@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {newRun,generateFloor,advanceClock,enrage,canEscape} from './engine.js';
+test('floors are connected with correct counts and boss placement',()=>{for(let j=0;j<100;j++)for(let f=0;f<2;f++){const rooms=generateFloor(f);assert.ok(rooms.length>=7+f&&rooms.length<=10+f);assert.equal(rooms.filter(r=>r.type==='boss').length,f);const visited=new Set([rooms[0]]);let old;do{old=visited.size;for(const a of visited)for(const b of rooms)if(Math.abs(a.x-b.x)+Math.abs(a.y-b.y)===1)visited.add(b);}while(old!==visited.size);assert.equal(visited.size,rooms.length);}});
+test('pause freezes time and cooldowns',()=>{const s=newRun();s.skill=9;advanceClock(s,3,true);assert.equal(s.elapsed,0);assert.equal(s.skill,9);advanceClock(s,2,false);assert.equal(s.elapsed,2);assert.equal(s.skill,7);});
+test('frenzy and save preserve map and facilities',()=>{let s=newRun();s.floors[0][2].used=true;const before=s.floors.map(rs=>rs.map(({x,y,type,seen,used})=>({x,y,type,seen,used})));enrage(s);s=JSON.parse(JSON.stringify(s));assert.deepEqual(s.floors.map(rs=>rs.map(({x,y,type,seen,used})=>({x,y,type,seen,used}))),before);assert.ok(canEscape(s));s.floor=1;assert.ok(!canEscape(s));});
+test('exit needs key and death stops time',()=>{const s=newRun();assert.ok(!canEscape(s));s.status='dead';advanceClock(s,50,false);assert.equal(s.elapsed,0);});

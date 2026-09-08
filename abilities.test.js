@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {newRun,advanceClock} from './engine.js';
+import {applySkill} from './progression.js';
+import {ultimateUnlocked,castUltimate,DODGE_COOLDOWN} from './abilities.js';
+import {updateBrute} from './brute.js';
+import {blocked} from './terrain.js';
+test('ultimate unlocks after five selections including repeated upgrades, and persists',()=>{const s=newRun();s.floors[0][0].enemies=[{hp:200}];assert.equal(castUltimate(s),false);applySkill(s.player,'split');applySkill(s.player,'split');assert.equal(ultimateUnlocked(s.player),false);applySkill(s.player,'fire');assert.equal(ultimateUnlocked(s.player),false);applySkill(s.player,'frost');assert.equal(castUltimate(s),false);applySkill(s.player,'chain');assert.equal(ultimateUnlocked(JSON.parse(JSON.stringify(s)).player),true);assert.equal(castUltimate(s),true);assert.equal(s.floors[0][0].enemies[0].hp,80);assert.equal(castUltimate(s),false);assert.equal(s.skill,25);s.dodge=DODGE_COOLDOWN;advanceClock(s,10,true);assert.equal(s.dodge,20);assert.equal(s.skill,25);advanceClock(s,10,false);assert.equal(s.dodge,10);});
+test('brute locks a safe landing, crosses cover, and leaves a recovery window',()=>{let e={x:100,y:200,hp:150,jumpCooldown:0},p={x:300,y:200},obs=[{x:250,y:170,w:80,h:60}];updateBrute(e,p,obs,.01);assert.equal(e.phase,'windup');assert.ok(!blocked(e.landX,e.landY,22,obs));const landing=[e.landX,e.landY];p.x=500;updateBrute(e,p,obs,.5);assert.deepEqual([e.landX,e.landY],landing);e=JSON.parse(JSON.stringify(e));updateBrute(e,p,obs,.5);assert.equal(e.phase,'air');assert.equal(updateBrute(e,p,obs,.55),0);assert.equal(e.phase,'recover');assert.deepEqual([e.x,e.y],landing);assert.ok(e.jumpCooldown>0);});
+test('short melee attack is telegraphed and can be escaped without dodge',()=>{const e={x:100,y:200},p={x:140,y:200};assert.equal(updateBrute(e,p,[],.01),0);assert.equal(e.phase,'swing');p.x+=100;assert.equal(updateBrute(e,p,[],.6),0);assert.equal(e.phase,'recover');});
