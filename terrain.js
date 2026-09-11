@@ -22,6 +22,7 @@ export function safeSpawn(body,obstacles=[],radius=18){
 }
 // Small visibility graph: deterministic routing around obstacle corners.
 export function steering(body,target,obstacles=[],radius=18){
+ if(blocked(target.x,target.y,radius,obstacles)){target={x:target.x,y:target.y};safeSpawn(target,obstacles,radius+1);}
  if(!segmentBlocked(body,target,obstacles,radius))return Math.atan2(target.y-body.y,target.x-body.x);
  const pad=radius+3,nodes=[body,target];
  for(const o of obstacles)for(const x of [o.x-pad,o.x+o.w+pad])for(const y of [o.y-pad,o.y+o.h+pad])if(x>35&&x<925&&y>50&&y<490&&!blocked(x,y,radius,obstacles))nodes.push({x,y});
@@ -37,14 +38,14 @@ export function drawObstacles(ctx,obstacles=[]){
  if(o.type==='bones'){ctx.fillStyle='#4b5149';ctx.fillRect(x,y,w,h);ctx.fillStyle='#c2b99a';ctx.fillRect(x+8,y+h/2-3,w-16,6);for(let i=0;i<4;i++){ctx.fillRect(x+12+i*12,y+9,5,h-18);}ctx.fillStyle='#e0d3ab';ctx.fillRect(x+w-22,y+12,19,22);ctx.fillStyle='#353e36';ctx.fillRect(x+w-18,y+17,4,6);ctx.fillRect(x+w-10,y+17,4,6);}
  }
 }
-export function drawMinimap(ctx,rooms,current){
+export function drawMinimap(ctx,rooms,current,path=[]){
  const visible=rooms.filter(r=>r.seen);if(!visible.length)return;
  ctx.fillStyle='#08120fce';ctx.fillRect(772,12,166,160);ctx.strokeStyle='#91a18a66';ctx.lineWidth=1;ctx.strokeRect(772.5,12.5,166,160);
- ctx.textAlign='center';ctx.font='10px sans-serif';ctx.fillStyle='#c1cdb9';ctx.fillText('탐색 지도 · 문 위치',855,28);
+ ctx.textAlign='center';ctx.font='10px sans-serif';ctx.fillStyle='#c1cdb9';ctx.fillText(rooms.some(r=>r.returnRisk)?'귀환 · 빨강 위험 / 초록 우회':'탐색 지도 · 문 위치',855,28);
  const minX=Math.min(...visible.map(r=>r.x)),minY=Math.min(...visible.map(r=>r.y)),width=Math.max(...visible.map(r=>r.x))-minX+1,height=Math.max(...visible.map(r=>r.y))-minY+1,step=Math.min(28,142/width,125/height),size=step*.68;
  const ox=855-width*step/2,oy=38+(125-height*step)/2;
- for(const r of visible){const x=ox+(r.x-minX)*step+(step-size)/2,y=oy+(r.y-minY)*step+(step-size)/2;ctx.fillStyle=r===current?'#cfbb83':'#536d60';ctx.fillRect(x,y,size,size);
+ for(const r of visible){const x=ox+(r.x-minX)*step+(step-size)/2,y=oy+(r.y-minY)*step+(step-size)/2;ctx.fillStyle=r===current?'#cfbb83':r.returnRisk==='high'?'#a35d53':r.returnRisk==='low'?'#4c876b':'#536d60';ctx.fillRect(x,y,size,size);if(path.includes(rooms.indexOf(r))){ctx.strokeStyle='#f4dc85';ctx.lineWidth=2;ctx.strokeRect(x-1,y-1,size+2,size+2);}
  roomDoors(rooms,r).forEach((open,i)=>{if(!open)return;ctx.fillStyle='#e7dcaf';const [dx,dy]=directions[i],cx=x+size/2+dx*size/2,cy=y+size/2+dy*size/2;ctx.fillRect(cx-(dx?1.5:2.5),cy-(dy?1.5:2.5),dx?3:5,dy?3:5);});
- const symbol=({up:'↑',down:'↓',boss:'!',exit:'⌂',treasure:'◆',fountain:'~',shrine:'†'})[r.type];if(symbol){ctx.fillStyle='#f3e9c8';ctx.font=`${Math.min(11,size-2)}px monospace`;ctx.fillText(symbol,x+size/2,y+size/2+3);}
+ const symbol=({up:'↑',down:'↓',boss:'!',exit:'⌂',treasure:'◆',fountain:'~',shrine:'†',event:'?'})[r.type];if(symbol){ctx.fillStyle=r.type==='fountain'&&r.used?'#88948a':'#f3e9c8';ctx.font=`${Math.min(11,size-2)}px monospace`;ctx.fillText(symbol,x+size/2,y+size/2+3);}
  }
 }

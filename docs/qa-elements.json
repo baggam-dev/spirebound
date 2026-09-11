@@ -1,0 +1,11 @@
+{
+  "release": "0.13.0-prebeta",
+  "simulatedSeconds": 120,
+  "wallMilliseconds": 903,
+  "enemies": 32,
+  "peakZones": 4,
+  "peakStacks": 7,
+  "damageDealt": 208101.35000196984,
+  "saveResumeChecks": 6,
+  "limitations": "Node CPU smoke test with invulnerable player, high-HP passive targets and all elemental/arrow skills maxed. Not browser FPS or human balance validation."
+}

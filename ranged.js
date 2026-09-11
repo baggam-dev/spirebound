@@ -1,3 +1,4 @@
+import {ENEMY_COOLDOWN_FACTOR,attackProfile} from './balance.js';
 import {segmentBlocked,steering,moveBody} from './terrain.js';
 
 export function beamEnd(e,obstacles=[]){
@@ -20,10 +21,10 @@ export function updateRanged(e,p,obstacles,dt,bullets,enraged=false){
   if(e.phaseTime<=0){
    if(e.phase==='aim'){
     if(e.type==='laser'){e.phase='beam';e.phaseTime=.35;}
-    else{bullets.push({x:e.x,y:e.y,vx:Math.cos(e.aim)*330,vy:Math.sin(e.aim)*330,enemy:true,ricochet:true,bounces:1,life:5,hit:[]});e.phase=null;e.cd=enraged?2.5:3.5;}
-   }else{e.phase=null;e.cd=enraged?3:4;}
+    else{const profile=attackProfile(e),count=2+Math.floor(profile.count/2);for(let i=0;i<count;i++){const a=e.aim+(i-(count-1)/2)*.16;bullets.push({x:e.x,y:e.y,vx:Math.cos(a)*330*profile.speed,vy:Math.sin(a)*330*profile.speed,enemy:true,source:'반사 사수 반사탄',ricochet:true,bounces:1,life:5,hit:[]});}e.phase=null;e.cd=(enraged?2.5:3.5)*ENEMY_COOLDOWN_FACTOR*profile.recovery;}
+   }else{e.phase=null;e.cd=(enraged?3:4)*ENEMY_COOLDOWN_FACTOR*attackProfile(e).recovery;}
   }
-  if(e.phase==='beam'&&!e.beamHit&&lineDistance(p,e,beamEnd(e,obstacles))<18&&!segmentBlocked(e,p,obstacles,4)){e.beamHit=true;return 18;}
+  if(e.phase==='beam'&&!e.beamHit&&lineDistance(p,e,beamEnd(e,obstacles))<29&&!segmentBlocked(e,p,obstacles,4)){e.beamHit=true;return 18;}
   return 0;
  }
  e.cd=(e.cd??2)-dt;
@@ -53,6 +54,6 @@ export function drawRanged(ctx,e,obstacles){
  if(e.type==='laser'){ctx.fillRect(e.x-6,e.y-32,12,23);ctx.fillStyle='#f9e6f3';ctx.fillRect(e.x-3,e.y-27,6,10);}
  else{ctx.strokeStyle=color;ctx.lineWidth=4;ctx.beginPath();ctx.arc(e.x,e.y-7,16,0,Math.PI*2);ctx.stroke();ctx.fillRect(e.x-5,e.y-12,10,10);}
  if(!e.phase)return;
- const end=beamEnd(e,obstacles);ctx.save();ctx.strokeStyle=color;ctx.lineWidth=e.phase==='beam'?8:2;ctx.setLineDash(e.phase==='aim'?[8,6]:[]);ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(end.x,end.y);ctx.stroke();
+ const end=beamEnd(e,obstacles);ctx.save();ctx.strokeStyle=color;ctx.lineWidth=e.phase==='beam'?30:3;ctx.setLineDash(e.phase==='aim'?[8,6]:[]);ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(end.x,end.y);ctx.stroke();
  if(e.phase==='beam'){ctx.strokeStyle='#fff0f8';ctx.lineWidth=2;ctx.stroke();}ctx.restore();
 }

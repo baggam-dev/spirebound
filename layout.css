@@ -1,0 +1,33 @@
+/* Interaction layout: the arena and its controls stay inside the available height. */
+body{min-height:100dvh;overscroll-behavior:none}
+header{height:56px;padding:0 3%;gap:10px}header a{font-size:19px}.edition{letter-spacing:1px}
+main{width:min(1280px,calc((100dvh - 176px)*1.7778 + 32px));padding:12px 16px;margin:auto}
+.topline{min-height:44px;margin-bottom:10px;gap:14px}.stats{gap:14px;flex-wrap:wrap;justify-content:flex-end;max-width:65%}h1{font-size:20px}
+.arena{aspect-ratio:16/9}canvas{width:100%;height:100%;touch-action:none}footer{margin-top:8px;flex-wrap:wrap;gap:8px;font-size:10px}
+#saveStatus{color:#9eb49b}#health{white-space:nowrap;letter-spacing:1px}#level{white-space:nowrap}
+.panel{width:min(660px,96%);max-height:100%;padding:20px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.panel h2{font-size:32px;margin:8px 0 14px}.panel p{font-size:13px;line-height:1.6}.guide{text-align:left}.guide p{margin:10px 0}.guide b{color:#d2bd86}
+.history-list{display:grid;gap:8px;text-align:left}.history-list article{background:#27382f;padding:12px;border:1px solid #425749;border-radius:4px}.history-list span,.history-list small{display:block;margin-top:5px}
+button{min-height:44px}button:focus-visible{outline:2px solid #f0d89d;outline-offset:3px}#stick{user-select:none;-webkit-user-select:none;touch-action:none}.touch button{user-select:none;-webkit-user-select:none}
+#notice{max-width:65%;white-space:normal;text-align:center}#overlay:empty{display:none}
+.panel button{touch-action:pan-y}
+@media(orientation:portrait){#overlay:not(:empty){position:fixed;inset:64px 8px 8px;z-index:20;border:1px solid #566052;border-radius:8px}.panel{width:100%;padding:18px}}
+@media(orientation:landscape) and (max-height:500px){
+ header{height:40px!important}header a{font-size:14px}header button{padding:5px 9px;min-height:32px;font-size:11px}.edition{display:none}
+ main{width:min(100%,calc((100dvh - 110px)*1.7778 + 16px));padding:5px 8px!important}
+ .topline{min-height:32px;margin-bottom:5px!important}.topline h1{font-size:13px!important;margin:0}.stats{font-size:10px;gap:8px;max-width:72%}#timer{font-size:17px}#health{letter-spacing:0}
+ footer{font-size:9px;margin-top:5px!important}footer>span:last-child{display:none}
+ .panel{padding:10px 14px}.panel h2{font-size:23px!important;margin:3px 0 8px}.panel p{font-size:11px;line-height:1.4!important}.panel small{font-size:8px}.panel button{padding:8px 10px;min-height:36px;font-size:11px}.cards{gap:4px}.cards button{padding:10px}.cards b{margin-bottom:6px}.cards span{font-size:11px}.cards em{font-size:9px;margin-top:6px}
+ .touch{bottom:9px;left:9px;right:9px}#stick{width:76px;height:76px}#stick i{left:18px;top:18px}.actions button{min-height:44px;padding:8px;font-size:10px}#skill{height:48px}kbd{display:none}#interact{bottom:68px;padding:7px 12px;min-height:34px;font-size:11px}
+}
+@media(orientation:portrait){
+ header{height:auto;min-height:52px;flex-wrap:wrap;padding:8px 10px;gap:6px}header a{flex:1;font-size:14px}.edition{display:none}header button{font-size:11px;padding:6px;min-height:34px}
+ main{width:100%;padding:12px 8px}.topline{align-items:flex-start;flex-direction:column;gap:8px}.stats{max-width:100%;width:100%;justify-content:space-between;font-size:11px}.arena{margin-top:8px}h1{font-size:18px}
+ .panel{padding:8px}.panel h2{font-size:20px;margin:4px 0}.panel p{font-size:11px}.panel button{min-height:36px;padding:8px;font-size:11px}.cards{flex-direction:column}.touch{bottom:5px;left:5px;right:5px}#stick{width:60px;height:60px}#stick i{width:30px;height:30px;left:14px;top:14px}.actions{gap:4px}.actions button{min-height:36px;font-size:9px;padding:5px}#skill{height:38px}#interact{bottom:50px;padding:5px 8px;font-size:10px;min-height:30px}
+ .rotate{display:block}#notice{font-size:10px;max-width:90%}
+}
+
+.main-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.main-cards button{margin:0;touch-action:pan-y}.main-cards b{margin-bottom:5px}
+@media(orientation:portrait){#overlay:has(.main-cards){position:fixed;inset:60px 8px 12px;z-index:20}.main-cards button{padding:14px 10px}.main-cards span{line-height:1.6}}
+
+.cards .skill-main{background:#b48a2938;border:1px solid #d7b359}.cards .skill-main:hover{background:#b48a295c}.cards .skill-rare{background:#3076c238;border:1px solid #6ca9ed}.cards .skill-rare:hover{background:#3076c25c}.cards .skill-unique{background:#8748bd38;border:1px solid #bf8ee9}.cards .skill-unique:hover{background:#8748bd5c}

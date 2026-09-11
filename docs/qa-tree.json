@@ -1,0 +1,42 @@
+{
+  "release": "0.14.0-prebeta",
+  "results": [
+    {
+      "mainSkill": "fire",
+      "simulatedSeconds": 60,
+      "wallMilliseconds": 851,
+      "peakZones": 23,
+      "peakBullets": 7,
+      "damageDealt": 100236.02900031488,
+      "saveResumeChecks": 3
+    },
+    {
+      "mainSkill": "frost",
+      "simulatedSeconds": 60,
+      "wallMilliseconds": 717,
+      "peakZones": 0,
+      "peakBullets": 7,
+      "damageDealt": 46911.1599999778,
+      "saveResumeChecks": 3
+    },
+    {
+      "mainSkill": "poison",
+      "simulatedSeconds": 60,
+      "wallMilliseconds": 683,
+      "peakZones": 0,
+      "peakBullets": 7,
+      "damageDealt": 52040.39199990081,
+      "saveResumeChecks": 3
+    },
+    {
+      "mainSkill": "chain",
+      "simulatedSeconds": 60,
+      "wallMilliseconds": 644,
+      "peakZones": 0,
+      "peakBullets": 7,
+      "damageDealt": 52499.50412496785,
+      "saveResumeChecks": 3
+    }
+  ],
+  "limitations": "Node CPU only: 32 passive high-HP targets, invulnerable player, maximum support build. Not human balance or browser FPS validation."
+}

@@ -1,8 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {newRun,travel,bossDefeated,useShrine,currentRoom,canEscape,generateFloor} from './engine.js';
+import {newRun,travel,bossDefeated,currentRoom,canEscape,generateFloor} from './engine.js';
 import {updatePrism} from './prism.js';
-test('four connected floors have bosses only on 2 and 4 and a shrine on 3',()=>{for(let n=0;n<30;n++){const s=newRun();assert.equal(s.floors.length,4);s.floors.forEach((rooms,f)=>{const bosses=rooms.filter(r=>r.type==='boss');assert.equal(bosses.length,f%2);assert.ok(rooms.length-bosses.length>=7&&rooms.length-bosses.length<=10);assert.equal(rooms.filter(r=>r.type==='shrine').length,f===2?1:0);const reached=new Set([rooms[0]]);let old;do{old=reached.size;for(const a of reached)for(const b of rooms)if(Math.abs(a.x-b.x)+Math.abs(a.y-b.y)===1)reached.add(b);}while(old!==reached.size);assert.equal(reached.size,rooms.length);});assert.equal(s.floors[3].at(-1).enemies[0].variant,'prism');}});
-test('complete four-floor progression gates middle boss and preserves return path',()=>{let s=newRun();s.room=s.floors[0].findIndex(r=>r.type==='up');assert.ok(travel(s,1));s.room=s.floors[1].findIndex(r=>r.type==='boss');assert.equal(travel(s,1),false);currentRoom(s).enemies=[];assert.equal(bossDefeated(s),'stairs');assert.equal(s.key,false);assert.ok(travel(s,1));s.room=s.floors[2].findIndex(r=>r.type==='shrine');assert.ok(useShrine(s,'weapon'));assert.equal(useShrine(s,'armor'),false);s.room=s.floors[2].findIndex(r=>r.type==='up');assert.ok(travel(s,1));s.room=s.floors[3].findIndex(r=>r.type==='boss');currentRoom(s).enemies=[];assert.equal(bossDefeated(s),'key');s=JSON.parse(JSON.stringify(s));for(let f=3;f>0;f--){s.room=0;assert.ok(travel(s,-1));assert.equal(s.floor,f-1);}s.room=0;assert.ok(canEscape(s));assert.ok(s.floors[2].find(r=>r.type==='shrine').used);assert.equal(s.floors[1].find(r=>r.type==='boss').enemies.length,0);});
-test('legacy two-floor run still awards its key on floor 2',()=>{const s=newRun();s.floors=[generateFloor(0),generateFloor(1)];s.floor=1;s.room=s.floors[1].findIndex(r=>r.type==='boss');currentRoom(s).enemies=[];assert.equal(bossDefeated(s),'key');assert.equal(s.key,true);assert.equal(travel(s,1),false);});
-test('prism boss alternates telegraphed reflections and fixed triple laser; saves resume',()=>{let e={x:480,y:200,cd:0},p={x:700,y:200},b=[];updatePrism(e,p,[],.02,b);assert.equal(b.length,0);assert.equal(e.prismAttack,'bounce');for(let i=0;i<70;i++)updatePrism(e,p,[],.02,b);assert.equal(b.length,8);assert.ok(b.every(b=>b.bounces===1));for(let i=0;i<200;i++)updatePrism(e,p,[],.02,b);assert.equal(e.prismAttack,'laser');const aim=e.aim;e=JSON.parse(JSON.stringify(e));p.y=400;let damage=0;for(let i=0;i<90;i++)damage+=updatePrism(e,p,[],.02,b);assert.equal(e.aim,aim);assert.equal(damage,0);});
+import {encodeSave,parseSave} from './storage.js';
+test('six connected floors place three bosses and flowers only on upper ascent floors',()=>{
+ for(let seed=0;seed<60;seed++){
+  const s=newRun(seed);assert.equal(s.floors.length,6);
+  s.floors.forEach((rooms,f)=>{const bosses=rooms.filter(r=>r.type==='boss');assert.equal(bosses.length,f%2);assert.ok(rooms.length-bosses.length>=7&&rooms.length-bosses.length<=10);assert.equal(rooms.some(r=>r.enemies.some(e=>e.type==='flower')),f>=4);});
+  assert.equal(s.floors[1].at(-1).enemies[0].max,825);assert.equal(s.floors[3].at(-1).enemies[0].max,1500);assert.equal(s.floors[5].at(-1).enemies[0].variant,'slime');assert.equal(parseSave(encodeSave(s)).floors.length,6);
+ }
+});
+test('all six ascent and descent transitions preserve gates, maps and key timing',()=>{
+ const s=newRun(71),coords=s.floors.map(rs=>rs.map(r=>[r.x,r.y]));
+ for(let f=0;f<6;f++){s.room=s.floors[f].findIndex(r=>r.type==='up'||r.type==='boss');if(f%2){assert.equal(travel(s,1),false);currentRoom(s).enemies=[];assert.equal(bossDefeated(s),f===5?'key':'stairs');}assert.equal(s.key,f===5);if(f<5)assert.ok(travel(s,1));}
+ for(let f=5;f>0;f--){s.room=0;assert.ok(travel(s,-1));assert.equal(s.floor,f-1);}s.room=0;assert.ok(canEscape(s));assert.deepEqual(s.floors.map(rs=>rs.map(r=>[r.x,r.y])),coords);
+});
+test('legacy two and four floor saves keep their maps and final key floor',()=>{
+ for(const count of [2,4]){let s=newRun(14);s.floors=Array.from({length:count},(_,f)=>generateFloor(f));s=parseSave(encodeSave(s));assert.equal(s.floors.length,count);s.floor=count-1;s.room=s.floors.at(-1).findIndex(r=>r.type==='boss');currentRoom(s).enemies=[];assert.equal(bossDefeated(s),'key');assert.equal(travel(s,1),false);}
+});
+test('prism emits 18 reflected rounds and fixed five beams resume identically',()=>{
+ let e={x:480,y:200,cd:0},p={x:700,y:200},b=[];updatePrism(e,p,[],.02,b);assert.equal(b.length,0);while(e.prismPhase==='warning')updatePrism(e,p,[],.02,b);assert.equal(b.length,18);assert.ok(b.every(b=>b.bounces===1));while(e.prismAttack!=='laser')updatePrism(e,p,[],.02,b);const copy=structuredClone(e),other=[],aim=e.aim;p={x:350,y:450};for(let i=0;i<70;i++)assert.equal(updatePrism(e,p,[],.02,b),updatePrism(copy,p,[],.02,other));assert.equal(e.aim,aim);assert.deepEqual(e,copy);
+});

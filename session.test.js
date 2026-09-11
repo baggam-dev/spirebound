@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {SessionLease} from './session.js';
+const memory=()=>{const m=new Map();return {getItem:k=>m.get(k)||null,setItem:(k,v)=>m.set(k,v),removeItem:k=>m.delete(k)};};
+test('fallback lease blocks second writer and releases cleanly',async()=>{const storage=memory(),a=new SessionLease(storage,()=>{},null),b=new SessionLease(storage,()=>{},null);assert.equal(await a.acquire(),true);assert.equal(await b.acquire(),false);a.release();assert.equal(await b.acquire(),true);b.release();});
+test('fallback lease notices ownership loss and never removes new owner',async()=>{const storage=memory();let lost=false;const a=new SessionLease(storage,()=>lost=true,null);await a.acquire();storage.setItem(a.key,JSON.stringify({owner:'other',until:Date.now()+10000}));a.heartbeat();assert.equal(lost,true);a.release();assert.equal(JSON.parse(storage.getItem(a.key)).owner,'other');});
