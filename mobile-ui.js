@@ -1,0 +1,14 @@
+const header=document.querySelector('header');
+const menu=document.createElement('button');
+menu.id='mobileMenu';menu.textContent='메뉴';menu.setAttribute('aria-expanded','false');header.append(menu);
+menu.addEventListener('click',()=>{menu.setAttribute('aria-expanded',String(header.classList.toggle('mobile-open')));});
+header.addEventListener('click',e=>{if(e.target.closest('button')&&e.target!==menu){header.classList.remove('mobile-open');menu.setAttribute('aria-expanded','false');}});
+const fullscreen=document.createElement('button');fullscreen.id='fullscreen';fullscreen.textContent='전체 화면';fullscreen.hidden=!document.fullscreenEnabled;header.insertBefore(fullscreen,menu);
+fullscreen.addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{fullscreen.textContent='전체 화면 불가';}});
+document.addEventListener('fullscreenchange',()=>{fullscreen.textContent=document.fullscreenElement?'화면 복귀':'전체 화면';});
+document.getElementById('runHUD').addEventListener('click',e=>{e.target.closest('.hud-item')?.focus();});
+const collection=document.getElementById('collectionHUD'),toggle=document.createElement('button');
+toggle.id='collectionToggle';toggle.setAttribute('aria-expanded','false');collection.prepend(toggle);
+toggle.addEventListener('click',()=>toggle.setAttribute('aria-expanded',String(collection.classList.toggle('expanded'))));
+const countCollection=()=>{const label=`유물 ${collection.querySelectorAll('.relic-item').length} · 정수 ${collection.querySelectorAll('.essence-item').length} ${collection.classList.contains('expanded')?'접기':'보기'}`;if(toggle.textContent!==label)toggle.textContent=label;};
+new MutationObserver(countCollection).observe(collection,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
