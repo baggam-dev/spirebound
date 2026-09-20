@@ -49,8 +49,8 @@ export function advanceRicochet(b,dt,obstacles,p){
 }
 export function drawRanged(ctx,e,obstacles){
  if(e.type!=='laser'&&e.type!=='ricochet')return;
- const color=e.type==='laser'?'#f2a0cb':'#74e1dd';
- ctx.fillStyle='#353e50';ctx.fillRect(e.x-18,e.y-22,36,35);ctx.fillStyle=color;
+ const color=e.escapeDepth?'#ff9198':e.type==='laser'?'#f2a0cb':'#74e1dd';
+ ctx.fillStyle=e.escapeDepth?'#9e424f':'#353e50';ctx.fillRect(e.x-18,e.y-22,36,35);ctx.fillStyle=color;
  if(e.type==='laser'){ctx.fillRect(e.x-6,e.y-32,12,23);ctx.fillStyle='#f9e6f3';ctx.fillRect(e.x-3,e.y-27,6,10);}
  else{ctx.strokeStyle=color;ctx.lineWidth=4;ctx.beginPath();ctx.arc(e.x,e.y-7,16,0,Math.PI*2);ctx.stroke();ctx.fillRect(e.x-5,e.y-12,10,10);}
  if(!e.phase)return;

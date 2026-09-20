@@ -1,0 +1,1 @@
+export function useFountain(s){const r=s.floors[s.floor][s.room],p=s.player;if(s.status!=='playing'||r.type!=='fountain'||r.used||r.enemies.length||p.hp>=p.max)return false;r.used=true;p.hp=Math.min(p.max,p.hp+3);return true;}

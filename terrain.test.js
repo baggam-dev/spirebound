@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {generateObstacles,blocked,moveBody,segmentBlocked,steering,roomDoors} from './terrain.js';
-import {newRun,enrage} from './engine.js';
+import {newRun,enrage,neighbor} from './engine.js';
 function seeded(seed){return ()=>((seed=(seed*1664525+1013904223)>>>0)/4294967296);}
 test('layouts preserve central routes, facilities, perimeter and some empty rooms',()=>{let totals=[0,0],empty=0;for(let f=0;f<2;f++)for(let i=1;i<=500;i++){const obs=generateObstacles(f,'normal',seeded(i));totals[f]+=obs.length;if(!obs.length)empty++;for(const [a,b] of [[{x:480,y:50},{x:480,y:490}],[{x:30,y:270},{x:930,y:270}],[{x:80,y:80},{x:880,y:80}],[{x:80,y:460},{x:880,y:460}],[{x:80,y:80},{x:80,y:460}],[{x:880,y:80},{x:880,y:460}]])assert.equal(segmentBlocked(a,b,obs,25),false);}assert.ok(empty>0);assert.ok(totals[1]>totals[0]);assert.deepEqual(generateObstacles(1,'boss',()=>0),[]);});
 test('movement and dodge cannot tunnel through cover, sliding remains possible',()=>{const obs=[{x:100,y:100,w:70,h:70}],p={x:70,y:120};moveBody(p,200,0,obs,14);assert.ok(p.x<=86);moveBody(p,30,100,obs,14);assert.ok(p.y>170);assert.ok(!blocked(p.x,p.y,14,obs));assert.ok(segmentBlocked({x:0,y:130},{x:300,y:130},obs,3));assert.ok(!segmentBlocked({x:0,y:70},{x:300,y:70},obs,3));});
@@ -9,3 +9,9 @@ test('enemies can route around cover to player',()=>{const obs=[{x:300,y:160,w:8
 test('spawns are clear and terrain survives frenzy and serialization',()=>{for(let i=0;i<50;i++){const s=newRun(),before=JSON.stringify(s.floors.map(rs=>rs.map(r=>r.obstacles)));for(const rs of s.floors)for(const r of rs)for(const e of r.enemies)assert.ok(!blocked(e.x,e.y,e.type==='boss'?32:18,r.obstacles));enrage(s);assert.equal(JSON.stringify(JSON.parse(JSON.stringify(s)).floors.map(rs=>rs.map(r=>r.obstacles))),before);for(const rs of s.floors)for(const r of rs)for(const e of r.enemies)assert.ok(!blocked(e.x,e.y,18,r.obstacles));}});
 test('doors describe visited-room edges without revealing neighboring rooms',()=>{const r={x:0,y:0,seen:true},hidden={x:1,y:0,seen:false};assert.deepEqual(roomDoors([r,hidden],r),[false,true,false,false]);assert.equal(hidden.seen,false);});
 test('new runs actually contain persisted obstacle arrays',()=>{let count=0;for(let i=0;i<20;i++)for(const rs of newRun().floors)for(const r of rs){assert.ok(Array.isArray(r.obstacles));count+=r.obstacles.length;}assert.ok(count>0);});
+
+test('minimap neighbor lookup shares tutorial entrance restrictions even from another room',()=>{
+ const s=newRun(91),doors=index=>[0,1,2,3].map(d=>neighbor(s,d,index)>=0);
+ assert.deepEqual(doors(0),[false,true,false,false]);s.room=1;assert.deepEqual(doors(0),[false,true,false,false]);
+ s.tutorialComplete=true;assert.deepEqual(doors(0),[false,true,true,false]);s.tutorialComplete=false;s.key=true;assert.deepEqual(doors(0),[false,true,true,false]);
+});

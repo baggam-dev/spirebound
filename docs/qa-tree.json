@@ -1,40 +1,40 @@
 {
-  "release": "0.14.0-prebeta",
+  "release": "0.21.0-prebeta",
   "results": [
     {
       "mainSkill": "fire",
       "simulatedSeconds": 60,
-      "wallMilliseconds": 851,
-      "peakZones": 23,
+      "wallMilliseconds": 10274,
+      "peakZones": 0,
       "peakBullets": 7,
-      "damageDealt": 100236.02900031488,
+      "damageDealt": 496495.82200043846,
       "saveResumeChecks": 3
     },
     {
       "mainSkill": "frost",
       "simulatedSeconds": 60,
-      "wallMilliseconds": 717,
+      "wallMilliseconds": 3979,
       "peakZones": 0,
       "peakBullets": 7,
-      "damageDealt": 46911.1599999778,
+      "damageDealt": 131257.9099997662,
       "saveResumeChecks": 3
     },
     {
       "mainSkill": "poison",
       "simulatedSeconds": 60,
-      "wallMilliseconds": 683,
+      "wallMilliseconds": 3768,
       "peakZones": 0,
       "peakBullets": 7,
-      "damageDealt": 52040.39199990081,
+      "damageDealt": 133614.2353332262,
       "saveResumeChecks": 3
     },
     {
       "mainSkill": "chain",
       "simulatedSeconds": 60,
-      "wallMilliseconds": 644,
+      "wallMilliseconds": 2610,
       "peakZones": 0,
       "peakBullets": 7,
-      "damageDealt": 52499.50412496785,
+      "damageDealt": 135041.87199977261,
       "saveResumeChecks": 3
     }
   ],

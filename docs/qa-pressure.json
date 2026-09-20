@@ -1,13 +1,13 @@
 {
-  "release": "0.16.0-prebeta",
-  "generatedAt": "2026-09-09T16:52:36.495Z",
+  "release": "0.20.0-prebeta",
+  "generatedAt": "2026-09-16T23:29:55.580Z",
   "limitations": "Node CPU simulation only, standing invulnerable player with attacks disabled. This is a correctness/pressure smoke test, not browser FPS or human balance validation.",
   "results": [
     {
       "scene": "warden",
       "simulatedSeconds": 120,
-      "wallMilliseconds": 101,
-      "slowestStepMilliseconds": 2.42,
+      "wallMilliseconds": 691,
+      "slowestStepMilliseconds": 14.29,
       "peakBullets": 26,
       "peakHazards": 0,
       "peakEnemies": 1
@@ -15,27 +15,27 @@
     {
       "scene": "prism",
       "simulatedSeconds": 120,
-      "wallMilliseconds": 103,
-      "slowestStepMilliseconds": 0.8,
-      "peakBullets": 34,
+      "wallMilliseconds": 1053,
+      "slowestStepMilliseconds": 14.2,
+      "peakBullets": 52,
       "peakHazards": 0,
-      "peakEnemies": 1
+      "peakEnemies": 4
     },
     {
       "scene": "slime",
       "simulatedSeconds": 120,
-      "wallMilliseconds": 233,
-      "slowestStepMilliseconds": 2.07,
-      "peakBullets": 0,
-      "peakHazards": 3,
+      "wallMilliseconds": 1345,
+      "slowestStepMilliseconds": 18.4,
+      "peakBullets": 10,
+      "peakHazards": 11,
       "peakEnemies": 9
     },
     {
       "scene": "escape",
       "simulatedSeconds": 120,
-      "wallMilliseconds": 449,
-      "slowestStepMilliseconds": 3.34,
-      "peakBullets": 105,
+      "wallMilliseconds": 2595,
+      "slowestStepMilliseconds": 46.91,
+      "peakBullets": 112,
       "peakHazards": 0,
       "peakEnemies": 13
     }

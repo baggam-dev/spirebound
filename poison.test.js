@@ -28,13 +28,13 @@ test('overlapping poison pulses once per second, while dead-owner aura disappear
  for(let i=0;i<200;i++)updateHazards(r,.01,{x:400,y:200},()=>hits++);
  assert.equal(hits,2);assert.equal(r.hazards.length,2);
 });
-test('slime splits 1 to 2 to 4, unique ids survive reload, only last fragment awards key',()=>{
+test('slime splits 1 to 2 to 4, unique ids survive reload, last fragment opens seventh floor',()=>{
  let s=newRun(42);s.floor=5;s.room=s.floors[5].findIndex(r=>r.type==='boss');s.player.x=100;s.player.y=450;s.attack=999;
  currentRoom(s).enemies[0].hp=0;let result=stepRun(s,.01);assert.equal(s.key,false);assert.equal(currentRoom(s).enemies.length,2);assert.ok(!result.events.includes('key'));
  s=parseSave(encodeSave(s));const r=currentRoom(s),ids=new Set(r.enemies.map(e=>e.id));
  r.enemies.forEach(e=>e.hp=0);stepRun(s,.01);assert.equal(r.enemies.length,4);assert.equal(s.key,false);for(const e of r.enemies){assert.ok(!ids.has(e.id));ids.add(e.id);assert.equal(e.stage,2);}
  for(let i=0;i<3;i++){r.enemies[0].hp=0;stepRun(s,.01);assert.equal(s.key,false);}
- r.enemies.push({id:999,type:'minislime',summoned:true,hp:5,max:5,x:500,y:300,cd:1});r.enemies[0].hp=0;result=stepRun(s,.01);assert.equal(result.events.filter(e=>e==='key').length,1);assert.equal(s.key,true);assert.equal(r.enemies.length,0);assert.equal(r.used,true);
+ r.enemies.push({id:999,type:'minislime',summoned:true,hp:5,max:5,x:500,y:300,cd:1});r.enemies[0].hp=0;result=stepRun(s,.01);assert.equal(result.events.filter(e=>e==='stairs').length,1);assert.equal(s.key,false);assert.equal(r.enemies.length,0);assert.equal(r.used,true);
  assert.equal(stepRun(s,.01).events.includes('key'),false);
 });
 test('only first two slime generations summon and summons give no XP, seal or drops',()=>{
@@ -48,7 +48,18 @@ test('poison phases and summons resume deterministically with validated saves',(
  const bad=structuredClone(s);currentRoom(bad).hazards=[{kind:'puddle',phase:'active',time:2,r:Infinity}];assert.throws(()=>encodeSave(bad));
 });
 test('descending escape increases crowd size and attack pressure while preserving map',()=>{
- for(let seed=1;seed<=30;seed++){const s=newRun(seed);enrage(s);let previous=0;for(let f=5;f>=0;f--){const enemies=s.floors[f][0].enemies;assert.ok(enemies.length>=previous);previous=enemies.length;assert.ok(enemies.every(e=>e.escapeDepth===6-f));}
+ for(let seed=1;seed<=30;seed++){const s=newRun(seed);enrage(s);let previous=0;for(let f=5;f>=0;f--){const enemies=s.floors[f][0].enemies;assert.ok(enemies.length>=previous);previous=enemies.length;assert.ok(enemies.every(e=>e.escapeDepth===8-f));}
   const top=attackProfile(s.floors[5][0].enemies[0]),bottom=attackProfile(s.floors[0][0].enemies[0]);assert.ok(bottom.speed>top.speed&&bottom.count>top.count&&bottom.recovery<top.recovery);
+ }
+});
+
+test('flower targets walls and corners in ascent and descent, with warning and escape time',()=>{
+ for(const escapeDepth of [0,1,3])for(const [x,y] of [[31,270],[929,270],[480,49],[480,491],[31,49],[929,49],[31,491],[929,491]]){
+  const e={id:0,type:'flower',x:480,y:270,cd:0,escapeDepth},p={x,y};
+  const r={enemies:[e],obstacles:[{x:x+15,y:y-10,w:20,h:20}]};
+  updatePoisonEnemy(e,p,r,.01);assert.equal(r.hazards[0].x,x);assert.equal(r.hazards[0].y,y);assert.equal(r.hazards.length,escapeDepth>=3?3:escapeDepth?2:1);
+  let hits=0;updateHazards(r,.5,p,()=>hits++);assert.equal(hits,0);
+  updateHazards(r,.51,p,()=>hits++);assert.equal(hits,0);updateHazards(r,.66,p,()=>hits++);assert.equal(hits,1);
+  r.poisonPulse=0;updateHazards(r,.01,{x:480,y:270},()=>hits++);assert.equal(hits,1);
  }
 });

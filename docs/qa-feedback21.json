@@ -1,0 +1,26 @@
+{
+  "release": "0.21.0-prebeta",
+  "results": [
+    {
+      "mode": "burst",
+      "simulatedSeconds": 120,
+      "wallMilliseconds": 4735,
+      "peakProjectiles": 58,
+      "peakShards": 37,
+      "peakTurrets": 0,
+      "saveResumeChecks": 6,
+      "kills": 143
+    },
+    {
+      "mode": "turret",
+      "simulatedSeconds": 120,
+      "wallMilliseconds": 4420,
+      "peakProjectiles": 38,
+      "peakShards": 12,
+      "peakTurrets": 2,
+      "saveResumeChecks": 6,
+      "kills": 110
+    }
+  ],
+  "limitations": "Invulnerable CPU stress simulation with repeated groups and all new passive relics; does not measure browser FPS or player balance."
+}

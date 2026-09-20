@@ -1,0 +1,5 @@
+// Small synthesized warning cue; no downloaded assets or network access.
+let context,muted=false,last=-Infinity;
+export function unlockWarningAudio(){if(muted)return;try{const Audio=globalThis.AudioContext||globalThis.webkitAudioContext;if(!Audio)return;context??=new Audio();if(context.state==='suspended')context.resume().catch(()=>{});}catch{}}
+export function toggleWarningAudio(){muted=!muted;if(!muted)unlockWarningAudio();return muted;}
+export function playHeavyWarning(){if(muted||!context||context.state!=='running'||context.currentTime-last<.3)return;try{last=context.currentTime;for(const [offset,hz] of [[0,330],[.12,440]]){const o=context.createOscillator(),g=context.createGain(),start=context.currentTime+offset;o.type='sine';o.frequency.value=hz;g.gain.setValueAtTime(0,start);g.gain.linearRampToValueAtTime(.035,start+.015);g.gain.exponentialRampToValueAtTime(.001,start+.12);o.connect(g);g.connect(context.destination);o.start(start);o.stop(start+.13);o.onended=()=>{o.disconnect();g.disconnect();};}}catch{}}
