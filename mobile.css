@@ -18,7 +18,7 @@ canvas{width:100%;height:auto;aspect-ratio:16/9}
 #interact{position:fixed;left:auto;right:max(20px,env(safe-area-inset-right));bottom:155px;transform:none;min-height:48px;z-index:9;font-size:12px}kbd{display:none}#notice{top:42px;max-width:65%;font-size:11px}
 .hud-bottom{inset:0;border:0;background:none;display:block;height:auto;padding:0;pointer-events:none}.vitals{position:absolute;top:5px;left:8px;max-width:45%}#heartStrip .pixel-icon{width:20px;height:20px}#shieldStatus{font-size:9px}
 .build-status{position:absolute;bottom:17px;left:27%;right:27%}#skillStrip{gap:2px}.skill-item .pixel-icon{width:22px;height:22px}#hexStatus{display:none}
-#collectionHUD{left:8px;top:55px;max-width:40%}#relicStrip{max-height:54px;overflow:auto}#essenceStrip{gap:2px;margin-top:2px}.relic-item .pixel-icon{width:22px;height:22px}.essence-item .pixel-icon{width:16px;height:16px}.essence-item b{font-size:9px}
+#collectionHUD{left:8px;top:76px;max-width:40%}#relicStrip{max-height:54px;overflow:auto}#essenceStrip{gap:2px;margin-top:2px}.relic-item .pixel-icon{width:22px;height:22px}.essence-item .pixel-icon{width:16px;height:16px}.essence-item b{font-size:9px}
 #collectionToggle{display:block;pointer-events:auto;padding:3px 6px;min-height:32px;font-size:10px;background:#111b20b3;margin-bottom:3px}
 #collectionHUD:not(.expanded) #relicStrip>:nth-child(n+5),#collectionHUD:not(.expanded) #essenceStrip>:nth-child(n+4){display:none}
 #collectionHUD.expanded{max-width:60%;background:#10191ded;padding:5px}#collectionHUD.expanded #relicStrip{max-height:100px}

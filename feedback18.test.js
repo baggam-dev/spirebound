@@ -29,9 +29,9 @@ test('all five essences persist on the ground and are collected once, including 
 test('essences cannot be collected remotely or through cover',()=>{
  const s=newRun(3),r=currentRoom(s);r.essences=[{id:'attack',x:500,y:300}];r.obstacles=[{x:488,y:275,w:5,h:50,type:'rock'}];assert.equal(collectEssences(s,r).length,0);r.obstacles=[];s.player.x=100;assert.equal(collectEssences(s,r).length,0);s.player.x=410;grantRelic(s.player,'magnet');assert.equal(collectEssences(s,r).length,1);
 });
-test('31 relics stack persistently, old single slot migrates and duplicates have no effect',()=>{
+test('32 relics stack persistently, old single slot migrates and duplicates have no effect',()=>{
  const s=newRun(4);s.player.relic='boots';const loaded=parseSave(encodeSave(s));assert.deepEqual(loaded.player.relics,['boots']);assert.equal(loaded.player.relic,undefined);
- for(const r of relics)grantRelic(loaded.player,r.id);assert.equal(ownedRelics(loaded.player).length,31);const hp=loaded.player.max;assert.equal(grantRelic(loaded.player,'heart'),false);assert.equal(loaded.player.max,hp);assert.equal(relicStat(loaded.player,'move'),.18);assert.ok(movementSpeed(loaded.player)>174);assert.equal(parseSave(encodeSave(loaded)).player.relics.length,31);
+ for(const r of relics)grantRelic(loaded.player,r.id);assert.equal(ownedRelics(loaded.player).length,32);const hp=loaded.player.max;assert.equal(grantRelic(loaded.player,'heart'),false);assert.equal(loaded.player.max,hp);assert.equal(relicStat(loaded.player,'move'),.18);assert.ok(movementSpeed(loaded.player)>174);assert.equal(parseSave(encodeSave(loaded)).player.relics.length,32);
 });
 test('relic attack speed and ultimate damage/cooldown affect actual casts',()=>{
  const s=newRun(5),r=currentRoom(s);s.player.power=5;grantRelic(s.player,'quiver');fireArrow(s,{x:700,y:300});assert.equal(s.attack,.65/1.15);

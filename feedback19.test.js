@@ -18,10 +18,11 @@ function shrine(seed=9){const s=newRun(seed);s.floor=2;s.room=s.floors[2].findIn
 function boss(kind='prism'){const s=newRun(44);s.floor=kind==='prism'?3:5;s.room=s.floors[s.floor].findIndex(r=>r.type==='boss');s.attack=999;s.invulnerable=999;return s;}
 const foe=(id=0)=>({id,type:'chaser',x:650,y:300,hp:100,max:100,cd:1,balanceVersion:1});
 
-test('shrine room contains only elites and cannot be left before mandatory choice',()=>{
- const s=shrine(),r=currentRoom(s);assert.equal(r.enemies.length,3);assert.ok(r.enemies.every(e=>e.elite));assert.ok(roomLocked(s));assert.equal(claimIncantation(s,0),false);
- s.player.x=931;s.player.y=270;const room=s.room;stepRun(s,.01);assert.equal(s.room,room);assert.equal(travel(s,1),false);
- r.enemies.forEach(e=>e.hp=0);assert.ok(stepRun(s,.01).events.includes('incantation'));assert.equal(r.shrineState,'choice');assert.equal(r.incantations.length,2);const time=s.elapsed;stepRun(s,1);assert.equal(s.elapsed,time);assert.ok(claimIncantation(s,0));assert.equal(roomLocked(s),false);assert.equal(claimIncantation(s,1),false);
+test('shrine chooses on entry, pauses enemies, then retains elite combat and exit lock',()=>{
+ const s=shrine(),r=currentRoom(s);assert.equal(r.enemies.length,3);assert.ok(r.enemies.every(e=>e.elite));assert.equal(r.shrineState,'choice');assert.equal(r.incantations.length,2);assert.ok(roomLocked(s));
+ const time=s.elapsed,enemies=JSON.stringify(r.enemies),hp=s.player.hp;assert.ok(stepRun(s,1).events.includes('incantation'));assert.equal(s.elapsed,time);assert.equal(s.player.hp,hp);assert.equal(JSON.stringify(r.enemies),enemies);
+ const copy=parseSave(encodeSave(s));assert.deepEqual(currentRoom(copy).incantations,r.incantations);assert.equal(currentRoom(copy).enemies.length,3);
+ assert.ok(claimIncantation(s,0));assert.ok(roomLocked(s));assert.equal(claimIncantation(s,1),false);r.enemies=[];assert.equal(roomLocked(s),false);
 });
 test('shrine has ten blessings and five curses, including double-curse offers that persist on reload',()=>{
  assert.equal(incantations.filter(k=>k.good).length,10);assert.equal(incantations.filter(k=>!k.good).length,5);let found=false;
@@ -69,7 +70,7 @@ test('multiple elites award at most one potion per room even after save and reen
  const s=newRun(7),r=currentRoom(s);s.attack=999;r.enemies=[{...foe(0),hp:0,elite:'volley'},{...foe(1),hp:0,elite:'guardian'}];stepRun(s,.01);assert.equal(s.player.potions,2);const copy=parseSave(encodeSave(s));currentRoom(copy).enemies=[{...foe(2),hp:0,elite:'volley'}];enterRoom(copy);stepRun(copy,.01);assert.equal(copy.player.potions,2);
 });
 test('pixel icons have distinct relic and skill silhouettes and hearts never show unused diamonds',()=>{
- assert.equal(new Set(relics.map(k=>iconSVG(k.id))).size,31);assert.equal(new Set(skills.map(k=>iconSVG(k.id))).size,12);for(const id of [...relics,...skills].map(k=>k.id)){const svg=iconSVG(id);assert.ok(svg.includes('viewBox="0 0 16 16"'));assert.ok(!svg.includes('NaN'));}assert.ok(!healthMarkup({hp:5,max:8}).includes('◇'));assert.ok(healthMarkup({hp:23,max:25}).includes('23/25'));
+ assert.equal(new Set(relics.map(k=>iconSVG(k.id))).size,32);assert.equal(new Set(skills.map(k=>iconSVG(k.id))).size,12);for(const id of [...relics,...skills].map(k=>k.id)){const svg=iconSVG(id);assert.ok(svg.includes('viewBox="0 0 16 16"'));assert.ok(!svg.includes('NaN'));}assert.ok(!healthMarkup({hp:5,max:8}).includes('◇'));assert.ok(healthMarkup({hp:23,max:25}).includes('23/25'));
 });
 test('DPS readout measures the last five seconds and resets between runs',()=>{
  const meter=createDamageMeter(),s={runId:'one',elapsed:0,metrics:{damageDealt:0}};assert.equal(meter(s),0);for(let i=1;i<=6;i++){s.elapsed=i;s.metrics.damageDealt=i*100;meter(s);}assert.equal(meter(s),100);s.elapsed=12;assert.equal(meter(s),0);assert.equal(meter({runId:'two',elapsed:0,metrics:{damageDealt:0}}),0);

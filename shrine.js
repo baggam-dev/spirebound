@@ -28,19 +28,19 @@ export function enterShrine(s){
  const r=s.floors[s.floor][s.room];if(r.type!=='shrine'||r.used)return;
  // Legacy unclaimed shrines get a encounter only when entered, preserving other rooms.
  if(!r.shrineState){const random=shrineRandom(s);r.enemies=encounter(s.floor,random,r.obstacles).slice(0,3);r.enemies.forEach((e,i)=>promoteElite(e,['explosive','guardian','volley'][i]));}
- r.shrineState=r.enemies.length?'active':'choice';
+ r.shrineState='choice';
  if(r.shrineState==='choice')prepareIncantations(s);
 }
 export function prepareIncantations(s){
- const r=s.floors[s.floor][s.room];if(!shrineLocked(r)||r.enemies.some(e=>e.hp>0))return false;
+ const r=s.floors[s.floor][s.room];if(!shrineLocked(r))return false;
  r.shrineState='choice';
- if(!r.incantations){const random=shrineRandom(s),pool=[...incantations];r.incantations=[];for(let i=0;i<2;i++)r.incantations.push(pool.splice(Math.floor(random()*pool.length),1)[0].id);
+ if(!r.incantations){const random=shrineRandom(s),roll=random(),good=incantations.filter(k=>k.good),bad=incantations.filter(k=>!k.good);r.incantations=[];const pools=roll<.2?[bad,bad]:roll<.7?[good,bad]:[good,good];for(const pool of pools)r.incantations.push(pool.splice(Math.floor(random()*pool.length),1)[0].id);if(random()<.5)r.incantations.reverse();
   const available=relics.filter(k=>!ownedRelics(s.player).includes(k.id));if(r.incantations.includes('relic')&&available.length)r.incantationRelic=weightedRelic(available,random).id;
  }return true;
 }
 export function claimIncantation(s,index){
  const r=s.floors[s.floor][s.room],p=s.player;
- if(s.status!=='playing'||r.shrineState!=='choice'||r.used||r.enemies.length||!Number.isInteger(index)||!r.incantations?.[index])return false;
+ if(s.status!=='playing'||r.shrineState!=='choice'||r.used||!Number.isInteger(index)||!r.incantations?.[index])return false;
  const id=r.incantations[index],h=p.hexes??={};const multiply=(key,value)=>h[key]=(h[key]??1)*value;
  if(id==='might')p.damage+=5;if(id==='rhythm')p.bonusAttack=(p.bonusAttack||0)+.08;if(id==='stride')p.bonusMove=(p.bonusMove||0)+.05;
  if(id==='vitality'){p.max++;p.hp++;}if(id==='mend')p.hp=Math.min(p.max,p.hp+3);

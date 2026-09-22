@@ -1,3 +1,4 @@
+import {shieldStatusMarkup} from './combat-status.js';
 import {essences} from './essences.js';
 import {iconSVG} from './pixel-icons.js';
 import {skills,xpRequired} from './progression.js';
@@ -18,8 +19,7 @@ export function createHUD(){
   if(ss!==skillKey||!el('skillStrip').innerHTML){el('skillStrip').innerHTML=skillMarkup(p);skillKey=ss;}
   if(hs!==healthKey){el('heartStrip').innerHTML=healthMarkup(p);healthKey=hs;el('heartStrip').setAttribute('aria-label',`체력 ${p.hp}/${p.max}`);}
   const essenceKey=JSON.stringify(p.essenceCounts||{});if(el('essenceStrip').dataset.counts!==essenceKey){el('essenceStrip').innerHTML=essenceMarkup(p);el('essenceStrip').dataset.counts=essenceKey;}
-  const shields=[];if(p.armor)shields.push(`장비 ${s.shield>0?Math.ceil(s.shield)+'초':'준비'}`);if(p.aura>=3)shields.push(`오라 ${s.auraShield>0?Math.ceil(s.auraShield)+'초':'준비'}`);
-  el('shieldStatus').innerHTML=shields.length?iconSVG('shield')+'<span>'+shields.join(' · ')+'</span>':'';
+  el('shieldStatus').innerHTML=shieldStatusMarkup(s);
   const stats=displayedStats(p),dps=meter(s);el('statReadout').innerHTML=`<b>LV ${p.level}</b><span>공격력 ${stats.attack.toFixed(1)}</span><span>공속 ${stats.rate.toFixed(2)}/초</span><span>이속 ${stats.speed.toFixed(0)}</span><span title="최근 5초간 실제로 준 피해 ÷ 5. 범위 피해 포함. 조건부 유물 효과는 공격력 숫자에 미포함.">DPS ${dps.toFixed(1)}</span>`;
   const required=xpRequired(p.level);el('xpFill').style.width=Math.min(100,p.xp/required*100)+'%';el('xpTrack').setAttribute('aria-valuemax',required);el('xpTrack').setAttribute('aria-valuenow',p.xp);el('xpLabel').textContent=`LV ${p.level} · ${p.xp} / ${required}`;
   const aura=el('skillStrip').querySelector('[aria-label^="근접 오라"]');if(aura)aura.dataset.cooldown=p.aura>=3?(s.auraShield>0?Math.ceil(s.auraShield)+'s':'방어 준비'):'';

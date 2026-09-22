@@ -1,0 +1,69 @@
+@font-face{font-family:Galmuri;src:url('pixel-font.woff2') format('woff2');font-weight:100 900;font-display:swap}
+:root,body,button,input,select,textarea,kbd,small,.skill-item b,#xpLabel{font-family:Galmuri,monospace!important}
+button,.panel,.arena,.hud-item,.shield-state,.skill-preview{border-radius:0!important}
+button{border:2px solid #788573;box-shadow:inset 2px 2px #bdc9a42b,inset -3px -3px #030d1680,2px 2px #040a10;transition:background .1s}
+button:hover{border-color:#e6cb88}button:active:not(:disabled){box-shadow:inset 3px 3px #030d1680;transform:translateY(1px)}
+.panel .primary{border:2px solid #f3dc9c;background:#c8b278;box-shadow:inset 2px 2px #fff4c5,inset -3px -3px #887445,2px 2px #080f17}
+#stick,#stick::before,#stick i{border-radius:0!important;image-rendering:pixelated}
+#stick::before{border:3px solid #99af98;box-shadow:inset 4px 4px #182f36,inset -4px -4px #080e19,4px 4px #050e1666;clip-path:polygon(12% 0,88% 0,88% 12%,100% 12%,100% 88%,88% 88%,88% 100%,12% 100%,12% 88%,0 88%,0 12%,12% 12%)}
+#stick i{border:3px solid #d1dfb1;background:#7c9779;box-shadow:inset 3px 3px #e0e5b855,inset -3px -3px #334e47}
+.title-art{display:block;width:100%;max-height:46dvh;object-fit:contain;image-rendering:pixelated;margin:0 auto 8px}
+.panel:has(.title-art){width:min(760px,100%);max-width:760px;background:#101a20;padding:12px 18px;border:2px solid #728278}
+.title-accessible{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.hud-tooltip{font-family:Galmuri,monospace;pointer-events:none}
+.hud-item.tip-open .hud-tooltip{display:block}
+@media(pointer:coarse){
+ #collectionToggle{display:none!important}
+ #collectionHUD{top:76px;left:8px;max-width:43%;width:43%;background:none;padding:0;pointer-events:none}
+ #collectionHUD #relicStrip,#essenceStrip{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;max-height:none;scrollbar-width:none;gap:3px;pointer-events:auto;touch-action:pan-x}
+ #collectionHUD #relicStrip>.hud-item,#collectionHUD #essenceStrip>.hud-item{display:inline-flex!important;flex-shrink:0}
+ #collectionHUD .pixel-icon{width:20px;height:20px}#essenceStrip{margin-top:4px}.hud-empty{display:none}
+ .hud-item:hover .hud-tooltip,.hud-item:focus .hud-tooltip{display:none}
+ .hud-item.tip-open .hud-tooltip{display:block;position:fixed;left:50%;top:48px;bottom:auto;transform:translateX(-50%);width:min(300px,85vw);z-index:60;font-size:11px}
+ .panel{width:100%;max-width:none;padding:8px 10px}.panel:has(.cards){width:100%;max-width:none}
+ .cards{gap:6px;align-items:stretch}.cards>button{min-width:0;margin:2px;padding:8px;min-height:48px}
+ .cards b{font-size:12px;line-height:1.5;letter-spacing:0;margin-bottom:5px}.cards span{font-size:10px;line-height:1.5}.cards em{font-size:9px;margin-top:5px;line-height:1.5}
+ .skill-preview{margin-top:6px;padding:6px;gap:4px}.skill-preview strong{font-size:11px}.skill-preview small{font-size:9px;letter-spacing:0}
+ .panel:has(.cards)>p{font-size:10px;margin:4px 0}.panel:has(.cards)>h2{font-size:19px!important;margin:3px 0}
+ .panel:has(.title-art){display:grid;grid-template-columns:48% 1fr;gap:6px 12px;width:100%;max-width:none;align-items:center;padding:10px}
+ .title-art{grid-column:1;grid-row:1/8;max-height:calc(100dvh - 80px);width:100%;margin:0}.panel:has(.title-art)>:not(.title-art){grid-column:2}.panel:has(.title-art)>p{font-size:10px;line-height:1.5!important;margin:2px}.panel:has(.title-art) button{margin:3px;min-height:44px}
+}
+@media(pointer:coarse) and (orientation:portrait){.panel:has(.title-art){display:block}.title-art{max-height:38dvh}.cards{flex-direction:column}}
+
+/* Keep short and long upgrade cards aligned at their top edge. */
+.cards>button{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start}
+
+/* Full-screen tower artwork with a centered menu, matching the title reference. */
+body:has(.title-art) header{display:none!important}
+#overlay:has(.title-art){display:block;position:fixed!important;inset:0!important;background:#071116;border:0;border-radius:0;backdrop-filter:none;z-index:30;overflow:auto;overscroll-behavior:contain}
+#overlay .panel:has(.title-art){display:block;position:relative;width:100%;max-width:none;min-height:100svh;max-height:none;height:auto;margin:0;padding:36svh max(12px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));border:0;background:#071116;overflow:hidden;box-sizing:border-box}
+#overlay .title-art{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;object-position:center;image-rendering:pixelated;margin:0;filter:none;z-index:0}
+#overlay .title-content{position:relative;z-index:1;width:min(374px,100%);max-width:374px;min-width:0;margin:0 auto;padding:20px;box-sizing:border-box;background:#09151bf5;border:1px solid #bba46c40;border-top:1px solid #bba46c80;text-align:center}
+#overlay .title-lore{font-size:11px;line-height:1.8!important;margin:0 0 14px;color:#e2dfc9;text-shadow:1px 2px #000;word-break:keep-all;overflow-wrap:anywhere}
+.title-lore strong{color:#f0d69b}
+.title-actions{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
+#overlay .title-actions>p{flex-basis:100%;margin:0 0 2px;font-size:10px;line-height:1.6!important;overflow-wrap:anywhere;color:#a9b6a4}
+#overlay .title-actions button{flex:1 1 120px;min-width:0;min-height:40px;margin:0;padding:8px;font-size:11px}
+.title-secondary{display:flex;flex-wrap:wrap;justify-content:center;margin-top:10px;gap:6px}
+#overlay .title-secondary button{flex:1 1 70px;min-width:0;margin:0;font-size:10px;min-height:36px;padding:7px 4px}
+@media(pointer:coarse){#overlay .title-actions button,#overlay .title-secondary button{min-height:44px}}
+@media(orientation:landscape) and (max-height:500px){
+ #overlay .panel:has(.title-art){padding-top:30svh;padding-bottom:12px}
+ #overlay .title-art{object-fit:fill}
+ #overlay .title-content{width:350px;padding:10px 14px}
+ #overlay .title-lore{font-size:10px;line-height:1.5!important;margin-bottom:6px}
+ #overlay .title-actions>p{font-size:9px}
+ .title-secondary{margin-top:6px}
+}
+@media(orientation:portrait){
+ #overlay .panel:has(.title-art){padding-top:65vw;background:#071116}
+ #overlay .title-art{height:auto;object-fit:contain;object-position:center top;mask-image:linear-gradient(#000 85%,transparent)}
+ #overlay .title-content{width:min(374px,100%);padding:18px 14px}
+}
+
+/* Keep the entrance visible; align readouts with the canvas minimap edge. */
+#statReadout.hud-stats{right:2.291667%;top:calc(31.851852% + 4px);text-align:right;justify-items:end}
+#notice{top:60%;bottom:auto;left:50%;transform:translateX(-50%);width:max-content;max-width:56%;box-sizing:border-box;background:#10191d66;border-color:#b9cbb533;text-shadow:0 1px 2px #000,1px 0 2px #000;pointer-events:none;overflow-wrap:anywhere}
+
+@media(pointer:coarse){#notice{top:68%}}
+@media(pointer:coarse) and (orientation:portrait){#notice{top:60%;max-width:76%;font-size:10px;padding:5px 8px}}

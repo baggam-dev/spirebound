@@ -1,3 +1,6 @@
+import {releaseReturnSeal} from './return-seals.js';
+import {enemyHitEffects,enemyDeathEffect} from './enemy-feedback.js';
+import {elementHitEffects} from './element-hit-visuals.js';
 import {tickThunder} from './lightning.js';
 import {observeGrowth,tickBossRecord,completeBossRecord} from './growth-records.js';
 import {deployRoom} from './formations.js';
@@ -24,7 +27,7 @@ import {updatePrism,updatePrismSummons} from './prism.js';
 import {updatePattern} from './patterns.js';
 import {updateRanged,advanceRicochet} from './ranged.js';
 import {hitEnemy,tickEffects,xpRequired} from './progression.js';
-import {takeDamage,killRecovery} from './survival.js';
+import {takeDamage,killRecovery,monsterPotionReward} from './survival.js';
 import {ENEMY_COOLDOWN_FACTOR,CHARGE_DURATION,CHARGE_WARNING,attackProfile,chargeProfile} from './balance.js';
 import {runRandom} from './random.js';
 
@@ -51,30 +54,35 @@ export function fireArrow(s,target){
 export function stepRun(s,dt,input={x:0,y:0}){
  const events=[],effects=[];if(s.status!=='playing')return {events,effects};
  if(s.player.hp<=0){events.push('dead');return {events,effects};}
- if(!s.key&&currentRoom(s).shrineState==='choice'&&!currentRoom(s).used)return {events:['incantation'],effects};
+ if(currentRoom(s).shrineState==='choice'&&!currentRoom(s).used)return {events:['incantation'],effects};
  const p=s.player,metrics=ensureMetrics(s);observeGrowth(s);tickBossRecord(s,currentRoom(s),dt);s.projectiles??=[];advanceClock(s,dt,false);metrics.floorTimes[s.floor]=(metrics.floorTimes[s.floor]||0)+dt;
  s.entryGrace=Math.max(0,(s.entryGrace||0)-dt);let r=currentRoom(s);
- const hurt=(raw,source='알 수 없는 공격',kind=null)=>{if(s.entryGrace>0||p.hp<=0)return;const before=p.hp,result=takeDamage(s,r.trialState==='active'?Math.min(raw,9):raw,kind);if(before>p.hp)effects.push({x:p.x,y:p.y-35,t:1,color:'#ff7188',text:'-'+(before-p.hp)+' ♥'});metrics.damageTaken+=before-p.hp;recordHit(s,source,before-p.hp,result==='blocked');if(result==='blocked'){metrics.shields++;events.push('shield');}};
+ let hitOrigin=null;
+ const hurt=(raw,source='알 수 없는 공격',kind=null,origin=hitOrigin)=>{if(s.entryGrace>0||p.hp<=0)return;const before=p.hp,result=takeDamage(s,r.trialState==='active'?Math.min(raw,9):raw,kind);if(before>p.hp)effects.push({x:p.x,y:p.y-35,t:1,color:'#ff7188',text:'-'+(before-p.hp)+' ♥',hitSource:source,hitAngle:origin?Math.atan2(origin.y-p.y,origin.x-p.x):null});metrics.damageTaken+=before-p.hp;recordHit(s,source,before-p.hp,result==='blocked');if(result==='blocked'){metrics.shields++;events.push('shield');}};
  const n=Math.max(1,Math.hypot(input.x,input.y));moveBody(p,input.x/n*movementSpeed(p)*dt,input.y/n*movementSpeed(p)*dt,r.obstacles);
  const d=p.y<48?0:p.x>930?1:p.y>492?2:p.x<30?3:-1;
  if(d>=0){const next=neighbor(s,d),aligned=d%2===0?Math.abs(p.x-480)<40:Math.abs(p.y-270)<35;
   if(next>=0&&aligned&&!roomLocked(s,r)){s.room=next;r=currentRoom(s);p.x=d===1?48:d===3?912:p.x;p.y=d===0?477:d===2?63:p.y;enterRoom(s);events.push('room');}
   else{p.x=Math.max(31,Math.min(929,p.x));p.y=Math.max(49,Math.min(491,p.y));}
  }
+ if(r.shrineState==='choice'&&!r.used)return {events:[...events,'incantation'],effects};
  r.gateBanner=Math.max(0,(r.gateBanner||0)-dt);observeRoom(s,r);bindDefenses(r.enemies);if(r.enemies.some(e=>e.type==='boss'))bossHealth(r);
- for(const item of collectEssences(s,r))effects.push({x:p.x,y:p.y-45,t:1.2,color:essenceInfo(item.id).color,text:essenceInfo(item.id).label});
+ for(const item of collectEssences(s,r))effects.push({x:p.x,y:p.y-45,t:1.2,color:essenceInfo(item.id).color,text:essenceInfo(item.id).label,essencePickup:true,fromX:item.x,fromY:item.y});
+ const enemyHealthBefore=new Map(r.enemies.map(e=>[e,e.hp]));
  tickRain(s,dt);tickPassives(s,dt);effects.push(...tickThunder(s,dt));
  const elementBefore=r.enemies.reduce((n,e)=>n+Math.max(0,e.hp),0);effects.push(...tickElements(r,dt,p.poison||0));metrics.damageDealt+=elementBefore-r.enemies.reduce((n,e)=>n+Math.max(0,e.hp),0);
- tickBlasts(r,dt,p,raw=>hurt(raw,'정예 지연 폭발'));
+ tickBlasts(r,dt,p,raw=>hurt(raw,'정예 지연 폭발'),effects);
  if(s.entryGrace<=0)updateElites(r,dt,s.projectiles,p);
- if(r.allyZone){const z=r.allyZone,active=Math.min(dt,z.time);for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,z)<z.r){const before=e.hp;e.hp-=(z.damage??40)*active*enemyDamageFactor(e);metrics.damageDealt+=before-Math.max(0,e.hp);}z.time-=dt;if(z.time<=0)r.allyZone=null;}
+ if(r.allyZone){const z=r.allyZone,active=Math.min(dt,z.time);hitOrigin=null;
+ for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,z)<z.r){const before=e.hp;e.hp-=(z.damage??40)*active*enemyDamageFactor(e);metrics.damageDealt+=before-Math.max(0,e.hp);}z.time-=dt;if(z.time<=0)r.allyZone=null;}
  updateHazards(r,dt,p,raw=>hurt(raw,raw>=12?'독성 군체 독':'꽃봉우리 독'));
  const target=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!segmentBlocked(p,e,r.obstacles,3)).sort((a,b)=>distance(a,p)-distance(b,p))[0];
  s.auraVisual=Math.max(0,(s.auraVisual||0)-dt);const auraFlash=s.auraVisual<=0;if(auraFlash)s.auraVisual=.2;
- if(p.aura)for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,p)<=auraProfile(p.aura).radius*(1+relicStat(p,'auraRange'))&&!segmentBlocked(p,e,r.obstacles,1)){const before=e.hp;if(auraFlash)effects.push({x:e.x,y:e.y,r:24,t:.16,color:'#f8ffe6',slash:true});e.hp-=auraProfile(p.aura).dps*(1+relicStat(p,'auraDamage'))*dt*enemyDamageFactor(e,p);metrics.damageDealt+=before-Math.max(0,e.hp);}
+ if(p.aura)hitOrigin=null;
+ for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,p)<=auraProfile(p.aura).radius*(1+relicStat(p,'auraRange'))&&!segmentBlocked(p,e,r.obstacles,1)){const before=e.hp;if(auraFlash)effects.push({x:e.x,y:e.y,r:24,t:.16,color:'#f8ffe6',slash:true});e.hp-=auraProfile(p.aura).dps*(1+relicStat(p,'auraDamage'))*dt*enemyDamageFactor(e,p);metrics.damageDealt+=before-Math.max(0,e.hp);}
  if(target&&s.attack<=0)fireArrow(s,target);
  for(const e of r.enemies){
-  const hpBefore=Math.max(0,e.hp);tickEffects(e,dt);metrics.damageDealt+=hpBefore-Math.max(0,e.hp);const upper=e.variant==='king'||upperTypes.includes(e.type);const transitioning=upper&&tickUpperState(e,p,r,s.entryGrace>0?0:dt,s.projectiles);if(e.hp<=0||e.frozen>0||transitioning||r.enemies.some(n=>n.variant==='king'&&n.kingTransition>0))continue;
+  hitOrigin=e;const hpBefore=Math.max(0,e.hp);tickEffects(e,dt);metrics.damageDealt+=hpBefore-Math.max(0,e.hp);const upper=e.variant==='king'||upperTypes.includes(e.type);const transitioning=upper&&tickUpperState(e,p,r,s.entryGrace>0?0:dt,s.projectiles);if(e.hp<=0||e.frozen>0||transitioning||r.enemies.some(n=>n.variant==='king'&&n.kingTransition>0))continue;
   if(e.cd>0)e.cd+=dt*(1-frostAttackRate(e));if(e.jumpCooldown>0)e.jumpCooldown+=dt*(1-frostAttackRate(e));
   if(e.variant==='prism'&&s.entryGrace<=0)updatePrismSummons(e,p,r,dt,()=>runRandom(s));
   if(e.opening>0){e.opening=Math.max(0,e.opening-dt);continue;}if(!coordinateAttack(e,r))continue;
@@ -92,35 +100,38 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(e.cd<=0){e.cd=Math.max(2.3*ENEMY_COOLDOWN_FACTOR*profile.recovery,e.type==='charger'?chargeProfile(e).duration+chargeProfile(e).warning+.1:0);delete e.chargeAngle;}
   if(distance(e,p)<23&&!segmentBlocked(e,p,r.obstacles,0))hurt(e.type==='charger'&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration?18:9,enemyName(e)+' 접촉');
  }
- for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&!(e.spawnGrace>0)&&!(e.counterReason&&e.opening>0)&&!r.enemies.some(n=>n.kingTransition>0)&&!e.darkAttack?.moving&&distance(e,p)<enemyRadius(e)+14&&!segmentBlocked(e,p,r.obstacles,0))hurt(9,enemyName(e)+' 접촉');
+ hitOrigin=null;
+ for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&!(e.spawnGrace>0)&&!(e.counterReason&&e.opening>0)&&!r.enemies.some(n=>n.kingTransition>0)&&!e.darkAttack?.moving&&distance(e,p)<enemyRadius(e)+14&&!segmentBlocked(e,p,r.obstacles,0))hurt(9,enemyName(e)+' 접촉',null,e);
  // A lethal hit ends the simulation before drops or life-steal can heal the player.
  if(p.hp<=0){events.push('dead');return {events,effects};}
  for(const b of s.projectiles){
   if(b.life<=0)continue;
-  if(b.ricochet){if(advanceRicochet(b,dt,r.obstacles,p))hurt(9,b.source||'반사탄');if(p.hp<=0)break;continue;}
+  if(b.ricochet){if(advanceRicochet(b,dt,r.obstacles,p))hurt(9,b.source||'반사탄',null,{x:p.x-b.vx,y:p.y-b.vy});if(p.hp<=0)break;continue;}
   let travelDt=dt;if(b.delay>0){travelDt=Math.max(0,dt-b.delay);b.delay=Math.max(0,b.delay-dt);if(b.delay>0)continue;b.x=p.x;b.y=p.y;}if(!b.enemy)steerArrow(b,r.enemies,r.obstacles,travelDt,segmentBlocked);
   const next={x:b.x+b.vx*travelDt,y:b.y+b.vy*travelDt};b.life-=travelDt;
-  if(b.enemy){const t=collisionTime(b,next,p,15);if(t!==Infinity&&!segmentBlocked(b,{x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t},r.obstacles,3)){hurt(b.damage??10,b.source||'적 탄환');b.life=0;}}
+  if(b.enemy){const t=collisionTime(b,next,p,15);if(t!==Infinity&&!segmentBlocked(b,{x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t},r.obstacles,3)){hurt(b.damage??10,b.source||'적 탄환',null,{x:p.x-b.vx,y:p.y-b.vy});b.life=0;}}
   else{
    const candidates=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!b.hit.includes(e.id)).map(e=>({e,t:collisionTime(b,next,e,enemyRadius(e))})).filter(h=>h.t!==Infinity).sort((a,b)=>a.t-b.t);
-   for(const {e,t} of candidates){if(e.hp<=0)continue;const impact={x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t};if(segmentBlocked(b,impact,r.obstacles,3))break;if(b.passive){passiveHit(s,b,e);b.hit.push(e.id);b.life=0;break;}const before=r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);effects.push(...hitEnemy(b.frostShard?{...p,fire:0,poison:0,chain:0,frost:p.frost,frostShardAttack:true}:p,e,r.enemies,r.obstacles,b.damageScale??1,b.frostShard?true:b.elemental!==false,r,{x:b.x-b.vx*.001,y:b.y-b.vy*.001}));metrics.damageDealt+=before-r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);b.elemental=false;b.hit.push(e.id);if(b.pierce--<=0){b.life=0;break;}}
+   for(const {e,t} of candidates){if(e.hp<=0)continue;const impact={x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t};if(segmentBlocked(b,impact,r.obstacles,3))break;if(b.passive){passiveHit(s,b,e);b.hit.push(e.id);b.life=0;break;}effects.push(...elementHitEffects(b.frostShard?{frost:p.frost,evolutions:p.evolutions}:p,impact,{x:impact.x-b.vx,y:impact.y-b.vy},b.elemental!==false,!!b.frostShard));const before=r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);effects.push(...hitEnemy(b.frostShard?{...p,fire:0,poison:0,chain:0,frost:p.frost,frostShardAttack:true}:p,e,r.enemies,r.obstacles,b.damageScale??1,b.frostShard?true:b.elemental!==false,r,{x:b.x-b.vx*.001,y:b.y-b.vy*.001}));metrics.damageDealt+=before-r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);b.elemental=false;b.hit.push(e.id);if(b.pierce--<=0){b.life=0;break;}}
   }
   if(segmentBlocked(b,next,r.obstacles,3))b.life=0;b.x=next.x;b.y=next.y;if(p.hp<=0)break;
  }
+ effects.push(...enemyHitEffects(enemyHealthBefore,r.enemies));
  s.projectiles=s.projectiles.filter(b=>b.life>0&&b.x>25&&b.x<935&&b.y>40&&b.y<500);
  if(p.hp<=0){events.push('dead');return {events,effects};}
  r.nextEnemyId=Math.max(r.nextEnemyId||0,...r.enemies.map(e=>e.id+1));
  resolveFireFields(r);
  const defeated=r.enemies.filter(e=>e.hp<=0);r.enemies=r.enemies.filter(e=>e.hp>0);
  for(const e of defeated){
+  effects.push(enemyDeathEffect(e,!!s.key));
   frostShatter(p,e,s.projectiles);recordDefeat(s,e);
   if(e.summoned){eliteDeath(e,r);continue;}
   if(splitSlime(e,r,p,()=>runRandom(s)))continue;
   if(e.type!=='boss')dropEssences(s,r,e);
   if(e.chestBoss){s.kills++;continue;}
-  if(eliteDeath(e,r)&&!r.elitePotionDropped){r.elitePotionDropped=true;r.potionDropped=true;p.potions++;events.push('eliteReward');}
+  if(eliteDeath(e,r)&&!r.elitePotionDropped){r.elitePotionDropped=true;r.potionDropped=true;if(monsterPotionReward(s,r,e,()=>runRandom(s))==='potion')events.push('eliteReward');}
   s.kills++;
-  if(e.type!=='boss'&&killRecovery(s,r,false,()=>runRandom(s)))events.push('potion');
+  if(e.type!=='boss'&&killRecovery(s,r,false,()=>runRandom(s),e))events.push('potion');
   if(!s.key&&e.type!=='boss'){p.xp+=e.xpReward??12;}
  }
  if(r.gate&&!s.key&&defeated.length&&r.enemies.length===1){r.enemies[0].cd=Math.min(r.enemies[0].cd,.4);r.enemies[0].gateFury=true;}
@@ -136,5 +147,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  if(r.chestBattle==='active'&&!r.enemies.some(e=>!e.summoned)){r.chestBattle='done';r.enemies=[];r.hazards=[];s.projectiles=[];}
  if(r.trialState==='active'&&!r.enemies.length){r.trialState='reward';prepareTrialLoot(s);events.push('trialReward');}
  if(!s.key&&shrineLocked(r)&&!r.enemies.length){prepareIncantations(s);events.push('incantation');}
+ if(s.key&&releaseReturnSeal(r))events.push('returnUnlock');
+ if(defeated.length&&!r.enemies.length)events.push('roomClear');
  if(s.pendingLevels)events.push('level');return {events,effects};
 }

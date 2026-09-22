@@ -1,3 +1,5 @@
+import {drawGroundField} from './ground-visuals.js';
+import {drawOrganicBody} from './pixel-world.js';
 import {seededRandom} from './random.js';
 import {emitShot} from './patterns.js';
 import {openGuard} from './tactics.js';
@@ -72,18 +74,16 @@ export function updateHazards(room,dt,p,hurt){
  const touching=room.hazards.filter(h=>h.phase==='active'&&Math.hypot(p.x-h.x,p.y-h.y)<h.r+10&&(h.kind!=='aura'||!segmentBlocked(h,p,room.obstacles)));
  if(touching.length&&room.poisonPulse<=0){hurt(Math.max(...touching.map(h=>h.damage)));room.poisonPulse=1;}
 }
-export function drawHazards(ctx,room){
+export function drawHazards(ctx,room,time=0){
  ctx.save();
  for(const h of room.hazards||[]){
-  ctx.strokeStyle='#d7a4ff';ctx.fillStyle=h.phase==='active'?'#a855d466':'#c78aff24';ctx.lineWidth=2;ctx.setLineDash(h.phase==='active'?[]:[6,5]);ctx.beginPath();ctx.arc(h.x,h.y,h.r,0,Math.PI*2);ctx.fill();ctx.stroke();
+  drawGroundField(ctx,h,h.phase==='active'?'hostile':'warning',time);
   if(h.phase==='flight'){const t=1-h.time/h.flight,x=h.fromX+(h.x-h.fromX)*t,y=h.fromY+(h.y-h.fromY)*t-Math.sin(t*Math.PI)*85;ctx.setLineDash([]);ctx.fillStyle='#e5bdff';ctx.beginPath();ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();}
  }ctx.restore();
 }
-export function drawPoisonEnemy(ctx,e){
+export function drawPoisonEnemy(ctx,e,time=0,room={}){
  if(e.variant!=='slime'&&!['flower','minislime'].includes(e.type))return;
- ctx.save();if(e.phase==='splitJump'){ctx.strokeStyle='#e5ec9c';ctx.setLineDash([5,5]);ctx.beginPath();ctx.arc(e.landX,e.landY,slimeRadius(e)+15,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.translate(0,-Math.sin(Math.PI*(1-e.phaseTime/1.1))*90);}const r=slimeRadius(e);ctx.fillStyle=e.escapeDepth?'#e95757':e.type==='flower'?'#72994b':'#83b85f';
- if(e.type==='flower'){ctx.fillRect(e.x-4,e.y-3,8,25);for(let i=0;i<5;i++){const a=i*Math.PI*2/5;ctx.beginPath();ctx.arc(e.x+Math.cos(a)*12,e.y-9+Math.sin(a)*12,10,0,Math.PI*2);ctx.fill();}ctx.fillStyle='#dec884';ctx.beginPath();ctx.arc(e.x,e.y-9,7,0,Math.PI*2);ctx.fill();}
- else{ctx.beginPath();ctx.ellipse(e.x,e.y,r,r*.72,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#203524';ctx.fillRect(e.x-r*.4,e.y-5,5,5);ctx.fillRect(e.x+r*.25,e.y-5,5,5);}
+ ctx.save();if(e.phase==='splitJump'){ctx.strokeStyle='#e5ec9c';ctx.setLineDash([5,5]);ctx.beginPath();ctx.arc(e.landX,e.landY,slimeRadius(e)+15,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.translate(0,-Math.sin(Math.PI*(1-e.phaseTime/1.1))*90);}drawOrganicBody(ctx,e,slimeRadius(e),time,room);
  ctx.restore();
 }
 

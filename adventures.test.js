@@ -13,7 +13,7 @@ function at(type){const s=newRun(312);s.floor=type==='event'?2:0;s.room=s.floors
 test('treasure grants one fixed random reward and rejects repeats or occupied rooms',()=>{const s=at('treasure');currentRoom(s).chestReward={id:'attack3'};assert.ok(claimTreasure(s));assert.equal(s.player.damage,20);assert.equal(claimTreasure(s),false);const t=at('treasure');currentRoom(t).enemies=[{}];assert.equal(claimTreasure(t),false);});
 test('events enforce affordable visible costs and cannot be purchased twice',()=>{
  const s=at('event');s.player.hp=2;assert.equal(canChooseEvent(s,'blood'),false);assert.equal(chooseEvent(s,'blood'),false);s.player.hp=3;assert.ok(chooseEvent(s,'blood'));assert.equal(s.player.hp,1);assert.equal(s.player.armor,2);assert.equal(chooseEvent(s,'supply'),false);
- const t=at('event');assert.ok(chooseEvent(t,'supply'));assert.equal(t.player.potions,0);assert.equal(t.player.unique,true);
+ const t=at('event');t.player.relics=['boots'];assert.ok(chooseEvent(t,'supply','boots'));assert.equal(t.player.potions,1);assert.deepEqual(t.player.relics,['windSeal']);
 });
 test('trial battle, save, clear and reward have exactly-once transitions',()=>{
  let s=at('event');assert.ok(chooseEvent(s,'trial'));assert.equal(currentRoom(s).enemies.length,3);assert.equal(claimTrial(s,'weapon'),false);s=parseSave(encodeSave(s));currentRoom(s).enemies.forEach(e=>e.hp=0);stepRun(s,.01);assert.equal(currentRoom(s).trialState,'reward');assert.equal(currentRoom(s).trialOffers.length,3);assert.ok(claimTrial(s,0));assert.equal(claimTrial(s,0),false);assert.equal(s.pendingLevels,0); // three kills remain below the first XP threshold

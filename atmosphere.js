@@ -1,8 +1,9 @@
 import {iconSVG} from './pixel-icons.js';
 import {formationName} from './formations.js';
+import {drawRoomBackdrop} from './room-backdrops.js';
 export const floorNames=['잊힌 돌의 전당','파수꾼의 회랑','고대신의 서고','프리즘의 왕좌','독화의 온실','군체의 심장','무너진 천문관','몰락한 왕좌'];
 const tones=['#34473b35','#45403745','#39335350','#303c5750','#28453055','#373c2750','#1b204966','#36162c66'];
-const label=(c,t,x,y,color='#cab9d6',size=12)=>{c.fillStyle=color;c.textAlign='center';c.font=`${size}px monospace`;c.fillText(t,x,y);};
+const label=(c,t,x,y,color='#cab9d6',size=12)=>{c.fillStyle=color;c.textAlign='center';c.font=`${size}px Galmuri, monospace`;c.fillText(t,x,y);};
 export function drawFloorMood(c,s,r){c.save();c.beginPath();c.rect(26,45,908,455);c.clip();c.fillStyle=tones[s.floor]||tones[0];c.fillRect(26,45,908,455);const group=Math.floor(s.floor/2);c.lineWidth=1;
  if(group===0){for(const x of [110,810]){c.fillStyle='#73766455';for(let i=0;i<4;i++)c.fillRect(x+(i%2)*7,55+i*10,48-i*7,7);c.strokeStyle='#9e96775a';c.beginPath();c.moveTo(x+25,61);c.lineTo(x+25,105);c.moveTo(x+12,74);c.lineTo(x+38,74);c.stroke();}c.strokeStyle='#c7b27b22';c.strokeRect(370,210,220,120);}
  if(group===1){for(const x of [120,760]){c.fillStyle='#554757';c.fillRect(x,48,70,36);for(let i=0;i<7;i++){c.fillStyle=['#6c6485','#968768','#687f84'][i%3];c.fillRect(x+4+i*9,54,6,24);}c.fillStyle='#bba5d64a';c.beginPath();c.moveTo(x+35,430);c.lineTo(x+51,455);c.lineTo(x+35,480);c.lineTo(x+19,455);c.closePath();c.fill();}c.strokeStyle='#b3a3d422';c.beginPath();for(let i=0;i<6;i++){const a=i*Math.PI/3;c.moveTo(480+Math.cos(a)*70,270+Math.sin(a)*70);c.lineTo(480+Math.cos(a+Math.PI*2/3)*70,270+Math.sin(a+Math.PI*2/3)*70);}c.stroke();}
@@ -11,7 +12,7 @@ export function drawFloorMood(c,s,r){c.save();c.beginPath();c.rect(26,45,908,455
  if(s.floor===7){c.fillStyle='#7d304a48';c.fillRect(425,45,110,455);c.fillStyle='#c0a25c44';c.fillRect(425,45,3,455);c.fillRect(532,45,3,455);for(const x of [145,760]){c.fillStyle='#725f7055';c.fillRect(x,48,38,35);c.fillRect(x+8,83,21,15);c.fillStyle='#80334b';c.beginPath();c.moveTo(x+60,45);c.lineTo(x+87,45);c.lineTo(x+85,106);c.lineTo(x+76,91);c.lineTo(x+68,110);c.closePath();c.fill();c.fillStyle='#ba9c6555';c.fillRect(x+66,58,15,4);}}
  if(s.key){c.fillStyle='#a83a4124';c.fillRect(26,45,908,455);for(const x of [44,904]){c.fillStyle='#fa887b66';c.fillRect(x,75,8,16);c.fillRect(x,445,8,16);}}
  if(r.gate){c.strokeStyle=r.used?'#cab78455':'#c794e555';c.lineWidth=3;c.beginPath();c.moveTo(315,130);c.lineTo(645,130);c.stroke();if(!r.used){for(let i=0;i<8;i++){c.fillStyle='#a87fca88';c.fillRect(348+i*36,119,5,22);}}}
- c.restore();}
+ c.restore();drawRoomBackdrop(c,s,r);}
 export function drawRoomStory(c,s,r){c.save();if(r.gate&&!s.key){const guards=r.enemies.filter(e=>e.hp>0);if(!r.used){guards.forEach((e,i)=>{const x=190+i*330;c.fillStyle='#201824';c.fillRect(x,63,250,6);c.fillStyle=e.gateFury?'#f19a76':'#c19bdc';c.fillRect(x,63,250*Math.max(0,e.hp/e.max),6);label(c,(e.gateTitle||(e.type==='starKnight'?'왕의 방패, 칼드':'별의 눈, 베라'))+(e.gateFury?' · 격노':''),x+125,57,e.gateFury?'#f4b191':'#d9c2ec',11);if(e.gateFury){c.strokeStyle='#ffae7b';c.beginPath();c.arc(e.x,e.y,34,0,Math.PI*2);c.stroke();}});}if(r.gateBanner>0)label(c,r.used?'왕좌의 봉인이 풀렸다 · 유물함 개방':'왕좌의 문지기',480,158,'#ead7a3',17);}
  if(s.floor>=6&&!s.key&&!r.gate&&r.type!=='boss'&&r.enemies.length)label(c,r.intro?'상층의 첫 전투':formationName(r),480,77,'#bcaed0',11);
  if(r.rest&&!s.key)label(c,'왕좌 앞의 쉼터',480,440,'#b7d5cf',13);

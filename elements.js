@@ -1,3 +1,4 @@
+import {drawGroundField} from './ground-visuals.js';
 import {bindDefenses,enemyDamageFactor} from './enemy-defense.js';
 import {relicStat} from './relics.js';
 // Player effects are separate from hostile hazards. Fire triggers on first
@@ -55,16 +56,16 @@ export function tickElements(room,dt,poisonLevel=0){bindDefenses(room.enemies);
  }
  room.fireZones=(room.fireZones||[]).map(z=>({...z,time:Math.max(0,z.time-dt)})).filter(z=>z.time>0);
  // Each corpse explodes once, including a bounded chain through poisoned foes.
- let pending;do{pending=enemies.filter(e=>e.hp<=0&&e.poisonKilled&&(e.poisonLevel>=3||poisonLevel>=3)&&!e.corpseExploded);for(const e of pending){e.corpseExploded=true;for(const other of enemies)if(grounded(other)&&near(e,other,85))damage(other,e.poisonBlast??24,true);effects.push({x:e.x,y:e.y,r:85,t:.6,color:'#96ff72'});}}while(pending.length);
+ let pending;do{pending=enemies.filter(e=>e.hp<=0&&e.poisonKilled&&(e.poisonLevel>=3||poisonLevel>=3)&&!e.corpseExploded);for(const e of pending){e.corpseExploded=true;for(const other of enemies)if(grounded(other)&&near(e,other,85))damage(other,e.poisonBlast??24,true);effects.push({x:e.x,y:e.y,r:85,t:.6,color:'#96ff72',groundBurst:true});}}while(pending.length);
  return effects;
 }
-export function drawElements(ctx,room){
- ctx.save();for(const z of room.fireZones||[]){ctx.fillStyle='#f578345c';ctx.strokeStyle='#fa984f';ctx.beginPath();ctx.arc(z.x,z.y,z.r,0,Math.PI*2);ctx.fill();ctx.stroke();}
+export function drawElements(ctx,room,time=0){
+ ctx.save();for(const z of room.fireZones||[]){drawGroundField(ctx,z,'fire',time);}
  for(const e of room.enemies){
-  if(e.poisonStacks?.length>=2){ctx.fillStyle='#7bde6320';ctx.strokeStyle='#89d86d88';ctx.beginPath();ctx.arc(e.x,e.y,e.poisonRadius,0,Math.PI*2);ctx.fill();ctx.stroke();}
-  if(e.poisonStacks?.length){ctx.fillStyle='#8dea77';ctx.font='11px sans-serif';ctx.fillText('독 '+e.poisonStacks.length,e.x-15,e.y+31);}
+  if(e.poisonStacks?.length>=2){drawGroundField(ctx,{x:e.x,y:e.y,r:e.poisonRadius},'gas',time);}
+  if(e.poisonStacks?.length){ctx.fillStyle='#8dea77';ctx.font='11px Galmuri, monospace';ctx.fillText('독 '+e.poisonStacks.length,e.x-15,e.y+31);}
   if(e.burnStacks?.length){ctx.fillStyle='#ff9b49';ctx.fillRect(e.x-20,e.y-8,4,12);}
-  if(e.frozen>0){ctx.fillStyle='#9ceaff66';ctx.strokeStyle='#c4f6ff';ctx.fillRect(e.x-22,e.y-30,44,52);ctx.strokeRect(e.x-22,e.y-30,44,52);}else if(e.frostStacks){ctx.fillStyle='#b4ecff';ctx.font='11px sans-serif';ctx.fillText('서리 '+e.frostStacks,e.x-15,e.y+40);}
-  if(e.trialChampion){ctx.strokeStyle='#ca8cff';ctx.lineWidth=3;ctx.beginPath();ctx.arc(e.x,e.y,29,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#dbb0ff';ctx.font='12px sans-serif';ctx.textAlign='center';ctx.fillText('시련의 용사',e.x,e.y-44);}
+  if(e.frozen>0){ctx.fillStyle='#9ceaff66';ctx.strokeStyle='#c4f6ff';ctx.fillRect(e.x-22,e.y-30,44,52);ctx.strokeRect(e.x-22,e.y-30,44,52);}else if(e.frostStacks){ctx.fillStyle='#b4ecff';ctx.font='11px Galmuri, monospace';ctx.fillText('서리 '+e.frostStacks,e.x-15,e.y+40);}
+  if(e.trialChampion){ctx.strokeStyle='#ca8cff';ctx.lineWidth=3;ctx.beginPath();ctx.arc(e.x,e.y,29,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#dbb0ff';ctx.font='12px Galmuri, monospace';ctx.textAlign='center';ctx.fillText('시련의 용사',e.x,e.y-44);}
  }ctx.restore();
 }

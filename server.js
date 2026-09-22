@@ -8,9 +8,9 @@ export function createServer(root=process.cwd()){
   try{
    if(!['GET','HEAD'].includes(req.method)){res.writeHead(405);res.end();return;}
    const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname),file=pathname==='/'?'index.html':pathname.slice(1);
-   const allowed=file===basename(file)&&!file.includes('\\')&&(file==='index.html'||['style.css','layout.css','mobile.css'].includes(file)||/^[a-z][a-z0-9-]*\.js$/.test(file)&&file!=='server.js');
+   const allowed=file===basename(file)&&!file.includes('\\')&&(file==='index.html'||['style.css','layout.css','mobile.css','pixel-theme.css','pixel-font.woff2','title-art.png','FONT-LICENSE.txt'].includes(file)||/^[a-z][a-z0-9-]*\.js$/.test(file)&&file!=='server.js');
    if(!allowed)throw Error();const data=await readFile(resolve(root,file));
-   res.setHeader('Content-Type',({'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8'})[extname(file)]);res.end(req.method==='HEAD'?undefined:data);
+   res.setHeader('Content-Type',({'.png':'image/png','.woff2':'font/woff2','.txt':'text/plain; charset=utf-8','.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8'})[extname(file)]);res.end(req.method==='HEAD'?undefined:data);
   }catch{res.writeHead(404);res.end('Not found');}
  });
 }

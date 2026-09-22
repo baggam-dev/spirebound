@@ -74,3 +74,9 @@ main{width:min(1280px,calc((100dvh - 266px)*1.7778 + 32px))}.arena{aspect-ratio:
 @media(max-height:800px){.story-scene{height:130px;transform-origin:top center}.exit-scene{height:105px}.escape-reveal h2{font-size:24px;margin:6px 0}.escape-reveal p{font-size:12px;line-height:1.5}}
 
 #practiceBoss,#practiceMain{font:inherit;color:#eee4cb;background:#202b2a;border:1px solid #647269;border-radius:6px;padding:10px;margin:8px;max-width:95%}
+
+.skill-preview{display:grid!important;gap:6px;margin-top:12px;padding:10px;background:#10201e;border:1px solid #70877955;border-radius:5px}
+.skill-preview>span{display:block;font-size:11px;color:#b9cabc}.skill-preview strong{display:block;color:#e4d49e;font-size:12px;margin-top:2px}.skill-preview small{font-size:9px;letter-spacing:0;line-height:1.4;color:#93a69c}
+
+#shieldStatus{flex-wrap:wrap;gap:4px}.shield-state{display:inline-block;padding:3px 5px;border:1px solid;border-radius:4px;font-size:10px;line-height:1.3}.shield-state.ready{color:#f2ffff;background:#466269c9;border-color:#d4fcff}.shield-state.charging{color:#b6c3ce;background:#1a232dcc;border-color:#566573}
+@media(pointer:coarse){.shield-state{font-size:9px;padding:2px 4px}#collectionHUD{top:76px}}

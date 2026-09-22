@@ -25,7 +25,7 @@ export function drawEnemyDetails(ctx,e){
  if(e.type==='chaser'){box(-15,-6,5,21,'#b7b99a');box(10,-6,5,21,'#b7b99a');box(-7,0,14,3,'#343f35');}
  if(e.type==='brute'){
   const lift=e.phase==='air'?Math.sin(Math.PI*(1-Math.max(0,e.phaseTime)/.55))*45:0;
-  ctx.save();ctx.translate(0,-lift);box(-21,-13,42,33,'#73785c');box(-15,-30,30,24,'#a4a586');box(-24,-9,9,21,'#c3b794');box(15,-9,9,21,'#c3b794');box(-9,-21,5,5,'#e4ae70');box(5,-21,5,5,'#e4ae70');box(24,-7,5,31,'#886b44');box(18,-16,20,14,'#b5aa8d');ctx.restore();
+  ctx.save();ctx.translate(0,-lift);box(-21,-13,42,33,'#73785c');box(-15,-30,30,24,'#a4a586');box(-24,-9,9,21,'#c3b794');box(15,-9,9,21,'#c3b794');box(-9,-21,5,5,'#e4ae70');box(5,-21,5,5,'#e4ae70');box(24,-7,5,31,'#886b44');box(18,-16,20,14,'#b5aa8d');box(-13,-29,26,3,'#d0c6a4');box(-3,-25,4,12,'#606a54');box(-18,-8,36,4,'#4a5547');box(-17,6,34,3,'#464c42');box(-4,5,8,6,'#c8ae72');box(-19,18,13,6,'#39423c');box(6,18,13,6,'#39423c');box(20,-15,16,3,'#e4d6b0');for(const dx of [-22,17]){box(dx,-7,4,4,'#eee0b3');box(dx,2,4,3,'#8d866a');}ctx.restore();
   if(e.phase==='windup'||e.phase==='air'||e.phase==='swing'){const jumping=e.phase!=='swing';ctx.fillStyle='#de9c5328';ctx.strokeStyle='#f1b66e';ctx.lineWidth=2;ctx.beginPath();ctx.arc(jumping?e.landX:e.x,jumping?e.landY:e.y,jumping?62:MELEE_REACH,0,Math.PI*2);ctx.fill();ctx.stroke();}
  }
 }

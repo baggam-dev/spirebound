@@ -7,7 +7,12 @@ import {safeSpawn} from './terrain.js';
 const groups=[['chaser','archer','scatter'],['charger','archer','chaser'],['scatter','charger','chaser'],['brute','ricochet','archer'],['brute','laser','charger'],['laser','scatter','chaser'],['flower','charger','archer'],['flower','brute','ricochet']];
 export function encounter(floor,random,obstacles=[],escapeDepth=0,returnVariants=!!escapeDepth){
  if(floor>=6)return upperEncounter(floor,random,obstacles,escapeDepth);
- const pool=groups.slice(0,escapeDepth||floor>=4?8:floor>=1?6:3);if(!escapeDepth&&floor>=2)pool.push(['charger','brute','archer'],['brute','charger','scatter']);const group=pool[Math.floor(random()*pool.length)];
+ const pool=groups.slice(0,escapeDepth||floor>=4?8:floor>=1?6:3);
+ // Different threat pairs change target priority without adding more enemies.
+ if(floor>=1||escapeDepth)pool.push(['chaser','ricochet','charger','archer'],['brute','chaser','scatter','archer']);
+ if(!escapeDepth&&floor>=2)pool.push(['charger','brute','archer'],['brute','charger','scatter']);
+ if(floor>=4||escapeDepth)pool.push(['flower','chaser','laser','charger'],['ricochet','brute','archer','charger'],['flower','scatter','chaser','archer']);
+ const group=pool[Math.floor(random()*pool.length)];
  const count=escapeDepth?7+escapeDepth+Math.floor(random()*2):4+Math.floor(floor*.65)+Math.floor(random()*3);
  const level=escapeDepth?5:floor;
  const enemies=Array.from({length:count},(_,id)=>{

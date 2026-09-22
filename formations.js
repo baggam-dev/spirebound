@@ -9,7 +9,11 @@ export const formations=[
  {id:'pursuit',name:'별빛 추격대',min:6,units:['gravityMage','chaser','charger','astralSniper']},
  {id:'royal',name:'왕실 근위대',min:7,units:['royalGuard','pulseTurret','royalGuard','archer']},
  {id:'rift',name:'균열 습격대',min:7,units:['riftHunter','royalGuard','pulseTurret','chaser']},
- {id:'court',name:'마지막 궁정',min:7,units:['starBearer','royalGuard','astralSniper','riftHunter']}
+ {id:'court',name:'마지막 궁정',min:7,units:['starBearer','royalGuard','astralSniper','riftHunter']},
+ {id:'siege',name:'별빛 포위대',min:6,units:['starKnight','ricochet','pulseTurret','charger']},
+ {id:'garden',name:'봉쇄된 관측소',min:6,units:['laser','starKnight','scatter','chaser']},
+ {id:'hunt',name:'왕실 사냥대',min:7,units:['gravityMage','riftHunter','archer','royalGuard']},
+ {id:'bulwark',name:'왕좌의 방벽',min:7,units:['starBearer','royalGuard','ricochet','brute']}
 ];
 const support=new Set(['starBearer','gravityMage']);
 export const frontliner=type=>['chaser','charger','brute','starKnight','royalGuard','riftHunter','ambusher'].includes(type);

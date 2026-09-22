@@ -32,6 +32,7 @@ export function steering(body,target,obstacles=[],radius=18){
 }
 export function drawObstacles(ctx,obstacles=[]){
  for(const o of obstacles){const {x,y,w,h}=o;ctx.fillStyle='#0007';ctx.fillRect(x-3,y+7,w+6,h);ctx.fillStyle='#17201e';ctx.fillRect(x-2,y-2,w+4,h+4);
+ if(o.type==='wall'){ctx.fillStyle='#11191f';ctx.fillRect(x,y,w,h);ctx.fillStyle='#43504e';ctx.fillRect(x,y,w,4);ctx.fillRect(x,y,4,h);ctx.fillStyle='#293736';ctx.fillRect(x+w-4,y,4,h);ctx.fillRect(x,y+h-4,w,4);for(let yy=8;yy<h-5;yy+=24)for(let xx=8;xx<w-5;xx+=36){ctx.fillStyle='#202c2e';ctx.fillRect(x+xx,y+yy,Math.min(30,w-xx-4),Math.min(18,h-yy-4));}continue;}
  if(o.type==='rock'){ctx.fillStyle='#647169';ctx.fillRect(x+8,y,w-16,h);ctx.fillRect(x,y+10,w,h-20);ctx.fillStyle='#8c9480';ctx.fillRect(x+12,y+5,w-30,7);ctx.fillStyle='#414e49';ctx.fillRect(x+20,y+22,5,h-27);}
  if(o.type==='bookshelf'){ctx.fillStyle='#685239';ctx.fillRect(x,y,w,h);for(let row=0;row<2;row++){ctx.fillStyle='#282b25';ctx.fillRect(x+5,y+6+row*23,w-10,18);for(let i=0;i<Math.floor((w-12)/10);i++){ctx.fillStyle=['#9b6e58','#708980','#aea071'][i%3];ctx.fillRect(x+8+i*10,y+8+row*23,6,14);}}}
  if(o.type==='table'){ctx.fillStyle='#43372a';ctx.fillRect(x+4,y+h-5,8,9);ctx.fillRect(x+w-12,y+h-5,8,9);ctx.fillStyle='#91734d';ctx.fillRect(x,y,w,h-4);ctx.fillStyle='#b09463';ctx.fillRect(x+4,y+4,w-8,4);ctx.fillStyle='#5f4a32';ctx.fillRect(x+4,y+h/2,w-8,2);ctx.fillStyle='#bcb99b';ctx.fillRect(x+w/2,y+12,14,10);}
@@ -40,12 +41,12 @@ export function drawObstacles(ctx,obstacles=[]){
 }
 export function drawMinimap(ctx,rooms,current,path=[],doorsForRoom=r=>roomDoors(rooms,r)){
  const visible=rooms.filter(r=>r.seen);if(!visible.length)return;
- ctx.fillStyle='#08120fce';ctx.fillRect(772,12,166,160);ctx.strokeStyle='#91a18a66';ctx.lineWidth=1;ctx.strokeRect(772.5,12.5,166,160);
- ctx.textAlign='center';ctx.font='10px sans-serif';ctx.fillStyle='#c1cdb9';ctx.fillText(rooms.some(r=>r.returnRisk)?'귀환 · 빨강 위험 / 초록 우회':'탐색 지도 · 문 위치',855,28);
+ ctx.fillStyle='#08120f99';ctx.fillRect(772,12,166,160);ctx.strokeStyle='#91a18a66';ctx.lineWidth=1;ctx.strokeRect(772.5,12.5,166,160);
+ ctx.textAlign='center';ctx.font='10px Galmuri, monospace';ctx.fillStyle='#c1cdb9';ctx.fillText(rooms.some(r=>r.returnRisk)?'귀환 · 빨강 위험 / 초록 우회':'탐색 지도 · 문 위치',855,28);
  const minX=Math.min(...visible.map(r=>r.x)),minY=Math.min(...visible.map(r=>r.y)),width=Math.max(...visible.map(r=>r.x))-minX+1,height=Math.max(...visible.map(r=>r.y))-minY+1,step=Math.min(28,142/width,125/height),size=step*.68;
  const ox=855-width*step/2,oy=38+(125-height*step)/2;
  for(const r of visible){const x=ox+(r.x-minX)*step+(step-size)/2,y=oy+(r.y-minY)*step+(step-size)/2;ctx.fillStyle=r===current?'#cfbb83':r.returnRisk==='high'?'#a35d53':r.returnRisk==='low'?'#4c876b':'#536d60';ctx.fillRect(x,y,size,size);if(path.includes(rooms.indexOf(r))){ctx.strokeStyle='#f4dc85';ctx.lineWidth=2;ctx.strokeRect(x-1,y-1,size+2,size+2);}
  doorsForRoom(r).forEach((open,i)=>{if(!open)return;ctx.fillStyle='#e7dcaf';const [dx,dy]=directions[i],cx=x+size/2+dx*size/2,cy=y+size/2+dy*size/2;ctx.fillRect(cx-(dx?1.5:2.5),cy-(dy?1.5:2.5),dx?3:5,dy?3:5);});
- const symbol=r.hasChest?'~◆':({up:'↑',down:'↓',boss:'!',exit:'⌂',treasure:'◆',fountain:'~',shrine:'†',event:'?'})[r.type];if(symbol){ctx.fillStyle=r.type==='fountain'&&r.used?'#88948a':'#f3e9c8';ctx.font=`${Math.min(11,size-2)}px monospace`;ctx.fillText(symbol,x+size/2,y+size/2+3);}
+ const symbol=r.hasChest?'~◆':({up:'↑',down:'↓',boss:'!',exit:'⌂',treasure:'◆',fountain:'~',shrine:'†',event:'?'})[r.type];if(symbol){ctx.fillStyle=r.type==='fountain'&&r.used?'#88948a':'#f3e9c8';ctx.font=`${Math.min(11,size-2)}px Galmuri, monospace`;ctx.fillText(symbol,x+size/2,y+size/2+3);}
  }
 }

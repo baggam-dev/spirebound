@@ -33,7 +33,7 @@ export function updatePattern(e,p,obstacles,dt,bullets,enraged=false){
   if(e.pattern==='spiral'){for(let i=0;i<8;i++)emitShot(e,e.patternAim+i*Math.PI/4+n*.19,135,bullets);e.attackTime=.15;if(e.shot>=6)recover(e,1.8);}
   if(e.pattern==='cross'){for(let i=0;i<4;i++)for(let j=-2;j<=2;j++)emitShot(e,e.patternAim+i*Math.PI/2+j*.1+n*.14,200,bullets);e.attackTime=.25;if(e.shot>=3)recover(e,1.8);}
   if(e.pattern==='burst'){const upper=e.tier>=6;emitShot(e,e.patternAim,upper?230:190,bullets);e.attackTime=upper?.16:.22;if(e.shot>=5+attackProfile(e).count)recover(e,upper?1.7:enraged?1.7:2.4);}
-  if(e.pattern==='stagger'){for(let i=-2-attackProfile(e).count;i<=2+attackProfile(e).count;i++)emitShot(e,e.patternAim+i*.22+(n?.17:0),160,bullets);e.attackTime=.4;if(e.shot>=2)recover(e,enraged?2:2.8);}
+  if(e.pattern==='stagger'){const singleRow=e.type==='scatter'&&(e.tier??0)<2&&!enraged&&!e.escapeDepth;/* Keep the second beat silent so the attack cycle does not accelerate. */if(!singleRow||n===0)for(let i=-2-attackProfile(e).count;i<=2+attackProfile(e).count;i++)emitShot(e,e.patternAim+i*.22+(n?.17:0),160,bullets);e.attackTime=.4;if(e.shot>=2)recover(e,enraged?2:2.8);}
   return 0;
  }
  if(e.attackPhase==='recover'&&e.attackTime<=0){e.attackPhase=null;e.cd=e.type==='boss'?.24:.5*ENEMY_COOLDOWN_FACTOR;}
@@ -44,6 +44,6 @@ export function drawPattern(ctx,e){
  ctx.save();ctx.lineWidth=2;
  if(e.pattern==='slam'&&['warning','leap'].includes(e.attackPhase)){ctx.fillStyle='#eead6422';ctx.strokeStyle='#f1b76c';ctx.beginPath();ctx.arc(e.targetX,e.targetY,85,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(e.targetX-10,e.targetY);ctx.lineTo(e.targetX+10,e.targetY);ctx.moveTo(e.targetX,e.targetY-10);ctx.lineTo(e.targetX,e.targetY+10);ctx.stroke();}
  else if(e.attackPhase==='warning'){ctx.strokeStyle=e.type==='boss'?'#f1b76c':'#dcaa84';ctx.setLineDash([6,5]);const count=e.pattern==='spiral'?4:e.pattern==='ring'?12:1;for(let i=0;i<count;i++){const a=e.patternAim+i*Math.PI*2/count;ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(e.x+Math.cos(a)*100,e.y+Math.sin(a)*100);ctx.stroke();}}
- if(e.type==='boss'){ctx.setLineDash([]);ctx.font='11px sans-serif';ctx.textAlign='center';ctx.fillStyle=e.attackPhase==='recover'?'#a8d5b1':'#efd7a4';ctx.fillText(e.attackPhase==='recover'?'빈틈!':({ring:'원형 탄막',slam:'내려찍기',fan:'교차 부채꼴',spiral:'회전 탄막',cross:'회전 십자포화',pincer:'협공 탄막'})[e.pattern],e.x,e.y-57);}
+ if(e.type==='boss'){ctx.setLineDash([]);ctx.font='11px Galmuri, monospace';ctx.textAlign='center';ctx.fillStyle=e.attackPhase==='recover'?'#a8d5b1':'#efd7a4';ctx.fillText(e.attackPhase==='recover'?'빈틈!':({ring:'원형 탄막',slam:'내려찍기',fan:'교차 부채꼴',spiral:'회전 탄막',cross:'회전 십자포화',pincer:'협공 탄막'})[e.pattern],e.x,e.y-57);}
  ctx.restore();
 }

@@ -10,6 +10,7 @@ export function iconSVG(id){
  const heart=(c=1)=>{for(const [y,row] of ['011100001110','111110011111','111111111111','111111111111','011111111110','001111111100','000111111000','000011110000','000001100000'].entries())for(let x=0;x<12;x++)if(row[x]==='1')put(x+2,y+3,c);};
  const arrow=(x=8,c=1)=>{line(x,2,x,13,c);line(x-3,5,x,2,c);line(x+3,5,x,2,c);};
  switch(id){
+  case 'windSeal':circle(8,8,6,2);line(3,6,11,6,3);line(11,6,12,4,3);line(2,9,10,9);line(10,9,12,7);line(5,12,9,12,3);break;
   case 'turret':line(3,3,8,7);line(8,7,13,3);line(3,3,13,3,2);rect(7,2,2,10);rect(4,12,8,3,2);line(5,8,3,12);line(10,8,12,12);break;
   case 'sunFairy':circle(8,8,3,1,true);line(1,4,5,7,3);line(14,4,11,7,3);line(8,1,8,3);line(8,12,8,15);break;
   case 'snowFairy':diamond(8,8,4);line(1,4,5,7,3);line(14,4,11,7,3);line(8,2,8,14,2);break;

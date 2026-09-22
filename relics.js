@@ -1,6 +1,7 @@
 import {CROSSBOW} from './combat-tuning.js';
 import {seededRandom} from './random.js';
 export const relics=[
+ {id:'windSeal',name:'바람의 인장',description:'20처치마다 1하트 회복',stats:{}},
  {
   "id": "lens",
   "name": "정찰병의 망원경",
@@ -203,8 +204,9 @@ export const relics=[
 ].map(r=>({...r,grade:'unique',weight:.4}))
 ];
 export const relicInfo=id=>relics.find(r=>r.id===id);
-export const ownedRelics=p=>[...new Set([...(p.relics||[]),...(p.relic?[p.relic]:[])])];
+export const ownedRelics=p=>[...new Set([...(p.relics||[]),...(p.relic?[p.relic]:[]),...(p.unique?['windSeal']:[])])];
 export const hasRelic=(p,id)=>ownedRelics(p).includes(id);
+export function removeRelic(p,id){if(!hasRelic(p,id))return false;p.relics=ownedRelics(p).filter(key=>key!==id);delete p.relic;if(id==='windSeal'){p.unique=false;p.leechKills=0;}if(id==='heart'){p.max=Math.max(1,p.max-1);p.hp=Math.min(p.hp,p.max);}return true;}
 export const relicStat=(p,key)=>ownedRelics(p).reduce((n,id)=>n+(relicInfo(id)?.stats?.[key]||0),0);
 export const relicSummary=p=>ownedRelics(p).map(id=>relicInfo(id)?.name).filter(Boolean).join(' · ')||'없음';
 export function grantRelic(p,id){if(!relicInfo(id)||hasRelic(p,id))return false;p.relics=[...ownedRelics(p),id];delete p.relic;if(id==='heart'){p.max++;p.hp=Math.min(p.max,p.hp+1);}return true;}
@@ -217,6 +219,6 @@ export const dodgeCooldown=p=>10*(1-relicStat(p,'blinkCooldown'))*hexFactor(p,'b
 export const blinkDistance=p=>175*(1+relicStat(p,'blinkRange'))*hexFactor(p,'reach');
 export const ultimateCooldown=p=>(p.evolutions?.ultimate==='turret'?CROSSBOW.cooldown:25)*Math.max(.2,Math.pow(.9,p.ultimateEssences||0)*(1-relicStat(p,'ultimateCooldown'))*hexFactor(p,'ultimate'));
 
-export const attackInterval=p=>.65/(1+(p.haste||0)*.1+(p.bonusAttack||0)+relicStat(p,'attack'))/hexFactor(p,'attack')*(p.evolutions?.haste==='tempo'?.85:1)*(p.evolutions?.split==='focus'?1.15:1);
+export const attackInterval=p=>.65/(1+(p.haste||0)*.1+(p.bonusAttack||0)+relicStat(p,'attack'))/hexFactor(p,'attack')*(p.evolutions?.haste==='tempo'?.85:1)*(p.evolutions?.split==='focus'?1.15:1)/(p.fire>0?.7:1);
 
 export function weightedRelic(pool,random=Math.random){let roll=random()*pool.reduce((n,r)=>n+(r.weight??1),0);for(const r of pool){roll-=r.weight??1;if(roll<0)return r;}return pool.at(-1);}

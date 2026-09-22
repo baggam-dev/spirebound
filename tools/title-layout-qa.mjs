@@ -1,0 +1,9 @@
+import {mkdir} from 'node:fs/promises';import {join} from 'node:path';import {pathToFileURL} from 'node:url';
+const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'index.mjs')).href);const output=process.argv[2];await mkdir(output,{recursive:true});const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[];
+try{for(const [width,height,mobile] of [[1146,762,false],[1280,800,false],[844,390,true],[667,375,true],[390,844,true]])for(const saved of [false,true]){
+ const context=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile}),page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto('http://localhost:5173');
+ if(saved){await page.evaluate(async()=>{const {newRun}=await import('/engine.js'),{encodeSave,SAVE_KEY}=await import('/storage.js');const s=newRun(17);s.elapsed=27;localStorage.setItem(SAVE_KEY,encodeSave(s));});await page.reload();}
+ await page.locator('.title-art').waitFor();await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:join(output,`${width}-${saved?'saved':'new'}.png`)});
+ await page.evaluate(()=>{const r=document.querySelector('.title-content').getBoundingClientRect();if(r.left<0||r.right>innerWidth||r.bottom>innerHeight)throw Error('Title panel outside viewport');for(const b of document.querySelectorAll('.title-content button')){const box=b.getBoundingClientRect();if(document.elementFromPoint(box.x+box.width/2,box.y+box.height/2)!==b)throw Error('Button obstructed');}});
+ await page.locator('#guide').click();await page.locator('#closeInfo').click();await page.locator('#bossPractice').click();await context.close();
+}console.log(JSON.stringify({screens:10,errors}));if(errors.length)process.exitCode=1;}finally{await browser.close();}
