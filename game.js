@@ -1,3 +1,6 @@
+import {RankingClient,rankingError} from './ranking-client.js';
+import {createRankingUI} from './ranking-ui.js';
+import {finishRanking,rankingMarkup} from './ranking.js';
 import {returnStairsLocked,returnSealText,drawReturnSeal} from './return-seals.js';
 import {objectPoint} from './object-positions.js';
 import {drawAuraField,drawBurst} from './ground-visuals.js';
@@ -61,7 +64,8 @@ import {runRandom} from './random.js';
 
 const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d');
 let storage;try{storage=localStorage;}catch{storage={getItem(){throw Error();},setItem(){throw Error();}};}
-const store=new RunStore(storage);
+const store=new RunStore(storage),rankClient=new RankingClient(storage);
+const rankUI=createRankingUI({client:rankClient,panel,stop});
 document.addEventListener('pointerdown',unlockWarningAudio,{once:true});document.addEventListener('keydown',unlockWarningAudio,{once:true});$('warningSound').addEventListener('click',()=>{const muted=toggleWarningAudio();$('warningSound').textContent=muted?'경고음 끔':'경고음 켬';$('warningSound').setAttribute('aria-pressed',String(!muted));});
 const updateHUD=createHUD();
 let launching=false;
@@ -81,11 +85,27 @@ function title(){
  stop('title');lease.release();s=null;resetTransient();$('route').hidden=true;$('skill').hidden=true;$('interact').hidden=true;
  $('floor').textContent='잊힌 탑의 입구';$('phase').textContent='THE FORSAKEN SPIRE';$('health').textContent='♥♥♥♥♥';$('level').textContent='LV 1';$('timer').textContent='00:00';$('objective').textContent='탑에 들어가 탈출 열쇠를 찾으세요.';
  const loaded=store.read(),exists=!!loaded.run;
- panel(`<img class="title-art" src="title-art.png" alt="SPIREBOUND · 거대한 탑 입구 앞의 모험가"><h2 class="title-accessible">SPIREBOUND</h2><div class="title-content"><p class="title-lore">탑에 들어간 이들은 돌아오지 않았다.<br>탑의 꼭대기, 타락한 왕이 마지막 열쇠를 움켜쥐고 있다.<br>왕을 쓰러뜨려도 여정은 끝나지 않는다.<br><strong>살아서 내려와라.</strong></p><div class="title-actions">${exists?`<p>저장된 도전: ${loaded.run.floor+1}/${loaded.run.floors.length}층 · ${timeString(loaded.run.elapsed)}${loaded.recovered?' · 백업 복구 가능':''}</p><button class="primary" id="continue">이어하기</button>`:''}${loaded.error?`<p role="alert">${escapeHtml(loaded.error)}</p>`:''}<button ${exists?'':'class="primary"'} id="start">새 도전 →</button></div><div class="title-secondary"><button id="guide">조작 안내</button><button id="records">도전 기록</button><button id="bossPractice">보스 테스트</button></div></div>`);
+ panel(`<img class="title-art" src="title-art.png" alt="SPIREBOUND · 거대한 탑 입구 앞의 모험가"><h2 class="title-accessible">SPIREBOUND</h2><div class="title-content"><p class="title-lore">탑에 들어간 이들은 돌아오지 않았다.<br>탑의 꼭대기, 타락한 왕이 마지막 열쇠를 움켜쥐고 있다.<br>왕을 쓰러뜨려도 여정은 끝나지 않는다.<br><strong>살아서 내려와라.</strong></p><div class="title-actions">${exists?`<p>저장된 도전: ${loaded.run.floor+1}/${loaded.run.floors.length}층 · ${timeString(loaded.run.elapsed)}${loaded.recovered?' · 백업 복구 가능':''}</p><button class="primary" id="continue">이어하기</button>`:''}${loaded.error?`<p role="alert">${escapeHtml(loaded.error)}</p>`:''}<button ${exists?'':'class="primary"'} id="start">새 도전 →</button></div><div class="title-secondary"><button id="rank">RANK</button><button id="guide">조작 안내</button><button id="records">도전 기록</button><button id="bossPractice">보스 테스트</button></div></div>`);
  button('start',()=>{if(exists){stop('confirm');panel('<h2>새 도전 시작</h2><p>현재 이어하기 저장을 새 도전으로 교체합니다.</p><button id="confirmStart">새 도전 시작</button><button id="cancelStart">돌아가기</button>');button('confirmStart',start);button('cancelStart',title);}else start();});
- button('bossPractice',practiceMenu);button('continue',continueRun);button('guide',()=>showInfo('help'));button('records',()=>showInfo('history'));
+ button('rank',()=>rankUI.board(title));button('bossPractice',practiceMenu);button('continue',continueRun);button('guide',()=>showInfo('help'));button('records',()=>showInfo('history'));
 }
-async function start(seed){if(launching)return;launching=true;try{if(!await lease.acquire()){toast('다른 탭에서 도전 중입니다. 그 탭을 종료한 뒤 다시 시도하세요.');return;}s=newRun(Number.isInteger(seed)&&seed>=0&&seed<=4294967295?seed:undefined);ensureMetrics(s);resetTransient();enterRoom(s);resume();save();toast('출구가 봉쇄되었습니다. 문을 찾아 탐험하세요.');}finally{launching=false;}}
+function start(seed){if(launching)return;beginRun(newRun(Number.isInteger(seed)&&seed>=0&&seed<=4294967295?seed:undefined),true);}
+async function beginRun(candidate,online){
+ if(launching)return;launching=true;stop('rank-start');s=null;
+ panel('<h2>새 도전 준비</h2><p id="rankStartStatus">'+(online?'온라인 랭킹에 도전을 연결하는 중…':'로컬 도전을 준비하는 중…')+'</p><button id="rankStartCancel">돌아가기</button>');
+ const marker=$('rankStartStatus');button('rankStartCancel',title);
+ try{
+  if(!await lease.acquire()){title();toast('다른 탭에서 도전 중입니다. 그 탭을 종료한 뒤 다시 시도하세요.');return;}
+  if(!marker.isConnected){lease.release();return;}
+  if(online)await rankClient.start(candidate);else delete candidate.ranking.online;
+  if(!marker.isConnected){lease.release();return;}
+  s=candidate;ensureMetrics(s);resetTransient();enterRoom(s);if(document.hidden)pause('다시 화면으로 돌아온 뒤 시작하세요.');else resume();save();toast(online?'랭킹 도전 시작 · 탈출 후 이름을 남길 수 있습니다.':'로컬 도전 시작 · 온라인 랭킹에는 등록되지 않습니다.');
+ }catch(error){
+  lease.release();if(!marker.isConnected)return;
+  panel('<h2>랭킹 연결 실패</h2><p>'+escapeHtml(rankingError(error))+'</p><p>로컬로 시작해도 플레이와 개인 기록은 저장되지만, 이번 도전은 온라인 순위에 등록되지 않습니다.</p><button class="primary" id="rankStartRetry">다시 연결</button><button id="rankStartLocal">로컬로 시작</button><button id="rankStartCancel">돌아가기</button>');
+  button('rankStartRetry',()=>beginRun(candidate,true));button('rankStartLocal',()=>beginRun(candidate,false));button('rankStartCancel',title);
+ }finally{launching=false;}
+}
 async function continueRun(){if(launching)return;launching=true;try{
  if(!await lease.acquire()){toast('다른 탭에서 도전 중입니다. 그 탭을 종료한 뒤 다시 시도하세요.');return;}
  const loaded=store.read();if(!loaded.run){lease.release();title();toast(loaded.error||'이어갈 도전이 없습니다.');return;}
@@ -94,7 +114,7 @@ async function continueRun(){if(launching)return;launching=true;try{
 function escapeNotice(){stop('return');save();panel('<div class="escape-reveal">'+returnStoryMarkup(s.floors.length>=8)+'<small>THE WAY HOME</small><h2>1층 탈출 열쇠 획득</h2><p>왕은 쓰러졌지만, 탑의 저주는 풀리지 않았습니다.<br>탑의 몬스터들이 광폭화했습니다.<br><strong>이제 아래층으로 내려가 1층 입구에서 탈출하세요.</strong><br>하강 시 미방문 방은 전멸해야 출구가 열립니다. 방문한 방도 30% 확률로 열쇠수호자가 문을 잠급니다. 내려가는 계단은 방의 적을 전멸해야 열립니다.</p><button class="primary" id="beginReturn">1층으로 귀환 시작 ↓</button></div>');button('beginReturn',()=>{s.returnNoticePending=false;save();resume();});}
 function resume(){if(!s||s.status!=='playing'||!s.practice&&!lease.active)return;if(s.returnNoticePending){escapeNotice();return;}if(shrineLocked(room())){shrine();return;}if(!s.player.mainSkill&&(s.pendingLevels||mainSkills.some(id=>s.player[id]>0))){mainPanel();return;}if(pendingEvolution(s.player)){evolutionPanel();return;}if(s.pendingHeal){s.player.hp=Math.min(s.player.max,s.player.hp+1);s.pendingHeal=false;}mode='play';paused=false;$('overlay').innerHTML='';input.setEnabled(true);accumulator=0;last=performance.now();if(s.pendingLevels)levelUp();}
 function pause(reason=''){if(!s||s.status!=='playing'||['title','result','level'].includes(mode))return;stop('pause');const ok=save();if(s.practice){practicePause();return;}panel(`<small>TAKE A BREATH</small><h2>잠시 쉬어가기</h2><p>${reason||'게임과 기록 시간이 멈췄습니다.'}<br>${ok?'진행 상황이 저장되었습니다.':'저장하지 못했습니다. 진단 기록을 내려받아 보관할 수 있습니다.'}</p><button class="primary" id="resume">계속 탐험</button><button id="quit">저장 후 입구로</button><button id="guide">조작 안내</button><button id="journal">원정 기록 · 도감</button><button id="export">진단 기록 받기</button>`);button('resume',resume);button('quit',()=>{if(save())title();});button('guide',()=>showInfo('help'));button('export',exportReport);button('journal',journalPanel);}
-function showInfo(kind){const during=!!s&&s.status==='playing';if(mode==='level')return;stop('info');if(during)save();panel(kind==='history'?historyMarkup(storage):helpMarkup());button('closeInfo',()=>during?pause():title());}
+function showInfo(kind){if(mode==='rank-start')return;const during=!!s&&s.status==='playing';if(mode==='level')return;stop('info');if(during)save();panel(kind==='history'?historyMarkup(storage):helpMarkup());button('closeInfo',()=>during?pause():title());}
 function exportReport(){downloadJSON('spirebound-report.json',diagnostic(s,saveFailed?'저장 오류 있음':''));}
 function bag(){if(!s||s.status!=='playing'||mode==='level')return;stop('bag');save();const p=s.player;
  panel(`<small>ROYAL SCOUT / INVENTORY</small><h2>여행자의 가방</h2><div class="guide"><p>무기 · ${p.weapon?'강화 장궁':'정찰병의 활'} / 공격력 ${p.damage}<br>유물 · ${ownedRelics(p).map(id=>relicInfo(id).name+' — '+relicInfo(id).description).join('<br>')||'없음'}<br>방어구 · ${p.armor?'보호막 재충전 '+shieldCooldown(p)+'초':'보호막 없음'}<br>바람의 인장 · ${ownedRelics(p).includes('windSeal')?'20회 처치당 1하트 ('+(p.leechKills||0)+'/20)':'없음'}</p><p>메인 · ${skills.find(k=>k.id===p.mainSkill)?.name||'미선택'}<br>익힌 기술 · ${skills.filter(k=>p[k.id]>0).map(k=>k.name+' '+p[k.id]).join(' / ')||'없음'}<br>선택 분기 · ${evolutionSummary(p)}<br>활성 조합 · ${combinations(p).map(c=>c.name).join(' / ')||'없음'}<br>궁극기 · ${ultimateUnlocked(p)?'해금됨':'미습득 · 5레벨부터 레벨업 선택지에 등장'}</p><p>물약 ${p.potions}개 · 음식 ${p.food}개<br>${s.pendingHeal?'음식 회복이 예약되었습니다. 재개할 때 1하트 회복합니다.':'음식은 안전한 방에서 사용합니다.'}</p></div><button id="eat" ${room().enemies.length||!p.food||s.pendingHeal||p.hp>=p.max?'disabled':''}>음식 먹기 · 1하트</button><button id="journal">원정 기록 · 도감</button><button class="primary" id="closeBag">탐험 재개</button>`);
@@ -109,8 +129,8 @@ function levelUp(){
  choices.forEach((k,i)=>button('u'+i,()=>{const was=ultimateUnlocked(s.player),previous=combinations(s.player).map(c=>c.name);if(!applyLevelReward(s,k.id))return;if(k.id==='ultimate')s.skill=0;const unlocked=combinations(s.player).filter(c=>!previous.includes(c.name));if(unlocked.length)toast('조합 완성 · '+unlocked.map(c=>c.name).join(' / '));if(!was&&ultimateUnlocked(s.player)){s.skill=0;toast('궁극기 화살비 해금 · F');}consumeLevelChoice(s);emitInteraction(s,'level',room(),{level:s.player.level});resume();save();}));
 }
 let endResult={ok:true};
-function finish(won){if(s.practice){s.status=won?'won':'dead';practiceResult();return;}if(s.status!=='playing')return;s.status=won?'won':'dead';stop('result');endResult=store.complete(s,won);lease.release();resultPanel();}
-function resultPanel(){if(s?.practice){practiceResult();return;}const won=s.status==='won';stop('result');panel(`${won?escapeStoryMarkup():''}<small>${won?'THE WAY HOME':'THE SPIRE REMEMBERS'}</small><h2>${won?'탑에서 탈출했습니다':'도전이 끝났습니다'}</h2><p>${timeString(s.elapsed)} · LV ${s.player.level} · 처치 ${s.kills}<br>${s.floor+1}층 · 열쇠 ${s.key?'획득':'미획득'}<br>유물 · ${relicSummary(s.player)}<br>최종 기술 · ${skills.filter(k=>s.player[k.id]>0).map(k=>k.name+' '+s.player[k.id]).join(' · ')||'없음'}${s.metrics?.ultimateDamage!==undefined?'<br>궁극기 기록 피해 '+Math.round(s.metrics.ultimateDamage):''}${s.metrics?.floorDamage?.some(n=>n>0)?'<br>최대 피해 층 · '+(s.metrics.floorDamage.indexOf(Math.max(...s.metrics.floorDamage))+1)+'층':''}<br>받은 피해 ${s.metrics?.damageTaken||0}하트 · 보호막 방어 ${s.metrics?.shields||0}회<br>${s.lastHit?'마지막 피격 · '+escapeHtml(s.lastHit.source):'피격 기록 없음'}</p><p>${endResult.ok?'개인 기록을 저장했습니다.':escapeHtml(endResult.error)}</p>${won?"":deathSummaryMarkup(s)}<button class="primary" id="again">입구로 돌아가기</button><button id="journal">원정 기록 · 도감</button>${s.generationVersion>=17?'<button id="retrySeed">같은 지도에서 새 도전</button>':''}<button id="export">진단 기록 받기</button>`);button('again',title);const retrySeed=s.seed;button('retrySeed',()=>start(retrySeed));button('journal',journalPanel);button('export',exportReport);}
+function finish(won){if(s.practice){s.status=won?'won':'dead';practiceResult();return;}if(s.status!=='playing')return;s.status=won?'won':'dead';stop('result');finishRanking(s);rankClient.draft(s);endResult=store.complete(s,won);lease.release();resultPanel();}
+function resultPanel(){if(s?.practice){practiceResult();return;}const won=s.status==='won',rankDraft=rankClient.draft(s);stop('result');panel(`${won?escapeStoryMarkup():''}<small>${won?'THE WAY HOME':'THE SPIRE REMEMBERS'}</small><h2>${won?'탑에서 탈출했습니다':'도전이 끝났습니다'}</h2><p>${timeString(s.elapsed)} · LV ${s.player.level} · 처치 ${s.kills}<br>${s.floor+1}층 · 열쇠 ${s.key?'획득':'미획득'}<br>유물 · ${relicSummary(s.player)}<br>최종 기술 · ${skills.filter(k=>s.player[k.id]>0).map(k=>k.name+' '+s.player[k.id]).join(' · ')||'없음'}${s.metrics?.ultimateDamage!==undefined?'<br>궁극기 기록 피해 '+Math.round(s.metrics.ultimateDamage):''}${s.metrics?.floorDamage?.some(n=>n>0)?'<br>최대 피해 층 · '+(s.metrics.floorDamage.indexOf(Math.max(...s.metrics.floorDamage))+1)+'층':''}<br>받은 피해 ${s.metrics?.damageTaken||0}하트 · 보호막 방어 ${s.metrics?.shields||0}회<br>${s.lastHit?'마지막 피격 · '+escapeHtml(s.lastHit.source):'피격 기록 없음'}</p>${rankingMarkup(s)}${rankDraft?'<button class="primary" id="rankRegister">'+(rankDraft.receipt?'등록 결과 보기':'이름 남기기 · 랭킹 등록')+'</button>':''}<p>${endResult.ok?'개인 기록을 저장했습니다.':escapeHtml(endResult.error)}</p>${won?"":deathSummaryMarkup(s)}<button class="primary" id="again">입구로 돌아가기</button><button id="journal">원정 기록 · 도감</button>${s.generationVersion>=17?'<button id="retrySeed">같은 지도에서 새 도전</button>':''}<button id="export">진단 기록 받기</button>`);button('rankRegister',()=>rankUI.submission(rankDraft,resultPanel));button('again',title);const retrySeed=s.seed;button('retrySeed',()=>start(retrySeed));button('journal',journalPanel);button('export',exportReport);}
 
 function potion(){if(paused)return;ensureMetrics(s);if(!usePotion(s))return;toast('회복 물약 · '+(1+relicStat(s.player,'potion'))+'하트 회복');save();}
 function dodge(){if(paused||!castBlink(s,input.direction()))return;ensureMetrics(s).dodgesUsed++;fx.push({x:s.player.x,y:s.player.y,r:40,t:.35,color:'#d5eed4'});}
@@ -168,6 +188,7 @@ function draw(){updateHUD(s);ctx.clearRect(0,0,960,540);rect(0,0,960,540,'#11191
 }
 
 function dispatch(action){
+ if(mode==='rank-start')return;
  if(action==='pause'){if(['pause','bag','shrine'].includes(mode))resume();else pause();return;}
  if(action==='help'){showInfo('help');return;}
  if(action==='bag'){if(mode==='bag')resume();else bag();return;}

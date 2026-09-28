@@ -10,7 +10,9 @@ import {lootInfo} from './loot.js';
 import {skills} from './progression.js';
 export const SAVE_KEY='spirebound.run.v1';
 export const HISTORY_KEY='spirebound.history';
-export const RELEASE='0.31.0-prebeta';
+export {RELEASE} from './version.js';
+import {RELEASE} from './version.js';
+import {validateRanking,rankingSummary} from './ranking.js';
 const roomTypes=new Set(['exit','down','up','normal','boss','fountain','treasure','shrine','event']);
 const enemyTypes=new Set(['chaser','charger','archer','scatter','brute','laser','ricochet','boss','flower','minislime','strafer','ringcaster','ambusher','astralSniper','gravityMage','starKnight','starBearer','royalGuard','pulseTurret','riftHunter']);
 function check(condition){if(!condition)throw new Error('저장 데이터 형식이 올바르지 않습니다.');}
@@ -82,7 +84,7 @@ export function validateRun(s){
  if(s.metrics?.bossRecords!==undefined){const a=s.metrics.bossRecords;check(Array.isArray(a)&&a.length<=s.floors.length);const seen=new Set();for(const r of a){check(r&&(Number.isInteger(r.floor)&&number(r.floor,0,s.floors.length-1))&&number(r.seconds,0,1e12)&&typeof r.complete==='boolean'&&!seen.has(r.floor));seen.add(r.floor);}}
  if(s.choices!=null)check(Array.isArray(s.choices)&&s.choices.length<=3&&s.choices.every(k=>skillIds.includes(k)||growthRewards.some(r=>r.id===k)));
  if(s.projectiles!==undefined){check(Array.isArray(s.projectiles)&&s.projectiles.length<2000);for(const b of s.projectiles){check(number(b.x,-100,1100)&&number(b.y,-100,700)&&number(b.vx,-2000,2000)&&number(b.vy,-2000,2000)&&number(b.life,0,20)&&typeof b.enemy==='boolean');if(b.shardSize!==undefined)check([.5,1,1.5].includes(b.shardSize));if(b.passive!==undefined)check(!b.enemy&&['sunFairy','snowFairy','stormFairy','turret'].includes(b.passive)&&number(b.passiveDamage,0,100000));if(b.poisonShot!==undefined)check(['needle','orb'].includes(b.poisonShot));if(b.frostShard!==undefined)check(typeof b.frostShard==='boolean');if(b.frostShard)check(!b.enemy&&number(b.damageScale,.3,.51)&&b.pierce===0);if(b.delay!==undefined)check(number(b.delay,0,.16));if(b.homing!==undefined)check(typeof b.homing==='boolean');check(Array.isArray(b.hit)&&b.hit.length<128);}}
- return s;
+ check(validateRanking(s));return s;
 }
 function fingerprint(text){let hash=2166136261;for(let i=0;i<text.length;i++)hash=Math.imul(hash^text.charCodeAt(i),16777619);return (hash>>>0).toString(16);}
 export function parseSave(raw){
@@ -108,8 +110,9 @@ export class RunStore{
   if(s.practice)return {ok:true,practice:true};
   try{
    this.storage.setItem(this.key+'.ended',s.runId||'legacy');
+   const ranking=won?rankingSummary(s):null;
    const history=safeHistory(this.storage),id=s.runId||'legacy';
-   if(!history.some(row=>row.id===id))history.push({id,won,time:s.elapsed,level:s.player.level,floor:s.floor+1,key:s.key,date:new Date().toISOString(),release:RELEASE,seed:s.seed,metrics:s.metrics,relic:s.player.relic,relics:s.player.relics,lastHit:s.lastHit,bestiary:s.bestiary,evolutions:s.player.evolutions||{},build:skillIds.map(k=>[k,s.player[k]||0]),weapon:s.player.weapon});
+   if(!history.some(row=>row.id===id))history.push({id,won,ranking,time:s.elapsed,level:s.player.level,floor:s.floor+1,key:s.key,date:new Date().toISOString(),release:RELEASE,seed:s.seed,metrics:s.metrics,relic:s.player.relic,relics:s.player.relics,lastHit:s.lastHit,bestiary:s.bestiary,evolutions:s.player.evolutions||{},build:skillIds.map(k=>[k,s.player[k]||0]),weapon:s.player.weapon});
    this.storage.setItem(HISTORY_KEY,JSON.stringify(history.slice(-30)));
    this.storage.removeItem(this.key);this.storage.removeItem(this.key+'.backup');return {ok:true};
   }catch{return {ok:false,error:'결과를 저장하지 못했습니다. 이 창을 닫기 전에 기록을 내려받으세요.'};}

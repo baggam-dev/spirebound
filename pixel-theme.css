@@ -1,4 +1,8 @@
 @font-face{font-family:Galmuri;src:url('pixel-font.woff2') format('woff2');font-weight:100 900;font-display:swap}
+.ranking-summary{margin:14px 0;padding:12px;border:1px solid #bba46c80;background:#09151b;text-align:center}
+.ranking-summary h3{color:#f0d69b;margin:0 0 8px}.ranking-summary p{margin:6px 0}.ranking-summary small{color:#a9b6a4}
+.rank-view{max-width:620px;margin:auto;text-align:center}.rank-view input{display:block;box-sizing:border-box;width:min(320px,100%);margin:12px auto;padding:12px;border:2px solid #bba46c;background:#09151b;color:#f0d69b;font-size:16px}
+.rank-view label,.rank-note{font-size:11px}.rank-list{list-style:none;margin:10px 0;padding:0;text-align:left}.rank-row{display:grid;grid-template-columns:32px minmax(0,1fr) 84px;gap:10px;align-items:center;padding:10px 8px;border-bottom:1px solid #bba46c40}.rank-row span{overflow-wrap:anywhere}.rank-row strong{text-align:right;color:#f0d69b}.rank-row small{display:block;color:#a9b6a4;font-size:10px;margin-top:4px}.rank-mine,.rank-personal{background:#bba46c15}.rank-personal{padding:10px;border:1px solid #bba46c80}.rank-personal .rank-list{margin-bottom:0}.rank-draft{display:block;width:100%;margin:8px 0!important}.rank-pending{margin:18px 0}.rank-pending summary{padding:10px;cursor:pointer}.rank-view button{min-height:44px}#rankMessage{min-height:2em;overflow-wrap:anywhere}
 :root,body,button,input,select,textarea,kbd,small,.skill-item b,#xpLabel{font-family:Galmuri,monospace!important}
 button,.panel,.arena,.hud-item,.shield-state,.skill-preview{border-radius:0!important}
 button{border:2px solid #788573;box-shadow:inset 2px 2px #bdc9a42b,inset -3px -3px #030d1680,2px 2px #040a10;transition:background .1s}
