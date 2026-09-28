@@ -16,6 +16,7 @@ docs/WORK_STATUS.md → docs/TODO.md → docs/WORK_LOG.md 최근 항목 → docs
 폴더 리팩터링도 검증·배포 완료했어. README 소스 탐색표와 docs/repository-structure.md를 참고해.
 소스는 src/ 기능별 폴더, 테스트는 tests/, 배포는 tools/deploy/deploy.ps1, QA는 tools/qa/야.
 서버 공통 랭킹은 독립 브라우저 공유 검증까지 완료했어. 상위 100명 확장/계정 연결은 별도 요청 없이 추가하지 마.
+현재 벽 개선은 docs/room-shapes.md의 합의대로 구현했어. 기존형/얇은 동선형을 섞고 석조 외형을 공통 적용하며, 기존 저장 지형은 유지해. 검증·배포 상태는 WORK_STATUS.md를 확인해.
 다음 개발은 사용자 요청 범위에 맞춰 진행하고 실제 iPhone·외부 백업·외부 알림은 선택 과제로 남겨줘.
 완료된 작업을 반복하지 말고 TODO의 다음 미완료 항목부터 진행해줘.
 개발 후 적절한 검증과 배포까지 이어가되, 사용자 정보가 필요한 외부 작업은 무엇이 부족한지 알려줘.

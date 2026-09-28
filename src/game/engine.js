@@ -1,7 +1,7 @@
 import {startRanking} from '../ranking/ranking.js';
 import {prepareReturnSeals,returnDoorsLocked,returnStairsLocked} from '../world/return-seals.js';
 import {placeRoomObjects} from '../world/object-positions.js';
-import {applyRoomShape} from '../world/room-shapes.js';
+import {applyRoomShape,chooseRoomShape} from '../world/room-shapes.js';
 import {strengthenGateKnight} from '../combat/balance.js';
 import {enterShrine,shrineLocked,claimIncantation} from '../world/shrine.js';
 import {offerRelics} from '../progression/relics.js';
@@ -37,7 +37,7 @@ export function generateFloor(floor,random=Math.random){
  if(floor===7){const boss=rooms.find(r=>r.type==='boss');boss.enemies=[];boss.kingPending=true;const rest=rooms.find(r=>Math.abs(r.x-boss.x)+Math.abs(r.y-boss.y)===1);rest.type='fountain';rest.enemies=[];rest.obstacles=[];rest.hasChest=false;rest.rest=true;}
  if(floor>=6){const intro=rooms[1];intro.intro=true;intro.enemies=encounter(floor,random,intro.obstacles).slice(0,4);intro.enemies.forEach((e,i)=>{e.type=floor===6?(i<2?'starKnight':'astralSniper'):(i<2?'royalGuard':'pulseTurret');delete e.elite;delete e.formation;e.hp=e.max=Math.ceil((32+floor*16)*1.25*(['starKnight','royalGuard'].includes(e.type)?1.15:1));e.cd=1.2+i*.3;e.role=i<2?'전열':'후열';});}
  if(floor===0){const r=rooms[1];r.tutorial=true;r.obstacles=[];r.enemies=Array.from({length:4},(_,i)=>({id:i,type:'chaser',x:620+(i%2)*100,y:180+Math.floor(i/2)*170,hp:54,max:54,tier:0,cd:1.5,balanceVersion:1,xpReward:i===0?11:10}));}
- rooms.forEach(r=>applyRoomShape(r,Math.min(3,Math.floor(random()*4))));
+ rooms.forEach(r=>applyRoomShape(r,chooseRoomShape(random)));
  rooms.forEach(r=>placeRoomObjects(r,random));
  return rooms;
 }
