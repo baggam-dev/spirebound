@@ -12,6 +12,7 @@ docs/WORK_STATUS.md → docs/TODO.md → docs/WORK_LOG.md 최근 항목 → docs
 기존 미커밋/신규 파일을 보존하고 임의 초기화하지 마. 검증을 마친 의미 있는 수정 단위마다 관련 코드·테스트·문서를 커밋해줘. 푸시는 별도 요청이 있을 때만 해.
 랭킹 5단계 HTTPS·백업·운영 검증은 완료했어. 최신 릴리스와 검증 근거는 WORK_STATUS.md를 기준으로 해.
 공개 HTTPS·기존 HTTP 기록 이전·Secure 쿠키·랭킹 조회·예약 작업 검증까지 완료했으므로 초기 전환을 반복하지 마.
+랭킹·HTTPS·리팩터링 완료 커밋은 사용자 요청으로 origin/main에 푸시했어(2026-09-29).
 폴더 리팩터링도 검증·배포 완료했어. README 소스 탐색표와 docs/repository-structure.md를 참고해.
 소스는 src/ 기능별 폴더, 테스트는 tests/, 배포는 tools/deploy/deploy.ps1, QA는 tools/qa/야.
 서버 공통 랭킹은 독립 브라우저 공유 검증까지 완료했어. 상위 100명 확장/계정 연결은 별도 요청 없이 추가하지 마.
