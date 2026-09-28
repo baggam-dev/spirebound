@@ -12,7 +12,9 @@ docs/WORK_STATUS.md → docs/TODO.md → docs/WORK_LOG.md 최근 항목 → docs
 기존 미커밋/신규 파일을 보존하고 임의 초기화하지 마. 검증을 마친 의미 있는 수정 단위마다 관련 코드·테스트·문서를 커밋해줘. 푸시는 별도 요청이 있을 때만 해.
 랭킹 5단계 HTTPS·백업·운영 검증은 완료했어. 최신 릴리스와 검증 근거는 WORK_STATUS.md를 기준으로 해.
 공개 HTTPS·기존 HTTP 기록 이전·Secure 쿠키·랭킹 조회·예약 작업 검증까지 완료했으므로 초기 전환을 반복하지 마.
-다음 작업 검토는 docs/repository-structure.md에 있어. 서버 공통 랭킹은 이미 구현돼 있으며 폴더 재구성을 구현했어. 소스는 src/, 테스트는 tests/, 배포 도구는 tools/deploy/야. 검증·배포 완료 여부는 WORK_STATUS.md를 확인해.
+폴더 리팩터링도 검증·배포 완료했어. README 소스 탐색표와 docs/repository-structure.md를 참고해.
+소스는 src/ 기능별 폴더, 테스트는 tests/, 배포는 tools/deploy/deploy.ps1, QA는 tools/qa/야.
+서버 공통 랭킹은 독립 브라우저 공유 검증까지 완료했어. 상위 100명 확장/계정 연결은 별도 요청 없이 추가하지 마.
 다음 개발은 사용자 요청 범위에 맞춰 진행하고 실제 iPhone·외부 백업·외부 알림은 선택 과제로 남겨줘.
 완료된 작업을 반복하지 말고 TODO의 다음 미완료 항목부터 진행해줘.
 개발 후 적절한 검증과 배포까지 이어가되, 사용자 정보가 필요한 외부 작업은 무엇이 부족한지 알려줘.

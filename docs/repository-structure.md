@@ -1,6 +1,6 @@
 # 랭킹 공유 및 저장소 구조 검토
 
-2026-09-29. 검토 후 사용자 승인으로 폴더 구조 적용 중. 최신 검증/배포 상태는 WORK_STATUS.md 참조.
+2026-09-29. 검토 후 사용자 승인으로 구현·검증·배포 완료. 코드 커밋 3e6c57a, 릴리스 release-20260929-022149-cb811d. 최신 상태는 WORK_STATUS.md 참조.
 
 ## 1. 랭킹은 이미 서버 저장·공통 조회
 - ranking-client.js의 submit은 POST /api/records, leaderboard는 GET /api/rankings를 호출한다. localStorage는 개인 저장/등록 대기·재시도 기록용이다.
@@ -9,7 +9,7 @@
 - 내 순위는 브라우저 쿠키 식별자 기준이다. 다른 기기를 같은 사람으로 연결하는 계정 기능은 없다. 같은 닉네임만으로 계정 통합하지 않는다.
 - 온라인 시작 후 탈출하여 이름을 등록한 기록만 공개 대상이며, 로컬 기록/등록 대기/검토 보류 기록은 목록에 포함되지 않는다.
 - 전체 유저라는 뜻이 101위 이후까지 조회라면 페이지네이션이 필요하다. 기기 간 내 기록 연결까지 원한다면 별도 계정/이전 기능 설계가 필요하다. 서버 저장 변경 자체는 필요 없다.
-- 근거: ranking-ui.js board, ranking-client.js request/submit/leaderboard, api/ranking_api.py leaderboard, api/test_ranking_api.py의 재시작 보존·사용자별 최고·100위 밖 내 순위 검사. 이번에는 코드 검토만 했으며 서로 다른 실기기로 새 기록을 등록하는 시험은 하지 않았다.
+- 근거: ranking-ui.js board, ranking-client.js request/submit/leaderboard, api/ranking_api.py leaderboard, api/test_ranking_api.py의 재시작 보존·사용자별 최고·100위 밖 내 순위 검사. 후속 구현에서 임시 API에 3개 브라우저로 등록한 뒤 별도 익명 브라우저가 동일 목록을 보는 QA를 통과했다. 서로 다른 실제 기기 시험은 하지 않았다.
 
 ## 2. 적용 폴더 구조
 기존 루트 156개 파일을 9개로 줄이고 src 기능별 8개 폴더, tests/unit·integration, styles, assets/images·fonts, tools/qa·deploy로 분리했다. server.js와 공개 HTML 진입점은 루트에 유지한다.
