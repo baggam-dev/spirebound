@@ -12,6 +12,8 @@ class NginxTests(unittest.TestCase):
     def test_secure_config_keeps_transfer_page_and_certificate_outside_release(self):
         config = render('168.107.21.43', True)
         self.assertIn('listen 443 ssl', config)
+        for asset in ['src/persistence/upgrade.js', 'src/persistence/upgrade-transfer.js', 'styles/pixel-theme.css', 'assets/fonts/pixel-font.woff2']:
+            self.assertIn('location = /' + asset + ' { try_files $uri =404; }', config)
         self.assertIn('location = / { try_files /upgrade.html', config)
         self.assertIn('/etc/letsencrypt/live/spirebound-ip/fullchain.pem', config)
         self.assertIn('return 308 https://168.107.21.43$request_uri', config)

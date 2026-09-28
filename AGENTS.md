@@ -26,7 +26,7 @@
 - 순수 JavaScript + Canvas 8층 로그라이크. 현재 코드가 전투·성장 밸런스의 기준이다.
 - `node --test`가 JS 테스트 및 Python API 통합 테스트를 실행한다. Windows 번들 Python 자동 탐색, 없으면 `PYTHON`으로 지정한다.
 - 개발 서버: `node server.js` — 실제 출력 포트를 확인한다. API 프록시는 `RANKING_API_PORT` 환경변수로 연결한다.
-- 브라우저 QA: `tools/*-qa.mjs`, Playwright `channel: msedge`. 실제 iPhone 검증과 에뮬레이션을 구분한다.
-- 배포: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools\deploy.ps1`.
+- 브라우저 QA: `tools/qa/*-qa.mjs`, Playwright `channel: msedge`. 실제 iPhone 검증과 에뮬레이션을 구분한다.
+- 배포: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools\deploy\deploy.ps1`.
 - 배포 후 공개 파일/서비스를 확인한다. HTTPS 활성화와 운영 절차는 `docs/ranking-operations.md` 및 현재 상태 문서를 따른다.
 - 문서 정리만으로 필요한 테스트를 반복하지 않는다. 변경 범위에 맞는 검증을 수행한다.

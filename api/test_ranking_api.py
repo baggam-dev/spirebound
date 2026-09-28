@@ -80,6 +80,8 @@ class RankingTests(unittest.TestCase):
             self.app.submit(token, dict(self.body, runId=run_id, elapsedMs=elapsed))
         board = self.app.leaderboard(self.token, 'BETA-1')
         self.assertEqual(len(board['entries']), 2)
+        self.assertEqual(self.app.leaderboard(None, 'BETA-1')['entries'], board['entries'])
+        self.assertEqual(self.app.leaderboard(other, 'BETA-1')['entries'], board['entries'])
         self.assertEqual(board['mine']['rank'], 2)
         self.assertEqual(board['mine']['elapsedMs'], 1199999)
 

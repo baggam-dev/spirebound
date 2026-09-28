@@ -1,6 +1,6 @@
 import http from 'node:http';
-import {readFile} from 'node:fs/promises';
-import {resolve,extname,basename} from 'node:path';
+import {readFile,realpath} from 'node:fs/promises';
+import {resolve,extname,sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 export function createServer(root=process.cwd(),apiPort=process.env.RANKING_API_PORT){
  return http.createServer(async(req,res)=>{
@@ -12,8 +12,10 @@ export function createServer(root=process.cwd(),apiPort=process.env.RANKING_API_
   try{
    if(!['GET','HEAD'].includes(req.method)){res.writeHead(405);res.end();return;}
    const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname),file=pathname==='/'?'index.html':pathname.slice(1);
-   const allowed=file===basename(file)&&!file.includes('\\')&&(['index.html','upgrade.html'].includes(file)||['style.css','layout.css','mobile.css','pixel-theme.css','pixel-font.woff2','title-art.png','FONT-LICENSE.txt'].includes(file)||/^[a-z][a-z0-9-]*\.js$/.test(file)&&file!=='server.js');
-   if(!allowed)throw Error();const data=await readFile(resolve(root,file));
+   const allowed=['index.html','upgrade.html'].includes(file)||/^src\/(?:[a-z][a-z0-9-]*\/)+[a-z][a-z0-9-]*\.js$/.test(file)||/^styles\/[a-z][a-z0-9-]*\.css$/.test(file)||['assets/images/title-art.png','assets/fonts/pixel-font.woff2','assets/fonts/FONT-LICENSE.txt'].includes(file);
+   if(!allowed)throw Error();
+   const base=await realpath(root),target=await realpath(resolve(root,file));
+   if(!target.startsWith(base+sep))throw Error();const data=await readFile(target);
    res.setHeader('Content-Type',({'.png':'image/png','.woff2':'font/woff2','.txt':'text/plain; charset=utf-8','.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8'})[extname(file)]);res.end(req.method==='HEAD'?undefined:data);
   }catch{res.writeHead(404);res.end('Not found');}
  });

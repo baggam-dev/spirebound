@@ -2,6 +2,27 @@
 
 새 대화/다른 AI는 [AGENTS.md](AGENTS.md)를 먼저 읽고 [현재 상태](docs/WORK_STATUS.md), [TODO](docs/TODO.md), [작업 이력](docs/WORK_LOG.md)을 확인하세요. [새 챗 인계 블록](docs/HANDOFF.md)과 [랭킹 운영 절차](docs/ranking-operations.md)도 유지합니다. 아래 버전별 항목은 과거 변경 이력이며 현재 운영 상태는 WORK_STATUS.md가 기준입니다.
 
+## 소스 찾기
+
+| 수정할 기능 | 위치 / 시작 파일 |
+| --- | --- |
+| 게임 시작·루프·상태 | [src/game/](src/game/) — game.js, engine.js, simulation.js |
+| 공격·스킬·적·보스 | [src/combat/](src/combat/) |
+| 층·방·탐험·귀환 | [src/world/](src/world/) |
+| 성장·유물·보상 | [src/progression/](src/progression/) |
+| Canvas 그림·이펙트 | [src/rendering/](src/rendering/) |
+| 화면·HUD·조작 | [src/ui/](src/ui/) |
+| 랭킹 규칙·화면·통신 | [src/ranking/](src/ranking/) |
+| 저장·탭 잠금·HTTPS 이전 | [src/persistence/](src/persistence/) |
+| 서버 랭킹·DB·운영 | [api/](api/) |
+| CSS / 이미지·폰트 | [styles/](styles/) / [assets/](assets/) |
+| 자동 테스트 / 브라우저 QA | [tests/](tests/) / [tools/qa/](tools/qa/) |
+| 배포·인증서 도구 | [tools/deploy/](tools/deploy/) |
+
+저장소 루트에서 개발 서버는 `npm start`, 전체 테스트는 `npm test` 또는 `node --test`를 실행합니다.
+배포는 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools\deploy\deploy.ps1` 또는 `deploy.bat`입니다.
+공식 서비스의 공통 랭킹은 서버 SQLite에 저장됩니다. 개인 진행 저장과 등록 대기 기록은 브라우저에 남습니다.
+
 # 0.31 · 편성 리듬과 반격 기회
 
 상층 전열·사수·지원 공격 시차, 인력+탄막 편성, 칼드 장애물 유도 및 모르도 연속 베기 회피 보상. [상세 변경](docs/counterplay-31.md).
@@ -179,8 +200,8 @@ Node.js 22 이상에서 npm start → http://localhost:5173 . 별도 패키지 �
 
 자동 검사 91개: 지도/계단/기존 저장, 스킬 감소율, 탄막 강화, 분열 종료, 소환 보상 제한, 독 중복·지속시간, 독 진행 중 저장 재개 등.
 
-node tools/qa-pressure.mjs: 보스 3종 및 광폭 구간 각각 120초의 무적·공격 정지 CPU 시뮬레이션. 저장 재개 포함, 광폭 장면 최대 170개 동시 탄환. 결과는 docs/qa-pressure.json. 이는 브라우저 FPS나 실제 난이도 검증이 아닙니다.
+node tools/qa/qa-pressure.mjs: 보스 3종 및 광폭 구간 각각 120초의 무적·공격 정지 CPU 시뮬레이션. 저장 재개 포함, 광폭 장면 최대 170개 동시 탄환. 결과는 docs/qa-pressure.json. 이는 브라우저 FPS나 실제 난이도 검증이 아닙니다.
 
-node tools/qa-scenes.mjs: http://localhost:5193/qa 에 별도 저장 공간의 화면 검증 장면 제공. 실제 플레이 주소 5173의 저장은 건드리지 않습니다. 이 테스트 서버는 127.0.0.1 전용이며 기본 게임 서버에서 제공하지 않습니다.
+node tools/qa/qa-scenes.mjs: http://localhost:5193/qa 에 별도 저장 공간의 화면 검증 장면 제공. 실제 플레이 주소 5173의 저장은 건드리지 않습니다. 이 테스트 서버는 127.0.0.1 전용이며 기본 게임 서버에서 제공하지 않습니다.
 
 브라우저에서 슬라임/꽃봉우리 표시와 가로 화면 경계, 오류 없는 실행을 확인했습니다. **실제 사람의 6층 왕복 완주, 모바일 기기 성능과 체감 난이도는 다음 플레이테스트가 필요**합니다. 이전 변경 이력은 docs/history-through-0.8.md, 구축일지는 docs/build-journal.md.

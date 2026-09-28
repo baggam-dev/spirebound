@@ -23,11 +23,11 @@ sudo systemctl start spirebound-ops-check.service
 
 ## HTTPS 초기 구성
 1. 현재 deploy 스크립트로 HTTP 운영 준비 파일과 안정된 ACME 경로(`/usr/share/nginx/spirebound-acme`)를 먼저 배포한다.
-2. `tools/secure-server.sh`를 LF 개행으로 서버 임시 경로에 업로드하고 `sudo bash <경로> 168.107.21.43`으로 실행한다.
+2. `tools/deploy/secure-server.sh`를 LF 개행으로 서버 임시 경로에 업로드하고 `sudo bash <경로> 168.107.21.43`으로 실행한다.
 3. Python 3.12 + 전용 `/opt/spirebound-certbot` 환경, Certbot 5.4 이상, staging/production 순 IP 인증서 발급을 수행한다. 앱의 Python 3.9는 변경하지 않는다.
 4. 인증서는 `/etc/letsencrypt/live/spirebound-ip/`. **privkey.pem 내용 출력·복사 금지**. 6일 유효기간이므로 하루 두 번 갱신 점검 타이머를 사용한다.
 5. 443 시험 리스너 `/api/health`를 외부에서 인증서 검증을 켠 상태로 확인한다. 외부 차단 시 Oracle 인바운드 규칙을 확인해야 한다. `-k`로 우회한 결과를 성공으로 간주하지 않는다.
-6. `tools/deploy.ps1 -EnableHttps`로 실제 전환한다. 이후 일반 배포도 `/etc/spirebound-https-enabled` 마커에 따라 HTTPS를 유지한다.
+6. `tools/deploy/deploy.ps1 -EnableHttps`로 실제 전환한다. 이후 일반 배포도 `/etc/spirebound-https-enabled` 마커에 따라 HTTPS를 유지한다.
 7. 배포기는 서버용 API 설정을 HTTPS Origin / Secure 쿠키로 맞춘다. `api/config.json`의 저장소 기본값과 서버 생성 설정이 다를 수 있다.
 8. 기존 HTTP 첫 화면은 기록 이전 안내로 남긴다. 그 외 요청은 HTTPS로 리다이렉트하며, ACME·기록 이전에 필요한 파일만 HTTP에 제공한다.
 

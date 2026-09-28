@@ -28,10 +28,10 @@ def render(address, secure=False):
     config += '''    location = / { try_files /upgrade.html =404; }
     location = /index.html { try_files /upgrade.html =404; }
     location = /upgrade.html { try_files $uri =404; }
-    location = /upgrade.js { try_files $uri =404; }
-    location = /upgrade-transfer.js { try_files $uri =404; }
-    location = /pixel-theme.css { try_files $uri =404; }
-    location = /pixel-font.woff2 { try_files $uri =404; }
+    location = /src/persistence/upgrade.js { try_files $uri =404; }
+    location = /src/persistence/upgrade-transfer.js { try_files $uri =404; }
+    location = /styles/pixel-theme.css { try_files $uri =404; }
+    location = /assets/fonts/pixel-font.woff2 { try_files $uri =404; }
 '''
     config += f'    location / {{ return 308 https://{address}$request_uri; }}\n}}\n'
     config += f'''server {{

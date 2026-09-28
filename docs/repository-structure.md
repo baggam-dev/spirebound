@@ -1,6 +1,6 @@
 # 랭킹 공유 및 저장소 구조 검토
 
-2026-09-29. 구현 전 검토이며 이번에는 제품 코드·배포를 변경하지 않았다.
+2026-09-29. 검토 후 사용자 승인으로 폴더 구조 적용 중. 최신 검증/배포 상태는 WORK_STATUS.md 참조.
 
 ## 1. 랭킹은 이미 서버 저장·공통 조회
 - ranking-client.js의 submit은 POST /api/records, leaderboard는 GET /api/rankings를 호출한다. localStorage는 개인 저장/등록 대기·재시도 기록용이다.
@@ -11,8 +11,8 @@
 - 전체 유저라는 뜻이 101위 이후까지 조회라면 페이지네이션이 필요하다. 기기 간 내 기록 연결까지 원한다면 별도 계정/이전 기능 설계가 필요하다. 서버 저장 변경 자체는 필요 없다.
 - 근거: ranking-ui.js board, ranking-client.js request/submit/leaderboard, api/ranking_api.py leaderboard, api/test_ranking_api.py의 재시작 보존·사용자별 최고·100위 밖 내 순위 검사. 이번에는 코드 검토만 했으며 서로 다른 실기기로 새 기록을 등록하는 시험은 하지 않았다.
 
-## 2. 제안 폴더 구조
-현재 루트 파일 156개 중 JS 테스트가 66개다. 기능별 src와 별도 tests로 탐색을 개선한다. 아래 경계는 구현 시 import 의존관계를 확인해 확정한다.
+## 2. 적용 폴더 구조
+기존 루트 156개 파일을 9개로 줄이고 src 기능별 8개 폴더, tests/unit·integration, styles, assets/images·fonts, tools/qa·deploy로 분리했다. server.js와 공개 HTML 진입점은 루트에 유지한다.
 
 ~~~text
 index.html / upgrade.html   # 공개 진입점 유지
@@ -39,8 +39,8 @@ docs/                      # 기존 문서 링크 유지
 
 ## 3. 이동과 함께 고쳐야 하는 부분
 - 상대 import, HTML script/link, CSS 이미지·폰트 URL, 테스트에서 읽는 파일 경로를 함께 갱신한다.
-- server.js는 현재 루트의 명시적 파일만 제공한다. 하위 디렉터리를 지원하되 src/styles/assets 등 공개 경로만 허용하고 api/docs/tests/.git 및 경로 이탈 차단을 유지한다.
-- tools/deploy.ps1은 루트 파일만 묶으므로 폴더를 보존하는 명시적 배포 목록으로 수정한다. 테스트·운영 문서·비밀·DB가 정적 배포물에 포함되지 않게 한다.
+- server.js는 src/styles/assets의 하위 디렉터리를 지원한다. src/styles/assets 등 공개 경로만 허용하고 api/docs/tests/.git 및 경로 이탈 차단을 유지한다.
+- tools/deploy/deploy.ps1은 공개 HTML과 src/styles/assets만 폴더 구조를 보존해 묶는다. 예상하지 못한 파일 유형은 배포를 중단한다. 테스트·운영 문서·비밀·DB가 정적 배포물에 포함되지 않게 한다.
 - deploy-remote.sh의 파일 검증 경로, api/nginx_config.py의 HTTP 이전용 허용 경로, tools QA의 /engine.js 같은 동적 import를 함께 갱신한다.
 - package.json 명령, Python 테스트 탐색, QA 실행 위치, deploy.bat 및 문서 명령도 갱신한다. API/DB 운영 경로는 폴더 정리 이유만으로 이동하지 않는다.
 - 저장 키/데이터 형식/API 경로/게임 규칙은 유지한다. 빌드 도구나 프레임워크 도입은 이번 목적에 필요하지 않다.
