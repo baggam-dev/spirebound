@@ -1,3 +1,7 @@
+# 개발 재개와 작업 기록
+
+새 대화/다른 AI는 [AGENTS.md](AGENTS.md)를 먼저 읽고 [현재 상태](docs/WORK_STATUS.md), [TODO](docs/TODO.md), [작업 이력](docs/WORK_LOG.md)을 확인하세요. [새 챗 인계 블록](docs/HANDOFF.md)과 [랭킹 운영 절차](docs/ranking-operations.md)도 유지합니다. 아래 버전별 항목은 과거 변경 이력이며 현재 운영 상태는 WORK_STATUS.md가 기준입니다.
+
 # 0.31 · 편성 리듬과 반격 기회
 
 상층 전열·사수·지원 공격 시차, 인력+탄막 편성, 칼드 장애물 유도 및 모르도 연속 베기 회피 보상. [상세 변경](docs/counterplay-31.md).
