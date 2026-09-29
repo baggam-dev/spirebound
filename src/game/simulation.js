@@ -8,6 +8,7 @@ import {observeGrowth,tickBossRecord,completeBossRecord} from '../progression/gr
 import {deployRoom} from '../world/formations.js';
 import {updateUpper,upperTypes,tickUpperState} from '../combat/upper-floors.js';
 import {updateCommander,resetCommanderAttack} from '../combat/commander.js';
+import {updateDemon,resetDemonAttack,advanceDemonPhase} from '../combat/demon.js';
 import {tickRain} from '../combat/abilities.js';
 import {tickPassives,passiveHit} from '../progression/passives.js';
 import {frostAttackRate} from '../combat/frost.js';
@@ -44,6 +45,7 @@ export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
 export function enterRoom(s){
  trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
+ resetDemonAttack(r);
  // Do not preserve an off-screen attack aimed at the previous visit's position.
  for(const e of r.enemies){resetCommanderAttack(e);if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
 }
@@ -76,6 +78,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  if(r.allyZone){const z=r.allyZone,active=Math.min(dt,z.time);hitOrigin=null;
  for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,z)<z.r){const before=e.hp;e.hp-=(z.damage??40)*active*enemyDamageFactor(e);metrics.damageDealt+=before-Math.max(0,e.hp);}z.time-=dt;if(z.time<=0)r.allyZone=null;}
  updateHazards(r,dt,p,raw=>hurt(raw,raw>=12?'독성 군체 독':'꽃봉우리 독'));
+ if(s.entryGrace<=0)updateDemon(s,r,p,dt,s.projectiles,(raw,source)=>hurt(raw,source));
  const target=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!segmentBlocked(p,e,r.obstacles,3)).sort((a,b)=>distance(a,p)-distance(b,p))[0];
  s.auraVisual=Math.max(0,(s.auraVisual||0)-dt);const auraFlash=s.auraVisual<=0;if(auraFlash)s.auraVisual=.2;
  if(p.aura)hitOrigin=null;
@@ -87,6 +90,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(e.variant==='prism'&&s.entryGrace<=0)updatePrismSummons(e,p,r,dt,()=>runRandom(s));
   if(e.opening>0){e.opening=Math.max(0,e.opening-dt);continue;}if(!coordinateAttack(e,r))continue;
   e.spawnGrace=Math.max(0,(e.spawnGrace||0)-dt);if(s.entryGrace>0||e.spawnGrace>0)continue;
+  if(e.variant==='demon')continue;
   if(e.variant==='commander'){updateCommander(e,p,r,dt,s.projectiles,(raw,source)=>hurt(raw,source));continue;}
   if(e.variant==='king'||upperTypes.includes(e.type)){updateUpper(e,p,r,dt,s.projectiles,raw=>hurt(raw,enemyName(e)+' 암흑 공격'));continue;}
   if(e.variant==='slime'||e.type==='flower'){updatePoisonEnemy(e,p,r,dt,s.projectiles);continue;}
@@ -109,6 +113,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(b.life<=0)continue;
   if(b.ricochet){if(advanceRicochet(b,dt,r.obstacles,p))hurt(9,b.source||'반사탄',null,{x:p.x-b.vx,y:p.y-b.vy});if(p.hp<=0)break;continue;}
   let travelDt=dt;if(b.delay>0){travelDt=Math.max(0,dt-b.delay);b.delay=Math.max(0,b.delay-dt);if(b.delay>0)continue;if(!b.turretShot){b.x=p.x;b.y=p.y;}}if(!b.enemy)steerArrow(b,r.enemies,r.obstacles,travelDt,segmentBlocked);
+  if(b.demonCurve){const turn=b.demonCurve*travelDt,c=Math.cos(turn),sin=Math.sin(turn),vx=b.vx;b.vx=vx*c-b.vy*sin;b.vy=vx*sin+b.vy*c;}
   const next={x:b.x+b.vx*travelDt,y:b.y+b.vy*travelDt};b.life-=travelDt;
   if(b.enemy){const t=collisionTime(b,next,p,15);if(t!==Infinity&&!segmentBlocked(b,{x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t},r.obstacles,3)){const before=p.hp;hurt(b.damage??10,b.source||'적 탄환',null,{x:p.x-b.vx,y:p.y-b.vy});if(b.frostArrow&&p.hp<before)p.frostSlow=Math.max(p.frostSlow||0,1.35);b.life=0;}}
   else{
@@ -123,6 +128,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  r.nextEnemyId=Math.max(r.nextEnemyId||0,...r.enemies.map(e=>e.id+1));
  resolveFireFields(r);
  const defeated=r.enemies.filter(e=>e.hp<=0);r.enemies=r.enemies.filter(e=>e.hp>0);
+ if(r.demon&&advanceDemonPhase(r,s.projectiles))events.push('demonPhase');
  for(const e of defeated){
   recordRankingDefeat(s,e);
   effects.push(enemyDeathEffect(e,!!s.key));

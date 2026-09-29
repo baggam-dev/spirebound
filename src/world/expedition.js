@@ -1,4 +1,5 @@
 export const enemyGuide={
+ demon:{name:'대악마의 신체',tip:'손·발, 눈·코·입, 벽 너머 본체의 세 단계를 차례로 무너뜨리세요.'},
  commander:{name:'악마 군단장',tip:'두 갈래에서 세 갈래로 강화되는 빙결 연사. 화살비의 고정된 착탄 지점에서 벗어나고 점멸 뒤 위치를 확인하세요.'},
  king:{name:'타락한 왕, 모르드',tip:'검은 왕 → 타락 → 마왕의 세 단계. 보라 전조를 피하고 검이 멈추면 공격하세요.'},
  astralSniper:{name:'별자리 저격수',tip:'고정된 조준선에서 벗어나 검기를 피하세요.'},
@@ -25,7 +26,7 @@ export const enemyGuide={
  slime:{name:'독성 군체',tip:'거대 1 → 중형 2 → 소형 4. 모든 분열체를 처치해야 끝납니다.'}
 };
 export function enemyKey(e){return e.type==='boss'?(e.variant||'warden'):e.type;}
-export function enemyName(e){return Object.hasOwn(enemyGuide,enemyKey(e))?enemyGuide[enemyKey(e)].name:'알 수 없는 적';}
+export function enemyName(e){if(e.variant==='demon')return ({hand:'대악마의 손',foot:'대악마의 발',eye:'대악마의 눈',nose:'대악마의 코',mouth:'대악마의 입',core:'대악마 본체'})[e.part]||enemyGuide.demon.name;return Object.hasOwn(enemyGuide,enemyKey(e))?enemyGuide[enemyKey(e)].name:'알 수 없는 적';}
 export function observeRoom(s,room){
  for(const e of room.enemies){const key=enemyKey(e);if(!Object.hasOwn(enemyGuide,key))continue;const entry=(s.bestiary??={})[key]??={kills:0,traits:[]};if(e.elite&&!entry.traits.includes(e.elite))entry.traits.push(e.elite);}
 }
