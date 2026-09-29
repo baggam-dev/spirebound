@@ -43,6 +43,10 @@ class RankingTests(unittest.TestCase):
         self.assertEqual(score(999, 0, 1, 3)['time'], 6000)
         self.assertEqual(score(1000, 0, 1, 3)['time'], 5998)
 
+    def test_beta_one_rejects_expanded_map(self):
+        expanded = dict(self.run, runId='run-expanded-0001', roomCounts=self.run['roomCounts'] + [8, 2])
+        self.reject(lambda: self.app.start(self.token, expanded), 'invalid_map')
+
     def test_recompute_and_restart_persistence(self):
         receipt = self.app.submit(self.token, self.body)
         self.assertEqual(receipt['status'], 'accepted')

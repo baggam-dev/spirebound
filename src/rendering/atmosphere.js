@@ -2,7 +2,7 @@ import {iconSVG} from './pixel-icons.js';
 import {formationName} from '../world/formations.js';
 import {drawRoomBackdrop} from './room-backdrops.js';
 import {drawSoftField} from './ground-visuals.js';
-export const floorNames=['잊힌 돌의 전당','파수꾼의 회랑','고대신의 서고','프리즘의 왕좌','독화의 온실','군체의 심장','무너진 천문관','몰락한 왕좌'];
+export const floorNames=['잊힌 돌의 전당','파수꾼의 회랑','고대신의 서고','프리즘의 왕좌','독화의 온실','군체의 심장','무너진 천문관','몰락한 왕좌','군단장의 전장','대악마의 옥좌'];
 const tones=['#34473b35','#45403745','#39335350','#303c5750','#28453055','#373c2750','#1b204966','#36162c66'];
 const label=(c,t,x,y,color='#cab9d6',size=12)=>{c.fillStyle=color;c.textAlign='center';c.font=`${size}px Galmuri, monospace`;c.fillText(t,x,y);};
 export function drawFloorMood(c,s,r){c.save();c.beginPath();c.rect(26,45,908,455);c.clip();c.fillStyle=tones[s.floor]||tones[0];c.fillRect(26,45,908,455);const group=Math.floor(s.floor/2);c.lineWidth=1;

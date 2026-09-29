@@ -28,7 +28,7 @@ import {unlockWarningAudio,toggleWarningAudio,playHeavyWarning} from '../ui/warn
 import {drawUpper,drawUpperGround,drawUpperLinks,upperTypes,challengeKing,kingPhase} from '../combat/upper-floors.js';
 import {PRISM_SUMMON} from '../combat/combat-tuning.js';
 import {drawPassives} from '../progression/passives.js';
-import {useFountain} from '../world/fountain.js';
+import {fountainPoint,useFountain} from '../world/fountain.js';
 import {createHUD} from '../ui/hud.js';
 import {iconSVG} from '../rendering/pixel-icons.js';
 import {incantationInfo,prepareIncantations,shrineLocked,enterShrine} from '../world/shrine.js';
@@ -140,12 +140,14 @@ function interaction(){
  if(s?.practice)return null;
  if(!s||s.status!=='playing')return null;const r=room();
  if(r.hasChest&&!r.chestUsed&&!r.enemies.length&&distance(s.player,objectPoint(r,true))<=65)return ['보물 상자 열기',()=>{prepareChest(s);save();if(openChest(s)){emitInteraction(s,'chest',r,{...objectPoint(r,!!r.hasChest),trap:['elites','boss'].includes(r.lastLoot?.id)});save();toast(lootLabel(room().lastLoot));resume();}}];
+ if(r.type==='down'&&r.fountainReady&&distance(s.player,fountainPoint(r))<=70)return [s.player.hp>=s.player.max?'샘물 · 체력이 가득합니다':'샘물 · '+Math.min(3,s.player.max-s.player.hp)+'하트 회복 · 사용 후 소모',()=>{const amount=Math.min(3,s.player.max-s.player.hp);if(!useFountain(s))return;emitInteraction(s,'fountain',r,fountainPoint(r));save();toast('샘물 사용 · '+amount+'하트 회복');}];
  if(distance(s.player,objectPoint(r))>78)return null;
  if(r.kingPending)return ['타락한 왕에게 도전',()=>{if(challengeKing(s)){save();toast('타락한 왕, 모르드가 왕좌에서 일어납니다.');}}];
  if(r.type==='fountain'&&!r.used&&!r.enemies.length)return [s.player.hp>=s.player.max?'샘물 · 체력이 가득합니다':'샘물 · '+Math.min(3,s.player.max-s.player.hp)+'하트 회복 · 사용 후 소모',()=>{const amount=Math.min(3,s.player.max-s.player.hp);if(!useFountain(s))return;emitInteraction(s,'fountain',r,objectPoint(r));save();toast('샘물 사용 · '+amount+'하트 회복');}];
  if(r.type==='treasure'&&!r.used&&!r.enemies.length)return ['보물 상자 열기',()=>{prepareChest(s);save();if(openChest(s)){emitInteraction(s,'chest',r,{...objectPoint(r,!!r.hasChest),trap:['elites','boss'].includes(r.lastLoot?.id)});save();toast(lootLabel(room().lastLoot));resume();}}];
  if(r.type==='event'&&!r.enemies.length&&(!r.used||r.trialState==='reward'))return [r.trialState==='reward'?'시련 보상 선택':'수상한 제단 · 위험과 보상',()=>r.trialState==='reward'?rewardPanel(true):eventPanel()];
  if(r.used&&!r.enemies.length&&r.relicOffers&&!r.relicClaimed)return ['유물함 · 선택 또는 지나가기',relicPanel];
+ if(r.type==='up'&&s.campaign==='expanded'&&s.floor===8&&!s.floors[8].some(room=>room.commanderPending&&room.used))return ['군단장 처치 후 계단 개방',()=>toast('9층 군단장을 먼저 처치해야 합니다.')];
  if(!roomLocked(s)&&(r.type==='up'||r.type==='boss'&&r.used)&&s.floor<s.floors.length-1)return [(s.floor+2)+'층으로 올라가기',()=>changeFloor(s.floor+1)];
  if(r.type==='down'&&!roomLocked(s)&&(!s.key||!returnStairsLocked(r)))return [s.floor+'층으로 내려가기',()=>changeFloor(s.floor-1)];
  if(r.type==='shrine'&&!r.used&&!r.enemies.length)return ['신전의 축복·저주 · 반드시 하나 선택',shrine];
@@ -178,6 +180,7 @@ function draw(){updateHUD(s);ctx.clearRect(0,0,960,540);rect(0,0,960,540,'#11191
  ctx.save();const objectPosition=objectPoint(r);ctx.translate(objectPosition.x-480,objectPosition.y-115);
  if(['up','down','exit','fountain','treasure','shrine','event'].includes(r.type)||r.type==='boss'&&r.used&&s.floor<s.floors.length-1){rect(453,85,54,43,'#151f21');if(r.type==='event'){rect(465,90,30,32,r.used?'#625666':'#a184b6');text(r.trialState==='reward'?'시련 보상':r.used?'계약한 제단':'위험과 보상',480,76);}else if(r.type==='shrine'){rect(465,88,30,38,r.used?'#50545a':'#9a88bb');text(r.used?'선택 완료 · '+(incantationInfo(r.incantationChoice)?.name||'신전의 축복·저주'):'신전의 축복·저주 · 입장 시 선택',480,76);}else if(r.type==='fountain'){rect(456,100,48,25,'#667c76');rect(462,98,36,18,r.used?'#34423e':'#68b4ac');text(r.used?'메마른 샘':'요정의 샘물',480,76);}else if(r.type==='treasure'){rect(463,95,34,24,r.used?'#4f4b36':'#b69854');rect(478,99,5,9,'#ead18d');text(r.used?'빈 상자':'보물 상자',480,76);}else{for(let i=0;i<5;i++)rect(457+i*3,89+i*7,46-i*6,4,'#8a9380');text(r.relicOffers&&!r.relicClaimed?'유물함':r.type==='exit'?(s.key?'탈출구':'봉쇄된 출구'):r.type==='down'?(s.key&&returnStairsLocked(r)?'봉인된 하강 계단':'↓ '+s.floor+'층'):r.gate&&!r.used?'봉인된 8층 계단':'↑ '+(s.floor+2)+'층',480,76);}}
  ctx.restore();
+ if(typeof r.fountainReady==='boolean'){const point=fountainPoint(r);rect(point.x-27,point.y-10,54,27,'#151f21');rect(point.x-23,point.y-7,46,20,'#667c76');rect(point.x-18,point.y-8,36,17,r.fountainReady?'#68b4ac':'#34423e');text(r.fountainReady?'결전 전 샘물':'메마른 샘',point.x,point.y-38,'#b7d5cf');}
  for(let d=0;d<4;d++){const n=neighbor(s,d);if(n>=0&&s.floors[s.floor][n].type==='shrine'&&!s.floors[s.floor][n].used)text('축복·저주 · 입장 시 선택',d===1?860:d===3?100:480,d===0?62:d===2?491:235,'#e4a4db',11);}
  drawObstacles(ctx,r.obstacles);drawObjectDetails(ctx,s,r);drawInteractionEffects(ctx,s,r);if(s.key)drawReturnSeal(ctx,r);
  if(r.allyZone){drawSoftField(ctx,r.allyZone.x,r.allyZone.y,r.allyZone.r,'#f2dc9b',.4);}

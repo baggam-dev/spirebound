@@ -1,1 +1,2 @@
-export function useFountain(s){const r=s.floors[s.floor][s.room],p=s.player;if(s.status!=='playing'||r.type!=='fountain'||r.used||r.enemies.length||p.hp>=p.max)return false;r.used=true;p.hp=Math.min(p.max,p.hp+3);return true;}
+export function fountainPoint(room){return room.fountainReady!==undefined?{x:680,y:270}:room.objectPosition||{x:480,y:115};}
+export function useFountain(s){const r=s.floors[s.floor][s.room],p=s.player,shared=r.type==='down'&&r.fountainReady===true;if(s.status!=='playing'||!(shared||r.type==='fountain'&&!r.used)||r.enemies.length||p.hp>=p.max)return false;if(shared)r.fountainReady=false;else r.used=true;p.hp=Math.min(p.max,p.hp+3);return true;}
