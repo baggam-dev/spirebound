@@ -46,7 +46,7 @@ test('aura respects intervening cover and cannot damage airborne enemies',()=>{
  const s=newRun(1),r=currentRoom(s);s.attack=999;s.entryGrace=1;s.player.aura=3;r.obstacles=[{x:498,y:280,w:10,h:40,type:'rock'}];const a=enemy(0,520),b=enemy(1,450);b.phase='air';b.phaseTime=1;r.enemies=[a,b];stepRun(s,.1);assert.equal(a.hp,1000);assert.equal(b.hp,1000);
 });
 test('fire splash and field have enlarged radius and increased damage',()=>{
- const p={damage:20,fire:3},e=enemy(),r={enemies:[e]};hitEnemy(p,e,r.enemies,[],1,true,r);assert.ok(Math.abs(e.hp-(1000-20-36))<1e-9);assert.equal(r.fireZones?.length||0,0);assert.equal(e.burnField.r,75);assert.equal(e.burnField.dps,30);assert.equal(e.burnStacks[0].dps,9);
+ const p={damage:20,fire:3},e=enemy(),r={enemies:[e]};hitEnemy(p,e,r.enemies,[],1,true,r);assert.ok(Math.abs(e.hp-(1000-20-36.9))<1e-9);assert.equal(r.fireZones?.length||0,0);assert.equal(e.burnField.r,75);assert.equal(e.burnField.dps,30);assert.equal(e.burnStacks[0].dps,9);
 });
 test('split secondary arrows carry the chosen element with proportional damage',()=>{
  const s=newRun(5);Object.assign(s.player,{mainSkill:'fire',fire:3,split:1});fireArrow(s,{x:800,y:300});assert.ok(s.projectiles.every(b=>b.elemental&&b.element==='fire'));const a=enemy(),b=enemy(),ra={enemies:[a]},rb={enemies:[b]};hitEnemy(s.player,a,ra.enemies,[],1,true,ra);hitEnemy(s.player,b,rb.enemies,[],.45,true,rb);assert.ok(Math.abs((1000-b.hp)/(1000-a.hp)-.45)<1e-9);assert.ok(Math.abs(b.burnField.dps/a.burnField.dps-.45)<1e-9);

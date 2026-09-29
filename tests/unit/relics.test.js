@@ -32,7 +32,7 @@ test('boots and stride bonuses are symmetric and diagonal motion is normalized',
  for(const d of samples)assert.ok(Math.abs(d-174*1.08*1.12*.1)<1e-9);
 });
 test('ember relic strengthens burn with no direct arrow penalty',()=>{
- const p={damage:20,fire:2,frost:2,relic:'ember'},e={hp:100,x:20,y:20};hitEnemy(p,e,[e]);assert.ok(Math.abs(e.hp-49.14)<1e-8);assert.equal(e.burnStacks[0].dps,7.5);assert.equal(e.slow,2);
+ const p={damage:20,fire:2,frost:2,relic:'ember'},e={hp:100,x:20,y:20};hitEnemy(p,e,[e]);assert.ok(Math.abs(e.hp-48.24)<1e-8);assert.equal(e.burnStacks[0].dps,7.5);assert.equal(e.slow,2);
 });
 test('journal observes only current enemies and retains discovered elite traits',()=>{
  const s=newRun(8);assert.equal(s.bestiary,undefined);observeRoom(s,{enemies:[{type:'archer',elite:'volley'}]});observeRoom(s,{enemies:[{type:'archer',elite:'volley'}]});assert.deepEqual(Object.keys(s.bestiary),['archer']);assert.deepEqual(s.bestiary.archer.traits,['volley']);assert.equal(s.bestiary.slime,undefined);

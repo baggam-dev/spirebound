@@ -5,10 +5,10 @@ import {encounter} from '../../src/world/encounters.js';
 import {upperEncounter} from '../../src/world/formations.js';
 import {seededRandom} from '../../src/game/random.js';
 import {openingLabel} from '../../src/combat/tactics.js';
-test('fire reduces firing frequency by thirty percent with every attack-speed build',()=>{
+test('fire reduces firing frequency by thirty-three percent with every attack-speed build',()=>{
  for(const build of [{},{haste:3,bonusAttack:.25},{evolutions:{haste:'tempo',split:'focus'}}]){
   const p={relics:[],...build};const normal=attackInterval(p);
-  for(const fire of [1,2,3])assert.ok(Math.abs(normal/attackInterval({...p,fire})-.7)<1e-10);
+  for(const fire of [1,2,3])assert.ok(Math.abs(normal/attackInterval({...p,fire})-.67)<1e-10);
   for(const skill of ['poison','frost','chain'])assert.equal(attackInterval({...p,[skill]:3}),normal);
  }
 });

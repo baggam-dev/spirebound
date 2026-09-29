@@ -14,7 +14,7 @@ function chest(){const s=newRun(17);s.room=3;currentRoom(s).enemies=[];s.attack=
 test('every split and repeat combination has at most homing level guided arrows per volley',()=>{
  for(let split=0;split<=4;split++)for(let repeat=0;repeat<=1;repeat++)for(let homing=0;homing<=3;homing++){const s=newRun(1);Object.assign(s.player,{split,repeat,homing});fireArrow(s,{x:800,y:300});assert.equal(s.projectiles.filter(b=>b.homing).length,Math.min(homing,1+split+repeat));if(homing)assert.ok(s.projectiles[0].homing);}
 });
-test('fire explosion has stronger base damage and level growth',()=>{const loss=[];for(let fire=1;fire<=3;fire++){const e=foe(1000);elementalImpact({damage:20,fire},e,[e],{enemies:[e]});loss.push(1000-e.hp);}assert.ok(Math.abs(loss[0]-23.4)<1e-9);assert.ok(Math.abs(loss[2]-loss[1]-6.3)<1e-9);});
+test('fire explosion has stronger base damage and level growth',()=>{const loss=[];for(let fire=1;fire<=3;fire++){const e=foe(1000);elementalImpact({damage:20,fire},e,[e],{enemies:[e]});loss.push(1000-e.hp);}assert.ok(Math.abs(loss[0]-24.3)<1e-9);assert.ok(Math.abs(loss[2]-loss[1]-6.3)<1e-9);});
 test('fire field requires existing three stacks, max fire and a fire killing hit',()=>{
  for(let fire=2;fire<=3;fire++)for(let count=0;count<=3;count++){const e=foe(1);e.burnStacks=burn().slice(0,count);const r={enemies:[e]};hitEnemy({damage:20,fire},e,[e],[],1,true,r);resolveFireFields(r);assert.equal(r.fireZones?.length||0,fire===3&&count===3?1:0);resolveFireFields(r);assert.ok((r.fireZones?.length||0)<=1);}
  const e=foe(1);e.burnStacks=burn();const r={enemies:[e]};hitEnemy({damage:20,aura:3},e,[e],[],1,true,r);resolveFireFields(r);assert.equal(r.fireZones,undefined);

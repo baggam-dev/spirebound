@@ -14,7 +14,7 @@ export function elementalImpact(p,target,enemies,room){
  bindDefenses(enemies);const effects=[],boost=(1+relicStat(p,'dot'))*(p.effectScale??1);
  if(p.fire){
   const wide=p.evolutions?.fire==='ember',strong=p.evolutions?.fire==='flare';
-  const radius=(40+15*p.fire)*(wide?1.2:1),blast=((18+7*(p.fire-1))*(p.effectScale??1)+p.damage*.4*(1+relicStat(p,'element')))*(1+relicStat(p,'fire'))*(strong?1.25:wide?.85:1)*.9;
+  const radius=(40+15*p.fire)*(wide?1.2:1),blast=((19+7*(p.fire-1))*(p.effectScale??1)+p.damage*.4*(1+relicStat(p,'element')))*(1+relicStat(p,'fire'))*(strong?1.25:wide?.85:1)*.9;
   for(const e of enemies)if(grounded(e)&&near(e,target,radius)){
    const alive=e.hp>0;damage(e,blast);if(alive)markFireKill(e,fireFieldSpec(p));if(e.hp>0&&p.fire>=2){stack(e,'burnStacks',2,(6+3*(p.fire-2))*boost,6);if(p.fire>=3)e.burnField=fireFieldSpec(p);}
   }

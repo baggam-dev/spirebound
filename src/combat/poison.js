@@ -1,3 +1,4 @@
+import {drawSoftField} from '../rendering/ground-visuals.js';
 import {drawGroundField} from '../rendering/ground-visuals.js';
 import {drawOrganicBody} from '../rendering/pixel-world.js';
 import {seededRandom} from '../game/random.js';
@@ -83,7 +84,7 @@ export function drawHazards(ctx,room,time=0){
 }
 export function drawPoisonEnemy(ctx,e,time=0,room={}){
  if(e.variant!=='slime'&&!['flower','minislime'].includes(e.type))return;
- ctx.save();if(e.phase==='splitJump'){ctx.strokeStyle='#e5ec9c';ctx.setLineDash([5,5]);ctx.beginPath();ctx.arc(e.landX,e.landY,slimeRadius(e)+15,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.translate(0,-Math.sin(Math.PI*(1-e.phaseTime/1.1))*90);}drawOrganicBody(ctx,e,slimeRadius(e),time,room);
+ ctx.save();if(e.phase==='splitJump'){ctx.strokeStyle='#e5ec9c';ctx.setLineDash([5,5]);drawSoftField(ctx,e.landX,e.landY,slimeRadius(e)+15,'#e5ec9c',.6);ctx.setLineDash([]);ctx.translate(0,-Math.sin(Math.PI*(1-e.phaseTime/1.1))*90);}drawOrganicBody(ctx,e,slimeRadius(e),time,room);
  ctx.restore();
 }
 

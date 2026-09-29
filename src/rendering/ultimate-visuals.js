@@ -1,3 +1,4 @@
+import {drawSoftField} from './ground-visuals.js';
 import {CROSSBOW} from '../combat/combat-tuning.js';
 const clamp=n=>Math.max(0,Math.min(1,n));
 const box=(c,x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h);};
@@ -12,8 +13,7 @@ export function turretVisualState(t){
 }
 // Ground markings stay below hostile warnings and actors.
 export function drawUltimateGround(c,room){const z=room.arrowRain;if(!z)return;const v=rainVisualState(z);c.save();clipArena(c);c.globalAlpha=v.opacity;
- c.beginPath();c.arc(z.x,z.y,z.r,0,Math.PI*2);c.fillStyle='#83c5d60c';c.fill();c.strokeStyle='#a5d8dc80';c.lineWidth=1;c.setLineDash([6,7]);c.stroke();c.setLineDash([]);
- for(let i=0;i<8;i++){const a=i*Math.PI/4,x=z.x+Math.cos(a)*(z.r-6),y=z.y+Math.sin(a)*(z.r-6);box(c,x-2,y-2,4,4,'#afdedba0');}
+ drawSoftField(c,z.x,z.y,z.r,'#83c5d6',.28);
  c.restore();}
 export function drawArrowRain(c,z){const v=rainVisualState(z);c.save();clipArena(c);c.beginPath();c.arc(z.x,z.y,z.r,0,Math.PI*2);c.clip();c.globalAlpha=v.opacity;
  // Every arrow lands on the actual 0 / .6 / 1.2-second damage pulse.
