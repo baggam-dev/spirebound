@@ -30,6 +30,10 @@ export function drawPixelActor(c,e,time=0,run=null){
   for(const side of [-1,1]){box(c,side<0?-26:10,16,16,13,'#282b35');box(c,side<0?-31:18,-22,17,21,'#988778');box(c,side<0?-29:20,-21,13,4,'#c7b697');box(c,side<0?-30:24,-44,6,23,'#d0b783');box(c,side<0?-34:28,-47,6,8,'#f0d49b');}
   box(c,-20,-38,40,25,ink);box(c,-17,-35,34,19,'#756c71');box(c,-17,-35,34,4,'#aba08e');box(c,-12,-26,24,6,'#252632');box(c,-10,-25,6,3,'#ffc087');box(c,5,-25,6,3,'#ffc087');box(c,-3,-35,6,22,'#a99377');
   for(let i=0;i<3;i++){box(c,-18,-12+i*9,36,6,'#726774');box(c,-17,-12+i*9,34,2,'#97868b');}diamond(c,0,-7,6,'#e0b06e');diamond(c,0,-7,2,'#fff1b2');
+  // A lopsided, weathered cuirass and a broken visor distinguish the warden.
+  box(c,-30,-19,12,28,'#493c3c');box(c,-27,-18,7,4,'#a66b4c');box(c,19,-16,10,33,'#65534a');box(c,21,-13,5,2,'#b58860');
+  box(c,-14,-37,7,3,'#bc8963');box(c,7,-34,9,2,'#473a3b');box(c,9,-32,2,6,'#c3926e');box(c,-13,-26,6,2,'#d5b496');
+  box(c,-16,3,11,3,'#994d3e');box(c,7,12,9,2,'#a0694a');box(c,-5,16,10,3,'#4e3537');
   c.save();c.translate(-34,-5-(attack.stage==='air'?30:attack.charge*24));c.rotate(attack.weapon);box(c,-3,-10,5,39,'#8d704a');box(c,-11,-23,22,17,ink);box(c,-9,-21,18,12,'#a6a397');box(c,-7,-21,14,3,'#dad4b0');c.restore();if(attack.stage==='windup'){diamond(c,0,-7,3+Math.round(attack.charge*2),'#fff0b9');}
 
  }else{
@@ -93,7 +97,9 @@ export function drawCrystalBody(c,e,time=0){const attack=bossPose(e);c.save();c.
  for(const side of [-1,1]){box(c,side<0?-27:17,-16,10,29,'#817196');box(c,side<0?-26:18,-16,8,3,'#c9b5ce');for(let i=0;i<3;i++)box(c,side<0?-24:20,-9+i*8,3,3,'#c9a4ef');}
  const y=-12+Math.round(Math.sin(time*2.4)*2)-Math.round(attack.charge*9)+attack.bodyY;diamond(c,0,y,23,ink);diamond(c,0,y,20,e.escapeDepth?'#e087ac':'#71b8c3');
  for(let i=0;i<18;i+=2)box(c,-i/2,y-18+i,i/2+1,2,'#d5f5ea');line(c,[[0,y-19],[0,y+18],[16,y]],'#f2f7ff',1);diamond(c,0,y,attack.stage==='strike'?8:5,attack.stage==='strike'?'#fff7d5':'#f1e4ff');
- for(let i=0;i<3;i++){const a=(attack.stage==='idle'?time*.8:attack.charge*1.5+(e.prismShot||0)*.5)+i*Math.PI*2/3,orbit=attack.stage==='recover'?27:34+attack.charge*9;diamond(c,Math.cos(a)*orbit,Math.sin(a)*12-10,4,attack.stage==='strike'?'#fff0cf':'#bcb4e5');}c.restore();}
+ line(c,[[-15,y-5],[-4,y-16],[8,y-9]],'#f0ffff99',1);line(c,[[-10,y+12],[4,y+7],[14,y+2]],'#354f6b',2);
+ for(let i=0;i<3;i++){const a=(attack.stage==='idle'?time*.8:attack.charge*1.5+(e.prismShot||0)*.5)+i*Math.PI*2/3,orbit=attack.stage==='recover'?27:34+attack.charge*9,x=Math.cos(a)*orbit,z=Math.sin(a)*12-10;diamond(c,x,z,7,ink);diamond(c,x,z,5,attack.stage==='strike'?'#fff0cf':'#a5a3d0');box(c,x-2,z-3,3,2,'#e7faff');}
+ for(const side of [-1,1]){diamond(c,side*22,y+13,5,'#51617b');box(c,side*22-1,y+10,2,5,'#c2d9dd');}c.restore();}
 export function drawOrganicBody(c,e,r,time=0,room={}){const attack=bossPose(e,room);c.save();c.translate(Math.round(e.x),Math.round(e.y));const red=!!e.escapeDepth;
  if(e.type==='flower'){
   box(c,-4,-4,8,27,'#374e38');box(c,-1,-3,3,25,'#849458');for(const side of [-1,1]){box(c,side<0?-16:4,12,12,4,'#69834b');box(c,side<0?-12:6,8,8,5,'#405d3c');}
@@ -102,7 +108,12 @@ export function drawOrganicBody(c,e,r,time=0,room={}){const attack=bossPose(e,ro
   const pulse=e.frozen>0?0:Math.sin(time*3+(e.id||0))*.035,ry=r*(.72+pulse-attack.charge*.1+attack.release*.07),rx=r*(1-pulse),body=red?'#b85b64':'#6b9d65';
   for(let y=-Math.ceil(ry/2)*2;y<=ry;y+=2){const width=Math.sqrt(Math.max(0,1-(y/ry)**2))*rx;box(c,-width-2,y,width*2+4,2,ink);box(c,-width,y,width*2,2,y>ry*.4?(red?'#833a51':'#3d6d54'):body);}
   box(c,-r*.55,-ry*.55,r*.42,3,red?'#f2a290':'#bad99b');box(c,-r*.65,-ry*.3,r*.18,3,'#ffffff77');box(c,-r*.36,-5,4,6,ink);box(c,r*.22,-5,4,6,ink);box(c,-r*.34,-5,2,2,'#fff3c7');box(c,r*.24,-5,2,2,'#fff3c7');box(c,-3,4,6,attack.stage==='strike'?7:attack.stage==='windup'?3+Math.round(attack.charge*3):2,ink);if(attack.stage==='strike')box(c,-2,6,4,3,'#c3e58f');
-  if(e.variant==='slime'){diamond(c,0,11,Math.max(4,Math.round(r/5)),red?'#ed9bad':'#b9cb75');for(let i=0;i<3;i++)box(c,-10+i*8,-ry-3-(i===1?4:0),5,7,'#ccb978');}
+  if(e.variant==='slime'){
+   diamond(c,0,11,Math.max(4,Math.round(r/5)),red?'#ed9bad':'#b9cb75');diamond(c,0,11,Math.max(2,Math.round(r/9)),red?'#ffe2c5':'#e5eaa8');
+   for(let i=0;i<3;i++){const bx=(i-1)*Math.round(r*.48),by=-Math.round(r*.27)+i*5;diamond(c,bx,by,3+i%2,red?'#dc8490':'#9fca88');box(c,bx-1,by-2,2,2,'#ffffff70');}
+   const broken=e.stage>0||e.splitCount>0;for(let i=0;i<3;i++){const x=-10+i*8;box(c,x,-ry-3-(i===1?4:0),5,7,broken&&i===2?'#8b6e5c':'#ccb978');box(c,x+1,-ry-2-(i===1?4:0),2,2,'#f3db99');}
+   if(broken){box(c,-r*.7,ry*.42,8,3,'#85ba7b');box(c,r*.48,ry*.35,6,4,'#7caf73');}
+  }
  }c.restore();}
 export function drawTurretDetail(c,t,time){
  c.save();c.translate(t.x,t.y);box(c,-14,13,28,4,'#171c24');for(const side of [-1,1]){box(c,side<0?-13:8,7,5,8,'#786247');box(c,side<0?-12:9,8,2,3,'#cbbb8a');}c.rotate(t.aim||0);

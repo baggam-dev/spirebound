@@ -22,13 +22,21 @@ export function stoneWallEdges(walls){
 const surfaces=new Map();
 export const outerWalls=[{x:0,y:0,w:960,h:44,type:'wall'},{x:0,y:508,w:960,h:32,type:'wall'},{x:0,y:35,w:25,h:475,type:'wall'},{x:935,y:35,w:25,h:475,type:'wall'}];
 function stamp(obstacles){return obstacles.filter(o=>o.type==='wall').map(o=>[o.x,o.y,o.w,o.h].join(',')).join(';');}
+function cellHash(x,y){let n=Math.imul(x/48+31,73856093)^Math.imul(y/40+17,19349663);n=Math.imul(n^(n>>>13),1274126177);return (n^(n>>>16))>>>0;}
 export function paintStoneWalls(ctx,obstacles){
  const walls=obstacles.filter(o=>o.type==='wall');if(!walls.length)return;
  ctx.save();ctx.beginPath();for(const o of walls)ctx.rect(o.x,o.y,o.w,o.h);ctx.clip();
  ctx.fillStyle='#11191b';for(const o of walls)ctx.fillRect(o.x,o.y,o.w,o.h);
- // Same world-aligned blocks for outer and inner walls; no separate trim or brick texture.
- ctx.fillStyle='#3c4742';
- const cells=new Set();for(const o of walls)for(let y=Math.floor(o.y/40)*40;y<o.y+o.h;y+=40)for(let x=Math.floor(o.x/48)*48;x<o.x+o.w;x+=48){const key=y*960+x;if(cells.has(key))continue;cells.add(key);ctx.fillRect(x,y,46,38);}
+ // The same deterministic, world-aligned masonry covers both outer and inner walls.
+ const cells=new Set();for(const o of walls)for(let y=Math.floor(o.y/40)*40;y<o.y+o.h;y+=40)for(let x=Math.floor(o.x/48)*48;x<o.x+o.w;x+=48){
+  const key=y*960+x;if(cells.has(key))continue;cells.add(key);const h=cellHash(x,y);
+  ctx.fillStyle='#3c4742';ctx.fillRect(x,y,46,38);
+  ctx.fillStyle='#ffffff0b';ctx.fillRect(x+2,y+2,42,2);
+  ctx.fillStyle='#101b1a26';ctx.fillRect(x+2,y+34,42,3);
+  if(h%5===0){ctx.fillStyle='#202b2938';ctx.fillRect(x+9+(h%25),y+9,2,8);ctx.fillRect(x+11+(h%25),y+17,5,1);}
+  if(h%9===0){ctx.fillStyle='#61705b38';ctx.fillRect(x+4+(h%30),y+4,7,2);}
+  if(h%7===0){ctx.fillStyle='#b5b8a21c';ctx.fillRect(x+5+(h%31),y+26,4,1);}
+ }
  ctx.restore();
 }
 export function drawStoneWalls(ctx,obstacles){
