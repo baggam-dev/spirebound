@@ -21,14 +21,26 @@ export function safeSpawn(body,obstacles=[],radius=18){
  let best=null;for(let y=90;y<=450;y+=20)for(let x=100;x<=860;x+=20)if(!blocked(x,y,radius,obstacles)&&(!best||Math.hypot(x-body.x,y-body.y)<best.d))best={x,y,d:Math.hypot(x-body.x,y-body.y)};
  if(best){body.x=best.x;body.y=best.y;}
 }
+// Static corner visibility is shared by every enemy with the same collision radius.
+const navigation=new WeakMap();
+function cornerGraph(obstacles,radius){
+ let data=navigation.get(obstacles);
+ if(!data||data.snapshot.length!==obstacles.length*4||obstacles.some((o,i)=>o.x!==data.snapshot[i*4]||o.y!==data.snapshot[i*4+1]||o.w!==data.snapshot[i*4+2]||o.h!==data.snapshot[i*4+3])){
+  data={snapshot:obstacles.flatMap(o=>[o.x,o.y,o.w,o.h]),radii:new Map()};navigation.set(obstacles,data);
+ }
+ let graph=data.radii.get(radius);if(graph)return graph;
+ const pad=radius+3,nodes=[];
+ for(const o of obstacles)for(const x of [o.x-pad,o.x+o.w+pad])for(const y of [o.y-pad,o.y+o.h+pad])if(x>35&&x<925&&y>50&&y<490&&!blocked(x,y,radius,obstacles))nodes.push({x,y});
+ const visible=nodes.map((a,i)=>nodes.map((b,j)=>i!==j&&!segmentBlocked(a,b,obstacles,radius)));
+ graph={nodes,visible};data.radii.set(radius,graph);if(data.radii.size>8)data.radii.delete(data.radii.keys().next().value);return graph;
+}
 // Small visibility graph: deterministic routing around obstacle corners.
 export function steering(body,target,obstacles=[],radius=18){
  if(blocked(target.x,target.y,radius,obstacles)){target={x:target.x,y:target.y};safeSpawn(target,obstacles,radius+1);}
  if(!segmentBlocked(body,target,obstacles,radius))return Math.atan2(target.y-body.y,target.x-body.x);
- const pad=radius+3,nodes=[body,target];
- for(const o of obstacles)for(const x of [o.x-pad,o.x+o.w+pad])for(const y of [o.y-pad,o.y+o.h+pad])if(x>35&&x<925&&y>50&&y<490&&!blocked(x,y,radius,obstacles))nodes.push({x,y});
+ const graph=cornerGraph(obstacles,radius),nodes=[body,target,...graph.nodes];
  const dist=nodes.map(()=>Infinity),prev=[],visited=new Set();dist[0]=0;
- while(visited.size<nodes.length){let at=-1;for(let i=0;i<nodes.length;i++)if(!visited.has(i)&&(at<0||dist[i]<dist[at]))at=i;if(at<0||!Number.isFinite(dist[at])||at===1)break;visited.add(at);for(let j=0;j<nodes.length;j++)if(!visited.has(j)&&!segmentBlocked(nodes[at],nodes[j],obstacles,radius)){const d=dist[at]+Math.hypot(nodes[j].x-nodes[at].x,nodes[j].y-nodes[at].y);if(d<dist[j]){dist[j]=d;prev[j]=at;}}}
+ while(visited.size<nodes.length){let at=-1;for(let i=0;i<nodes.length;i++)if(!visited.has(i)&&(at<0||dist[i]<dist[at]))at=i;if(at<0||!Number.isFinite(dist[at])||at===1)break;visited.add(at);for(let j=0;j<nodes.length;j++)if(!visited.has(j)&&(at>=2&&j>=2?graph.visible[at-2][j-2]:!segmentBlocked(nodes[at],nodes[j],obstacles,radius))){const d=dist[at]+Math.hypot(nodes[j].x-nodes[at].x,nodes[j].y-nodes[at].y);if(d<dist[j]){dist[j]=d;prev[j]=at;}}}
  let next=1;if(prev[next]===undefined)return Math.atan2(target.y-body.y,target.x-body.x);while(prev[next]!==0)next=prev[next];return Math.atan2(nodes[next].y-body.y,nodes[next].x-body.x);
 }
 export function drawObstacles(ctx,obstacles=[]){
