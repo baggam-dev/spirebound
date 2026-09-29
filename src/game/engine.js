@@ -60,7 +60,7 @@ export function travel(s,direction){
  const r=currentRoom(s),next=s.floor+direction;if(next<0||next>=s.floors.length)return false;
  if(roomLocked(s,r))return false;
  if(direction===1&&!(r.type==='up'||r.type==='boss'&&r.used&&!r.enemies.length))return false;
- if(direction===1&&s.campaign==='expanded'&&s.floor===8&&!s.floors[8].some(room=>room.commanderPending&&room.used))return false;
+ if(direction===1&&s.campaign==='expanded'&&s.floor===8&&!s.floors[8].some(room=>room.type==='boss'&&room.commanderPending===false&&room.used))return false;
  if(direction===-1&&(r.type!=='down'||s.key&&returnStairsLocked(r)))return false;
  const rooms=s.floors[next],destination=direction===1?0:(rooms.findIndex(r=>r.type==='boss'&&r.used)>=0?rooms.findIndex(r=>r.type==='boss'&&r.used):rooms.findIndex(r=>r.type==='up'||r.type==='boss'));if(destination<0)return false;
  s.floor=next;s.room=destination;s.player.x=480;s.player.y=220;currentRoom(s).seen=true;return true;

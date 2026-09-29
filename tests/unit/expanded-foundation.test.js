@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {newRun,currentRoom,travel} from '../../src/game/engine.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 import {fountainPoint,useFountain} from '../../src/world/fountain.js';
+import {challengeCommander} from '../../src/combat/commander.js';
 
 test('explicit expanded draft adds connected ninth and two-room final floors without changing classic',()=>{
  const classic=newRun(93),draft=newRun(93,{campaign:'expanded'});
@@ -29,7 +30,7 @@ test('expanded draft saves its topology and permits ascent and descent without e
  draft.floor=7;draft.room=draft.floors[7].findIndex(r=>r.type==='boss');currentRoom(draft).used=true;
  assert.equal(travel(draft,1),true);assert.equal(draft.floor,8);
  const ninthStairs=draft.floors[8].findIndex(r=>r.type==='up');draft.floors[8][ninthStairs].enemies=[];draft.room=ninthStairs;assert.equal(travel(draft,1),false);
- draft.room=draft.floors[8].findIndex(r=>r.type==='boss');currentRoom(draft).used=true;
+ draft.room=draft.floors[8].findIndex(r=>r.type==='boss');assert.equal(challengeCommander(draft),true);currentRoom(draft).enemies=[];currentRoom(draft).used=true;
  assert.equal(travel(draft,1),true);assert.equal(draft.floor,9);assert.equal(draft.room,0);
  assert.equal(travel(draft,-1),true);assert.equal(draft.floor,8);assert.equal(currentRoom(draft).type,'boss');
  draft.room=ninthStairs;assert.equal(travel(draft,1),true);assert.equal(draft.floor,9);

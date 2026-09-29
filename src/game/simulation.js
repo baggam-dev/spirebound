@@ -7,6 +7,7 @@ import {tickThunder} from '../combat/lightning.js';
 import {observeGrowth,tickBossRecord,completeBossRecord} from '../progression/growth-records.js';
 import {deployRoom} from '../world/formations.js';
 import {updateUpper,upperTypes,tickUpperState} from '../combat/upper-floors.js';
+import {updateCommander,resetCommanderAttack} from '../combat/commander.js';
 import {tickRain} from '../combat/abilities.js';
 import {tickPassives,passiveHit} from '../progression/passives.js';
 import {frostAttackRate} from '../combat/frost.js';
@@ -44,7 +45,7 @@ export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of
 export function enterRoom(s){
  trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
  // Do not preserve an off-screen attack aimed at the previous visit's position.
- for(const e of r.enemies){if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
+ for(const e of r.enemies){resetCommanderAttack(e);if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
 }
 export function fireArrow(s,target){
  const p=s.player,side=s.volleySide??1;s.volleySide=-side;emitWeaponVolley(s.projectiles,p,p,target,side);
@@ -58,7 +59,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  s.entryGrace=Math.max(0,(s.entryGrace||0)-dt);let r=currentRoom(s);
  let hitOrigin=null;
  const hurt=(raw,source='알 수 없는 공격',kind=null,origin=hitOrigin)=>{if(s.entryGrace>0||p.hp<=0)return;const before=p.hp,result=takeDamage(s,r.trialState==='active'?Math.min(raw,9):raw,kind);if(before>p.hp)effects.push({x:p.x,y:p.y-35,t:1,color:'#ff7188',text:'-'+(before-p.hp)+' ♥',hitSource:source,hitAngle:origin?Math.atan2(origin.y-p.y,origin.x-p.x):null});metrics.damageTaken+=before-p.hp;recordHit(s,source,before-p.hp,result==='blocked');if(result==='blocked'){metrics.shields++;events.push('shield');}};
- const n=Math.max(1,Math.hypot(input.x,input.y));moveBody(p,input.x/n*movementSpeed(p)*dt,input.y/n*movementSpeed(p)*dt,r.obstacles);
+ const n=Math.max(1,Math.hypot(input.x,input.y)),frostSlow=p.frostSlow>0?.72:1;moveBody(p,input.x/n*movementSpeed(p)*frostSlow*dt,input.y/n*movementSpeed(p)*frostSlow*dt,r.obstacles);p.frostSlow=Math.max(0,(p.frostSlow||0)-dt);
  const d=p.y<48?0:p.x>930?1:p.y>492?2:p.x<30?3:-1;
  if(d>=0){const next=neighbor(s,d),aligned=d%2===0?Math.abs(p.x-480)<40:Math.abs(p.y-270)<35;
   if(next>=0&&aligned&&!roomLocked(s,r)){s.room=next;r=currentRoom(s);p.x=d===1?48:d===3?912:p.x;p.y=d===0?477:d===2?63:p.y;enterRoom(s);events.push('room');}
@@ -86,6 +87,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(e.variant==='prism'&&s.entryGrace<=0)updatePrismSummons(e,p,r,dt,()=>runRandom(s));
   if(e.opening>0){e.opening=Math.max(0,e.opening-dt);continue;}if(!coordinateAttack(e,r))continue;
   e.spawnGrace=Math.max(0,(e.spawnGrace||0)-dt);if(s.entryGrace>0||e.spawnGrace>0)continue;
+  if(e.variant==='commander'){updateCommander(e,p,r,dt,s.projectiles,(raw,source)=>hurt(raw,source));continue;}
   if(e.variant==='king'||upperTypes.includes(e.type)){updateUpper(e,p,r,dt,s.projectiles,raw=>hurt(raw,enemyName(e)+' 암흑 공격'));continue;}
   if(e.variant==='slime'||e.type==='flower'){updatePoisonEnemy(e,p,r,dt,s.projectiles);continue;}
   if(e.variant==='prism'){hurt(updatePrism(e,p,r.obstacles,dt,s.projectiles),'프리즘 광선','laser');continue;}
@@ -108,7 +110,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(b.ricochet){if(advanceRicochet(b,dt,r.obstacles,p))hurt(9,b.source||'반사탄',null,{x:p.x-b.vx,y:p.y-b.vy});if(p.hp<=0)break;continue;}
   let travelDt=dt;if(b.delay>0){travelDt=Math.max(0,dt-b.delay);b.delay=Math.max(0,b.delay-dt);if(b.delay>0)continue;if(!b.turretShot){b.x=p.x;b.y=p.y;}}if(!b.enemy)steerArrow(b,r.enemies,r.obstacles,travelDt,segmentBlocked);
   const next={x:b.x+b.vx*travelDt,y:b.y+b.vy*travelDt};b.life-=travelDt;
-  if(b.enemy){const t=collisionTime(b,next,p,15);if(t!==Infinity&&!segmentBlocked(b,{x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t},r.obstacles,3)){hurt(b.damage??10,b.source||'적 탄환',null,{x:p.x-b.vx,y:p.y-b.vy});b.life=0;}}
+  if(b.enemy){const t=collisionTime(b,next,p,15);if(t!==Infinity&&!segmentBlocked(b,{x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t},r.obstacles,3)){const before=p.hp;hurt(b.damage??10,b.source||'적 탄환',null,{x:p.x-b.vx,y:p.y-b.vy});if(b.frostArrow&&p.hp<before)p.frostSlow=Math.max(p.frostSlow||0,1.35);b.life=0;}}
   else{
    const candidates=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!b.hit.includes(e.id)).map(e=>({e,t:collisionTime(b,next,e,enemyRadius(e))})).filter(h=>h.t!==Infinity).sort((a,b)=>a.t-b.t);
    for(const {e,t} of candidates){if(e.hp<=0)continue;const impact={x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t};if(segmentBlocked(b,impact,r.obstacles,3))break;if(b.passive){passiveHit(s,b,e);b.hit.push(e.id);b.life=0;break;}const shotPlayer=b.weapon||p;effects.push(...elementHitEffects(b.frostShard?{frost:shotPlayer.frost,evolutions:shotPlayer.evolutions}:shotPlayer,impact,{x:impact.x-b.vx,y:impact.y-b.vy},b.elemental!==false,!!b.frostShard));const before=r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);effects.push(...hitEnemy(b.frostShard?{...shotPlayer,fire:0,poison:0,chain:0,frost:shotPlayer.frost,frostShardAttack:true}:shotPlayer,e,r.enemies,r.obstacles,b.damageScale??1,b.frostShard?true:b.elemental!==false,r,{x:b.x-b.vx*.001,y:b.y-b.vy*.001}));metrics.damageDealt+=before-r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);if(shotPlayer.frost)e.frostWeapon=b.weapon;if(b.turretShot)metrics.ultimateDamage=(metrics.ultimateDamage||0)+before-r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);b.elemental=false;b.hit.push(e.id);if(b.pierce--<=0){b.life=0;break;}}
