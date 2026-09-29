@@ -1,3 +1,4 @@
+import {drawSoftField} from '../rendering/ground-visuals.js';
 import {moveBody,steering,safeSpawn,segmentBlocked} from '../world/terrain.js';
 import {attackProfile} from './balance.js';
 
@@ -25,8 +26,8 @@ export function updateReturnEnemy(e,p,obstacles,dt,bullets){
 export function drawReturnEnemy(ctx,e){
  if(!returnEnemyTypes.includes(e.type))return;ctx.save();ctx.fillStyle='#ee777c';ctx.strokeStyle='#ffb0b1';ctx.lineWidth=2;
  if(e.type==='strafer'){ctx.fillRect(e.x-19,e.y-16,5,26);ctx.fillRect(e.x+15,e.y-16,5,26);ctx.fillRect(e.x-12,e.y-26,24,5);}
- if(e.type==='ringcaster'){ctx.beginPath();ctx.arc(e.x,e.y-6,23,0,Math.PI*2);ctx.stroke();ctx.fillRect(e.x-4,e.y-29,8,10);}
+ if(e.type==='ringcaster'){drawSoftField(ctx,e.x,e.y-6,26,'#ffb0b1',.4);ctx.fillRect(e.x-4,e.y-29,8,10);}
  if(e.type==='ambusher'){ctx.beginPath();ctx.moveTo(e.x-19,e.y+15);ctx.lineTo(e.x,e.y-28);ctx.lineTo(e.x+19,e.y+15);ctx.closePath();ctx.stroke();}
- if(e.attackPhase==='warning'){ctx.setLineDash([5,5]);ctx.beginPath();if(e.type==='ringcaster')ctx.arc(e.x,e.y,65,e.aim+Math.PI/4,e.aim+Math.PI*2);else{ctx.moveTo(e.x,e.y);ctx.lineTo(e.x+Math.cos(e.aim)*130,e.y+Math.sin(e.aim)*130);}ctx.stroke();}
+ if(e.attackPhase==='warning'){ctx.lineWidth=1;ctx.globalAlpha=e.attackTime<.25?.75:.5;ctx.setLineDash([5,5]);ctx.beginPath();if(e.type==='ringcaster')ctx.arc(e.x,e.y,65,e.aim+Math.PI/4,e.aim+Math.PI*2);else{ctx.moveTo(e.x,e.y);ctx.lineTo(e.x+Math.cos(e.aim)*130,e.y+Math.sin(e.aim)*130);}ctx.stroke();}
  ctx.restore();
 }

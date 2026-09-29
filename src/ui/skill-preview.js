@@ -32,7 +32,7 @@ export function skillPreview(player,id){
  if(id==='split')row('동시 화살',1+(player.split||0),1+next.split,'발',0);
  if(id==='pierce')row('추가 관통',player.evolutions?.pierce==='impact'?0:(player.pierce||0)+(player.evolutions?.pierce==='depth'?2:0),next.evolutions?.pierce==='impact'?0:next.pierce+(next.evolutions?.pierce==='depth'?2:0),'체',0);
  if(id==='repeat')row('추가 연속탄','없음','0.16초 후 60% 피해 1발');
- if(id==='homing')row('유도 화살',player.homing||0,next.homing,'발',0);
+ if(id==='homing')row('별도 유도 화살',player.homing?'1.5초마다 1발':'없음','1.5초마다 100% 일반탄 1발');
  if(id==='ultimate')row('궁극기','미습득','선택 후 화살비 / 석궁 결정');
  if(id==='growthHealth')row('최대 체력',player.max,next.max,'♥',0);
  return rows;

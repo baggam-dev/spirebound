@@ -17,11 +17,11 @@ test('one cooldown relic gives two to three seconds of natural turret overlap',(
   tickPassives(s,19-cd);assert.equal(currentRoom(s).turrets.length,1);
  }
 });
-test('tower has 308 range from installation and fires 200 percent every half second',()=>{
+test('tower has 308 range from installation and fires a 100 percent snapshotted volley every 0.6 second',()=>{
  const s=setup(),r=currentRoom(s);castUltimate(s);const t=r.turrets[0];s.player.x=100;
  const e={id:0,type:'archer',hp:1000,x:t.x+309,y:t.y};r.enemies=[e];tickPassives(s,.01);assert.equal(s.projectiles.length,0);
- e.x=t.x+308;tickPassives(s,.01);assert.equal(s.projectiles.length,1);assert.equal(s.projectiles[0].passiveDamage,passivePower(s.player)*2);
- tickPassives(s,.49);assert.equal(s.projectiles.length,1);tickPassives(s,.01);assert.equal(s.projectiles.length,2);
+ e.x=t.x+308;tickPassives(s,.01);assert.equal(s.projectiles.length,1);assert.equal(s.projectiles[0].weapon.damage,s.player.damage);
+ tickPassives(s,.59);assert.equal(s.projectiles.length,1);tickPassives(s,.01);assert.equal(s.projectiles.length,2);
 });
 test('chests allocate eight percent to relics and trial offers never duplicate rewards',()=>{
  assert.equal(lootTable.reduce((a,b)=>a+b.weight,0),100);assert.equal(lootTable.find(r=>r.id==='relic').weight,8);

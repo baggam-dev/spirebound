@@ -1,3 +1,4 @@
+import {drawSoftField} from '../rendering/ground-visuals.js';
 import {drawCrystalBody} from '../rendering/pixel-world.js';
 import {PRISM_SUMMON} from './combat-tuning.js';
 import {prismShielded} from './enemy-defense.js';
@@ -25,9 +26,9 @@ export function updatePrism(e,p,obstacles,dt,bullets){
  return 0;
 }
 export function drawPrism(ctx,e,obstacles,enemies=[],time=0){
- ctx.save();if(prismShielded(e,enemies)){ctx.strokeStyle='#d1a5ff';ctx.fillStyle='#ad76ed35';ctx.lineWidth=3;ctx.beginPath();ctx.arc(e.x,e.y,58*(e.scale??1),0,Math.PI*2);ctx.fill();ctx.stroke();ctx.font='12px Galmuri, monospace';ctx.textAlign='center';ctx.fillStyle='#e5caff';ctx.fillText('수호 보호막 · 받는 피해 ⅓',e.x,e.y+70);for(const n of enemies.filter(n=>n.hp>0&&n.summoned&&n.summoner===e.id)){ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(n.x,n.y);ctx.stroke();}}drawCrystalBody(ctx,e,time);
+ ctx.save();if(prismShielded(e,enemies)){ctx.strokeStyle='#d1a5ff';ctx.fillStyle='#ad76ed35';ctx.lineWidth=3;drawSoftField(ctx,e.x,e.y,58*(e.scale??1),'#d1a5ff',.45);ctx.lineWidth=1;ctx.font='12px Galmuri, monospace';ctx.textAlign='center';ctx.fillStyle='#e5caff';ctx.fillText('수호 보호막 · 받는 피해 ⅓',e.x,e.y+70);for(const n of enemies.filter(n=>n.hp>0&&n.summoned&&n.summoner===e.id)){ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(n.x,n.y);ctx.stroke();}}drawCrystalBody(ctx,e,time);
  if(['warning','beam'].includes(e.prismPhase)){
-  ctx.strokeStyle=e.prismAttack==='laser'?'#f3a3d1':'#7ae6df';ctx.lineWidth=e.prismPhase==='beam'?26:2;ctx.setLineDash(e.prismPhase==='warning'?[7,6]:[]);
+  ctx.strokeStyle=e.prismAttack==='laser'?'#f3a3d1':'#7ae6df';ctx.lineWidth=e.prismPhase==='beam'?26:1;if(e.prismPhase==='warning')ctx.globalAlpha=e.prismTime<.25?.75:.5;ctx.setLineDash(e.prismPhase==='warning'?[7,6]:[]);
   const angles=e.prismAttack==='laser'?[-.65,-.325,0,.325,.65]:Array.from({length:18},(_,i)=>i*Math.PI/4);
   for(const offset of angles){const a=e.aim+offset,end=e.prismAttack==='laser'?beamEnd({...e,aim:a},obstacles):{x:e.x+Math.cos(a)*120,y:e.y+Math.sin(a)*120};ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(end.x,end.y);ctx.stroke();}
  }

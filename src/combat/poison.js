@@ -3,6 +3,7 @@ import {drawGroundField} from '../rendering/ground-visuals.js';
 import {drawOrganicBody} from '../rendering/pixel-world.js';
 import {seededRandom} from '../game/random.js';
 import {emitShot} from './patterns.js';
+import {warningCount} from './tactics.js';
 import {openGuard} from './tactics.js';
 import {moveBody,steering,safeSpawn,segmentBlocked} from '../world/terrain.js';
 import {attackProfile} from './balance.js';
@@ -11,7 +12,7 @@ export function allocateEnemyId(room){room.nextEnemyId=Math.max(room.nextEnemyId
 export function slimeRadius(e){return (e.variant==='slime'?[38,28,20][e.stage||0]:e.type==='minislime'?11:19)*(e.scale??1);}
 function puddles(e,p,room,count,boss){
  room.hazards??=[];
- for(let i=0;i<count;i++){
+ for(let i=0;i<count;i++){if(boss&&room.hazards.length>=12)break;
   const angle=(e.poisonTurn||0)*1.7+i*Math.PI*2/count,offset=count===1||(!boss&&i===0)?0:55;
   const target=boss?{x:Math.max(100,Math.min(860,p.x+Math.cos(angle)*offset)),y:Math.max(100,Math.min(440,p.y+Math.sin(angle)*offset))}:{x:Math.max(31,Math.min(929,p.x+Math.cos(angle)*offset)),y:Math.max(49,Math.min(491,p.y+Math.sin(angle)*offset))};
   // Flower lob targets the floor under the player, including the perimeter.
@@ -21,7 +22,7 @@ function puddles(e,p,room,count,boss){
  }
 }
 export function updatePoisonEnemy(e,p,room,dt,bullets=[]){
- if(e.phase==='splitJump'){e.phaseTime=Math.max(0,e.phaseTime-dt);const t=1-e.phaseTime/1.1;e.x=e.launchX+(e.landX-e.launchX)*t;e.y=e.launchY+(e.landY-e.launchY)*t;if(e.phaseTime===0){e.phase=null;e.cd=.7;e.spawnGrace=.3;}return;}
+ if(e.phase==='splitJump'){e.phaseTime=Math.max(0,e.phaseTime-dt);const t=1-e.phaseTime/1.1;e.x=e.launchX+(e.landX-e.launchX)*t;e.y=e.launchY+(e.landY-e.launchY)*t;if(e.phaseTime===0){e.phase=null;e.cd=.7+(e.id%4)*.35;e.spawnGrace=.3;}return;}
  e.cd=(e.cd??1)-dt;
  const hazards=room.hazards??=[];
  if(e.type==='flower'){
@@ -30,12 +31,13 @@ export function updatePoisonEnemy(e,p,room,dt,bullets=[]){
    e.poisonTurn=(e.poisonTurn||0)+1;e.cd=1.2*attackProfile(e).recovery;
   }return;
  }
- e.gasClock=Math.max(0,(e.gasClock??0)-dt);if(e.gasClock<=0){hazards.push({owner:e.id,kind:'aura',closeGas:true,x:e.x,y:e.y,r:90-(e.stage||0)*20,phase:'warning',time:.6,flight:0,duration:3.4,damage:9});e.gasClock=6;}
+ e.gasClock=Math.max(0,(e.gasClock??((e.id%4)*.6))-dt);if(e.gasClock<=0&&hazards.length<12&&warningCount(room,e)<2){hazards.push({owner:e.id,kind:'aura',closeGas:true,x:e.x,y:e.y,r:90-(e.stage||0)*20,phase:'warning',time:.6,flight:0,duration:3.4,damage:9});e.gasClock=6;}
  if(e.cd<=0&&hazards.some(h=>h.owner===e.id&&h.kind==='aura'&&!h.closeGas&&h.phase!=='expired')){e.cd=.1;return;}
  const stage=e.stage||0;
  if(stage<2){e.slimeShotClock=Math.max(0,(e.slimeShotClock??(stage===0?2:3))-dt);if(e.slimeShotClock===0){const aim=Math.atan2(p.y-e.y,p.x-e.x),offsets=stage===0?[-.48,-.24,0,.24,.48]:[-.12,.12];for(const offset of offsets){emitShot(e,aim+offset,stage===0?180:165,bullets);Object.assign(bullets.at(-1),{damage:9,source:'독성 군체 일반탄'});}e.slimeShotClock=stage===0?2.8:4;}}
 
  if(e.cd>0){const a=steering(e,p,room.obstacles,slimeRadius(e));moveBody(e,Math.cos(a)*(22+stage*10)*1.2*(e.slow>0?e.slowFactor:1)*dt,Math.sin(a)*(22+stage*10)*1.2*(e.slow>0?e.slowFactor:1)*dt,room.obstacles,slimeRadius(e));e.x=Math.max(75,Math.min(885,e.x));e.y=Math.max(90,Math.min(450,e.y));return;}
+ if(warningCount(room,e)>=2||hazards.length>=12){e.cd=.15;return;}
  const turn=e.poisonTurn||0,pattern=turn%(stage<2?6:5);e.poisonTurn=turn+1;
  if(stage===0&&pattern===0)puddles(e,p,room,3,true);
  else if(pattern===0)hazards.push({owner:e.id,kind:'aura',x:e.x,y:e.y,r:110-stage*22,phase:'warning',time:1.1,flight:0,duration:3,damage:12});
@@ -51,11 +53,11 @@ export function updatePoisonEnemy(e,p,room,dt,bullets=[]){
    if(e.chestBoss){child.chestBoss=true;child.scale=e.scale;}safeSpawn(child,room.obstacles,11);room.enemies.push(child);
   }
  }
- room.hazards=hazards;e.cd=(stage===0?2.6:4+stage*.4)*.85;
+ room.hazards=hazards;e.cd=[1.95,3.3,3.6][stage];
 }
 export function splitSlime(e,room,player={x:480,y:270},random=seededRandom((e.id+1)*7717+(e.stage||0))){
  if(e.variant!=='slime'||e.stage>=2)return false;
- room.hazards=(room.hazards||[]).filter(h=>h.owner!==e.id||h.kind!=='aura');room.hazards.push({owner:e.id,kind:'puddle',x:e.x,y:e.y,fromX:e.x,fromY:e.y,r:65,phase:'warning',time:.6,flight:0,duration:4,damage:12});
+ room.hazards=(room.hazards||[]).filter(h=>h.owner!==e.id||h.kind!=='aura');if(room.hazards.length<12)room.hazards.push({owner:e.id,kind:'puddle',x:e.x,y:e.y,fromX:e.x,fromY:e.y,r:65,phase:'warning',time:.6,flight:0,duration:4,damage:12});
  const landings=[];
  for(let i=0;i<2;i++){
   const max=Math.ceil(e.max/2),child={id:allocateEnemyId(room),type:'boss',variant:'slime',stage:(e.stage||0)+1,tier:e.tier||5,x:Math.max(75,Math.min(885,e.x+(i?36:-36))),y:Math.max(90,Math.min(450,e.y+(i?15:-15))),hp:max,max,cd:1.2+i*.8,poisonTurn:i,balanceVersion:1,bossHealthVersion:1,bossPowerVersion:18,spawnGrace:.8};

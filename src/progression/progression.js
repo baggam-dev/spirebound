@@ -23,7 +23,7 @@ export const skills = [
  {id:'repeat',name:'연속 화살',description:'희귀 · 0.16초 후 같은 방향 추가 1발 · 피해/지속 피해 60% · 주력 속성 발동',max:1},
  {id:'ultimate',name:'궁극기 습득',description:'화살비 또는 자동 저격 석궁 중 하나를 선택합니다.',max:1},
  {id:'aura',name:'근접 오라',description:'반경 90/115/140 · 초당 피해 24/48/72 · 3레벨 60초마다 1회 방어',max:3},
- {id:'homing',name:'추적 화살',description:'유니크 · 공격당 기술 레벨 수만큼만 유도 · 중앙 화살 우선',max:1},
+ {id:'homing',name:'추적 화살',description:'유니크 · 1.5초마다 별도 무속성 유도 화살 1발 · 일반 공격력 100% · 갈래/연속 복제 없음',max:1},
 ].map(k=>({...k,tree:mainSkills.includes(k.id)?'main':'support',grade:skillGrade(k.id),weight:k.id==='homing'?.04:['split','repeat'].includes(k.id)?.18:1}));
 export const recipes = [
  {name:'폭풍 화살',needs:['split','pierce'],description:'모든 화살 피해 +3'},

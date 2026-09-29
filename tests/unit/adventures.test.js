@@ -31,7 +31,7 @@ test('arrow branches change spread, penetration and timing without multiplying p
  s.projectiles=[];s.player.evolutions.pierce='impact';fireArrow(s,{x:700,y:300});assert.equal(s.projectiles[0].pierce,0);
 });
 test('arrow rain deals three bounded pulses only within its region and expires',()=>{
- const s=at('normal'),r=currentRoom(s);s.invulnerable=999;s.player.split=4;s.player.chain=1;s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};s.attack=999;r.enemies=[{id:0,type:'archer',x:500,y:300,hp:500,max:500,cd:999},{id:1,type:'archer',x:900,y:100,hp:500,max:500,cd:999}];assert.ok(castUltimate(s));assert.equal(r.enemies[0].hp,440);for(let i=0;i<121;i++)stepRun(s,1/60);assert.ok(Math.abs(r.enemies[0].hp-320)<.001);assert.equal(r.enemies[1].hp,500);assert.equal(r.arrowRain,null);
+ const s=at('normal'),r=currentRoom(s);s.invulnerable=999;s.player.split=4;s.player.chain=1;s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};s.attack=999;r.enemies=[{id:0,type:'archer',x:500,y:300,hp:500,max:500,cd:999},{id:1,type:'archer',x:900,y:100,hp:500,max:500,cd:999}];assert.ok(castUltimate(s));assert.equal(r.enemies[0].hp,450);for(let i=0;i<121;i++)stepRun(s,1/60);assert.ok(Math.abs(r.enemies[0].hp-350)<.001);assert.equal(r.enemies[1].hp,500);assert.equal(r.arrowRain,null);
 });
 test('guardian protection ends with its owner; explosive elite detonates only after warning',()=>{
  const a={id:0,x:200,y:200,hp:100,max:100,type:'chaser'},b={id:1,x:220,y:200,hp:100,max:100,type:'chaser'},r={enemies:[a,b]};promoteElite(a,'guardian');updateElites(r,.01,[],{x:500,y:300});hitEnemy({damage:20},b,r.enemies);assert.equal(b.hp,90);a.hp=0;updateElites(r,.01,[],{x:500,y:300});hitEnemy({damage:20},b,r.enemies);assert.equal(b.hp,70);

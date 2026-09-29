@@ -1,3 +1,4 @@
+import {drawSoftField} from '../rendering/ground-visuals.js';
 import {ENEMY_COOLDOWN_FACTOR,attackProfile} from './balance.js';
 import {segmentBlocked,steering,moveBody} from '../world/terrain.js';
 
@@ -52,9 +53,9 @@ export function drawRanged(ctx,e,obstacles){
  const color=e.escapeDepth?'#ff9198':e.type==='laser'?'#f2a0cb':'#74e1dd';
  ctx.fillStyle=e.escapeDepth?'#9e424f':'#353e50';ctx.fillRect(e.x-18,e.y-22,36,35);ctx.fillStyle=color;
  if(e.type==='laser'){ctx.fillRect(e.x-6,e.y-32,12,23);ctx.fillStyle='#f9e6f3';ctx.fillRect(e.x-3,e.y-27,6,10);}
- else{ctx.strokeStyle=color;ctx.lineWidth=4;ctx.beginPath();ctx.arc(e.x,e.y-7,16,0,Math.PI*2);ctx.stroke();ctx.fillRect(e.x-5,e.y-12,10,10);}
+ else{ctx.strokeStyle=color;ctx.lineWidth=4;drawSoftField(ctx,e.x,e.y-7,19,color,.5);ctx.fillRect(e.x-5,e.y-12,10,10);}
  ctx.fillStyle='#101824';ctx.fillRect(e.x-18,e.y+8,36,5);ctx.fillStyle='#b8bac077';ctx.fillRect(e.x-17,e.y-21,34,2);ctx.fillRect(e.x-14,e.y-15,3,19);ctx.fillRect(e.x+11,e.y-15,3,19);ctx.fillStyle=color;ctx.fillRect(e.x-11,e.y+2,4,3);ctx.fillRect(e.x+7,e.y+2,4,3);
  if(!e.phase)return;
- const end=beamEnd(e,obstacles);ctx.save();ctx.strokeStyle=color;ctx.lineWidth=e.phase==='beam'?30:3;ctx.setLineDash(e.phase==='aim'?[8,6]:[]);ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(end.x,end.y);ctx.stroke();
+ const end=beamEnd(e,obstacles);ctx.save();ctx.strokeStyle=color;ctx.lineWidth=e.phase==='beam'?30:1;if(e.phase!=='beam')ctx.globalAlpha=e.phaseTime<.25?.75:.5;ctx.setLineDash(e.phase==='aim'?[8,6]:[]);ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(end.x,end.y);ctx.stroke();
  if(e.phase==='beam'){ctx.strokeStyle='#fff0f8';ctx.lineWidth=2;ctx.stroke();}ctx.restore();
 }

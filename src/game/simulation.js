@@ -1,3 +1,4 @@
+import {emitWeaponVolley,clearTurretEndings} from '../combat/weapon-projectiles.js';
 import {trackRankingRoom,recordRankingDefeat} from '../ranking/ranking.js';
 import {releaseReturnSeal} from '../world/return-seals.js';
 import {enemyHitEffects,enemyDeathEffect} from '../rendering/enemy-feedback.js';
@@ -41,15 +42,12 @@ export function enemyRadius(e){return e.variant==='slime'||e.type==='minislime'?
 export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||e.attackPhase==='leap';}
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
 export function enterRoom(s){
- trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.turrets=[];r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
+ trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
  // Do not preserve an off-screen attack aimed at the previous visit's position.
  for(const e of r.enemies){if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
 }
 export function fireArrow(s,target){
- const p=s.player,a=Math.atan2(target.y-p.y,target.x-p.x),count=1+Math.min(4,p.split);
- const side=(s.volleySide??1);s.volleySide=-side;
- for(let i=0;i<count;i++){const offset=i===0?0:Math.ceil(i/2)*(i%2?side:-side);const angle=a+offset*(p.evolutions?.split==='fan'?.25:p.evolutions?.split==='focus'?.055:.14);s.projectiles.push({x:p.x,y:p.y,vx:Math.cos(angle)*420,vy:Math.sin(angle)*420,enemy:false,elemental:true,element:p.fire?'fire':p.poison?'poison':p.frost?'frost':p.chain?'chain':null,damageScale:i===0?1:(p.evolutions?.split==='fan'?.5:.45),homing:i<(p.homing||0),life:3,pierce:p.evolutions?.pierce==='impact'?0:p.pierce+(p.evolutions?.pierce==='depth'?2:0),hit:[]});}
- if(p.repeat){const first=s.projectiles[s.projectiles.length-count];s.projectiles.push({...first,hit:[],damageScale:.6,delay:.16,homing:count<(p.homing||0)});}
+ const p=s.player,side=s.volleySide??1;s.volleySide=-side;emitWeaponVolley(s.projectiles,p,p,target,side);
  s.attack=attackInterval(p);
 }
 export function stepRun(s,dt,input={x:0,y:0}){
@@ -108,12 +106,12 @@ export function stepRun(s,dt,input={x:0,y:0}){
  for(const b of s.projectiles){
   if(b.life<=0)continue;
   if(b.ricochet){if(advanceRicochet(b,dt,r.obstacles,p))hurt(9,b.source||'반사탄',null,{x:p.x-b.vx,y:p.y-b.vy});if(p.hp<=0)break;continue;}
-  let travelDt=dt;if(b.delay>0){travelDt=Math.max(0,dt-b.delay);b.delay=Math.max(0,b.delay-dt);if(b.delay>0)continue;b.x=p.x;b.y=p.y;}if(!b.enemy)steerArrow(b,r.enemies,r.obstacles,travelDt,segmentBlocked);
+  let travelDt=dt;if(b.delay>0){travelDt=Math.max(0,dt-b.delay);b.delay=Math.max(0,b.delay-dt);if(b.delay>0)continue;if(!b.turretShot){b.x=p.x;b.y=p.y;}}if(!b.enemy)steerArrow(b,r.enemies,r.obstacles,travelDt,segmentBlocked);
   const next={x:b.x+b.vx*travelDt,y:b.y+b.vy*travelDt};b.life-=travelDt;
   if(b.enemy){const t=collisionTime(b,next,p,15);if(t!==Infinity&&!segmentBlocked(b,{x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t},r.obstacles,3)){hurt(b.damage??10,b.source||'적 탄환',null,{x:p.x-b.vx,y:p.y-b.vy});b.life=0;}}
   else{
    const candidates=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!b.hit.includes(e.id)).map(e=>({e,t:collisionTime(b,next,e,enemyRadius(e))})).filter(h=>h.t!==Infinity).sort((a,b)=>a.t-b.t);
-   for(const {e,t} of candidates){if(e.hp<=0)continue;const impact={x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t};if(segmentBlocked(b,impact,r.obstacles,3))break;if(b.passive){passiveHit(s,b,e);b.hit.push(e.id);b.life=0;break;}effects.push(...elementHitEffects(b.frostShard?{frost:p.frost,evolutions:p.evolutions}:p,impact,{x:impact.x-b.vx,y:impact.y-b.vy},b.elemental!==false,!!b.frostShard));const before=r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);effects.push(...hitEnemy(b.frostShard?{...p,fire:0,poison:0,chain:0,frost:p.frost,frostShardAttack:true}:p,e,r.enemies,r.obstacles,b.damageScale??1,b.frostShard?true:b.elemental!==false,r,{x:b.x-b.vx*.001,y:b.y-b.vy*.001}));metrics.damageDealt+=before-r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);b.elemental=false;b.hit.push(e.id);if(b.pierce--<=0){b.life=0;break;}}
+   for(const {e,t} of candidates){if(e.hp<=0)continue;const impact={x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t};if(segmentBlocked(b,impact,r.obstacles,3))break;if(b.passive){passiveHit(s,b,e);b.hit.push(e.id);b.life=0;break;}const shotPlayer=b.weapon||p;effects.push(...elementHitEffects(b.frostShard?{frost:shotPlayer.frost,evolutions:shotPlayer.evolutions}:shotPlayer,impact,{x:impact.x-b.vx,y:impact.y-b.vy},b.elemental!==false,!!b.frostShard));const before=r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);effects.push(...hitEnemy(b.frostShard?{...shotPlayer,fire:0,poison:0,chain:0,frost:shotPlayer.frost,frostShardAttack:true}:shotPlayer,e,r.enemies,r.obstacles,b.damageScale??1,b.frostShard?true:b.elemental!==false,r,{x:b.x-b.vx*.001,y:b.y-b.vy*.001}));metrics.damageDealt+=before-r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);if(shotPlayer.frost)e.frostWeapon=b.weapon;if(b.turretShot)metrics.ultimateDamage=(metrics.ultimateDamage||0)+before-r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);b.elemental=false;b.hit.push(e.id);if(b.pierce--<=0){b.life=0;break;}}
   }
   if(segmentBlocked(b,next,r.obstacles,3))b.life=0;b.x=next.x;b.y=next.y;if(p.hp<=0)break;
  }
@@ -126,7 +124,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  for(const e of defeated){
   recordRankingDefeat(s,e);
   effects.push(enemyDeathEffect(e,!!s.key));
-  frostShatter(p,e,s.projectiles);recordDefeat(s,e);
+  const shardStart=s.projectiles.length;frostShatter(e.frostWeapon||p,e,s.projectiles);if(e.frostWeapon)for(const shard of s.projectiles.slice(shardStart)){shard.weapon=e.frostWeapon;shard.turretShot=true;}recordDefeat(s,e);
   if(e.summoned){eliteDeath(e,r);continue;}
   if(splitSlime(e,r,p,()=>runRandom(s)))continue;
   if(e.type!=='boss')dropEssences(s,r,e);

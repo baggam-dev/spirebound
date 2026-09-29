@@ -12,19 +12,17 @@ export function turretVisualState(t){
  return {build:clamp((CROSSBOW.lifetime-t.time)/.28),recoil:clamp(1-(CROSSBOW.interval-t.clock)/.14),opacity:clamp(t.time/1.2),remaining:clamp(t.time/CROSSBOW.lifetime)};
 }
 // Ground markings stay below hostile warnings and actors.
-export function drawUltimateGround(c,room){const z=room.arrowRain;if(!z)return;const v=rainVisualState(z);c.save();clipArena(c);c.globalAlpha=v.opacity;
- drawSoftField(c,z.x,z.y,z.r,'#83c5d6',.28);
- c.restore();}
+export function drawUltimateGround(c,room){} // No circular floor marker.
 export function drawArrowRain(c,z){const v=rainVisualState(z);c.save();clipArena(c);c.beginPath();c.arc(z.x,z.y,z.r,0,Math.PI*2);c.clip();c.globalAlpha=v.opacity;
  // Every arrow lands on the actual 0 / .6 / 1.2-second damage pulse.
  // The first pulse is immediate: never delay damage to fit an anticipation.
- for(let i=0;i<24;i++){
-  const angle=i*2.3999632297,r=z.r*Math.sqrt((i+.5)/24)*.95,x=z.x+Math.cos(angle)*r,y=z.y+Math.sin(angle)*r;
+ for(let i=0;i<36;i++){
+  const angle=i*2.3999632297,r=z.r*Math.sqrt((i+.5)/36)*.95,x=z.x+Math.cos(angle)*r,y=z.y+Math.sin(angle)*r;
   if(v.impact>0){const spread=(1-v.impact)*13;c.globalAlpha=v.opacity*v.impact;
-   line(c,[[x-4,y-18],[x,y]],'#d7eef0',2);box(c,x-3,y-3,7,3,'#f5e7b5');
+   line(c,[[x-7,y-38],[x,y]],'#d7eef088',5);line(c,[[x-4,y-28],[x,y]],'#fff1c6',2);box(c,x-7,y-1,15,2,'#f8dd9188');box(c,x-1,y-7,2,14,'#fff1cc');box(c,x-3,y-3,7,3,'#f5e7b5');
    for(let j=0;j<3;j++){const a=j*Math.PI*2/3+i;box(c,x+Math.cos(a)*spread,y+Math.sin(a)*spread*.5,3,2,j===0?'#f8e1a1':'#89c3c7');}
   }
-  if(v.fall>0){c.globalAlpha=v.opacity*.8;const lift=(1-v.fall)*105,ax=x-lift*.22,ay=y-lift;
+  if(v.fall>0){c.globalAlpha=v.opacity*.8;const lift=(1-v.fall)*145,ax=x-lift*.22,ay=y-lift;
    line(c,[[ax-6,ay-28],[ax,ay]],'#8fc6d955',4);line(c,[[ax-5,ay-22],[ax,ay]],'#d6e9e9',2);
    line(c,[[ax-4,ay-4],[ax,ay],[ax+2,ay-6]],'#f6dfac',2);box(c,ax-7,ay-21,5,3,'#78a6ad');
   }
@@ -35,7 +33,7 @@ export function drawCrossbow(c,t){const v=turretVisualState(t);if(t.time<=0)retu
  box(c,-20,12,40,7,'#0c151c88');
  for(const side of [-1,1]){const x=side*(7+v.build*9);line(c,[[0,3],[x,14]],'#202730',7);line(c,[[0,3],[x,14]],'#8b7858',3);box(c,x-4,13,8,4,'#b39a6d');}
  box(c,-9,0,18,12,'#3c3934');box(c,-8,0,16,3,'#d5bb80');box(c,-3,-4,6,11,'#a68b5d');
- if(v.build<1){c.globalAlpha=v.opacity*(1-v.build);for(let i=0;i<6;i++){const a=i*Math.PI/3;box(c,Math.cos(a)*(14+v.build*15),14+Math.sin(a)*5,3,2,'#d8c690');}c.globalAlpha=v.opacity;}
+ if(v.build<1){c.globalAlpha=v.opacity*(1-v.build);for(let i=0;i<6;i++){const a=i*Math.PI/3;box(c,Math.cos(a)*(14+v.build*20),14+Math.sin(a)*7,4,2,'#d8c690');box(c,Math.cos(a)*(10+v.build*12),-28*(1-v.build)+Math.sin(a)*8,2,5,'#fff0bd');}c.globalAlpha=v.opacity;}
  c.save();c.translate(0,-3-(1-v.build)*8);c.rotate(t.aim||0);c.translate(-v.recoil*5,0);
  line(c,[[-7,-19],[5,-13],[10,0],[5,13],[-7,19]],'#18222c',7);
  line(c,[[-7,-19],[5,-13],[10,0],[5,13],[-7,19]],'#bba16c',4);
@@ -44,3 +42,5 @@ export function drawCrossbow(c,t){const v=turretVisualState(t);if(t.time<=0)retu
  box(c,12,-2,16,4,'#dbe2d4');box(c,-16,-3,4,6,'#6b5541');for(const side of [-1,1])box(c,-8,side*16-2,4,4,'#e7ca82');
  if(v.recoil>.35){c.globalAlpha=v.opacity*v.recoil;line(c,[[27,0],[36,0]],'#fff0bb',2);line(c,[[28,-2],[32,-6]],'#d7c493',1);line(c,[[28,2],[32,6]],'#d7c493',1);}
  c.restore();c.globalAlpha=v.opacity*.8;box(c,-17,23,34,2,'#17212b');box(c,-17,23,Math.ceil(34*v.remaining),2,'#d5b97a');c.restore();}
+
+export function drawCrossbowEnding(c,t){const age=1-t.time/.4;c.save();c.globalAlpha=1-age;c.translate(t.x,t.y);for(let i=0;i<10;i++){const a=i*Math.PI/5,r=6+age*22;box(c,Math.cos(a)*r,Math.sin(a)*r*.4-age*17,3,3,i%2?'#c6ae7b':'#e4eee3');}line(c,[[-16*(1-age),5],[0,12-age*8],[16*(1-age),5]],'#ad9a75',3);c.restore();}

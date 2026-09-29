@@ -35,7 +35,7 @@ test('32 relics stack persistently, old single slot migrates and duplicates have
 });
 test('relic attack speed and ultimate damage/cooldown affect actual casts',()=>{
  const s=newRun(5),r=currentRoom(s);s.player.power=5;grantRelic(s.player,'quiver');fireArrow(s,{x:700,y:300});assert.equal(s.attack,.65/1.15);
- grantRelic(s.player,'crown');grantRelic(s.player,'rain');s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};r.enemies=[{id:0,x:500,y:300,hp:500,max:500}];assert.ok(castUltimate(s));assert.equal(r.enemies[0].hp,419);assert.equal(s.skill,20);
+ grantRelic(s.player,'crown');grantRelic(s.player,'rain');s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};r.enemies=[{id:0,x:500,y:300,hp:500,max:500}];assert.ok(castUltimate(s));assert.equal(r.enemies[0].hp,432.5);assert.equal(s.skill,20);
 });
 test('aura shield absorbs one hit, respects invulnerability, pause and recharge, independently of armor',()=>{
  const s=newRun(6);s.player.aura=3;s.player.armor=2;assert.equal(takeDamage(s,20),'blocked');assert.equal(s.auraShield,60);assert.equal(s.shield,undefined);assert.equal(takeDamage(s,20),'ignored');s.invulnerable=0;assert.equal(takeDamage(s,20),'blocked');s.invulnerable=0;assert.equal(takeDamage(s,10),'hurt');advanceClock(s,60,true);assert.equal(s.auraShield,60);advanceClock(s,60,false);assert.equal(takeDamage(s,20),'blocked');assert.equal(s.player.hp,4);assert.equal(parseSave(encodeSave(s)).auraShield,60);

@@ -6,7 +6,7 @@ const TAU=Math.PI*2;
 function circle(c,x,y,r){drawSoftField(c,x,y,r,typeof c.strokeStyle==='string'?c.strokeStyle.slice(0,7):'#dba5ff',.6);}
 function label(c,text,x,y,color='#eacaff'){c.fillStyle=color;c.font='bold 12px Galmuri, monospace';c.textAlign='center';c.fillText(text,x,y);}
 function capsule(c,a){const dx=a.tx-a.x,dy=a.ty-a.y,theta=Math.atan2(dy,dx);c.save();c.translate(a.x,a.y);c.rotate(theta);const length=Math.hypot(dx,dy);c.beginPath();c.moveTo(0,-35);c.lineTo(length,-35);c.arc(length,0,35,-Math.PI/2,Math.PI/2);c.lineTo(0,35);c.arc(0,0,35,Math.PI/2,Math.PI*1.5);c.closePath();c.fill();c.stroke();c.restore();}
-function attackShape(c,e,a,flash=false){c.save();const strong=a.kind==='judgment'||a.finisher;c.strokeStyle=strong?'#ffc091':'#dba5ff';c.fillStyle=flash?'#f1d8ff66':strong?'#e36c7838':'#ad5bdd30';c.lineWidth=flash?4:2;c.setLineDash(flash||a.moving?[]:[6,4]);
+function attackShape(c,e,a,flash=false){c.save();const strong=a.kind==='judgment'||a.finisher;c.strokeStyle=strong?'#ffc091':'#dba5ff';c.fillStyle=flash?'#f1d8ff66':strong?'#e36c7838':'#ad5bdd30';c.lineWidth=flash?4:1;if(!flash)c.globalAlpha=a.time<.25?.75:.5;c.setLineDash(flash||a.moving?[]:[6,4]);
  if(a.kind==='dash'){capsule(c,a);if(!flash&&!a.moving)label(c,e.gateTitle?'돌진 · 장애물로 유도':'돌진',a.tx,a.ty-42);}
  else if(a.kind==='slash'){c.beginPath();c.moveTo(a.x,a.y);c.arc(a.x,a.y,slashReach(e),a.aim-1.15,a.aim+1.15);c.closePath();c.fill();c.stroke();if(!flash&&e.variant==='king'&&kingPhase(e)>=2)label(c,'연속 베기 '+(a.step+1)+'/'+(kingPhase(e)===3?3:2),a.x,a.y-58);}
  else if(a.kind==='mark'||a.kind==='blink'){circle(c,a.tx,a.ty,a.kind==='blink'?35:65);if(strong){c.setLineDash([]);label(c,'!! 2♥',a.tx,a.ty-78,'#ffc091');}else if(a.kind==='blink')label(c,'출현',a.tx,a.ty-45);}

@@ -7,10 +7,10 @@ import {rainVisualState,turretVisualState} from '../../src/rendering/ultimate-vi
 import {CROSSBOW} from '../../src/combat/combat-tuning.js';
 function run(kind){const s=newRun(42);s.player.ultimate=1;s.player.evolutions={ultimate:kind};currentRoom(s).obstacles=[];currentRoom(s).enemies=[{id:1,type:'chaser',x:600,y:300,hp:1000,max:1000}];return s;}
 test('rain landings coincide with all three damage pulses including immediate first impact',()=>{
- const s=run('burst'),r=currentRoom(s);castUltimate(s);assert.equal(r.enemies[0].hp,940);assert.equal(rainVisualState(r.arrowRain).impact,1);
- tickRain(s,.59);assert.equal(r.enemies[0].hp,940);assert.equal(rainVisualState(r.arrowRain).impact,0);assert.ok(rainVisualState(r.arrowRain).fall>.9);
- tickRain(s,.01);assert.equal(r.enemies[0].hp,880);assert.equal(rainVisualState(r.arrowRain).impact,1);
- tickRain(s,.6);assert.equal(r.enemies[0].hp,820);assert.equal(rainVisualState(r.arrowRain).impact,1);assert.equal(rainVisualState(r.arrowRain).fall,0);
+ const s=run('burst'),r=currentRoom(s);castUltimate(s);assert.equal(r.enemies[0].hp,950);assert.equal(rainVisualState(r.arrowRain).impact,1);
+ tickRain(s,.59);assert.equal(r.enemies[0].hp,950);assert.equal(rainVisualState(r.arrowRain).impact,0);assert.ok(rainVisualState(r.arrowRain).fall>.9);
+ tickRain(s,.01);assert.equal(r.enemies[0].hp,900);assert.equal(rainVisualState(r.arrowRain).impact,1);
+ tickRain(s,.6);assert.equal(r.enemies[0].hp,850);assert.equal(rainVisualState(r.arrowRain).impact,1);assert.equal(rainVisualState(r.arrowRain).fall,0);
  tickRain(s,.59);assert.equal(rainVisualState(r.arrowRain).impact,0);assert.equal(rainVisualState(r.arrowRain).fall,0);tickRain(s,.01);assert.equal(r.arrowRain,null);
 });
 test('crossbow recoil follows an actual shot and remains idle without a target',()=>{
