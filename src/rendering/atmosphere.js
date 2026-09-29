@@ -1,6 +1,7 @@
 import {iconSVG} from './pixel-icons.js';
 import {formationName} from '../world/formations.js';
 import {drawRoomBackdrop} from './room-backdrops.js';
+import {drawSoftField} from './ground-visuals.js';
 export const floorNames=['잊힌 돌의 전당','파수꾼의 회랑','고대신의 서고','프리즘의 왕좌','독화의 온실','군체의 심장','무너진 천문관','몰락한 왕좌'];
 const tones=['#34473b35','#45403745','#39335350','#303c5750','#28453055','#373c2750','#1b204966','#36162c66'];
 const label=(c,t,x,y,color='#cab9d6',size=12)=>{c.fillStyle=color;c.textAlign='center';c.font=`${size}px Galmuri, monospace`;c.fillText(t,x,y);};
@@ -13,7 +14,7 @@ export function drawFloorMood(c,s,r){c.save();c.beginPath();c.rect(26,45,908,455
  if(s.key){c.fillStyle='#a83a4124';c.fillRect(26,45,908,455);for(const x of [44,904]){c.fillStyle='#fa887b66';c.fillRect(x,75,8,16);c.fillRect(x,445,8,16);}}
  if(r.gate){c.strokeStyle=r.used?'#cab78455':'#c794e555';c.lineWidth=3;c.beginPath();c.moveTo(315,130);c.lineTo(645,130);c.stroke();if(!r.used){for(let i=0;i<8;i++){c.fillStyle='#a87fca88';c.fillRect(348+i*36,119,5,22);}}}
  c.restore();drawRoomBackdrop(c,s,r);}
-export function drawRoomStory(c,s,r){c.save();if(r.gate&&!s.key){const guards=r.enemies.filter(e=>e.hp>0);if(!r.used){guards.forEach((e,i)=>{const x=190+i*330;c.fillStyle='#201824';c.fillRect(x,63,250,6);c.fillStyle=e.gateFury?'#f19a76':'#c19bdc';c.fillRect(x,63,250*Math.max(0,e.hp/e.max),6);label(c,(e.gateTitle||(e.type==='starKnight'?'왕의 방패, 칼드':'별의 눈, 베라'))+(e.gateFury?' · 격노':''),x+125,57,e.gateFury?'#f4b191':'#d9c2ec',11);if(e.gateFury){c.strokeStyle='#ffae7b';c.beginPath();c.arc(e.x,e.y,34,0,Math.PI*2);c.stroke();}});}if(r.gateBanner>0)label(c,r.used?'왕좌의 봉인이 풀렸다 · 유물함 개방':'왕좌의 문지기',480,158,'#ead7a3',17);}
+export function drawRoomStory(c,s,r){c.save();if(r.gate&&!s.key){const guards=r.enemies.filter(e=>e.hp>0);if(!r.used){guards.forEach((e,i)=>{const x=190+i*330;c.fillStyle='#201824';c.fillRect(x,63,250,6);c.fillStyle=e.gateFury?'#f19a76':'#c19bdc';c.fillRect(x,63,250*Math.max(0,e.hp/e.max),6);label(c,(e.gateTitle||(e.type==='starKnight'?'왕의 방패, 칼드':'별의 눈, 베라'))+(e.gateFury?' · 격노':''),x+125,57,e.gateFury?'#f4b191':'#d9c2ec',11);if(e.gateFury){drawSoftField(c,e.x,e.y-4,40,'#f19a76',.32);c.fillStyle='#f8bd8b99';for(const [dx,dy] of [[-17,-19],[16,-8],[-12,14],[11,20]])c.fillRect(e.x+dx,e.y+dy,3,4);}});}if(r.gateBanner>0)label(c,r.used?'왕좌의 봉인이 풀렸다 · 유물함 개방':'왕좌의 문지기',480,158,'#ead7a3',17);}
  if(s.floor>=6&&!s.key&&!r.gate&&r.type!=='boss'&&r.enemies.length)label(c,r.intro?'상층의 첫 전투':formationName(r),480,77,'#bcaed0',11);
  if(r.rest&&!s.key)label(c,'왕좌 앞의 쉼터',480,440,'#b7d5cf',13);
  c.restore();}

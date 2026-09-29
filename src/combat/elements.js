@@ -65,7 +65,8 @@ export function drawElements(ctx,room,time=0){
   if(e.poisonStacks?.length>=2){drawGroundField(ctx,{x:e.x,y:e.y,r:e.poisonRadius},'gas',time);}
   if(e.poisonStacks?.length){ctx.fillStyle='#8dea77';ctx.font='11px Galmuri, monospace';ctx.fillText('독 '+e.poisonStacks.length,e.x-15,e.y+31);}
   if(e.burnStacks?.length){ctx.fillStyle='#ff9b49';ctx.fillRect(e.x-20,e.y-8,4,12);}
-  if(e.frozen>0){ctx.fillStyle='#9ceaff66';ctx.strokeStyle='#c4f6ff';ctx.fillRect(e.x-22,e.y-30,44,52);ctx.strokeRect(e.x-22,e.y-30,44,52);}else if(e.frostStacks){ctx.fillStyle='#b4ecff';ctx.font='11px Galmuri, monospace';ctx.fillText('서리 '+e.frostStacks,e.x-15,e.y+40);}
-  if(e.trialChampion){ctx.strokeStyle='#ca8cff';ctx.lineWidth=3;ctx.beginPath();ctx.arc(e.x,e.y,29,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#dbb0ff';ctx.font='12px Galmuri, monospace';ctx.textAlign='center';ctx.fillText('시련의 용사',e.x,e.y-44);}
+  if(e.frozen>0){drawSoftField(ctx,e.x,e.y-3,32,'#9ceaff',.31);ctx.fillStyle='#d8f5ff99';for(const [dx,dy] of [[-17,-16],[15,-7],[-13,12],[12,16]]){ctx.fillRect(e.x+dx,e.y+dy,2,6);ctx.fillRect(e.x+dx-2,e.y+dy+2,6,2);}}else if(e.frostStacks){ctx.fillStyle='#b4ecff';ctx.font='11px Galmuri, monospace';ctx.fillText('서리 '+e.frostStacks,e.x-15,e.y+40);}
+  if(e.trialChampion){drawSoftField(ctx,e.x,e.y-3,34,'#b98bdf',.31);ctx.fillStyle='#dbb0ff';ctx.fillRect(e.x-2,e.y-36,4,4);ctx.font='12px Galmuri, monospace';ctx.textAlign='center';ctx.fillText('시련의 용사',e.x,e.y-44);}
  }ctx.restore();
 }
+import {drawSoftField} from '../rendering/ground-visuals.js';
