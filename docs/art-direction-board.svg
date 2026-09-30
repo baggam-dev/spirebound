@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1056" height="380" viewBox="0 0 1056 380">
+  <title>Spirebound 아트 방향 비교: 재의 성채, 지옥 현무암, 타락한 왕실</title>
+  <style>
+    text{font-family:'Malgun Gothic',sans-serif;fill:#e6e1d3}
+    .title{font-size:18px;font-weight:700}.sub{font-size:12px;fill:#aaa9a6}.label{font-size:12px}
+  </style>
+  <defs>
+    <pattern id="floorGrid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="var(--line)" stroke-width="1"/></pattern>
+    <g id="scene">
+      <rect width="320" height="210" fill="var(--void)"/>
+      <rect x="12" y="12" width="296" height="186" fill="var(--wall)"/>
+      <path d="M12 38H308M12 64H308M12 90H308M12 116H308M12 142H308M12 168H308" stroke="var(--mortar)" stroke-width="3"/>
+      <path d="M58 12V38M116 38V64M174 12V38M232 38V64M290 12V38M58 142V168M116 168V198M174 142V168M232 168V198M290 142V168" stroke="var(--mortar)" stroke-width="3"/>
+      <rect x="34" y="40" width="252" height="132" fill="var(--floor)"/>
+      <rect x="34" y="40" width="252" height="132" fill="url(#floorGrid)"/>
+      <path d="M40 45H280M40 168H280" stroke="var(--edge)" stroke-width="3" opacity=".55"/>
+      <rect x="50" y="54" width="28" height="8" fill="var(--stone)" opacity=".45"/><rect x="254" y="148" width="20" height="7" fill="var(--stone)" opacity=".4"/>
+      <rect x="64" y="104" width="8" height="18" fill="var(--metal)"/><rect x="62" y="100" width="12" height="5" fill="var(--ember)"/>
+      <rect x="248" y="69" width="8" height="18" fill="var(--metal)"/><rect x="246" y="65" width="12" height="5" fill="var(--ember)"/>
+      <path d="M55 100l13-24 13 24M238 65l13-24 13 24" fill="var(--ember)" opacity=".18"/>
+      <rect x="141" y="122" width="9" height="17" fill="#20242b"/><rect x="154" y="122" width="9" height="17" fill="#20242b"/>
+      <rect x="139" y="103" width="25" height="22" fill="#242b33"/><rect x="142" y="105" width="20" height="6" fill="var(--metal)"/>
+      <rect x="143" y="84" width="19" height="20" fill="#ddaf8d"/><rect x="141" y="82" width="23" height="7" fill="#edc96a"/><rect x="139" y="88" width="5" height="11" fill="#d69d45"/><rect x="157" y="89" width="3" height="2" fill="#2b3136"/>
+      <rect x="163" y="108" width="8" height="6" fill="#9a7759"/><path d="M175 93q16 21 0 43" fill="none" stroke="#d7b77d" stroke-width="3"/>
+      <rect x="199" y="95" width="8" height="26" fill="var(--demon)"/><rect x="210" y="94" width="9" height="27" fill="var(--demon)"/>
+      <rect x="196" y="74" width="27" height="23" fill="var(--enemy)"/><rect x="199" y="67" width="22" height="8" fill="var(--metal)"/><path d="M198 70l-5-10h8M220 70l5-10h-8" fill="var(--metal)"/>
+      <rect x="200" y="78" width="5" height="3" fill="var(--eye)"/><rect x="215" y="78" width="5" height="3" fill="var(--eye)"/>
+      <path d="M183 108h24" stroke="var(--magic)" stroke-width="4"/><path d="M190 103l-7 5 7 5" fill="var(--magic)"/>
+      <path d="M218 126q15 8 23 0" fill="none" stroke="var(--hazard)" stroke-width="5" opacity=".7"/>
+      <rect x="102" y="74" width="6" height="3" fill="var(--edge)" opacity=".6"/><rect x="229" y="147" width="8" height="3" fill="var(--edge)" opacity=".6"/>
+    </g>
+  </defs>
+  <rect width="1056" height="380" fill="#10151b"/>
+  <text x="24" y="31" class="title">SPIREBOUND · 공통 픽셀 규칙을 유지한 분위기 비교</text>
+  <text x="24" y="53" class="sub">같은 구조·영웅·적·탄환을 세 팔레트로 비교한 방향 시안. 실제 게임 에셋/화면은 아님.</text>
+  <g transform="translate(16 76)" style="--void:#0c1518;--wall:#46524b;--mortar:#1d2928;--floor:#273635;--line:#344743;--edge:#b7c6a4;--stone:#8fa89d;--metal:#9aa8a2;--ember:#d8ad68;--enemy:#49605b;--demon:#2a3c3b;--eye:#ffbd72;--magic:#8fdad8;--hazard:#e7a765"><use href="#scene" xlink:href="#scene"/><text x="0" y="238" class="title">A · 재의 성채</text><text x="0" y="258" class="label">석조·청록빛 / 현재 1~8층과 연결 쉬움</text><rect x="0" y="275" width="64" height="13" fill="#46524b"/><rect x="68" y="275" width="64" height="13" fill="#273635"/><rect x="136" y="275" width="64" height="13" fill="#8fdad8"/><rect x="204" y="275" width="64" height="13" fill="#e7a765"/></g>
+  <g transform="translate(368 76)" style="--void:#130d11;--wall:#49383a;--mortar:#211a23;--floor:#282129;--line:#3c3035;--edge:#ac8580;--stone:#825e57;--metal:#95817d;--ember:#fa944d;--enemy:#70434d;--demon:#382831;--eye:#ffd179;--magic:#d793d1;--hazard:#ff8b50"><use href="#scene" xlink:href="#scene"/><text x="0" y="238" class="title">B · 지옥 현무암</text><text x="0" y="258" class="label">검붉은 균열·불씨 / 9·10층 권장</text><rect x="0" y="275" width="64" height="13" fill="#49383a"/><rect x="68" y="275" width="64" height="13" fill="#282129"/><rect x="136" y="275" width="64" height="13" fill="#d793d1"/><rect x="204" y="275" width="64" height="13" fill="#ff8b50"/></g>
+  <g transform="translate(720 76)" style="--void:#111420;--wall:#444459;--mortar:#1e2331;--floor:#272b3b;--line:#363e51;--edge:#a8a2c4;--stone:#777b9c;--metal:#b6a7a0;--ember:#dda762;--enemy:#615369;--demon:#342d43;--eye:#f7c079;--magic:#b99de5;--hazard:#df877e"><use href="#scene" xlink:href="#scene"/><text x="0" y="238" class="title">C · 타락한 왕실</text><text x="0" y="258" class="label">남보라·황동 / 8층에서 지옥으로 전이</text><rect x="0" y="275" width="64" height="13" fill="#444459"/><rect x="68" y="275" width="64" height="13" fill="#272b3b"/><rect x="136" y="275" width="64" height="13" fill="#b99de5"/><rect x="204" y="275" width="64" height="13" fill="#df877e"/></g>
+</svg>

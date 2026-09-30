@@ -45,3 +45,18 @@ test('a landed frost arrow slows movement without freezing dodge or corrupting s
  const hp=p.hp;stepRun(s,.2);assert.equal(p.hp,hp-1);assert.equal(p.frostSlow,1.35);assert.equal(s.dodge,0);
  assert.equal(parseSave(encodeSave(s)).player.frostSlow,1.35);
 });
+test('commander keeps flanking, telegraphs a fixed sniper shot, and resumes after save',()=>{
+ const {s,e,p,r}=fight(),c=e.commander,bullets=[];
+ c.volleyClock=20;c.blinkClock=20;c.rainClock=20;c.snipeClock=.02;
+ const start={x:e.x,y:e.y};
+ updateCommander(e,p,r,.03,bullets,()=>{});
+ assert.ok(c.snipe);assert.equal(bullets.length,0);
+ const aimed=c.snipe.aim;p.x+=100;
+ assert.ok(currentRoom(parseSave(encodeSave(s))).enemies[0].commander.snipe);
+ updateCommander(e,p,r,.72,bullets,()=>{});
+ assert.equal(bullets.length,1);assert.equal(bullets[0].frostArrow,true);
+ assert.ok(Math.abs(Math.atan2(bullets[0].vy,bullets[0].vx)-aimed)<1e-9);
+ for(let i=0;i<180;i++)updateCommander(e,p,r,1/60,bullets,()=>{});
+ assert.ok(Math.hypot(e.x-start.x,e.y-start.y)>35);
+ assert.ok(currentRoom(parseSave(encodeSave(s))).enemies[0].commander.strafeDirection);
+});

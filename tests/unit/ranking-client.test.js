@@ -13,12 +13,18 @@ test('online start issues session before run and survives save continuation',asy
  await client.start(s);assert.deepEqual(calls.map(c=>c[0]),['/api/session','/api/runs']);assert.equal(calls[0][1].credentials,'same-origin');assert.deepEqual(JSON.parse(calls[1][1].body).roomCounts,s.floors.map(r=>r.length));assert.deepEqual(parseSave(encodeSave(s)).ranking.online,s.ranking.online);
 });
 test('expanded season starts online and only drafts a completed final demon run',async()=>{
- const s=newRun(21,{campaign:'expanded'}),client=new RankingClient(memory(),async(path)=>response(path.endsWith('session')?{active:true}:{runId:s.runId,seasonId:'ASCENT-1',startedAt:123}));
- await client.start(s);assert.equal(s.ranking.seasonId,'ASCENT-1');assert.equal(s.ranking.rulesVersion,'ranking-v2');
+ const s=newRun(21,{campaign:'expanded'}),client=new RankingClient(memory(),async(path)=>response(path.endsWith('session')?{active:true}:{runId:s.runId,seasonId:'ASCENT-2',startedAt:123}));
+ await client.start(s);assert.equal(s.ranking.seasonId,'ASCENT-2');assert.equal(s.ranking.rulesVersion,'ranking-v3');
  s.key=true;s.status='won';s.player.mainSkill='fire';assert.equal(finishRanking(s),null);assert.equal(client.draft(s),null);
  s.floors[9][1].used=true;s.floors[9][1].demonPending=false;
  finishRanking(s);const qualified=client.draft(s);assert.equal(qualified.payload.finalDemonDefeated,true);
- assert.equal(qualified.payload.seasonId,'ASCENT-1');
+ assert.equal(qualified.payload.seasonId,'ASCENT-2');
+});
+test('a continued ASCENT-1 save remains local after its season closes',()=>{
+ const s=newRun(31,{campaign:'expanded'}),client=new RankingClient(memory());
+ s.ranking.seasonId='ASCENT-1';s.ranking.rulesVersion='ranking-v2';s.ranking.online={runId:s.runId,startedAt:123};
+ s.key=true;s.status='won';s.player.mainSkill='fire';s.floors[9][1].used=true;s.floors[9][1].demonPending=false;
+ assert.ok(finishRanking(s));assert.equal(client.draft(s),null);
 });
 test('offline, legacy and practice results cannot create online drafts',()=>{
  const client=new RankingClient(memory());for(const mutate of [s=>delete s.ranking.online,s=>delete s.ranking,s=>s.practice={},s=>s.status='dead']){const s=winner();mutate(s);assert.equal(client.draft(s),null);}

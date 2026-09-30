@@ -1,6 +1,6 @@
 # 완주 후기 + 스킬/비주얼/출시 품질 통합 우선순위 (2026-09-30)
 
-이 문서는 사용자의 화염 궁수 10층 완주 후기와 이후의 순수 화살·유틸 액티브, 전면 비주얼 개선, 출시 품질 목표를 하나의 **구현 권장 순서**로 묶는다. 세부 규칙은 `full-clear-feedback-review.md`, `skill-expansion-review.md`, `visual-overhaul-review.md`, `release-quality-roadmap.md`를 기준으로 한다. 현재까지는 설계 검토이며 아래 항목을 구현/배포했다고 뜻하지 않는다.
+이 문서는 사용자의 화염 궁수 10층 완주 후기와 이후의 순수 화살·유틸 액티브, 전면 비주얼 개선, 출시 품질 목표를 하나의 **구현 권장 순서**로 묶는다. 세부 규칙은 `full-clear-feedback-review.md`, `skill-expansion-review.md`, `visual-overhaul-review.md`, `release-quality-roadmap.md`를 기준으로 한다. 완료·배포 현황은 `WORK_STATUS.md`를 따른다. 0번 선행 결과는 `stage1-baseline-art-season.md`, 1번 군단장 작업은 `commander-stage1.md`에 기록한다.
 
 ## 순서
 

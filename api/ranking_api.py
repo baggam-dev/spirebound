@@ -17,7 +17,9 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 RULES = 'ranking-v1'
-EXPANDED_RULES = 'ranking-v2'
+EXPANDED_RULES = 'ranking-v3'
+LEGACY_EXPANDED_RULES = 'ranking-v2'
+LEGACY_EXPANDED_SEASON = 'ASCENT-1'
 COOKIE = 'spirebound_player'
 MAX_BODY = 131072
 MAIN_SKILLS = {'fire', 'frost', 'poison', 'chain'}
@@ -76,6 +78,8 @@ class Ranking:
             if config.get('expandedSeason'):
                 db.execute('INSERT OR IGNORE INTO seasons VALUES (?,?,?)',
                            (config['expandedSeason'], EXPANDED_RULES, self.clock()))
+                db.execute('INSERT OR IGNORE INTO seasons VALUES (?,?,?)',
+                           (LEGACY_EXPANDED_SEASON, LEGACY_EXPANDED_RULES, self.clock()))
 
     def active_season(self, season):
         if season == self.config.get('expandedSeason'):
