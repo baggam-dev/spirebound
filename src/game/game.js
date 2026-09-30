@@ -94,7 +94,7 @@ function title(){
  button('start',()=>campaignMenu(exists));
  button('rank',()=>rankUI.board(title));button('bossPractice',practiceMenu);button('continue',continueRun);button('guide',()=>showInfo('help'));button('records',()=>showInfo('history'));
 }
-function campaignMenu(replacing=false){stop('campaign');panel(`<h2>새 도전 선택</h2>${replacing?'<p>현재 이어하기 저장을 새 도전으로 교체합니다.</p>':''}<p>기본 8층 · BETA-1 / 확장 10층 · ASCENT-2</p><button class="primary" id="startClassic">기본 8층 시작</button><button id="startExpanded">확장 10층 시작</button><button id="cancelStart">돌아가기</button>`);button('startClassic',()=>start(undefined,'classic'));button('startExpanded',()=>start(undefined,'expanded'));button('cancelStart',title);}
+function campaignMenu(replacing=false){stop('campaign');panel(`<h2>새 도전 선택</h2>${replacing?'<p>현재 이어하기 저장을 새 도전으로 교체합니다.</p>':''}<p>기본 8층 · BETA-1 / 확장 10층 · ASCENT-3</p><button class="primary" id="startClassic">기본 8층 시작</button><button id="startExpanded">확장 10층 시작</button><button id="cancelStart">돌아가기</button>`);button('startClassic',()=>start(undefined,'classic'));button('startExpanded',()=>start(undefined,'expanded'));button('cancelStart',title);}
 function start(seed,campaign='classic'){if(launching)return;beginRun(newRun(Number.isInteger(seed)&&seed>=0&&seed<=4294967295?seed:undefined,{campaign}),true);}
 async function beginRun(candidate,online){
  if(launching)return;launching=true;stop('rank-start');s=null;

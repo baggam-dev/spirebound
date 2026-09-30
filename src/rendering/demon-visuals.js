@@ -6,7 +6,13 @@ function oval(c,x,y,rx,ry,fill){c.fillStyle=fill;c.beginPath();c.ellipse(x,y,rx,
 export function drawDemonGround(c,r,time=0){
  const d=r.demon;if(!d)return;c.save();
  if(d.phase===3){box(c,353,72,254,72,'#0a0913');for(let i=0;i<8;i++){const x=365+i*32,y=72+(i%3)*5;box(c,x,y,27,7,'#48504c');box(c,x+4,145+(i%2)*3,24,5,'#4e5151');if(d.recovery>0)box(c,x+12,92+((time*80+i*23)%65),5,4,'#a38a9a');}}
- for(const o of r.obstacles)if(o.demonHole){box(c,o.x-4,o.y-2,o.w+8,o.h+8,'#5e465e');box(c,o.x,o.y,o.w,o.h,'#0b0a17');box(c,o.x+5,o.y+5,o.w-10,o.h-10,'#171024');box(c,o.x+12,o.y+13,o.w-24,o.h-23,'#080812');}
+ for(const o of r.obstacles)if(o.demonHole){
+  const x=o.x,y=o.y;
+  oval(c,x+27,y+35,22,17,'#634967');oval(c,x+27,y+34,18,14,'#090914');
+  oval(c,x+25,y+22,18,15,'#634967');oval(c,x+25,y+22,14,12,'#090914');
+  for(let i=0;i<5;i++){const tx=x+9+i*9,ty=y+10-Math.sin(i/4*Math.PI)*4;oval(c,tx,ty,6,7,'#634967');oval(c,tx,ty,4,5,'#090914');}
+  c.strokeStyle='#9b759a88';c.lineWidth=1;for(const [sx,sy,ex,ey] of [[3,30,10,27],[45,34,53,38],[19,50,13,54],[43,12,50,7]]){c.beginPath();c.moveTo(x+sx,y+sy);c.lineTo(x+ex,y+ey);c.stroke();}
+ }
  for(const t of d.trails)drawSoftField(c,t.x,t.y,t.radius,'#aa75bc',Math.min(.58,t.time/4*.58));
  if(d.force){drawSoftField(c,d.force.x,d.force.y,180,'#c883b6',.2*d.force.time/.8);c.strokeStyle='#e4a9d077';c.lineWidth=1;for(let i=0;i<8;i++){const angle=i*Math.PI/4+time*.3,x=d.force.x+Math.cos(angle)*100,y=d.force.y+Math.sin(angle)*100,sign=d.force.kind==='mouthPull'?-1:1;c.beginPath();c.moveTo(x,y);c.lineTo(x+Math.cos(angle)*20*sign,y+Math.sin(angle)*20*sign);c.stroke();}}
  const a=d.attack;if(a){
@@ -17,11 +23,11 @@ export function drawDemonGround(c,r,time=0){
    const offsets=a.kind==='eyeRay'?[-.22,0,.22]:[0];
    for(const offset of offsets){const angle=a.aim+offset;c.beginPath();c.moveTo(a.x,a.y);c.lineTo(a.x+Math.cos(angle)*850,a.y+Math.sin(angle)*850);c.stroke();}
   }
-  if(['hand','eyeOrb'].includes(a.kind))drawSoftField(c,a.x,a.y,44,shade,.42);
+  if(['hand','eyeOrb','coreBurst'].includes(a.kind))drawSoftField(c,a.x,a.y,a.kind==='coreBurst'?82:44,shade,.42);
   if(['mouthPull','mouthPush'].includes(a.kind))drawSoftField(c,a.x,a.y,245,shade,.22);
   c.fillStyle='#f4d9f2';c.font='11px Galmuri, monospace';c.textAlign='center';
   const finger=['엄지 부채','검지 저격','중지 관통','약지 곡사','새끼 산탄'];
-  c.fillText(a.kind==='hand'?finger[a.finger]:({footJump:'발 착지',footDash:'발 돌진',eyeRay:'눈 광선',eyeOrb:'눈 탄환',noseTrail:'독길',mouthPull:'흡입',mouthPush:'밀어내기',mouthTongue:'혀 공격'})[a.kind],a.x,a.y-65);
+  c.fillText(a.kind==='hand'?finger[a.finger]:({footJump:'발 착지',footDash:'발 돌진',eyeRay:'눈 광선',eyeOrb:'눈 탄환',noseTrail:'독길',mouthPull:'흡입',mouthPush:'밀어내기',mouthTongue:'혀 공격',coreBurst:'심연 탄막'})[a.kind],a.x,a.y-65);
  }
  c.restore();
 }

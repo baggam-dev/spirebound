@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {newRun,enrage,currentRoom,advanceClock} from '../../src/game/engine.js';
 import {enterRoom,stepRun} from '../../src/game/simulation.js';
 import {encodeSave,parseSave,RunStore,safeHistory} from '../../src/persistence/storage.js';
-import {calculateScore,trackRankingRoom,recordRankingDefeat,finishRanking,rankingMarkup,validateRanking,EXPANDED_SEASON,EXPANDED_RULES,LEGACY_EXPANDED_SEASON,LEGACY_EXPANDED_RULES} from '../../src/ranking/ranking.js';
+import {calculateScore,trackRankingRoom,recordRankingDefeat,finishRanking,rankingMarkup,validateRanking,EXPANDED_SEASON,EXPANDED_RULES,EXPANDED_ARCHIVES} from '../../src/ranking/ranking.js';
 const win=s=>{s.key=true;s.floor=0;s.room=0;s.status='won';return finishRanking(s);};
 test('score examples, caps, second boundary and invalid metrics',()=>{
  for(const [elapsedMs,kills,visited,totalRooms,total] of [[1200000,180,60,80,16900],[1800000,300,80,80,17400],[3000000,450,80,80,16000]])assert.equal(calculateScore({elapsedMs,kills,visited,totalRooms}).total,total);
@@ -41,12 +41,14 @@ test('score snapshot and completion history persist once',()=>{
 test('malformed ranking counters, identifiers and snapshots are rejected',()=>{
  for(const mutate of [s=>s.ranking.visited.push('99:0'),s=>s.ranking.visited.push('0:0'),s=>s.ranking.totalRooms++,s=>s.ranking.defeated.push(-1),s=>s.ranking.nextEnemyId=Infinity,s=>{win(s);s.ranking.result.total++;}]){const s=newRun(1);mutate(s);assert.equal(validateRanking(s),false);assert.throws(()=>encodeSave(s));}
 });
-test('new expanded season keeps former runs loadable without joining the new ranking',()=>{
+test('new expanded season keeps both former runs loadable without joining the new ranking',()=>{
  const current=newRun(55,{campaign:'expanded'});
  assert.equal(current.ranking.seasonId,EXPANDED_SEASON);assert.equal(current.ranking.rulesVersion,EXPANDED_RULES);
- const old=newRun(55,{campaign:'expanded'});old.ranking.seasonId=LEGACY_EXPANDED_SEASON;old.ranking.rulesVersion=LEGACY_EXPANDED_RULES;
- old.ranking.online={runId:old.runId,startedAt:123};
- const loaded=parseSave(encodeSave(old));assert.equal(loaded.ranking.seasonId,LEGACY_EXPANDED_SEASON);
- assert.equal(validateRanking(loaded),true);
- loaded.ranking.rulesVersion=EXPANDED_RULES;assert.equal(validateRanking(loaded),false);
+ for(const archive of EXPANDED_ARCHIVES){
+  const old=newRun(55,{campaign:'expanded'});old.ranking.seasonId=archive.seasonId;old.ranking.rulesVersion=archive.rulesVersion;
+  old.ranking.online={runId:old.runId,startedAt:123};
+  const loaded=parseSave(encodeSave(old));assert.equal(loaded.ranking.seasonId,archive.seasonId);
+  assert.equal(validateRanking(loaded),true);
+  loaded.ranking.rulesVersion=EXPANDED_RULES;assert.equal(validateRanking(loaded),false);
+ }
 });

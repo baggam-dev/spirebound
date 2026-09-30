@@ -19,11 +19,16 @@ test('five fingers produce distinct bounded salvos',()=>{
  for(let i=0;i<5;i++){const hand=r.enemies[0];d.attack={kind:'hand',owner:'hand',time:.01,x:hand.x,y:hand.y,tx:p.x,ty:p.y,aim:0,finger:i};d.recovery=0;updateDemon(s,r,p,.02,s.projectiles,()=>{});assert.equal(s.projectiles.length,counts.slice(0,i+1).reduce((a,b)=>a+b,0));}
  assert.ok(s.projectiles.some(b=>b.demonCurve));assert.doesNotThrow(()=>parseSave(encodeSave(s)));
 });
-test('foot craters are capped at two, block movement and shots, and preserve routes',()=>{
+test('footprint pits persist through all phases, block shots, and keep an open route',()=>{
  const {s,r,p}=fight();p.x=810;p.y=420;
  assert.equal(tryDemonHole(r,360,300,p),true);assert.equal(tryDemonHole(r,480,300,p),true);assert.equal(tryDemonHole(r,600,300,p),true);
- const holes=r.obstacles.filter(o=>o.demonHole);assert.equal(holes.length,2);assert.ok(!holes.some(o=>Math.abs(o.x+27-360)<5));
+ const holes=r.obstacles.filter(o=>o.demonHole);assert.equal(holes.length,3);assert.ok(holes.some(o=>Math.abs(o.x+27-360)<5));
  assert.equal(blocked(480,300,10,r.obstacles),true);assert.equal(segmentBlocked({x:420,y:300},{x:540,y:300},r.obstacles),true);
+ r.enemies.forEach(e=>e.hp=0);assert.equal(advanceDemonPhase(r,s.projectiles),true);assert.equal(r.obstacles.filter(o=>o.demonHole).length,3);assert.ok(r.enemies.every(e=>!blocked(e.x,e.y,32,r.obstacles)));
+ r.enemies.forEach(e=>e.hp=0);assert.equal(advanceDemonPhase(r,s.projectiles),true);assert.equal(r.obstacles.filter(o=>o.demonHole).length,3);assert.ok(r.enemies.every(e=>!blocked(e.x,e.y,32,r.obstacles)));
+ for(const [x,y] of [[720,220],[320,400],[620,400],[750,130]])tryDemonHole(r,x,y,p);
+ assert.equal(r.obstacles.filter(o=>o.demonHole).length,4);
+ assert.ok(r.obstacles.filter(o=>o.demonHole).some(o=>Math.abs(o.x+27-360)<5));
  assert.doesNotThrow(()=>parseSave(encodeSave(s)));
 });
 test('part extinction advances two phases before only the final core grants a key',()=>{
@@ -53,10 +58,33 @@ test('final shadow attacks do not repeat immediately and keep the core fixed',()
  for(let i=0;i<12;i++){d.attack=null;d.attackClock=0;updateDemon(s,r,p,.01,s.projectiles,()=>{});assert.ok(d.attack&&d.attack.kind!==last);last=d.attack.kind;}
  assert.deepEqual({x:r.enemies[0].x,y:r.enemies[0].y},origin);assert.doesNotThrow(()=>parseSave(encodeSave(s)));
 });
+test('foot pressure adds a jump and final core fires a readable seven-shot spread',()=>{
+ const {s,r,d,p}=fight();d.attackClock=0;d.footPressureClock=0;d.recovery=0;
+ updateDemon(s,r,p,.01,s.projectiles,()=>{});assert.equal(d.attack.kind,'footJump');
+ r.enemies.forEach(e=>e.hp=0);advanceDemonPhase(r,s.projectiles);r.enemies.forEach(e=>e.hp=0);advanceDemonPhase(r,s.projectiles);
+ const core=r.enemies[0];d.recovery=0;d.attack={kind:'coreBurst',owner:'core',time:.01,x:core.x,y:core.y,tx:p.x,ty:p.y,aim:0};
+ updateDemon(s,r,p,.02,s.projectiles,()=>{});assert.equal(s.projectiles.filter(b=>b.enemy&&b.life>0).length,7);
+ assert.doesNotThrow(()=>parseSave(encodeSave(s)));
+});
+test('active parts reposition and accelerated projectiles retain a warning interval',()=>{
+ const {s,r,d,p}=fight();d.attackClock=3;d.recovery=0;p.x=510;p.y=430;
+ const before=r.enemies.map(e=>({x:e.x,y:e.y}));updateDemon(s,r,p,1,s.projectiles,()=>{});
+ assert.ok(r.enemies.every((e,i)=>Math.hypot(e.x-before[i].x,e.y-before[i].y)>20));
+ d.attack={kind:'hand',owner:'hand',time:.85,x:r.enemies[0].x,y:r.enemies[0].y,tx:p.x,ty:p.y,aim:0,finger:1};
+ updateDemon(s,r,p,.4,s.projectiles,()=>{});assert.equal(s.projectiles.length,0);
+ updateDemon(s,r,p,.45,s.projectiles,()=>{});assert.equal(s.projectiles.length,3);
+ assert.ok(s.projectiles.every(b=>Math.hypot(b.vx,b.vy)>300));
+ r.enemies.forEach(e=>e.hp=0);advanceDemonPhase(r,s.projectiles);d.recovery=0;d.attackClock=3;
+ const eye=r.enemies.find(e=>e.part==='eye'),nose=r.enemies.find(e=>e.part==='nose'),oldEye={x:eye.x,y:eye.y},oldNose={x:nose.x,y:nose.y};
+ updateDemon(s,r,p,1,s.projectiles,()=>{});
+ assert.ok(Math.hypot(eye.x-oldEye.x,eye.y-oldEye.y)>20);
+ assert.ok(Math.hypot(nose.x-oldNose.x,nose.y-oldNose.y)>40);
+ assert.doesNotThrow(()=>parseSave(encodeSave(s)));
+});
 test('a minute of live combat stays bounded and re-entry clears only the old warning',()=>{
  const {s,r,d,p}=fight();p.max=p.hp=100;s.entryGrace=0;s.attack=100;
  for(let i=0;i<1200;i++)stepRun(s,.05);
- assert.ok(d.turn>=8);assert.ok(s.projectiles.length<2000);assert.ok(r.obstacles.filter(o=>o.demonHole).length<=2);
+ assert.ok(d.turn>=8);assert.ok(s.projectiles.length<2000);assert.ok(r.obstacles.filter(o=>o.demonHole).length<=4);
  assert.doesNotThrow(()=>parseSave(encodeSave(s)));
- d.attack={kind:'footJump',owner:'foot',time:.5,x:675,y:255,tx:400,ty:300,aim:1};enterRoom(s);assert.equal(d.attack,null);assert.ok(r.obstacles.filter(o=>o.demonHole).length<=2);
+ d.attack={kind:'footJump',owner:'foot',time:.5,x:675,y:255,tx:400,ty:300,aim:1};enterRoom(s);assert.equal(d.attack,null);assert.ok(r.obstacles.filter(o=>o.demonHole).length<=4);
 });

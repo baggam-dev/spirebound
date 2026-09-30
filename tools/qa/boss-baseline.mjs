@@ -35,10 +35,10 @@ function measureBoss(boss,main,seed,damageScale=1){
 function probeFootprints(){
  const s=createPractice('demon','fire',66),r=currentRoom(s),p=s.player,d=r.demon;
  s.entryGrace=0;s.invulnerable=1e6;s.attack=1e6;
+ const positions=[[360,300],[480,300],[600,300],[700,220]];p.x=positions[0][0];p.y=positions[0][1];
  let jumps=0,maxHoles=0,previousAttack=null;
  for(let tick=0;tick<60/dt;tick++){
-  if(d.attack?.kind==='footJump'&&d.attack!==previousAttack){jumps++;previousAttack=d.attack;}
-  if(d.attack?.kind==='footJump'&&d.attack.time<.5){p.x=d.attack.tx<480?Math.min(865,d.attack.tx+170):Math.max(95,d.attack.tx-170);p.y=d.attack.ty;}
+  if(d.attack?.kind==='footJump'&&d.attack!==previousAttack){jumps++;previousAttack=d.attack;const next=positions[jumps%positions.length];p.x=next[0];p.y=next[1];}
   stepRun(s,dt);maxHoles=Math.max(maxHoles,r.obstacles.filter(o=>o.demonHole).length);
  }
  return {seconds:60,jumps,maxHoles,holesAtEnd:r.obstacles.filter(o=>o.demonHole).length,proxy:'invulnerable no-fire scripted dodge; not a human playthrough'};

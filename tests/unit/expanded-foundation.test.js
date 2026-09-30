@@ -11,8 +11,8 @@ test('explicit expanded draft adds connected ninth and two-room final floors wit
  assert.equal(classic.campaign,undefined);
  assert.equal(classic.ranking.seasonId,'BETA-1');
  assert.equal(draft.floors.length,10);
- assert.equal(draft.ranking.seasonId,'ASCENT-2');
- assert.equal(draft.ranking.rulesVersion,'ranking-v3');
+ assert.equal(draft.ranking.seasonId,'ASCENT-3');
+ assert.equal(draft.ranking.rulesVersion,'ranking-v4');
  assert.deepEqual(draft.floors.slice(0,8),classic.floors);
  const ninth=draft.floors[8],commander=ninth.find(r=>r.type==='boss'),stairs=ninth.find(r=>r.type==='up');
  assert.ok(commander?.commanderPending);
@@ -39,7 +39,7 @@ test('expanded draft saves its topology and permits ascent and descent without e
  draft.player.hp=2;assert.equal(useFountain(draft),true);assert.equal(draft.player.hp,5);assert.equal(currentRoom(draft).fountainReady,false);assert.equal(currentRoom(draft).used,false);assert.equal(useFountain(draft),false);
  assert.equal(travel(draft,-1),true);assert.equal(draft.floor,8);assert.equal(currentRoom(draft).type,'boss');
  const restored=parseSave(encodeSave(draft));
- assert.equal(restored.campaign,'expanded');assert.equal(restored.ranking.seasonId,'ASCENT-2');
+ assert.equal(restored.campaign,'expanded');assert.equal(restored.ranking.seasonId,'ASCENT-3');
  assert.equal(restored.floors[9][0].fountainReady,false);
  for(const change of [s=>{s.floors[9].push({...s.floors[9][1],x:2});},s=>{delete s.floors[9][0].fountainReady;},s=>{s.ranking=newRun(4).ranking;},s=>{delete s.campaign;}]){
   const copy=structuredClone(restored);change(copy);assert.throws(()=>encodeSave(copy));
