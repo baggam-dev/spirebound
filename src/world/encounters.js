@@ -6,7 +6,7 @@ import {safeSpawn} from './terrain.js';
 
 const groups=[['chaser','archer','scatter'],['charger','archer','chaser'],['scatter','charger','chaser'],['brute','ricochet','archer'],['brute','laser','charger'],['laser','scatter','chaser'],['flower','charger','archer'],['flower','brute','ricochet']];
 export function encounter(floor,random,obstacles=[],escapeDepth=0,returnVariants=!!escapeDepth){
- if(floor>=6)return upperEncounter(floor,random,obstacles,escapeDepth);
+ if(floor>=5)return upperEncounter(floor,random,obstacles,escapeDepth);
  const pool=groups.slice(0,escapeDepth||floor>=4?8:floor>=1?6:3);
  // Different threat pairs change target priority without adding more enemies.
  if(floor>=1||escapeDepth)pool.push(['chaser','ricochet','charger','archer'],['brute','chaser','scatter','archer']);

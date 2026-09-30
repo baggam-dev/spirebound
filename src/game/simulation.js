@@ -15,6 +15,7 @@ import {frostAttackRate} from '../combat/frost.js';
 import {bindDefenses,enemyDamageFactor} from '../combat/enemy-defense.js';
 import {enterShrine,prepareIncantations,shrineLocked} from '../world/shrine.js';
 import {updateReturnEnemy,returnEnemyTypes} from '../combat/return-enemies.js';
+import {updateInfernal,infernalTypes} from '../combat/infernal-enemies.js';
 import {coordinateAttack,openGuard} from '../combat/tactics.js';
 import {steerArrow,auraProfile,frostShatter} from '../progression/skill-tree.js';
 import {prepareChest,prepareTrialLoot} from '../progression/loot.js';
@@ -40,7 +41,7 @@ export function collisionTime(a,b,c,radius){
  const dx=b.x-a.x,dy=b.y-a.y,ox=a.x-c.x,oy=a.y-c.y,A=dx*dx+dy*dy,C=ox*ox+oy*oy-radius*radius;
  if(C<=0)return 0;if(A===0)return Infinity;const B=2*(ox*dx+oy*dy),discriminant=B*B-4*A*C;if(discriminant<0)return Infinity;const t=(-B-Math.sqrt(discriminant))/(2*A);return t>=0&&t<=1?t:Infinity;
 }
-export function enemyRadius(e){return e.variant==='slime'||e.type==='minislime'?slimeRadius(e):(e.type==='boss'?32:e.type==='brute'?22:19)*(e.scale??1);}
+export function enemyRadius(e){return e.variant==='slime'||e.type==='minislime'?slimeRadius(e):(e.type==='boss'?32:e.type==='brute'||e.type==='demonCaptain'?24:e.type==='demonBat'?14:19)*(e.scale??1);}
 export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||e.attackPhase==='leap';}
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
 export function enterRoom(s){
@@ -92,6 +93,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
   e.spawnGrace=Math.max(0,(e.spawnGrace||0)-dt);if(s.entryGrace>0||e.spawnGrace>0)continue;
   if(e.variant==='demon')continue;
   if(e.variant==='commander'){updateCommander(e,p,r,dt,s.projectiles,(raw,source)=>hurt(raw,source));continue;}
+  if(infernalTypes.includes(e.type)){updateInfernal(e,p,r,dt,s.projectiles,(raw,source)=>hurt(raw,source));continue;}
   if(e.variant==='king'||upperTypes.includes(e.type)){updateUpper(e,p,r,dt,s.projectiles,raw=>hurt(raw,enemyName(e)+' 암흑 공격'));continue;}
   if(e.variant==='slime'||e.type==='flower'){updatePoisonEnemy(e,p,r,dt,s.projectiles);continue;}
   if(e.variant==='prism'){hurt(updatePrism(e,p,r.obstacles,dt,s.projectiles),'프리즘 광선','laser');continue;}
@@ -132,7 +134,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  for(const e of defeated){
   recordRankingDefeat(s,e);
   effects.push(enemyDeathEffect(e,!!s.key));
-  const shardStart=s.projectiles.length;frostShatter(e.frostWeapon||p,e,s.projectiles);if(e.frostWeapon)for(const shard of s.projectiles.slice(shardStart)){shard.weapon=e.frostWeapon;shard.turretShot=true;}recordDefeat(s,e);
+  const shardStart=s.projectiles.length;frostShatter(e.frostWeapon||p,e,s.projectiles);if(e.frostWeapon)for(const shard of s.projectiles.slice(shardStart)){shard.weapon=e.frostWeapon;shard.turretShot=true;}if(!e.selfDestruct)recordDefeat(s,e);
   if(e.summoned){eliteDeath(e,r);continue;}
   if(splitSlime(e,r,p,()=>runRandom(s)))continue;
   if(e.type!=='boss')dropEssences(s,r,e);

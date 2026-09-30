@@ -19,7 +19,7 @@ try {
  const cookies=await context.cookies(base+'/api/');const cookie=cookies.find(c=>c.httpOnly);assert.ok(cookie);assert.equal(cookie.secure,true);
  // Simulate a valid pre-upgrade cookie locally, then verify API refresh preserves identity and secures it.
  await context.clearCookies();await context.addCookies([{...cookie,secure:false}]);
- const board=await page.evaluate(async()=>{const r=await fetch('/api/rankings?season=BETA-1');const d=await r.json();return {status:r.status,valid:Array.isArray(d.entries)};});assert.deepEqual(board,{status:200,valid:true});
+ const board=await page.evaluate(async()=>{const r=await fetch('/api/rankings?season=BETA-2');const d=await r.json();return {status:r.status,valid:Array.isArray(d.entries)};});assert.deepEqual(board,{status:200,valid:true});
  const refreshed=(await context.cookies(base+'/api/')).find(c=>c.name===cookie.name);assert.equal(refreshed.value,cookie.value);assert.equal(refreshed.secure,true);
  await context.close();
  for(const existing of [false,true]){

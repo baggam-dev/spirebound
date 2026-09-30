@@ -3,7 +3,7 @@
 현재 활성화 여부와 마지막 릴리스는 WORK_STATUS.md를 기준으로 한다. 이 문서는 절차와 경로를 설명한다.
 
 ## 캠페인별 시즌
-- 기존 8층은 BETA-1/ranking-v1을 유지한다. 10층 확장의 현재 활성 시즌은 WORK_STATUS.md와 배포된 `api/config.json`을 확인한다. 군단장 변경 이전 ASCENT-1/ranking-v2와 이후 ASCENT-2/ranking-v3 기록은 종료된 시즌으로 보존·조회한다. 새 대악마 변경은 ASCENT-3/ranking-v4로 분리한다. 시즌별 상위 100명·내 최고 기록을 섞지 않는다.
+- 6~9층 출현표 변경은 기본 8층에도 영향을 주므로 새 기본 도전 BETA-2/ranking-v5, 새 확장 도전 ASCENT-4/ranking-v6로 분리한다. 이전 BETA-1/ranking-v1 및 ASCENT-1/ranking-v2·ASCENT-2/ranking-v3·ASCENT-3/ranking-v4 기록은 조회 전용으로 보존한다. 시즌별 상위 100명·내 최고 기록을 섞지 않는다. 실제 운영 활성 릴리스는 WORK_STATUS.md와 배포된 `api/config.json`을 확인한다.
 - 확장 시즌 시작 요청은 기존 8층 지도 대신 10층 지도(마지막 층 2방)를 검증한다. 완료 기록에는 10층 방문과 대악마 처치 표시가 필요하다. 이름·점수 등록은 기존과 같이 명시적 사용자 동작이다.
 - `api/config.json`의 `expandedSeason`/`expandedOpen`으로 확장 시즌을 운영한다. 중지 시 `expandedOpen=false`로 배포하면 새 확장 시작·등록이 막히고 기존 순위는 읽을 수 있다. 런타임 설정/DB 경로는 아래 절차를 따른다.
 

@@ -16,12 +16,16 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
-RULES = 'ranking-v1'
-EXPANDED_RULES = 'ranking-v4'
+RULES = 'ranking-v5'
+EXPANDED_RULES = 'ranking-v6'
 LEGACY_EXPANDED_RULES = 'ranking-v2'
 LEGACY_EXPANDED_SEASON = 'ASCENT-1'
 PREVIOUS_EXPANDED_RULES = 'ranking-v3'
 PREVIOUS_EXPANDED_SEASON = 'ASCENT-2'
+ARCHIVED_SEASONS = [('BETA-1', 'ranking-v1'),
+                    (LEGACY_EXPANDED_SEASON, LEGACY_EXPANDED_RULES),
+                    (PREVIOUS_EXPANDED_SEASON, PREVIOUS_EXPANDED_RULES),
+                    ('ASCENT-3', 'ranking-v4')]
 COOKIE = 'spirebound_player'
 MAX_BODY = 131072
 MAIN_SKILLS = {'fire', 'frost', 'poison', 'chain'}
@@ -80,10 +84,9 @@ class Ranking:
             if config.get('expandedSeason'):
                 db.execute('INSERT OR IGNORE INTO seasons VALUES (?,?,?)',
                            (config['expandedSeason'], EXPANDED_RULES, self.clock()))
+            for season_id, rules in ARCHIVED_SEASONS:
                 db.execute('INSERT OR IGNORE INTO seasons VALUES (?,?,?)',
-                           (LEGACY_EXPANDED_SEASON, LEGACY_EXPANDED_RULES, self.clock()))
-                db.execute('INSERT OR IGNORE INTO seasons VALUES (?,?,?)',
-                           (PREVIOUS_EXPANDED_SEASON, PREVIOUS_EXPANDED_RULES, self.clock()))
+                           (season_id, rules, self.clock()))
 
     def active_season(self, season):
         if season == self.config.get('expandedSeason'):

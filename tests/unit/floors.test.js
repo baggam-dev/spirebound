@@ -6,7 +6,7 @@ import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 test('eight connected floors place three bosses and flowers only on upper ascent floors',()=>{
  for(let seed=0;seed<60;seed++){
   const s=newRun(seed);assert.equal(s.floors.length,8);
-  s.floors.forEach((rooms,f)=>{const bosses=rooms.filter(r=>r.type==='boss');assert.equal(bosses.length,f%2);assert.ok(rooms.length-bosses.length>=7&&rooms.length-bosses.length<=10);assert.equal(rooms.some(r=>r.enemies.some(e=>e.type==='flower')),f>=4&&f<6);});
+  s.floors.forEach((rooms,f)=>{const bosses=rooms.filter(r=>r.type==='boss');assert.equal(bosses.length,f%2);assert.ok(rooms.length-bosses.length>=7&&rooms.length-bosses.length<=10);if(f<4)assert.equal(rooms.some(r=>r.enemies.some(e=>e.type==='flower')),false);if(f===4||f===5)assert.equal(rooms.some(r=>r.enemies.some(e=>e.type==='flower')),true);});
   assert.equal(s.floors[1].at(-1).enemies[0].max,1155);assert.equal(s.floors[3].at(-1).enemies[0].max,2100);assert.equal(s.floors[5].at(-1).enemies[0].variant,'slime');assert.equal(parseSave(encodeSave(s)).floors.length,8);
  }
 });

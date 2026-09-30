@@ -13,7 +13,7 @@ try{
   const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));
   await page.goto(base);
   const classic=await page.evaluate(async()=>{const {newRun}=await import('/src/game/engine.js');const s=newRun(91);return {floors:s.floors.length,season:s.ranking?.seasonId};});
-  if(classic.floors!==8||classic.season!=='BETA-1')throw Error('Public default campaign changed');
+  if(classic.floors!==8||classic.season!=='BETA-2')throw Error('Public default campaign changed');
   await page.evaluate(async()=>{
    const {newRun}=await import('/src/game/engine.js'),{encodeSave,SAVE_KEY}=await import('/src/persistence/storage.js');
    const s=newRun(91,{campaign:'expanded'});s.floor=9;s.room=0;s.player.x=680;s.player.y=270;s.player.hp=2;s.player.mainSkill='fire';s.player.fire=1;s.tutorialComplete=true;
@@ -25,9 +25,9 @@ try{
   await page.screenshot({path:join(output,`${width}x${height}-fountain.png`)});
   await page.locator('#interact').click();
   const result=await page.evaluate(async()=>{const {parseSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=parseSave(localStorage.getItem(SAVE_KEY));return {hp:s.player.hp,ready:s.floors[9][0].fountainReady,stairs:s.floors[9][0].type,rooms:s.floors[9].length,ranking:s.ranking??null};});
-  if(result.hp!==5||result.ready!==false||result.stairs!=='down'||result.rooms!==2||result.ranking?.seasonId!=='ASCENT-3'||result.ranking.online)throw Error(`Expanded facility/save mismatch: ${JSON.stringify(result)}`);
+  if(result.hp!==5||result.ready!==false||result.stairs!=='down'||result.rooms!==2||result.ranking?.seasonId!=='ASCENT-4'||result.ranking.online)throw Error(`Expanded facility/save mismatch: ${JSON.stringify(result)}`);
   await context.close();
  }
  if(errors.length)throw Error(errors.join('\n'));
- console.log(JSON.stringify({classicFloors:8,classicSeason:'BETA-1',expandedFinalRooms:2,fountainOnce:true,expandedSeason:'ASCENT-3',offlineFixture:true,viewports:2,pageErrors:0}));
+ console.log(JSON.stringify({classicFloors:8,classicSeason:'BETA-2',expandedFinalRooms:2,fountainOnce:true,expandedSeason:'ASCENT-4',offlineFixture:true,viewports:2,pageErrors:0}));
 }finally{await browser.close();}

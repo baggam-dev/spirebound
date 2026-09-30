@@ -9,10 +9,10 @@ test('explicit expanded draft adds connected ninth and two-room final floors wit
  const classic=newRun(93),draft=newRun(93,{campaign:'expanded'});
  assert.equal(classic.floors.length,8);
  assert.equal(classic.campaign,undefined);
- assert.equal(classic.ranking.seasonId,'BETA-1');
+ assert.equal(classic.ranking.seasonId,'BETA-2');
  assert.equal(draft.floors.length,10);
- assert.equal(draft.ranking.seasonId,'ASCENT-3');
- assert.equal(draft.ranking.rulesVersion,'ranking-v4');
+ assert.equal(draft.ranking.seasonId,'ASCENT-4');
+ assert.equal(draft.ranking.rulesVersion,'ranking-v6');
  assert.deepEqual(draft.floors.slice(0,8),classic.floors);
  const ninth=draft.floors[8],commander=ninth.find(r=>r.type==='boss'),stairs=ninth.find(r=>r.type==='up');
  assert.ok(commander?.commanderPending);
@@ -26,7 +26,7 @@ test('explicit expanded draft adds connected ninth and two-room final floors wit
  assert.equal(Math.abs(entry.x-final.x)+Math.abs(entry.y-final.y),1);
 });
 
-test('expanded draft saves its topology and permits ascent and descent without entering BETA-1',()=>{
+test('expanded draft saves its topology and permits ascent and descent without entering BETA-2',()=>{
  const draft=newRun(4,{campaign:'expanded'});
  draft.floor=7;draft.room=draft.floors[7].findIndex(r=>r.type==='boss');currentRoom(draft).used=true;
  assert.equal(travel(draft,1),true);assert.equal(draft.floor,8);
@@ -39,7 +39,7 @@ test('expanded draft saves its topology and permits ascent and descent without e
  draft.player.hp=2;assert.equal(useFountain(draft),true);assert.equal(draft.player.hp,5);assert.equal(currentRoom(draft).fountainReady,false);assert.equal(currentRoom(draft).used,false);assert.equal(useFountain(draft),false);
  assert.equal(travel(draft,-1),true);assert.equal(draft.floor,8);assert.equal(currentRoom(draft).type,'boss');
  const restored=parseSave(encodeSave(draft));
- assert.equal(restored.campaign,'expanded');assert.equal(restored.ranking.seasonId,'ASCENT-3');
+ assert.equal(restored.campaign,'expanded');assert.equal(restored.ranking.seasonId,'ASCENT-4');
  assert.equal(restored.floors[9][0].fountainReady,false);
  for(const change of [s=>{s.floors[9].push({...s.floors[9][1],x:2});},s=>{delete s.floors[9][0].fountainReady;},s=>{s.ranking=newRun(4).ranking;},s=>{delete s.campaign;}]){
   const copy=structuredClone(restored);change(copy);assert.throws(()=>encodeSave(copy));

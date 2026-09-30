@@ -1,7 +1,7 @@
 {
-  "season": "BETA-1",
+  "season": "BETA-2",
   "open": true,
-  "expandedSeason": "ASCENT-3",
+  "expandedSeason": "ASCENT-4",
   "expandedOpen": true,
   "versions": ["0.31.0-prebeta"],
   "origins": ["http://168.107.21.43"],
