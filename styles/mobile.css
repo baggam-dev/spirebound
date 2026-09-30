@@ -14,7 +14,7 @@ canvas{width:100%;height:auto;aspect-ratio:16/9}
 #stick::before{content:'';position:absolute;left:var(--stick-x);top:var(--stick-y);width:96px;height:96px;margin:-48px;border:2px solid #b7d3bc70;border-radius:50%;background:#111c2480;pointer-events:none}
 #stick i{left:var(--stick-x);top:var(--stick-y);width:40px;height:40px;margin:-20px;background:#bed4b58c;pointer-events:none}#stick.active::before{border-color:#e4f0c5}
 .actions{margin-left:auto;display:grid;grid-template-columns:56px 76px;gap:10px;align-items:center}.actions button{min-width:56px;min-height:52px;padding:5px;font-size:12px;border-radius:16px;touch-action:none}
-#dodge{grid-column:2;grid-row:1/3;height:76px;background:#304d42e6;border:2px solid #b7d3a5}#skill{height:56px;grid-column:1;grid-row:1}#potion{grid-column:1;grid-row:2}
+#dodge{grid-column:2;grid-row:2;height:56px;background:#304d42e6;border:2px solid #b7d3a5}#skill{height:56px;grid-column:1;grid-row:2}#potion{grid-column:1;grid-row:1}#utility{height:56px;grid-column:2;grid-row:1}
 #interact{position:fixed;left:auto;right:max(20px,env(safe-area-inset-right));bottom:155px;transform:none;min-height:48px;z-index:9;font-size:12px}kbd{display:none}#notice{top:42px;max-width:65%;font-size:11px}
 .hud-bottom{inset:0;border:0;background:none;display:block;height:auto;padding:0;pointer-events:none}.vitals{position:absolute;top:5px;left:8px;max-width:45%}#heartStrip .pixel-icon{width:20px;height:20px}#shieldStatus{font-size:9px}
 .build-status{position:absolute;bottom:17px;left:27%;right:27%}#skillStrip{gap:2px}.skill-item .pixel-icon{width:22px;height:22px}#hexStatus{display:none}

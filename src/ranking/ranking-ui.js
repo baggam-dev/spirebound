@@ -1,7 +1,7 @@
 import {escapeHtml} from '../ui/ui.js';
 import {rankingError} from './ranking-client.js';
 import {RANKING_SEASON,EXPANDED_SEASON,CLASSIC_ARCHIVES,EXPANDED_ARCHIVES,rankingSeason} from './ranking.js';
-const builds={fire:'화염',frost:'서리',poison:'독',chain:'번개'};
+const builds={fire:'화염',frost:'서리',poison:'독',chain:'번개',precision:'정밀'};
 const number=n=>Number.isFinite(n)?Math.floor(n).toLocaleString('ko-KR'):'—';
 const duration=ms=>{const seconds=Math.floor(ms/1000);return Number.isFinite(seconds)?Math.floor(seconds/60)+':'+String(seconds%60).padStart(2,'0'):'—';};
 export function rankRow(row,mine=false){return `<li class="rank-row${mine?' rank-mine':''}"><b>${number(row.rank)}</b><span>${escapeHtml(row.nickname)}<small>${duration(row.elapsedMs)} · ${builds[row.mainSkill]||'기타'}</small></span><strong>${number(row.score)}<small>점</small></strong></li>`;}

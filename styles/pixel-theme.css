@@ -75,4 +75,6 @@ body:has(.title-art) header{display:none!important}
 /* Desktop-sized choice dialogs: keep breathing room even on touch-capable PCs. */
 @media (min-width:1100px) and (min-height:600px){
  #overlay .panel:has(.cards > button[class^="skill-"]){width:min(960px,calc(100% - 64px));max-width:960px;margin-inline:auto}
+ #overlay .main-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ #overlay .main-cards>button{margin:0;padding:10px;min-height:0}
 }

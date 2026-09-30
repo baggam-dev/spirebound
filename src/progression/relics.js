@@ -219,6 +219,6 @@ export const dodgeCooldown=p=>10*(1-relicStat(p,'blinkCooldown'))*hexFactor(p,'b
 export const blinkDistance=p=>175*(1+relicStat(p,'blinkRange'))*hexFactor(p,'reach');
 export const ultimateCooldown=p=>(p.evolutions?.ultimate==='turret'?CROSSBOW.cooldown:25)*Math.max(.2,Math.pow(.9,p.ultimateEssences||0)*(1-relicStat(p,'ultimateCooldown'))*hexFactor(p,'ultimate'));
 
-export const attackInterval=p=>.65/(1+(p.haste||0)*.1+(p.bonusAttack||0)+relicStat(p,'attack'))/hexFactor(p,'attack')*(p.evolutions?.haste==='tempo'?.85:1)*(p.evolutions?.split==='focus'?1.15:1)/(p.fire>0?.67:1);
+export const attackInterval=p=>.65/(1+(p.haste||0)*.1+(p.bonusAttack||0)+relicStat(p,'attack'))/hexFactor(p,'attack')*(p.evolutions?.haste==='tempo'?.85:1)*(p.evolutions?.split==='focus'?1.15:1)/(p.fire>0?.67:1)*(p.focusTime>0?.9:1);
 
 export function weightedRelic(pool,random=Math.random){let roll=random()*pool.reduce((n,r)=>n+(r.weight??1),0);for(const r of pool){roll-=r.weight??1;if(roll<0)return r;}return pool.at(-1);}

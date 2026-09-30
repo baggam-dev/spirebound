@@ -6,6 +6,7 @@ export const evolutions={
  poison:[{id:'ember',name:'잔류 독',description:'독 4.5초 · 중첩당 초당 피해 -20%'},{id:'flare',name:'맹독',description:'중첩당 초당 피해 +25% · 독 지속 2초'}],
  frost:[{id:'deep',name:'깊은 서리',description:'둔화율 +15% · 지속시간 1초'},{id:'lasting',name:'잔류 서리',description:'둔화 4초 · 둔화율 10% 감소'}],
  chain:[{id:'surge',name:'집중 방전',description:'직격 추가 번개 75% · 전이 1체에 120% 피해'},{id:'web',name:'번개 그물',description:'전이 +2 · 첫 전이 65%, 이후 90% 유지'}],
+ precision:[{id:'sniper',name:'집중 저격',description:'같은 적을 두 번 맞히면 다음 정밀탄 강화 · 강화탄 피해 +110%'},{id:'execution',name:'결정 사격',description:'체력 35% 이하 적에게 주는 정밀 직격 피해 +35%'}],
  ultimate:[{id:'burst',name:'화살비',description:'반경 280 고정 영역 · 0/0.6/1.2초에 50 피해씩 · 재사용 25초'},{id:'turret',name:'자동 저격 석궁',description:'19초 유지 · 사거리 308 · 0.6초마다 설치 시 공격력 100%·속성/갈래/관통/연속/유도 계승(요정 제외) · 최대 2대 · 재사용 20초'}]
 };
 export function pendingEvolution(p){if(p.ultimate===1&&!p.evolutions?.ultimate)return 'ultimate';return Object.keys(evolutions).find(k=>!p.evolutions?.[k]&&(k==='ultimate'?p.ultimate===1:(p[k]||0)>=3));}

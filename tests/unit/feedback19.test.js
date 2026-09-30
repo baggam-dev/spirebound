@@ -70,7 +70,7 @@ test('multiple elites award at most one potion per room even after save and reen
  const s=newRun(7),r=currentRoom(s);s.attack=999;r.enemies=[{...foe(0),hp:0,elite:'volley'},{...foe(1),hp:0,elite:'guardian'}];stepRun(s,.01);assert.equal(s.player.potions,2);const copy=parseSave(encodeSave(s));currentRoom(copy).enemies=[{...foe(2),hp:0,elite:'volley'}];enterRoom(copy);stepRun(copy,.01);assert.equal(copy.player.potions,2);
 });
 test('pixel icons have distinct relic and skill silhouettes and hearts never show unused diamonds',()=>{
- assert.equal(new Set(relics.map(k=>iconSVG(k.id))).size,32);assert.equal(new Set(skills.map(k=>iconSVG(k.id))).size,12);for(const id of [...relics,...skills].map(k=>k.id)){const svg=iconSVG(id);assert.ok(svg.includes('viewBox="0 0 16 16"'));assert.ok(!svg.includes('NaN'));}assert.ok(!healthMarkup({hp:5,max:8}).includes('◇'));assert.ok(healthMarkup({hp:23,max:25}).includes('23/25'));
+ assert.equal(new Set(relics.map(k=>iconSVG(k.id))).size,32);assert.equal(new Set(skills.map(k=>iconSVG(k.id))).size,skills.length);for(const id of [...relics,...skills].map(k=>k.id)){const svg=iconSVG(id);assert.ok(svg.includes('viewBox="0 0 16 16"'));assert.ok(!svg.includes('NaN'));}assert.ok(!healthMarkup({hp:5,max:8}).includes('◇'));assert.ok(healthMarkup({hp:23,max:25}).includes('23/25'));
 });
 test('DPS readout measures the last five seconds and resets between runs',()=>{
  const meter=createDamageMeter(),s={runId:'one',elapsed:0,metrics:{damageDealt:0}};assert.equal(meter(s),0);for(let i=1;i<=6;i++){s.elapsed=i;s.metrics.damageDealt=i*100;meter(s);}assert.equal(meter(s),100);s.elapsed=12;assert.equal(meter(s),0);assert.equal(meter({runId:'two',elapsed:0,metrics:{damageDealt:0}}),0);

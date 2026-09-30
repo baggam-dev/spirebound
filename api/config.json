@@ -1,9 +1,9 @@
 {
-  "season": "BETA-2",
+  "season": "BETA-3",
   "open": true,
-  "expandedSeason": "ASCENT-4",
+  "expandedSeason": "ASCENT-5",
   "expandedOpen": true,
-  "versions": ["0.31.0-prebeta"],
+  "versions": ["0.32.0-prebeta"],
   "origins": ["http://168.107.21.43"],
   "secureCookie": false,
   "blockedNames": ["admin", "moderator", "spirebound", "운영자", "관리자", "시발", "씨발", "병신"]

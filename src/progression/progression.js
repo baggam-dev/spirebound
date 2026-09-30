@@ -9,6 +9,7 @@ import {elementalImpact,markFireKill,fireFieldSpec} from '../combat/elements.js'
 import {directRelicFactor,relicStat,ownedRelics,hexFactor} from './relics.js';
 import {migrateEnemies} from '../combat/balance.js';
 import {migrateHealth} from '../combat/health.js';
+import {precisionMultiplier,recordPrecisionHit,tickPrecision} from '../combat/precision.js';
 export const MOVE_SPEED = 174;
 export function xpRequired(level){return Math.ceil(level*30*1.35);}
 export const skills = [
@@ -19,6 +20,9 @@ export const skills = [
  {id:'poison',name:'독 화살',description:'관통한 모든 적에게 3초 독 (최대 8중첩) · 2중첩 독가스 · 레벨당 피해/가스 범위 증가 · 3레벨 독 처치 시 폭발',max:3},
  {id:'frost',name:'서리 화살',description:'중첩 둔화 · 빙결 4/3/2/2타 · 서리 피해 10/15/20/25% · 중첩 사망 6파편 · 4레벨 빙결 사망 12파편',max:4},
  {id:'chain',name:'번개 화살',description:'직격 번개 15/25/35% · 전이 45/55/65%, 이후 80% 유지 · 3초마다 1/2/3체에 일반 화살 1발분 천둥',max:3},
+ {id:'precision',name:'정밀 사격',description:'무속성 직격 강화 · 같은 적 3회 적중마다 강화탄 · 2레벨 강화 · 3레벨 저격/결정 사격 분기',max:3},
+ {id:'weakpoint',name:'약점 추적',description:'정밀 사격 전용 · 같은 적 연속 적중 직격 피해 +10/20/30%',max:3},
+ {id:'finisher',name:'마무리 조준',description:'정밀 사격 전용 · 체력 35% 이하 대상 직격 피해 +15/30/45%',max:3},
  {id:'power',name:'화살 연마',description:'화살 직격 및 속성 피해 +12%',max:5},
  {id:'repeat',name:'연속 화살',description:'희귀 · 0.16초 후 같은 방향 추가 1발 · 피해/지속 피해 60% · 주력 속성 발동',max:1},
  {id:'ultimate',name:'궁극기 습득',description:'화살비 또는 자동 저격 석궁 중 하나를 선택합니다.',max:1},
@@ -36,9 +40,10 @@ export function skillChoices(p,random=Math.random){const pool=skills.filter(k=>k
 export function applySkill(p,id){const skill=skills.find(k=>k.id===id);if(!skill||!allowedSkill(p,id)||(p[id]||0)>=skill.max)return false;if(mainSkills.includes(id))p.mainSkill??=id;p[id]=(p[id]||0)+1;return true;}
 // Both minimap cells and its bounds must derive only from explored rooms.
 export function discoveredRooms(rooms){return rooms.filter(r=>r.seen);}
-export function hitEnemy(p,e,enemies,obstacles=[],scale=1,elemental=true,room=null,origin=p){
+export function hitEnemy(p,e,enemies,obstacles=[],scale=1,elemental=true,room=null,origin=p,shot={}){
  p={...p,damage:p.damage*scale*hexFactor(p,'damage')*(1+.12*(p.power||0)+relicStat(p,'damage')),effectScale:scale*hexFactor(p,'damage')*(1+.12*(p.power||0)+relicStat(p,'damage'))*(1+relicStat(p,'element'))};
- bindDefenses(enemies);if(p.frost&&elemental)applyFrost(p,e);const wasFrozen=e.frozen>0,wasAlive=e.hp>0;const effects=[];e.hp-=(p.damage+(p.split&&p.pierce?3*scale:0))*(p.evolutions?.pierce==='depth'?.85:p.evolutions?.pierce==='impact'?1.25:1)*(p.evolutions?.haste==='tempo'?.85:1)*directRelicFactor(p,e)*(p.frost?FROST_DAMAGE_FACTOR:1)*(p.frostShardAttack?1+relicStat(p,'element'):1)*enemyDamageFactor(e,origin);
+ bindDefenses(enemies);if(p.frost&&elemental)applyFrost(p,e);const wasFrozen=e.frozen>0,wasAlive=e.hp>0;const effects=[];const precision=shot.primary&&p.precision?precisionMultiplier(p,e):1;e.hp-=(p.damage+(p.split&&p.pierce?3*scale:0))*(p.evolutions?.pierce==='depth'?.85:p.evolutions?.pierce==='impact'?1.25:1)*(p.evolutions?.haste==='tempo'?.85:1)*directRelicFactor(p,e)*(p.frost?FROST_DAMAGE_FACTOR:1)*(p.frostShardAttack?1+relicStat(p,'element'):1)*enemyDamageFactor(e,origin)*precision*(shot.focused?1.2:1);
+ if(shot.primary&&p.precision){const burst=(e.precisionHits||0)>=(p.evolutions?.precision==='sniper'?1:2);recordPrecisionHit(p,e);if(burst)effects.push({x:e.x,y:e.y-28,t:.65,color:'#f9e2a5',text:'약점!'});}
  if(wasAlive)markFireKill(e,fireFieldSpec(p));
  if(elemental)effects.push(...elementalImpact(p,e,enemies,room));
  else if(p.poison)effects.push(...elementalImpact({...p,fire:0},e,enemies,room));
@@ -46,7 +51,7 @@ export function hitEnemy(p,e,enemies,obstacles=[],scale=1,elemental=true,room=nu
  if(p.chain&&elemental)effects.push(...lightningImpact(p,e,enemies));
  if(wasFrozen&&e.hp<=0)e.frozenDeath=true;return effects;
 }
-export function tickEffects(e,dt){if(e.hp<=0){if(e.frozen>0)e.frozenDeath=true;return;}const wasFrozen=e.frozen>0;if(e.burn>0)e.hp-=Math.min(dt,e.burn)*(e.burnDamage||0)*enemyDamageFactor(e);if(wasFrozen&&e.hp<=0)e.frozenDeath=true;for(const k of ['burn','slow','blastCooldown','frozen','freezeImmune','frostStackTime'])e[k]=Math.max(0,(e[k]||0)-dt);if(!e.frostStackTime)e.frostStacks=0;}
+export function tickEffects(e,dt){if(e.hp<=0){if(e.frozen>0)e.frozenDeath=true;return;}tickPrecision(e,dt);const wasFrozen=e.frozen>0;if(e.burn>0)e.hp-=Math.min(dt,e.burn)*(e.burnDamage||0)*enemyDamageFactor(e);if(wasFrozen&&e.hp<=0)e.frozenDeath=true;for(const k of ['burn','slow','blastCooldown','frozen','freezeImmune','frostStackTime'])e[k]=Math.max(0,(e[k]||0)-dt);if(!e.frostStackTime)e.frostStacks=0;}
 
 export function rerollSkills(s){
  if(s.status!=='playing'||!s.player.mainSkill||s.pendingLevels<=0||!s.choices?.length||(s.rerolls??1)<=0)return false;
@@ -61,6 +66,7 @@ export function levelChoices(s,random=()=>runRandom(s),reroll=false){
  // Restoring stale candidates must not roll or consume an ultimate milestone again.
  if(!reroll&&!restoring){s.ultimateOffer=false;if(!s.player.ultimate&&level>=5){s.ultimateMilestones??=[];const guaranteed=[5,10].includes(level)&&!s.ultimateMilestones.includes(level);s.ultimateOffer=guaranteed||random()<.3;if(guaranteed)s.ultimateMilestones.push(level);}}
  const choices=skillChoices(s.player,random);
+ if(s.player.mainSkill==='precision'&&level<=3&&!s.player.weakpoint&&!s.player.finisher&&!choices.some(k=>['weakpoint','finisher'].includes(k.id))){const slot=choices.findIndex(k=>k.id!=='ultimate');if(slot>=0)choices[slot]=skills.find(k=>k.id==='weakpoint');}
  if(s.ultimateOffer&&!s.player.ultimate){if(choices.length===3)choices.pop();choices.push(skills.find(k=>k.id==='ultimate'));}
  if(!choices.length)choices.push(...growthRewards.filter(k=>growthAvailable(s.player,k)));
  s.choices=choices.map(k=>k.id);return choices;

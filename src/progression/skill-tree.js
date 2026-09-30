@@ -1,8 +1,8 @@
-export const mainSkills=['fire','frost','poison','chain'];
-export const supportSkills=['split','pierce','haste','power','repeat','aura','homing','ultimate'];
+export const mainSkills=['fire','frost','poison','chain','precision'];
+export const supportSkills=['split','pierce','haste','power','repeat','aura','homing','ultimate','weakpoint','finisher'];
 export const skillIds=[...mainSkills,...supportSkills];
 export const skillPoints=p=>skillIds.reduce((n,id)=>n+(p[id]||0),0);
-export const allowedSkill=(p,id)=>id==='ultimate'?p.level>=5:!mainSkills.includes(id)||!p.mainSkill||p.mainSkill===id;
+export const allowedSkill=(p,id)=>id==='ultimate'?p.level>=5:['weakpoint','finisher'].includes(id)?p.mainSkill==='precision':!mainSkills.includes(id)||!p.mainSkill||p.mainSkill===id;
 // Selection is explicit: old multi-element builds refund the branches discarded.
 export function chooseMain(s,id){
  const p=s.player;if(s.status!=='playing'||p.mainSkill||!mainSkills.includes(id)||!(s.pendingLevels+mainSkills.reduce((n,k)=>n+(p[k]||0),0)))return false;

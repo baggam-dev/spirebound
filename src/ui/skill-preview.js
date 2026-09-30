@@ -10,7 +10,7 @@ import {applyGrowth} from '../progression/growth.js';
 export function previewStats(player){
  const p=structuredClone(player);p.x=0;p.y=0;
  const target={id:0,type:'chaser',x:100,y:0,hp:100000,max:100000};
- const effects=hitEnemy(p,target,[target],[],1,true,{fireZones:[]});
+ const effects=hitEnemy(p,target,[target],[],1,true,{fireZones:[]},p,{primary:true});
  return {hit:100000-target.hp,rate:1/attackInterval(p),radius:effects.find(e=>e.instant)?.r||0,
   poison:target.poisonStacks?.[0]?.dps||0,burn:target.burnStacks?.[0]?.dps||0,
   aura:p.aura?auraProfile(p.aura).dps*(1+relicStat(p,'auraDamage')):0,
@@ -28,6 +28,9 @@ export function skillPreview(player,id){
  if(id==='poison'){row('독 1중첩 / 초',a.poison,b.poison);row('독가스 반경',player.poison?30+12*player.poison:0,30+12*next.poison,'',0);if(next.poison===3)row('독 처치','폭발 없음','독 폭발 해금');}
  if(id==='frost'){row('빙결까지 적중',player.frost?frostThreshold(player.frost):'없음',frostThreshold(next.frost),'회',0);row('빙결 적 사망 파편',player.frost?(player.frost>=4?12:6):0,next.frost>=4?12:6,'발',0);}
  if(id==='chain'){row('전이 대상 최대',player.chain?lightningSpec(player).count:0,lightningSpec(next).count,'체',0);row('3초마다 천둥',player.chain||0,next.chain,'체',0);}
+ if(id==='precision')row('같은 대상 강화탄',player.precision?'3번째 적중':'없음',next.precision>=3?'3번째 적중 · 분기 선택':'3번째 적중');
+ if(id==='weakpoint')row('연속 직격 보너스',(player.weakpoint||0)*10,next.weakpoint*10,'%',0);
+ if(id==='finisher')row('체력 35% 이하 보너스',(player.finisher||0)*15,next.finisher*15,'%',0);
  if(id==='aura'){row('오라 초당 피해',a.aura,b.aura);row('오라 반경',a.auraRadius,b.auraRadius,'',0);if(next.aura===3)row('오라 보호막','없음',(60-relicStat(next,'auraShield'))+'초마다 1회 방어');}
  if(id==='split')row('동시 화살',1+(player.split||0),1+next.split,'발',0);
  if(id==='pierce')row('추가 관통',player.evolutions?.pierce==='impact'?0:(player.pierce||0)+(player.evolutions?.pierce==='depth'?2:0),next.evolutions?.pierce==='impact'?0:next.pierce+(next.evolutions?.pierce==='depth'?2:0),'체',0);

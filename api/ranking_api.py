@@ -16,8 +16,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
-RULES = 'ranking-v5'
-EXPANDED_RULES = 'ranking-v6'
+RULES = 'ranking-v7'
+EXPANDED_RULES = 'ranking-v8'
 LEGACY_EXPANDED_RULES = 'ranking-v2'
 LEGACY_EXPANDED_SEASON = 'ASCENT-1'
 PREVIOUS_EXPANDED_RULES = 'ranking-v3'
@@ -25,10 +25,12 @@ PREVIOUS_EXPANDED_SEASON = 'ASCENT-2'
 ARCHIVED_SEASONS = [('BETA-1', 'ranking-v1'),
                     (LEGACY_EXPANDED_SEASON, LEGACY_EXPANDED_RULES),
                     (PREVIOUS_EXPANDED_SEASON, PREVIOUS_EXPANDED_RULES),
-                    ('ASCENT-3', 'ranking-v4')]
+                    ('ASCENT-3', 'ranking-v4'),
+                    ('BETA-2', 'ranking-v5'),
+                    ('ASCENT-4', 'ranking-v6')]
 COOKIE = 'spirebound_player'
 MAX_BODY = 131072
-MAIN_SKILLS = {'fire', 'frost', 'poison', 'chain'}
+MAIN_SKILLS = {'fire', 'frost', 'poison', 'chain', 'precision'}
 ORDER = 'score DESC, elapsed_ms ASC, submitted_ms ASC, id ASC'
 
 

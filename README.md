@@ -23,6 +23,10 @@
 배포는 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools\deploy\deploy.ps1` 또는 `deploy.bat`입니다.
 공식 서비스의 공통 랭킹은 서버 SQLite에 저장됩니다. 개인 진행 저장과 등록 대기 기록은 브라우저에 남습니다.
 
+# 0.32 · 정밀 사격과 유틸 기술
+
+다섯 번째 메인 정밀 사격과 직격 시너지, 4레벨 유틸 액티브 1칸(전투 집중·응급 처치·수호 환영)을 추가했습니다. 새 기본 BETA-3/확장 ASCENT-5 랭킹으로 분리하며 이전 기록은 조회할 수 있습니다. [상세 변경](docs/skill-stage4.md).
+
 # 0.31 · 편성 리듬과 반격 기회
 
 상층 전열·사수·지원 공격 시차, 인력+탄막 편성, 칼드 장애물 유도 및 모르도 연속 베기 회피 보상. [상세 변경](docs/counterplay-31.md).

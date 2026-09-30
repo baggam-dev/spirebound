@@ -1,6 +1,6 @@
 export function createInput(stick,onAction){
  const keys=new Set();let pointer=null,axis={x:0,y:0},last={x:0,y:-1},enabled=false;
- const keyActions={q:'potion',f:'skill',' ':'dodge',e:'interact',escape:'pause',i:'bag',h:'help'};
+ const keyActions={q:'potion',f:'skill',g:'utility',' ':'dodge',e:'interact',escape:'pause',i:'bag',h:'help'};
  let origin=null;
  function reset(){keys.clear();axis={x:0,y:0};const previous=pointer;pointer=null;if(previous!==null&&stick.hasPointerCapture?.(previous))stick.releasePointerCapture(previous);origin=null;stick.classList.remove('active');stick.firstElementChild.style.transform='';}
  function movement(){let x=axis.x+Number(keys.has('d')||keys.has('arrowright'))-Number(keys.has('a')||keys.has('arrowleft')),y=axis.y+Number(keys.has('s')||keys.has('arrowdown'))-Number(keys.has('w')||keys.has('arrowup'));const n=Math.max(1,Math.hypot(x,y));const vector={x:x/n,y:y/n};if(Math.hypot(vector.x,vector.y)>.1)last=vector;return enabled?vector:{x:0,y:0};}

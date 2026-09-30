@@ -1,14 +1,14 @@
 import {RELEASE} from '../game/version.js';
-export const RANKING_RULES='ranking-v5';
-export const RANKING_SEASON='BETA-2';
-export const CLASSIC_ARCHIVES=[{seasonId:'BETA-1',rulesVersion:'ranking-v1'}];
-export const EXPANDED_SEASON='ASCENT-4';
-export const EXPANDED_RULES='ranking-v6';
+export const RANKING_RULES='ranking-v7';
+export const RANKING_SEASON='BETA-3';
+export const CLASSIC_ARCHIVES=[{seasonId:'BETA-1',rulesVersion:'ranking-v1'},{seasonId:'BETA-2',rulesVersion:'ranking-v5'}];
+export const EXPANDED_SEASON='ASCENT-5';
+export const EXPANDED_RULES='ranking-v8';
 export const LEGACY_EXPANDED_SEASON='ASCENT-1';
 export const LEGACY_EXPANDED_RULES='ranking-v2';
 export const PREVIOUS_EXPANDED_SEASON='ASCENT-3';
 export const PREVIOUS_EXPANDED_RULES='ranking-v4';
-export const EXPANDED_ARCHIVES=[{seasonId:LEGACY_EXPANDED_SEASON,rulesVersion:LEGACY_EXPANDED_RULES},{seasonId:'ASCENT-2',rulesVersion:'ranking-v3'},{seasonId:PREVIOUS_EXPANDED_SEASON,rulesVersion:PREVIOUS_EXPANDED_RULES}];
+export const EXPANDED_ARCHIVES=[{seasonId:LEGACY_EXPANDED_SEASON,rulesVersion:LEGACY_EXPANDED_RULES},{seasonId:'ASCENT-2',rulesVersion:'ranking-v3'},{seasonId:PREVIOUS_EXPANDED_SEASON,rulesVersion:PREVIOUS_EXPANDED_RULES},{seasonId:'ASCENT-4',rulesVersion:'ranking-v6'}];
 export const rankingSeason=campaign=>campaign==='expanded'?EXPANDED_SEASON:RANKING_SEASON;
 export function startRanking(s){
  s.ranking={rulesVersion:s.campaign==='expanded'?EXPANDED_RULES:RANKING_RULES,seasonId:rankingSeason(s.campaign),gameVersion:RELEASE,totalRooms:s.floors.flat().length,visited:['0:0'],defeated:[],nextEnemyId:0};

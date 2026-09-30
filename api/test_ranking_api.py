@@ -14,18 +14,18 @@ class RankingTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.now = 1000000
-        self.config = dict(season='BETA-2', open=True, versions=['0.31.0-prebeta'],
+        self.config = dict(season='BETA-3', open=True, versions=['0.32.0-prebeta'],
                            origins=['http://localhost:5173'], blockedNames=['admin', '운영자'])
         self.path = Path(self.temp.name) / 'ranking.sqlite3'
         self.app = Ranking(self.path, self.config, lambda: self.now)
         self.token = self.app.session(None)[1]
         self.run = dict(runId='run-example-0001', seed=17, roomCounts=[7, 8, 7, 8, 7, 8, 7, 8],
-                        rulesVersion='ranking-v5', gameVersion='0.31.0-prebeta', seasonId='BETA-2')
+                        rulesVersion='ranking-v7', gameVersion='0.32.0-prebeta', seasonId='BETA-3')
         self.app.start(self.token, self.run)
         self.now += 1200000
         self.body = dict(runId=self.run['runId'], nickname='모험가_1', outcome='escaped', kingDefeated=True,
-                         floor=0, practice=False, rulesVersion='ranking-v5', seasonId='BETA-2',
-                         gameVersion='0.31.0-prebeta', elapsedMs=1200000,
+                         floor=0, practice=False, rulesVersion='ranking-v7', seasonId='BETA-3',
+                         gameVersion='0.32.0-prebeta', elapsedMs=1200000,
                          visited=[f'{f}:0' for f in range(8)], defeated=list(range(180)), mainSkill='fire', total=99999999)
 
     def tearDown(self):
@@ -48,45 +48,45 @@ class RankingTests(unittest.TestCase):
         self.reject(lambda: self.app.start(self.token, expanded), 'invalid_map')
 
     def test_expanded_season_accepts_only_ten_floor_map_and_final_demon(self):
-        self.config.update(expandedSeason='ASCENT-4', expandedOpen=True)
+        self.config.update(expandedSeason='ASCENT-5', expandedOpen=True)
         app = Ranking(self.path, self.config, lambda: self.now)
         rooms = self.run['roomCounts'] + [8, 2]
         expanded = dict(self.run, runId='run-expanded-0001', roomCounts=rooms,
-                        rulesVersion='ranking-v6', seasonId='ASCENT-4')
+                        rulesVersion='ranking-v8', seasonId='ASCENT-5')
         app.start(self.token, expanded)
         self.reject(lambda: app.start(self.token, dict(expanded, runId='wrong-map-0001', roomCounts=self.run['roomCounts'])), 'invalid_map')
-        self.reject(lambda: app.start(self.token, dict(expanded, runId='wrong-rule-0001', rulesVersion='ranking-v5')), 'unsupported_rules')
-        self.reject(lambda: app.start(self.token, dict(self.run, runId='wrong-season-0001', seasonId='ASCENT-4')), 'invalid_map')
-        self.assertEqual(app.leaderboard(self.token, 'BETA-2')['rulesVersion'], 'ranking-v5')
-        self.assertEqual(app.leaderboard(self.token, 'ASCENT-4')['rulesVersion'], 'ranking-v6')
+        self.reject(lambda: app.start(self.token, dict(expanded, runId='wrong-rule-0001', rulesVersion='ranking-v7')), 'unsupported_rules')
+        self.reject(lambda: app.start(self.token, dict(self.run, runId='wrong-season-0001', seasonId='ASCENT-5')), 'invalid_map')
+        self.assertEqual(app.leaderboard(self.token, 'BETA-3')['rulesVersion'], 'ranking-v7')
+        self.assertEqual(app.leaderboard(self.token, 'ASCENT-5')['rulesVersion'], 'ranking-v8')
         self.assertEqual(app.leaderboard(self.token, 'ASCENT-2')['rulesVersion'], 'ranking-v3')
         self.assertFalse(app.leaderboard(self.token, 'ASCENT-2')['open'])
         self.assertEqual(app.leaderboard(self.token, 'ASCENT-1')['rulesVersion'], 'ranking-v2')
         self.assertFalse(app.leaderboard(self.token, 'ASCENT-1')['open'])
         self.now += 1200000
-        expanded_body = dict(self.body, runId=expanded['runId'], rulesVersion='ranking-v6',
-                             seasonId='ASCENT-4', visited=[f'{f}:0' for f in range(10)], finalDemonDefeated=True)
+        expanded_body = dict(self.body, runId=expanded['runId'], rulesVersion='ranking-v8',
+                             seasonId='ASCENT-5', visited=[f'{f}:0' for f in range(10)], finalDemonDefeated=True)
         self.reject(lambda: app.submit(self.token, dict(expanded_body, finalDemonDefeated=False)), 'not_eligible')
         self.reject(lambda: app.submit(self.token, dict(expanded_body, visited=expanded_body['visited'][:-1])), 'invalid_visits')
         result = app.submit(self.token, expanded_body)
         self.assertEqual(result['status'], 'accepted')
-        self.assertEqual(app.leaderboard(self.token, 'ASCENT-4')['mine']['recordId'], result['recordId'])
-        self.assertEqual(app.leaderboard(self.token, 'BETA-2')['entries'], [])
+        self.assertEqual(app.leaderboard(self.token, 'ASCENT-5')['mine']['recordId'], result['recordId'])
+        self.assertEqual(app.leaderboard(self.token, 'BETA-3')['entries'], [])
         beta = app.submit(self.token, self.body)
-        self.assertEqual(app.leaderboard(self.token, 'BETA-2')['mine']['recordId'], beta['recordId'])
-        self.assertEqual(app.leaderboard(self.token, 'ASCENT-4')['entries'][0]['recordId'], result['recordId'])
+        self.assertEqual(app.leaderboard(self.token, 'BETA-3')['mine']['recordId'], beta['recordId'])
+        self.assertEqual(app.leaderboard(self.token, 'ASCENT-5')['entries'][0]['recordId'], result['recordId'])
         self.config['expandedOpen'] = False
-        self.assertFalse(app.leaderboard(self.token, 'ASCENT-4')['open'])
+        self.assertFalse(app.leaderboard(self.token, 'ASCENT-5')['open'])
         self.reject(lambda: app.start(self.token, dict(expanded, runId='closed-0001')), 'season_closed')
 
     def test_new_expanded_season_keeps_existing_ascent_two_record_read_only(self):
-        self.config.update(expandedSeason='ASCENT-4', expandedOpen=True)
+        self.config.update(expandedSeason='ASCENT-5', expandedOpen=True)
         app = Ranking(self.path, self.config, lambda: self.now)
         old_score = score(1200000, 180, 10, 70)
         with app.connect() as db:
             player_id = db.execute('SELECT id FROM players').fetchone()['id']
             db.execute('INSERT INTO runs VALUES (?,?,?,?,?,?,?)',
-                       ('old-expanded-run', player_id, 'ASCENT-2', '0.31.0-prebeta', 17,
+                       ('old-expanded-run', player_id, 'ASCENT-2', '0.32.0-prebeta', 17,
                         json.dumps([7, 8, 7, 8, 7, 8, 7, 8, 8, 2]), self.now - 1200000))
             db.execute('INSERT INTO records VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
                        ('old-expanded-record', 'old-expanded-run', player_id, 'ASCENT-2', '옛모험가',
@@ -97,10 +97,10 @@ class RankingTests(unittest.TestCase):
         self.assertEqual(old['rulesVersion'], 'ranking-v3')
         self.assertEqual(old['mine']['recordId'], 'old-expanded-record')
         self.assertEqual(old['entries'][0]['nickname'], '옛모험가')
-        self.assertEqual(reopened.leaderboard(self.token, 'ASCENT-4')['entries'], [])
+        self.assertEqual(reopened.leaderboard(self.token, 'ASCENT-5')['entries'], [])
 
     def test_new_classic_and_expanded_seasons_preserve_both_previous_boards(self):
-        self.config.update(expandedSeason='ASCENT-4', expandedOpen=True)
+        self.config.update(expandedSeason='ASCENT-5', expandedOpen=True)
         app = Ranking(self.path, self.config, lambda: self.now)
         with app.connect() as db:
             player_id = db.execute('SELECT id FROM players').fetchone()['id']
@@ -109,7 +109,7 @@ class RankingTests(unittest.TestCase):
                 ('ASCENT-3', 'old-ascent-run', 'old-ascent-record', self.run['roomCounts'] + [8, 2])
             ]:
                 db.execute('INSERT INTO runs VALUES (?,?,?,?,?,?,?)',
-                           (run_id, player_id, season, '0.31.0-prebeta', 17,
+                           (run_id, player_id, season, '0.32.0-prebeta', 17,
                             json.dumps(rooms), self.now - 1200000))
                 db.execute('INSERT INTO records VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
                            (record_id, run_id, player_id, season, '기존기록', 17000,
@@ -119,22 +119,46 @@ class RankingTests(unittest.TestCase):
             self.assertFalse(board['open'])
             self.assertEqual(board['mine']['recordId'], expected)
             self.assertEqual(board['entries'][0]['recordId'], expected)
-        self.assertTrue(app.leaderboard(self.token, 'BETA-2')['open'])
-        self.assertTrue(app.leaderboard(self.token, 'ASCENT-4')['open'])
-        self.assertEqual(app.leaderboard(self.token, 'ASCENT-4')['entries'], [])
+        self.assertTrue(app.leaderboard(self.token, 'BETA-3')['open'])
+        self.assertTrue(app.leaderboard(self.token, 'ASCENT-5')['open'])
+        self.assertEqual(app.leaderboard(self.token, 'ASCENT-5')['entries'], [])
 
     def test_recompute_and_restart_persistence(self):
         receipt = self.app.submit(self.token, self.body)
         self.assertEqual(receipt['status'], 'accepted')
         self.assertEqual(receipt['score'], score(1200000, 180, 8, 60))
         restarted = Ranking(self.path, self.config, lambda: self.now)
-        board = restarted.leaderboard(self.token, 'BETA-2')
+        board = restarted.leaderboard(self.token, 'BETA-3')
         self.assertEqual(board['mine']['recordId'], receipt['recordId'])
         self.assertEqual(board['entries'][0]['rank'], 1)
         self.assertNotIn('player_id', board['entries'][0])
         with restarted.connect() as db:
             self.assertNotEqual(db.execute('SELECT token_hash FROM players').fetchone()[0], self.token)
-        self.assertIsNone(restarted.leaderboard(None, 'BETA-2')['mine'])
+        self.assertIsNone(restarted.leaderboard(None, 'BETA-3')['mine'])
+
+    def test_precision_build_is_accepted_in_new_season(self):
+        receipt = self.app.submit(self.token, dict(self.body, mainSkill='precision'))
+        self.assertEqual(receipt['status'], 'accepted')
+        self.assertEqual(self.app.leaderboard(self.token, 'BETA-3')['entries'][0]['mainSkill'], 'precision')
+
+    def test_newest_prior_seasons_are_read_only_and_keep_records(self):
+        self.config.update(expandedSeason='ASCENT-5', expandedOpen=True)
+        app = Ranking(self.path, self.config, lambda: self.now)
+        with app.connect() as db:
+            player_id = db.execute('SELECT id FROM players').fetchone()['id']
+            for season, rules, rooms in [('BETA-2', 'ranking-v5', self.run['roomCounts']),
+                                         ('ASCENT-4', 'ranking-v6', self.run['roomCounts'] + [8, 2])]:
+                db.execute('INSERT INTO runs VALUES (?,?,?,?,?,?,?)',
+                           (season + '-old-run', player_id, season, '0.31.0-prebeta', 17,
+                            json.dumps(rooms), self.now - 1200000))
+                db.execute('INSERT INTO records VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
+                           (season + '-old-record', season + '-old-run', player_id, season, '기존기록',
+                            17000, 1200000, self.now, 'accepted', None, 'fire', '{}'))
+        for season, rules in [('BETA-2', 'ranking-v5'), ('ASCENT-4', 'ranking-v6')]:
+            board = app.leaderboard(self.token, season)
+            self.assertFalse(board['open'])
+            self.assertEqual(board['rulesVersion'], rules)
+            self.assertEqual(board['entries'][0]['recordId'], season + '-old-record')
 
     def test_run_identity_and_idempotent_submission_even_after_close(self):
         original_start = self.app.start(self.token, self.run)
@@ -158,10 +182,10 @@ class RankingTests(unittest.TestCase):
             self.app.start(token, dict(self.run, runId=run_id))
             self.now += 1200000
             self.app.submit(token, dict(self.body, runId=run_id, elapsedMs=elapsed))
-        board = self.app.leaderboard(self.token, 'BETA-2')
+        board = self.app.leaderboard(self.token, 'BETA-3')
         self.assertEqual(len(board['entries']), 2)
-        self.assertEqual(self.app.leaderboard(None, 'BETA-2')['entries'], board['entries'])
-        self.assertEqual(self.app.leaderboard(other, 'BETA-2')['entries'], board['entries'])
+        self.assertEqual(self.app.leaderboard(None, 'BETA-3')['entries'], board['entries'])
+        self.assertEqual(self.app.leaderboard(other, 'BETA-3')['entries'], board['entries'])
         self.assertEqual(board['mine']['rank'], 2)
         self.assertEqual(board['mine']['elapsedMs'], 1199999)
 
@@ -172,25 +196,25 @@ class RankingTests(unittest.TestCase):
             for i in range(105):
                 player_id, run_id = f'player-{i}', f'fixture-{i}'
                 db.execute('INSERT INTO players VALUES (?,?,?,?)', (player_id, f'hash-{i}', 0, self.now + 1))
-                db.execute('INSERT INTO runs VALUES (?,?,?,?,?,?,?)', (run_id, player_id, 'BETA-2', '0.31.0-prebeta', i, '[]', 0))
+                db.execute('INSERT INTO runs VALUES (?,?,?,?,?,?,?)', (run_id, player_id, 'BETA-3', '0.32.0-prebeta', i, '[]', 0))
                 row = template[:]
                 row[0], row[1], row[2], row[5] = f'record-{i:03d}', run_id, player_id, 22000
                 db.execute('INSERT INTO records VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', row)
-        board = self.app.leaderboard(self.token, 'BETA-2')
+        board = self.app.leaderboard(self.token, 'BETA-3')
         self.assertEqual(len(board['entries']), 100)
         self.assertEqual(board['mine']['rank'], 106)
         self.assertEqual(board['entries'][0]['recordId'], 'record-000')
 
     def test_old_season_is_read_only_and_session_expires(self):
         self.app.submit(self.token, self.body)
-        self.config['season'] = 'BETA-3'
+        self.config['season'] = 'BETA-4'
         next_season = Ranking(self.path, self.config, lambda: self.now)
-        old = next_season.leaderboard(self.token, 'BETA-2')
+        old = next_season.leaderboard(self.token, 'BETA-3')
         self.assertFalse(old['open'])
         self.assertEqual(len(old['entries']), 1)
-        self.assertEqual(next_season.leaderboard(self.token, 'BETA-3')['entries'], [])
+        self.assertEqual(next_season.leaderboard(self.token, 'BETA-4')['entries'], [])
         self.now += 366 * 86400000
-        self.assertIsNone(next_season.leaderboard(self.token, 'BETA-2')['mine'])
+        self.assertIsNone(next_season.leaderboard(self.token, 'BETA-3')['mine'])
 
     def test_cross_player_access_and_missing_server_run(self):
         other = self.app.session(None)[1]
@@ -212,7 +236,7 @@ class RankingTests(unittest.TestCase):
     def test_suspicious_record_is_private_and_held(self):
         receipt = self.app.submit(self.token, dict(self.body, elapsedMs=1000))
         self.assertEqual(receipt['status'], 'held')
-        self.assertEqual(self.app.leaderboard(self.token, 'BETA-2')['entries'], [])
+        self.assertEqual(self.app.leaderboard(self.token, 'BETA-3')['entries'], [])
 
     def test_nickname_normalization_and_filter(self):
         self.assertEqual(self.app.nickname('  가나  '), '가나')
