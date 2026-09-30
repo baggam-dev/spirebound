@@ -2,6 +2,11 @@
 
 현재 활성화 여부와 마지막 릴리스는 WORK_STATUS.md를 기준으로 한다. 이 문서는 절차와 경로를 설명한다.
 
+## 캠페인별 시즌
+- 기존 8층은 BETA-1/ranking-v1, 확장 10층은 ASCENT-1/ranking-v2다. 두 시즌의 상위 100명·내 최고 기록은 각각 조회하고 기존 BETA-1 기록은 그대로 보존한다.
+- 확장 시즌 시작 요청은 기존 8층 지도 대신 10층 지도(마지막 층 2방)를 검증한다. 완료 기록에는 10층 방문과 대악마 처치 표시가 필요하다. 이름·점수 등록은 기존과 같이 명시적 사용자 동작이다.
+- `api/config.json`의 `expandedSeason`/`expandedOpen`으로 확장 시즌을 운영한다. 중지 시 `expandedOpen=false`로 배포하면 새 확장 시작·등록이 막히고 기존 순위는 읽을 수 있다. 런타임 설정/DB 경로는 아래 절차를 따른다.
+
 ## 일상 운영
 - 정적 파일: `/usr/share/nginx/spirebound-current` → 릴리스 디렉터리.
 - API: `/opt/spirebound-api-current`, `spirebound-api.service`, 127.0.0.1:8787. Nginx만 외부 요청을 전달한다.

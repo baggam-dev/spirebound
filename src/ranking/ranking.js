@@ -1,8 +1,11 @@
 import {RELEASE} from '../game/version.js';
 export const RANKING_RULES='ranking-v1';
 export const RANKING_SEASON='BETA-1';
+export const EXPANDED_SEASON='ASCENT-1';
+export const EXPANDED_RULES='ranking-v2';
+export const rankingSeason=campaign=>campaign==='expanded'?EXPANDED_SEASON:RANKING_SEASON;
 export function startRanking(s){
- s.ranking={rulesVersion:RANKING_RULES,seasonId:RANKING_SEASON,gameVersion:RELEASE,totalRooms:s.floors.flat().length,visited:['0:0'],defeated:[],nextEnemyId:0};
+ s.ranking={rulesVersion:s.campaign==='expanded'?EXPANDED_RULES:RANKING_RULES,seasonId:rankingSeason(s.campaign),gameVersion:RELEASE,totalRooms:s.floors.flat().length,visited:['0:0'],defeated:[],nextEnemyId:0};
  return s;
 }
 export function trackRankingRoom(s){
@@ -22,7 +25,7 @@ export function calculateScore({elapsedMs,kills,visited,totalRooms}){
  return {escape,combat,exploration,time,total:escape+combat+exploration+time};
 }
 export function finishRanking(s){
- const q=s.ranking;if(!q||s.practice||s.status!=='won'||!s.key||s.floor!==0)return null;
+ const q=s.ranking;if(!q||s.practice||s.status!=='won'||!s.key||s.floor!==0||s.campaign==='expanded'&&(!s.floors[9][1].used||s.floors[9][1].demonPending!==false))return null;
  if(!q.result){const metrics={elapsedMs:Math.round(s.elapsed*1000),kills:q.defeated.length,visited:q.visited.length,totalRooms:q.totalRooms};q.result={...metrics,...calculateScore(metrics)};}
  return q.result;
 }
@@ -32,7 +35,7 @@ export function rankingSummary(s){
 export function validateRanking(s){
  const q=s.ranking;if(q===undefined)return true;
  const int=n=>Number.isSafeInteger(n)&&n>=0;
- if(!q||q.rulesVersion!==RANKING_RULES||q.seasonId!==RANKING_SEASON||typeof q.gameVersion!=='string'||q.gameVersion.length>64||q.totalRooms!==s.floors.flat().length||!int(q.nextEnemyId)||q.nextEnemyId>1000000)return false;
+ if(!q||q.rulesVersion!==(s.campaign==='expanded'?EXPANDED_RULES:RANKING_RULES)||q.seasonId!==rankingSeason(s.campaign)||typeof q.gameVersion!=='string'||q.gameVersion.length>64||q.totalRooms!==s.floors.flat().length||!int(q.nextEnemyId)||q.nextEnemyId>1000000)return false;
  if(!Array.isArray(q.visited)||q.visited.length<1||q.visited.length>q.totalRooms||new Set(q.visited).size!==q.visited.length)return false;
  const rooms=new Set(s.floors.flatMap((rooms,f)=>rooms.map((_,r)=>f+':'+r)));
  if(q.visited.some(k=>!rooms.has(k))||!Array.isArray(q.defeated)||q.defeated.length>10000||new Set(q.defeated).size!==q.defeated.length||q.defeated.some(id=>!int(id)||id>=q.nextEnemyId))return false;

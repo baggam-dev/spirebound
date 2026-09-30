@@ -17,6 +17,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 RULES = 'ranking-v1'
+EXPANDED_RULES = 'ranking-v2'
 COOKIE = 'spirebound_player'
 MAX_BODY = 131072
 MAIN_SKILLS = {'fire', 'frost', 'poison', 'chain'}
@@ -72,6 +73,16 @@ class Ranking:
             ''')
             db.execute('INSERT OR IGNORE INTO seasons VALUES (?,?,?)',
                        (config['season'], RULES, self.clock()))
+            if config.get('expandedSeason'):
+                db.execute('INSERT OR IGNORE INTO seasons VALUES (?,?,?)',
+                           (config['expandedSeason'], EXPANDED_RULES, self.clock()))
+
+    def active_season(self, season):
+        if season == self.config.get('expandedSeason'):
+            return EXPANDED_RULES, self.config.get('expandedOpen', False)
+        if season == self.config['season']:
+            return RULES, self.config['open']
+        return None, False
 
     @contextmanager
     def connect(self):
@@ -111,12 +122,16 @@ class Ranking:
         run_id, rooms = body.get('runId'), body.get('roomCounts')
         require(isinstance(run_id, str) and re.fullmatch(r'[A-Za-z0-9_-]{8,80}', run_id))
         require(integer(body.get('seed'), 0, 4294967295))
-        require(isinstance(rooms, list) and len(rooms) == 8 and
-                all(integer(n, 7 if i % 2 == 0 else 8, 10 if i % 2 == 0 else 11)
-                    for i, n in enumerate(rooms)) and rooms[7] == 8, 'invalid_map')
-        require(body.get('rulesVersion') == RULES, 'unsupported_rules')
+        season = body.get('seasonId')
+        rules, opened = self.active_season(season)
+        classic_map = isinstance(rooms, list) and len(rooms) == 8 and rooms[7] == 8 and all(
+            integer(n, 7 if i % 2 == 0 else 8, 10 if i % 2 == 0 else 11) for i, n in enumerate(rooms))
+        expanded_map = isinstance(rooms, list) and len(rooms) == 10 and rooms[7] == 8 and rooms[9] == 2 and all(
+            integer(n, 7 if i % 2 == 0 else 8, 10 if i % 2 == 0 else 11) for i, n in enumerate(rooms[:8])) and integer(rooms[8], 8, 11)
+        require(classic_map if rules == RULES else expanded_map if rules == EXPANDED_RULES else False, 'invalid_map')
+        require(body.get('rulesVersion') == rules, 'unsupported_rules')
         require(body.get('gameVersion') in self.config['versions'], 'unsupported_version')
-        require(body.get('seasonId') == self.config['season'] and self.config['open'], 'season_closed', 409)
+        require(opened, 'season_closed', 409)
         with self.connect() as db:
             db.execute('BEGIN IMMEDIATE')
             identity = self.authenticated(token, db)
@@ -129,8 +144,8 @@ class Ranking:
                 return {'runId': run_id, 'startedAt': previous['started_ms'], 'seasonId': previous['season']}
             now = self.clock()
             db.execute('INSERT INTO runs VALUES (?,?,?,?,?,?,?)',
-                       (run_id, identity, self.config['season'], body['gameVersion'], body['seed'], json.dumps(rooms), now))
-            return {'runId': run_id, 'startedAt': now, 'seasonId': self.config['season']}
+                       (run_id, identity, season, body['gameVersion'], body['seed'], json.dumps(rooms), now))
+            return {'runId': run_id, 'startedAt': now, 'seasonId': season}
 
     def nickname(self, value):
         require(isinstance(value, str), 'invalid_nickname')
@@ -150,12 +165,15 @@ class Ranking:
             # A retry never changes the original name, timestamp, or score, even after season close.
             if previous:
                 return self.receipt(previous)
-            require(run['season'] == self.config['season'] and self.config['open'], 'season_closed', 409)
+            rules, opened = self.active_season(run['season'])
+            require(opened, 'season_closed', 409)
             require(run['version'] in self.config['versions'], 'unsupported_version', 409)
-            require(body.get('rulesVersion') == RULES and body.get('seasonId') == run['season'] and
+            require(body.get('rulesVersion') == rules and body.get('seasonId') == run['season'] and
                     body.get('gameVersion') == run['version'], 'version_mismatch')
             require(body.get('outcome') == 'escaped' and body.get('kingDefeated') is True and
                     integer(body.get('floor'), 0, 0) and body.get('practice') is False, 'not_eligible')
+            if rules == EXPANDED_RULES:
+                require(body.get('finalDemonDefeated') is True, 'not_eligible')
             nickname = self.nickname(body.get('nickname'))
             elapsed, visited, defeated = body.get('elapsedMs'), body.get('visited'), body.get('defeated')
             rooms = json.loads(run['rooms'])
@@ -165,7 +183,7 @@ class Ranking:
                     all(isinstance(k, str) for k in visited) and len(set(visited)) == len(visited), 'invalid_visits')
             valid_rooms = {f'{f}:{r}' for f, count in enumerate(rooms) for r in range(count)}
             require(set(visited) <= valid_rooms and '0:0' in visited and
-                    {k.split(':')[0] for k in visited} == set('01234567'), 'invalid_visits')
+                    {k.split(':')[0] for k in visited} == {str(i) for i in range(len(rooms))}, 'invalid_visits')
             require(isinstance(defeated, list) and len(defeated) <= 10000 and
                     all(integer(k, 0, 999999) for k in defeated) and len(set(defeated)) == len(defeated), 'invalid_kills')
             require(isinstance(body.get('mainSkill'), str) and body['mainSkill'] in MAIN_SKILLS, 'invalid_build')
@@ -173,7 +191,7 @@ class Ranking:
             reason = 'implausible_metrics' if elapsed < 120000 or len(defeated) > 3000 or len(defeated) < 10 else None
             status = 'held' if reason else 'accepted'
             snapshot = dict(parts, elapsedMs=elapsed, kills=len(defeated), visited=visited, defeated=defeated,
-                            totalRooms=sum(rooms), seed=run['seed'], gameVersion=run['version'], rulesVersion=RULES)
+                            totalRooms=sum(rooms), seed=run['seed'], gameVersion=run['version'], rulesVersion=rules)
             record_id = str(uuid.uuid4())
             db.execute('INSERT INTO records VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
                        (record_id, run['id'], identity, run['season'], nickname, parts['total'], elapsed,
@@ -189,7 +207,8 @@ class Ranking:
 
     def leaderboard(self, token, season):
         with self.connect() as db:
-            require(db.execute('SELECT 1 FROM seasons WHERE id=?', (season,)).fetchone(), 'season_not_found', 404)
+            entry = db.execute('SELECT rules FROM seasons WHERE id=?', (season,)).fetchone()
+            require(entry, 'season_not_found', 404)
             player = self.player(token, db)
             query = f'''WITH best AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY player_id ORDER BY {ORDER}) AS pick
                          FROM records WHERE season=? AND status='accepted'),
@@ -199,8 +218,8 @@ class Ranking:
             def public(row):
                 return {'rank': row['rank'], 'recordId': row['id'], 'nickname': row['nickname'],
                         'score': row['score'], 'elapsedMs': row['elapsed_ms'], 'mainSkill': row['main_skill']}
-            return {'seasonId': season, 'rulesVersion': RULES,
-                    'open': season == self.config['season'] and self.config['open'],
+            return {'seasonId': season, 'rulesVersion': entry['rules'],
+                    'open': self.active_season(season)[1],
                     'entries': [public(r) for r in rows if r['rank'] <= 100],
                     'mine': next((public(r) for r in rows if player and r['player_id'] == player['id']), None)}
 

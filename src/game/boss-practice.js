@@ -13,7 +13,7 @@ const hiddenPracticeBoss={id:'commander',floor:8,name:'9층 악마 군단장'};
 const hiddenFinalBoss={id:'demon',floor:9,name:'10층 대악마'};
 export function createPractice(bossId,main,seed=Math.floor(Math.random()*4294967296)){
  const boss=practiceBosses.find(b=>b.id===bossId)||(bossId==='commander'?hiddenPracticeBoss:bossId==='demon'?hiddenFinalBoss:null);if(!boss||!mainSkills.includes(main))throw Error('잘못된 테스트 설정');
- const s=newRun(seed,['commander','demon'].includes(bossId)?{campaign:'expanded'}:undefined),p=s.player,random=seededRandom(seed^0x46a513);s.practice={boss:bossId,main,seed};s.floor=boss.floor;s.room=s.floors[s.floor].findIndex(r=>bossId==='gate'?r.gate:r.type==='boss');
+ const s=newRun(seed,['commander','demon'].includes(bossId)?{campaign:'expanded'}:undefined),p=s.player,random=seededRandom(seed^0x46a513);delete s.ranking;s.practice={boss:bossId,main,seed};s.floor=boss.floor;s.room=s.floors[s.floor].findIndex(r=>bossId==='gate'?r.gate:r.type==='boss');
  const r=currentRoom(s);p.x=480;p.y=430;p.level=10;for(let i=0;i<3;i++)applySkill(p,main);
  for(let i=0;i<7;i++){const pool=skills.filter(k=>k.tree==='support'&&(p[k.id]||0)<k.max);let roll=random()*pool.reduce((n,k)=>n+k.weight,0),chosen=pool.at(-1);for(const k of pool){roll-=k.weight;if(roll<0){chosen=k;break;}}applySkill(p,chosen.id);}
  let key;while((key=pendingEvolution(p)))chooseEvolution(p,key,evolutions[key][Math.floor(random()*evolutions[key].length)].id);

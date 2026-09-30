@@ -28,12 +28,12 @@ export class RankingClient{
  draft(s){
   const q=s.ranking;if(s.practice||s.status!=='won'||!q?.result||q.online?.runId!==s.runId)return null;
   const existing=this.list().find(r=>r.runId===s.runId);if(existing)return existing;
-  return this.persist({runId:s.runId,createdAt:Date.now(),nickname:'',payload:{runId:s.runId,outcome:'escaped',kingDefeated:!!s.key,floor:s.floor,practice:false,rulesVersion:q.rulesVersion,seasonId:q.seasonId,gameVersion:q.gameVersion,elapsedMs:q.result.elapsedMs,visited:[...q.visited],defeated:[...q.defeated],mainSkill:s.player.mainSkill},score:q.result.total});
+  return this.persist({runId:s.runId,createdAt:Date.now(),nickname:'',payload:{runId:s.runId,outcome:'escaped',kingDefeated:!!s.key,finalDemonDefeated:s.campaign==='expanded'&&s.floors[9][1].used&&s.floors[9][1].demonPending===false,floor:s.floor,practice:false,rulesVersion:q.rulesVersion,seasonId:q.seasonId,gameVersion:q.gameVersion,elapsedMs:q.result.elapsedMs,visited:[...q.visited],defeated:[...q.defeated],mainSkill:s.player.mainSkill},score:q.result.total});
  }
  submit(item,name){
   if(this.pending.has(item.runId))return this.pending.get(item.runId);
   const work=(async()=>{if(item.receipt)return item.receipt;item.nickname=normalizeNickname(name);this.persist(item);const receipt=await this.request('records',{...item.payload,nickname:item.nickname});if(receipt.runId!==item.runId||!['accepted','held'].includes(receipt.status)||!Number.isSafeInteger(receipt.score?.total))throw failure('network');item.receipt=receipt;this.persist(item);return receipt;})();
   this.pending.set(item.runId,work);work.then(()=>this.pending.delete(item.runId),()=>this.pending.delete(item.runId));return work;
  }
- leaderboard(){return this.request('rankings?season='+encodeURIComponent(RANKING_SEASON));}
+ leaderboard(season=RANKING_SEASON){return this.request('rankings?season='+encodeURIComponent(season));}
 }

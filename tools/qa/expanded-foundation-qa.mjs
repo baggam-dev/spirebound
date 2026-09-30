@@ -25,9 +25,9 @@ try{
   await page.screenshot({path:join(output,`${width}x${height}-fountain.png`)});
   await page.locator('#interact').click();
   const result=await page.evaluate(async()=>{const {parseSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=parseSave(localStorage.getItem(SAVE_KEY));return {hp:s.player.hp,ready:s.floors[9][0].fountainReady,stairs:s.floors[9][0].type,rooms:s.floors[9].length,ranking:s.ranking??null};});
-  if(result.hp!==5||result.ready!==false||result.stairs!=='down'||result.rooms!==2||result.ranking!==null)throw Error(`Expanded facility/save mismatch: ${JSON.stringify(result)}`);
+  if(result.hp!==5||result.ready!==false||result.stairs!=='down'||result.rooms!==2||result.ranking?.seasonId!=='ASCENT-1'||result.ranking.online)throw Error(`Expanded facility/save mismatch: ${JSON.stringify(result)}`);
   await context.close();
  }
  if(errors.length)throw Error(errors.join('\n'));
- console.log(JSON.stringify({classicFloors:8,classicSeason:'BETA-1',expandedFinalRooms:2,fountainOnce:true,rankingExcluded:true,viewports:2,pageErrors:0}));
+ console.log(JSON.stringify({classicFloors:8,classicSeason:'BETA-1',expandedFinalRooms:2,fountainOnce:true,expandedSeason:'ASCENT-1',offlineFixture:true,viewports:2,pageErrors:0}));
 }finally{await browser.close();}

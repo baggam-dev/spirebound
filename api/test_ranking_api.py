@@ -47,6 +47,34 @@ class RankingTests(unittest.TestCase):
         expanded = dict(self.run, runId='run-expanded-0001', roomCounts=self.run['roomCounts'] + [8, 2])
         self.reject(lambda: self.app.start(self.token, expanded), 'invalid_map')
 
+    def test_expanded_season_accepts_only_ten_floor_map_and_final_demon(self):
+        self.config.update(expandedSeason='ASCENT-1', expandedOpen=True)
+        app = Ranking(self.path, self.config, lambda: self.now)
+        rooms = self.run['roomCounts'] + [8, 2]
+        expanded = dict(self.run, runId='run-expanded-0001', roomCounts=rooms,
+                        rulesVersion='ranking-v2', seasonId='ASCENT-1')
+        app.start(self.token, expanded)
+        self.reject(lambda: app.start(self.token, dict(expanded, runId='wrong-map-0001', roomCounts=self.run['roomCounts'])), 'invalid_map')
+        self.reject(lambda: app.start(self.token, dict(expanded, runId='wrong-rule-0001', rulesVersion='ranking-v1')), 'unsupported_rules')
+        self.reject(lambda: app.start(self.token, dict(self.run, runId='wrong-season-0001', seasonId='ASCENT-1')), 'invalid_map')
+        self.assertEqual(app.leaderboard(self.token, 'BETA-1')['rulesVersion'], 'ranking-v1')
+        self.assertEqual(app.leaderboard(self.token, 'ASCENT-1')['rulesVersion'], 'ranking-v2')
+        self.now += 1200000
+        expanded_body = dict(self.body, runId=expanded['runId'], rulesVersion='ranking-v2',
+                             seasonId='ASCENT-1', visited=[f'{f}:0' for f in range(10)], finalDemonDefeated=True)
+        self.reject(lambda: app.submit(self.token, dict(expanded_body, finalDemonDefeated=False)), 'not_eligible')
+        self.reject(lambda: app.submit(self.token, dict(expanded_body, visited=expanded_body['visited'][:-1])), 'invalid_visits')
+        result = app.submit(self.token, expanded_body)
+        self.assertEqual(result['status'], 'accepted')
+        self.assertEqual(app.leaderboard(self.token, 'ASCENT-1')['mine']['recordId'], result['recordId'])
+        self.assertEqual(app.leaderboard(self.token, 'BETA-1')['entries'], [])
+        beta = app.submit(self.token, self.body)
+        self.assertEqual(app.leaderboard(self.token, 'BETA-1')['mine']['recordId'], beta['recordId'])
+        self.assertEqual(app.leaderboard(self.token, 'ASCENT-1')['entries'][0]['recordId'], result['recordId'])
+        self.config['expandedOpen'] = False
+        self.assertFalse(app.leaderboard(self.token, 'ASCENT-1')['open'])
+        self.reject(lambda: app.start(self.token, dict(expanded, runId='closed-0001')), 'season_closed')
+
     def test_recompute_and_restart_persistence(self):
         receipt = self.app.submit(self.token, self.body)
         self.assertEqual(receipt['status'], 'accepted')

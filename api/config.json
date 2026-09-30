@@ -1,6 +1,8 @@
 {
   "season": "BETA-1",
   "open": true,
+  "expandedSeason": "ASCENT-1",
+  "expandedOpen": true,
   "versions": ["0.31.0-prebeta"],
   "origins": ["http://168.107.21.43"],
   "secureCookie": false,
