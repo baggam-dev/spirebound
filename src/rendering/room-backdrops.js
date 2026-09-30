@@ -1,8 +1,8 @@
 import {objectPoint} from '../world/object-positions.js';
 // Decoration only: deterministic room variation, no gameplay state or random draws.
-const palettes=[['#52634f','#839078'],['#655e4e','#9b8d68'],['#554d69','#9a87af'],['#455b71','#8cacc0'],['#425b43','#82976a'],['#55593c','#a0a16c'],['#454762','#9990af'],['#603e4b','#ac8d66']];
+const palettes=[['#52634f','#839078'],['#655e4e','#9b8d68'],['#554d69','#9a87af'],['#455b71','#8cacc0'],['#425b43','#82976a'],['#55593c','#a0a16c'],['#454762','#9990af'],['#603e4b','#ac8d66'],['#4b3437','#ae6a59'],['#3b303e','#a56d78']];
 export function drawRoomBackdrop(c,s,r){
- const floor=Math.max(0,Math.min(7,s.floor|0)),[shade,light]=palettes[floor];
+ const floor=Math.max(0,Math.min(9,s.floor|0)),[shade,light]=palettes[floor];
  const seed=Math.abs(((r.x||0)*37+(r.y||0)*71+floor*13)|0);
  const box=(x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h);};
  c.save();c.beginPath();c.rect(26,45,908,455);c.clip();
@@ -28,9 +28,28 @@ export function drawRoomBackdrop(c,s,r){
    for(let i=0;i<8;i++){const xx=x+9+i%4*18,yy=63+Math.floor(i/4)*17;box(xx,yy,12,11,shade);box(xx+2,yy+2,8,6,light);box(xx+4,yy+4,4,5,'#343a2a');}
   }else if(floor===6){
    c.strokeStyle=light;c.lineWidth=1;c.beginPath();c.moveTo(x+10,82);c.lineTo(x+28,63);c.lineTo(x+47,79);c.lineTo(x+68,61);c.stroke();for(const [dx,dy] of [[10,82],[28,63],[47,79],[68,61]])box(x+dx-2,dy-2,4,4,light);
-  }else{
+  }else if(floor===7){
    box(x+17,58,46,33,'#623547');box(x+24,67,32,5,light);for(const dx of [24,38,52])box(x+dx,61,4,9,light);box(x+28,75,24,3,light);box(x+19,85,10,7,shade);box(x+51,85,10,7,shade);
+  }else{ // Basalt buttresses and fissure glass, kept above the traversal lane.
+   for(let i=0;i<5;i++){const xx=x+5+i*15,h=17+(i+seed)%3*7;box(xx,91-h,12,h,'#27262b');box(xx+2,92-h,8,3,shade);box(xx+4,95-h,2,Math.max(4,h-10),light);}
+   box(x+6,88,69,4,'#1b1b22');box(x+9,89,63,2,shade);
+   for(const dx of [19,41,63]){box(x+dx,75+(dx%3)*3,4,2,floor===8?'#d77450':'#ca83a7');box(x+dx+1,77+(dx%3)*3,2,3,'#f0ad76');}
   }
+ }
+ if(floor>=8){
+  // Embedded seams, not warning zones: no circles or filled attack silhouettes.
+  const ember=floor===8?'#b76855':'#9d6b91';c.globalAlpha=.22;
+  for(let i=0;i<24;i++){
+   const x=76+(i*149+seed*7)%810,y=132+(i*103+seed*3)%315;
+   box(x,y,15+i%4*4,2,'#15151b');box(x+8,y+2,2,5,'#15151b');
+   if(i%3===0){box(x+11,y+1,9,1,ember);box(x+20,y-2,1,3,ember);}
+  }
+  c.globalAlpha=.52;
+  for(const x of [95,805]){
+   box(x,121,53,4,'#17171d');box(x+8,127,37,3,shade);box(x+20,130,13,9,'#1d1b22');
+   for(const dx of [13,25,37])box(x+dx,123,3,2,ember);
+  }
+  c.globalAlpha=.65;
  }
  // Side-wall footings stay clear of the central doors and traversal lanes.
  for(const x of [56,888])for(const y of [145,353]){box(x,y,16,45,'#192226');box(x-3,y,22,5,shade);box(x+3,y+7,3,29,light);box(x-4,y+41,24,6,shade);}

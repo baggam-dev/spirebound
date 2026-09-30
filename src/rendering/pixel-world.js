@@ -50,11 +50,11 @@ export function drawPixelActor(c,e,time=0,run=null){
  c.restore();
 }
 export function drawWorldDetails(c,s,r){
- const t=s.elapsed,group=Math.floor(s.floor/2),accent=['#6e8066','#827499','#899257','#96806a'][group]||'#728473';c.save();
+ const t=s.elapsed,group=Math.floor(s.floor/2),accent=s.floor>=8?(s.floor===8?'#73504a':'#665069'):['#6e8066','#827499','#899257','#96806a'][group]||'#728473';c.save();
  // Quiet floor detail, kept underneath entities and every combat telegraph.
  for(let i=0;i<65;i++){const x=40+(i*137+s.floor*43)%865,y=55+(i*79+s.floor*17)%425;box(c,x,y,5+i%7,1,'#a4a79513');if(i%6===0){box(c,x,y,2,6,'#0a12193b');box(c,x+2,y+5,7,2,'#0a12193b');}}
  for(const x of [32,918])for(let y=80;y<470;y+=75){box(c,x,y,10,31,'#151e23');box(c,x-2,y,14,4,accent);box(c,x+2,y+5,3,22,'#ffffff18');box(c,x-2,y+29,14,4,'#263438');}
- for(const x of [85,875])for(const y of [82,455]){box(c,x-10,y+12,20,5,ink);box(c,x-6,y-3,12,15,'#756b55');box(c,x-5,y,10,3,'#b49d6c');const f=Math.floor(t*9+x)%3;box(c,x-6,y-12-f*2,12,13+f*2,'#d66e3c');box(c,x-3,y-15+f,6,14,'#ffc56f');box(c,x-1,y-9,3,7,'#fff0b2');box(c,x+4-f*3,y-24-(t*17%12),2,3,'#f2b568');}
+ for(const x of [85,875])for(const y of [82,455]){const infernal=s.floor>=8,deep=s.floor>=9;box(c,x-10,y+12,20,5,ink);box(c,x-6,y-3,12,15,infernal?'#4c414a':'#756b55');box(c,x-5,y,10,3,infernal?'#9b7172':'#b49d6c');const f=Math.floor(t*9+x)%3;box(c,x-6,y-12-f*2,12,13+f*2,deep?'#91577f':'#d66e3c');box(c,x-3,y-15+f,6,14,deep?'#d28bad':'#ffc56f');box(c,x-1,y-9,3,7,deep?'#f0c6d0':'#fff0b2');box(c,x+4-f*3,y-24-(t*17%12),2,3,deep?'#cb92b0':'#f2b568');}
  c.restore();
 }
 function chest(c,x,y,used,age=Infinity){box(c,x-19,y-2,38,28,ink);box(c,x-17,y,34,23,used?'#514534':'#825a38');box(c,x-15,y+2,30,7,used?'#71634b':'#bf9354');box(c,x-17,y+10,34,3,ink);for(const dx of [-12,9]){box(c,x+dx,y,3,23,'#c2a363');box(c,x+dx,y+3,2,2,'#eee0aa');}box(c,x-3,y+9,6,8,'#e7c77c');box(c,x-1,y+12,2,3,ink);if(used){const lift=Math.round(12*Math.min(1,age/.25));box(c,x-15,y+1,30,8,'#171c22');box(c,x-17,y-lift,34,7,'#806443');box(c,x-15,y-lift+1,30,2,'#bca16b');for(const dx of [-12,9])box(c,x+dx,y-lift,3,7,'#c2a363');}}

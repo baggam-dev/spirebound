@@ -28,3 +28,9 @@ test('outer and inner wall faces use the same world-aligned block palette',()=>{
  const colors=new Set(),rects=[];const c={save(){},restore(){},beginPath(){},rect(){},clip(){},set fillStyle(v){colors.add(v);},fillRect(x,y,w,h){rects.push([x,y,w,h]);}};
  paintStoneWalls(c,outerWalls);paintStoneWalls(c,[{x:25,y:40,w:155,h:185,type:'wall'}]);assert.ok(colors.has('#11191b')&&colors.has('#3c4742'));assert.ok(rects.filter(r=>r[2]===46&&r[3]===38).every(([x,y])=>x%48===0&&y%40===0));
 });
+test('infernal masonry uses one palette for inner and outer walls and refreshes cached floor themes',()=>{
+ const previous=globalThis.OffscreenCanvas,colors=new Set();let created=0;
+ const c={save(){},restore(){},beginPath(){},rect(){},clip(){},drawImage(){},set fillStyle(v){colors.add(v);},fillRect(){}};
+ globalThis.OffscreenCanvas=class{constructor(){created++;}getContext(){return c;}};
+ try{const walls=[{x:25,y:40,w:155,h:185,type:'wall'}];paintStoneWalls(c,outerWalls,8);paintStoneWalls(c,walls,8);assert.ok(colors.has('#423636')&&colors.has('#1a171b'));drawStoneWalls(c,walls,0);drawStoneWalls(c,walls,8);drawStoneWalls(c,walls,8);drawStoneWalls(c,walls,9);assert.equal(created,3);assert.ok(colors.has('#39313d')&&colors.has('#14131c'));}finally{globalThis.OffscreenCanvas=previous;}
+});
