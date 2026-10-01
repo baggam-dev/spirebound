@@ -17,20 +17,21 @@ try{
   const challenged=await page.evaluate(async()=>{const {parseSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=parseSave(localStorage.getItem(SAVE_KEY)),r=s.floors[8][s.room];return {pending:r.commanderPending,variant:r.enemies[0]?.variant,ranking:s.ranking??null};});
   if(challenged.pending||challenged.variant!=='commander'||challenged.ranking?.seasonId!=='ASCENT-5'||challenged.ranking.online)throw Error(JSON.stringify(challenged));
   if(!mobile){
-   const gallery=await context.newPage();await gallery.goto(base);
-   const difference=await gallery.evaluate(async()=>{
+   const gallery=await context.newPage();
+   await gallery.route('**/commander-gallery',route=>route.fulfill({contentType:'text/html',body:'<body style="margin:0;background:#141c23"><canvas width="720" height="360"></canvas></body>'}));
+   await gallery.goto(`${base}/commander-gallery`);
+   const comparison=await gallery.evaluate(async()=>{
     const {drawCommander}=await import('/src/rendering/commander-visuals.js');
-    document.body.innerHTML='<canvas width="720" height="360"></canvas>';document.body.style='margin:0;background:#141c23';
     const c=document.querySelector('canvas').getContext('2d'),hashes=[];
     for(const [i,phase] of [1,2].entries()){
      c.save();c.translate(190+i*340,230);c.scale(3,3);
      drawCommander(c,{x:0,y:0,variant:'commander',commander:{phase}},1);c.restore();
      c.fillStyle='#c8d9de';c.font='18px monospace';c.fillText(`PHASE ${phase}`,110+i*340,60);
-     const bytes=c.getImageData(70+i*340,70,240,240).data;let hash=0;for(let j=0;j<bytes.length;j+=16)hash=(Math.imul(hash,31)+bytes[j])|0;hashes.push(hash);
+     const bytes=c.getImageData(70+i*340,70,240,240).data;let hash=0,opaque=0;for(let j=0;j<bytes.length;j+=4){hash=(Math.imul(hash,31)+bytes[j]+bytes[j+1]+bytes[j+2]+bytes[j+3])|0;if(bytes[j+3]>0)opaque++;}hashes.push({hash,opaque});
     }
-    return hashes[0]!==hashes[1];
+    return {visible:hashes.every(item=>item.opaque>500),different:hashes[0].hash!==hashes[1].hash};
    });
-   if(!difference)throw Error('Commander phases look identical');
+   if(!comparison.visible||!comparison.different)throw Error(`Commander phase gallery invalid: ${JSON.stringify(comparison)}`);
    await gallery.locator('canvas').screenshot({path:join(output,'commander-phases.png')});await gallery.close();
   }
   await context.close();
