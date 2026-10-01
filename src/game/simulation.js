@@ -36,6 +36,7 @@ import {takeDamage,killRecovery,monsterPotionReward} from '../combat/survival.js
 import {ENEMY_COOLDOWN_FACTOR,CHARGE_DURATION,CHARGE_WARNING,attackProfile,chargeProfile} from '../combat/balance.js';
 import {runRandom} from './random.js';
 import {absorbGuardian} from '../combat/utility.js';
+import {tickFinalEscape} from '../world/final-escape.js';
 
 const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 export function collisionTime(a,b,c,radius){
@@ -60,6 +61,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  if(s.player.hp<=0){events.push('dead');return {events,effects};}
  if(currentRoom(s).shrineState==='choice'&&!currentRoom(s).used)return {events:['incantation'],effects};
  trackRankingRoom(s);const p=s.player,metrics=ensureMetrics(s);observeGrowth(s);tickBossRecord(s,currentRoom(s),dt);s.projectiles??=[];advanceClock(s,dt,false);metrics.floorTimes[s.floor]=(metrics.floorTimes[s.floor]||0)+dt;
+ events.push(...tickFinalEscape(s,currentRoom(s),dt));
  s.entryGrace=Math.max(0,(s.entryGrace||0)-dt);let r=currentRoom(s);
  let hitOrigin=null;
  const hurt=(raw,source='알 수 없는 공격',kind=null,origin=hitOrigin)=>{if(s.entryGrace>0||p.hp<=0||s.invulnerable>0||raw<=0)return;if(absorbGuardian(s)){s.invulnerable=.65;effects.push({x:p.x,y:p.y-35,t:.8,color:'#b8d9f1',text:'수호!'});metrics.shields++;return;}const before=p.hp,result=takeDamage(s,r.trialState==='active'?Math.min(raw,9):raw,kind);if(before>p.hp)effects.push({x:p.x,y:p.y-35,t:1,color:'#ff7188',text:'-'+(before-p.hp)+' ♥',hitSource:source,hitAngle:origin?Math.atan2(origin.y-p.y,origin.x-p.x):null});metrics.damageTaken+=before-p.hp;recordHit(s,source,before-p.hp,result==='blocked');if(result==='blocked'){metrics.shields++;events.push('shield');}};

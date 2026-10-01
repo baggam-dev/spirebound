@@ -23,7 +23,7 @@ test('visited room guardian rate is approximately thirty percent and determinist
  }assert.ok(count/total>.27&&count/total<.33);
 });
 test('old descending saves without seal metadata retain access and blocked exit cannot be used',()=>{
- const s=newRun(4);s.key=true;s.room=0;assert.equal(roomLocked(s),false);assert.equal(canEscape(s),true);
+ const s=newRun(4);s.generationVersion=27;s.key=true;s.room=0;assert.equal(roomLocked(s),false);assert.equal(canEscape(s),true);
  const r=currentRoom(s);r.returnSeal='guardian';r.returnSealReleased=false;r.returnGuardianId=42;r.enemies=[{id:42,hp:10}];assert.equal(canEscape(s),false);r.enemies[0].hp=0;assert.equal(returnSealActive(r),false);assert.equal(canEscape(s),true);
 });
 test('live movement cannot cross a sealed exit and can cross after clearance',()=>{

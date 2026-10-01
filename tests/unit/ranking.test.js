@@ -4,7 +4,7 @@ import {newRun,enrage,currentRoom,advanceClock} from '../../src/game/engine.js';
 import {enterRoom,stepRun} from '../../src/game/simulation.js';
 import {encodeSave,parseSave,RunStore,safeHistory} from '../../src/persistence/storage.js';
 import {calculateScore,trackRankingRoom,recordRankingDefeat,finishRanking,rankingMarkup,validateRanking,EXPANDED_SEASON,EXPANDED_RULES,EXPANDED_ARCHIVES} from '../../src/ranking/ranking.js';
-const win=s=>{s.key=true;s.floor=0;s.room=0;s.status='won';return finishRanking(s);};
+const win=s=>{s.key=true;s.floor=0;s.room=0;s.status='won';s.floors[0][0].finalEscape={elapsed:36,wave:3,ready:true};return finishRanking(s);};
 test('score examples, caps, second boundary and invalid metrics',()=>{
  for(const [elapsedMs,kills,visited,totalRooms,total] of [[1200000,180,60,80,16900],[1800000,300,80,80,17400],[3000000,450,80,80,16000]])assert.equal(calculateScore({elapsedMs,kills,visited,totalRooms}).total,total);
  const base={elapsedMs:999,kills:0,visited:1,totalRooms:3};assert.equal(calculateScore(base).time,6000);assert.equal(calculateScore({...base,elapsedMs:1000}).time,5998);assert.equal(calculateScore(base).exploration,666);

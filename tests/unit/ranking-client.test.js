@@ -7,18 +7,18 @@ import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 import {rankRow} from '../../src/ranking/ranking-ui.js';
 const memory=()=>{const data=new Map();return {getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v)};};
 const response=data=>({ok:true,json:async()=>data});
-function winner(){const s=newRun(1);s.key=true;s.status='won';s.player.mainSkill='fire';s.ranking.online={runId:s.runId,startedAt:100};finishRanking(s);return s;}
+function winner(){const s=newRun(1);s.key=true;s.status='won';s.player.mainSkill='fire';s.floors[0][0].finalEscape={elapsed:36,wave:3,ready:true};s.ranking.online={runId:s.runId,startedAt:100};finishRanking(s);return s;}
 test('online start issues session before run and survives save continuation',async()=>{
  const calls=[],s=newRun(1),client=new RankingClient(memory(),async(path,options)=>{calls.push([path,options]);return response(path.endsWith('session')?{active:true}:{runId:s.runId,seasonId:s.ranking.seasonId,startedAt:123});});
  await client.start(s);assert.deepEqual(calls.map(c=>c[0]),['/api/session','/api/runs']);assert.equal(calls[0][1].credentials,'same-origin');assert.deepEqual(JSON.parse(calls[1][1].body).roomCounts,s.floors.map(r=>r.length));assert.deepEqual(parseSave(encodeSave(s)).ranking.online,s.ranking.online);
 });
 test('expanded season starts online and only drafts a completed final demon run',async()=>{
- const s=newRun(21,{campaign:'expanded'}),client=new RankingClient(memory(),async(path)=>response(path.endsWith('session')?{active:true}:{runId:s.runId,seasonId:'ASCENT-5',startedAt:123}));
- await client.start(s);assert.equal(s.ranking.seasonId,'ASCENT-5');assert.equal(s.ranking.rulesVersion,'ranking-v8');
+ const s=newRun(21,{campaign:'expanded'}),client=new RankingClient(memory(),async(path)=>response(path.endsWith('session')?{active:true}:{runId:s.runId,seasonId:'ASCENT-6',startedAt:123}));
+ await client.start(s);assert.equal(s.ranking.seasonId,'ASCENT-6');assert.equal(s.ranking.rulesVersion,'ranking-v10');
  s.key=true;s.status='won';s.player.mainSkill='fire';assert.equal(finishRanking(s),null);assert.equal(client.draft(s),null);
- s.floors[9][1].used=true;s.floors[9][1].demonPending=false;
+ s.floors[9][1].used=true;s.floors[9][1].demonPending=false;s.floors[0][0].finalEscape={elapsed:36,wave:3,ready:true};
  finishRanking(s);const qualified=client.draft(s);assert.equal(qualified.payload.finalDemonDefeated,true);
- assert.equal(qualified.payload.seasonId,'ASCENT-5');
+ assert.equal(qualified.payload.seasonId,'ASCENT-6');
 });
 test('continued ASCENT-1 and ASCENT-2 saves remain local after their seasons close',()=>{
  const client=new RankingClient(memory());

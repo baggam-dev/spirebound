@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {newRun,travel,bossDefeated,currentRoom,canEscape,generateFloor} from '../../src/game/engine.js';
 import {updatePrism} from '../../src/combat/prism.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
+import {startFinalEscape,tickFinalEscape} from '../../src/world/final-escape.js';
 test('eight connected floors place three bosses and flowers only on upper ascent floors',()=>{
  for(let seed=0;seed<60;seed++){
   const s=newRun(seed);assert.equal(s.floors.length,8);
@@ -13,7 +14,7 @@ test('eight connected floors place three bosses and flowers only on upper ascent
 test('all eight ascent and descent transitions preserve gates, maps and key timing',()=>{
  const s=newRun(71),coords=s.floors.map(rs=>rs.map(r=>[r.x,r.y]));
  for(let f=0;f<8;f++){s.room=s.floors[f].findIndex(r=>r.type==='up'||r.type==='boss');if(f%2){assert.equal(travel(s,1),false);currentRoom(s).enemies=[];assert.equal(bossDefeated(s),f===7?'key':'stairs');}if(f%2===0){assert.equal(travel(s,1),false);currentRoom(s).enemies=[];}assert.equal(s.key,f===7);if(f<7)assert.ok(travel(s,1));}
- for(let f=7;f>0;f--){s.room=0;assert.equal(travel(s,-1),false);currentRoom(s).enemies=[];assert.ok(travel(s,-1));assert.equal(s.floor,f-1);}s.room=0;currentRoom(s).enemies=[];assert.ok(canEscape(s));assert.deepEqual(s.floors.map(rs=>rs.map(r=>[r.x,r.y])),coords);
+ for(let f=7;f>0;f--){s.room=0;assert.equal(travel(s,-1),false);currentRoom(s).enemies=[];assert.ok(travel(s,-1));assert.equal(s.floor,f-1);}s.room=0;currentRoom(s).enemies=[];assert.equal(canEscape(s),false);assert.equal(startFinalEscape(s,currentRoom(s)),true);tickFinalEscape(s,currentRoom(s),36);assert.ok(canEscape(s));assert.deepEqual(s.floors.map(rs=>rs.map(r=>[r.x,r.y])),coords);
 });
 test('legacy two and four floor saves keep their maps and final key floor',()=>{
  for(const count of [2,4,6]){let s=newRun(14);delete s.ranking;s.floors=Array.from({length:count},(_,f)=>generateFloor(f));s=parseSave(encodeSave(s));assert.equal(s.floors.length,count);s.floor=count-1;s.room=s.floors.at(-1).findIndex(r=>r.type==='boss');currentRoom(s).enemies=[];assert.equal(bossDefeated(s),'key');assert.equal(travel(s,1),false);}

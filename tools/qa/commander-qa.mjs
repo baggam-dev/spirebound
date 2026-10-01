@@ -15,7 +15,7 @@ try{
   await page.evaluate(async()=>{const {newRun}=await import('/src/game/engine.js'),{encodeSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=newRun(37,{campaign:'expanded'});s.floor=8;s.room=s.floors[8].findIndex(r=>r.type==='boss');s.player.x=480;s.player.y=115;s.tutorialComplete=true;localStorage.setItem(SAVE_KEY,encodeSave(s));});
   await page.reload();await page.locator('#continue').click();await page.waitForFunction(()=>document.querySelector('#floor')?.textContent?.startsWith('9층'));await page.locator('#interact').getByText('악마 군단장에게 도전',{exact:false}).waitFor();await page.locator('#interact').click();await page.screenshot({path:join(output,`${width}x${height}-commander.png`)});
   const challenged=await page.evaluate(async()=>{const {parseSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=parseSave(localStorage.getItem(SAVE_KEY)),r=s.floors[8][s.room];return {pending:r.commanderPending,variant:r.enemies[0]?.variant,ranking:s.ranking??null};});
-  if(challenged.pending||challenged.variant!=='commander'||challenged.ranking?.seasonId!=='ASCENT-5'||challenged.ranking.online)throw Error(JSON.stringify(challenged));
+  if(challenged.pending||challenged.variant!=='commander'||challenged.ranking?.seasonId!=='ASCENT-6'||challenged.ranking.online)throw Error(JSON.stringify(challenged));
   if(!mobile){
    const gallery=await context.newPage();
    await gallery.route('**/commander-gallery',route=>route.fulfill({contentType:'text/html',body:'<body style="margin:0;background:#141c23"><canvas width="720" height="360"></canvas></body>'}));

@@ -16,8 +16,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
-RULES = 'ranking-v7'
-EXPANDED_RULES = 'ranking-v8'
+RULES = 'ranking-v9'
+EXPANDED_RULES = 'ranking-v10'
 LEGACY_EXPANDED_RULES = 'ranking-v2'
 LEGACY_EXPANDED_SEASON = 'ASCENT-1'
 PREVIOUS_EXPANDED_RULES = 'ranking-v3'
@@ -27,7 +27,9 @@ ARCHIVED_SEASONS = [('BETA-1', 'ranking-v1'),
                     (PREVIOUS_EXPANDED_SEASON, PREVIOUS_EXPANDED_RULES),
                     ('ASCENT-3', 'ranking-v4'),
                     ('BETA-2', 'ranking-v5'),
-                    ('ASCENT-4', 'ranking-v6')]
+                    ('ASCENT-4', 'ranking-v6'),
+                    ('BETA-3', 'ranking-v7'),
+                    ('ASCENT-5', 'ranking-v8')]
 COOKIE = 'spirebound_player'
 MAX_BODY = 131072
 MAIN_SKILLS = {'fire', 'frost', 'poison', 'chain', 'precision'}
@@ -185,6 +187,7 @@ class Ranking:
                     body.get('gameVersion') == run['version'], 'version_mismatch')
             require(body.get('outcome') == 'escaped' and body.get('kingDefeated') is True and
                     integer(body.get('floor'), 0, 0) and body.get('practice') is False, 'not_eligible')
+            require(body.get('finalSealBroken') is True, 'not_eligible')
             if rules == EXPANDED_RULES:
                 require(body.get('finalDemonDefeated') is True, 'not_eligible')
             nickname = self.nickname(body.get('nickname'))

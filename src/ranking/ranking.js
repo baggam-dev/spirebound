@@ -1,14 +1,14 @@
 import {RELEASE} from '../game/version.js';
-export const RANKING_RULES='ranking-v7';
-export const RANKING_SEASON='BETA-3';
-export const CLASSIC_ARCHIVES=[{seasonId:'BETA-1',rulesVersion:'ranking-v1'},{seasonId:'BETA-2',rulesVersion:'ranking-v5'}];
-export const EXPANDED_SEASON='ASCENT-5';
-export const EXPANDED_RULES='ranking-v8';
+export const RANKING_RULES='ranking-v9';
+export const RANKING_SEASON='BETA-4';
+export const CLASSIC_ARCHIVES=[{seasonId:'BETA-1',rulesVersion:'ranking-v1'},{seasonId:'BETA-2',rulesVersion:'ranking-v5'},{seasonId:'BETA-3',rulesVersion:'ranking-v7'}];
+export const EXPANDED_SEASON='ASCENT-6';
+export const EXPANDED_RULES='ranking-v10';
 export const LEGACY_EXPANDED_SEASON='ASCENT-1';
 export const LEGACY_EXPANDED_RULES='ranking-v2';
 export const PREVIOUS_EXPANDED_SEASON='ASCENT-3';
 export const PREVIOUS_EXPANDED_RULES='ranking-v4';
-export const EXPANDED_ARCHIVES=[{seasonId:LEGACY_EXPANDED_SEASON,rulesVersion:LEGACY_EXPANDED_RULES},{seasonId:'ASCENT-2',rulesVersion:'ranking-v3'},{seasonId:PREVIOUS_EXPANDED_SEASON,rulesVersion:PREVIOUS_EXPANDED_RULES},{seasonId:'ASCENT-4',rulesVersion:'ranking-v6'}];
+export const EXPANDED_ARCHIVES=[{seasonId:LEGACY_EXPANDED_SEASON,rulesVersion:LEGACY_EXPANDED_RULES},{seasonId:'ASCENT-2',rulesVersion:'ranking-v3'},{seasonId:PREVIOUS_EXPANDED_SEASON,rulesVersion:PREVIOUS_EXPANDED_RULES},{seasonId:'ASCENT-4',rulesVersion:'ranking-v6'},{seasonId:'ASCENT-5',rulesVersion:'ranking-v8'}];
 export const rankingSeason=campaign=>campaign==='expanded'?EXPANDED_SEASON:RANKING_SEASON;
 export function startRanking(s){
  s.ranking={rulesVersion:s.campaign==='expanded'?EXPANDED_RULES:RANKING_RULES,seasonId:rankingSeason(s.campaign),gameVersion:RELEASE,totalRooms:s.floors.flat().length,visited:['0:0'],defeated:[],nextEnemyId:0};
@@ -31,7 +31,8 @@ export function calculateScore({elapsedMs,kills,visited,totalRooms}){
  return {escape,combat,exploration,time,total:escape+combat+exploration+time};
 }
 export function finishRanking(s){
- const q=s.ranking;if(!q||s.practice||s.status!=='won'||!s.key||s.floor!==0||s.campaign==='expanded'&&(!s.floors[9][1].used||s.floors[9][1].demonPending!==false))return null;
+ const q=s.ranking,newSeason=q?.rulesVersion===(s.campaign==='expanded'?EXPANDED_RULES:RANKING_RULES);
+ if(!q||s.practice||s.status!=='won'||!s.key||s.floor!==0||newSeason&&!s.floors[0][0].finalEscape?.ready||s.campaign==='expanded'&&(!s.floors[9][1].used||s.floors[9][1].demonPending!==false))return null;
  if(!q.result){const metrics={elapsedMs:Math.round(s.elapsed*1000),kills:q.defeated.length,visited:q.visited.length,totalRooms:q.totalRooms};q.result={...metrics,...calculateScore(metrics)};}
  return q.result;
 }
@@ -43,6 +44,7 @@ export function validateRanking(s){
  const int=n=>Number.isSafeInteger(n)&&n>=0;
  const current=q?.rulesVersion===(s.campaign==='expanded'?EXPANDED_RULES:RANKING_RULES)&&q?.seasonId===rankingSeason(s.campaign);
  const legacy=(s.campaign==='expanded'?EXPANDED_ARCHIVES:CLASSIC_ARCHIVES).some(a=>q?.rulesVersion===a.rulesVersion&&q?.seasonId===a.seasonId);
+ if(current&&s.generationVersion<28)return false;
  if(!q||!(current||legacy)||typeof q.gameVersion!=='string'||q.gameVersion.length>64||q.totalRooms!==s.floors.flat().length||!int(q.nextEnemyId)||q.nextEnemyId>1000000)return false;
  if(!Array.isArray(q.visited)||q.visited.length<1||q.visited.length>q.totalRooms||new Set(q.visited).size!==q.visited.length)return false;
  const rooms=new Set(s.floors.flatMap((rooms,f)=>rooms.map((_,r)=>f+':'+r)));
@@ -50,7 +52,7 @@ export function validateRanking(s){
  if(q.online!==undefined&&(!q.online||q.online.runId!==s.runId||!int(q.online.startedAt)))return false;
  const ids=[];for(const e of s.floors.flat().flatMap(r=>r.enemies))if(e.rankingId!==undefined){if(!int(e.rankingId)||e.rankingId>=q.nextEnemyId||q.defeated.includes(e.rankingId)&&e.hp>0)return false;ids.push(e.rankingId);}
  if(new Set(ids).size!==ids.length)return false;
- if(q.result!==undefined){const m=q.result;if(!m||s.status!=='won'||!s.key||s.floor!==0||s.practice||m.elapsedMs!==Math.round(s.elapsed*1000)||m.kills!==q.defeated.length||m.visited!==q.visited.length||m.totalRooms!==q.totalRooms)return false;try{const expected=calculateScore(m);if(Object.keys(expected).some(k=>m[k]!==expected[k]))return false;}catch{return false;}}
+ if(q.result!==undefined){const m=q.result;if(!m||s.status!=='won'||!s.key||s.floor!==0||s.practice||current&&!s.floors[0][0].finalEscape?.ready||m.elapsedMs!==Math.round(s.elapsed*1000)||m.kills!==q.defeated.length||m.visited!==q.visited.length||m.totalRooms!==q.totalRooms)return false;try{const expected=calculateScore(m);if(Object.keys(expected).some(k=>m[k]!==expected[k]))return false;}catch{return false;}}
  return true;
 }
 export function rankingMarkup(s){

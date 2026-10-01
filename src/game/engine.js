@@ -12,6 +12,7 @@ import {seededRandom} from './random.js';
 import {strengthenEnemy} from '../combat/balance.js';
 import {generateObstacles,safeSpawn} from '../world/terrain.js';
 import {MOVE_SPEED} from '../progression/progression.js';
+import {finalEscapeActive,finalEscapeRequired} from '../world/final-escape.js';
 export const dirs=[[0,-1],[1,0],[0,1],[-1,0]];
 function generateFinalFloor(){return [
  {x:0,y:0,type:'down',seen:false,used:false,enemies:[],obstacles:[],fountainReady:true},
@@ -47,12 +48,12 @@ export function generateFloor(floor,random=Math.random){
  rooms.forEach(r=>placeRoomObjects(r,random));
  return rooms;
 }
-export function newRun(seed=Math.floor(Math.random()*4294967296),{campaign='classic'}={}){if(!['classic','expanded'].includes(campaign))throw Error('Unknown campaign');const expanded=campaign==='expanded',random=seededRandom(seed);const run={runId:(globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+Math.random().toString(36).slice(2)),seed,randomState:seed>>>0,projectiles:[],generationVersion:27,upgrade21:true,levelQueue:[],combatVersion:17,tutorialComplete:false,rerolls:1,skillSystemVersion:14,version:1,healthVersion:1,floor:0,room:0,floors:Array.from({length:expanded?10:8},(_,i)=>generateFloor(i,random)),player:{x:480,y:300,hp:5,max:5,level:1,xp:0,damage:17,speed:MOVE_SPEED,fire:0,poison:0,frost:0,chain:0,precision:0,weakpoint:0,finisher:0,focusTime:0,haste:0,split:0,pierce:0,power:0,repeat:0,aura:0,homing:0,ultimate:0,potions:1,food:2,weapon:0,armor:0,unique:false,relics:[]},elapsed:0,key:false,kills:0,attack:0,skill:0,dodge:0,invulnerable:0,utilityCooldown:0,guardianTime:0,guardianCharges:0,utilityHealedFloors:[],pendingLevels:0,status:'playing'};if(expanded)run.campaign='expanded';return startRanking(run);}
+export function newRun(seed=Math.floor(Math.random()*4294967296),{campaign='classic'}={}){if(!['classic','expanded'].includes(campaign))throw Error('Unknown campaign');const expanded=campaign==='expanded',random=seededRandom(seed);const run={runId:(globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+Math.random().toString(36).slice(2)),seed,randomState:seed>>>0,projectiles:[],generationVersion:28,upgrade21:true,levelQueue:[],combatVersion:17,tutorialComplete:false,rerolls:1,skillSystemVersion:14,version:1,healthVersion:1,floor:0,room:0,floors:Array.from({length:expanded?10:8},(_,i)=>generateFloor(i,random)),player:{x:480,y:300,hp:5,max:5,level:1,xp:0,damage:17,speed:MOVE_SPEED,fire:0,poison:0,frost:0,chain:0,precision:0,weakpoint:0,finisher:0,focusTime:0,haste:0,split:0,pierce:0,power:0,repeat:0,aura:0,homing:0,ultimate:0,potions:1,food:2,weapon:0,armor:0,unique:false,relics:[]},elapsed:0,key:false,kills:0,attack:0,skill:0,dodge:0,invulnerable:0,utilityCooldown:0,guardianTime:0,guardianCharges:0,utilityHealedFloors:[],pendingLevels:0,status:'playing'};if(expanded)run.campaign='expanded';return startRanking(run);}
 export function currentRoom(s){return s.floors[s.floor][s.room];}
-export function neighbor(s,d,roomIndex=s.room){if(s.practice)return -1;const r=s.floors[s.floor][roomIndex];const next=s.floors[s.floor].findIndex(n=>n.x===r.x+dirs[d][0]&&n.y===r.y+dirs[d][1]);return s.floor===0&&roomIndex===0&&!s.key&&s.tutorialComplete===false&&next!==1?-1:next;}
+export function neighbor(s,d,roomIndex=s.room){if(s.practice)return -1;const r=s.floors[s.floor][roomIndex];if(s.floor===0&&r.type==='exit'&&r.finalEscape)return -1;const next=s.floors[s.floor].findIndex(n=>n.x===r.x+dirs[d][0]&&n.y===r.y+dirs[d][1]);return s.floor===0&&roomIndex===0&&!s.key&&s.tutorialComplete===false&&next!==1?-1:next;}
 export function enrage(s){if(s.key)return;s.key=true;const random=seededRandom((s.seed??1)^0x9e3779b9);s.floors.forEach((rooms,f)=>{prepareReturn(rooms);rooms.forEach(r=>{if(r.trialState==='active'||shrineLocked(r))return;if(r.type!=='boss'&&r.trialState!=='active'){r.enemies=encounter(f,random,r.obstacles,s.floors.length-f);r.deployed=false;r.battlePotions=0;r.collectedEssences=0;}if(r.returnRisk==='low')r.enemies=r.enemies.slice(0,Math.max(4,Math.ceil(r.enemies.length*.6)));if(r.returnRisk==='high'&&r.enemies.length)promoteElite(r.enemies[0],'volley');r.hazards=[];r.blasts=[];r.fireZones=[];});});prepareReturnSeals(s);}
 export function advanceClock(s,dt,paused){if(!paused&&s.status==='playing'){s.elapsed+=dt;for(const k of ['attack','skill','dodge','invulnerable','shield','auraShield','potionCooldown','utilityCooldown','guardianTime'])s[k]=Math.max(0,(s[k]||0)-dt);s.player.focusTime=Math.max(0,(s.player.focusTime||0)-dt);}}
-export function canEscape(s){return s.key&&s.floor===0&&currentRoom(s).type==='exit'&&!roomLocked(s);}
+export function canEscape(s){const room=currentRoom(s);return s.key&&s.floor===0&&room.type==='exit'&&!roomLocked(s)&&(!finalEscapeRequired(s)||room.finalEscape?.ready===true);}
 export function timeString(t){return `${Math.floor(t/60).toString().padStart(2,'0')}:${Math.floor(t%60).toString().padStart(2,'0')}`;}
 
 export function ascendRoom(s){return s.floors[s.floor].find(r=>r.type==='boss')||s.floors[s.floor].find(r=>r.type==='up');}
@@ -67,4 +68,4 @@ export function travel(s,direction){
 }
 export function bossDefeated(s){if(s.practice){currentRoom(s).used=true;return 'practiceWon';}const r=currentRoom(s);r.used=true;offerRelics(s,r);if(s.floor===s.floors.length-1){enrage(s);s.returnNoticePending=true;return 'key';}offerRelics(s,r);return 'stairs';}
 export const useShrine=claimIncantation;
-export const roomLocked=(s,r=currentRoom(s))=>Boolean(s.key?returnDoorsLocked(r):(shrineLocked(r)||r.enemies.some(e=>e.hp>0)));
+export const roomLocked=(s,r=currentRoom(s))=>Boolean(finalEscapeActive(r)||(s.key?returnDoorsLocked(r):shrineLocked(r)||r.enemies.some(e=>e.hp>0)));

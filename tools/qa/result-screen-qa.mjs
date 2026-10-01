@@ -18,7 +18,7 @@ try{
     s.floor=0;s.room=s.floors[0].findIndex(r=>r.type==='exit');if(s.room<0)throw Error('No exit room');
     const room=s.floors[0][s.room];room.enemies=[];Object.assign(s.player,objectPoint(room));
     if(kind==='death'){s.player.hp=1;s.entryGrace=0;s.invulnerable=0;s.projectiles=[{x:s.player.x,y:s.player.y,vx:0,vy:0,life:1,enemy:true,hit:[],source:'검증용 탄환'}];}
-    else{if(kind==='expanded'){s.floor=9;s.room=1;challengeDemon(s);const boss=s.floors[9][1];boss.used=true;boss.enemies=[];s.floor=0;s.room=s.floors[0].findIndex(r=>r.type==='exit');}s.key=true;}
+    else{if(kind==='expanded'){s.floor=9;s.room=1;challengeDemon(s);const boss=s.floors[9][1];boss.used=true;boss.enemies=[];s.floor=0;s.room=s.floors[0].findIndex(r=>r.type==='exit');}s.key=true;room.finalEscape={elapsed:36,wave:3,ready:true};}
     delete s.ranking.online;localStorage.setItem(SAVE_KEY,encodeSave(s));
    },kind);
    await page.reload();await page.locator('#continue').click();
