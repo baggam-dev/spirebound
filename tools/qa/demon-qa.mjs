@@ -20,6 +20,23 @@ try{
    await context.close();
   }
  }
+ const gallery=await browser.newPage();
+ await gallery.route('**/demon-gallery',route=>route.fulfill({contentType:'text/html',body:'<body style="margin:0;background:#151821"><canvas width="1260" height="460"></canvas></body>'}));
+ await gallery.goto(`${base}/demon-gallery`);
+ const parts=await gallery.evaluate(async()=>{
+  const {drawDemon}=await import('/src/rendering/demon-visuals.js'),c=document.querySelector('canvas').getContext('2d');
+  const names=['hand','foot','eye','nose','mouth','core'],hashes=[];
+  for(const [i,part] of names.entries()){
+   c.save();c.translate(part==='core'?1125:105+i*210,310);c.scale(part==='core'?1.1:2,part==='core'?1.1:2);drawDemon(c,{x:0,y:0,variant:'demon',part},1);c.restore();
+   c.fillStyle='#e2cadb';c.font='18px monospace';c.fillText(part.toUpperCase(),30+i*210,45);
+   const data=c.getImageData(10+i*210,75,200,350).data;let hash=0,visible=0;
+   for(let j=0;j<data.length;j+=4){hash=(Math.imul(hash,31)+data[j]+data[j+1]+data[j+2]+data[j+3])|0;if(data[j+3]>0)visible++;}
+   hashes.push({hash,visible});
+  }
+  return {visible:hashes.every(h=>h.visible>500),distinct:new Set(hashes.map(h=>h.hash)).size};
+ });
+ if(!parts.visible||parts.distinct!==6)throw Error(`Demon part gallery invalid: ${JSON.stringify(parts)}`);
+ await gallery.locator('canvas').screenshot({path:join(output,'demon-parts.png')});await gallery.close();
  if(errors.length)throw Error(errors.join('\n'));
- console.log(JSON.stringify({viewports:2,phases:3,hiddenPractice:true,expandedSeason:'ASCENT-5',offlineFixture:true,pageErrors:0}));
+ console.log(JSON.stringify({viewports:2,phases:3,partGallery:6,hiddenPractice:true,expandedSeason:'ASCENT-5',offlineFixture:true,pageErrors:0}));
 }finally{await browser.close();}

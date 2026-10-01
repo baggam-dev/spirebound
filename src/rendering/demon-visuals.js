@@ -39,23 +39,34 @@ export function drawDemon(c,e,time=0){
   oval(c,0,0,30,20,'#211726');oval(c,0,-2,24,15,'#a9689b');
   for(let i=0;i<5;i++){const x=-23+i*11,h=24+(i===2?12:i===0?4:0);box(c,x,-12-h+pulse,8,h,'#281826');box(c,x+2,-10-h+pulse,5,h-3,'#c078ae');box(c,x+3,-11-h+pulse,3,5,'#e4c0dc');}
   box(c,-15,0,30,7,'#6d416d');
+  // Tendons and five separate nail tips keep the crawling hand readable at game scale.
+  for(let i=0;i<5;i++){const x=-23+i*11,h=24+(i===2?12:i===0?4:0);box(c,x+3,-10-h+pulse,3,3,'#f5d8e5');box(c,x+2,-6-h+pulse,1,12,'#8e4b82');box(c,x+1,-14,6,2,'#e0a6c7');}
+  for(const x of [-15,-5,5,15])box(c,x,-1,2,5,'#542d60');
  }
  if(part==='foot'){
   box(c,-14,-46+pulse,28,51,'#24192a');box(c,-11,-42+pulse,22,43,'#9c6b9a');oval(c,0,15,31,18,'#231923');oval(c,0,12,27,14,'#b781ac');
   for(let i=0;i<3;i++){box(c,-26+i*17,12,13,16,'#9e668f');box(c,-25+i*17,21,11,4,'#edbed7');}
+  box(c,-9,-37+pulse,18,3,'#d1a9c7');box(c,-5,-32+pulse,10,25,'#754a80');box(c,-13,-3,26,4,'#e1b6d0');
+  for(let i=0;i<3;i++){const x=-25+i*17;box(c,x+2,15,9,2,'#d9a8c7');box(c,x+4,24,7,4,'#f3d5df');box(c,x+2,18,2,8,'#5e366a');}
  }
  if(part==='eye'){
   for(const side of [-1,1]){c.fillStyle='#332447';c.beginPath();c.moveTo(0,-7);c.lineTo(side*55,-29+pulse);c.lineTo(side*30,11);c.fill();}
   oval(c,0,-3,23,19,'#2e2138');oval(c,0,-4,17,13,'#f3d1ea');oval(c,0,-4,8,12,'#b55ab5');oval(c,0,-4,3,10,'#181126');
+  for(const side of [-1,1]){c.strokeStyle='#98719e';c.lineWidth=2;c.beginPath();c.moveTo(side*16,-6);c.lineTo(side*34,-20+pulse);c.lineTo(side*46,-22+pulse);c.stroke();box(c,side*38-(side<0?3:0),-14,3,4,'#5a3a6a');}
+  box(c,-15,-17,30,3,'#7f5a88');box(c,-2,-10,2,11,'#fbebf7');box(c,3,-9,2,4,'#e4a9e5');
  }
  if(part==='nose'){
   oval(c,0,0,30,21,'#352136');oval(c,0,-3,24,16,'#a96791');
   for(const side of [-1,1]){box(c,side<0?-28:15,-22,13,9,'#6d426f');box(c,side<0?-23:17,-19,7,5,'#e0b3d3');}
   oval(c,0,13,16,11,'#dc95bd');for(const x of [-7,7])oval(c,x,14,4,5,'#271726');
+  for(const side of [-1,1]){c.strokeStyle='#ecd6c7';c.lineWidth=4;c.beginPath();c.moveTo(side*16,11);c.lineTo(side*27,4);c.lineTo(side*28,-4);c.stroke();box(c,side*20-(side<0?3:0),-15,4,2,'#dfb5d0');}
+  box(c,-10,-9,20,2,'#d79ac0');box(c,-7,10,4,3,'#4a284e');box(c,4,10,4,3,'#4a284e');
  }
  if(part==='mouth'){
   for(const side of [-1,1])for(let i=0;i<3;i++){c.strokeStyle='#6c416b';c.lineWidth=4;c.beginPath();c.moveTo(side*13,-1+i*7);c.lineTo(side*(31+i*4),8+i*8);c.stroke();}
   oval(c,0,-5,25,21,'#321d36');oval(c,0,-3,19,15,'#b66b9c');oval(c,0,2,14,8,'#110c1a');for(const x of [-10,10])box(c,x,2,4,8,'#efc9dd');
+  for(const side of [-1,1])for(let i=0;i<3;i++){const y=-4+i*9;c.strokeStyle='#a675a4';c.lineWidth=2;c.beginPath();c.moveTo(side*19,y);c.lineTo(side*(29+i*3),y-7);c.lineTo(side*(40+i*4),y+5);c.stroke();}
+  box(c,-5,8,10,7,'#a64576');box(c,-3,9,6,3,'#ed91b8');box(c,-13,-11,5,3,'#edd3e1');box(c,8,-11,5,3,'#edd3e1');
  }
  if(part==='core'){
   c.fillStyle='#251a2d';c.beginPath();c.moveTo(-115,-76);c.lineTo(-75,46);c.lineTo(75,46);c.lineTo(115,-76);c.fill();
@@ -71,6 +82,10 @@ export function drawDemon(c,e,time=0){
   for(const side of [-1,1])for(let i=0;i<3;i++){c.strokeStyle='#d494bb';c.lineWidth=3;c.beginPath();c.moveTo(side*23,-30+i*14);c.lineTo(side*36,-19+i*14);c.stroke();}
   oval(c,0,-15,15,22,'#e8b6dc');oval(c,0,-15,8,15,'#4e194f');
   oval(c,0,-15,3,11,'#f5d8ef');
+  // Obsidian plates frame the chest eye while leaving its center exposed.
+  for(const side of [-1,1]){box(c,side<0?-42:24,-45,18,6,'#312536');box(c,side<0?-49:31,-33,16,5,'#8d638b');box(c,side<0?-51:34,-21,13,4,'#d3a0c6');}
+  box(c,-37,8,74,4,'#251a2b');box(c,-31,13,62,3,'#8c5a83');
+  for(const x of [-28,26]){box(c,x,-61,3,11,'#c08db0');box(c,x+2,-50,8,2,'#6c3e70');}
  }
  if(part!=='core')drawSoftField(c,0,-5,43,color[part],.16);
  c.restore();
