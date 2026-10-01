@@ -87,7 +87,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  s.auraVisual=Math.max(0,(s.auraVisual||0)-dt);const auraFlash=s.auraVisual<=0;if(auraFlash)s.auraVisual=.2;
  if(p.aura)hitOrigin=null;
  for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,p)<=auraProfile(p.aura).radius*(1+relicStat(p,'auraRange'))&&!segmentBlocked(p,e,r.obstacles,1)){const before=e.hp;if(auraFlash)effects.push({x:e.x,y:e.y,r:24,t:.16,color:'#f8ffe6',slash:true});e.hp-=auraProfile(p.aura).dps*(1+relicStat(p,'auraDamage'))*dt*enemyDamageFactor(e,p);metrics.damageDealt+=before-Math.max(0,e.hp);}
- if(target&&s.attack<=0)fireArrow(s,target);
+ if(target&&s.attack<=0){fireArrow(s,target);events.push('shot');}
  for(const e of r.enemies){
   hitOrigin=e;const hpBefore=Math.max(0,e.hp);tickEffects(e,dt);metrics.damageDealt+=hpBefore-Math.max(0,e.hp);const upper=e.variant==='king'||upperTypes.includes(e.type);const transitioning=upper&&tickUpperState(e,p,r,s.entryGrace>0?0:dt,s.projectiles);if(e.hp<=0||e.frozen>0||transitioning||r.enemies.some(n=>n.variant==='king'&&n.kingTransition>0))continue;
   if(e.cd>0)e.cd+=dt*(1-frostAttackRate(e));if(e.jumpCooldown>0)e.jumpCooldown+=dt*(1-frostAttackRate(e));
