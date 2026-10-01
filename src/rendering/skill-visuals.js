@@ -1,5 +1,5 @@
 import {evolutions} from '../progression/evolutions.js';
-const colors={fire:['#ff874a','#fff0b5'],frost:['#87d8f3','#eaffff'],poison:['#85d469','#dff5a1'],chain:['#ad9bed','#f5e6ff']};
+const colors={fire:['#ff874a','#fff0b5'],frost:['#87d8f3','#eaffff'],poison:['#85d469','#dff5a1'],chain:['#ad9bed','#f5e6ff'],precision:['#d5bd85','#fff3d1']};
 export function skillVisualProfile(element,player={}){
  const max=element==='frost'?4:3,level=Math.max(1,Math.min(max,Math.floor(player[element]||1))),candidate=player.evolutions?.[element];
  const branch=level>=3&&evolutions[element]?.some(e=>e.id===candidate)?candidate:null;
@@ -11,6 +11,12 @@ function line(c,points,color,width=1){c.strokeStyle=color;c.lineWidth=width;c.be
 export function drawSkillTrail(c,element,player,time){if(!colors[element])return;const v=skillVisualProfile(element,player),[color,light]=colors[element],phase=Math.floor(time*18)%3;
  for(let i=0;i<v.segments;i++){const x=-12-i*5,y=(i%2?1:-1)*(2+(phase+i)%3);box(c,x,y,3,2,color+(i?'88':'cc'));if(v.level>=3)box(c,x+2,-y,2,1,color+'66');}
  if(v.level>=2)line(c,[[-9,0],[-3,0]],light,1);
+ if(element==='precision'){
+  // A narrow measured wake, distinct from elemental glow and no wider than the arrow.
+  line(c,[[-23,0],[-13,0]],'#d5bd8588',1);
+  box(c,-17-phase,-2,2,1,light);box(c,-12-phase,2,2,1,color);
+  if(v.level>=3){box(c,-24,0,3,1,color+'88');box(c,-27,-1,2,1,light+'88');}
+ }
  if(element==='frost'&&v.level===4){line(c,[[-13,-3],[-7,3]],light,1);line(c,[[-13,3],[-7,-3]],light,1);}
  if(element==='fire'&&v.branch==='ember'){
   line(c,[[-26,-4],[-18,-3],[-10,0]],'#ee904977',2);line(c,[[-26,4],[-18,3],[-10,0]],'#ee904977',2);box(c,-22-phase,-5,2,2,light);box(c,-20-phase,4,2,2,color);

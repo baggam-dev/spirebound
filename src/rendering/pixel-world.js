@@ -6,7 +6,7 @@ import {drawSkillTrail} from './skill-visuals.js';
 // Presentation only: animation history never enters the saved run or combat RNG.
 const motion = new WeakMap();
 const ink = '#111720';
-const palettes = {fire:['#ff713d','#ffe7a0'],frost:['#71c9ef','#e8fcff'],poison:['#73cc68','#d7ff99'],chain:['#a18aff','#f5e9ff']};
+const palettes = {fire:['#ff713d','#ffe7a0'],frost:['#71c9ef','#e8fcff'],poison:['#73cc68','#d7ff99'],chain:['#a18aff','#f5e9ff'],precision:['#dbc18a','#fff0c6']};
 function box(c,x,y,w,h,color){c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h);}
 function line(c,points,color,width=2){c.strokeStyle=color;c.lineWidth=width;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.stroke();}
 function diamond(c,x,y,r,color){for(let i=-r;i<=r;i+=2)box(c,x-(r-Math.abs(i)),y+i,(r-Math.abs(i))*2+2,2,color);}
@@ -34,6 +34,12 @@ export function drawPixelActor(c,e,time=0,run=null){
   box(c,-30,-19,12,28,'#493c3c');box(c,-27,-18,7,4,'#a66b4c');box(c,19,-16,10,33,'#65534a');box(c,21,-13,5,2,'#b58860');
   box(c,-14,-37,7,3,'#bc8963');box(c,7,-34,9,2,'#473a3b');box(c,9,-32,2,6,'#c3926e');box(c,-13,-26,6,2,'#d5b496');
   box(c,-16,3,11,3,'#994d3e');box(c,7,12,9,2,'#a0694a');box(c,-5,16,10,3,'#4e3537');
+  // Cold iron visor, oxidized left shoulder, and a warmer right pauldron read as three materials.
+  box(c,-29,-15,8,2,'#795848');box(c,-27,-10,3,14,'#a16d50');box(c,-24,4,5,2,'#c18b62');
+  box(c,21,-10,7,2,'#aa927a');box(c,23,-5,3,18,'#453f42');
+  for(const x of [-12,-2,9])box(c,x,-34,2,2,'#d1c3a5');
+  box(c,-10,-22,4,1,'#ffe0af');box(c,6,-22,4,1,'#ffe0af');
+  box(c,-11,-1,22,2,'#2d3038');box(c,-8,0,4,2,'#b79b7e');box(c,5,0,4,2,'#b79b7e');
   c.save();c.translate(-34,-5-(attack.stage==='air'?30:attack.charge*24));c.rotate(attack.weapon);box(c,-3,-10,5,39,'#8d704a');box(c,-11,-23,22,17,ink);box(c,-9,-21,18,12,'#a6a397');box(c,-7,-21,14,3,'#dad4b0');c.restore();if(attack.stage==='windup'){diamond(c,0,-7,3+Math.round(attack.charge*2),'#fff0b9');}
 
  }else{
@@ -41,6 +47,12 @@ export function drawPixelActor(c,e,time=0,run=null){
   box(c,-10,10+p.step,8,11,ink);box(c,3,10-p.step,8,11,ink);box(c,-8,12+p.step,5,5,'#777365');box(c,4,12-p.step,5,5,'#777365');
   box(c,-13,-12,26,28,ink);box(c,-11,-10,22,24,cloth);box(c,-8,-8,4,19,'#ffffff23');box(c,5,-8,5,21,'#0003');box(c,-12,7,24,4,'#352d31');box(c,-2,7,4,4,'#c6a574');
   box(c,-10,-24,20,17,ink);box(c,-8,-22,16,13,cloth);box(c,-5,-20,12,3,'#afac91');box(c,-6,-16,14,5,'#1b2028');box(c,-4,-15,3,2,red?'#ffb1a0':'#f1cf93');box(c,4,-15,3,2,red?'#ffb1a0':'#f1cf93');
+  // Class marks stay inside the existing silhouette and leave attack warnings unobscured.
+  box(c,-9,-8,18,2,'#11172088');box(c,-7,-5,3,12,'#ffffff20');
+  if(e.type==='archer'||e.type==='strafer'){box(c,-12,-26,24,3,'#363544');box(c,-10,-28,20,2,'#95839d');box(c,-5,-4,10,2,'#c4aa8b');box(c,-9,10,18,2,'#4b3c4f');}
+  if(e.type==='charger'){box(c,-10,-4,20,3,'#a58966');box(c,-7,0,4,7,'#4d4035');box(c,3,0,4,7,'#4d4035');box(c,-8,-22,16,2,'#d1bc92');}
+  if(e.type==='scatter'){box(c,-8,-4,17,2,'#c09a68');box(c,-7,1,14,4,'#604438');box(c,-10,-22,20,2,'#d2af79');}
+  if(e.type==='chaser'||e.type==='ambusher'){box(c,-11,-13,6,18,'#273c3c');box(c,5,-11,5,16,'#9fa797');box(c,-8,-23,16,2,'#b3b39c');}
   if(e.type==='archer'||e.type==='strafer')bow(c,16,-2);
   else if(e.type==='charger'){box(c,-15,-28,5,17,'#d8c399');box(c,11,-28,5,17,'#d8c399');box(c,15,-5,4,26,'#80654a');box(c,12,-14,10,13,'#bcb8a1');box(c,12,-14,3,12,'#ece4bd');}
   else if(e.type==='scatter'){box(c,8,-3,14,12,'#b49963');box(c,19,-1,7,8,'#343b43');box(c,20,0,3,6,'#e9ba7e');}
@@ -76,6 +88,7 @@ export function drawProjectile(c,b,time=0,player={}){if(b.delay>0)return;const [
    if(b.element==='fire'){box(c,-7,-3,9,6,color);box(c,-3,-1,7,2,light);box(c,-11,-2,4,3,'#e64f36');}
    if(b.element==='frost'){diamond(c,3,0,4,color);line(c,[[-3,0],[7,0]],light,1);box(c,-12,-4,2,8,color+'88');box(c,-15,-1,8,2,color+'88');}
    if(b.element==='poison'){diamond(c,3,0,4,color);box(c,1,-2,3,2,light);box(c,-9,3,3,3,color);}
+   if(b.element==='precision'){box(c,-8,-1,14,2,'#e8d6a6');diamond(c,6,0,3,'#f9e8bc');box(c,-12,-3,3,2,'#b39768');box(c,-12,2,3,2,'#b39768');}
   }
  }c.restore();}
 export function drawImpact(c,f){

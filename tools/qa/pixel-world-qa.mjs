@@ -38,8 +38,8 @@ try{
   label('BOSSES / CORRUPTED ARMOR & LIVING CRYSTALS',600,267,16);
   c.save();c.translate(0,310);const bosses=[{type:'boss',x:135,y:90},{type:'boss',variant:'prism',x:360,y:90},{type:'boss',variant:'slime',x:585,y:90},{type:'boss',variant:'king',x:850,y:90},{type:'starKnight',x:1080,y:90}];
   bosses.forEach((e,i)=>{e.hp=e.max=100;c.save();c.translate(e.x,e.y);c.scale(1.65,1.65);const n={...e,x:0,y:0};if(i===0)p.drawPixelActor(c,n,1);else if(i===1)p.drawCrystalBody(c,n,1);else if(i===2)p.drawOrganicBody(c,n,38,1);else drawUpper(c,n,1);c.restore();label(['WARDEN','PRISM','SLIME','MORDO','KNIGHT'][i],e.x,185);});c.restore();
-  label('FIRE / FROST / POISON / LIGHTNING',600,535,16);
-  for(const [i,element] of ['fire','frost','poison','chain'].entries()){c.save();c.translate(190+i*275,575);c.scale(3,3);p.drawProjectile(c,{x:0,y:0,vx:420,vy:0,element},1);c.restore();label(element,190+i*275,615);}
+  label('FIRE / FROST / POISON / LIGHTNING / PRECISION',600,535,16);
+  for(const [i,element] of ['fire','frost','poison','chain','precision'].entries()){const x=130+i*235;c.save();c.translate(x,575);c.scale(3,3);p.drawProjectile(c,{x:0,y:0,vx:420,vy:0,element},1);c.restore();label(element,x,615);}
   c.save();c.translate(120,640);const r={type:'treasure',obstacles:[{type:'rock',x:0,y:65,w:60,h:50},{type:'bookshelf',x:160,y:65,w:80,h:60},{type:'table',x:340,y:65,w:75,h:45}],enemies:[]};drawObstacles(c,r.obstacles);p.drawObjectDetails(c,{elapsed:1},r);c.restore();
   label('STONE / LIBRARY / RELICS',600,820,16);label('Code-drawn sprites. Original combat timing and hitboxes preserved.',600,900,14);
   // Verify renderer purity against frozen combat state, including repeated frames.
