@@ -11,7 +11,7 @@ GitHub: https://github.com/baggam-dev/spirebound
 docs/WORK_STATUS.md → docs/TODO.md → docs/WORK_LOG.md 최근 항목 → docs/HANDOFF.md 순서로 읽어줘.
 기존 미커밋·신규 파일을 보존하고 reset/clean/stash 하지 마. 의미 있는 수정 단위로 검증 후 커밋하고, 푸시는 별도 요청에만 해.
 
-통합 개선 순위 0~4번은 구현·검증·배포 완료했다. 5번 전면 비주얼 개선은 진행 중이며 여섯 단위를 완료했다. 현재 운영 릴리스와 완료 근거는 WORK_STATUS.md를 기준으로 확인해.
+통합 개선 순위 0~4번은 구현·검증·배포 완료했다. 5번 전면 비주얼 개선은 진행 중이며 일곱 단위를 완료했다. 현재 운영 릴리스와 완료 근거는 WORK_STATUS.md를 기준으로 확인해.
 4번은 무속성 정밀 사격 메인·직격 전용 보조·3레벨 분기와 4레벨 유틸 액티브 1칸(집중/응급 처치/수호 환영), PC G/모바일 버튼·저장 호환이다. 상세는 docs/skill-stage4.md.
 5번 첫 단위는 1층 영웅 얼굴/상체, 9·10층 현무암 바닥·벽·횃불, 9층 악마 적, 귀환 도약 거인 부분 발광을 적용했다. 코드 aa71935 / 운영 release-20260930-230723-cd53ab. 전체 node --test 396개·서버 Python24개·로컬/공개 Edge PC/모바일 1·9·10층 화면·공개 HTTPS QA 통과, 운영 점수 제출 없음. 상세와 캡처는 docs/visual-stage5.md.
 5번 둘째 단위는 2층 파수꾼·기본 적 재질, 정밀 화살 궤적, PC HUD 가독성을 개선했다. 코드 809a9ab / 운영 release-20261001-172601-940a52. 전체396개·서버 Python24개·로컬/공개 Edge PC/모바일 보스·화살 화면·공개 HTTPS QA 통과, 운영 점수 제출 없음. 상세 docs/visual-stage5.md.
@@ -19,9 +19,10 @@ docs/WORK_STATUS.md → docs/TODO.md → docs/WORK_LOG.md 최근 항목 → docs
 5번 넷째 단위는 9층 군단장 화살통·판금과 2페이즈 균열/빙결 견갑을 추가했다. 코드 385e452 / 운영 release-20261001-180645-af23e1. 전체397개·서버 Python24개·로컬/공개 Edge PC/모바일 도전·저장·페이즈 화면 및 공개 HTTPS QA 통과, 운영 점수 제출 없음. 비교 캡처 docs/visual-stage5-commander-phases.png.
 5번 다섯째 단위는 10층 대악마 손·발/눈·코·입/상반신의 재질과 실루엣을 구분했다. 코드 05e62fb / 운영 release-20261001-184251-7b8ede. 전체397개·서버 Python24개·로컬/공개 Edge PC/모바일 3페이즈/6부위 및 공개 HTTPS QA 통과, 운영 점수 제출 없음. 비교 캡처 docs/visual-stage5-demon-parts.png.
 5번 여섯째 단위는 속성 화살 4종에 실제 자동 사격 직전 작은 활 표식, 속성별 비행 잔상, 독 피격 비말 균형을 적용했다. 코드 2425f3a / 운영 release-20261001-203004-1b7f2d. 전체398개·서버 Python24개·로컬/공개 Edge 4속성 12장면·PC/모바일 전투/공개 HTTPS QA 통과, 운영 점수 제출 없음. 비교 캡처 docs/visual-stage5-element-shots.png.
+5번 일곱째 단위는 결과 화면을 제목/핵심 수치/탈출 점수·사망 원인/주요 행동/빌드 상세로 정리했다. 코드 b50d783 / 운영 release-20261001-211430-e79701. 전체398개·서버 Python24개·로컬/공개 Edge PC/모바일 기본·확장 완주/사망 12장면씩·공개 HTTPS QA 통과, 운영 점수 제출 없음. 캡처 docs/visual-stage5-result-win.png 및 visual-stage5-result-death-mobile.png.
 새 도전은 기본 BETA-3/ranking-v7, 확장 ASCENT-5/ranking-v8이다. 이전 BETA-1/2·ASCENT-1~4는 조회 전용이다. 기존 저장은 이어갈 수 있으나 종료 시즌 점수 신규 제출은 안 된다.
-사용자 요청으로 b0a22d6까지 origin/main 푸시 완료. 이후 코드 2425f3a와 최종 문서 커밋은 별도 푸시 요청 전까지 로컬에 둔다. 배포와 푸시를 혼동하지 마.
-다음은 **같은 5번의 나머지 확장**이다: 결과 화면의 보상/사망/완주 가독성을 공통 재질·계층 규칙으로 다듬고 PC/모바일 가독성과 전체 프레임 p95/p99·변경 전후를 확인한다. 실제 iPhone 검증은 에뮬레이션과 구분해. 순서는 docs/TODO.md와 docs/visual-stage5.md를 확인해.
+사용자 요청으로 6200d9b까지 origin/main 푸시 완료. 이후 코드 b50d783와 최종 문서 커밋은 별도 푸시 요청 전까지 로컬에 둔다. 배포와 푸시를 혼동하지 마.
+다음은 **같은 5번의 남은 검증**이다: 실제 게임 전체 프레임 p95/p99와 변경 전후 화면·가독성을 비교한다. PC/모바일 에뮬레이션부터 진행하고 실제 iPhone Safari 검증은 별도로 구분해. 순서는 docs/TODO.md와 docs/visual-stage5.md를 확인해.
 실제 iPhone, 사람 조작 난이도, 장시간 FPS는 아직 검증하지 않았다. 외부 백업·알림과 기기 간 본인 식별은 선택 과제다.
 
 완료된 단계를 반복하지 말고 TODO의 다음 미완료 항목부터 진행해줘. 개발 후 적절한 검증과 배포까지 이어가되, 외부 정보가 필요한 과제는 부족한 내용을 알려줘.
