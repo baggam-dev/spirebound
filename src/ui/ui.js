@@ -5,6 +5,7 @@ import {eliteNames} from '../combat/elites.js';
 import {evolutionSummary} from '../progression/evolutions.js';
 import {safeHistory,RELEASE} from '../persistence/storage.js';
 import {timeString} from '../game/engine.js';
+import {skills} from '../progression/progression.js';
 export function escapeHtml(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);}
 export function historyMarkup(storage){
  const rows=safeHistory(storage).reverse();
@@ -20,4 +21,16 @@ export function deathSummaryMarkup(s){
  const hits=(s.combatLog||[]).filter(h=>h.amount>0&&!h.blocked&&h.time<=s.elapsed&&s.elapsed-h.time<=15).slice(-3).reverse();
  if(!hits.length)return '<div class="guide"><p>사망 직전 15초 동안 기록된 피해가 없습니다.</p></div>';
  return '<div class="guide death-summary"><h3>사망 직전 피격 · 최근 15초</h3>'+hits.map((h,i)=>'<p><b>'+(i===0?'마지막 피해':Math.max(0,s.elapsed-h.time).toFixed(1)+'초 전')+'</b> · '+escapeHtml(h.source)+' · −'+h.amount+'♥</p>').join('')+'</div>';
+}
+
+export function resultOverviewMarkup(s,scene=''){
+ const won=s.status==='won';
+ const stats=[['도전 시간',timeString(s.elapsed)],['도달 층',`${s.floor+1}/${s.floors.length}층`],['성장',`LV ${s.player.level}`],['처치',`${s.kills}체`]];
+ return `<div class="result-head"><div class="result-head-copy"><small>${won?'THE WAY HOME':'THE SPIRE REMEMBERS'}</small><h2>${won?'탑에서 탈출했습니다':'도전이 끝났습니다'}</h2><p>${won?'열쇠를 가지고 1층 출구로 돌아왔습니다.':'이번 원정은 끝났지만 기록은 남았습니다.'}</p></div>${scene?`<div class="result-scene">${scene}</div>`:''}</div><div class="result-metrics">${stats.map(([label,value])=>`<div><span>${label}</span><strong>${value}</strong></div>`).join('')}</div>`;
+}
+
+export function resultBuildMarkup(s){
+ const build=skills.filter(skill=>s.player[skill.id]>0).map(skill=>`${skill.name} ${s.player[skill.id]}`).join(' · ')||'없음';
+ const peak=s.metrics?.floorDamage?.some(n=>n>0)?`${s.metrics.floorDamage.indexOf(Math.max(...s.metrics.floorDamage))+1}층`:'없음';
+ return `<section class="result-build"><h3>마지막 빌드와 생존 기록</h3><dl><div><dt>최종 기술</dt><dd>${escapeHtml(build)}</dd></div><div><dt>유물</dt><dd>${escapeHtml(relicSummary(s.player))}</dd></div><div><dt>탈출 열쇠</dt><dd>${s.key?'획득':'미획득'}</dd></div><div><dt>받은 피해</dt><dd>${s.metrics?.damageTaken||0}하트 · 보호막 방어 ${s.metrics?.shields||0}회</dd></div><div><dt>최대 피해 층</dt><dd>${peak}</dd></div>${s.metrics?.ultimateDamage!==undefined?`<div><dt>궁극기 기록 피해</dt><dd>${Math.round(s.metrics.ultimateDamage)}</dd></div>`:''}<div><dt>마지막 피격</dt><dd>${s.lastHit?escapeHtml(s.lastHit.source):'피격 기록 없음'}</dd></div></dl></section>`;
 }

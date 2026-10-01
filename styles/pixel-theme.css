@@ -79,3 +79,22 @@ body:has(.title-art) header{display:none!important}
  #overlay .main-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
  #overlay .main-cards>button{margin:0;padding:10px;min-height:0}
 }
+
+/* Result screens use the same dark stone and restrained gold as the dungeon HUD. */
+#overlay .panel:has(.result-screen){width:min(820px,96%);max-width:820px;padding:0;border:2px solid #718277;background:#101a20;box-shadow:0 18px 55px #020a0bcc;text-align:left}
+.result-screen{padding:20px 24px 24px;min-width:0;overflow-wrap:anywhere}
+.result-win{border-top:4px solid #d2b677}.result-loss{border-top:4px solid #8f7478}
+.result-head{display:grid;grid-template-columns:minmax(0,1fr) 170px;align-items:center;gap:16px;padding-bottom:15px;border-bottom:1px solid #a8b8a533}
+.result-head-copy small{color:#bfae83;letter-spacing:2px}.result-head-copy h2{font-size:29px!important;line-height:1.35;letter-spacing:1px;margin:7px 0!important;color:#f1e8c9}.result-loss .result-head-copy h2{color:#e5cac8}
+.result-head-copy p{margin:0;color:#b8c7bd!important;font-size:12px!important}.result-scene .exit-scene{width:150px;height:120px;margin:0 auto;border:2px solid #9daa8b66}
+.result-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:15px 0}
+.result-metrics>div{min-width:0;padding:10px 8px;border:1px solid #8e9c874a;background:#16252a}
+.result-metrics span,.result-metrics strong{display:block}.result-metrics span{color:#a6b9aa;font-size:10px}.result-metrics strong{color:#f0e3c2;font-size:16px;margin-top:4px;font-variant-numeric:tabular-nums}
+.result-screen .ranking-summary{text-align:left;margin:12px 0;padding:14px 16px;background:#182222;border-color:#c5aa6d88}
+.result-screen .ranking-summary h3{font-size:17px;margin-bottom:6px}.result-screen .ranking-summary p{font-size:11px;line-height:1.5;margin:5px 0}.result-screen .ranking-summary small{font-size:9px;letter-spacing:0;line-height:1.5}
+.result-screen .result-rank{display:block;width:100%;margin:0 0 14px!important}
+.result-screen .death-summary{padding:12px 15px;border:1px solid #af777466;background:#2b2024;margin:12px 0}.result-screen .death-summary h3{color:#efb6a8;margin:0 0 6px;font-size:14px}.result-screen .death-summary p{font-size:11px;margin:5px 0!important}
+.result-build{margin-top:12px;padding:14px 16px;border:1px solid #8e9c874a;background:#111d22}.result-build h3{font-size:13px;color:#dcc695;margin:0 0 10px}.result-build dl{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px;margin:0}.result-build dl>div{min-width:0;border-top:1px solid #ffffff16;padding-top:7px}.result-build dt{color:#9baea6;font-size:10px}.result-build dd{color:#e0e4d5;font-size:11px;line-height:1.5;margin:3px 0 0}
+.result-screen .result-save{font-size:10px;color:#9eb9a9;margin:10px 0!important}.result-actions{display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid #a8b8a533;padding-top:12px}.result-actions button{margin:0!important;flex:1 1 160px;min-width:0;font-size:11px;line-height:1.5}
+@media(max-width:750px){#overlay .panel:has(.result-screen){width:100%;max-width:none}.result-screen{padding:14px}.result-head{grid-template-columns:minmax(0,1fr) 110px;gap:6px}.result-head-copy h2{font-size:19px!important}.result-head-copy p{font-size:10px!important}.result-scene .exit-scene{width:105px;height:86px}.result-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin:10px 0}.result-metrics strong{font-size:13px}.result-build dl{grid-template-columns:1fr;gap:6px}.result-actions button{flex-basis:calc(50% - 3px)}}
+@media(orientation:landscape) and (max-height:500px){.result-screen{padding:9px 12px}.result-head{grid-template-columns:minmax(0,1fr) 90px;padding-bottom:6px}.result-head-copy h2{font-size:18px!important}.result-head-copy p{font-size:9px!important}.result-scene .exit-scene{width:90px;height:65px}.result-metrics{grid-template-columns:repeat(4,minmax(0,1fr));margin:6px 0}.result-metrics>div{padding:4px 6px}.result-metrics strong{font-size:11px}.result-build{padding:8px 10px}.result-build dl{grid-template-columns:1fr 1fr}.result-actions button{min-height:34px}}

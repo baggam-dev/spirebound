@@ -17,7 +17,7 @@ import {relicPreviewMarkup} from '../ui/relic-preview.js';
 import {prismStatus} from '../combat/combat-status.js';
 import {skillPreviewMarkup} from '../ui/skill-preview.js';
 import {drawHitFeedback} from '../rendering/hit-feedback.js';
-import {deathSummaryMarkup} from '../ui/ui.js';
+import {deathSummaryMarkup,resultOverviewMarkup,resultBuildMarkup} from '../ui/ui.js';
 import {essenceInfo} from '../progression/essences.js';
 import '../ui/mobile-ui.js';
 import {createPractice,practiceBosses,practiceCleared} from './boss-practice.js';
@@ -138,7 +138,12 @@ function levelUp(){
 }
 let endResult={ok:true};
 function finish(won){if(s.practice){s.status=won?'won':'dead';practiceResult();return;}if(s.status!=='playing')return;s.status=won?'won':'dead';stop('result');finishRanking(s);rankClient.draft(s);endResult=store.complete(s,won);lease.release();resultPanel();}
-function resultPanel(){if(s?.practice){practiceResult();return;}const won=s.status==='won',rankDraft=rankClient.draft(s);stop('result');panel(`${won?escapeStoryMarkup():''}<small>${won?'THE WAY HOME':'THE SPIRE REMEMBERS'}</small><h2>${won?'탑에서 탈출했습니다':'도전이 끝났습니다'}</h2><p>${timeString(s.elapsed)} · LV ${s.player.level} · 처치 ${s.kills}<br>${s.floor+1}층 · 열쇠 ${s.key?'획득':'미획득'}<br>유물 · ${relicSummary(s.player)}<br>최종 기술 · ${skills.filter(k=>s.player[k.id]>0).map(k=>k.name+' '+s.player[k.id]).join(' · ')||'없음'}${s.metrics?.ultimateDamage!==undefined?'<br>궁극기 기록 피해 '+Math.round(s.metrics.ultimateDamage):''}${s.metrics?.floorDamage?.some(n=>n>0)?'<br>최대 피해 층 · '+(s.metrics.floorDamage.indexOf(Math.max(...s.metrics.floorDamage))+1)+'층':''}<br>받은 피해 ${s.metrics?.damageTaken||0}하트 · 보호막 방어 ${s.metrics?.shields||0}회<br>${s.lastHit?'마지막 피격 · '+escapeHtml(s.lastHit.source):'피격 기록 없음'}</p>${rankingMarkup(s)}${rankDraft?'<button class="primary" id="rankRegister">'+(rankDraft.receipt?'등록 결과 보기':'이름 남기기 · 랭킹 등록')+'</button>':''}<p>${endResult.ok?'개인 기록을 저장했습니다.':escapeHtml(endResult.error)}</p>${won?"":deathSummaryMarkup(s)}<button class="primary" id="again">입구로 돌아가기</button><button id="journal">원정 기록 · 도감</button>${s.generationVersion>=17?'<button id="retrySeed">같은 지도에서 새 도전</button>':''}<button id="export">진단 기록 받기</button>`);button('rankRegister',()=>rankUI.submission(rankDraft,resultPanel));button('again',title);const retrySeed=s.seed,retryCampaign=s.campaign||'classic';button('retrySeed',()=>start(retrySeed,retryCampaign));button('journal',journalPanel);button('export',exportReport);}
+function resultPanel(){
+ if(s?.practice){practiceResult();return;}
+ const won=s.status==='won',rankDraft=rankClient.draft(s);stop('result');
+ panel(`<div class="result-screen ${won?'result-win':'result-loss'}">${resultOverviewMarkup(s,won?escapeStoryMarkup():'')}${rankingMarkup(s)}${rankDraft?'<button class="primary result-rank" id="rankRegister">'+(rankDraft.receipt?'등록 결과 보기':'이름 남기기 · 랭킹 등록')+'</button>':''}${won?'':deathSummaryMarkup(s)}<p class="result-save">${endResult.ok?'개인 기록을 저장했습니다.':escapeHtml(endResult.error)}</p><div class="result-actions"><button class="primary" id="again">입구로 돌아가기</button><button id="journal">원정 기록 · 도감</button>${s.generationVersion>=17?'<button id="retrySeed">같은 지도에서 새 도전</button>':''}<button id="export">진단 기록 받기</button></div>${resultBuildMarkup(s)}</div>`);
+ button('rankRegister',()=>rankUI.submission(rankDraft,resultPanel));button('again',title);const retrySeed=s.seed,retryCampaign=s.campaign||'classic';button('retrySeed',()=>start(retrySeed,retryCampaign));button('journal',journalPanel);button('export',exportReport);
+}
 
 function potion(){if(paused)return;ensureMetrics(s);if(!usePotion(s))return;toast('회복 물약 · '+(1+relicStat(s.player,'potion'))+'하트 회복');save();}
 function dodge(){if(paused||s.dodge>0)return;if(!castBlink(s,input.direction())){toast('이 방향은 막혀 있습니다. 다른 방향으로 이동 후 점멸하세요.');return;}ensureMetrics(s).dodgesUsed++;fx.push({x:s.player.x,y:s.player.y,r:40,t:.35,color:'#d5eed4'});}
