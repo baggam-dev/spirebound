@@ -35,7 +35,7 @@ export function drawElementHit(c,f){
    const dx=Math.cos(a)*5,dy=Math.sin(a)*5;stroke(c,[[x-dx,y-dy],[x,y-2],[x+dx,y+dy]],'#387dae',4);stroke(c,[[x-dx,y-dy],[x+dx,y+dy]],'#b3edff',2);box(c,x,y-1,2,2,'#efffff');}
   if(age<.45){stroke(c,[[-7,0],[7,0]],'#efffff',2);stroke(c,[[0,-7],[0,7]],'#efffff',2);}
  }else if(f.hitElement==='poison'){
-  for(let i=0;i<7;i++){const a=angle+(i-(v.particles-1)/2)*.85,r=3+spread*(10+i%3*4),x=Math.cos(a)*r,y=Math.sin(a)*r-9*Math.sin(age*Math.PI)+age*age*16,size=i%3===0?5:3;
+  for(let i=0;i<7;i++){const a=angle+(i-3)*.85,r=3+spread*(10+i%3*4),x=Math.cos(a)*r,y=Math.sin(a)*r-9*Math.sin(age*Math.PI)+age*age*16,size=i%3===0?5:3;
    box(c,x-1,y-1,size+2,size+2,'#315a46');box(c,x,y,size,size,'#86d96b');box(c,x,y,2,2,'#dbf59b');if(age>.55)box(c,x,y+size,2,3,'#62b865');}
   if(age<.3){box(c,-5,-3,10,6,'#91df6b');box(c,-3,-5,6,10,'#91df6b');box(c,-2,-2,4,3,'#e0f8ac');}
  }else{

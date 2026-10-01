@@ -7,9 +7,25 @@ export function skillVisualProfile(element,player={}){
 }
 const box=(c,x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h);};
 function line(c,points,color,width=1){c.strokeStyle=color;c.lineWidth=width;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(Math.round(x),Math.round(y)):c.moveTo(Math.round(x),Math.round(y)));c.stroke();}
+// A nocked arrow only appears during the real auto-attack's last draw frames.
+// It is deliberately smaller than the arrowhead, not an attack warning or hit area.
+export function drawElementNock(c,element,charge=0){if(!['fire','frost','poison','chain'].includes(element)||charge<=0)return;
+ const alpha=c.globalAlpha;c.globalAlpha*=Math.min(1,charge)*.85;
+ if(element==='fire'){box(c,0,-3,3,6,'#d66340');box(c,1,-5,2,4,'#ffc074');box(c,1,-2,2,2,'#fff0b5');}
+ else if(element==='frost'){line(c,[[-3,0],[0,-4],[3,0],[0,4],[-3,0]],'#8ad9ef',1);box(c,0,-2,1,4,'#eaffff');}
+ else if(element==='poison'){box(c,-2,0,5,3,'#3e7454');box(c,-1,-2,3,4,'#8bd76b');box(c,0,-3,1,2,'#e5f5af');}
+ else{line(c,[[-3,-3],[1,-1],[-1,1],[3,3]],'#a995ee',2);box(c,0,-1,2,2,'#f7ecff');}
+ c.globalAlpha=alpha;
+}
 // Extra detail stays behind the same arrowhead; it never advertises a larger hitbox.
 export function drawSkillTrail(c,element,player,time){if(!colors[element])return;const v=skillVisualProfile(element,player),[color,light]=colors[element],phase=Math.floor(time*18)%3;
- for(let i=0;i<v.segments;i++){const x=-12-i*5,y=(i%2?1:-1)*(2+(phase+i)%3);box(c,x,y,3,2,color+(i?'88':'cc'));if(v.level>=3)box(c,x+2,-y,2,1,color+'66');}
+ for(let i=0;i<v.segments;i++){const x=-12-i*5,y=(i%2?1:-1)*(2+(phase+i)%3);
+  if(element==='fire'){box(c,x,y-2,3,4,color+(i?'88':'cc'));box(c,x+1,y-4,1,2,light+'bb');}
+  else if(element==='frost'){line(c,[[x-2,y],[x,y-2],[x+2,y],[x,y+2],[x-2,y]],color+'bb',1);box(c,x,y,1,1,light);}
+  else if(element==='poison'){box(c,x,y,3,3,'#416e54aa');box(c,x+1,y+2,2,2,color+'bb');}
+  else if(element==='chain')line(c,[[x-2,y-2],[x+1,y],[x-1,y+2],[x+2,y+3]],color+'aa',1);
+  else box(c,x,y,3,2,color+(i?'88':'cc'));
+  if(v.level>=3)box(c,x+2,-y,2,1,color+'66');}
  if(v.level>=2)line(c,[[-9,0],[-3,0]],light,1);
  if(element==='precision'){
   // A narrow measured wake, distinct from elemental glow and no wider than the arrow.

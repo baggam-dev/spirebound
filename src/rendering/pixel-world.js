@@ -2,11 +2,19 @@ import {drawHero} from './hero.js';
 import {objectPoint} from '../world/object-positions.js';
 import {interactionAge} from './interaction-visuals.js';
 import {bossPose} from './boss-poses.js';
-import {drawSkillTrail} from './skill-visuals.js';
+import {drawElementNock,drawSkillTrail} from './skill-visuals.js';
+import {segmentBlocked} from '../world/terrain.js';
 // Presentation only: animation history never enters the saved run or combat RNG.
 const motion = new WeakMap();
 const ink = '#111720';
 const palettes = {fire:['#ff713d','#ffe7a0'],frost:['#71c9ef','#e8fcff'],poison:['#73cc68','#d7ff99'],chain:['#a18aff','#f5e9ff'],precision:['#dbc18a','#fff0c6']};
+export function shotPreparation(run){
+ const p=run?.player,element=p?.fire?'fire':p?.poison?'poison':p?.frost?'frost':p?.chain?'chain':null;
+ if(!element||!(run.attack>0&&run.attack<.18))return null;
+ const room=run.floors?.[run.floor]?.[run.room];
+ if(!room?.enemies?.some(enemy=>enemy.hp>0&&!['air','splitJump'].includes(enemy.phase)&&enemy.attackPhase!=='leap'&&!segmentBlocked(p,enemy,room.obstacles,3)))return null;
+ return {element,charge:1-run.attack/.18};
+}
 function box(c,x,y,w,h,color){c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h);}
 function line(c,points,color,width=2){c.strokeStyle=color;c.lineWidth=width;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.stroke();}
 function diamond(c,x,y,r,color){for(let i=-r;i<=r;i+=2)box(c,x-(r-Math.abs(i)),y+i,(r-Math.abs(i))*2+2,2,color);}
@@ -23,7 +31,8 @@ export function drawPixelActor(c,e,time=0,run=null){
  if(hero){
   const shot=p.recoil>0&&run?.projectiles?.findLast(b=>!b.enemy&&!b.passive&&!(b.delay>0)&&b.life>2.7);
   if(shot&&Math.abs(shot.vx)>20){p.face=Math.sign(shot.vx);const history=motion.get(run.player);if(history)history.face=p.face;}
-  c.scale(p.face,1);drawHero(c,p,time,bow);
+  const preparing=shotPreparation(run);
+  c.scale(p.face,1);drawHero(c,p,time,bow);if(preparing){c.save();c.translate(29,-2);drawElementNock(c,preparing.element,preparing.charge);c.restore();}
  }else if(boss){
   const attack=bossPose(e);c.translate(0,attack.bodyY-attack.lift);
   box(c,-25,-22,50,43,ink);box(c,-22,-20,44,39,red?'#763a47':'#454654');
