@@ -34,3 +34,10 @@ test('infernal masonry uses one palette for inner and outer walls and refreshes 
  globalThis.OffscreenCanvas=class{constructor(){created++;}getContext(){return c;}};
  try{const walls=[{x:25,y:40,w:155,h:185,type:'wall'}];paintStoneWalls(c,outerWalls,8);paintStoneWalls(c,walls,8);assert.ok(colors.has('#423636')&&colors.has('#1a171b'));drawStoneWalls(c,walls,0);drawStoneWalls(c,walls,8);drawStoneWalls(c,walls,8);drawStoneWalls(c,walls,9);assert.equal(created,3);assert.ok(colors.has('#39313d')&&colors.has('#14131c'));}finally{globalThis.OffscreenCanvas=previous;}
 });
+test('middle-floor masonry shares each themed palette across inner and outer walls',()=>{
+ const colors=new Set(),c={save(){},restore(){},beginPath(){},rect(){},clip(){},set fillStyle(v){colors.add(v);},fillRect(){}};
+ for(const [floor,face,mortar] of [[2,'#414650','#171b23'],[3,'#404252','#171823'],[4,'#3a4940','#141e19'],[5,'#3e4038','#1b1b15'],[6,'#3a434e','#151a24'],[7,'#4b3d43','#1d171c']]){
+  colors.clear();paintStoneWalls(c,outerWalls,floor);assert.ok(colors.has(face)&&colors.has(mortar));
+  colors.clear();paintStoneWalls(c,[{x:25,y:40,w:155,h:185,type:'wall'}],floor);assert.ok(colors.has(face)&&colors.has(mortar));
+ }
+});

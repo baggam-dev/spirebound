@@ -8,7 +8,8 @@ const base=process.env.SPIREBOUND_URL||'http://localhost:5173',output=process.ar
 await mkdir(output,{recursive:true});
 const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[];
 try{
- for(const [width,height,mobile] of [[1280,800,false],[390,844,true]])for(const floor of [0,8,9]){
+ const floors=Array.from({length:10},(_,i)=>i);
+ for(const [width,height,mobile] of [[1280,800,false],[390,844,true]])for(const floor of floors){
   const context=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile}),page=await context.newPage();
   page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`);});
   await page.goto(base);
@@ -37,13 +38,13 @@ try{
  });
  await gallery.screenshot({path:join(output,'actor-comparison.png')});await gallery.close();
  const perf=await browser.newPage();await perf.goto(base);
- const report=await perf.evaluate(async()=>{
+ const report=await perf.evaluate(async floors=>{
   const {drawStoneWalls,outerWalls}=await import('/src/rendering/stone-walls.js');
   const {drawFloorMood}=await import('/src/rendering/atmosphere.js');
   const {drawPixelActor}=await import('/src/rendering/pixel-world.js');
   const canvas=document.createElement('canvas');canvas.width=960;canvas.height=540;const c=canvas.getContext('2d',{willReadFrequently:true});
   const hashes=[],times={};
-  for(const floor of [0,8,9]){
+  for(const floor of floors){
    const s=Object.freeze({floor,elapsed:2}),r=Object.freeze({x:2,y:3,type:'normal'}),walls=outerWalls;
    const draw=()=>{c.clearRect(0,0,960,540);drawFloorMood(c,s,r);drawStoneWalls(c,walls,floor);drawPixelActor(c,{type:'player',x:480,y:270},2);};
    draw();const bytes=c.getImageData(26,45,908,455).data;let hash=0;for(let i=0;i<bytes.length;i+=32)hash=(Math.imul(hash,31)+bytes[i])|0;hashes.push(hash);
@@ -51,7 +52,7 @@ try{
    if(c.globalAlpha!==1||c.getTransform().a!==1)throw Error('Canvas state leak');
   }
   return {distinctPalettes:new Set(hashes).size,times};
- });
- assert.equal(report.distinctPalettes,3);assert.deepEqual(errors,[]);
- console.log(JSON.stringify({viewports:2,floors:[1,9,10],report,pageErrors:errors.length}));
+ },floors);
+ assert.equal(report.distinctPalettes,10);assert.deepEqual(errors,[]);
+ console.log(JSON.stringify({viewports:2,floors:floors.map(i=>i+1),report,pageErrors:errors.length}));
 }finally{await browser.close();}
