@@ -88,7 +88,18 @@ const input=createInput($('stick'),dispatch);
 const lease=new SessionLease(storage,()=>{paused=true;input.setEnabled(false);panel('<h2>다른 탭에서 진행 중</h2><p>이 탭은 저장 덮어쓰기를 막기 위해 멈췄습니다.</p><button id="goTitle">입구로</button>');button('goTitle',title);});
 function toast(message){$('notice').textContent=message;toastTime=4;}
 function save(){if(!s||s.status!=='playing')return false;if(s.practice){$('saveStatus').textContent='보스 테스트 · 일반 저장 유지';return true;}lease.heartbeat();if(!lease.active)return false;const result=store.write(s);saveFailed=!result.ok;$('saveStatus').textContent=result.ok?'진행 저장됨':'저장 실패';if(!result.ok)toast(result.error);return result.ok;}
-function panel(html){$('overlay').innerHTML=`<div class="panel" role="dialog" aria-modal="true">${html}</div>`;}
+function panel(html){$('overlay').innerHTML=`<div class="panel" role="dialog" aria-modal="true" tabindex="-1">${html}</div>`;$('overlay').firstElementChild.focus();}
+const modalFocusables='button:not([disabled]):not([hidden]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+$('overlay').addEventListener('keydown',event=>{
+ if(event.key==='Escape'){
+  const back=['settingsBack','closeInfo','cancelStart','rankBack','closeJournal','closeBag','leaveRoute','practiceBack','choosePractice','endPractice'].map($).find(item=>item?.getClientRects().length);
+  if(back){event.preventDefault();event.stopPropagation();back.click();return;}
+ }
+ if(event.key!=='Tab')return;const dialog=$('overlay').firstElementChild;if(!dialog)return;
+ const items=[...dialog.querySelectorAll(modalFocusables)].filter(item=>item.getClientRects().length>0);if(!items.length){event.preventDefault();dialog.focus();return;}
+ if(event.shiftKey&&(document.activeElement===items[0]||document.activeElement===dialog)){event.preventDefault();items.at(-1).focus();}
+ else if(!event.shiftKey&&document.activeElement===items.at(-1)){event.preventDefault();items[0].focus();}
+});
 function button(id,fn){$(id)?.addEventListener('click',fn);}
 function stop(nextMode){paused=true;mode=nextMode;input.setEnabled(false);accumulator=0;}
 function resetTransient(){fx=[];bullets=s?.projectiles||[];saveTick=0;accumulator=0;last=performance.now();}
@@ -124,7 +135,7 @@ async function continueRun(){if(launching)return;launching=true;try{
  s=loaded.run;enterShrine(s);ensureMetrics(s);resetTransient();resume();if(loaded.recovered)toast('마지막 정상 백업에서 복구했습니다.');save();}finally{launching=false;}
 }
 function escapeNotice(){stop('return');save();const ending=s.campaign==='expanded'?'대악마를 쓰러뜨리고 마지막 열쇠를 되찾았습니다.':'왕은 쓰러졌지만, 탑의 저주는 풀리지 않았습니다.';panel('<div class="escape-reveal">'+returnStoryMarkup(s.floors.length>=8)+'<small>THE WAY HOME</small><h2>1층 탈출 열쇠 획득</h2><p>'+ending+'<br>탑의 몬스터들이 광폭화했습니다.<br><strong>이제 아래층으로 내려가 1층 입구에서 탈출하세요.</strong><br>하강 시 미방문 방은 전멸해야 출구가 열립니다. 방문한 방도 30% 확률로 열쇠수호자가 문을 잠급니다. 내려가는 계단은 방의 적을 전멸해야 열립니다.</p><button class="primary" id="beginReturn">1층으로 귀환 시작 ↓</button></div>');button('beginReturn',()=>{s.returnNoticePending=false;save();resume();});}
-function resume(){if(!s||s.status!=='playing'||!s.practice&&!lease.active)return;if(s.returnNoticePending){escapeNotice();return;}if(shrineLocked(room())){shrine();return;}if(!s.player.mainSkill&&(s.pendingLevels||mainSkills.some(id=>s.player[id]>0))){mainPanel();return;}if(pendingEvolution(s.player)){evolutionPanel();return;}if(!s.practice&&s.player.level>=4&&!s.player.utility){utilityPanel();return;}if(s.pendingHeal){s.player.hp=Math.min(s.player.max,s.player.hp+1);s.pendingHeal=false;}mode='play';paused=false;$('overlay').innerHTML='';input.setEnabled(true);accumulator=0;last=performance.now();if(s.pendingLevels)levelUp();}
+function resume(){if(!s||s.status!=='playing'||!s.practice&&!lease.active)return;if(s.returnNoticePending){escapeNotice();return;}if(shrineLocked(room())){shrine();return;}if(!s.player.mainSkill&&(s.pendingLevels||mainSkills.some(id=>s.player[id]>0))){mainPanel();return;}if(pendingEvolution(s.player)){evolutionPanel();return;}if(!s.practice&&s.player.level>=4&&!s.player.utility){utilityPanel();return;}if(s.pendingHeal){s.player.hp=Math.min(s.player.max,s.player.hp+1);s.pendingHeal=false;}mode='play';paused=false;$('overlay').innerHTML='';canvas.focus();input.setEnabled(true);accumulator=0;last=performance.now();if(s.pendingLevels)levelUp();}
 function pause(reason=''){if(!s||s.status!=='playing'||['title','result','level'].includes(mode))return;stop('pause');const ok=save();if(s.practice){practicePause();return;}panel(`<small>TAKE A BREATH</small><h2>잠시 쉬어가기</h2><p>${reason||'게임과 기록 시간이 멈췄습니다.'}<br>${ok?'진행 상황이 저장되었습니다.':'저장하지 못했습니다. 진단 기록을 내려받아 보관할 수 있습니다.'}</p><button class="primary" id="resume">계속 탐험</button><button id="quit">저장 후 입구로</button><button id="guide">조작 안내</button><button id="pauseSettings">소리·화면 설정</button><button id="journal">원정 기록 · 도감</button><button id="export">진단 기록 받기</button>`);button('resume',resume);button('quit',()=>{if(save())title();});button('guide',()=>showInfo('help'));button('pauseSettings',settingsPanel);button('export',exportReport);button('journal',journalPanel);}
 function settingsPanel(){
  if(mode==='play')pause();if(!['title','pause','result'].includes(mode)){toast('설정은 입구나 일시정지에서 열 수 있습니다.');return;}
