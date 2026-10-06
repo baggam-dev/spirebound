@@ -7,6 +7,6 @@ export function importRecords(storage,records){
  const existingRun=transferKeys.slice(0,3).some(key=>storage.getItem(key)!==null);
  storage.setItem(backupKey,JSON.stringify(records));
  try{for(const [key,value] of Object.entries(records)){if(storage.getItem(key)!==null||existingRun&&transferKeys.slice(0,3).includes(key)){skipped.push(key);continue;}storage.setItem(key,value);added.push(key);}}
- catch(error){for(const key of added)storage.removeItem(key);throw Error('저장 공간이 부족합니다. 원본은 이전 주소에 남아 있습니다.');}
+ catch(error){for(const key of added)storage.removeItem(key);throw Error('저장 공간이 부족합니다. 가져오기 전 기록은 보존했습니다.');}
  return {added:added.length,skipped:skipped.length,backupKey};
 }
