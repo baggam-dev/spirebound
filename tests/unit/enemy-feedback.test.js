@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {newRun,currentRoom} from '../../src/game/engine.js';
 import {stepRun} from '../../src/game/simulation.js';
 import {createPractice} from '../../src/game/boss-practice.js';
-import {enemyHitEffects,enemyDeathEffect,mergeEnemyFeedback} from '../../src/rendering/enemy-feedback.js';
+import {enemyHitEffects,enemyDeathEffect,mergeEnemyFeedback,drawBossHealthLoss} from '../../src/rendering/enemy-feedback.js';
 function run(hp=100){const s=newRun(42);s.attack=100;s.player.damage=10;s.player.x=100;s.player.y=200;const r=currentRoom(s);r.obstacles=[];r.enemies=[{id:1,type:'archer',x:220,y:200,hp,max:100,cd:3}];s.projectiles=[{x:120,y:200,vx:1000,vy:0,life:1,enemy:false,pierce:0,hit:[]}];return s;}
 test('actual damage emits a hit reaction without moving or stunning its target',()=>{
  const s=run(),e=currentRoom(s).enemies[0],result=stepRun(s,.1);assert.equal(e.hp,90);assert.equal(e.x,220);assert.equal(e.y,200);assert.equal(result.effects.filter(f=>f.enemyFeedback==='hit').length,1);
@@ -23,4 +23,14 @@ test('continuous damage is throttled, death cancels hit glints, and crowd caps k
 });
 test('death snapshots have no live enemy references or state mutations',()=>{
  const e=Object.freeze({id:1,type:'boss',variant:'prism',x:400,y:200,hp:0});const before=JSON.stringify(e),f=enemyDeathEffect(e);assert.equal(f.style,'crystal');assert.equal(JSON.stringify(e),before);assert.equal(Object.values(f).some(v=>v&&typeof v==='object'),false);
+});
+test('hit feedback records only the lost health interval for normal enemies and the first boss',()=>{
+ const regular=Object.freeze({id:1,type:'archer',x:200,y:210,hp:75,max:100});
+ const boss=Object.freeze({id:2,type:'boss',x:480,y:200,hp:900,max:1000});
+ const effects=enemyHitEffects(new Map([[regular,100],[boss,1000]]),[regular,boss]);
+ assert.deepEqual(effects.map(f=>[f.beforeRatio,f.afterRatio,f.healthOffset]),[[1,.75,-36],[1,.9,-52]]);
+ const draws=[];const ctx={globalAlpha:1,save(){},restore(){},fillRect(...args){draws.push(args)}};
+ assert.equal(drawBossHealthLoss(ctx,effects,boss),true);assert.deepEqual(draws[0],[640,27,40,7]);
+ assert.equal(drawBossHealthLoss(ctx,effects,{...boss,variant:'slime'}),false);
+ assert.equal(regular.hp,75);assert.equal(boss.hp,900);
 });

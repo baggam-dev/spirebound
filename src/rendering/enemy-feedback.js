@@ -7,7 +7,9 @@ function style(e){
  return 'armor';
 }
 export function enemyHitEffects(before,enemies){return enemies.filter(e=>e.hp>0&&before.has(e)&&e.hp<before.get(e)).map(e=>({
- enemyFeedback:'hit',enemyId:e.id,x:e.x,y:e.y,boss:e.type==='boss',t:.28,duration:.28
+ enemyFeedback:'hit',enemyId:e.id,x:e.x,y:e.y,boss:e.type==='boss',
+ beforeRatio:Math.min(1,before.get(e)/e.max),afterRatio:Math.max(0,e.hp/e.max),
+ healthOffset:e.variant==='king'?-83:e.type==='boss'?-52:-36,t:.28,duration:.28
 }));}
 export function enemyDeathEffect(e,returning=false){const split=e.variant==='slime'&&!e.summoned&&(e.stage||0)<2;
  return {enemyFeedback:'death',enemyId:e.id,x:e.x,y:e.y,style:style(e),boss:e.type==='boss',king:e.variant==='king',split,returning,
@@ -21,6 +23,13 @@ export function mergeEnemyFeedback(current,incoming){
  let hits=Math.max(0,result.filter(f=>f.enemyFeedback==='hit').length-32),dead=Math.max(0,result.filter(f=>f.enemyFeedback==='death').length-24);
  return result.filter(f=>f.enemyFeedback==='hit'?hits--<=0:f.enemyFeedback==='death'?dead--<=0:true);
 }
+export function drawBossHealthLoss(c,effects,boss){
+ if(boss.variant)return false; // Other bosses can use aggregate or phase-specific bars.
+ const f=effects.findLast(effect=>effect.enemyFeedback==='hit'&&effect.enemyId===boss.id&&effect.boss&&effect.beforeRatio>effect.afterRatio&&effect.t>0);
+ if(!f)return false;
+ const x=280+400*f.afterRatio,width=Math.min(680-x,Math.max(3,400*(f.beforeRatio-f.afterRatio)));
+ c.save();c.globalAlpha*=Math.min(1,f.t/f.duration)*.78;c.fillStyle='#f1cba4';c.fillRect(Math.round(x),27,Math.max(1,Math.round(width)),7);c.restore();return true;
+}
 const box=(c,x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),Math.max(1,Math.round(w)),Math.max(1,Math.round(h)));};
 function line(c,points,color,width=2){c.strokeStyle=color;c.lineWidth=width;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(Math.round(x),Math.round(y)):c.moveTo(Math.round(x),Math.round(y)));c.stroke();}
 function crystal(c,x,y,r,color){line(c,[[x-r,y],[x,y-r*1.7],[x+r,y],[x,y+r],[x-r,y]],color,2);}
@@ -29,9 +38,15 @@ export function drawEnemyFeedback(c,f){
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(f.x),Math.round(f.y));
  if(f.enemyFeedback==='hit'){
   // A short glint followed by a quiet cooldown prevents DoT from strobing every tick.
-  const brightness=Math.max(0,1-age/.36);c.globalAlpha=brightness*.85;const w=f.boss?20:11;
+  const brightness=Math.max(0,1-age/.36),baseAlpha=c.globalAlpha;c.globalAlpha=baseAlpha*brightness*.85;const w=f.boss?20:11;
   line(c,[[-w-3,-14],[-w-6,-14],[-w-6,-5]],'#ffecc4',2);line(c,[[w+3,-14],[w+6,-14],[w+6,-5]],'#ffecc4',2);
-  box(c,-5,-17,3,7,'#fff9e5');box(c,-7,-15,7,2,'#fff9e5');box(c,5,-6,4,2,'#e7d9b9');c.restore();return true;
+  box(c,-5,-17,3,7,'#fff9e5');box(c,-7,-15,7,2,'#fff9e5');box(c,5,-6,4,2,'#e7d9b9');
+  if(f.beforeRatio>f.afterRatio){
+   const x=-15+30*f.afterRatio,width=Math.min(15-x,Math.max(2,30*(f.beforeRatio-f.afterRatio)));
+   c.globalAlpha=baseAlpha*Math.max(0,1-age)*.9;c.fillStyle='#f1cba4';
+   c.fillRect(Math.round(x),f.healthOffset,Math.max(1,Math.round(width)),3);
+  }
+  c.restore();return true;
  }
  c.scale(f.scale||1,f.scale||1);const fade=(1-age)**1.3,spread=1-(1-age)**2,red=f.returning;
  c.globalAlpha=fade*.85;
