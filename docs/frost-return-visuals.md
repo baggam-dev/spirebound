@@ -5,3 +5,5 @@
 지옥몹5종(폭렬 박쥐/심연 가시핵/악마 병사/악마 사수/악마 부대장)의 escapeDepth 외형을 추가했다. 붉은 몸·갑주, 용암 균열, 밝은 눈, 뿔·활·갑주별 식별 변화를 사용한다. 정상 외형은 픽셀 비교에서 동일하다. 전투/저장/랭킹 규칙 변경 없음.
 
 전체415개, Edge PC1280×800·모바일844×390/390×844의 파편 전후 픽셀 크기/그리기 알파·일반/적 화살 불변·정상 지옥몹 불변·폭주5종 외형 차이·하강 저장/재개/가로 넘침/페이지 오류0. 실제 모바일 기기 검증은 아니다. 비교판 frost-return-visuals.png. QA tools/qa/frost-return-visuals-qa.mjs는 .tmp/frost-return/baseline-pixel-world.js와 baseline-infernal.js에 변경 전 소스를 넣어 비교한다. API를 차단해 운영 기록을 생성하지 않는다. 배포/공개 검증은 WORK_STATUS.md 참조.
+
+코드 db2d6dd, 변경 전 비교 기준0019ebf. QA 재실행 시 해당 기준 커밋의 src/rendering/pixel-world.js 및 src/combat/infernal-enemies.js를 위 baseline 파일에 준비한다.
