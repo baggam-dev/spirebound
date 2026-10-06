@@ -9,7 +9,7 @@
 ## 검증 범위
 - `node --test` 403개 통과. Edge 로컬 QA `tools/qa/data-recovery-qa.mjs`: 백업에 허용된 3개 키만 포함되고 쿠키/타 사이트 키가 제외됨, 새 브라우저 가져오기와 같은 도전 이어하기, 기존 도전 충돌 보존, 허용되지 않은 파일 거부, 손상된 저장의 원본 다운로드, 모바일 에뮬레이션 가로/세로 화면 오류 0.
 - 기존 `tools/qa/upgrade-qa.mjs`의 HTTP→HTTPS 자동 이전에서 신규/기존 도전 모두 보존됨.
-- 공개 배포·공개 QA 결과는 배포 후 기록한다.
+- 코드 `e944243`, 운영 `release-20261006-095311-d3940d`. 서버 Python24개·Nginx·인증서/health 통과. 공개 Edge의 격리된 브라우저에서 백업/새 기기 가져오기·기존 기록 보존·불량 파일 거부·손상 저장 원본·모바일 가로/세로 오류 0. 공개 HTTPS 정적 8개 일치·HTTP308·랭킹/보안 쿠키/기존 HTTP 이전 오류 0, 운영 도전·점수 제출 없음.
 
 ## 서버 운영 경계와 후속 정보
 - `ranking-operations.md` 기준 운영 DB는 SQLite이며 `spirebound-backup.timer`가 서버 내부에 매일 검증된 스냅샷을 14개 보관한다. `spirebound-ops-check.timer`는 15분마다 API/백업/인증서 상태를 점검한다. 현재 실패는 systemd/journal에만 남고 외부 알림은 없다.
