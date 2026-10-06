@@ -69,6 +69,11 @@ body:has(.title-art) header{display:none!important}
 /* Keep the entrance visible; align readouts with the canvas minimap edge. */
 #statReadout.hud-stats{right:2.291667%;top:calc(31.851852% + 4px);text-align:right;justify-items:end}
 @media (min-width:751px){#statReadout.hud-stats{box-sizing:border-box;padding:5px 8px 6px 4px;background:linear-gradient(90deg,#0b171a00,#0b171abe);border-right:2px solid #abac8b66;color:#e3e9db;text-shadow:1px 1px #061013,-1px -1px #061013}}
+@media(pointer:coarse) and (orientation:landscape) and (max-height:500px){
+ #statReadout.hud-stats{width:22%;font-size:11px;line-height:1.3;gap:1px;padding:5px 8px 6px 5px;background:linear-gradient(90deg,#0b171a00,#0b171ae6)}
+ #xpTrack{height:13px}#xpLabel{font-size:10px;line-height:13px}
+ #mapLabel{font-size:10px;letter-spacing:1px}
+}
 #notice{top:60%;bottom:auto;left:50%;transform:translateX(-50%);width:max-content;max-width:56%;box-sizing:border-box;background:#10191d66;border-color:#b9cbb533;text-shadow:0 1px 2px #000,1px 0 2px #000;pointer-events:none;overflow-wrap:anywhere}
 
 @media(pointer:coarse){#notice{top:68%}}

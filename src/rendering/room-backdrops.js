@@ -36,6 +36,21 @@ export function drawRoomBackdrop(c,s,r){
    for(const dx of [19,41,63]){box(x+dx,75+(dx%3)*3,4,2,floor===8?'#d77450':'#ca83a7');box(x+dx+1,77+(dx%3)*3,2,3,'#f0ad76');}
   }
  }
+ if(floor<=1&&['normal','boss'].includes(r.type)){
+  // Worn stone inlays add texture without resembling a combat warning.
+  c.globalAlpha=.18;
+  for(let row=0;row<4;row++)for(let col=0;col<6;col++){
+   const x=334+col*49+(row%2)*13,y=202+row*38;
+   box(x,y,36,2,shade);
+   if((col+row+seed)%3===0){box(x+4,y+6,13,2,light);box(x+31,y+4,2,9,shade);}
+  }
+  if(floor===1&&r.type==='boss'){
+   c.globalAlpha=.22;
+   box(398,121,164,4,shade);box(398,258,164,4,shade);
+   for(const x of [400,440,480,520,558]){box(x,126,3,132,shade);box(x+5,131,11,2,light);}
+   box(414,145,132,3,light);box(414,235,132,3,shade);
+  }
+ }
  if(floor>=8){
   // Embedded seams, not warning zones: no circles or filled attack silhouettes.
   const ember=floor===8?'#b76855':'#9d6b91';c.globalAlpha=.22;
