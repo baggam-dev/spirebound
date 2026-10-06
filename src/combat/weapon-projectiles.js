@@ -21,6 +21,22 @@ export function emitSeeker(projectiles,p,origin,target,turret=false){
  const a=Math.atan2(target.y-origin.y,target.x-origin.x);
  projectiles.push({x:origin.x,y:origin.y,vx:Math.cos(a)*420,vy:Math.sin(a)*420,life:3,enemy:false,seeker:true,turretShot:turret,weapon:weaponSnapshot(p,origin,true),elemental:false,damageScale:1,homing:true,pierce:0,hit:[]});
 }
+// Storm arrows can make one deliberate turn after their first pierced target.
+export function turnStormArrow(arrow,weapon,impact,enemies,blocked){
+ if(!weapon.split||!weapon.pierce||arrow.hit.length!==1||arrow.pierce<0||arrow.frostShard||arrow.seeker)return false;
+ const speed=Math.hypot(arrow.vx,arrow.vy);
+ if(!speed)return false;
+ const forward={x:arrow.vx/speed,y:arrow.vy/speed};
+ const targets=enemies.filter(enemy=>enemy.hp>0&&!['air','splitJump'].includes(enemy.phase)&&enemy.attackPhase!=='leap'&&!arrow.hit.includes(enemy.id)).map(enemy=>{
+  const dx=enemy.x-impact.x,dy=enemy.y-impact.y,distance=Math.hypot(dx,dy);
+  return {enemy,distance,dot:(dx*forward.x+dy*forward.y)/distance};
+ }).filter(({enemy,distance,dot})=>distance>0&&distance<=240&&dot>=.35&&dot<.985&&!blocked(impact,enemy));
+ targets.sort((a,b)=>a.distance-b.distance||a.enemy.id-b.enemy.id);
+ if(!targets.length)return false;
+ const target=targets[0].enemy,angle=Math.atan2(target.y-impact.y,target.x-impact.x);
+ arrow.vx=Math.cos(angle)*speed;arrow.vy=Math.sin(angle)*speed;
+ return true;
+}
 // Ephemeral presentation is not part of the save; no phantom attacks after removal.
 const endings=new WeakMap();
 export function retireTurret(room,t){const list=endings.get(room)||[];list.push({x:t.x,y:t.y,aim:t.aim||0,time:.4});endings.set(room,list.slice(-4));}

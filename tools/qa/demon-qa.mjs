@@ -16,7 +16,7 @@ try{
    if(phase===1){await page.locator('#interact').getByText('대악마에게 도전',{exact:false}).waitFor();await page.locator('#interact').click();}
    await page.screenshot({path:join(output,`${width}x${height}-phase${phase}.png`)});
    const actual=await page.evaluate(async()=>{const {parseSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=parseSave(localStorage.getItem(SAVE_KEY));return {phase:s.floors[9][1].demon.phase,holes:s.floors[9][1].obstacles.filter(o=>o.demonHole).length,ranking:s.ranking??null};});
-   if(actual.phase!==phase||phase>1&&actual.holes!==2||actual.ranking?.seasonId!=='ASCENT-6'||actual.ranking.online)throw Error(JSON.stringify(actual));
+   if(actual.phase!==phase||phase>1&&actual.holes!==2||actual.ranking?.seasonId!=='ASCENT-7'||actual.ranking.online)throw Error(JSON.stringify(actual));
    await context.close();
   }
  }
@@ -38,5 +38,5 @@ try{
  if(!parts.visible||parts.distinct!==6)throw Error(`Demon part gallery invalid: ${JSON.stringify(parts)}`);
  await gallery.locator('canvas').screenshot({path:join(output,'demon-parts.png')});await gallery.close();
  if(errors.length)throw Error(errors.join('\n'));
- console.log(JSON.stringify({viewports:2,phases:3,partGallery:6,hiddenPractice:true,expandedSeason:'ASCENT-6',offlineFixture:true,pageErrors:0}));
+ console.log(JSON.stringify({viewports:2,phases:3,partGallery:6,hiddenPractice:true,expandedSeason:'ASCENT-7',offlineFixture:true,pageErrors:0}));
 }finally{await browser.close();}

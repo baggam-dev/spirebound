@@ -1,14 +1,14 @@
 import {RELEASE} from '../game/version.js';
-export const RANKING_RULES='ranking-v9';
-export const RANKING_SEASON='BETA-4';
-export const CLASSIC_ARCHIVES=[{seasonId:'BETA-1',rulesVersion:'ranking-v1'},{seasonId:'BETA-2',rulesVersion:'ranking-v5'},{seasonId:'BETA-3',rulesVersion:'ranking-v7'}];
-export const EXPANDED_SEASON='ASCENT-6';
-export const EXPANDED_RULES='ranking-v10';
+export const RANKING_RULES='ranking-v11';
+export const RANKING_SEASON='BETA-5';
+export const CLASSIC_ARCHIVES=[{seasonId:'BETA-1',rulesVersion:'ranking-v1'},{seasonId:'BETA-2',rulesVersion:'ranking-v5'},{seasonId:'BETA-3',rulesVersion:'ranking-v7'},{seasonId:'BETA-4',rulesVersion:'ranking-v9'}];
+export const EXPANDED_SEASON='ASCENT-7';
+export const EXPANDED_RULES='ranking-v12';
 export const LEGACY_EXPANDED_SEASON='ASCENT-1';
 export const LEGACY_EXPANDED_RULES='ranking-v2';
 export const PREVIOUS_EXPANDED_SEASON='ASCENT-3';
 export const PREVIOUS_EXPANDED_RULES='ranking-v4';
-export const EXPANDED_ARCHIVES=[{seasonId:LEGACY_EXPANDED_SEASON,rulesVersion:LEGACY_EXPANDED_RULES},{seasonId:'ASCENT-2',rulesVersion:'ranking-v3'},{seasonId:PREVIOUS_EXPANDED_SEASON,rulesVersion:PREVIOUS_EXPANDED_RULES},{seasonId:'ASCENT-4',rulesVersion:'ranking-v6'},{seasonId:'ASCENT-5',rulesVersion:'ranking-v8'}];
+export const EXPANDED_ARCHIVES=[{seasonId:LEGACY_EXPANDED_SEASON,rulesVersion:LEGACY_EXPANDED_RULES},{seasonId:'ASCENT-2',rulesVersion:'ranking-v3'},{seasonId:PREVIOUS_EXPANDED_SEASON,rulesVersion:PREVIOUS_EXPANDED_RULES},{seasonId:'ASCENT-4',rulesVersion:'ranking-v6'},{seasonId:'ASCENT-5',rulesVersion:'ranking-v8'},{seasonId:'ASCENT-6',rulesVersion:'ranking-v10'}];
 export const rankingSeason=campaign=>campaign==='expanded'?EXPANDED_SEASON:RANKING_SEASON;
 export function startRanking(s){
  s.ranking={rulesVersion:s.campaign==='expanded'?EXPANDED_RULES:RANKING_RULES,seasonId:rankingSeason(s.campaign),gameVersion:RELEASE,totalRooms:s.floors.flat().length,visited:['0:0'],defeated:[],nextEnemyId:0};
@@ -44,7 +44,7 @@ export function validateRanking(s){
  const int=n=>Number.isSafeInteger(n)&&n>=0;
  const current=q?.rulesVersion===(s.campaign==='expanded'?EXPANDED_RULES:RANKING_RULES)&&q?.seasonId===rankingSeason(s.campaign);
  const legacy=(s.campaign==='expanded'?EXPANDED_ARCHIVES:CLASSIC_ARCHIVES).some(a=>q?.rulesVersion===a.rulesVersion&&q?.seasonId===a.seasonId);
- if(current&&s.generationVersion<28)return false;
+ if(current&&s.generationVersion<29)return false;
  if(!q||!(current||legacy)||typeof q.gameVersion!=='string'||q.gameVersion.length>64||q.totalRooms!==s.floors.flat().length||!int(q.nextEnemyId)||q.nextEnemyId>1000000)return false;
  if(!Array.isArray(q.visited)||q.visited.length<1||q.visited.length>q.totalRooms||new Set(q.visited).size!==q.visited.length)return false;
  const rooms=new Set(s.floors.flatMap((rooms,f)=>rooms.map((_,r)=>f+':'+r)));

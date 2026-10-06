@@ -30,7 +30,7 @@ export const skills = [
  {id:'homing',name:'추적 화살',description:'유니크 · 1.5초마다 별도 무속성 유도 화살 1발 · 일반 공격력 100% · 갈래/연속 복제 없음',max:1},
 ].map(k=>({...k,tree:mainSkills.includes(k.id)?'main':'support',grade:skillGrade(k.id),weight:k.id==='homing'?.04:['split','repeat'].includes(k.id)?.18:1}));
 export const recipes = [
- {name:'폭풍 화살',needs:['split','pierce'],description:'모든 화살 피해 +3'},
+ {name:'폭풍 화살',needs:['split','pierce'],description:'모든 화살 피해 +3 · 첫 관통 후 전방 240 내 적에게 한 번 꺾임'},
  {name:'속성 연사',needs:['fire','repeat'],description:'뒤따르는 화살도 작은 화염 폭발 발동'},
  {name:'뇌우',needs:['chain','haste'],description:'번개 전이 거리 +40 · 레벨별 전이 45/55/65%, 이후 80% 유지'},
 ];
