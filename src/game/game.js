@@ -84,13 +84,13 @@ document.addEventListener('pointerdown',()=>sound.unlock(),{once:true});document
 const updateHUD=createHUD();
 let launching=false;
 let practiceDraft=null;
-let s=null,paused=true,mode='title',fx=[],bullets=[],last=performance.now(),accumulator=0,saveTick=0,toastTime=0,saveFailed=false;
+let s=null,paused=true,mode='title',fx=[],bullets=[],last=performance.now(),accumulator=0,saveTick=0,toastTime=0,saveFailed=false,saveError='';
 const room=()=>currentRoom(s),distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 const touchControls=window.matchMedia('(pointer:coarse)');
 const input=createInput($('stick'),dispatch);
 const lease=new SessionLease(storage,()=>{paused=true;input.setEnabled(false);panel('<h2>다른 탭에서 진행 중</h2><p>이 탭은 저장 덮어쓰기를 막기 위해 멈췄습니다.</p><button id="goTitle">입구로</button>');button('goTitle',title);});
 function toast(message){$('notice').textContent=message;toastTime=4;}
-function save(){if(!s||s.status!=='playing')return false;if(s.practice){$('saveStatus').textContent='보스 테스트 · 일반 저장 유지';return true;}lease.heartbeat();if(!lease.active)return false;const result=store.write(s);saveFailed=!result.ok;$('saveStatus').textContent=result.ok?'진행 저장됨':'저장 실패';if(!result.ok)toast(result.error);return result.ok;}
+function save(){if(!s||s.status!=='playing')return false;if(s.practice){$('saveStatus').textContent='보스 테스트 · 일반 저장 유지';return true;}lease.heartbeat();if(!lease.active){saveFailed=true;saveError='다른 탭이 진행 중이어서 이 탭은 저장할 수 없습니다.';toast(saveError);return false;}const result=store.write(s);saveFailed=!result.ok;saveError=result.error||'';$('saveStatus').textContent=result.ok?'진행 저장됨':'저장 실패';if(!result.ok)toast(result.error);return result.ok;}
 function panel(html){$('overlay').innerHTML=`<div class="panel" role="dialog" aria-modal="true" tabindex="-1">${html}</div>`;$('overlay').firstElementChild.focus();}
 const modalFocusables='button:not([disabled]):not([hidden]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 $('overlay').addEventListener('keydown',event=>{
@@ -125,7 +125,7 @@ async function beginRun(candidate,online){
   if(!marker.isConnected){lease.release();return;}
   if(online)await rankClient.start(candidate);else delete candidate.ranking.online;
   if(!marker.isConnected){lease.release();return;}
-  s=candidate;ensureMetrics(s);resetTransient();enterRoom(s);if(document.hidden)pause('다시 화면으로 돌아온 뒤 시작하세요.');else resume();save();toast(online?'랭킹 도전 시작 · 탈출 후 이름을 남길 수 있습니다.':'로컬 도전 시작 · 온라인 랭킹에는 등록되지 않습니다.');
+  s=candidate;ensureMetrics(s);resetTransient();enterRoom(s);if(document.hidden)pause('다시 화면으로 돌아온 뒤 시작하세요.');else resume();const saved=save();if(saved)toast(online?'랭킹 도전 시작 · 탈출 후 이름을 남길 수 있습니다.':'로컬 도전 시작 · 온라인 랭킹에는 등록되지 않습니다.');
  }catch(error){
   lease.release();if(!marker.isConnected)return;
  panel('<h2>랭킹 연결 실패</h2><p>'+escapeHtml(rankingError(error))+'</p><p>로컬로 시작해도 플레이와 개인 기록은 저장되지만, 이번 도전은 온라인 순위에 등록되지 않습니다.</p><button class="primary" id="rankStartRetry">다시 연결</button><button id="rankStartLocal">로컬로 시작</button><button id="rankStartCancel">돌아가기</button>');
@@ -139,7 +139,7 @@ async function continueRun(){if(launching)return;launching=true;try{
 }
 function escapeNotice(){stop('return');save();const ending=s.campaign==='expanded'?'대악마를 쓰러뜨리고 마지막 열쇠를 되찾았습니다.':'왕은 쓰러졌지만, 탑의 저주는 풀리지 않았습니다.';panel('<div class="escape-reveal">'+returnStoryMarkup(s.floors.length>=8)+'<small>THE WAY HOME</small><h2>1층 탈출 열쇠 획득</h2><p>'+ending+'<br>탑의 몬스터들이 광폭화했습니다.<br><strong>이제 아래층으로 내려가 1층 입구에서 탈출하세요.</strong><br>하강 시 미방문 방은 전멸해야 출구가 열립니다. 방문한 방도 30% 확률로 열쇠수호자가 문을 잠급니다. 내려가는 계단은 방의 적을 전멸해야 열립니다.</p><button class="primary" id="beginReturn">1층으로 귀환 시작 ↓</button></div>');button('beginReturn',()=>{s.returnNoticePending=false;save();resume();});}
 function resume(){if(!s||s.status!=='playing'||!s.practice&&!lease.active)return;if(s.returnNoticePending){escapeNotice();return;}if(shrineLocked(room())){shrine();return;}if(!s.player.mainSkill&&(s.pendingLevels||mainSkills.some(id=>s.player[id]>0))){mainPanel();return;}if(pendingEvolution(s.player)){evolutionPanel();return;}if(!s.practice&&s.player.level>=4&&!s.player.utility){utilityPanel();return;}if(s.pendingHeal){s.player.hp=Math.min(s.player.max,s.player.hp+1);s.pendingHeal=false;}mode='play';paused=false;$('overlay').innerHTML='';canvas.focus();input.setEnabled(true);accumulator=0;last=performance.now();if(s.pendingLevels)levelUp();}
-function pause(reason=''){if(!s||s.status!=='playing'||['title','result','level'].includes(mode))return;stop('pause');const ok=save();if(s.practice){practicePause();return;}panel(`<small>TAKE A BREATH</small><h2>잠시 쉬어가기</h2><p>${reason||'게임과 기록 시간이 멈췄습니다.'}<br>${ok?'진행 상황이 저장되었습니다.':'저장하지 못했습니다. 진단 기록을 내려받아 보관할 수 있습니다.'}</p><button class="primary" id="resume">계속 탐험</button><button id="quit">저장 후 입구로</button><button id="guide">조작 안내</button><button id="pauseSettings">소리·화면 설정</button><button id="journal">원정 기록 · 도감</button><button id="export">진단 기록 받기</button>`);button('resume',resume);button('quit',()=>{if(save())title();});button('guide',()=>showInfo('help'));button('pauseSettings',settingsPanel);button('export',exportReport);button('journal',journalPanel);}
+function pause(reason=''){if(!s||s.status!=='playing'||['title','result','level'].includes(mode))return;stop('pause');const ok=save();if(s.practice){practicePause();return;}panel(`<small>TAKE A BREATH</small><h2>잠시 쉬어가기</h2><p>${reason||'게임과 기록 시간이 멈췄습니다.'}<br>${ok?'진행 상황이 저장되었습니다.':escapeHtml(saveError||'저장하지 못했습니다.')+' 진단 기록을 내려받아 보관할 수 있습니다.'}</p><button class="primary" id="resume">계속 탐험</button><button id="quit">저장 후 입구로</button><button id="guide">조작 안내</button><button id="pauseSettings">소리·화면 설정</button><button id="journal">원정 기록 · 도감</button><button id="export">진단 기록 받기</button>`);button('resume',resume);button('quit',()=>{if(save())title();});button('guide',()=>showInfo('help'));button('pauseSettings',settingsPanel);button('export',exportReport);button('journal',journalPanel);}
 function settingsPanel(){
  if(mode==='play')pause();if(!['title','pause','result'].includes(mode)){toast('설정은 입구나 일시정지에서 열 수 있습니다.');return;}
  const from=mode,settings=sound.settings;stop('settings');

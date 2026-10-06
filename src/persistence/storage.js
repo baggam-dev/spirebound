@@ -101,6 +101,10 @@ export function parseSave(raw){
  const s=validateRun(decoded.schema===2?JSON.parse(decoded.payload):decoded);s.runId??='legacy-'+fingerprint(raw);migrateRun(s);s.projectiles??=[];s.floors[s.floor][s.room].seen=true;return s;
 }
 export function encodeSave(s){validateRun(s);const payload=JSON.stringify(s);return JSON.stringify({schema:2,checksum:fingerprint(payload),savedAt:new Date().toISOString(),release:RELEASE,payload});}
+function saveStorageFailure(error){
+ const quota=error?.name==='QuotaExceededError'||error?.code===22||error?.code===1014;
+ return quota?{ok:false,reason:'quota',error:'브라우저 저장 공간이 부족합니다. 현재 도전은 닫지 말고 기록을 내려받아 보관하세요.'}:{ok:false,reason:'unavailable',error:'브라우저 저장소에 쓸 수 없습니다. 저장소 권한·시크릿 모드를 확인하세요.'};
+}
 export function safeHistory(storage){try{const rows=JSON.parse(storage.getItem(HISTORY_KEY)||'[]');return Array.isArray(rows)?rows.filter(r=>r&&typeof r.won==='boolean'&&number(r.time,0,1e9)&&number(r.floor,1,10)&&number(r.level,1,100000)).slice(-30):[];}catch{return [];}}
 export class RunStore{
  constructor(storage,key=SAVE_KEY){this.storage=storage;this.key=key;}
@@ -111,9 +115,11 @@ export class RunStore{
  }
  write(s){
   if(s.practice)return {ok:true,practice:true};
-  try{const raw=encodeSave(s),previous=this.storage.getItem(this.key);let same=false;if(previous){try{const old=parseSave(previous);same=old.runId===s.runId;if(same)this.storage.setItem(this.key+'.backup',previous);}catch{}}
+  let raw;try{raw=encodeSave(s);}catch{return {ok:false,reason:'invalid_state',error:'게임 상태를 저장할 수 없습니다. 현재 도전은 닫지 말고 진단 기록을 내려받아 보관하세요.'};}
+  try{const previous=this.storage.getItem(this.key);let same=false;if(previous){try{const old=parseSave(previous);same=old.runId===s.runId;}catch{}}
+   if(same)try{this.storage.setItem(this.key+'.backup',previous);}catch(error){if(error?.name!=='QuotaExceededError'&&error?.code!==22&&error?.code!==1014)throw error;}
    this.storage.setItem(this.key,raw);if(!same)this.storage.removeItem(this.key+'.backup');return {ok:true};
-  }catch(error){return {ok:false,error:'저장하지 못했습니다. 저장 공간을 확인하세요.'};}
+  }catch(error){return saveStorageFailure(error);}
  }
  complete(s,won){
   if(s.practice)return {ok:true,practice:true};
