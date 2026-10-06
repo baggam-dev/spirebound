@@ -16,6 +16,7 @@ import {drawElementHit,limitElementHits} from '../rendering/element-hit-visuals.
 import {drawDoorFrame,drawPixelActor,drawWorldDetails,drawObjectDetails,drawProjectile,drawImpact,drawSpellDetails} from '../rendering/pixel-world.js';
 import {bindCombatAction} from '../ui/touch-actions.js';
 import {relicPreviewMarkup} from '../ui/relic-preview.js';
+import {recipePreviewMarkup} from '../ui/recipe-preview.js';
 import {prismStatus} from '../combat/combat-status.js';
 import {skillPreviewMarkup} from '../ui/skill-preview.js';
 import {drawHitFeedback} from '../rendering/hit-feedback.js';
@@ -42,7 +43,7 @@ import {drawReturnEnemy} from '../combat/return-enemies.js';
 import {drawInfernal,drawInfernalGround,infernalTypes} from '../combat/infernal-enemies.js';
 import {bossHealth} from '../combat/poison.js';
 import {drawOpenings} from '../combat/tactics.js';
-import {mainSkills,chooseMain,allowedSkill,auraProfile,skillGrade,gradeLabels} from '../progression/skill-tree.js';
+import {mainSkills,chooseMain,auraProfile,skillGrade,gradeLabels} from '../progression/skill-tree.js';
 import {drawEssences} from '../progression/essences.js';
 import {relicInfo,claimRelic,relicStat,relicSummary,ownedRelics} from '../progression/relics.js';
 import {evolutions,pendingEvolution,chooseEvolution,evolutionSummary} from '../progression/evolutions.js';
@@ -66,7 +67,7 @@ import {usePotion,ultimateUnlocked,castUltimate,castBlink} from '../combat/abili
 import {drawEnemyDetails} from '../combat/brute.js';
 import {moveBody,drawObstacles,drawMinimap} from '../world/terrain.js';
 import {openChest,prepareChest,prepareTrialLoot,claimTrialLoot,lootLabel} from '../progression/loot.js';
-import {xpRequired,skills,recipes,combinations,skillChoices,applySkill,rerollSkills,levelChoices,consumeLevelChoice} from '../progression/progression.js';
+import {xpRequired,skills,combinations,skillChoices,applySkill,rerollSkills,levelChoices,consumeLevelChoice} from '../progression/progression.js';
 import {newRun,currentRoom,neighbor,travel,useShrine,canEscape,timeString,roomLocked} from './engine.js';
 import {runRandom} from './random.js';
 import {utilitySkills,chooseUtility,castUtility} from '../combat/utility.js';
@@ -156,7 +157,7 @@ function levelUp(){
  if(!s.player.mainSkill){mainPanel();return;}
  stop('level');const choices=levelChoices(s,()=>runRandom(s));save();
  if(!choices.length){s.player.hp=Math.min(s.player.max,s.player.hp+1);consumeLevelChoice(s);emitInteraction(s,'level',room(),{level:s.player.level});resume();return;}
- panel('<small>CHOOSE YOUR PATH</small><h2>새로운 깨달음</h2><p>'+ (choices[0]?.growth?'기술 강화를 마쳤습니다. 이번 도전의 기본 능력을 추가로 성장시키세요.':'궁극기는 5·10레벨 미습득 시 확정 후보, 그 외 5레벨 이후 30% 확률로 등장합니다.')+'</p><div class="cards">'+choices.map((k,i)=>'<button class="skill-'+k.grade+'" id="u'+i+'">'+iconSVG(k.icon||k.id)+'<b>'+ '['+(k.growth?'추가 성장':gradeLabels[k.grade])+'] '+k.name+(k.growth?'':' '+((s.player[k.id]||0)+1)+' / '+k.max)+'</b><span>'+k.description+'</span>'+skillPreviewMarkup(s.player,k.id)+'<em>'+recipes.filter(r=>r.needs.includes(k.id)&&r.needs.every(id=>allowedSkill(s.player,id))).map(r=>r.name+' · '+r.needs.map(id=>skills.find(a=>a.id===id).name).join(' + ')).join('<br>')+'</em></button>').join('')+'</div><button id="reroll" '+((s.rerolls??1)>0&&!choices.every(k=>k.growth)?'':'disabled')+'>후보 새로고침 · '+(s.rerolls??1)+'회</button>');
+ panel('<small>CHOOSE YOUR PATH</small><h2>새로운 깨달음</h2><p>'+ (choices[0]?.growth?'기술 강화를 마쳤습니다. 이번 도전의 기본 능력을 추가로 성장시키세요.':'궁극기는 5·10레벨 미습득 시 확정 후보, 그 외 5레벨 이후 30% 확률로 등장합니다.')+'</p><div class="cards">'+choices.map((k,i)=>'<button class="skill-'+k.grade+'" id="u'+i+'">'+iconSVG(k.icon||k.id)+'<b>'+ '['+(k.growth?'추가 성장':gradeLabels[k.grade])+'] '+k.name+(k.growth?'':' '+((s.player[k.id]||0)+1)+' / '+k.max)+'</b><span>'+k.description+'</span>'+skillPreviewMarkup(s.player,k.id)+recipePreviewMarkup(s.player,k.id)+'</button>').join('')+'</div><button id="reroll" '+((s.rerolls??1)>0&&!choices.every(k=>k.growth)?'':'disabled')+'>후보 새로고침 · '+(s.rerolls??1)+'회</button>');
  button('reroll',()=>{if(rerollSkills(s)){save();levelUp();}});
  choices.forEach((k,i)=>button('u'+i,()=>{const was=ultimateUnlocked(s.player),previous=combinations(s.player).map(c=>c.name);if(!applyLevelReward(s,k.id))return;if(k.id==='ultimate')s.skill=0;const unlocked=combinations(s.player).filter(c=>!previous.includes(c.name));if(unlocked.length)toast('조합 완성 · '+unlocked.map(c=>c.name).join(' / '));if(!was&&ultimateUnlocked(s.player)){s.skill=0;toast('궁극기 화살비 해금 · F');}consumeLevelChoice(s);emitInteraction(s,'level',room(),{level:s.player.level});resume();save();}));
 }
