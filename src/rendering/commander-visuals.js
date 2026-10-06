@@ -1,11 +1,12 @@
+import {commanderProfile,commanderOffsets} from '../combat/boss-pressure.js';
 import {drawSoftField} from './ground-visuals.js';
 
 export function drawCommanderGround(c,e,time=0){
  if(e.variant!=='commander')return;
- const state=e.commander;
+ const state=e.commander,q=commanderProfile(e);
  c.save();
  if(state?.rain){
-  const a=state.rain,progress=1-a.time/1.05;
+  const a=state.rain,progress=1-a.time/q.rainWindup;
   drawSoftField(c,a.x,a.y,a.radius,'#9cdcf2',.55+progress*.28);
   c.strokeStyle='#c9f2ff99';c.lineWidth=1;
   for(let i=0;i<7;i++){const x=a.x-75+i*25,y=a.y-45+(i%3)*30;c.beginPath();c.moveTo(x-4,y-16-progress*12);c.lineTo(x+4,y-2-progress*12);c.stroke();}
@@ -14,10 +15,11 @@ export function drawCommanderGround(c,e,time=0){
  if(state?.blink){drawSoftField(c,state.blink.x,state.blink.y,40,'#9bdaf1',.6);c.fillStyle='#ddf4ffbb';c.fillRect(state.blink.x-2,state.blink.y-10,4,20);c.fillRect(state.blink.x-10,state.blink.y-2,20,4);}
  if(state?.volley?.fired===0){
   const a=state.volley;c.strokeStyle='#a9d9ed88';c.lineWidth=1;
-  for(const offset of a.count===2?[-.15,.15]:[-.23,0,.23]){const angle=a.aim+offset;c.beginPath();c.moveTo(e.x,e.y);c.lineTo(e.x+Math.cos(angle)*220,e.y+Math.sin(angle)*220);c.stroke();}
+  for(const offset of commanderOffsets(a.count)){const angle=a.aim+offset;c.beginPath();c.moveTo(e.x,e.y);c.lineTo(e.x+Math.cos(angle)*220,e.y+Math.sin(angle)*220);c.stroke();}
  }
+ if(state?.ricochet){const a=state.ricochet;c.strokeStyle='#74e1dd';c.setLineDash([5,4]);for(const offset of commanderOffsets(a.count)){const angle=a.aim+offset;c.beginPath();c.moveTo(e.x,e.y);c.lineTo(e.x+Math.cos(angle)*260,e.y+Math.sin(angle)*260);c.stroke();}c.setLineDash([]);c.fillStyle='#a8ece0';c.font='12px Galmuri, monospace';c.textAlign='center';c.fillText('반사탄 · 벽 뒤도 주의',e.x,e.y-60);}
  if(state?.snipe){
-  const a=state.snipe,progress=1-a.time/.72;
+  const a=state.snipe,progress=1-a.time/q.snipeWindup;
   c.strokeStyle=`rgba(195,230,246,${.22+progress*.32})`;c.lineWidth=1;
   c.beginPath();c.moveTo(e.x,e.y);c.lineTo(e.x+Math.cos(a.aim)*920,e.y+Math.sin(a.aim)*920);c.stroke();
   drawSoftField(c,e.x,e.y,26,'#9bdaf1',.18+progress*.2);

@@ -28,6 +28,22 @@ class RankingTests(unittest.TestCase):
                          gameVersion='0.34.0-prebeta', elapsedMs=1200000,
                          visited=[f'{f}:0' for f in range(8)], defeated=list(range(180)), mainSkill='fire', total=99999999)
 
+    def test_latest_version_board_preserves_old_rows_and_rejects_old_run(self):
+        self.app.submit(self.token, self.body)
+        self.assertEqual(len(self.app.leaderboard(self.token, 'SPIREBOUND')['entries']), 1)
+        self.config['versions'] = ['0.35.0-prebeta']
+        current = Ranking(self.path, self.config, lambda: self.now)
+        self.assertEqual(current.leaderboard(self.token, 'SPIREBOUND')['entries'], [])
+        with current.connect() as db:
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM records').fetchone()[0], 1)
+        old = dict(self.run, runId='old-version-new-run')
+        self.reject(lambda: current.start(self.token, old), 'unsupported_version')
+        run = dict(self.run, runId='new-version-run', gameVersion='0.35.0-prebeta')
+        current.start(self.token, run)
+        self.now += 1200000
+        current.submit(self.token, dict(self.body, runId=run['runId'], gameVersion='0.35.0-prebeta'))
+        self.assertEqual(len(current.leaderboard(self.token, 'SPIREBOUND')['entries']), 1)
+
     def tearDown(self):
         self.temp.cleanup()
 

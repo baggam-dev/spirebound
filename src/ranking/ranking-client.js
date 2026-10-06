@@ -1,3 +1,4 @@
+import {RELEASE} from '../game/version.js';
 import {RANKING_SEASON,rankingSeason} from './ranking.js';
 import {finalEscapeRequired} from '../world/final-escape.js';
 export const SUBMISSIONS_KEY='spirebound.rank-submissions.v1';
@@ -27,7 +28,7 @@ export class RankingClient{
   try{this.storage.setItem(SUBMISSIONS_KEY,JSON.stringify(this.memory));this.storageOK=true;}catch{this.storageOK=false;}return item;
  }
  draft(s){
-  const q=s.ranking;if(s.practice||s.status!=='won'||!q?.result||q.online?.runId!==s.runId||q.seasonId!==rankingSeason(s.campaign))return null;
+  const q=s.ranking;if(s.practice||s.status!=='won'||!q?.result||q.online?.runId!==s.runId||q.seasonId!==rankingSeason(s.campaign)||q.gameVersion!==RELEASE)return null;
   const existing=this.list().find(r=>r.runId===s.runId);if(existing)return existing;
   return this.persist({runId:s.runId,createdAt:Date.now(),nickname:'',payload:{runId:s.runId,outcome:'escaped',kingDefeated:!!s.key,finalDemonDefeated:s.campaign==='expanded'&&s.floors[9][1].used&&s.floors[9][1].demonPending===false,finalSealBroken:finalEscapeRequired(s)&&s.floors[0][0].finalEscape?.ready===true,floor:s.floor,practice:false,rulesVersion:q.rulesVersion,seasonId:q.seasonId,gameVersion:q.gameVersion,elapsedMs:q.result.elapsedMs,visited:[...q.visited],defeated:[...q.defeated],mainSkill:s.player.mainSkill},score:q.result.total});
  }

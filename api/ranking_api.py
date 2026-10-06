@@ -207,11 +207,14 @@ class Ranking:
             entry = db.execute('SELECT rules FROM seasons WHERE id=?', (season,)).fetchone()
             require(entry, 'season_not_found', 404)
             player = self.player(token, db)
+            versions = self.config['versions']
+            placeholders = ','.join('?' for _ in versions)
             query = f'''WITH best AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY player_id ORDER BY {ORDER}) AS pick
-                         FROM records WHERE season=? AND status='accepted'),
+                         FROM records WHERE season=? AND status='accepted'
+                         AND run_id IN (SELECT id FROM runs WHERE version IN ({placeholders}))),
                          ranked AS (SELECT *, ROW_NUMBER() OVER (ORDER BY {ORDER}) AS rank FROM best WHERE pick=1)
                          SELECT * FROM ranked WHERE rank<=100 OR player_id=? ORDER BY rank'''
-            rows = db.execute(query, (season, player['id'] if player else '')).fetchall()
+            rows = db.execute(query, (season, *versions, player['id'] if player else '')).fetchall()
             def public(row):
                 return {'rank': row['rank'], 'recordId': row['id'], 'nickname': row['nickname'],
                         'score': row['score'], 'elapsedMs': row['elapsed_ms'], 'mainSkill': row['main_skill'],

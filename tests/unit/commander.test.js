@@ -6,7 +6,7 @@ import {enterRoom,stepRun} from '../../src/game/simulation.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 import {createPractice,practiceBosses} from '../../src/game/boss-practice.js';
 
-function fight(){const s=newRun(123,{campaign:'expanded'});s.floor=8;s.room=s.floors[8].findIndex(r=>r.type==='boss');s.player.x=480;s.player.y=435;const r=currentRoom(s);assert.equal(challengeCommander(s),true);return {s,r,e:r.enemies[0],p:s.player};}
+function fight(){const s=newRun(123,{campaign:'expanded'});s.generationVersion=30;s.floor=8;s.room=s.floors[8].findIndex(r=>r.type==='boss');s.player.x=480;s.player.y=435;const r=currentRoom(s);assert.equal(challengeCommander(s),true);return {s,r,e:r.enemies[0],p:s.player};}
 test('commander challenge is exclusive to expanded ninth floor and survives save',()=>{
  const classic=newRun(123);assert.equal(classic.floors.length,8);
  assert.equal(practiceBosses.some(b=>b.id==='commander'),false);assert.equal(currentRoom(createPractice('commander','frost',123)).enemies[0].variant,'commander');

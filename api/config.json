@@ -1,7 +1,7 @@
 {
   "season": "SPIREBOUND",
   "open": true,
-  "versions": ["0.34.0-prebeta"],
+  "versions": ["0.35.0-prebeta"],
   "origins": ["http://168.107.21.43"],
   "secureCookie": false,
   "blockedNames": ["admin", "moderator", "spirebound", "운영자", "관리자", "시발", "씨발", "병신"]

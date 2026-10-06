@@ -11,7 +11,7 @@ const python=process.env.PYTHON||join(process.env.USERPROFILE,'.cache/codex-runt
 const output=process.argv[2];await mkdir(output,{recursive:true});const temp=await mkdtemp(join(tmpdir(),'spirebound-online-qa-')),database=join(temp,'ranking.sqlite3');
 const probe=net.createServer();await new Promise(r=>probe.listen(0,'127.0.0.1',r));const apiPort=probe.address().port;await new Promise(r=>probe.close(r));
 const server=createServer(resolve('.'),apiPort);await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;
-const config=join(temp,'config.json');await writeFile(config,JSON.stringify({season:'SPIREBOUND',open:true,versions:['0.34.0-prebeta'],origins:[base],blockedNames:['admin','운영자']}));
+const config=join(temp,'config.json');await writeFile(config,JSON.stringify({season:'SPIREBOUND',open:true,versions:['0.35.0-prebeta'],origins:[base],blockedNames:['admin','운영자']}));
 const backend=spawn(python,['-B','api/ranking_api.py','--database',database,'--config',config,'--port',String(apiPort)],{stdio:'pipe'});let backendErrors='';backend.stderr.on('data',data=>backendErrors+=data);
 const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[];
 try{
