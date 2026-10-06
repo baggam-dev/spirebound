@@ -11,7 +11,7 @@ try {
  await page.goto(base); await page.locator('#rank').waitFor();
  const image=page.locator('.title-art');assert.equal(await image.evaluate(img=>img.complete&&img.naturalWidth>0),true);await page.evaluate(()=>document.fonts.ready);
  if(process.argv[2])await page.screenshot({path:process.argv[2],fullPage:true});
- const assets=['index.html','upgrade.html','src/game/game.js','src/ui/ui.js','src/ranking/ranking-client.js','src/ranking/ranking-ui.js','src/persistence/upgrade.js','src/persistence/upgrade-transfer.js','src/rendering/room-backdrops.js','styles/pixel-theme.css'];
+ const assets=['index.html','upgrade.html','src/game/game.js','src/ui/ui.js','src/ranking/ranking-client.js','src/ranking/ranking-ui.js','src/persistence/upgrade.js','src/persistence/upgrade-transfer.js','src/rendering/room-backdrops.js','src/rendering/blink-visuals.js','styles/pixel-theme.css'];
  for(const file of assets){const r=await context.request.get(base+'/'+file);assert.equal(r.status(),200);assert.equal(await r.text(),await readFile(file,'utf8'));}
  const health=await context.request.get(base+'/api/health');assert.equal((await health.json()).ok,true);
  const redirect=await context.request.get(old+'/src/game/game.js',{maxRedirects:0});assert.equal(redirect.status(),308);assert.equal(redirect.headers().location,base+'/src/game/game.js');
