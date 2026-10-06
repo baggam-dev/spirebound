@@ -12,12 +12,12 @@ try{
   await page.locator('#rank').click();await page.locator('#rankBoard').getByText('현재 기록 · 등록 가능').waitFor();
   assert.equal(await page.locator('[data-season]').count(),0);
   const old=await page.evaluate(async()=>{const response=await fetch('/api/rankings?season=BETA-5');return response.status;});assert.equal(old,404);
-  await page.locator('#rankBack').click();await page.locator('#start').click();
-  await page.locator('#startClassic').waitFor();await page.locator('#startExpanded').waitFor();
+  await page.locator('#rankBack').click();await page.locator('#start').waitFor();
+  assert.equal(await page.locator('#startClassic,#startExpanded').count(),0);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
   assert.equal(await page.evaluate(()=>localStorage.getItem('spirebound.run.v1')),null);
   await context.close();
  }
  assert.deepEqual(errors,[]);
- console.log(JSON.stringify({viewports:2,current:'SPIREBOUND',oldSeasonHttpStatus:404,visibleSeasonTabs:0,publicStartChoices:true,productionRunsStarted:0,productionRecordsSubmitted:0,pageErrors:0}));
+ console.log(JSON.stringify({viewports:2,current:'SPIREBOUND',oldSeasonHttpStatus:404,visibleSeasonTabs:0,publicStartChoices:false,productionRunsStarted:0,productionRecordsSubmitted:0,pageErrors:0}));
 }finally{await browser.close();}

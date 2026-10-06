@@ -1,7 +1,7 @@
 import {drawStoneWalls,outerWalls} from '../rendering/stone-walls.js';
 import {RankingClient,rankingError} from '../ranking/ranking-client.js';
 import {createRankingUI} from '../ranking/ranking-ui.js';
-import {finishRanking,rankingMarkup,RANKING_SEASON} from '../ranking/ranking.js';
+import {finishRanking,rankingMarkup} from '../ranking/ranking.js';
 import {returnStairsLocked,returnSealText,drawReturnSeal} from '../world/return-seals.js';
 import {startFinalEscape,finalEscapeRequired,FINAL_ESCAPE_DURATION} from '../world/final-escape.js';
 import {drawFinalEscape} from '../rendering/final-escape.js';
@@ -95,7 +95,7 @@ function panel(html){$('overlay').innerHTML=`<div class="panel" role="dialog" ar
 const modalFocusables='button:not([disabled]):not([hidden]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 $('overlay').addEventListener('keydown',event=>{
  if(event.key==='Escape'){
-  const back=['settingsBack','closeInfo','cancelStart','rankBack','closeJournal','closeBag','leaveRoute','practiceBack','choosePractice','endPractice'].map($).find(item=>item?.getClientRects().length);
+  const back=['settingsBack','closeInfo','rankBack','closeJournal','closeBag','leaveRoute','practiceBack','choosePractice','endPractice'].map($).find(item=>item?.getClientRects().length);
   if(back){event.preventDefault();event.stopPropagation();back.click();return;}
  }
  if(event.key!=='Tab')return;const dialog=$('overlay').firstElementChild;if(!dialog)return;
@@ -110,12 +110,11 @@ function title(){
  stop('title');lease.release();s=null;resetTransient();$('route').hidden=true;$('skill').hidden=true;$('utility').hidden=true;$('interact').hidden=true;
  $('floor').textContent='잊힌 탑의 입구';$('phase').textContent='THE FORSAKEN SPIRE';$('health').textContent='♥♥♥♥♥';$('level').textContent='LV 1';$('timer').textContent='00:00';$('objective').textContent='탑에 들어가 탈출 열쇠를 찾으세요.';
  const loaded=store.read(),exists=!!loaded.run;
- panel(`<img class="title-art" src="assets/images/title-art.png" alt="SPIREBOUND · 거대한 탑 입구 앞의 모험가"><h2 class="title-accessible">SPIREBOUND</h2><div class="title-content"><p class="title-lore">탑에 들어간 이들은 돌아오지 않았다.<br>탑의 꼭대기에는 탈출의 열쇠가 숨겨져 있다.<br>왕을 쓰러뜨려도 여정은 끝나지 않는다.<br><strong>살아서 내려와라.</strong></p><div class="title-actions"><p class="title-hint">이동하며 자동 공격 · 진행 상황은 이 브라우저에 저장됩니다.</p>${exists?`<p>저장된 도전: ${loaded.run.floor+1}/${loaded.run.floors.length}층 · ${timeString(loaded.run.elapsed)}${loaded.recovered?' · 백업 복구 가능':''}</p><button class="primary" id="continue">이어하기</button>`:''}${loaded.error?`<p role="alert">${escapeHtml(loaded.error)} 원본을 보관하려면 아래에서 백업을 받으세요.</p><button id="dataRecovery">기록 백업·가져오기</button>`:''}<button ${exists?'':'class="primary"'} id="start">새 도전 →</button></div><div class="title-secondary"><button id="rank">RANK</button><button id="guide">조작 안내</button><button id="records">도전 기록</button><button id="bossPractice">보스 테스트</button><button id="titleSettings">소리·화면 설정</button></div></div>`);
- button('start',()=>campaignMenu(exists));
+ panel(`<img class="title-art" src="assets/images/title-art.png" alt="SPIREBOUND · 거대한 탑 입구 앞의 모험가"><h2 class="title-accessible">SPIREBOUND</h2><div class="title-content"><p class="title-lore">탑에 들어간 이들은 돌아오지 않았다.<br>탑의 꼭대기에는 탈출의 열쇠가 숨겨져 있다.<br>왕을 쓰러뜨려도 여정은 끝나지 않는다.<br><strong>살아서 내려와라.</strong></p><div class="title-actions"><p class="title-hint">이동하며 자동 공격 · 진행 상황은 이 브라우저에 저장됩니다.</p>${exists?`<p>저장된 도전: ${loaded.run.floor+1}/${loaded.run.floors.length}층 · ${timeString(loaded.run.elapsed)}${loaded.recovered?' · 백업 복구 가능':''}</p><button class="primary" id="continue">이어하기</button>`:''}${loaded.error?`<p role="alert">${escapeHtml(loaded.error)} 원본을 보관하려면 아래에서 백업을 받으세요.</p><button id="dataRecovery">기록 백업·가져오기</button>`:''}<button ${exists?'':'class="primary"'} id="start">${exists?'새 도전 · 현재 저장 교체':'새 도전 →'}</button></div><div class="title-secondary"><button id="rank">RANK</button><button id="guide">조작 안내</button><button id="records">도전 기록</button><button id="bossPractice">보스 테스트</button><button id="titleSettings">소리·화면 설정</button></div></div>`);
+ button('start',()=>start());
  button('rank',()=>rankUI.board(title));button('bossPractice',practiceMenu);button('continue',continueRun);button('guide',()=>showInfo('help'));button('records',()=>showInfo('history'));button('dataRecovery',()=>location.assign('upgrade.html'));button('titleSettings',settingsPanel);
 }
-function campaignMenu(replacing=false){stop('campaign');panel(`<h2>새 도전 선택</h2>${replacing?'<p>현재 이어하기 저장을 새 도전으로 교체합니다.</p>':''}<p>기본 8층 / 확장 10층 · 공통 랭킹 ${RANKING_SEASON}</p><button class="primary" id="startClassic">기본 8층 시작</button><button id="startExpanded">확장 10층 시작</button><button id="cancelStart">돌아가기</button>`);button('startClassic',()=>start(undefined,'classic'));button('startExpanded',()=>start(undefined,'expanded'));button('cancelStart',title);}
-function start(seed,campaign='classic'){if(launching)return;beginRun(newRun(Number.isInteger(seed)&&seed>=0&&seed<=4294967295?seed:undefined,{campaign}),true);}
+function start(seed,campaign='expanded'){if(launching)return;beginRun(newRun(Number.isInteger(seed)&&seed>=0&&seed<=4294967295?seed:undefined,{campaign}),true);}
 async function beginRun(candidate,online){
  if(launching)return;launching=true;stop('rank-start');s=null;
  panel('<h2>새 도전 준비</h2><p id="rankStartStatus">'+(online?'온라인 랭킹에 도전을 연결하는 중…':'로컬 도전을 준비하는 중…')+'</p><button id="rankStartCancel">돌아가기</button>');
