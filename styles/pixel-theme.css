@@ -47,6 +47,7 @@ body:has(.title-art) header{display:none!important}
 .title-lore strong{color:#f0d69b}
 .title-actions{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
 #overlay .title-actions>p{flex-basis:100%;margin:0 0 2px;font-size:10px;line-height:1.6!important;overflow-wrap:anywhere;color:#a9b6a4}
+@media(max-height:430px){#overlay .title-actions>.title-hint{display:none}}
 #overlay .title-actions button{flex:1 1 120px;min-width:0;min-height:40px;margin:0;padding:8px;font-size:11px}
 .title-secondary{display:flex;flex-wrap:wrap;justify-content:center;margin-top:10px;gap:6px}
 #overlay .title-secondary button{flex:1 1 70px;min-width:0;margin:0;font-size:10px;min-height:36px;padding:7px 4px}
