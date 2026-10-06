@@ -10,7 +10,7 @@ try{
   const context=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile});
   const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));
   await page.goto(base);await page.locator('#start').click();
-  assert.match(await page.locator('#overlay').innerText(),/BETA-5.*ASCENT-7/s);
+  assert.match(await page.locator('#overlay').innerText(),/기본 8층 \/ 확장 10층 · 공통 랭킹 SPIREBOUND/);
   const state=await page.evaluate(async()=>{
    const {newRun,currentRoom}=await import('/src/game/engine.js');
    const {stepRun}=await import('/src/game/simulation.js');
@@ -24,7 +24,7 @@ try{
    const resumed=parseSave(encodeSave(run));
    return {generation:run.generationVersion,season:run.ranking.seasonId,turned:run.projectiles[0]?.vy>0,resumedVy:resumed.projectiles[0]?.vy};
   });
-  assert.equal(state.generation,29);assert.equal(state.season,'BETA-5');
+  assert.equal(state.generation,30);assert.equal(state.season,'SPIREBOUND');
   assert.equal(state.turned,true);assert.ok(state.resumedVy>0);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
   await context.close();

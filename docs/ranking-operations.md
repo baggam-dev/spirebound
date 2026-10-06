@@ -2,11 +2,10 @@
 
 현재 활성화 여부와 마지막 릴리스는 WORK_STATUS.md를 기준으로 한다. 이 문서는 절차와 경로를 설명한다.
 
-## 캠페인별 시즌
-- 현재 신규 도전은 기본 **BETA-5/ranking-v11**, 확장 **ASCENT-7/ranking-v12**이다. 폭풍 화살 조합의 첫 관통 뒤 경로 변경을 이전 도전/점수와 분리한다(`storm-recipe-stage.md`). 마지막 1층 봉인 추격 완료는 계속 점수 제출 조건이다. 직전 BETA-4/ranking-v9·ASCENT-6/ranking-v10과 그 이전 시즌은 조회 전용이며 기존 로컬 저장의 이어하기는 유지한다. 결말 규칙은 `final-escape-stage6.md`를 참고한다.
-- 6~9층 출현표 변경은 기본 8층에도 영향을 주므로 새 기본 도전 BETA-2/ranking-v5, 새 확장 도전 ASCENT-4/ranking-v6로 분리한다. 이전 BETA-1/ranking-v1 및 ASCENT-1/ranking-v2·ASCENT-2/ranking-v3·ASCENT-3/ranking-v4 기록은 조회 전용으로 보존한다. 시즌별 상위 100명·내 최고 기록을 섞지 않는다. 실제 운영 활성 릴리스는 WORK_STATUS.md와 배포된 `api/config.json`을 확인한다.
-- 확장 시즌 시작 요청은 기존 8층 지도 대신 10층 지도(마지막 층 2방)를 검증한다. 완료 기록에는 10층 방문과 대악마 처치 표시가 필요하다. 이름·점수 등록은 기존과 같이 명시적 사용자 동작이다.
-- `api/config.json`의 `expandedSeason`/`expandedOpen`으로 확장 시즌을 운영한다. 중지 시 `expandedOpen=false`로 배포하면 새 확장 시작·등록이 막히고 기존 순위는 읽을 수 있다. 런타임 설정/DB 경로는 아래 절차를 따른다.
+## 단일 최신 랭킹
+- 최신 새 도전은 기본 8층과 확장 10층 모두 **SPIREBOUND/ranking-v13**, 게임 `0.34.0-prebeta`, 지도 generationVersion 30이다. 한 표에 두 캠페인의 사용자별 최고 기록을 합치고 각 행에 8층/10층을 표시한다. 처치 점수 상한 4,000·탐험 점수 정규화·시간 점수는 현재 공통 규칙을 따른다. 10층 완료는 대악마 처치, 두 캠페인 모두 마지막 1층 봉인 추격 완료가 필요하다. 이름·점수 등록은 명시적 사용자 동작이다.
+- 과거 BETA/ASCENT 시즌은 화면과 공개 API에서 조회되지 않고 신규 제출도 받지 않는다. 기존 로컬 저장은 시즌·배치 규칙을 바꾸지 않고 이어갈 수 있으나 최신 순위에 제출할 수 없다. 운영 SQLite에 이미 저장된 과거 행은 원본을 보존한다. 그 기록을 최신 버전 기록으로 이관하지 않는다.
+- `api/config.json`의 `season`/`open`이 공통 랭킹을 제어한다. `open=false`는 새 시작·등록을 막으며 기존 현재 순위 조회는 유지한다. 실제 운영 활성 릴리스는 WORK_STATUS.md와 배포된 설정을 확인한다.
 
 ## 일상 운영
 - 정적 파일: `/usr/share/nginx/spirebound-current` → 릴리스 디렉터리.

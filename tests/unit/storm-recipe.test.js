@@ -26,7 +26,7 @@ test('new run storm volley changes route and survives a save; older run keeps st
   s.projectiles=[{x:120,y:200,vx:420,vy:0,enemy:false,elemental:true,damageScale:1,life:3,pierce:1,hit:[]}];
   return s;
  };
- const fresh=setup(29),legacy=setup(28);
+ const fresh=setup(30),legacy=setup(28);
  for(let i=0;i<8;i++){stepRun(fresh,1/60);stepRun(legacy,1/60);}
  assert.ok(fresh.projectiles[0].vy>0);
  assert.equal(legacy.projectiles[0].vy,0);

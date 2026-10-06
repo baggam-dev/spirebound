@@ -9,11 +9,9 @@ try{
   const context=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile}),page=await context.newPage();
   page.on('pageerror',error=>errors.push(error.message));
   await page.goto(base);
-  await page.locator('#rank').click();await page.locator('#rankBoard').getByText('BETA-5 · 진행 중').waitFor();
-  await page.locator('[data-season="ASCENT-7"]').click();await page.locator('#rankBoard').getByText('ASCENT-7 · 진행 중').waitFor();
-  await page.locator('[data-season="BETA-4"]').click();await page.locator('#rankBoard').getByText('BETA-4 · 종료').waitFor();
-  await page.locator('[data-season="ASCENT-6"]').click();await page.locator('#rankBoard').getByText('ASCENT-6 · 종료').waitFor();
-  assert.equal(await page.locator('[data-season]').count(),12);
+  await page.locator('#rank').click();await page.locator('#rankBoard').getByText('현재 기록 · 등록 가능').waitFor();
+  assert.equal(await page.locator('[data-season]').count(),0);
+  const old=await page.evaluate(async()=>{const response=await fetch('/api/rankings?season=BETA-5');return response.status;});assert.equal(old,404);
   await page.locator('#rankBack').click();await page.locator('#start').click();
   await page.locator('#startClassic').waitFor();await page.locator('#startExpanded').waitFor();
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
@@ -21,5 +19,5 @@ try{
   await context.close();
  }
  assert.deepEqual(errors,[]);
- console.log(JSON.stringify({viewports:2,current:['BETA-5','ASCENT-7'],readOnly:['BETA-4','ASCENT-6'],visibleSeasons:12,publicStartChoices:true,productionRunsStarted:0,productionRecordsSubmitted:0,pageErrors:0}));
+ console.log(JSON.stringify({viewports:2,current:'SPIREBOUND',oldSeasonHttpStatus:404,visibleSeasonTabs:0,publicStartChoices:true,productionRunsStarted:0,productionRecordsSubmitted:0,pageErrors:0}));
 }finally{await browser.close();}

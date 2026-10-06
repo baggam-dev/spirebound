@@ -14,6 +14,12 @@ test('future deployment layouts vary flanks while current ranking generation kee
   assert.ok(room.deployed);for(const e of room.enemies){assert.ok(Math.hypot(e.x-player.x,e.y-player.y)>=155);for(const n of room.enemies)if(e!==n)assert.ok(Math.hypot(e.x-n.x,e.y-n.y)>=48);}
  }
 });
+test('new runs persist the upper-floor layout generation',()=>{
+ for(const campaign of ['classic','expanded']){
+  const run=newRun(3030,{campaign});assert.equal(run.generationVersion,30);
+  assert.equal(parseSave(encodeSave(run)).generationVersion,30);
+ }
+});
 test('upper introduction packs stay simple and do not retain elite health',()=>{const s=newRun(4);for(const floor of [6,7]){const r=s.floors[floor][1];assert.ok(r.intro);assert.equal(r.enemies.length,4);assert.equal(new Set(r.enemies.map(e=>e.type)).size,2);assert.ok(r.enemies.every(e=>!e.elite&&e.hp===Math.ceil((32+floor*16)*1.25*(['starKnight','royalGuard'].includes(e.type)?1.15:1))));}});
 test('gate announces both guardians, survivor fury, and rewards exactly once across reload',()=>{let s=newRun(8);s.floor=6;s.room=s.floors[6].findIndex(r=>r.gate);s.attack=999;s.invulnerable=999;enterRoom(s);let r=currentRoom(s);assert.equal(r.gateBanner,3);assert.ok(r.enemies.every(e=>e.gateTitle));r.enemies[0].hp=0;stepRun(s,.01);assert.ok(r.enemies[0].gateFury);s=parseSave(encodeSave(s));r=currentRoom(s);r.enemies[0].hp=0;assert.ok(stepRun(s,.01).events.includes('gateReward'));const offers=[...r.relicOffers];assert.ok(!stepRun(s,.01).events.includes('gateReward'));assert.deepEqual(r.relicOffers,offers);});
 test('return notice survives reload and enrage creates fresh deployment without altering facilities',()=>{const s=newRun(5);s.floor=7;s.room=s.floors[7].findIndex(r=>r.type==='boss');currentRoom(s).enemies=[];const facilities=s.floors.flat().map(r=>[r.x,r.y,r.type,r.used]);assert.equal(bossDefeated(s),'key');const copy=parseSave(encodeSave(s));assert.ok(copy.returnNoticePending&&copy.key);const entrance=copy.floors[0][0];assert.equal(entrance.deployed,false);copy.floor=0;copy.room=0;copy.player.x=480;copy.player.y=220;enterRoom(copy);assert.ok(entrance.deployed);assert.equal(copy.floors.flat().length,facilities.length);});

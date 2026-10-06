@@ -1,7 +1,7 @@
 import {drawStoneWalls,outerWalls} from '../rendering/stone-walls.js';
 import {RankingClient,rankingError} from '../ranking/ranking-client.js';
 import {createRankingUI} from '../ranking/ranking-ui.js';
-import {finishRanking,rankingMarkup,RANKING_SEASON,EXPANDED_SEASON} from '../ranking/ranking.js';
+import {finishRanking,rankingMarkup,RANKING_SEASON} from '../ranking/ranking.js';
 import {returnStairsLocked,returnSealText,drawReturnSeal} from '../world/return-seals.js';
 import {startFinalEscape,finalEscapeRequired,FINAL_ESCAPE_DURATION} from '../world/final-escape.js';
 import {drawFinalEscape} from '../rendering/final-escape.js';
@@ -114,7 +114,7 @@ function title(){
  button('start',()=>campaignMenu(exists));
  button('rank',()=>rankUI.board(title));button('bossPractice',practiceMenu);button('continue',continueRun);button('guide',()=>showInfo('help'));button('records',()=>showInfo('history'));button('dataRecovery',()=>location.assign('upgrade.html'));button('titleSettings',settingsPanel);
 }
-function campaignMenu(replacing=false){stop('campaign');panel(`<h2>새 도전 선택</h2>${replacing?'<p>현재 이어하기 저장을 새 도전으로 교체합니다.</p>':''}<p>기본 8층 · ${RANKING_SEASON} / 확장 10층 · ${EXPANDED_SEASON}</p><button class="primary" id="startClassic">기본 8층 시작</button><button id="startExpanded">확장 10층 시작</button><button id="cancelStart">돌아가기</button>`);button('startClassic',()=>start(undefined,'classic'));button('startExpanded',()=>start(undefined,'expanded'));button('cancelStart',title);}
+function campaignMenu(replacing=false){stop('campaign');panel(`<h2>새 도전 선택</h2>${replacing?'<p>현재 이어하기 저장을 새 도전으로 교체합니다.</p>':''}<p>기본 8층 / 확장 10층 · 공통 랭킹 ${RANKING_SEASON}</p><button class="primary" id="startClassic">기본 8층 시작</button><button id="startExpanded">확장 10층 시작</button><button id="cancelStart">돌아가기</button>`);button('startClassic',()=>start(undefined,'classic'));button('startExpanded',()=>start(undefined,'expanded'));button('cancelStart',title);}
 function start(seed,campaign='classic'){if(launching)return;beginRun(newRun(Number.isInteger(seed)&&seed>=0&&seed<=4294967295?seed:undefined,{campaign}),true);}
 async function beginRun(candidate,online){
  if(launching)return;launching=true;stop('rank-start');s=null;

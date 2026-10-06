@@ -14,9 +14,9 @@ try{
   await page.reload();await page.locator('#continue').click();await page.waitForFunction(f=>document.querySelector('#floor')?.textContent?.startsWith(`${f+1}층`),floor);
   await page.screenshot({path:join(output,`${width}x${height}-floor${floor+1}.png`)});
   const actual=await page.evaluate(async()=>{const {parseSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=parseSave(localStorage.getItem(SAVE_KEY));return {floor:s.floor,season:s.ranking.seasonId,types:[...new Set(s.floors[s.floor][s.room].enemies.map(e=>e.type))]};});
-  assert.equal(actual.floor,floor);assert.equal(actual.season,'ASCENT-7');assert.equal(expected.season,'ASCENT-7');if(floor===8)for(const type of ['demonSoldier','demonArcher','demonBat'])assert.ok(actual.types.includes(type),type);
+  assert.equal(actual.floor,floor);assert.equal(actual.season,'SPIREBOUND');assert.equal(expected.season,'SPIREBOUND');if(floor===8)for(const type of ['demonSoldier','demonArcher','demonBat'])assert.ok(actual.types.includes(type),type);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
   await context.close();
  }
- assert.deepEqual(errors,[]);console.log(JSON.stringify({viewports:2,floors:[6,7,8,9],infernalIntro:true,season:'ASCENT-7',offlineFixture:true,pageErrors:0}));
+ assert.deepEqual(errors,[]);console.log(JSON.stringify({viewports:2,floors:[6,7,8,9],infernalIntro:true,season:'SPIREBOUND',offlineFixture:true,pageErrors:0}));
 }finally{await browser.close();}

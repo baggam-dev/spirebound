@@ -16,22 +16,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
-RULES = 'ranking-v11'
-EXPANDED_RULES = 'ranking-v12'
-LEGACY_EXPANDED_RULES = 'ranking-v2'
-LEGACY_EXPANDED_SEASON = 'ASCENT-1'
-PREVIOUS_EXPANDED_RULES = 'ranking-v3'
-PREVIOUS_EXPANDED_SEASON = 'ASCENT-2'
-ARCHIVED_SEASONS = [('BETA-1', 'ranking-v1'),
-                    (LEGACY_EXPANDED_SEASON, LEGACY_EXPANDED_RULES),
-                    (PREVIOUS_EXPANDED_SEASON, PREVIOUS_EXPANDED_RULES),
-                    ('ASCENT-3', 'ranking-v4'),
-                    ('BETA-2', 'ranking-v5'),
-                    ('ASCENT-4', 'ranking-v6'),
-                    ('BETA-3', 'ranking-v7'),
-                    ('ASCENT-5', 'ranking-v8'),
-                    ('BETA-4', 'ranking-v9'),
-                    ('ASCENT-6', 'ranking-v10')]
+RULES = 'ranking-v13'
 COOKIE = 'spirebound_player'
 MAX_BODY = 131072
 MAIN_SKILLS = {'fire', 'frost', 'poison', 'chain', 'precision'}
@@ -87,16 +72,8 @@ class Ranking:
             ''')
             db.execute('INSERT OR IGNORE INTO seasons VALUES (?,?,?)',
                        (config['season'], RULES, self.clock()))
-            if config.get('expandedSeason'):
-                db.execute('INSERT OR IGNORE INTO seasons VALUES (?,?,?)',
-                           (config['expandedSeason'], EXPANDED_RULES, self.clock()))
-            for season_id, rules in ARCHIVED_SEASONS:
-                db.execute('INSERT OR IGNORE INTO seasons VALUES (?,?,?)',
-                           (season_id, rules, self.clock()))
 
     def active_season(self, season):
-        if season == self.config.get('expandedSeason'):
-            return EXPANDED_RULES, self.config.get('expandedOpen', False)
         if season == self.config['season']:
             return RULES, self.config['open']
         return None, False
@@ -145,7 +122,7 @@ class Ranking:
             integer(n, 7 if i % 2 == 0 else 8, 10 if i % 2 == 0 else 11) for i, n in enumerate(rooms))
         expanded_map = isinstance(rooms, list) and len(rooms) == 10 and rooms[7] == 8 and rooms[9] == 2 and all(
             integer(n, 7 if i % 2 == 0 else 8, 10 if i % 2 == 0 else 11) for i, n in enumerate(rooms[:8])) and integer(rooms[8], 8, 11)
-        require(classic_map if rules == RULES else expanded_map if rules == EXPANDED_RULES else False, 'invalid_map')
+        require(classic_map or expanded_map, 'invalid_map')
         require(body.get('rulesVersion') == rules, 'unsupported_rules')
         require(body.get('gameVersion') in self.config['versions'], 'unsupported_version')
         require(opened, 'season_closed', 409)
@@ -190,7 +167,7 @@ class Ranking:
             require(body.get('outcome') == 'escaped' and body.get('kingDefeated') is True and
                     integer(body.get('floor'), 0, 0) and body.get('practice') is False, 'not_eligible')
             require(body.get('finalSealBroken') is True, 'not_eligible')
-            if rules == EXPANDED_RULES:
+            if len(json.loads(run['rooms'])) == 10:
                 require(body.get('finalDemonDefeated') is True, 'not_eligible')
             nickname = self.nickname(body.get('nickname'))
             elapsed, visited, defeated = body.get('elapsedMs'), body.get('visited'), body.get('defeated')
@@ -209,6 +186,7 @@ class Ranking:
             reason = 'implausible_metrics' if elapsed < 120000 or len(defeated) > 3000 or len(defeated) < 10 else None
             status = 'held' if reason else 'accepted'
             snapshot = dict(parts, elapsedMs=elapsed, kills=len(defeated), visited=visited, defeated=defeated,
+                            campaign='expanded' if len(rooms) == 10 else 'classic',
                             totalRooms=sum(rooms), seed=run['seed'], gameVersion=run['version'], rulesVersion=rules)
             record_id = str(uuid.uuid4())
             db.execute('INSERT INTO records VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
@@ -225,6 +203,7 @@ class Ranking:
 
     def leaderboard(self, token, season):
         with self.connect() as db:
+            require(season == self.config['season'], 'season_not_found', 404)
             entry = db.execute('SELECT rules FROM seasons WHERE id=?', (season,)).fetchone()
             require(entry, 'season_not_found', 404)
             player = self.player(token, db)
@@ -235,7 +214,8 @@ class Ranking:
             rows = db.execute(query, (season, player['id'] if player else '')).fetchall()
             def public(row):
                 return {'rank': row['rank'], 'recordId': row['id'], 'nickname': row['nickname'],
-                        'score': row['score'], 'elapsedMs': row['elapsed_ms'], 'mainSkill': row['main_skill']}
+                        'score': row['score'], 'elapsedMs': row['elapsed_ms'], 'mainSkill': row['main_skill'],
+                        'campaign': json.loads(row['snapshot']).get('campaign', 'classic')}
             return {'seasonId': season, 'rulesVersion': entry['rules'],
                     'open': self.active_season(season)[1],
                     'entries': [public(r) for r in rows if r['rank'] <= 100],
