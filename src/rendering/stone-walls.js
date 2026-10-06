@@ -55,6 +55,13 @@ export function paintStoneWalls(ctx,obstacles,floor=0){
    if(theme===6){ctx.fillStyle='#a3b5c158';ctx.fillRect(a,b,2,2);ctx.fillRect(a+7,b-4,1,5);ctx.fillRect(a+7,b,6,1);}
    if(theme===7){ctx.fillStyle='#ab84675c';ctx.fillRect(a,b,12,1);ctx.fillRect(a+5,b+1,2,6);}
   }
+  if(basalt&&h%3===0){
+   const a=x+9+h%18,b=y+5;
+   for(const [dx,dy,w,h] of [[0,0,3,9],[3,7,4,3],[2,9,3,9],[3,16,5,3],[6,18,3,9],[-5,18,8,2]]){
+    ctx.fillStyle=deep?'#803d5480':'#b348298c';ctx.fillRect(a+dx-1,b+dy,w+2,h);
+    ctx.fillStyle=deep?'#e576668c':'#f898538c';ctx.fillRect(a+dx,b+dy,1,h);
+   }
+  }
   if(basalt&&h%4===0){ctx.fillStyle=deep?'#a6668848':'#b55e4b4d';const a=x+6+h%22;ctx.fillRect(a,y+21,13,1);ctx.fillRect(a+12,y+17,1,4);ctx.fillStyle='#e4a07722';ctx.fillRect(a+2,y+20,5,1);}
  }
  ctx.restore();
