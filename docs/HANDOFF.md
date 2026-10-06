@@ -11,6 +11,7 @@ GitHub: https://github.com/baggam-dev/spirebound
 docs/WORK_STATUS.md → docs/TODO.md → docs/WORK_LOG.md 최근 항목 → docs/HANDOFF.md 순서로 읽어줘.
 기존 미커밋·신규 파일을 보존하고 reset/clean/stash 하지 마. 의미 있는 수정 단위로 검증 후 커밋하고, 푸시는 별도 요청에만 해.
 사용자가 강조한 출시 품질 우선순위는 **1. 플레이의 재미 2. 디자인의 유려함**이다. 앱 빌드/스토어 심사/운영 개선을 먼저 진행하지 마. 기존 완주 후기·현재 게임 코드·대표 화면에서 재미와 시각 문제를 진단하고, 작은 개선 단위를 정해 검증해. 상세 docs/app-store-readiness-review.md와 TODO 상단을 확인해.
+사용자 레퍼런스는 Shattered Pixel Dungeon(절제된 도트·탐험), Hades 1/2(속도감·이펙트·캐릭터), The Binding of Isaac(한 판을 바꾸는 조합)이다. 적용/비적용 원칙과 첫 단위는 docs/quality-reference-direction.md. 다음은 기존 5빌드 조합 감사와 1층 일반방+첫 보스의 공통 아트/타격 리듬 비교. 이 레퍼런스 검토는 문서만 완료했고 게임 코드·배포는 하지 않았다.
 
 통합 개선 순위 0~4번과 6번 결말 전투는 구현·검증·배포 완료했다. 5번 전면 비주얼 개선은 여덟 단위를 완료했고, 7번 출시 품질 사운드·설정, 입력·모달 포커스, 31분 저장·재개 내구성, 브라우저 데이터·복구 안내 네 단위도 완료했다. 실제 iPhone 가독성·음량·장시간 성능은 대기한다. 현재 운영 릴리스와 완료 근거는 WORK_STATUS.md를 기준으로 확인해.
 4번은 무속성 정밀 사격 메인·직격 전용 보조·3레벨 분기와 4레벨 유틸 액티브 1칸(집중/응급 처치/수호 환영), PC G/모바일 버튼·저장 호환이다. 상세는 docs/skill-stage4.md.
