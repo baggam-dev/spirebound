@@ -23,7 +23,7 @@ docs/WORK_STATUS.md → docs/TODO.md → docs/WORK_LOG.md 최근 항목 → docs
 5번 여섯째 단위는 속성 화살 4종에 실제 자동 사격 직전 작은 활 표식, 속성별 비행 잔상, 독 피격 비말 균형을 적용했다. 코드 2425f3a / 운영 release-20261001-203004-1b7f2d. 전체398개·서버 Python24개·로컬/공개 Edge 4속성 12장면·PC/모바일 전투/공개 HTTPS QA 통과, 운영 점수 제출 없음. 비교 캡처 docs/visual-stage5-element-shots.png.
 5번 일곱째 단위는 결과 화면을 제목/핵심 수치/탈출 점수·사망 원인/주요 행동/빌드 상세로 정리했다. 코드 b50d783 / 운영 release-20261001-211430-e79701. 전체398개·서버 Python24개·로컬/공개 Edge PC/모바일 기본·확장 완주/사망 12장면씩·공개 HTTPS QA 통과, 운영 점수 제출 없음. 캡처 docs/visual-stage5-result-win.png 및 visual-stage5-result-death-mobile.png.
 새 도전은 기본8층·확장10층 공통 `SPIREBOUND/ranking-v13`이다. 옛 BETA/ASCENT는 UI/API 조회 불가, 원 DB 행은 복구용 보존. 기존 저장은 이어갈 수 있으나 최신 순위 제출은 안 된다.
-사용자 요청으로 935275a까지 origin/main 푸시 완료. 신규 코드 `44576c3`와 이번 최종 문서 커밋은 푸시 대기(현재 상태는 git으로 재확인). 배포와 푸시를 혼동하지 마.
+사용자 요청으로 코드 `44576c3`·배포 검증 문서 `40645c2`까지 origin/main 푸시 완료. 이 뒤의 최종 상태 기록만 별도 커밋으로 남긴다면 원격 상태를 git으로 재확인하라. 배포와 푸시를 혼동하지 마.
 5번 여덟째 단위는 비주얼 직전 25f2248과 현재의 실제 게임 루프 p95/p99 및 PC·모바일 전후 화면을 같은 시드로 비교했다. 15장면×240프레임 오류·가로 넘침0, 큰 미로 벽의 지속 버벅임 근거 없음. 모바일 가로 HUD 글자는 작다. 상세 수치·전후 캡처·재현 도구: docs/visual-stage5-frame-qa.md. 게임 변경이 없어 배포 없음.
 6번 1층 결말 전투는 코드 aa86f0b / 운영 release-20261002-034334-aaeb84로 완료했다. 새 도전은 1층 출구에서 봉인을 깨고 36초 동안 3차 추격을 버틴 뒤 탈출한다. 전체401개·서버 Python24개, 로컬/공개 Edge PC·모바일 결말/시즌/HTTPS QA 통과, 운영 점수 제출 없음. 상세 docs/final-escape-stage6.md.
 7번 첫 단위 사운드·설정은 코드 539237b / 운영 release-20261002-040023-d91cc6으로 완료했다. 짧은 전투 효과음과 브라우저별 음량·음소거·화면 효과 완화 설정을 더했다. 전체403개·서버 Python24개, 로컬/공개 Edge PC·모바일 설정/재개 및 HTTPS QA 통과, 운영 점수 제출 없음. 상세 docs/release-quality-stage7-sound.md.
