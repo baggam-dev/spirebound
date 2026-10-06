@@ -42,3 +42,6 @@ docs/WORK_STATUS.md → docs/TODO.md → docs/WORK_LOG.md 최근 항목 → docs
 - 배포: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools\deploy\deploy.ps1`.
 - HTTPS 전환 시에만 `-EnableHttps`; 이미 활성화된 서버는 일반 배포에서도 HTTPS 유지.
 - DB·서비스·운영 경로와 최신 릴리스는 WORK_STATUS.md 및 ranking-operations.md에서 확인.
+
+## 저장 보완 재개 체크포인트
+2026-10-07 재개: 사용자 브라우저에서 저장 보완 해결 여부는 미확인. 같은 브라우저 새로고침 → 이어하기 → 일시정지 저장 결과, 기기/브라우저, 실패 시 정확한 문구를 요청했다. 사이트 데이터와 저장 원본은 보존한다. 답변 후 해당 오류 경로의 후속 수정 여부를 정한다. 코드 변경·신규 테스트·재배포·푸시 없음. 기존 마지막 검증은 전체415개·공개 Edge/HTTPS QA 통과이며 사용자 실증과 구분한다. 실행 중 명령/세션 없음.
