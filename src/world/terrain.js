@@ -45,7 +45,7 @@ export function steering(body,target,obstacles=[],radius=18){
 }
 export function drawObstacles(ctx,obstacles=[],floor=0){
  drawStoneWalls(ctx,obstacles,floor);
- for(const o of obstacles){if(o.type==='wall'||o.demonHole)continue;const {x,y,w,h}=o;ctx.fillStyle='#0007';ctx.fillRect(x-3,y+7,w+6,h);ctx.fillStyle='#17201e';ctx.fillRect(x-2,y-2,w+4,h+4);
+ for(const o of obstacles){if(o.type==='wall'||o.demonHole||o.demonBolt)continue;const {x,y,w,h}=o;ctx.fillStyle='#0007';ctx.fillRect(x-3,y+7,w+6,h);ctx.fillStyle='#17201e';ctx.fillRect(x-2,y-2,w+4,h+4);
  if(o.type==='rock'){ctx.fillStyle='#647169';ctx.fillRect(x+8,y,w-16,h);ctx.fillRect(x,y+10,w,h-20);ctx.fillStyle='#8c9480';ctx.fillRect(x+12,y+5,w-30,7);ctx.fillStyle='#414e49';ctx.fillRect(x+20,y+22,5,h-27);}
  if(o.type==='bookshelf'){ctx.fillStyle='#685239';ctx.fillRect(x,y,w,h);for(let row=0;row<2;row++){ctx.fillStyle='#282b25';ctx.fillRect(x+5,y+6+row*23,w-10,18);for(let i=0;i<Math.floor((w-12)/10);i++){ctx.fillStyle=['#9b6e58','#708980','#aea071'][i%3];ctx.fillRect(x+8+i*10,y+8+row*23,6,14);}}}
  if(o.type==='table'){ctx.fillStyle='#43372a';ctx.fillRect(x+4,y+h-5,8,9);ctx.fillRect(x+w-12,y+h-5,8,9);ctx.fillStyle='#91734d';ctx.fillRect(x,y,w,h-4);ctx.fillStyle='#b09463';ctx.fillRect(x+4,y+4,w-8,4);ctx.fillStyle='#5f4a32';ctx.fillRect(x+4,y+h/2,w-8,2);ctx.fillStyle='#bcb99b';ctx.fillRect(x+w/2,y+12,14,10);}

@@ -3,9 +3,9 @@ export const utilitySkills=[
  {id:'firstAid',name:'응급 처치',description:'주변 적과 거리를 벌린 뒤 1하트 회복 · 층당 1회 · 재사용 20초'},
  {id:'guardian',name:'수호 환영',description:'5초 동안 다음 피격 1회를 막는 환영 · 적 이동과 공격은 방해하지 않음 · 재사용 25초'}
 ];
-export function chooseUtility(s,id){if(s.status!=='playing'||s.player.level<4||s.player.utility||!utilitySkills.some(k=>k.id===id))return false;s.player.utility=id;s.utilityCooldown=0;s.utilityHealedFloors??=[];return true;}
+export function chooseUtility(s,id){if(s.status!=='playing'||s.player.actionStun>0||s.player.level<4||s.player.utility||!utilitySkills.some(k=>k.id===id))return false;s.player.utility=id;s.utilityCooldown=0;s.utilityHealedFloors??=[];return true;}
 export function castUtility(s){
- const id=s.player.utility;if(s.status!=='playing'||!id||s.utilityCooldown>0)return false;
+ const id=s.player.utility;if(s.status!=='playing'||s.player.actionStun>0||!id||s.utilityCooldown>0)return false;
  const room=s.floors[s.floor][s.room];
  if(id==='firstAid'){
   if(s.player.hp>=s.player.max||s.utilityHealedFloors?.includes(s.floor)||room.enemies.some(e=>e.hp>0&&Math.hypot(e.x-s.player.x,e.y-s.player.y)<140))return false;

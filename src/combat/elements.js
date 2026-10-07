@@ -5,7 +5,7 @@ import {relicStat} from '../progression/relics.js';
 // contact; poison also applies after piercing. Secondary arrows scale damage.
 const near=(a,b,r)=>Math.hypot(a.x-b.x,a.y-b.y)<=r;
 const grounded=e=>e.phase!=='air'&&e.phase!=='splitJump'&&e.attackPhase!=='leap';
-function damage(e,amount,poison=false){if(e.hp<=0)return;const before=e.hp;e.hp-=amount*enemyDamageFactor(e);if(poison&&before>0&&e.hp<=0)e.poisonKilled=true;}
+function damage(e,amount,poison=false){if(e.hp<=0||amount<=0)return;const before=e.hp;e.hp-=amount*enemyDamageFactor(e);if(poison&&before>0&&e.hp<=0)e.poisonKilled=true;}
 function stack(e,key,time,dps,cap){const list=e[key]??=[];list.push({time,dps});if(list.length>cap)list.shift();}
 export function fireFieldSpec(p){return p.fire>=3?{r:(35+40/3*p.fire)*(p.evolutions?.fire==='ember'?1.2:1),time:p.evolutions?.fire==='flare'?1:1.5,dps:30*(1+relicStat(p,'fire'))*(p.effectScale??1)}:null;}
 export function markFireKill(e,spec,stacks=e.burnStacks?.filter(s=>s.time>0).length||0){if(e.hp<=0&&spec&&stacks>=3&&!e.fireFieldSpawned)e.pendingFireField??={...spec};}

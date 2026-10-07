@@ -9,6 +9,7 @@ import {observeGrowth,tickBossRecord,completeBossRecord} from '../progression/gr
 import {deployRoom} from '../world/formations.js';
 import {updateUpper,upperTypes,tickUpperState} from '../combat/upper-floors.js';
 import {updateCommander,resetCommanderAttack} from '../combat/commander.js';
+import {clearDemonSpecials} from '../combat/demon-specials.js';
 import {updateDemon,resetDemonAttack,advanceDemonPhase} from '../combat/demon.js';
 import {tickRain} from '../combat/abilities.js';
 import {tickPassives,passiveHit} from '../progression/passives.js';
@@ -49,7 +50,7 @@ export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
 export function enterRoom(s){
  trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
- resetDemonAttack(r);
+ s.player.actionStun=0;s.player.electricGrace=0;resetDemonAttack(r);
  // Do not preserve an off-screen attack aimed at the previous visit's position.
  for(const e of r.enemies){resetCommanderAttack(e);if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
 }
@@ -66,7 +67,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  s.entryGrace=Math.max(0,(s.entryGrace||0)-dt);let r=currentRoom(s);
  let hitOrigin=null;
  const hurt=(raw,source='알 수 없는 공격',kind=null,origin=hitOrigin)=>{if(s.entryGrace>0||p.hp<=0||s.invulnerable>0||raw<=0)return;if(absorbGuardian(s)){s.invulnerable=.65;effects.push({x:p.x,y:p.y-35,t:.8,color:'#b8d9f1',text:'수호!'});metrics.shields++;return;}const before=p.hp,result=takeDamage(s,r.trialState==='active'?Math.min(raw,9):raw,kind);if(before>p.hp)effects.push({x:p.x,y:p.y-35,t:1,color:'#ff7188',text:'-'+(before-p.hp)+' ♥',hitSource:source,hitAngle:origin?Math.atan2(origin.y-p.y,origin.x-p.x):null});metrics.damageTaken+=before-p.hp;recordHit(s,source,before-p.hp,result==='blocked');if(result==='blocked'){metrics.shields++;events.push('shield');}};
- const n=Math.max(1,Math.hypot(input.x,input.y)),frostSlow=p.frostSlow>0?.72:1;moveBody(p,input.x/n*movementSpeed(p)*frostSlow*dt,input.y/n*movementSpeed(p)*frostSlow*dt,r.obstacles);p.frostSlow=Math.max(0,(p.frostSlow||0)-dt);
+ const n=Math.max(1,Math.hypot(input.x,input.y)),frostSlow=p.frostSlow>0?.72:1;moveBody(p,input.x/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),input.y/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),r.obstacles);p.frostSlow=Math.max(0,(p.frostSlow||0)-dt);
  const d=p.y<48?0:p.x>930?1:p.y>492?2:p.x<30?3:-1;
  if(d>=0){const next=neighbor(s,d),aligned=d%2===0?Math.abs(p.x-480)<40:Math.abs(p.y-270)<35;
   if(next>=0&&aligned&&!roomLocked(s,r)){s.room=next;r=currentRoom(s);p.x=d===1?48:d===3?912:p.x;p.y=d===0?477:d===2?63:p.y;enterRoom(s);events.push('room');}
@@ -87,8 +88,8 @@ export function stepRun(s,dt,input={x:0,y:0}){
  const target=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!segmentBlocked(p,e,r.obstacles,3)).sort((a,b)=>distance(a,p)-distance(b,p))[0];
  s.auraVisual=Math.max(0,(s.auraVisual||0)-dt);const auraFlash=s.auraVisual<=0;if(auraFlash)s.auraVisual=.2;
  if(p.aura)hitOrigin=null;
- for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,p)<=auraProfile(p.aura).radius*(1+relicStat(p,'auraRange'))&&!segmentBlocked(p,e,r.obstacles,1)){const before=e.hp;if(auraFlash)effects.push({x:e.x,y:e.y,r:24,t:.16,color:'#f8ffe6',slash:true});e.hp-=auraProfile(p.aura).dps*(1+relicStat(p,'auraDamage'))*dt*enemyDamageFactor(e,p);metrics.damageDealt+=before-Math.max(0,e.hp);}
- if(target&&s.attack<=0){fireArrow(s,target);events.push('shot');}
+ if(p.aura)for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,p)<=auraProfile(p.aura).radius*(1+relicStat(p,'auraRange'))&&!segmentBlocked(p,e,r.obstacles,1)){const before=e.hp;if(auraFlash)effects.push({x:e.x,y:e.y,r:24,t:.16,color:'#f8ffe6',slash:true});e.hp-=auraProfile(p.aura).dps*(1+relicStat(p,'auraDamage'))*dt*enemyDamageFactor(e,p);metrics.damageDealt+=before-Math.max(0,e.hp);}
+ if(target&&s.attack<=0&&!(p.actionStun>0)){fireArrow(s,target);events.push('shot');}
  for(const e of r.enemies){
   hitOrigin=e;const hpBefore=Math.max(0,e.hp);tickEffects(e,dt);metrics.damageDealt+=hpBefore-Math.max(0,e.hp);const upper=e.variant==='king'||upperTypes.includes(e.type);const transitioning=upper&&tickUpperState(e,p,r,s.entryGrace>0?0:dt,s.projectiles);if(e.hp<=0||e.frozen>0||transitioning||r.enemies.some(n=>n.variant==='king'&&n.kingTransition>0))continue;
   if(e.cd>0)e.cd+=dt*(1-frostAttackRate(e));if(e.jumpCooldown>0)e.jumpCooldown+=dt*(1-frostAttackRate(e));
@@ -152,7 +153,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  if(r.gate&&!r.used&&defeated.length&&!r.enemies.length){r.used=true;r.gateBanner=3;offerRelics(s,r);events.push('gateReward');}
  if(defeated.some(e=>e.type==='boss'&&!e.summoned)&&!r.enemies.some(e=>e.type==='boss')){const boss=defeated.find(e=>e.type==='boss');dropEssences(s,r,boss);if(boss.chestBoss){r.used=true;offerRelics(s,r);}}
  if(r.type==='boss'&&defeated.some(e=>e.type==='boss'&&!e.chestBoss)&&!r.enemies.some(e=>e.type==='boss')&&!r.used){
-  r.enemies=r.enemies.filter(e=>!e.summoned);r.hazards=[];r.blasts=[];s.projectiles=[];
+  r.enemies=r.enemies.filter(e=>!e.summoned);r.hazards=[];r.blasts=[];s.projectiles=[];if(r.demon?.pressureVersion===1){clearDemonSpecials(r);p.actionStun=0;p.electricGrace=0;}
   completeBossRecord(s);if(!s.key)p.xp+=45;events.push(bossDefeated(s));
  }
  while(p.xp>=xpRequired(p.level)){p.xp-=xpRequired(p.level);p.level++;s.pendingLevels++;(s.levelQueue??=[]).push(p.level);}

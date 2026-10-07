@@ -2,7 +2,7 @@ import {lightningImpact} from '../combat/lightning.js';
 import {growthRewards,growthAvailable,applyGrowth} from './growth.js';
 import {FROST_DAMAGE_FACTOR} from '../combat/combat-tuning.js';
 import {applyFrost} from '../combat/frost.js';
-import {bindDefenses,enemyDamageFactor} from '../combat/enemy-defense.js';
+import {bindDefenses,enemyDamageFactor,absorbDemonShield} from '../combat/enemy-defense.js';
 import {runRandom} from '../game/random.js';
 import {mainSkills,allowedSkill,skillGrade} from './skill-tree.js';
 import {elementalImpact,markFireKill,fireFieldSpec} from '../combat/elements.js';
@@ -41,6 +41,7 @@ export function applySkill(p,id){const skill=skills.find(k=>k.id===id);if(!skill
 // Both minimap cells and its bounds must derive only from explored rooms.
 export function discoveredRooms(rooms){return rooms.filter(r=>r.seen);}
 export function hitEnemy(p,e,enemies,obstacles=[],scale=1,elemental=true,room=null,origin=p,shot={}){
+ if(absorbDemonShield(e))return [{x:e.x,y:e.y-45,t:.5,color:'#9edcf8',text:'방어막!'}];
  p={...p,damage:p.damage*scale*hexFactor(p,'damage')*(1+.12*(p.power||0)+relicStat(p,'damage')),effectScale:scale*hexFactor(p,'damage')*(1+.12*(p.power||0)+relicStat(p,'damage'))*(1+relicStat(p,'element'))};
  bindDefenses(enemies);if(p.frost&&elemental)applyFrost(p,e);const wasFrozen=e.frozen>0,wasAlive=e.hp>0;const effects=[];const precision=shot.primary&&p.precision?precisionMultiplier(p,e):1;e.hp-=(p.damage+(p.split&&p.pierce?3*scale:0))*(p.evolutions?.pierce==='depth'?.85:p.evolutions?.pierce==='impact'?1.25:1)*(p.evolutions?.haste==='tempo'?.85:1)*directRelicFactor(p,e)*(p.frost?FROST_DAMAGE_FACTOR:1)*(p.frostShardAttack?1+relicStat(p,'element'):1)*enemyDamageFactor(e,origin)*precision*(shot.focused?1.2:1);
  if(shot.primary&&p.precision){const burst=(e.precisionHits||0)>=(p.evolutions?.precision==='sniper'?1:2);recordPrecisionHit(p,e);if(burst)effects.push({x:e.x,y:e.y-28,t:.65,color:'#f9e2a5',text:'약점!'});}
@@ -51,7 +52,7 @@ export function hitEnemy(p,e,enemies,obstacles=[],scale=1,elemental=true,room=nu
  if(p.chain&&elemental)effects.push(...lightningImpact(p,e,enemies));
  if(wasFrozen&&e.hp<=0)e.frozenDeath=true;return effects;
 }
-export function tickEffects(e,dt){if(e.hp<=0){if(e.frozen>0)e.frozenDeath=true;return;}tickPrecision(e,dt);const wasFrozen=e.frozen>0;if(e.burn>0)e.hp-=Math.min(dt,e.burn)*(e.burnDamage||0)*enemyDamageFactor(e);if(wasFrozen&&e.hp<=0)e.frozenDeath=true;for(const k of ['burn','slow','blastCooldown','frozen','freezeImmune','frostStackTime'])e[k]=Math.max(0,(e[k]||0)-dt);if(!e.frostStackTime)e.frostStacks=0;}
+export function tickEffects(e,dt){if(e.hp<=0){if(e.frozen>0)e.frozenDeath=true;return;}tickPrecision(e,dt);const wasFrozen=e.frozen>0;if(e.burn>0&&e.burnDamage>0)e.hp-=Math.min(dt,e.burn)*(e.burnDamage||0)*enemyDamageFactor(e);if(wasFrozen&&e.hp<=0)e.frozenDeath=true;for(const k of ['burn','slow','blastCooldown','frozen','freezeImmune','frostStackTime'])e[k]=Math.max(0,(e[k]||0)-dt);if(!e.frostStackTime)e.frostStacks=0;}
 
 export function rerollSkills(s){
  if(s.status!=='playing'||!s.player.mainSkill||s.pendingLevels<=0||!s.choices?.length||(s.rerolls??1)<=0)return false;
