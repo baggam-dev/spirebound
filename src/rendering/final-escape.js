@@ -17,5 +17,6 @@ export function drawFinalEscape(c,room,time=0){
  c.fillRect(448,84,64,5);c.fillRect(448,122,64,4);
  c.globalAlpha=1;c.textAlign='center';c.font='11px Galmuri, monospace';c.fillStyle=state.ready?'#d6e8c7':'#f2c4b4';
  c.fillText(state.ready?'봉인 파괴 · 출구 개방':`봉인 붕괴 ${Math.ceil(FINAL_ESCAPE_DURATION-state.elapsed)}초`,480,170);
+ if(!state.ready&&state.pressureVersion===1){for(const p of state.pending){c.strokeStyle='#f4aa72';c.lineWidth=2;c.strokeRect(p.x-22,p.y-22,44,44);c.beginPath();c.arc(p.x,p.y,17,0,Math.PI*2);c.stroke();c.fillStyle='#efb78b';c.fillText('소환',p.x,p.y-29);}}
  c.restore();
 }

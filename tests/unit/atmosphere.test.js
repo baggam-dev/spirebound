@@ -16,8 +16,8 @@ test('future deployment layouts vary flanks while current ranking generation kee
 });
 test('new runs persist the upper-floor layout generation',()=>{
  for(const campaign of ['classic','expanded']){
-  const run=newRun(3030,{campaign});assert.equal(run.generationVersion,33);
-  assert.equal(parseSave(encodeSave(run)).generationVersion,33);
+  const run=newRun(3030,{campaign});assert.equal(run.generationVersion,34);
+  assert.equal(parseSave(encodeSave(run)).generationVersion,34);
  }
 });
 test('upper introduction packs stay simple and do not retain elite health',()=>{const s=newRun(4);for(const floor of [6,7]){const r=s.floors[floor][1];assert.ok(r.intro);assert.equal(r.enemies.length,4);assert.equal(new Set(r.enemies.map(e=>e.type)).size,2);assert.ok(r.enemies.every(e=>!e.elite&&e.hp===Math.ceil((32+floor*16)*1.25*(['starKnight','royalGuard'].includes(e.type)?1.15:1))));}});
