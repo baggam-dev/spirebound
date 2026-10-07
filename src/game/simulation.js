@@ -1,3 +1,4 @@
+import {recoverPlayerPosition} from '../world/player-position.js';
 import {emitWeaponVolley,clearTurretEndings,turnStormArrow} from '../combat/weapon-projectiles.js';
 import {trackRankingRoom,recordRankingDefeat} from '../ranking/ranking.js';
 import {releaseReturnSeal} from '../world/return-seals.js';
@@ -49,7 +50,7 @@ export function enemyRadius(e){return e.variant==='slime'||e.type==='minislime'?
 export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||e.attackPhase==='leap';}
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
 export function enterRoom(s){
- trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
+ recoverPlayerPosition(s.player,currentRoom(s).obstacles);trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
  s.player.actionStun=0;s.player.electricGrace=0;resetDemonAttack(r);
  // Do not preserve an off-screen attack aimed at the previous visit's position.
  for(const e of r.enemies){resetCommanderAttack(e);if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
@@ -61,6 +62,7 @@ export function fireArrow(s,target){
 export function stepRun(s,dt,input={x:0,y:0}){
  const events=[],effects=[];if(s.status!=='playing')return {events,effects};
  if(s.player.hp<=0){events.push('dead');return {events,effects};}
+ recoverPlayerPosition(s.player,currentRoom(s).obstacles);
  if(currentRoom(s).shrineState==='choice'&&!currentRoom(s).used)return {events:['incantation'],effects};
  trackRankingRoom(s);const p=s.player,metrics=ensureMetrics(s);observeGrowth(s);tickBossRecord(s,currentRoom(s),dt);s.projectiles??=[];advanceClock(s,dt,false);metrics.floorTimes[s.floor]=(metrics.floorTimes[s.floor]||0)+dt;
  events.push(...tickFinalEscape(s,currentRoom(s),dt));

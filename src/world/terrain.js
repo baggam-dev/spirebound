@@ -12,9 +12,9 @@ export function blocked(x,y,r,obstacles=[]){return obstacles.some(o=>x>o.x-r&&x<
 export function segmentBlocked(a,b,obstacles=[],radius=0){
  return obstacles.some(o=>{let lo=0,hi=1;for(const [start,delta,min,max] of [[a.x,b.x-a.x,o.x-radius,o.x+o.w+radius],[a.y,b.y-a.y,o.y-radius,o.y+o.h+radius]]){if(Math.abs(delta)<1e-9){if(start<min||start>max)return false;}else{const t1=(min-start)/delta,t2=(max-start)/delta;lo=Math.max(lo,Math.min(t1,t2));hi=Math.min(hi,Math.max(t1,t2));if(lo>hi)return false;}}return true;});
 }
-export function moveBody(body,dx,dy,obstacles=[],radius=14){
+export function moveBody(body,dx,dy,obstacles=[],radius=14,bounds=null){
  const steps=Math.max(1,Math.ceil(Math.hypot(dx,dy)/5));
- for(let i=0;i<steps;i++){if(!blocked(body.x+dx/steps,body.y,radius,obstacles))body.x+=dx/steps;if(!blocked(body.x,body.y+dy/steps,radius,obstacles))body.y+=dy/steps;}
+ for(let i=0;i<steps;i++){const x=bounds?Math.max(bounds.minX,Math.min(bounds.maxX,body.x+dx/steps)):body.x+dx/steps;if(!blocked(x,body.y,radius,obstacles))body.x=x;const y=bounds?Math.max(bounds.minY,Math.min(bounds.maxY,body.y+dy/steps)):body.y+dy/steps;if(!blocked(body.x,y,radius,obstacles))body.y=y;}
 }
 export function safeSpawn(body,obstacles=[],radius=18){
  if(!blocked(body.x,body.y,radius,obstacles))return;
