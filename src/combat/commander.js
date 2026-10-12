@@ -47,8 +47,8 @@ export function updateCommander(e,p,r,dt,bullets,hurt){
   return;
  }
  if(c.rainFlash){c.rainFlash.time=Math.max(0,c.rainFlash.time-dt);if(!c.rainFlash.time)delete c.rainFlash;}
- if(c.blink){c.blink.time=Math.max(0,c.blink.time-dt);if(!c.blink.time){e.x=c.blink.x;e.y=c.blink.y;c.blinkFlash=.35;c.blinkClock=q.blink;delete c.blink;if(pressureBoss(e))c.volley={aim:Math.atan2(p.y-e.y,p.x-e.x),count:q.count,time:.25,fired:0};}return;}
- if(c.ricochet){const a=c.ricochet;a.time=Math.max(0,a.time-dt);if(!a.time){for(const offset of commanderOffsets(a.count)){emitShot(e,a.aim+offset,phase===2?440:400,bullets);Object.assign(bullets.at(-1),{ricochet:true,bounces:1,life:5,damage:9,source:'악마 군단장 반사탄'});}delete c.ricochet;c.volleyClock=Math.max(c.volleyClock,.45);}return;}
+ if(c.blink){c.blink.time=Math.max(0,c.blink.time-dt);if(!c.blink.time){e.x=c.blink.x;e.y=c.blink.y;c.blinkFlash=.35;c.blinkClock=q.blink;delete c.blink;if(pressureBoss(e))c.volley={aim:Math.atan2(p.y-e.y,p.x-e.x),count:q.count,time:.30,fired:0};}return;}
+ if(c.ricochet){const a=c.ricochet;a.time=Math.max(0,a.time-dt);if(!a.time){for(const offset of commanderOffsets(a.count)){emitShot(e,a.aim+offset,q.reflectSpeed,bullets);Object.assign(bullets.at(-1),{ricochet:true,bounces:1,life:5,damage:9,source:'악마 군단장 반사탄'});}delete c.ricochet;c.volleyClock=Math.max(c.volleyClock,.45);}return;}
  if(c.snipe){c.snipe.time=Math.max(0,c.snipe.time-dt);if(!c.snipe.time){emitShot(e,c.snipe.aim,q.snipeSpeed,bullets);const b=bullets.at(-1);b.damage=11;b.source='악마 군단장 저격 화살';b.frostArrow=true;delete c.snipe;c.volleyClock=Math.max(c.volleyClock,.55);}return;}
  if(!c.rainClock){c.rain={x:clamp(p.x,145,815),y:clamp(p.y,125,415),radius:120,time:q.rainWindup};c.rainClock=q.rain;delete c.volley;return;}
  if(c.volley){
