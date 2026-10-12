@@ -1,9 +1,11 @@
-// Five-head archer. Logical feet/bow anchors stay compatible with combat.
+import {drawHeroSprite} from './hero-sprite.js';
+// Loading/offline fallback only. The active reference-style art is in hero-sprite.js.
 export const HERO_PROPORTIONS=Object.freeze({headHeight:13,height:65,top:-43,feet:22});
 const ink='#111923';
 const box=(c,x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h);};
 const shape=(c,points,color)=>{c.fillStyle=color;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.fill();};
 export function drawHero(c,p,time,bow){
+ if(drawHeroSprite(c,p))return; // Keep a safe loading/offline fallback.
  const gait=p.moving?Math.sin(p.walk):0,step=gait*3.5,settle=p.moving?Math.abs(Math.cos(p.walk))*.5:Math.sin(time*1.5)*.25,swing=p.moving?Math.sin(p.walk-.6)*2:.4*Math.sin(time*1.5);
  c.save();
  // Long articulated legs: thigh, knee, shin and planted toe, rather than blocks.
