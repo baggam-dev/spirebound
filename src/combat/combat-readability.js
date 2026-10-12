@@ -14,7 +14,7 @@ export function drawCombatLabels(c,effects,compact=false){
  c.save();c.textAlign='center';c.strokeStyle='#101016';c.lineWidth=4;
  for(const f of labels){
   c.font=`bold ${compact?(f.essencePickup?15:18):20}px Galmuri, monospace`;
-  let x=f.x,y=f.y-(1-f.t)*22;
+  let x=f.x,y=f.y-(1-f.t)*22-(f.hitSource?12:0);
   if(compact&&f.essencePickup){
    const base=essences[0];x=base.x;y=Math.max(80,Math.min(470-18*(essences.length-1),base.y+86))+row++*18;
   }
