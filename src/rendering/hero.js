@@ -1,3 +1,4 @@
+import {characterSizes} from './character-sizes.js';
 import {drawHeroSprite} from './hero-sprite.js';
 // Loading/offline fallback only. The active reference-style art is in hero-sprite.js.
 export const HERO_PROPORTIONS=Object.freeze({headHeight:13,height:65,top:-43,feet:22});
@@ -6,6 +7,7 @@ const box=(c,x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.ro
 const shape=(c,points,color)=>{c.fillStyle=color;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.fill();};
 export function drawHero(c,p,time,bow){
  if(drawHeroSprite(c,p))return; // Keep a safe loading/offline fallback.
+ c.save();c.translate(0,22);c.scale(characterSizes.hero/65,characterSizes.hero/65);c.translate(0,-22);
  const gait=p.moving?Math.sin(p.walk):0,step=gait*3.5,settle=p.moving?Math.abs(Math.cos(p.walk))*.5:Math.sin(time*1.5)*.25,swing=p.moving?Math.sin(p.walk-.6)*2:.4*Math.sin(time*1.5);
  c.save();
  // Long articulated legs: thigh, knee, shin and planted toe, rather than blocks.
@@ -38,4 +40,5 @@ export function drawHero(c,p,time,bow){
  shape(c,[[7,-25],[12,-23],[14,-12],[20,-5],[20,2],[15,3],[10,-8],[8,-16]],ink);
  shape(c,[[8,-23],[11,-21],[12,-12],[17,-6],[16,-2],[11,-8],[9,-16]],'#526575');box(c,9,-23,3,2,'#b0bcb5');box(c,12,-11,2,4,'#87988e');box(c,16,-3,4,5,'#ad9070');box(c,17,-3,2,3,'#debf94');bow(c,20-p.recoil*3,-2+gait*.3,p.recoil*6);c.restore();
  c.restore();c.restore();
+ c.restore();
 }

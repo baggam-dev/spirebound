@@ -1,3 +1,4 @@
+import {characterSizes} from '../rendering/character-sizes.js';
 // Rendering-only density control. Damage, bullets, hazards and hit directions stay intact.
 export function readableEffects(effects,compact=false){
  if(!compact)return effects;
@@ -14,7 +15,7 @@ export function drawCombatLabels(c,effects,compact=false){
  c.save();c.textAlign='center';c.strokeStyle='#101016';c.lineWidth=4;
  for(const f of labels){
   c.font=`bold ${compact?(f.essencePickup?15:18):20}px Galmuri, monospace`;
-  let x=f.x,y=f.y-(1-f.t)*22-(f.hitSource?25:0);
+  let x=f.x,y=f.y-(1-f.t)*22-(f.hitSource?Math.max(0,characterSizes.hero-55):0);
   if(compact&&f.essencePickup){
    const base=essences[0];x=base.x;y=Math.max(80,Math.min(470-18*(essences.length-1),base.y+86))+row++*18;
   }

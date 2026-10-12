@@ -1,8 +1,9 @@
+import {characterSizes} from './character-sizes.js';
 const sourceFrames=[
  {x:28,y:126,w:911,h:756,anchorX:580,feet:873},
  {x:979,y:0,w:791,h:884,anchorX:1370,feet:875}
 ];
-const bodyHeight=108,scale=bodyHeight/744,frames=[];
+const bodyHeight=characterSizes.warden,scale=bodyHeight/744,frames=[];
 export const wardenSpriteState=()=>({ready:frames.length===2,frames:frames.length,bodyHeight});
 export const wardenHealthOffset=()=>frames.length?bodyHeight-29+12:52;
 export const wardenLabelOffset=()=>frames.length?bodyHeight-29+20:57;

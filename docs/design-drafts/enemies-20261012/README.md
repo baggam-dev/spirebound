@@ -1,3 +1,11 @@
+# 크기 축소·추격자 보행 로컬 초안
+
+보스까지배포완료후사용자요청의별도작업. [크기 비교·보행 보기](scale-walk-preview.html), [구현/제약](../../character-scale-walk.md), 내장 imagegen [보행 프롬프트](prompts-chaser-walk.md).
+
+표시높이hero56/grunt50/brute64/warden76. 추격자4프레임첫단위연결·발교차보완남음. 후속은로컬커밋만·테스트/푸시/배포없음·기존운영크기/모션유지.
+
+---
+
 # 승인·배포 완료 — 첫 보스 뿔·핏자국 v2
 
 투구뿔 한쌍·대형망치/갑옷곳곳짙은핏자국 추가, 기존녹슨중갑/정지·내려찍기준비2자세 유지. 내장imagegen [수정 프롬프트](prompts-warden-v2.md) · [별도 보기](review.html).

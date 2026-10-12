@@ -1,16 +1,18 @@
+import {drawChaserWalk} from './chaser-walk.js';
+import {characterSizes} from './character-sizes.js';
 // Approved masked grunt originals; crop and downsample once, never modify saved actors.
 const specs={
- chaser:{scale:74/716,frames:[{x:185,y:90,w:695,h:730,anchorX:440,feet:809},{x:938,y:169,w:830,h:655,anchorX:1242,feet:814}]},
- archer:{scale:74/768,frames:[{x:255,y:78,w:567,h:780,anchorX:495,feet:848},{x:1010,y:26,w:724,h:834,anchorX:1247,feet:851}]},
- charger:{scale:74/689,frames:[{x:134,y:123,w:724,h:701,anchorX:440,feet:818},{x:905,y:226,w:739,h:598,anchorX:1243,feet:818}]},
- scatter:{scale:74/703,frames:[{x:181,y:107,w:625,h:715,anchorX:440,feet:816},{x:921,y:158,w:802,h:666,anchorX:1250,feet:818}]},
- ricochet:{width:1773,scale:74/712,frames:[{x:153,y:108,w:649,h:724,anchorX:440,feet:824},{x:920,y:157,w:834,h:672,anchorX:1250,feet:821}]},
- laser:{scale:74/705,frames:[{x:96,y:124,w:610,h:717,anchorX:400,feet:833},{x:854,y:152,w:797,h:690,anchorX:1140,feet:834}]},
- brute:{scale:96/772,feetOffset:24,frames:[{x:34,y:72,w:876,h:784,anchorX:463,feet:847},{x:981,y:214,w:782,h:644,anchorX:1340,feet:849}]}
+ chaser:{scale:characterSizes.grunt/716,frames:[{x:185,y:90,w:695,h:730,anchorX:440,feet:809},{x:938,y:169,w:830,h:655,anchorX:1242,feet:814}]},
+ archer:{scale:characterSizes.grunt/768,frames:[{x:255,y:78,w:567,h:780,anchorX:495,feet:848},{x:1010,y:26,w:724,h:834,anchorX:1247,feet:851}]},
+ charger:{scale:characterSizes.grunt/689,frames:[{x:134,y:123,w:724,h:701,anchorX:440,feet:818},{x:905,y:226,w:739,h:598,anchorX:1243,feet:818}]},
+ scatter:{scale:characterSizes.grunt/703,frames:[{x:181,y:107,w:625,h:715,anchorX:440,feet:816},{x:921,y:158,w:802,h:666,anchorX:1250,feet:818}]},
+ ricochet:{width:1773,scale:characterSizes.grunt/712,frames:[{x:153,y:108,w:649,h:724,anchorX:440,feet:824},{x:920,y:157,w:834,h:672,anchorX:1250,feet:821}]},
+ laser:{scale:characterSizes.grunt/705,frames:[{x:96,y:124,w:610,h:717,anchorX:400,feet:833},{x:854,y:152,w:797,h:690,anchorX:1140,feet:834}]},
+ brute:{scale:characterSizes.brute/772,feetOffset:24,frames:[{x:34,y:72,w:876,h:784,anchorX:463,feet:847},{x:981,y:214,w:782,h:644,anchorX:1340,feet:849}]}
 };
 const cached=new Map();
 export const hasGruntSprite=type=>cached.has(type);
-export const gruntSpriteState=()=>({ready:cached.size===Object.keys(specs).length,types:[...cached.keys()],frames:[...cached.values()].reduce((n,f)=>n+f.length,0),bodyHeight:74});
+export const gruntSpriteState=()=>({ready:cached.size===Object.keys(specs).length,types:[...cached.keys()],frames:[...cached.values()].reduce((n,f)=>n+f.length,0),bodyHeight:characterSizes.grunt,bruteHeight:characterSizes.brute});
 export const gruntSpriteReady=typeof Image==='undefined'?Promise.resolve(false):Promise.all(Object.entries(specs).map(([type,s])=>new Promise(resolve=>{
  const atlas=new Image();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==(s.width||1774)||atlas.naturalHeight!==887){resolve(false);return;}
@@ -30,7 +32,7 @@ export function gruntPose(e,p,run){
 }
 export function drawGruntSprite(c,e,p,run){
  const frames=cached.get(e.type);if(!frames)return false;const pose=gruntPose(e,p,run),f=frames[pose.index];
- c.save();c.scale(pose.face,1);c.imageSmoothingEnabled=false;c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y-pose.bob));
+ c.save();c.scale(pose.face,1);c.imageSmoothingEnabled=false;if(!(e.type==='chaser'&&pose.index===0&&drawChaserWalk(c,p)))c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y-pose.bob));
  // Return-trip rage remains identifiable without losing the approved grey clothes.
  if(run?.key||e.escapeDepth){c.strokeStyle='#ef858d';c.lineWidth=2;c.beginPath();c.moveTo(-17,17);c.lineTo(-21,12);c.moveTo(17,17);c.lineTo(21,12);c.stroke();}
  c.restore();return true;

@@ -1,0 +1,21 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>크기 축소·추격자 보행 로컬 초안</title>
+<style>body{background:#172229;color:#e5e8eb;font:16px system-ui;margin:0}main{max-width:1024px;margin:auto;padding:24px}canvas{display:block;max-width:100%;height:auto;background:#243238;margin:16px 0;border:1px solid #59656b}button,a{color:#d1e9ed}button{background:#35444a;border:1px solid #657880;padding:8px 18px}p{line-height:1.7}h1{font-size:24px}</style>
+<main><h1>크기 축소·추격자 보행 — 로컬 초안</h1><p>보스까지 운영배포 완료 후의 별도 작업입니다. 축소·보행은 로컬 코드만 연결했으며 테스트·푸시·배포하지 않았습니다. 아래는 같은 간격에 배치한 표시크기 비교용 그림으로 실제 플레이 검증 결과가 아닙니다.</p><canvas id="sizes" width="960" height="760"></canvas><h2>추격자 보행 4프레임 초안</h2><button id="toggle">일시정지</button><canvas id="walk" width="240" height="160"></canvas><p>이동 프레임의 좌우 발 교차와 캐릭터 일관성은 아직 실게임 검증 전입니다. 다른 잡몹 보행 확장은 다음 단위입니다. <a href="prompts-chaser-walk.md">이미지 생성·보완 프롬프트</a></p></main>
+<script>
+const root='../../../assets/images/',rows=[{label:'운영 배포 현재 / 주인공80·잡몹74·거인96·보스108',hero:80,grunt:74,brute:96,warden:108},{label:'로컬 축소 초안 / 주인공56·잡몹50·거인64·보스76',hero:56,grunt:50,brute:64,warden:76}];
+const actors=[
+ ['주인공','hero-reference-atlas.png','hero',64,108,419,554,240,658,546,22],
+ ['추격자','chaser-masked-atlas.png','grunt',185,90,695,730,440,809,716,21],
+ ['궁수','archer-masked-atlas.png','grunt',255,78,567,780,495,848,768,21],
+ ['돌진병','charger-masked-atlas.png','grunt',134,123,724,701,440,818,689,21],
+ ['산탄사수','scatter-masked-atlas.png','grunt',181,107,625,715,440,816,703,21],
+ ['반사사수','ricochet-masked-atlas.png','grunt',153,108,649,724,440,824,712,21],
+ ['광선마법사','laser-masked-atlas.png','grunt',96,124,610,717,400,833,705,21],
+ ['도약거인','brute-masked-atlas.png','brute',34,72,876,784,463,847,772,24],
+ ['첫보스','warden-horns-blood-atlas.png','warden',28,126,911,756,580,873,744,29]
+];
+const images=new Map();function fetchImage(name){return new Promise(resolve=>{const img=new Image();img.onload=()=>{images.set(name,img);resolve(img)};img.onerror=()=>resolve(null);img.src=root+name})}
+Promise.all(actors.map(a=>fetchImage(a[1]))).then(()=>{const c=document.querySelector('#sizes').getContext('2d');for(const [row,s] of rows.entries()){const top=row*380;c.fillStyle='#243238';c.fillRect(0,top,960,380);c.strokeStyle='#34444a';for(let x=0;x<960;x+=40){c.beginPath();c.moveTo(x,top+45);c.lineTo(x,top+355);c.stroke()}for(let y=top+45;y<top+356;y+=40){c.beginPath();c.moveTo(0,y);c.lineTo(960,y);c.stroke()}c.fillStyle='#e7edf0';c.font='18px sans-serif';c.fillText(s.label,20,top+30);for(const [i,a] of actors.entries()){const [label,file,type,x,y,w,h,anchor,feet,denom,offset]=a,scale=s[type]/denom,img=images.get(file);if(img){c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(img,x,y,w,h,70+i*102+(x-anchor)*scale,top+275+offset-(feet-y)*scale,w*scale,h*scale)}c.fillStyle='#d1d9df';c.font='13px sans-serif';c.fillText(label,40+i*102,top+335)}}});
+const frames=[[69,36,534,596,275,625],[707,36,520,596,910,625],[69,652,534,579,275,1224],[706,652,525,581,910,1226]];let playing=true,index=0,last=0;document.querySelector('#toggle').onclick=()=>{playing=!playing;document.querySelector('#toggle').textContent=playing?'일시정지':'재생'};
+fetchImage('chaser-walk-atlas.png').then(img=>{if(!img)return;const c=document.querySelector('#walk').getContext('2d');function frame(t){if(playing&&t-last>160){index=(index+1)%4;last=t}c.clearRect(0,0,240,160);const [x,y,w,h,anchor,feet]=frames[index],scale=100/(feet-y);c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(img,x,y,w,h,100+(x-anchor)*scale,135-(feet-y)*scale,w*scale,h*scale);c.fillStyle='#fff';c.font='12px sans-serif';c.fillText('frame '+(index+1),10,20);requestAnimationFrame(frame)}requestAnimationFrame(frame)});
+</script></html>

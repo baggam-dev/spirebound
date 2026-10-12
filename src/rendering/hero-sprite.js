@@ -1,3 +1,4 @@
+import {characterSizes} from './character-sizes.js';
 // Original generated reference-style atlas. Cache its four frames at game size.
 const sourceFrames=[
  {x:64,y:108,w:419,h:554,anchorX:240,feet:658},
@@ -5,8 +6,8 @@ const sourceFrames=[
  {x:1066,y:110,w:451,h:549,anchorX:1275,feet:655},
  {x:1601,y:70,w:468,h:593,anchorX:1785,feet:659}
 ];
-const scale=80/546,frames=[];
-export const heroSpriteState=()=>({ready:frames.length===4,frames:frames.length,bodyHeight:80});
+const scale=characterSizes.hero/546,frames=[];
+export const heroSpriteState=()=>({ready:frames.length===4,frames:frames.length,bodyHeight:characterSizes.hero});
 export const heroSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
  const atlas=new Image();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==2079||atlas.naturalHeight!==756){resolve(false);return;}
