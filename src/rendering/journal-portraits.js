@@ -14,7 +14,7 @@ import {enemyGuide} from '../world/expedition.js';
 const cache=new Map(),pendingRoots=new WeakSet();
 // Render once, using the same bodies as combat. Never mutate the expedition.
 function portrait(key,part){
- const id=key+':'+part+':'+(['chaser','archer'].includes(key)?gruntSpriteState().types.includes(key):false);if(cache.has(id))return cache.get(id);
+ const id=key+':'+part+':'+gruntSpriteState().types.includes(key);if(cache.has(id))return cache.get(id);
  const source=document.createElement('canvas');source.width=384;source.height=384;
  const c=source.getContext('2d'),boss=['warden','prism','slime','king','commander','demon'].includes(key);
  const e={x:192,y:250,type:boss?'boss':key,hp:100,max:100,id:0,tier:0,part:part||'core'};
