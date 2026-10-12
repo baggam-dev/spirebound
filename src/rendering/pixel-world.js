@@ -1,3 +1,4 @@
+import {drawWardenSprite} from './warden-sprite.js';
 import {drawHero} from './hero.js';
 import {drawGruntSprite} from './grunt-sprite.js';
 import {objectPoint} from '../world/object-positions.js';
@@ -36,6 +37,7 @@ export function drawPixelActor(c,e,time=0,run=null){
   c.scale(p.face,1);drawHero(c,p,time,bow);if(preparing){c.save();c.translate(29,-2);drawElementNock(c,preparing.element,preparing.charge);c.restore();}
  }else if(boss){
   const attack=bossPose(e);c.translate(0,attack.bodyY-attack.lift);
+  if(!drawWardenSprite(c,e,p,attack,red)){
   box(c,-25,-22,50,43,ink);box(c,-22,-20,44,39,red?'#763a47':'#454654');
   for(const side of [-1,1]){box(c,side<0?-26:10,16,16,13,'#282b35');box(c,side<0?-31:18,-22,17,21,'#988778');box(c,side<0?-29:20,-21,13,4,'#c7b697');box(c,side<0?-30:24,-44,6,23,'#d0b783');box(c,side<0?-34:28,-47,6,8,'#f0d49b');}
   box(c,-20,-38,40,25,ink);box(c,-17,-35,34,19,'#756c71');box(c,-17,-35,34,4,'#aba08e');box(c,-12,-26,24,6,'#252632');box(c,-10,-25,6,3,'#ffc087');box(c,5,-25,6,3,'#ffc087');box(c,-3,-35,6,22,'#a99377');
@@ -52,6 +54,7 @@ export function drawPixelActor(c,e,time=0,run=null){
   box(c,-11,-1,22,2,'#2d3038');box(c,-8,0,4,2,'#b79b7e');box(c,5,0,4,2,'#b79b7e');
   c.save();c.translate(-34,-5-(attack.stage==='air'?30:attack.charge*24));c.rotate(attack.weapon);box(c,-3,-10,5,39,'#8d704a');box(c,-11,-23,22,17,ink);box(c,-9,-21,18,12,'#a6a397');box(c,-7,-21,14,3,'#dad4b0');c.restore();if(attack.stage==='windup'){diamond(c,0,-7,3+Math.round(attack.charge*2),'#fff0b9');}
 
+  }
  }else if(drawGruntSprite(c,e,p,run)){
   // The approved raster includes its own clothing and weapon.
  }else{
