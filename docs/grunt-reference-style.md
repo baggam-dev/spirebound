@@ -8,3 +8,5 @@
 - server.js 및 deploy.ps1에 두PNG만 명시 허용, public-https QA에서 바이너리일치 확인.
 
 검증: 전체447개 통과. tools/qa/grunt-reference-qa.mjs 로컬Edge12장면(PC1280×800, 모바일에뮬844×390/390×844 × normal/attack/rage/legacy), 실제렌더4캐시/자세/좌우/그리기상태불변/초상/이동·HP보존·구27저장·로딩실패fallback/오류·넘침0. 비교 grunt-reference-comparison.png 및 모바일 grunt-reference-mobile.png. 실제iPhone/장시간최대몹 FPS 미검증. 운영 배포/공개검증은 WORK_STATUS 및 WORK_LOG의 최신 기록을 따른다.
+
+운영 검증 완료: ac3c115 origin/main / release-20261012-141218-8c4571. 공개 Edge 12장면 및47파일·PNG3종바이너리일치·HTTPS/HTTP308/랭킹/보안쿠키/이전 통과, 서버Python25개. 공개 모바일 캡처 grunt-reference-public-mobile.png. 운영 점수제출 없음.

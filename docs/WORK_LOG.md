@@ -596,3 +596,11 @@ a5c2e61 푸시·release-20261012-132552-cbc635 활성(107런타임파일). 서�
 
 ## 2026-10-12 승인 잡졸 v3 로컬검증
 2026-10-12 승인 v3 일반잡졸 로컬 구현/검증 완료. src/rendering/grunt-sprite.js에서 원본1774×887 두종 PNG를74px/4캐시로 변환, pixel-world 역할별 정지/근접/조준·연사/좌우·이동바운스 연결. 회색 의상 유지하며 하강 붉은 발쪽 표식, 체력바60px상향, 원정기록 초상 같은 스프라이트 및 비동기로딩 캐시갱신. server/deploy PNG 허용·공개QA 두PNG일치 확인 추가. 전체447개 및 로컬Edge12장면/4캐시/두공격자세/초상/불변/이동·HP/구27저장/로딩실패fallback 통과, 오류0. 다음: 코드·자산·문서 커밋/푸시→deploy.ps1→공개 grunt-reference/public-https QA. 변경파일 src/rendering/grunt-sprite·pixel-world·journal-portraits, src/game/game, server, deploy, QA, PNG2종 및 문서. 실행중명령없음·차단없음. 실제기기/보행추가프레임은미검증.
+
+## 2026-10-12 승인 잡졸 운영 배포
+ac3c115 origin/main 푸시, release-20261012-141218-8c4571 활성. 110런타임파일·서버Python25개/Nginx/인증서/HTTPShealth 통과. 다음 공개12장면/파일·PNG일치 검증.
+
+## 2026-10-12 승인 잡졸 공개검증 완료 및 후속 시안
+2026-10-12 승인 잡졸 v3 적용·푸시·배포·공개검증 완료. 사용자 “확정 및 다음” 승인 두종(추격자/연사궁수), 코드 ac3c115 origin/main, 운영 release-20261012-141218-8c4571 활성. 회색·입가리개 원본 PNG2종/74px4캐시, 정지·근접·조준/연사·좌우·이동바운스, 체력바/기록초상·비동기갱신/실패fallback. 전투/충돌/0.38·generation34/랭킹 유지. 전체447개·로컬/공개Edge12장면 각각4캐시/자세/초상/상태불변/실제이동·HP/구27저장/실패fallback/오류·넘침0 통과. 서버Python25개/Nginx/인증서/HTTPShealth, 공개47정적파일+주인공/잡졸PNG3바이너리일치/HTTP308/랭킹/쿠키/기록이전 통과. 실제iPhone/별도보행프레임/최대몹장시간FPS 미검증. 상세 grunt-reference-style.md. 실행중명령/세션없음.
+후속 돌진병·산탄 사수 시안 생성·제시 완료/컨펌대기. 내장 image_gen 생성 모드에서 승인 chaser-v3 스타일 참조: 회색/입가리개/수수한장비 유지, 돌진병 철모/도끼·정지/돌진자세, 산탄사수 천모자/짧은나팔총·정지/조준자세. docs/design-drafts/enemies-20261012/charger-concept.png·scatter-concept.png(각1774×887 RGBA/알파0~255)·prompts-charger-scatter.md 보존, 생성원본 미삭제. 런타임 미반영. 다음: 두종 사용자 컨펌/수정의견 대기→승인된 역할만 구현·검증·푸시·배포.
+생성원본 exec-75076a00-1f97-4aec-80df-fbd7b546b9c2.png / exec-6a817f79-8928-46ad-a7e2-f92b04fc911e.png 보존. 최종 시안/검증 기록만 커밋·푸시하며 런타임 추가배포/재시험 불필요.
