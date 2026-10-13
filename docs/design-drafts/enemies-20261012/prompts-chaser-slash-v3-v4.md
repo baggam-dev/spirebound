@@ -1,0 +1,9 @@
+# 단일 베기 칼팔 보완
+
+내장 imagegen 편집2회. v3 원본참조·칼손교정실패. v4 v3팔만수정·화면오른쪽칼팔/왼쪽빈손 시각확인.
+
+## v3
+Precise-object-edit. Attached two-pose approved grey masked knife soldier is reference. Output ONLY ONE fullbody character, based on LEFT idle figure, in quick shortknife slash pose. Keep head/greyhair/mask/outfit/legs/scale exactly same as LEFT figure. Crucial: LEFT-ON-SCREEN arm remains lowered EMPTY FIST beside left hip. ONLY RIGHT-ON-SCREEN arm which already holds knife changes: keep that shoulder on RIGHT side of torso, elbow bends slightly forward, hand at right side of chest extending outward to RIGHT, knife slashes short diagonal DOWNWARD on right side of body. Never use left-on-screen arm to slash, never cross forearm from left shoulder across chest. Blade remains in original right-on-screen hand firmly gripped. Left empty fist visibly separate on left at hip. A VERY THIN small pale steel-white motion arc beside blade on RIGHT only, no huge crescent/no glow. No lunging/jumping, grounded feet same pose. Full knife/head/boots in frame with generous margins. Fine pixel fantasy RPG style, actual transparent background, no text/numbers/floor/shadow. Single character not sheet.
+
+## v4
+Edit ONLY the arms and weapon of this single character. SWAP WHICH HAND HOLDS KNIFE: the hand currently empty at RIGHT edge near right hip MUST hold the knife. The hand currently holding knife across belly at LEFT side MUST be EMPTY, lower that left arm at left hip. Remove knife from left hand entirely. Put same knife into rightmost hand, blade pointing diagonally down/out toward right edge, right forearm slightly extended. Keep left empty fist clearly visible at left hip. Thin small pale arc ONLY next to new blade on right side, remove arc crossing left belly. Preserve entire head/face/hair/body/clothes/legs/scale/colors and transparency. Do NOT mirror whole image. No extra knife. This edit is hand assignment correction, one knife in RIGHTMOST hand only.
