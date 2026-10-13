@@ -713,3 +713,6 @@ e50369c / release-20261012-173829-3baf4d 활성. 서버Python25개/Nginx/인증�
 
 ## 2026-10-13 모바일1/2 로컬구현
 2026-10-13 1/2 모바일 가로전용·더블탭억제 로컬구현 완료(미검증). docs/mobile-landscape-input.md. mobile-ui coarse/portrait감지·가로안내/이벤트·전체화면지원시 landscape잠금시도, game resume/update세로차단·전환입력reset/일시정지/저장·가로복귀수동재개, mobile.css세로전투/HUD/조작숨김·메뉴보존·body/헤더/HUD/일반버튼 manipulation. Canvas/스틱/액션none·유물pan-x 유지, OS회전/확대보장아님. index안내문구/공개QA확인파일 준비. 실제기기·런타임·브라우저·단위 테스트 미실행, 푸시/배포없음·로컬커밋만. 승인보행e155065 함께누적미검증, 운영release-20261012-195601-440a80 유지. 수정 mobile-ui.js/game.js/mobile.css/index.html/public-https-qa 및기록, 실행중세션없음. 다음 3~5HUD이미지시안/컨펌 또는 배포지시때 기존QA세로전투기대값을차단으로갱신·회전/정지재개/저장/터치/스크롤·보행합성검증후푸시배포. 3~8미구현.
+
+## 2026-10-13 HUD외곽시안
+2026-10-13 3~5 모바일HUD 배치 이미지시안 v1 생성·직접제시/컨펌대기. 내장imagegen 첨부화면편집1회, docs/design-drafts/enemies-20261012/mobile-hud-v1.png/prompts-mobile-hud-v1.md 보존. 체력/유물좌상단·스킬좌하단(스틱위)·미니맵/수치우상단·액션우하단 제안, 아이콘/숫자는배치예시·실제캡처아님. 생성이미지 중앙하단 기존아이콘1개 잔존은시안오류이며 최종구현때삭제대상, 캐릭터/맵재설계아님. runtime/배포자산미반영·테스트/푸시/배포없음·로컬시안커밋만. 1/2 2cac2cb·보행e155065 미검증누적, 운영release-20261012-195601-440a80 유지. 다음사용자컨펌→HUD외곽동적레이아웃/미니맵별도Canvas 로컬구현. 실행중세션없음.
