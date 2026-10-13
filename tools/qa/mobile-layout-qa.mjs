@@ -24,6 +24,7 @@ try{
   const scale=await page.evaluate(()=>visualViewport.scale);const game=await page.locator('#game').boundingBox();await page.touchscreen.tap(game.x+game.width/2,game.y+game.height/2);await page.touchscreen.tap(game.x+game.width/2,game.y+game.height/2);assert.equal(await page.evaluate(()=>visualViewport.scale),scale);
   // Exercise the real captured joystick, then rotate while the pointer is still down.
   const stick=await page.locator('#stick').boundingBox();await page.mouse.move(stick.x+stick.width*.65,stick.y+stick.height*.65);await page.mouse.down();assert.equal(await page.locator('#stick').evaluate(el=>el.classList.contains('active')),true);assert.ok(Math.abs(await page.locator('#stick').evaluate(el=>parseFloat(el.style.getPropertyValue('--stick-x')))-stick.width*.65)<1);await page.mouse.move(stick.x+stick.width*.65+24,stick.y+stick.height*.65);await page.waitForTimeout(200);
+  if(output)await page.screenshot({path:join(output,'floating-stick-'+width+'.png')});
   // Reset capture and halt simulation on rotation; returning does not auto-resume.
   await page.setViewportSize({width:390,height:844});await page.locator('#resume').waitFor();
   const snapshot=()=>page.evaluate(async()=>{const {parseSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=parseSave(localStorage.getItem(SAVE_KEY));return {elapsed:s.elapsed,x:s.player.x,hp:s.player.hp};});
