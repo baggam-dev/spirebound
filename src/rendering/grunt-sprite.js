@@ -1,5 +1,6 @@
 import {drawChaserWalk} from './chaser-walk.js';
 import {drawChaserSlash} from './chaser-slash.js';
+import {drawChaserSweep} from './chaser-sweep.js';
 import {drawArcherWalk} from './archer-walk.js';
 import {drawChargerWalk} from './charger-walk.js';
 import {drawScatterWalk} from './scatter-walk.js';
@@ -41,5 +42,5 @@ export function drawGruntSprite(c,e,p,run){
  c.save();c.scale(pose.face,1);c.imageSmoothingEnabled=false;const slashing=e.type==='chaser'&&drawChaserSlash(c,e),walking=!slashing&&pose.index===0&&(e.type==='chaser'?drawChaserWalk(c,p):e.type==='archer'?drawArcherWalk(c,p):e.type==='charger'?drawChargerWalk(c,p):e.type==='scatter'?drawScatterWalk(c,p):e.type==='ricochet'?drawRicochetWalk(c,p):e.type==='laser'&&e.phase!=='aim'?drawLaserWalk(c,p):e.type==='brute'&&!e.phase?drawBruteWalk(c,p):false);if(!slashing&&!walking)c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y-pose.bob));
  // Return-trip rage remains identifiable without losing the approved grey clothes.
  if(run?.key||e.escapeDepth){c.strokeStyle='#ef858d';c.lineWidth=2;c.beginPath();c.moveTo(-17,17);c.lineTo(-21,12);c.moveTo(17,17);c.lineTo(21,12);c.stroke();}
- c.restore();return true;
+ c.restore();if(e.type==='chaser')drawChaserSweep(c,e);return true;
 }
