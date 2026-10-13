@@ -797,3 +797,6 @@ e50369c / release-20261012-173829-3baf4d 활성. 서버Python25개/Nginx/인증�
 
 ### 승인 도약거인 보행 연결
 2026-10-13 사용자진행 승인거인v3 보행 로컬연결 완료·미검증. 승인PNG원본 brute-walk-atlas1774x887 복사, brute-walk.js가로4캐시64px/feet24·거리순환·grunt기존좌우반전. brute drawEnemyDetails 기존moving:false 경로를WeakMap x/y/누적거리로보완·일반이동(!phase)만활성·windup/air/swing/recover보행차단·기존점프lift45/공격자세/경고유지. 저장actor변경없음. server/deploy/publicQA목록추가(실행없음). PNG크기읽기만·crop경계/발정렬/프레임/전환/불변/fallback실동작미검증. 2번발바닥/1~3접지유사승인안유지·도끼파지최종디테일링보류. 돌진/산탄/반사/마법사와5종로컬미검증누적. 테스트/푸시/배포없음·로컬커밋만. 운영 release-20261013-115042-384ad4/마지막검증유지. 수정PNG/brute-walk/grunt/combat-brute/server/deploy/QA/기록, 실행중세션없음. 다음배포지시때5종프레임/공격우선/불변/fallback/crop크기묶음검증 또는다음그래픽범위선정.
+
+### 5종보행 배포전검증
+2026-10-13 5종보행 배포전검증 통과: 신규remaining-walk-qa Edge 5종각4프레임구분·공격자세고정·정지·actor불변·5개로드실패fallback/pageerror0. 캡처frames.png 시각확인 큰잘림없음(첫칸거인actor검증겹침있음). brute-reference15장면·저장재개/legacy/airLift45/portraits/fallback통과. 관련서버/가독성4개+abilities3개 총7테스트통과. 최초잘못된테스트경로명령은파일없음으로미실행·실제관련경로로대체. 전체449재실행안함(직전배포성공결과유지). 실기기/보행자연스러움/난이도미검증. 실행중세션없음. 다음검증기록커밋푸시→deploy.ps1→공개파일/5종보행확인. 현재운영release-20261013-115042-384ad4.
