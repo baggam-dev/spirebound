@@ -32,7 +32,7 @@ export function drawPrism(ctx,e,obstacles,enemies=[],time=0){
   const angles=e.prismAttack==='laser'?[-.65,-.325,0,.325,.65]:Array.from({length:18},(_,i)=>i*Math.PI/4);
   for(const offset of angles){const a=e.aim+offset,end=e.prismAttack==='laser'?beamEnd({...e,aim:a},obstacles):{x:e.x+Math.cos(a)*120,y:e.y+Math.sin(a)*120};ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(end.x,end.y);ctx.stroke();}
  }
- ctx.font='11px Galmuri, monospace';ctx.textAlign='center';ctx.fillStyle='#ead9b5';ctx.fillText(e.prismPhase==='recover'?'빈틈!':e.prismAttack==='laser'?'오중 광선':['shards','cage'].includes(e.prismAttack)?(e.prismAttack==='cage'?'수렴 결정 감옥':'회전 결정 연사'):'반사 결정탄',e.x,e.y-55);ctx.restore();
+ ctx.font='11px Galmuri, monospace';ctx.textAlign='center';ctx.fillStyle='#ead9b5';ctx.fillText(e.prismPhase==='recover'?'빈틈!':e.prismAttack==='laser'?'오중 광선':['shards','cage'].includes(e.prismAttack)?(e.prismAttack==='cage'?'수렴 결정 감옥':'회전 결정 연사'):'반사 결정탄',e.x,e.y-70);ctx.restore();
 }
 
 export function updatePrismSummons(e,p,room,dt,random){
