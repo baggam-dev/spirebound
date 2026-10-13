@@ -29,5 +29,11 @@ canvas{width:100%;height:auto;aspect-ratio:16/9}
 .arena:has(#overlay:not(:empty)) .touch,.arena:has(#overlay:not(:empty)) #interact{visibility:hidden}
 }
 @media(pointer:coarse) and (orientation:portrait){
-main{align-items:flex-start;padding-top:20px!important}.arena{width:100%}.rotate{display:block;position:fixed;top:calc(44px + 100vw*9/16 + 30px);left:10px;right:10px;font-size:12px}.cards{flex-direction:column}#stick{height:45dvh}.build-status{left:15%;right:15%}
+/* Portrait supports menus and saving, never the combat layout. */
+.rotate{display:none}.arena>canvas,#runHUD,.touch,#interact{visibility:hidden!important}.cards{flex-direction:column}
+}
+#landscapeNotice{display:none}
+@media(pointer:coarse){
+ body,header,header button,header a,.hud-item,.panel button,input,select{touch-action:manipulation}
+ #landscapeNotice:not([hidden]){display:flex;position:fixed;inset:calc(44px + env(safe-area-inset-top)) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);z-index:12;align-items:center;justify-content:center;text-align:center;padding:24px;background:#10191d;color:#e8dec7;font-size:16px;line-height:1.8;pointer-events:none}
 }
