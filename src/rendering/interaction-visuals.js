@@ -1,4 +1,5 @@
 // Successful interactions only; transient presentation never enters saved state.
+import {doorCenter} from '../world/doors.js';
 const effects=new WeakMap();
 export function emitInteraction(s,kind,room,detail={}){
  const list=(effects.get(s)||[]).filter(e=>e.room===room&&s.elapsed-e.start<.9&&(kind!=='level'||e.kind!=='level'));
@@ -29,7 +30,7 @@ export function drawInteractionEffects(c,s,r){
    c.fillRect(406,170-Math.round(p*8),148,1);
    if(e.unlocked)for(let d=0;d<4;d++){
     if(!e.doors?.[d])continue;
-    c.save();c.translate(d===1?943:d===3?17:480,d===0?25:d===2?520:270);c.rotate(d*Math.PI/2);
+    c.save();c.translate(d===1?943:d===3?17:doorCenter(e.room,d),d===0?25:d===2?520:doorCenter(e.room,d));c.rotate(d*Math.PI/2);
     // A broken seal retreats to the jambs; the opening is immediately traversable.
     const spread=Math.round(12+p*27);c.fillStyle='#c5dec0';
     for(const side of [-1,1]){c.fillRect(side*spread-2,-6,4,12);c.fillRect(side*(spread+6)-1,3+p*6,2,3);}

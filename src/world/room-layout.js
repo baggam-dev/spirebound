@@ -1,8 +1,9 @@
 import {seededRandom} from '../game/random.js';
 import {applyRoomShape} from './room-shapes.js';
+import {refreshDoorLayout} from './doors.js';
 // One active layout rule for both new and loaded expeditions.
 export function refreshRoomLayout(run){
- if(run.roomLayoutVersion===1)return;
+ if(run.roomLayoutVersion===1){refreshDoorLayout(run);return;}
  for(const [floor,rooms] of run.floors.entries()){
   // The final demon arena has no ascending stairs and retains its dedicated coordinates.
   if(floor===9)continue;
@@ -19,4 +20,5 @@ export function refreshRoomLayout(run){
   }
  }
  run.roomLayoutVersion=1;
+ refreshDoorLayout(run);
 }

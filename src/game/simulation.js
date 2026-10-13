@@ -1,4 +1,5 @@
 import {recoverPlayerPosition} from '../world/player-position.js';
+import {doorCenter,doorArrival} from '../world/doors.js';
 import {emitWeaponVolley,clearTurretEndings,turnStormArrow} from '../combat/weapon-projectiles.js';
 import {trackRankingRoom,recordRankingDefeat} from '../ranking/ranking.js';
 import {releaseReturnSeal} from '../world/return-seals.js';
@@ -71,8 +72,8 @@ export function stepRun(s,dt,input={x:0,y:0}){
  const hurt=(raw,source='알 수 없는 공격',kind=null,origin=hitOrigin)=>{if(s.entryGrace>0||p.hp<=0||s.invulnerable>0||raw<=0)return;if(absorbGuardian(s)){s.invulnerable=.65;effects.push({x:p.x,y:p.y-35,t:.8,color:'#b8d9f1',text:'수호!'});metrics.shields++;return;}const before=p.hp,result=takeDamage(s,r.trialState==='active'?Math.min(raw,9):raw,kind);if(before>p.hp)effects.push({x:p.x,y:p.y-35,t:1,color:'#ff7188',text:'-'+(before-p.hp)+' ♥',hitSource:source,hitAngle:origin?Math.atan2(origin.y-p.y,origin.x-p.x):null});metrics.damageTaken+=before-p.hp;recordHit(s,source,before-p.hp,result==='blocked');if(result==='blocked'){metrics.shields++;events.push('shield');}};
  const n=Math.max(1,Math.hypot(input.x,input.y)),frostSlow=p.frostSlow>0?.72:1;moveBody(p,input.x/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),input.y/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),r.obstacles);p.frostSlow=Math.max(0,(p.frostSlow||0)-dt);
  const d=p.y<48?0:p.x>930?1:p.y>492?2:p.x<30?3:-1;
- if(d>=0){const next=neighbor(s,d),aligned=d%2===0?Math.abs(p.x-480)<40:Math.abs(p.y-270)<35;
-  if(next>=0&&aligned&&!roomLocked(s,r)){s.room=next;r=currentRoom(s);p.x=d===1?48:d===3?912:p.x;p.y=d===0?477:d===2?63:p.y;enterRoom(s);events.push('room');}
+ if(d>=0){const next=neighbor(s,d),aligned=Math.abs((d%2?p.y:p.x)-doorCenter(r,d))<(d%2?35:40);
+  if(next>=0&&aligned&&!roomLocked(s,r)){s.room=next;r=currentRoom(s);Object.assign(p,doorArrival(r,(d+2)%4));enterRoom(s);events.push('room');}
   else{p.x=Math.max(31,Math.min(929,p.x));p.y=Math.max(49,Math.min(491,p.y));}
  }
  if(r.shrineState==='choice'&&!r.used)return {events:[...events,'incantation'],effects};

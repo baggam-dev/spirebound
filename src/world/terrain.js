@@ -1,4 +1,5 @@
 import {drawStoneWalls} from '../rendering/stone-walls.js';
+import {doorCenter} from './doors.js';
 const directions=[[0,-1],[1,0],[0,1],[-1,0]];
 export function roomDoors(rooms,room){return directions.map(([x,y])=>rooms.some(n=>n.x===room.x+x&&n.y===room.y+y));}
 // Four separated islands preserve a wide central cross and perimeter paths.
@@ -59,7 +60,7 @@ export function drawMinimap(ctx,rooms,current,path=[],doorsForRoom=r=>roomDoors(
  const minX=Math.min(...visible.map(r=>r.x)),minY=Math.min(...visible.map(r=>r.y)),width=Math.max(...visible.map(r=>r.x))-minX+1,height=Math.max(...visible.map(r=>r.y))-minY+1,step=Math.min(28,142/width,125/height),size=step*.68;
  const ox=855-width*step/2,oy=38+(125-height*step)/2;
  for(const r of visible){const x=ox+(r.x-minX)*step+(step-size)/2,y=oy+(r.y-minY)*step+(step-size)/2;ctx.fillStyle=r===current?'#cfbb83':r.returnRisk==='high'?'#a35d53':r.returnRisk==='low'?'#4c876b':'#536d60';ctx.fillRect(x,y,size,size);if(path.includes(rooms.indexOf(r))){ctx.strokeStyle='#f4dc85';ctx.lineWidth=2;ctx.strokeRect(x-1,y-1,size+2,size+2);}
- doorsForRoom(r).forEach((open,i)=>{if(!open)return;ctx.fillStyle='#e7dcaf';const [dx,dy]=directions[i],cx=x+size/2+dx*size/2,cy=y+size/2+dy*size/2;ctx.fillRect(cx-(dx?1.5:2.5),cy-(dy?1.5:2.5),dx?3:5,dy?3:5);});
+ doorsForRoom(r).forEach((open,i)=>{if(!open)return;ctx.fillStyle='#e7dcaf';const [dx,dy]=directions[i],fraction=r.doorPositions?(doorCenter(r,i)-(i%2?44:25))/(i%2?464:910):.5,cx=x+(dx?(dx>0?size:0):size*fraction),cy=y+(dy?(dy>0?size:0):size*fraction);ctx.fillRect(cx-(dx?1.5:2.5),cy-(dy?1.5:2.5),dx?3:5,dy?3:5);});
  const symbol=r.hasChest?'~◆':({up:'↑',down:'↓',boss:'!',exit:'⌂',treasure:'◆',fountain:'~',shrine:'†',event:'?'})[r.type];if(symbol){ctx.fillStyle=r.type==='fountain'&&r.used?'#88948a':'#f3e9c8';ctx.font=`${Math.min(11,size-2)}px Galmuri, monospace`;ctx.fillText(symbol,x+size/2,y+size/2+3);}
  }
 }
