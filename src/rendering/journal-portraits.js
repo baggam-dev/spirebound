@@ -1,6 +1,7 @@
 import {wardenSpriteReady,wardenSpriteState} from './warden-sprite.js';
 import {flowerSpriteReady,flowerSpriteState} from './flower-sprite.js';
 import {prismSpriteReady,prismSpriteState} from './prism-sprite.js';
+import {slimeSpriteReady,slimeSpriteState} from './slime-sprite.js';
 import {drawPixelActor} from './pixel-world.js';
 import {gruntSpriteReady,gruntSpriteState} from './grunt-sprite.js';
 import {drawUpper} from './upper-visuals.js';
@@ -17,7 +18,7 @@ import {enemyGuide} from '../world/expedition.js';
 const cache=new Map(),pendingRoots=new WeakSet();
 // Render once, using the same bodies as combat. Never mutate the expedition.
 function portrait(key,part){
- const id=key+':'+part+':'+(key==='prism'?prismSpriteState().ready:key==='flower'?flowerSpriteState().ready:key==='warden'?wardenSpriteState().ready:gruntSpriteState().types.includes(key));if(cache.has(id))return cache.get(id);
+ const id=key+':'+part+':'+(['slime','minislime'].includes(key)?slimeSpriteState().ready:key==='prism'?prismSpriteState().ready:key==='flower'?flowerSpriteState().ready:key==='warden'?wardenSpriteState().ready:gruntSpriteState().types.includes(key));if(cache.has(id))return cache.get(id);
  const source=document.createElement('canvas');source.width=384;source.height=384;
  const c=source.getContext('2d'),boss=['warden','prism','slime','king','commander','demon'].includes(key);
  const e={x:192,y:250,type:boss?'boss':key,hp:100,max:100,id:0,tier:0,part:part||'core'};
@@ -41,7 +42,7 @@ function portrait(key,part){
  cache.set(id,result);return result;
 }
 export function renderJournalPortraits(root){
- if(!pendingRoots.has(root)){pendingRoots.add(root);Promise.all([gruntSpriteReady,wardenSpriteReady,flowerSpriteReady,prismSpriteReady]).then(()=>{if(root.isConnected)renderJournalPortraits(root);});}
+ if(!pendingRoots.has(root)){pendingRoots.add(root);Promise.all([gruntSpriteReady,wardenSpriteReady,flowerSpriteReady,prismSpriteReady,slimeSpriteReady]).then(()=>{if(root.isConnected)renderJournalPortraits(root);});}
  for(const canvas of root.querySelectorAll('canvas[data-enemy]')){
   const key=canvas.dataset.enemy,part=canvas.dataset.part;
   if(!Object.hasOwn(enemyGuide,key)||part&&!['hand','foot','eye','nose','mouth','core'].includes(part))continue;
