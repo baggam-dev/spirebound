@@ -10,6 +10,7 @@ export function iconSVG(id){
  const heart=(c=1)=>{for(const [y,row] of ['011100001110','111110011111','111111111111','111111111111','011111111110','001111111100','000111111000','000011110000','000001100000'].entries())for(let x=0;x<12;x++)if(row[x]==='1')put(x+2,y+3,c);};
  const arrow=(x=8,c=1)=>{line(x,2,x,13,c);line(x-3,5,x,2,c);line(x+3,5,x,2,c);};
  switch(id){
+  case 'potion':rect(6,1,4,3,2);rect(5,4,6,2,3);circle(8,10,5,1,true);rect(6,6,2,4,3);rect(4,13,8,1,2);break;
   case 'windSeal':circle(8,8,6,2);line(3,6,11,6,3);line(11,6,12,4,3);line(2,9,10,9);line(10,9,12,7);line(5,12,9,12,3);break;
   case 'turret':line(3,3,8,7);line(8,7,13,3);line(3,3,13,3,2);rect(7,2,2,10);rect(4,12,8,3,2);line(5,8,3,12);line(10,8,12,12);break;
   case 'sunFairy':circle(8,8,3,1,true);line(1,4,5,7,3);line(14,4,11,7,3);line(8,1,8,3);line(8,12,8,15);break;
@@ -67,7 +68,7 @@ export function iconSVG(id){
   case 'shield':line(3,3,12,3);line(3,3,4,10);line(12,3,11,10);line(4,10,8,14);line(11,10,8,14);line(6,7,8,9,3);line(8,9,11,5,3);break;
   default:diamond(8,8,5);put(8,8,3);
  }
- const palettes={fire:['#ef7843','#a03931','#fff0a9'],frost:['#a4e6ff','#3975ab','#ffffff'],poison:['#9bdd69','#35552f','#e7ff98'],chain:['#e3caff','#9270c8','#ffffff'],precision:['#f2d488','#9a7137','#fff9d7'],focus:['#f2d488','#9a7137','#fff9d7'],firstAid:['#a6dbab','#427a60','#f0fff2'],guardian:['#b6d9ee','#47798e','#f0fbff'],heart:['#ff6d91','#903a5d','#ffe0e9'],shield:['#cde5ee','#729cad','#fff'],aura:['#e1efac','#6d9983','#fff'],ruby:['#e46b77','#873b69','#ffcbc2'],sun:['#ffcb6b','#d98243','#fffad1']};
+ const palettes={potion:['#e86679','#923346','#ffd4d8'],fire:['#ef7843','#a03931','#fff0a9'],frost:['#a4e6ff','#3975ab','#ffffff'],poison:['#9bdd69','#35552f','#e7ff98'],chain:['#e3caff','#9270c8','#ffffff'],precision:['#f2d488','#9a7137','#fff9d7'],focus:['#f2d488','#9a7137','#fff9d7'],firstAid:['#a6dbab','#427a60','#f0fff2'],guardian:['#b6d9ee','#47798e','#f0fbff'],heart:['#ff6d91','#903a5d','#ffe0e9'],shield:['#cde5ee','#729cad','#fff'],aura:['#e1efac','#6d9983','#fff'],ruby:['#e46b77','#873b69','#ffcbc2'],sun:['#ffcb6b','#d98243','#fffad1']};
  const colors=palettes[id]||['#d7bd83','#88725e','#fff0c5'];
  const result='<svg class="pixel-icon" viewBox="0 0 16 16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">'+[...pixels].map(([key,c])=>{const [x,y]=key.split(',');return `<rect x="${x}" y="${y}" width="1" height="1" fill="${colors[c-1]}"/>`;}).join('')+'</svg>';
  cache.set(id,result);return result;
