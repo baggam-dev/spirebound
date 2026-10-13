@@ -9,7 +9,10 @@ export function applyRoomShape(room,choice){
  room.shape=roomShapeNames[choice]||'standard';if(room.shape==='standard')return;
  const vertical=room.shape!=='horizontal',horizontal=room.shape!=='vertical',walls=[];
  const add=(x,y,w,h)=>{for(let dx=0;dx<w;dx+=180)for(let dy=0;dy<h;dy+=180)walls.push({x:x+dx,y:y+dy,w:Math.min(180,w-dx),h:Math.min(180,h-dy),type:'wall'});};
- if(room.shape==='cross'){
+ if(room.shape==='compact'){
+  // Only the north/south entries are short vestibules; both side entries stay open.
+  for(const y of [40,445]){add(25,y,380,55);add(555,y,380,55);}
+ }else if(room.shape==='cross'){
   add(466,175,28,190);add(300,256,166,28);add(494,256,166,28);
  }else if(room.shape==='staggered'){
   add(330,145,28,220);add(602,215,28,220);
