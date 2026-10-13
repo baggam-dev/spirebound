@@ -910,3 +910,6 @@ e50369c / release-20261012-173829-3baf4d 활성. 서버Python25개/Nginx/인증�
 
 ### 승인저격기사외형연결
 2026-10-14 승인저격기사v2 로컬외형연결완료·미검증. 승인PNG원본astral-sniper-reference-atlas복사·astral-sniper-sprite2캐시52px/feet21·idle/recover대기/windup·strike검기조준/기존bodyY·이동x방향WeakMap/공격aim좌우·귀환표식. drawUpperearly연결·실패기존외형fallback·기존drawUpperGround예고/검기패턴/소환/충돌/난이도/저장actor불변. journalready캐시및로드후재표시·server/deploy/publicQA목록준비(미실행). 독립걷기4프레임아직없음·원본2자세만연결·crop/비율/칼손/검끝/가독성실동작미검증. 넓은베기/꽃/프리즘/슬라임+저격기사누적미검증·테스트/푸시/배포없음·로컬커밋만·배포나중묶음. 운영release-20261013-213959-7366e5/마지막검증유지·실행중세션없음. 수정PNG/astral/upper/journal/server/deploy/QA/기록. 다음인력술사악마군외형시안→컨펌, 배포지시때누적범위검증.
+
+### 인력술사단정로브시안v2
+2026-10-14 인력술사시안v1생성중사용자갑옷줄이기/마법사스럽게/단정망토수정지시→v2편집. 내장imagegen2회·gravity-mage-v1/v2.png/prompts-gravity-mage-v1-v2.md보존·v2직접제시/컨펌대기. 왼쪽대기/오른쪽인력핵충전·기사금속갑옷제거/단정긴로브/넓은소매/후드안단순가면·보라핵/작은자수유지. 기존잡몹비율방향유지요청·정확비율/52px가독성/망토끝완전정돈미검증. runtime/배포자산미반영·테스트/푸시/배포없음·시안로컬커밋만. 넓은베기/꽃/프리즘/슬라임/저격기사미검증누적·배포나중묶음·운영release-20261013-213959-7366e5/마지막검증유지·실행중세션없음. 다음v2컨펌후기존인력예고/활성state연결·판정불변·이후성운기사시안.
