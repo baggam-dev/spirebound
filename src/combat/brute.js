@@ -29,8 +29,8 @@ export function drawEnemyDetails(ctx,e,run=null){
  if(e.type==='chaser'){box(-15,-6,5,21,'#b7b99a');box(10,-6,5,21,'#b7b99a');box(-7,0,14,3,'#343f35');}
  if(e.type==='brute'){
   const lift=bruteLift(e);
-  let motion=visualMotion.get(e);if(!motion){motion={x:e.x,face:1};visualMotion.set(e,motion);}const dx=e.x-motion.x;if(Math.abs(dx)>.1)motion.face=Math.sign(dx);motion.x=e.x;const face=['windup','air'].includes(e.phase)&&Number.isFinite(e.landX)&&Math.abs(e.landX-e.x)>.1?Math.sign(e.landX-e.x):motion.face;
-  ctx.save();ctx.translate(x,y-lift);const raster=drawGruntSprite(ctx,e,{face,moving:false},run);ctx.restore();
+  let motion=visualMotion.get(e);if(!motion){motion={x:e.x,y:e.y,face:1,walk:0};visualMotion.set(e,motion);}const dx=e.x-motion.x,dy=e.y-motion.y,distance=Math.hypot(dx,dy),moving=!e.phase&&distance>.05;if(Math.abs(dx)>.1)motion.face=Math.sign(dx);if(moving)motion.walk+=distance*.16;motion.x=e.x;motion.y=e.y;const face=['windup','air'].includes(e.phase)&&Number.isFinite(e.landX)&&Math.abs(e.landX-e.x)>.1?Math.sign(e.landX-e.x):motion.face;
+  ctx.save();ctx.translate(x,y-lift);const raster=drawGruntSprite(ctx,e,{face,moving,walk:motion.walk},run);ctx.restore();
   if(!raster){
   ctx.save();ctx.translate(0,-lift);box(-21,-13,42,33,'#73785c');box(-15,-30,30,24,'#a4a586');box(-24,-9,9,21,'#c3b794');box(15,-9,9,21,'#c3b794');box(-9,-21,5,5,'#e4ae70');box(5,-21,5,5,'#e4ae70');box(24,-7,5,31,'#886b44');box(18,-16,20,14,'#b5aa8d');box(-13,-29,26,3,'#d0c6a4');box(-3,-25,4,12,'#606a54');box(-18,-8,36,4,'#4a5547');box(-17,6,34,3,'#464c42');box(-4,5,8,6,'#c8ae72');box(-19,18,13,6,'#39423c');box(6,18,13,6,'#39423c');box(20,-15,16,3,'#e4d6b0');for(const dx of [-22,17]){box(dx,-7,4,4,'#eee0b3');box(dx,2,4,3,'#8d866a');}if(e.escapeDepth||run?.key){box(-19,-28,10,3,'#ad544e');box(8,-28,9,3,'#ad544e');box(-11,-21,7,5,'#e7906e');box(4,-21,7,5,'#e7906e');box(-18,9,7,2,'#c36a55');box(10,9,7,2,'#c36a55');box(22,-14,10,2,'#d98a63');}ctx.restore();
   }
