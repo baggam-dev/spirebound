@@ -1,3 +1,4 @@
+import {edgeTo,atExit} from '../helpers/door-fixture.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {newRun,currentRoom,roomLocked,enrage} from '../../src/game/engine.js';
@@ -7,7 +8,7 @@ import {blocked} from '../../src/world/terrain.js';
 import {recoverPlayerPosition} from '../../src/world/player-position.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 test('diagonal blink at left doorway never wraps outside and clamps into lower wall',()=>{
- const s=newRun(5);s.room=4;s.player.x=48;s.player.y=270;assert.ok(castBlink(s,{x:-1,y:1}));assert.ok(!blocked(s.player.x,s.player.y,14,currentRoom(s).obstacles));assert.ok(s.player.y<301);assert.ok(s.dodge>0);
+ const s=newRun(5);s.room=4;currentRoom(s).obstacles=[{x:25,y:315,w:155,h:185,type:"wall"}];s.player.x=48;s.player.y=270;assert.ok(castBlink(s,{x:-1,y:1}));assert.ok(!blocked(s.player.x,s.player.y,14,currentRoom(s).obstacles));assert.ok(s.player.y<301);assert.ok(s.dodge>0);
 });
 test('all doorway directions and campaign rooms remain clear after blink',()=>{
  for(const campaign of ['classic','expanded']){const s=newRun(5,{campaign});for(let f=0;f<s.floors.length;f++)for(let r=0;r<s.floors[f].length;r++)for(const [x,y] of [[48,270],[912,270],[480,63],[480,477]])for(const [dx,dy] of [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]){s.floor=f;s.room=r;Object.assign(s.player,{x,y});s.dodge=0;castBlink(s,{x:dx,y:dy});assert.ok(!blocked(s.player.x,s.player.y,14,currentRoom(s).obstacles),`${campaign}/${f}/${r}/${x}/${y}/${dx}/${dy}`);assert.ok(s.player.x>=31&&s.player.x<=929&&s.player.y>=49&&s.player.y<=491);}}
@@ -19,5 +20,5 @@ test('idle and room entry recover invalid player without requiring blink or gran
  const s=newRun(5);s.room=4;const r=currentRoom(s);r.enemies=[];s.player.x=50;s.player.y=386.67;s.dodge=7;s.invulnerable=0;stepRun(s,.001);assert.ok(!blocked(s.player.x,s.player.y,14,r.obstacles));assert.equal(s.invulnerable,0);const before={x:s.player.x,y:s.player.y};stepRun(s,.001);assert.deepEqual({x:s.player.x,y:s.player.y},before);s.player.x=50;s.player.y=386.67;enterRoom(s);assert.ok(!blocked(s.player.x,s.player.y,14,r.obstacles));
 });
 test('recovery leaves valid positions and open doorway movement untouched',()=>{
- const s=newRun(5);s.room=4;const r=currentRoom(s);s.player.x=48;s.player.y=270;assert.equal(recoverPlayerPosition(s.player,r.obstacles),false);s.tutorialComplete=true;r.enemies=[];s.player.x=31;stepRun(s,.1,{x:-1,y:0});assert.notEqual(s.room,4);assert.ok(!blocked(s.player.x,s.player.y,14,currentRoom(s).obstacles));
+ const s=newRun(5);s.room=4;const r=currentRoom(s);s.tutorialComplete=true;r.enemies=[];const d=[0,1,2,3].find(d=>s.floors[0].some(n=>edgeTo(s,4,s.floors[0].indexOf(n))===d));const input=atExit(s,d);assert.equal(recoverPlayerPosition(s.player,r.obstacles),false);stepRun(s,.1,input);assert.notEqual(s.room,4);assert.ok(!blocked(s.player.x,s.player.y,14,currentRoom(s).obstacles));
 });

@@ -1,3 +1,4 @@
+import {edgeTo,atExit} from '../helpers/door-fixture.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {generateObstacles,blocked,moveBody,segmentBlocked,steering,roomDoors} from '../../src/world/terrain.js';
@@ -12,6 +13,6 @@ test('new runs actually contain persisted obstacle arrays',()=>{let count=0;for(
 
 test('minimap neighbor lookup shares tutorial entrance restrictions even from another room',()=>{
  const s=newRun(91),doors=index=>[0,1,2,3].map(d=>neighbor(s,d,index)>=0);
- assert.deepEqual(doors(0),[false,true,false,false]);s.room=1;assert.deepEqual(doors(0),[false,true,false,false]);
- s.tutorialComplete=true;assert.deepEqual(doors(0),[false,true,true,false]);s.tutorialComplete=false;s.key=true;assert.deepEqual(doors(0),[false,true,true,false]);
+ assert.equal(doors(0).filter(Boolean).length,1);assert.equal(neighbor(s,edgeTo(s,0,1),0),1);s.room=1;assert.equal(doors(0).filter(Boolean).length,1);assert.equal(neighbor(s,edgeTo(s,0,1),0),1);
+ s.tutorialComplete=true;assert.equal(doors(0).filter(Boolean).length,2);assert.equal(neighbor(s,edgeTo(s,0,5),0),5);s.tutorialComplete=false;s.key=true;assert.equal(doors(0).filter(Boolean).length,2);assert.equal(neighbor(s,edgeTo(s,0,5),0),5);
 });

@@ -1,3 +1,4 @@
+import {edgeTo,atExit} from '../helpers/door-fixture.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {newRun,currentRoom,neighbor,enrage} from '../../src/game/engine.js';
@@ -25,7 +26,7 @@ test('explosion and simultaneous burn can finish three-stack enemies but field d
 });
 test('burn expirations do not count dead stacks at a later lethal tick',()=>{const e=foe(2);e.burnStacks=[{time:.1,dps:1},{time:.1,dps:1},{time:2,dps:2}];e.burnField={r:42.5,time:1.5,dps:10.2};const r={enemies:[e]};tickElements(r,2);resolveFireFields(r);assert.ok(e.hp<=0);assert.equal(r.fireZones.length,0);});
 test('tutorial cannot be bypassed and pays exactly one level; escape never repeats it',()=>{
- for(let seed=0;seed<20;seed++){const s=newRun(seed);assert.equal(neighbor(s,2),-1);assert.equal(neighbor(s,1),1);s.room=1;const r=currentRoom(s);assert.equal(r.enemies.length,4);assert.deepEqual([...new Set(r.enemies.map(e=>e.type))],['chaser']);assert.equal(r.obstacles.length,0);assert.equal(r.enemies.reduce((n,e)=>n+e.xpReward,0),xpRequired(1));r.enemies.forEach(e=>e.hp=0);s.attack=999;stepRun(s,.01);assert.equal(s.player.level,2);assert.equal(s.player.xp,0);assert.equal(s.pendingLevels,1);assert.ok(s.tutorialComplete);s.room=0;assert.equal(neighbor(s,2),5);enrage(s);s.room=1;currentRoom(s).enemies.forEach(e=>e.hp=0);stepRun(s,.01);assert.equal(s.player.xp,0);}
+ for(let seed=0;seed<20;seed++){const s=newRun(seed);const first=edgeTo(s,0,1),other=edgeTo(s,0,5);assert.equal(neighbor(s,other),-1);assert.equal(neighbor(s,first),1);s.room=1;const r=currentRoom(s);assert.equal(r.enemies.length,4);assert.deepEqual([...new Set(r.enemies.map(e=>e.type))],['chaser']);assert.equal(r.obstacles.length,0);assert.equal(r.enemies.reduce((n,e)=>n+e.xpReward,0),xpRequired(1));r.enemies.forEach(e=>e.hp=0);s.attack=999;stepRun(s,.01);assert.equal(s.player.level,2);assert.equal(s.player.xp,0);assert.equal(s.pendingLevels,1);assert.ok(s.tutorialComplete);s.room=0;assert.equal(neighbor(s,other),5);enrage(s);s.room=1;currentRoom(s).enemies.forEach(e=>e.hp=0);stepRun(s,.01);assert.equal(s.player.xp,0);}
 });
 test('raw chest weights total one hundred and invalid rewards redraw only positives',()=>{
  assert.equal(lootTable.reduce((n,k)=>n+k.weight,0),100);const p=newRun(1).player;assert.equal(drawLoot(p,()=>0).id,'relic');assert.equal(drawLoot(p,()=>.5).id,'elites');assert.equal(drawLoot(p,()=>.98).id,'boss');for(const k of skills)p[k.id]=k.max;for(let i=0;i<100;i++){const result=drawLoot(p,()=>i/100,true);assert.ok(!lootTable.find(k=>k.id===result.id).trap);assert.ok(!result.skill);}

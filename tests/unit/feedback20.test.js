@@ -1,3 +1,4 @@
+import {edgeTo,atExit} from '../helpers/door-fixture.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {newRun,currentRoom,roomLocked,travel} from '../../src/game/engine.js';
@@ -19,7 +20,7 @@ test('airborne bodies cannot contact hit, entry grace protects nearby bodies',()
 });
 test('ricochet projectile inflicts one heart',()=>{const s=combat();s.projectiles=[{x:470,y:300,vx:100,vy:0,enemy:true,ricochet:true,bounces:1,life:2,hit:[]}];stepRun(s,.1);assert.equal(s.player.hp,9);});
 test('ascent gates require a clear room; descent gates allow living bosses and stairs',()=>{
- const s=combat();currentRoom(s).enemies=[enemy()];assert.ok(roomLocked(s));s.player.x=931;s.player.y=270;const before=s.room;stepRun(s,.01);assert.equal(s.room,before);s.key=true;assert.equal(roomLocked(s),false);s.player.x=931;stepRun(s,.01);assert.notEqual(s.room,before);
+ const s=combat();currentRoom(s).enemies=[enemy()];assert.ok(roomLocked(s));const d=edgeTo(s,s.room,2);atExit(s,d);const before=s.room;stepRun(s,.01);assert.equal(s.room,before);s.key=true;assert.equal(roomLocked(s),false);atExit(s,d);stepRun(s,.01);assert.notEqual(s.room,before);
  s.key=false;s.floor=2;s.room=s.floors[2].findIndex(r=>r.type==='up');assert.equal(travel(s,1),false);currentRoom(s).enemies=[];assert.ok(travel(s,1));s.key=true;currentRoom(s).enemies=[enemy('boss')];assert.equal(roomLocked(s),false);assert.ok(travel(s,-1));
 });
 test('fountain generation includes empty, bounded solo fights, and full combined fights',()=>{

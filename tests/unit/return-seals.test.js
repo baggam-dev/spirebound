@@ -1,3 +1,4 @@
+import {edgeTo,atExit} from '../helpers/door-fixture.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {newRun,enrage,currentRoom,roomLocked,travel,canEscape} from '../../src/game/engine.js';
@@ -27,9 +28,9 @@ test('old descending saves without seal metadata retain access and blocked exit 
  const r=currentRoom(s);r.returnSeal='guardian';r.returnSealReleased=false;r.returnGuardianId=42;r.enemies=[{id:42,hp:10}];assert.equal(canEscape(s),false);r.enemies[0].hp=0;assert.equal(returnSealActive(r),false);assert.equal(canEscape(s),true);
 });
 test('live movement cannot cross a sealed exit and can cross after clearance',()=>{
- const s=newRun(11);s.generationVersion=32;s.room=1;enrage(s);const r=currentRoom(s);assert.equal(r.returnSeal,'clear');s.invulnerable=999;s.attack=999;s.player.x=928;s.player.y=270;
- stepRun(s,.1,{x:1,y:0});assert.equal(s.room,1);r.enemies.forEach(e=>e.hp=0);stepRun(s,.001,{x:0,y:0});assert.equal(r.returnSealReleased,true);
- s.player.x=928;s.player.y=270;stepRun(s,.1,{x:1,y:0});assert.equal(s.room,2);
+ const s=newRun(11);s.generationVersion=32;s.room=1;enrage(s);const r=currentRoom(s);assert.equal(r.returnSeal,'clear');s.invulnerable=999;s.attack=999;const d=edgeTo(s,1,2),input=atExit(s,d);
+ stepRun(s,.1,input);assert.equal(s.room,1);r.enemies.forEach(e=>e.hp=0);stepRun(s,.001,{x:0,y:0});assert.equal(r.returnSealReleased,true);
+ atExit(s,d);stepRun(s,.1,input);assert.equal(s.room,2);
 });
 
 test('both approach layers cover every exit branch for visited and unseen campaigns',()=>{
