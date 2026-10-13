@@ -1,0 +1,8 @@
+# 성운기사 v1 시안 — 2026-10-14
+
+- 내장 imagegen, 투명 배경. 참조: astral-sniper-v2.png (비율·톤만).
+- 디자인 승인 전이므로 runtime/배포 자산에 반영하지 않음.
+
+## Exact prompt
+
+Create a transparent-background game character concept sheet for Spirebound: two full-body poses of the SAME Nebula Knight, side by side, idle left and shield-forward melee preparation right. Use the supplied image ONLY as visual style, muted palette and compact humanoid proportion reference; design a distinct sword-and-shield demon-army infantry knight. Match its relatively large helmet and short sturdy legs, detailed small-scale Korean fantasy RPG pixel sprite aesthetic, no tall elegant anime proportions. Worn charcoal/slate iron plate armor, scuffs and chipped edges, closed angular helmet with tiny dim amber eye slit, no hair or visible pretty face. No hood, no horns, short orderly faded dark-purple shoulder cape, subtle violet star engraving only. Medium-sized angular iron kite shield on character's LEFT arm (viewer right in idle), battered steel rim, small restrained violet star mark; practical broad single-handed sword firmly gripped in character's RIGHT hand (viewer left in idle), thumb and fingers wrapped around handle. Shield distinctive from a small round wooden buckler. Same hands, armor, helmet and weapon designs across both poses. Idle sword lowered, shield by side; right pose shield raised in front and sword held ready beside shoulder, clearly visible silhouette. Keep both figures equal body size and baseline; entire sword, shield, cape and feet fully inside frame with generous transparent margins, no overlap between figures. No background, no text, no ground shadow, no glow clouds, no blood. This is an approval concept sheet, not a runtime asset.
