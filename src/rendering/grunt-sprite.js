@@ -1,4 +1,5 @@
 import {drawChaserWalk} from './chaser-walk.js';
+import {drawArcherWalk} from './archer-walk.js';
 import {characterSizes} from './character-sizes.js';
 // Approved masked grunt originals; crop and downsample once, never modify saved actors.
 const specs={
@@ -32,7 +33,7 @@ export function gruntPose(e,p,run){
 }
 export function drawGruntSprite(c,e,p,run){
  const frames=cached.get(e.type);if(!frames)return false;const pose=gruntPose(e,p,run),f=frames[pose.index];
- c.save();c.scale(pose.face,1);c.imageSmoothingEnabled=false;if(!(e.type==='chaser'&&pose.index===0&&drawChaserWalk(c,p)))c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y-pose.bob));
+ c.save();c.scale(pose.face,1);c.imageSmoothingEnabled=false;const walking=pose.index===0&&(e.type==='chaser'?drawChaserWalk(c,p):e.type==='archer'?drawArcherWalk(c,p):false);if(!walking)c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y-pose.bob));
  // Return-trip rage remains identifiable without losing the approved grey clothes.
  if(run?.key||e.escapeDepth){c.strokeStyle='#ef858d';c.lineWidth=2;c.beginPath();c.moveTo(-17,17);c.lineTo(-21,12);c.moveTo(17,17);c.lineTo(21,12);c.stroke();}
  c.restore();return true;
