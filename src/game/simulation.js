@@ -1,3 +1,4 @@
+import {updateChaserAttack} from '../combat/chaser.js';
 import {recoverPlayerPosition} from '../world/player-position.js';
 import {doorCenter,doorArrival} from '../world/doors.js';
 import {emitWeaponVolley,clearTurretEndings,turnStormArrow} from '../combat/weapon-projectiles.js';
@@ -85,13 +86,13 @@ export function stepRun(s,dt,input={x:0,y:0}){
  tickBlasts(r,dt,p,raw=>hurt(raw,'정예 지연 폭발'),effects);
  if(s.entryGrace<=0)updateElites(r,dt,s.projectiles,p);
  if(r.allyZone){const z=r.allyZone,active=Math.min(dt,z.time);hitOrigin=null;
- for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,z)<z.r){const before=e.hp;e.hp-=(z.damage??40)*active*enemyDamageFactor(e);metrics.damageDealt+=before-Math.max(0,e.hp);}z.time-=dt;if(z.time<=0)r.allyZone=null;}
+ for(const e of r.enemies)if(e.type!=='chaser'&&e.hp>0&&!enemyAirborne(e)&&distance(e,z)<z.r){const before=e.hp;e.hp-=(z.damage??40)*active*enemyDamageFactor(e);metrics.damageDealt+=before-Math.max(0,e.hp);}z.time-=dt;if(z.time<=0)r.allyZone=null;}
  updateHazards(r,dt,p,raw=>hurt(raw,raw>=12?'독성 군체 독':'꽃봉우리 독'));
  if(s.entryGrace<=0)updateDemon(s,r,p,dt,s.projectiles,(raw,source)=>hurt(raw,source));
  const target=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!segmentBlocked(p,e,r.obstacles,3)).sort((a,b)=>distance(a,p)-distance(b,p))[0];
  s.auraVisual=Math.max(0,(s.auraVisual||0)-dt);const auraFlash=s.auraVisual<=0;if(auraFlash)s.auraVisual=.2;
  if(p.aura)hitOrigin=null;
- if(p.aura)for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,p)<=auraProfile(p.aura).radius*(1+relicStat(p,'auraRange'))&&!segmentBlocked(p,e,r.obstacles,1)){const before=e.hp;if(auraFlash)effects.push({x:e.x,y:e.y,r:24,t:.16,color:'#f8ffe6',slash:true});e.hp-=auraProfile(p.aura).dps*(1+relicStat(p,'auraDamage'))*dt*enemyDamageFactor(e,p);metrics.damageDealt+=before-Math.max(0,e.hp);}
+ if(p.aura)for(const e of r.enemies)if(e.type!=='chaser'&&e.hp>0&&!enemyAirborne(e)&&distance(e,p)<=auraProfile(p.aura).radius*(1+relicStat(p,'auraRange'))&&!segmentBlocked(p,e,r.obstacles,1)){const before=e.hp;if(auraFlash)effects.push({x:e.x,y:e.y,r:24,t:.16,color:'#f8ffe6',slash:true});e.hp-=auraProfile(p.aura).dps*(1+relicStat(p,'auraDamage'))*dt*enemyDamageFactor(e,p);metrics.damageDealt+=before-Math.max(0,e.hp);}
  if(target&&s.attack<=0&&!(p.actionStun>0)){fireArrow(s,target);events.push('shot');}
  for(const e of r.enemies){
   hitOrigin=e;const hpBefore=Math.max(0,e.hp);tickEffects(e,dt);metrics.damageDealt+=hpBefore-Math.max(0,e.hp);const upper=e.variant==='king'||upperTypes.includes(e.type);const transitioning=upper&&tickUpperState(e,p,r,s.entryGrace>0?0:dt,s.projectiles);if(e.hp<=0||e.frozen>0||transitioning||r.enemies.some(n=>n.variant==='king'&&n.kingTransition>0))continue;
@@ -113,10 +114,11 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(e.type==='charger'){const charge=chargeProfile(e);if(e.cd<charge.duration+charge.warning&&e.chargeAngle===undefined)e.chargeAngle=Math.atan2(p.y-e.y,p.x-e.x);if(e.cd<charge.duration){a=e.chargeAngle??a;speed=charge.speed;}else speed=e.cd<charge.duration+charge.warning?0:35;}
   speed*=(e.trialChampion?1.15:1)*(1+(e.tier||0)*.035+(e.escapeDepth||0)*.07)*(e.slow>0?e.slowFactor:1);const beforeMove={x:e.x,y:e.y};moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,r.obstacles,18);if(e.type==='charger'&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration&&segmentBlocked(beforeMove,{x:beforeMove.x+Math.cos(a)*speed*dt,y:beforeMove.y+Math.sin(a)*speed*dt},r.obstacles,18)){openGuard(e,1.1);delete e.chargeAngle;e.cd=1.5;continue;}e.x=Math.max(40,Math.min(920,e.x));e.y=Math.max(60,Math.min(480,e.y));
   if(e.cd<=0){e.cd=Math.max(2.3*ENEMY_COOLDOWN_FACTOR*profile.recovery,e.type==='charger'?chargeProfile(e).duration+chargeProfile(e).warning+.1:0);delete e.chargeAngle;}
-  if(distance(e,p)<23&&!segmentBlocked(e,p,r.obstacles,0))hurt(e.type==='charger'&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration?18:9,enemyName(e)+' 접촉');
+  if(e.type==='chaser')hurt(updateChaserAttack(e,p,r.obstacles,dt),enemyName(e)+' 단검 베기',null,e);
+  else if(distance(e,p)<23&&!segmentBlocked(e,p,r.obstacles,0))hurt(e.type==='charger'&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration?18:9,enemyName(e)+' 접촉');
  }
  hitOrigin=null;
- for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&!(e.spawnGrace>0)&&!(e.counterReason&&e.opening>0)&&!r.enemies.some(n=>n.kingTransition>0)&&!e.darkAttack?.moving&&distance(e,p)<enemyRadius(e)+14&&!segmentBlocked(e,p,r.obstacles,0))hurt(9,enemyName(e)+' 접촉',null,e);
+ for(const e of r.enemies)if(e.type!=='chaser'&&e.hp>0&&!enemyAirborne(e)&&!(e.spawnGrace>0)&&!(e.counterReason&&e.opening>0)&&!r.enemies.some(n=>n.kingTransition>0)&&!e.darkAttack?.moving&&distance(e,p)<enemyRadius(e)+14&&!segmentBlocked(e,p,r.obstacles,0))hurt(9,enemyName(e)+' 접촉',null,e);
  // A lethal hit ends the simulation before drops or life-steal can heal the player.
  if(p.hp<=0){events.push('dead');return {events,effects};}
  for(const b of s.projectiles){
