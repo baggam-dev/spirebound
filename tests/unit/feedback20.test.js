@@ -11,8 +11,8 @@ import {essenceMarkup} from '../../src/ui/hud.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 const enemy=(type='archer',id=0)=>({id,type,x:480,y:300,hp:100,max:100,cd:999,balanceVersion:1});
 function combat(){const s=newRun(1);s.room=1;s.attack=999;s.player.hp=s.player.max=10;currentRoom(s).enemies=[];currentRoom(s).obstacles=[];return s;}
-test('all grounded enemy families inflict one contact heart with shared immunity',()=>{
- for(const type of ['chaser','charger','archer','scatter','brute','laser','ricochet','flower','minislime','boss','strafer','ringcaster','ambusher']){const s=combat(),r=currentRoom(s);r.enemies=[enemy(type),enemy(type,1)];stepRun(s,.01);assert.equal(s.player.hp,9,type);stepRun(s,.01);assert.equal(s.player.hp,9);}
+test('grounded contact and rapid chaser blades share one-heart immunity',()=>{
+ for(const type of ['chaser','charger','archer','scatter','brute','laser','ricochet','flower','minislime','boss','strafer','ringcaster','ambusher']){const s=combat(),r=currentRoom(s);r.enemies=[enemy(type),enemy(type,1)];stepRun(s,.01);if(type==='chaser'){assert.equal(s.player.hp,10);stepRun(s,.08);}assert.equal(s.player.hp,9,type);stepRun(s,.01);assert.equal(s.player.hp,9);}
  const s=combat();s.invulnerable=1;currentRoom(s).enemies=[enemy()];stepRun(s,.01);assert.equal(s.player.hp,10);
 });
 test('airborne bodies cannot contact hit, entry grace protects nearby bodies',()=>{

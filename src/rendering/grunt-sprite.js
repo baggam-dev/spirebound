@@ -1,4 +1,5 @@
 import {drawChaserWalk} from './chaser-walk.js';
+import {drawChaserSlash} from './chaser-slash.js';
 import {drawArcherWalk} from './archer-walk.js';
 import {drawChargerWalk} from './charger-walk.js';
 import {drawScatterWalk} from './scatter-walk.js';
@@ -31,14 +32,13 @@ export function gruntPose(e,p,run){
  const aiming=['archer','scatter'].includes(e.type)&&['warning','firing'].includes(e.attackPhase);
  const charging=e.type==='charger'&&Number.isFinite(e.chargeAngle);
  const ranged=['laser','ricochet'].includes(e.type)&&['aim','beam'].includes(e.phase);
- const target=run?.player;
- const melee=e.type==='chaser'&&target&&Math.hypot(e.x-target.x,e.y-target.y)<65;
- const aim=aiming?e.patternAim:charging?e.chargeAngle:ranged?e.aim:NaN;
+ const melee=e.type==='chaser'&&(e.chaserWindup>0||e.chaserStrike>0);
+ const aim=melee?e.chaserAim:aiming?e.patternAim:charging?e.chargeAngle:ranged?e.aim:NaN;
  return {index:brute||aiming||charging||melee||ranged&&!(e.type==='laser'&&e.phase==='aim')?1:0,face:Number.isFinite(aim)?(Math.cos(aim)<0?-1:1):p.face||1,bob:p.moving?Math.abs(p.step||0)*.35:0};
 }
 export function drawGruntSprite(c,e,p,run){
  const frames=cached.get(e.type);if(!frames)return false;const pose=gruntPose(e,p,run),f=frames[pose.index];
- c.save();c.scale(pose.face,1);c.imageSmoothingEnabled=false;const walking=pose.index===0&&(e.type==='chaser'?drawChaserWalk(c,p):e.type==='archer'?drawArcherWalk(c,p):e.type==='charger'?drawChargerWalk(c,p):e.type==='scatter'?drawScatterWalk(c,p):e.type==='ricochet'?drawRicochetWalk(c,p):e.type==='laser'&&e.phase!=='aim'?drawLaserWalk(c,p):e.type==='brute'&&!e.phase?drawBruteWalk(c,p):false);if(!walking)c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y-pose.bob));
+ c.save();c.scale(pose.face,1);c.imageSmoothingEnabled=false;const slashing=e.type==='chaser'&&drawChaserSlash(c,e),walking=!slashing&&pose.index===0&&(e.type==='chaser'?drawChaserWalk(c,p):e.type==='archer'?drawArcherWalk(c,p):e.type==='charger'?drawChargerWalk(c,p):e.type==='scatter'?drawScatterWalk(c,p):e.type==='ricochet'?drawRicochetWalk(c,p):e.type==='laser'&&e.phase!=='aim'?drawLaserWalk(c,p):e.type==='brute'&&!e.phase?drawBruteWalk(c,p):false);if(!slashing&&!walking)c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y-pose.bob));
  // Return-trip rage remains identifiable without losing the approved grey clothes.
  if(run?.key||e.escapeDepth){c.strokeStyle='#ef858d';c.lineWidth=2;c.beginPath();c.moveTo(-17,17);c.lineTo(-21,12);c.moveTo(17,17);c.lineTo(21,12);c.stroke();}
  c.restore();return true;
