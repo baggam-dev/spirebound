@@ -2,7 +2,7 @@ import {characterSizes} from './character-sizes.js';
 // Approved pose sheet. Body height excludes the raised hammer; feet stay anchored.
 const sources=[
  {x:0,y:40,w:627,h:568,anchorX:400,head:50,feet:596},
- {x:627,y:40,w:627,h:568,anchorX:995,head:50,feet:600},
+ {x:660,y:40,w:594,h:568,anchorX:995,head:50,feet:600},
  {x:70,y:608,w:557,h:606,anchorX:385,head:720,feet:1202},
  {x:627,y:690,w:627,h:524,anchorX:935,head:705,feet:1203}
 ];
