@@ -815,3 +815,6 @@ e50369c / release-20261012-173829-3baf4d 활성. 서버Python25개/Nginx/인증�
 
 ### 승인크기·보스4자세연결
 2026-10-13 사용자진행 보스시안승인 후 로컬구현·미검증. characterSizes hero58/grunt52/brute67/warden84(표시만), 충돌/공격범위불변. 승인PNG원본warden-motion-atlas 복사·warden-motion.js4캐시 머리~발84px/feet29·대기0/걷기0↔1거리순환/준비air2/strike3/recover0. warden-sprite 기존2자세fallback유지·원본+모션로드대기, 원본ready상태2프레임API유지. server/deploy/publicQA자산목록및크기QA기대값준비(실행없음). 머리5%시안방향유지·정확비율미검증, 보행2자세/복귀대기재사용으로완전4프레임보행/새복귀시안아님. crop경계/크기/머리/공격전환/로드실패실동작미검증. 테스트/푸시/배포없음·로컬커밋만·운영release-20261013-170237-c3164a유지. 수정sizes/warden-sprite/motion/PNG/server/deploy/QA/기록·실행중세션없음. 다음배포지시때크기/전체잡몹/보스4자세/걷기/준비/내려찍기/복귀/실패fallback묶음검증 또는추가보행/복귀시안.
+
+### 크기·보스모션 배포전검증
+2026-10-13 크기/보스모션 배포전검증통과: 관련7테스트·크기58/52/67/84/추적궁수보행fallback·5종보행공격우선/fallback·보스15장면저장재개legacy/portrait·새4자세구분/복귀대기/원본fallback통과. docs/qa-warden-motion-release 보존·poses캡처시각확인. 전체449재실행안함(이전성공유지)·실기기/자연스러움미검증. 실행중세션없음, 다음검증기록커밋푸시→deploy.ps1→공개파일/보스QA. 운영아직release-20261013-170237-c3164a.
