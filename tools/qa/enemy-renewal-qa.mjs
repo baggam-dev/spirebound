@@ -6,7 +6,7 @@ import {createServer} from '../../server.js';
 const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'index.mjs')).href);
 const server=process.env.SPIREBOUND_URL?null:createServer(resolve('.'));if(server)await new Promise(r=>server.listen(0,'127.0.0.1',r));
 const base=process.env.SPIREBOUND_URL||'http://127.0.0.1:'+server.address().port,browser=await chromium.launch({channel:'msedge',headless:true}),errors=[];
-await mkdir('docs/qa-renewal-20261014',{recursive:true});
+const output=process.env.QA_OUTPUT||'docs/qa-renewal-20261014';await mkdir(output,{recursive:true});
 try{
  for(const mobile of [false,true]){
   const page=await browser.newPage({viewport:mobile?{width:844,height:390}:{width:1280,height:800},isMobile:mobile,hasTouch:mobile});page.on('pageerror',e=>errors.push(e.message));
