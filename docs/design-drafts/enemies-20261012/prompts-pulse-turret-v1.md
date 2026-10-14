@@ -1,0 +1,12 @@
+# 맥동 포탑 v1 — 2026-10-14
+
+- 내장 imagegen 1회. `star-knight-v2.png`는 재질/그림톤 참조만. 생성 원본 유지, `pulse-turret-v1.png` 복사 보존.
+- 실제 역할: `upper-floors.js`에서 이동 분기 없음. 준비0.85초 후 19발 고리탄막(185px/s, 피해9), cd1.7초. aim 방향에 틈, 귀환 시 방향 회전. 기존 ground 예고/틈 표식 유지 예정.
+- 제안: 고정 철석 받침/장착 마름모 핵/황동 방출고리. 왼쪽 대기, 오른쪽 충전. 프리즘의 공중핵/파편 및 별무리 운반체의 몸통과 구분.
+- 시각 확인: 동일한 구성과 기준선, 오른쪽 핵·방출구 밝기 증가. 대기 핵도 밝고, 오른쪽 주변 빛 덩어리가 작은 탄환처럼 보일 수 있음. 원본 두 상태의 픽셀 동일성/52px 가독성/crop/게임 예고와 겹침 미검증. runtime 미반영, 승인 대기. 불필요한 재생성 없음.
+
+## 정확 프롬프트
+
+```text
+Use case: stylized-concept. Asset: transparent PNG design sheet for Spirebound ordinary upper-floor enemy pulseTurret (pulsing turret), NOT a boss. Attached image is style/material reference only: compact painted dark fantasy game sprites with strong outlines, worn iron and desaturated textures. Create a different NON-HUMANOID stationary magical turret. Exactly two isolated versions of the SAME object side by side, same size, base shape and baseline, generously spaced and full silhouettes with generous outer margins. Left dormant idle, right energized charge before emitting a ring of projectiles. A squat broad hexagonal weathered dark stone and iron plinth permanently grounded, chipped edges and tarnished brass corner fasteners. A single small vertical elongated diamond-shaped smoky violet crystal mechanically mounted in a short iron socket (not floating), about half of overall object height. One horizontal thick bronze-and-dark-iron circular emission collar surrounds the crystal at mid-height, with a few simple inset purple apertures. No floating satellite fragments. Idle crystal has a dim pale lavender inner slit; charge has a brighter white-lilac inner slit and purple lit apertures around the SAME collar, tiny contained energy sparks, retain identical silhouette and components. Visually show charge through luminosity, no massive explosions or outer attack wave. Target ordinary enemy total body height 52px and broad readable 50px base in game; simplify details for that scale, low compact artifact, not huge tall obelisk. Upper world three-quarter front view consistent with reference style. Distinct from prism boss: grounded machine, chunky low metal-stone base, one fixed crystal, no orbiting shards. Distinct from star bearer: no body, no chest core, no star shapes. No face, no limbs, no cannon barrel, no futuristic sci-fi, no labels, no text, no floor plane, no backdrop, no watermark. Transparent background. This is design concept, not gameplay screenshot.
+```

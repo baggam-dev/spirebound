@@ -1,5 +1,11 @@
 # 새 대화 인계
 
+- [맥동 포탑 v1·컨펌 대기] 2026-10-14 내장imagegen1회·pulse-turret-v1.png/prompts-pulse-turret-v1.md 원본보존·PNG직접제시. 고정철석받침/장착마름모핵/황동방출고리·왼쪽대기/오른쪽충전광증가. 대기핵도밝음·충전주변빛이탄환처럼보일수있음·정확동일성/52px가독성/crop/예고겹침 미검증. runtime미반영·테스트/푸시/배포/공개확인없음·시안/기록로컬커밋만. 누적9단위runtime미검증·미배포·운영release-20261013-213959-7366e5/마지막성공검증 유지. 현재시안/프롬프트/4기록수정·실행중세션없음·차단없음·다음 v1컨펌 또는 지정보완(後riftHunter시안·일괄구현금지).
+
+
+- [맥동 포탑 시안 진행 중] 2026-10-14 pulseTurret 코드 확인: 고정형/준비.85초/19발ring·속도185·피해9/cd1.7·전방틈/귀환방향회전. 낮은철석받침/고정마름모핵/방출고리 대기·충전2상태 제안. 내장imagegen1회 예정·승인전runtime미반영. 누적9단위 미검증·미배포·운영release-20261013-213959-7366e5 기록 유지. 테스트/푸시/배포/공개확인 없음. 현재4기록수정·실행중세션없음·차단없음·다음 PNG생성/정확프롬프트보존→컨펌대기 로컬커밋.
+
+
 - [망령 근위병 승인·로컬구현/미검증] 2026-10-14 v1 승인PNG royal-guard-reference-atlas1774x887 및 royal-guard-sprite2캐시 연결. 몸높이52/feet21·idle/recover대기·windup/strike준비·이동WeakMap방향/공격aim좌우·bodyY/귀환표식·upper fallback/초상ready재표시. server/deploy/publicQA 목록 준비(실행없음). 기존155px/반각1.15/.5초준비/피해9/벽/전투·저장actor 불변. 별도걷기/휘두르기/피격/사망없음·정확crop/발정렬/좌우/52px가독성/초상/fallback 미검증. PNG헤더크기 및 소스diff 읽기만. 누적9단위 runtime 미검증·미배포. 테스트·푸시·배포·공개확인 없음·로컬커밋만. 운영release-20261013-213959-7366e5 및 마지막 성공검증 유지. 현재PNG/sprite/upper/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음 pulseTurret 시안부터(후속일괄구현금지), 배포지시때 누적검증.
 
 
@@ -271,5 +277,5 @@ docs/WORK_STATUS.md → docs/TODO.md → docs/WORK_LOG.md 최근 항목 → docs
 
 ## 2026-10-14 최신 복사용 인계 (과거 블록보다 우선)
 ```text
-Spirebound main 재개. 최신 WORK_STATUS/TODO 상단을 우선한다. royal-guard-v1.png 승인·runtime/원정초상 연결 완료(미검증). 양손장검/붉은천/청록망령 갑옷 2자세, 별도걷기/휘두르기 프레임 없음. 다음 pulseTurret 실제역할 확인 후 PNG 시안부터. 누적9단위 runtime 미검증·미배포, 운영 release-20261013-213959-7366e5 기록 유지. 테스트/푸시/배포/공개확인은 명시 배포지시 전 금지. 이전 일회성푸시를 상시권한으로 확대하지 않는다. 실제 PNG 직접제시 및 최종 절대경로 이미지 유지. 실행중세션없음·차단없음. 현재 승인PNG/sprite/upper/journal/server/deploy/QA/4기록 변경, 로컬커밋만. 새 배포지시 때 crop/좌우/초상ready/fallback/actor불변 및 누적검증 수행.
+Spirebound main 재개. 최신 WORK_STATUS/TODO 상단을 우선한다. royal-guard-v1.png 승인·runtime/원정초상 연결 완료(미검증). 양손장검/붉은천/청록망령 갑옷 2자세, 별도걷기/휘두르기 프레임 없음. pulse-turret-v1.png 시안/정확프롬프트 보존·컨펌대기·runtime미반영. 다음 사용자 컨펌 또는 지정보완, 이후 riftHunter 시안부터. 누적9단위 runtime 미검증·미배포, 운영 release-20261013-213959-7366e5 기록 유지. 테스트/푸시/배포/공개확인은 명시 배포지시 전 금지. 이전 일회성푸시를 상시권한으로 확대하지 않는다. 실제 PNG 직접제시 및 최종 절대경로 이미지 유지. 실행중세션없음·차단없음. 현재 승인PNG/sprite/upper/journal/server/deploy/QA/4기록 변경, 로컬커밋만. 새 배포지시 때 crop/좌우/초상ready/fallback/actor불변 및 누적검증 수행.
 ```
