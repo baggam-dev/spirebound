@@ -1,5 +1,11 @@
 # 현재 작업 상태
 
+- [망령 근위병 승인·로컬구현/미검증] 2026-10-14 v1 승인PNG royal-guard-reference-atlas1774x887 및 royal-guard-sprite2캐시 연결. 몸높이52/feet21·idle/recover대기·windup/strike준비·이동WeakMap방향/공격aim좌우·bodyY/귀환표식·upper fallback/초상ready재표시. server/deploy/publicQA 목록 준비(실행없음). 기존155px/반각1.15/.5초준비/피해9/벽/전투·저장actor 불변. 별도걷기/휘두르기/피격/사망없음·정확crop/발정렬/좌우/52px가독성/초상/fallback 미검증. PNG헤더크기 및 소스diff 읽기만. 누적9단위 runtime 미검증·미배포. 테스트·푸시·배포·공개확인 없음·로컬커밋만. 운영release-20261013-213959-7366e5 및 마지막 성공검증 유지. 현재PNG/sprite/upper/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음 pulseTurret 시안부터(후속일괄구현금지), 배포지시때 누적검증.
+
+
+- [망령 근위병 승인·구현 진행 중] 2026-10-14 사용자 v1 컨펌. 승인PNG 2자세/52px·feet21/WeakMap방향/공격aim·bodyY/귀환표식/초상ready/fallback 연결 예정. 기존 베기/전투/저장actor 불변. 테스트·푸시·배포 없음. 현재 기록 수정·실행중세션없음·다음 royal-guard-sprite 및 연결/목록 수정→기록→로컬커밋.
+
+
 - [망령 근위병 v1·컨펌 대기] 2026-10-14 내장imagegen1회·royal-guard-v1.png/prompts-royal-guard-v1.md 보존·PNG 직접제시. 성운기사 비율/재질 참조, 방패없는 양손장검/붉은왕실천/청록관절망령빛·왼쪽대기/오른쪽베기준비. 볏이 왕관처럼 큼·오른쪽 검끝 여백 좁음·세갈래천 불명확·52px/crop/모션 미검증. runtime 미반영·테스트/푸시/배포/공개확인 없음·시안과기록 로컬커밋. 시작 main/origin/main 1036690 일치(추적ref), 누적8단위 미검증·미배포/운영release-20261013-213959-7366e5 기록유지. 현재 시안/프롬프트/4기록 수정·실행중세션없음·차단없음·다음 v1 컨펌 또는 지정 보완.
 
 

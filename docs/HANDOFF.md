@@ -1,5 +1,11 @@
 # 새 대화 인계
 
+- [망령 근위병 승인·로컬구현/미검증] 2026-10-14 v1 승인PNG royal-guard-reference-atlas1774x887 및 royal-guard-sprite2캐시 연결. 몸높이52/feet21·idle/recover대기·windup/strike준비·이동WeakMap방향/공격aim좌우·bodyY/귀환표식·upper fallback/초상ready재표시. server/deploy/publicQA 목록 준비(실행없음). 기존155px/반각1.15/.5초준비/피해9/벽/전투·저장actor 불변. 별도걷기/휘두르기/피격/사망없음·정확crop/발정렬/좌우/52px가독성/초상/fallback 미검증. PNG헤더크기 및 소스diff 읽기만. 누적9단위 runtime 미검증·미배포. 테스트·푸시·배포·공개확인 없음·로컬커밋만. 운영release-20261013-213959-7366e5 및 마지막 성공검증 유지. 현재PNG/sprite/upper/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음 pulseTurret 시안부터(후속일괄구현금지), 배포지시때 누적검증.
+
+
+- [망령 근위병 승인·구현 진행 중] 2026-10-14 사용자 v1 컨펌. 승인PNG 2자세/52px·feet21/WeakMap방향/공격aim·bodyY/귀환표식/초상ready/fallback 연결 예정. 기존 베기/전투/저장actor 불변. 테스트·푸시·배포 없음. 현재 기록 수정·실행중세션없음·다음 royal-guard-sprite 및 연결/목록 수정→기록→로컬커밋.
+
+
 - [망령 근위병 v1·컨펌 대기] 2026-10-14 내장imagegen1회·royal-guard-v1.png/prompts-royal-guard-v1.md 보존·PNG 직접제시. 성운기사 비율/재질 참조, 방패없는 양손장검/붉은왕실천/청록관절망령빛·왼쪽대기/오른쪽베기준비. 볏이 왕관처럼 큼·오른쪽 검끝 여백 좁음·세갈래천 불명확·52px/crop/모션 미검증. runtime 미반영·테스트/푸시/배포/공개확인 없음·시안과기록 로컬커밋. 시작 main/origin/main 1036690 일치(추적ref), 누적8단위 미검증·미배포/운영release-20261013-213959-7366e5 기록유지. 현재 시안/프롬프트/4기록 수정·실행중세션없음·차단없음·다음 v1 컨펌 또는 지정 보완.
 
 
@@ -265,5 +271,5 @@ docs/WORK_STATUS.md → docs/TODO.md → docs/WORK_LOG.md 최근 항목 → docs
 
 ## 2026-10-14 최신 복사용 인계 (과거 블록보다 우선)
 ```text
-Spirebound main 재개. 최신 WORK_STATUS/TODO 상단을 우선한다. royal-guard-v1.png 컨펌 대기: 양손장검/붉은천/청록망령 갑옷 2자세, runtime 미반영. 다음 사용자 승인 또는 지정 보완 후 해당 단위만 진행. 누적8단위 runtime 미검증·미배포, 운영 release-20261013-213959-7366e5 기록 유지. 테스트/푸시/배포/공개확인은 명시 배포지시 전 금지. 이전 일회성푸시를 상시권한으로 확대하지 않는다. 실제 PNG 직접제시 및 최종 절대경로 이미지 유지. 실행중세션없음·차단없음. 현재 시안/정확프롬프트/4기록만 변경, 로컬커밋 후 컨펌대기.
+Spirebound main 재개. 최신 WORK_STATUS/TODO 상단을 우선한다. royal-guard-v1.png 승인·runtime/원정초상 연결 완료(미검증). 양손장검/붉은천/청록망령 갑옷 2자세, 별도걷기/휘두르기 프레임 없음. 다음 pulseTurret 실제역할 확인 후 PNG 시안부터. 누적9단위 runtime 미검증·미배포, 운영 release-20261013-213959-7366e5 기록 유지. 테스트/푸시/배포/공개확인은 명시 배포지시 전 금지. 이전 일회성푸시를 상시권한으로 확대하지 않는다. 실제 PNG 직접제시 및 최종 절대경로 이미지 유지. 실행중세션없음·차단없음. 현재 승인PNG/sprite/upper/journal/server/deploy/QA/4기록 변경, 로컬커밋만. 새 배포지시 때 crop/좌우/초상ready/fallback/actor불변 및 누적검증 수행.
 ```
