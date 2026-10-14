@@ -1040,3 +1040,9 @@ e50369c / release-20261012-173829-3baf4d 활성. 서버Python25개/Nginx/인증�
 
 ### 2026-10-14 모르도2페이즈톤v3
 - [모르도2페이즈 톤 v3·컨펌 대기] 2026-10-14 사용자망토갑옷톤만수정·내장imagegen편집1회(2v2대상/승인1v5色참조)·mordo-phase2-v3.png/prompts-mordo-phase2-v3.md보존. 망토붉은채도감소/퇴색천/갑옷금장색맞춤·파손뿔뼈육체무기자세유지요청·픽셀同一性/정량色일치보장없음·crop84px가독성未검증. 오라1X/2O/3더큼공통분리규칙維持·runtime미반영/3페이즈未착수·누적12단위未검증未배포·테스트푸시배포공개확인없음·시안기록로컬커밋만. 운영release-20261013-213959-7366e5維持. 현재v3/프롬프트/4기록수정·실행중세션없음·차단없음·다음2페이즈v3컨펌또는톤지정보완.
+
+### 2026-10-14 모르도2페이즈v3확정연결 着수
+- [모르도2페이즈v3 승인·구현 진행 중] 2026-10-14 사용자확정다음진행. 승인v3phase2(.3<HP<=.65)84px/feet29/2자세+공통다크오라接続예정. phase1오라X·phase3外형기존/큰오라후속시안未구현·패턴저장불변. 테스트푸시배포없음·현재4기록수정·실행중세션없음·다음PNG/sprite/upper/초상목록→기록→로컬커밋.
+
+### 2026-10-14 모르도2페이즈確定runtime接続
+- [모르도2페이즈v3 승인·로컬구현/미검증] 2026-10-14 사용자확정·승인PNG mordo-phase2-reference-atlas/mordo-phase2-sprite2캐시接続. king.3<HP비율<=.65만84px/feet29·idle/recover대기/windup·strike준비·WeakMap/aim/bodyY/fallback. 分리공통오라100x92/.26농도/2.1초루프/준비1.1배·동결효과줄이기정지·phase1오라X/phase3큰오라外형후속未구현(기존維持). kingTransition표시helper추출로sprite後에도維持. 전투경계패턴저장actor불변·최종형초상HP25기존維持/ready대기추가. server/deploy/publicQA목록준비未실행. 独立걷기/할버드타격없음·crop手파지同一性/84px가독성/phase전환/오라性能색/fallback/actor불변未검증. 累積13단위runtime未검증未배포·테스트푸시배포공개확인없음·로컬커밋만. 운영release-20261013-213959-7366e5維持. 현재PNG/sprite/upper/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음승인2페이즈기준3페이즈악마형상시안→컨펌.
