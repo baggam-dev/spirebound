@@ -1,3 +1,4 @@
+import {demonSpriteReady,demonSpriteState} from './demon-sprite.js';
 import {commanderPhase2SpriteReady,commanderPhase2SpriteState} from './commander-phase2-sprite.js';
 import {commanderPhase1SpriteReady,commanderPhase1SpriteState} from './commander-phase1-sprite.js';
 import {mordoPhase3SpriteReady,mordoPhase3SpriteState} from './mordo-phase3-sprite.js';
@@ -31,7 +32,7 @@ import {enemyGuide} from '../world/expedition.js';
 const cache=new Map(),pendingRoots=new WeakSet();
 // Render once, using the same bodies as combat. Never mutate the expedition.
 function portrait(key,part){
- const id=key+':'+part+':'+(key==='commander'?commanderPhase1SpriteState().ready+':'+commanderPhase2SpriteState().ready+':'+shadowAuraState().ready:key==='king'?mordoPhase1SpriteState().ready+':'+mordoPhase2SpriteState().ready+':'+mordoPhase3SpriteState().ready+':'+shadowAuraState().ready:key==='riftHunter'?riftHunterSpriteState().ready+':'+shadowAuraState().ready:key==='pulseTurret'?pulseTurretSpriteState().ready:key==='royalGuard'?royalGuardSpriteState().ready:key==='starBearer'?starBearerSpriteState().ready:key==='starKnight'?starKnightSpriteState().ready:key==='gravityMage'?gravityMageSpriteState().ready:key==='astralSniper'?astralSniperSpriteState().ready:['slime','minislime'].includes(key)?slimeSpriteState().ready:key==='prism'?prismSpriteState().ready:key==='flower'?flowerSpriteState().ready:key==='warden'?wardenSpriteState().ready:gruntSpriteState().types.includes(key));if(cache.has(id))return cache.get(id);
+ const id=key+':'+part+':'+(key==='demon'?demonSpriteState().parts.join(',')+':'+shadowAuraState().ready:key==='commander'?commanderPhase1SpriteState().ready+':'+commanderPhase2SpriteState().ready+':'+shadowAuraState().ready:key==='king'?mordoPhase1SpriteState().ready+':'+mordoPhase2SpriteState().ready+':'+mordoPhase3SpriteState().ready+':'+shadowAuraState().ready:key==='riftHunter'?riftHunterSpriteState().ready+':'+shadowAuraState().ready:key==='pulseTurret'?pulseTurretSpriteState().ready:key==='royalGuard'?royalGuardSpriteState().ready:key==='starBearer'?starBearerSpriteState().ready:key==='starKnight'?starKnightSpriteState().ready:key==='gravityMage'?gravityMageSpriteState().ready:key==='astralSniper'?astralSniperSpriteState().ready:['slime','minislime'].includes(key)?slimeSpriteState().ready:key==='prism'?prismSpriteState().ready:key==='flower'?flowerSpriteState().ready:key==='warden'?wardenSpriteState().ready:gruntSpriteState().types.includes(key));if(cache.has(id))return cache.get(id);
  const source=document.createElement('canvas');source.width=384;source.height=384;
  const c=source.getContext('2d'),boss=['warden','prism','slime','king','commander','demon'].includes(key);
  const e={x:192,y:250,type:boss?'boss':key,hp:100,max:100,id:0,tier:0,part:part||'core'};
@@ -39,7 +40,7 @@ function portrait(key,part){
  if(key==='slime')e.stage=0;
  if(key==='king')e.hp=25; // The final form includes all identifying features.
  if(key==='commander')e.commander={phase:1};
- if(e.variant==='demon')drawDemon(c,e);
+ if(e.variant==='demon')drawDemon(c,e,0,false,true);
  else if(e.variant==='commander')drawCommander(c,e,0,false,true);
  else if(e.variant==='king'||upperTypes.includes(key))drawUpper(c,e,0,false,true);
  else if(infernalTypes.includes(key))drawInfernal(c,e);
@@ -55,7 +56,7 @@ function portrait(key,part){
  cache.set(id,result);return result;
 }
 export function renderJournalPortraits(root){
- if(!pendingRoots.has(root)){pendingRoots.add(root);Promise.all([gruntSpriteReady,wardenSpriteReady,flowerSpriteReady,prismSpriteReady,slimeSpriteReady,commanderPhase1SpriteReady,commanderPhase2SpriteReady,mordoPhase1SpriteReady,mordoPhase2SpriteReady,mordoPhase3SpriteReady,riftHunterSpriteReady,shadowAuraReady,pulseTurretSpriteReady,royalGuardSpriteReady,starBearerSpriteReady,starKnightSpriteReady,astralSniperSpriteReady,gravityMageSpriteReady]).then(()=>{if(root.isConnected)renderJournalPortraits(root);});}
+ if(!pendingRoots.has(root)){pendingRoots.add(root);Promise.all([demonSpriteReady,gruntSpriteReady,wardenSpriteReady,flowerSpriteReady,prismSpriteReady,slimeSpriteReady,commanderPhase1SpriteReady,commanderPhase2SpriteReady,mordoPhase1SpriteReady,mordoPhase2SpriteReady,mordoPhase3SpriteReady,riftHunterSpriteReady,shadowAuraReady,pulseTurretSpriteReady,royalGuardSpriteReady,starBearerSpriteReady,starKnightSpriteReady,astralSniperSpriteReady,gravityMageSpriteReady]).then(()=>{if(root.isConnected)renderJournalPortraits(root);});}
  for(const canvas of root.querySelectorAll('canvas[data-enemy]')){
   const key=canvas.dataset.enemy,part=canvas.dataset.part;
   if(!Object.hasOwn(enemyGuide,key)||part&&!['hand','foot','eye','nose','mouth','core'].includes(part))continue;

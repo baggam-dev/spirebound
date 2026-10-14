@@ -1,5 +1,7 @@
 import {drawDemonPressureGround} from './demon-pressure-visuals.js';
 import {drawSoftField} from './ground-visuals.js';
+import {drawDemonSprite} from './demon-sprite.js';
+import {drawShadowAura} from './shadow-aura.js';
 
 const color={hand:'#b75c96',foot:'#9a698d',eye:'#d7a4e5',nose:'#9a608f',mouth:'#bd6c9e',core:'#9b4e82'};
 function box(c,x,y,w,h,fill){c.fillStyle=fill;c.fillRect(Math.round(x),Math.round(y),w,h);}
@@ -32,8 +34,13 @@ export function drawDemonGround(c,r,time=0,reduced=false){
  }
  c.restore();drawDemonPressureGround(c,r,time,reduced);
 }
-export function drawDemon(c,e,time=0){
+export function drawDemon(c,e,time=0,reduced=false,staticPose=false,room=null){
  if(e.variant!=='demon')return;
+ const d=room?.demon,attack=(d?.attacks||[]).find(a=>a.owner===e.part)||(d?.attack?.owner===e.part?d.attack:null);
+ const auraRendered=e.part!=='core'&&drawShadowAura(c,e,time,{color:'#895496',opacity:.16,width:126,height:96,reduced,staticPose});
+ if(drawDemonSprite(c,e,time,{attack,staticPose,wall:d?.phase===3})){
+  if(e.demonShield){c.save();c.translate(Math.round(e.x),Math.round(e.y));drawDemonShield(c);c.restore();}return;
+ }
  c.save();c.translate(Math.round(e.x),Math.round(e.y));const pulse=Math.round(Math.sin(time*4)*2),part=e.part;
  oval(c,0,24,part==='core'?75:36,7,'#07091088');
  if(part==='hand'){
@@ -88,7 +95,8 @@ export function drawDemon(c,e,time=0){
   box(c,-37,8,74,4,'#251a2b');box(c,-31,13,62,3,'#8c5a83');
   for(const x of [-28,26]){box(c,x,-61,3,11,'#c08db0');box(c,x+2,-50,8,2,'#6c3e70');}
  }
- if(e.demonShield){c.strokeStyle='#a7ddf8';c.lineWidth=2;c.beginPath();c.arc(0,-5,46,0,Math.PI*2);c.stroke();c.fillStyle='#cceeff';c.font='11px Galmuri, monospace';c.textAlign='center';c.fillText('1회 방어막',0,-62);}
- if(part!=='core')drawSoftField(c,0,-5,43,color[part],.16);
+ if(e.demonShield)drawDemonShield(c);
+ if(part!=='core'&&!auraRendered)drawSoftField(c,0,-5,43,color[part],.16);
  c.restore();
 }
+function drawDemonShield(c){c.strokeStyle='#a7ddf8';c.lineWidth=2;c.beginPath();c.arc(0,-5,46,0,Math.PI*2);c.stroke();c.fillStyle='#cceeff';c.font='11px Galmuri, monospace';c.textAlign='center';c.fillText('1회 방어막',0,-62);}
