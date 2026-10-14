@@ -1,0 +1,13 @@
+# 대악마 박쥐의 눈 v1 — 2026-10-15
+
+- 사용자 다음부위 요청. 기존eyeRay/eyeOrb/측면이동·박쥐날개눈 확인. 이번눈 한부위만 시안, 기존 전투 변경 없음.
+- 내장imagegen1회, 손v2는 보라피부/검은능선/뼈색재질 참조. `demon-eye-v1.png`/생성원본 보존.
+- 큰호박홍채/세로동공/보라눈꺼풀/검은능선/짧은박쥐날개뼈끝. 왼쪽대기날개접힘, 오른쪽준비날개펴짐·동공축소. 외부오라/광선/탄환 미내포.
+- 시각 확인: 눈 중심 식별/두자세 차이. 오른쪽홍채크기도 줄어들어 동공만 변화한 것은 아님, 날개세부/전체크기동일성 후속 검토. 옆날개 여백 좁음·작은게임크기/crop/날개모션 가독성 미검증. 작은요청 출력1774x887로 미반영, 자동 재생성 없음.
+- 컨펌대기·손발눈runtime미반영·코입본체미착수. 군단장로컬미검증2단위/운영release-20261014-201910-449d0e 유지. 테스트/푸시/배포 없음.
+
+## 정확 프롬프트
+
+```text
+Use case: stylized-concept. Transparent PNG concept sheet for Spirebound greater demon PHASE TWO independent body-part creature called BAT'S EYE. Attached hand is ONLY same demon purple skin/obsidian natural ridges/ivory hard parts/dim violet fissures material reference, not anatomy. Create a SINGLE enormous floating demon EYEBALL with short BAT WINGS attached symmetrically to its sides, no head or bat face, no legs, no hands, no whole bat body. Exactly TWO poses side by side at same scale, camera and center anchor: left idle hovering eyeball with wings partly folded/down; right attack-ready pupil charged with wings slightly spread, still same eye and wing geometry. Eyeball: round-ish muted pale lavender/grey violet fleshy sclera wrapped in a few dark purple leathery lid ridges, a large clear intense amber-yellow IRIS with vertical BLACK SLIT pupil for highest contrast, small restrained violet line around iris. The iris is main identifying feature, not an orb crystal or chest core. Wet subtle specular glint and limited vein detail, painterly dark fantasy NOT photorealistic anatomical gore. Compact chunky winged-eye silhouette, wing span about 1.8x eyeball diameter, short sturdy wings rather than huge wide cape: dark purple sinewy wing roots and dusty violet membranes with dark bone-like ribs and short ivory tips. Match purple skin of attached hand, keep muted palette, avoid bright pink neon. Right eye readiness through a smaller tighter slit and modest brighter amber inner ring, NO actual laser beam, bullets, floating runes, orbiting crystals or external aura/cloud; runtime VFX separate. Preserve same number of wing ribs, eye shape and pigmentation both poses. Detached flying eye, no mouth/nose/ears/horns/crown/armor. Simplified high readability for 65-80px part display. Entire wing tips and eye inside generous outer/center margins. Request approximately1024x512 compact sheet if possible. Genuine transparent background, no floor, scenery, text, labels, watermark. Design preview awaiting approval, not runtime or gameplay. Only bat's eye, no other demon parts.
+```
