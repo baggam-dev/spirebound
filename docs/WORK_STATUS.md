@@ -1,5 +1,11 @@
 # 현재 작업 상태
 
+- [군단장1페이즈v1 승인·로컬구현/미검증] 2026-10-14 사용자좋아승인·PNG commander-phase1-reference-atlas/commander-phase1-sprite2캐시接続. phase1HP>.5/state.phase!=2만 몸높이84/feet29·대기/volley snipe ricochet rain조준·WeakMap방향/고정aim반전·blinkFlash/transition효과維持·초상ready캐시재표시/fallback. 2페이즈기존外형/ground예고/移動패턴HP저장actor不変. server/deploy/publicQA목록준비未실행. 独立보행발사회수프레임없음·승인원본대기/조준활손불일치保留·crop手形상84px가독성전환fallbackactor未검증. 배포후新미검증1단위·테스트푸시배포공개확인없음·로컬커밋만. 운영release-20261014-201910-449d0e/기존14단위455개公開QA통과維持. 현재PNG/sprite/commander/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음군단장2페이즈빙결강화시안→컨펌 또는 활손細부보완.
+
+
+- [군단장1페이즈v1 승인·구현 진행 중] 2026-10-14 사용자좋아外형승인. 승인PNG/84px2자세/전투초상ready/fallback接続예정·빙결패턴移動/phase2不変. 활손전환원본制約維持(별도보완未승인)·테스트푸시배포공개검증없음·현재4기록수정·실행중세션없음·다음sprite/PNG/commander/journal/목록→記録→로컬커밋.
+
+
 - [악마 군단장1페이즈 v1·컨펌 대기] 2026-10-14 내장imagegen1회·commander-phase1-v1.png/prompts-commander-phase1-v1.md보존·PNG직접표시/패널요청. 회색마족얼굴/뒤굽은뿔/비대칭철갑/청회망토/큰얼음복합궁/등화살통·좌대기우조준. 대기오른손활/조준왼손활로바뀌어같은활손불일치·활현당기는손形상정합성후속보완필요/갑옷비중큼/활몸보다큼·위여백좁음. 小크기未반영1774x887·84px/crop/모션未검증. runtime미반영/2페이즈未착수·테스트푸시배포공개확인없음·시안기록로컬커밋만. 운영release-20261014-201910-449d0e/마지막455개公開QA維持. 현재PNG/프롬프트/4기록수정·실행중세션없음·차단없음·다음외형컨펌또는활손形상지정보완.
 
 
