@@ -1,0 +1,7 @@
+# 성운기사 v2 — 2026-10-14
+
+내장 imagegen 편집. 입력 star-knight-v1.png. 컨펌 전 runtime 미반영.
+
+## Exact prompt
+
+Edit this two-pose Nebula Knight concept sheet. Preserve transparent background, two full-body figures, same compact RPG sprite proportions, muted worn charcoal/slate palette, hands and pose arrangement: idle left, shield-forward sword-ready right. Make BOTH poses clearly distinct from the hooded astral swordsman: REMOVE ALL hood fabric from head and neck; exposed closed heavy steel greathelm with broad flat angular brow, small dim amber eye slit, no face, no hair, no horns. REMOVE long ragged cape and scarf; only a short neat dark violet shoulder cape ending at waist. Replace slender sword with practical BROAD one-handed arming sword, visibly wider steel blade, about same overall length, securely grasped handle with thumb and fingers. Make chest, shoulder and shin armor heavier and broader, worn scuffed matte iron, preserve compact body height and larger helmet ratio. Enlarge angular iron kite shield moderately to cover torso when raised, simple restrained violet star engraving, no ornate decoration. Keep identical helmet, sword, armor and shield design across poses. Sword in right hand (viewer left), shield on left arm (viewer right) in BOTH poses. Entire weapons, feet and cape fully in frame, generous transparent margins, separate figures, no text, no ground shadow, no background. Approval draft only.
