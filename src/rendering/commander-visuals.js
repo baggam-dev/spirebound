@@ -1,3 +1,5 @@
+import {drawCommanderPhase2Sprite} from './commander-phase2-sprite.js';
+import {drawFrostAura} from './frost-aura.js';
 import {drawCommanderPhase1Sprite} from './commander-phase1-sprite.js';
 import {commanderProfile,commanderOffsets} from '../combat/boss-pressure.js';
 import {drawSoftField} from './ground-visuals.js';
@@ -27,9 +29,10 @@ export function drawCommanderGround(c,e,time=0){
  }
  c.restore();
 }
-export function drawCommander(c,e,time=0){
+export function drawCommander(c,e,time=0,reduced=false,staticPose=false){
  if(e.variant!=='commander')return;
- if(drawCommanderPhase1Sprite(c,e))return;
+ if(e.commander?.phase===2||e.hp/e.max<=.5)drawFrostAura(c,e,time,{reduced,staticPose});
+ if(drawCommanderPhase1Sprite(c,e)||drawCommanderPhase2Sprite(c,e))return;
  const state=e.commander||{},second=state.phase===2,facing=Math.cos(state.volley?.aim??state.snipe?.aim??0)<0?-1:1;
  c.save();c.translate(Math.round(e.x),Math.round(e.y));c.scale(facing,1);
  c.fillStyle='#07151a55';c.fillRect(-27,18,54,6);
