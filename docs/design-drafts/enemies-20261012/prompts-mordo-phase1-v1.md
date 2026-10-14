@@ -1,0 +1,12 @@
+# 모르도 1단계 검은 왕 v1 — 2026-10-14
+
+- 상층 일반 적 다음 미리뉴얼 보스 `king` 시안. 이번은 1단계만; 2단계 타락/3단계 마왕 미착수.
+- 코드: `kingPhase` HP65%/30% 경계. 1단계 검기 fan/전방145px 베기/mark/돌진. phase2부터 고리 또는 순간이동, phase3 judgment. 기존 왕관/붉은망토/검 외형 확인. 패턴 변경 없음.
+- 내장 imagegen1회, 성운기사 v2는 톤/비율 참조. 생성 원본 유지, `mordo-phase1-v1.png` 보존.
+- 왕관/검은중갑/낡은금테/긴붉은왕실망토/한손의식검. 왼쪽 대기/오른쪽 공격 준비와 명령손. 금속이 요청 검정색보다 밝고 기사 유사성 남음. 오른쪽 망토가 이미지 가장자리에서 잘림, 올린 검 위 여백 좁음. 시안 승인 전 runtime 미반영. 크기/동일성/crop/게임가독성/모션 미검증; 재생성 없음.
+
+## 정확 프롬프트
+
+```text
+Use case: stylized-concept. Transparent PNG concept sheet for Spirebound boss Mordo the corrupted king, PHASE ONE ONLY, called the Black King. Attached image is style/proportion/material reference only (ordinary star knight), not a character to copy. Exactly two full body poses side by side, same king and same equipment and scale and ground baseline, generous margins. Left regal ominous idle holding ONE large ceremonial broad sword one-handed lowered beside him; right deliberate attack windup with the same sword raised diagonally, same hand, off hand open commanding gesture. A compact stocky dark fantasy boss, larger and broader than ordinary guards but not tall realistic heroic anatomy. Clearly royal silhouette: a wide tarnished gold crown with five blunt uneven points, mounted over a severe black iron enclosed royal helmet, small cold lavender eye slit, no pretty human face, no hair. Massive weathered charcoal black plate chest and shoulders with restrained old gold trim, deep oxblood long royal mantle with ragged hem and faded simple gold edging, a dark crimson royal tabard and robust plated boots visible for anchoring. Great ceremonial sword with heavy dark steel blade and pale edge, modest gold crossguard, no shield. Royal and sinister, fallen king rather than common soldier. PHASE ONE: no demonic horns, no wings, no tentacles, no transformation cracks, no huge magical core, no floating orb, no aura clouds (effects will be separate). Crown clearly different from narrow iron three-prong crest of royal guard. No hammer, no bow. Maintain identical armor, crown, sword and cape between poses. Painted dark fantasy game sprite finish with crisp outlines and visibly worn materials, compact readable details. No scenery, floor, throne, labels, text, watermark, attack arc. Truly transparent background. This is initial boss appearance approval sheet, not an implemented animation or gameplay capture.
+```

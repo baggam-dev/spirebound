@@ -1,5 +1,11 @@
 # 새 대화 인계
 
+- [모르도1단계 v1·컨펌 대기] 2026-10-14 내장imagegen1회·mordo-phase1-v1.png/prompts-mordo-phase1-v1.md原본보존·PNG직접제시. 왕관/검은중갑금테/긴붉은왕실망토/한손의식검·왼쪽대기/오른쪽준비명령손. 갑옷검정보다밝음·기사유사성·오른쪽망토가장자리잘림/검위여백좁음·크기동일성crop가독성모션미검증. 1단계만시안·타락/마왕후속별도. runtime미반영·테스트푸시배포공개확인없음·시안기록로컬커밋만. 누적11단위미검증미배포/운영release-20261013-213959-7366e5維持. 현재PNG/프롬프트/4기록수정·실행중세션없음·차단없음·다음v1컨펌또는지정보완.
+
+
+- [모르도1단계 시안 진행 중] 2026-10-14 후속미리뉴얼보스king 선택·코드HP65%/30%3단계·1단계slash/mark/dash/fan확인. 이번검은왕1단계만 왕관/검은중갑/긴붉은왕실망토/의식검 대기준비2자세시안. 타락/마왕후속별도·승인전runtime미반영·내장imagegen1회예정. 누적11단위미검증미배포/운영release-20261013-213959-7366e5기록유지·테스트푸시배포없음. 현재4기록수정·실행중세션없음·다음PNG/프롬프트보존→컨펌대기로컬커밋.
+
+
 - [균열 사냥꾼/공통오라 승인·로컬구현/미검증] 2026-10-14 오라없는v1캐릭터/rift-hunter-sprite2자세52px/feet21·WeakMap좌우/aim/bodyY/귀환표식/초상ready/fallback 연결. shadow-aura4셀96캐시·色캐시8개상한/원본明도알파유지·color/opacity/width/height/speed/intensity·.22농도/66x60/2.1초crossfade/id위상/±1.1px흔들림·준비1.2배·후면/발위clip. 동결/효과줄이기정지·줄이기농도.6배/초상정지·actor저장불변·로드실패오라없음. 정예/하강적未적용. enemyGuide出현예고→순간이동→베기로정정·전투판정불변. PNG헤더/소스diff읽기만·編集명령1회구문오류는수정완료. crop/좌우/초상/색/자연스러움/성능/fallback/actor불변미검증. 누적11단위runtime미검증·미배포·테스트/푸시/배포/공개확인없음·로컬커밋만. 운영release-20261013-213959-7366e5/마지막성공검증유지. 현재PNG2/sprite/aura/upper/journal/game/guide/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음후속보스시안대상확인(임의일괄구현금지) 또는 배포지시때누적검증.
 
 
@@ -312,5 +318,5 @@ Spirebound main 재개. 최신 WORK_STATUS/TODO 상단을 우선한다. royal-gu
 
 ## 최신 복사용 인계 — 사냥꾼/분리오라 승인 연결
 ```text
-최신상단 WORK_STATUS/TODO 우선. 오라없는rift-hunter-v1 및 shadow-aura-separate-v1 승인·runtime/초상 연결 완료(미검증). 공통오라 color/opacity/width/height/speed/intensity 설정,4셀crossfade/id위상/동결효과줄이기정지/후면·발clip. 정예/시련하강일괄적용없음. 누적11단위runtime미검증·미배포. 운영release-20261013-213959-7366e5 기록유지. 테스트/푸시/배포/공개확인은 명시배포지시 후만. 다음 후속보스 시안 대상 기존docs/코드확인 후 한단위만, 사용자컨펌전runtime반영금지. chaser.test.js55px120도/player14 경계갱신 및 enemyGuide추적병문구, 누적crop/좌우/초상ready/fallback/actor불변/오라색루프성능 배포검증목록유지. 실행중세션없음·차단없음. 실제PNG직접제시/최종절대경로이미지·기존원본유지.
+최신상단 WORK_STATUS/TODO 우선. 오라없는rift-hunter-v1 및 shadow-aura-separate-v1 승인·runtime/초상 연결 완료(미검증). 공통오라 color/opacity/width/height/speed/intensity 설정,4셀crossfade/id위상/동결효과줄이기정지/후면·발clip. 정예/시련하강일괄적용없음. 누적11단위runtime미검증·미배포. 운영release-20261013-213959-7366e5 기록유지. 테스트/푸시/배포/공개확인은 명시배포지시 후만. 다음 mordo-phase1-v1.png 검은왕1단계 컨펌 또는 지정보완. 2단계타락/3단계마왕은미착수. 오른쪽망토잘림/갑옷밝기 제약 기록. 이번시안runtime미반영, 사용자컨펌전runtime반영금지. chaser.test.js55px120도/player14 경계갱신 및 enemyGuide추적병문구, 누적crop/좌우/초상ready/fallback/actor불변/오라색루프성능 배포검증목록유지. 실행중세션없음·차단없음. 실제PNG직접제시/최종절대경로이미지·기존원본유지.
 ```
