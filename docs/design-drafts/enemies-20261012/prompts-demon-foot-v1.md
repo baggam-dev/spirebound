@@ -1,0 +1,13 @@
+# 대악마 뛰는 발 v1 — 2026-10-14
+
+- 사용자 다음 부위 요청으로 발 시안 진행. 손v1은 보존하며 이번에 runtime 반영하지 않음. footJump/footDash/주기방어막 역할 확인, 기존 공격 판정 유지 예정.
+- 내장 imagegen1회, 손v1은 같은 대악마 재질 참조. `demon-foot-v1.png`/생성원본 보존.
+- 잿빛 마족 피부·힘줄·검은 능선·뼈발톱·보라 균열. 왼쪽 발 접지, 오른쪽 뒤꿈치를 든 도약 준비. 외부오라/착지먼지/방어막은 원본에 미내포.
+- 요청 다섯 발가락 대비 왼쪽4/오른쪽3 발톱이 선명하게 보임. 가려진 발가락 여부/정확 해부학/두자세 동일성 후속 검토 필요, 다섯이라고 확정하지 않음. 발목이 짧은 요청보다 긴 편. 실제 게임크기/crop/접지/움직임 미검증. 작은크기 요청 출력1774x887로 미반영. 자동 재생성 없음, 컨펌 대기.
+- 이번 발 한 부위만 시안·runtime 미반영·테스트/푸시/배포 없음. 군단장 로컬 미검증2단위 및 운영release-20261014-201910-449d0e 유지.
+
+## 정확 프롬프트
+
+```text
+Use case: stylized-concept. Create transparent PNG concept sheet for Spirebound greater demon detached FOOT enemy, called the jumping foot. Attached crawling hand is ONLY reference for SAME demon skin/material family: ash-grey desaturated mauve sinew, dark obsidian natural ridges, pale bone claws, very small dim violet fissures. New anatomy is one detached monstrous FOOT, not a hand and not a claw arm. Exactly two poses side by side of SAME foot, SAME scale and camera, generous margins: LEFT planted idle foot with all toes grounded; RIGHT compressed pre-jump windup with toes bent against floor and heel slightly lifted, ankle leaning forward, no midair leap yet. Low three-quarter camera that clearly shows heel, arch, ankle and toes pointing diagonally toward viewer-right; same direction and camera both poses. Foot has FIVE anatomical toes (large big toe on inner side, four progressively smaller toes), short chunky toes with pale curved claw tips, a broad heel and readable instep, a thick short ankle/calf stump sealed in a dry magical scar without blood/gore. Toes should be short and foot-like, not long hand fingers. Strong heavy boss-part silhouette, compact creature displayed roughly 65-80px in game, no realistic photo human foot. Skin folds, strong tendons and irregular dark obsidian-like natural plates at ankle/shin and top of instep, tiny restrained violet cracks between plates, claws weathered bone ivory. Cursed living demonic flesh, no boots, no armor, no bracelets, no jewelry, no bones-only skeleton, no face, no eye, no mouth, no horns. Keep toe count, claw shapes, ankle/stump details consistent across two poses. No external aura, smoke, jump dust, shockwave, shield bubble or motion lines; runtime VFX will be separate. Painted worn dark fantasy sprite finish matching attached hand, strong crisp outlines and simplified readable textures. Approximately 1024x512 compact landscape sheet if possible. ALL claws/ankle/heel fully inside generous margins, no crop. Genuinely transparent background, no floor/scenery, no text/labels/watermark. Design preview awaiting approval only, not gameplay. Only foot, do not add hand or other demon parts.
+```
