@@ -1,5 +1,11 @@
 # 새 대화 인계
 
+- [균열 사냥꾼/공통오라 승인·로컬구현/미검증] 2026-10-14 오라없는v1캐릭터/rift-hunter-sprite2자세52px/feet21·WeakMap좌우/aim/bodyY/귀환표식/초상ready/fallback 연결. shadow-aura4셀96캐시·色캐시8개상한/원본明도알파유지·color/opacity/width/height/speed/intensity·.22농도/66x60/2.1초crossfade/id위상/±1.1px흔들림·준비1.2배·후면/발위clip. 동결/효과줄이기정지·줄이기농도.6배/초상정지·actor저장불변·로드실패오라없음. 정예/하강적未적용. enemyGuide出현예고→순간이동→베기로정정·전투판정불변. PNG헤더/소스diff읽기만·編集명령1회구문오류는수정완료. crop/좌우/초상/색/자연스러움/성능/fallback/actor불변미검증. 누적11단위runtime미검증·미배포·테스트/푸시/배포/공개확인없음·로컬커밋만. 운영release-20261013-213959-7366e5/마지막성공검증유지. 현재PNG2/sprite/aura/upper/journal/game/guide/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음후속보스시안대상확인(임의일괄구현금지) 또는 배포지시때누적검증.
+
+
+- [균열 사냥꾼/分리오라 승인·구현 진행 중] 2026-10-14 사용자ㄱㄱ로v1캐릭터+분리오라조합승인. 52px2자세/공통색농도크기속도/4프레임crossfade/후면저농도연결예정·정예하강일괄적용없음·enemyGuide출현예고정정. 테스트/푸시/배포없음·현재4기록수정·실행중세션없음·다음PNG/sprite/aura/연결/목록→記録→로컬커밋.
+
+
 - [분리 오라 v1·컨펌 대기] 2026-10-14 내장imagegen1회·shadow-aura-separate-v1.png/prompts-shadow-aura-separate-v1.md보존·PNG직접제시. キャ릭터없는4단계연무(좌상우상좌하우하)·정지시안/실제일렁임未확인. 요청보다연무두껍고상단아치·프레임외곽다름·루프/52px/투명도미검증. 제안: 오라없는rift-v1뒤低농도(.18~.28)/1.8~2.4초crossfade/동일셀앵커/색농도크기속도설정/검정그림자와색레이어캐시분리·actor불변·발예고보존·fallback. キャ릭터/오라컨펌전runtime미반영·정예/시련하강일괄적용미승인. 테스트/푸시/배포없음·로컬커밋만. 누적10단위미검증·미배포/운영release-20261013-213959-7366e5유지. 현재PNG/프롬프트설계/4기록수정·실행중세션없음·차단없음·다음분리오라방향/캐릭터v1조합컨펌또는지정보완.
 
 
@@ -302,4 +308,9 @@ docs/WORK_STATUS.md → docs/TODO.md → docs/WORK_LOG.md 최근 항목 → docs
 ## 2026-10-14 최신 복사용 인계 (과거 블록보다 우선)
 ```text
 Spirebound main 재개. 최신 WORK_STATUS/TODO 상단을 우선한다. royal-guard-v1.png 승인·runtime/원정초상 연결 완료(미검증). 양손장검/붉은천/청록망령 갑옷 2자세, 별도걷기/휘두르기 프레임 없음. pulse-turret-v1.png 시안/정확프롬프트 보존·컨펌대기·runtime미반영. 다음 사용자 컨펌 또는 지정보완, 이후 riftHunter 시안부터. 누적9단위 runtime 미검증·미배포, 운영 release-20261013-213959-7366e5 기록 유지. 테스트/푸시/배포/공개확인은 명시 배포지시 전 금지. 이전 일회성푸시를 상시권한으로 확대하지 않는다. 실제 PNG 직접제시 및 최종 절대경로 이미지 유지. 실행중세션없음·차단없음. 현재 승인PNG/sprite/upper/journal/server/deploy/QA/4기록 변경, 로컬커밋만. 새 배포지시 때 crop/좌우/초상ready/fallback/actor불변 및 누적검증 수행.
+```
+
+## 최신 복사용 인계 — 사냥꾼/분리오라 승인 연결
+```text
+최신상단 WORK_STATUS/TODO 우선. 오라없는rift-hunter-v1 및 shadow-aura-separate-v1 승인·runtime/초상 연결 완료(미검증). 공통오라 color/opacity/width/height/speed/intensity 설정,4셀crossfade/id위상/동결효과줄이기정지/후면·발clip. 정예/시련하강일괄적용없음. 누적11단위runtime미검증·미배포. 운영release-20261013-213959-7366e5 기록유지. 테스트/푸시/배포/공개확인은 명시배포지시 후만. 다음 후속보스 시안 대상 기존docs/코드확인 후 한단위만, 사용자컨펌전runtime반영금지. chaser.test.js55px120도/player14 경계갱신 및 enemyGuide추적병문구, 누적crop/좌우/초상ready/fallback/actor불변/오라색루프성능 배포검증목록유지. 실행중세션없음·차단없음. 실제PNG직접제시/최종절대경로이미지·기존원본유지.
 ```

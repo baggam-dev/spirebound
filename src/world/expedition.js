@@ -13,7 +13,7 @@ export const enemyGuide={
  starBearer:{name:'별무리 운반체',tip:'주변 적의 공격 준비를 가속합니다. 우선 처치하세요.'},
  royalGuard:{name:'망령 근위병',tip:'넓은 전방 베기를 사용합니다. 소환체는 보상을 주지 않습니다.'},
  pulseTurret:{name:'맥동 포탑',tip:'고리 탄막의 넓은 틈으로 이동하세요.'},
- riftHunter:{name:'균열 사냥꾼',tip:'예고된 직선 경로에서 벗어나세요.'},
+ riftHunter:{name:'균열 사냥꾼',tip:'예고된 출현 위치를 벗어나고, 순간이동 후 전방 베기를 피하세요.'},
  strafer:{name:'횡단 사수',tip:'측면으로 이동하며 평행 탄막을 발사합니다.'},
  ringcaster:{name:'고리술사',tip:'고리 탄막의 넓은 틈으로 통과하세요.'},
  ambusher:{name:'매복 사냥꾼',tip:'긴 돌진 예고 후 측면을 파고듭니다.'},
