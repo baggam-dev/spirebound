@@ -1,5 +1,11 @@
 # 새 대화 인계
 
+- [맥동 포탑 승인·로컬구현/미검증] 2026-10-14 v1 승인PNG pulse-turret-reference-atlas1774x887/pulse-turret-sprite2캐시 연결. 일반적높이52/바닥21·idle/recover대기/windup·strike충전·고정받침(bodyY/aim반전없음)/귀환표식·upper fallback/초상ready재표시. 기존ring19발/틈예고/귀환방향/전투·저장actor 불변. server/deploy/publicQA 목록준비(실행없음). 원본내포빛고정·독립고리회전/핵맥동/피격사망없음·crop/52px크기/밝기/예고겹침/초상ready/fallback/actor불변 런타임미검증. PNG헤더읽기/diff목록만. 누적10단위runtime미검증·미배포·테스트/푸시/배포/공개확인없음·로컬커밋만. 운영release-20261013-213959-7366e5/마지막성공검증 유지. 현재PNG/sprite/upper/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음 riftHunter 실제역할확인후 PNG시안→컨펌.
+
+
+- [맥동 포탑 승인·구현 진행 중] 2026-10-14 사용자 오키ㄱㄱ v1 승인. 고정형52px/바닥21·대기충전2상태/초상ready/fallback 연결 예정. 기존ring19발/틈예고/전투·저장actor 불변. 테스트/푸시/배포/공개확인없음. 현재4기록수정·실행중세션없음·차단없음·다음 sprite/PNG/연결/목록→記録→로컬커밋.
+
+
 - [맥동 포탑 v1·컨펌 대기] 2026-10-14 내장imagegen1회·pulse-turret-v1.png/prompts-pulse-turret-v1.md 원본보존·PNG직접제시. 고정철석받침/장착마름모핵/황동방출고리·왼쪽대기/오른쪽충전광증가. 대기핵도밝음·충전주변빛이탄환처럼보일수있음·정확동일성/52px가독성/crop/예고겹침 미검증. runtime미반영·테스트/푸시/배포/공개확인없음·시안/기록로컬커밋만. 누적9단위runtime미검증·미배포·운영release-20261013-213959-7366e5/마지막성공검증 유지. 현재시안/프롬프트/4기록수정·실행중세션없음·차단없음·다음 v1컨펌 또는 지정보완(後riftHunter시안·일괄구현금지).
 
 
