@@ -1,6 +1,6 @@
 # 새 대화 인계
 
-- [성운기사 승인·로컬구현/미검증] 2026-10-14 승인v2를 star-knight-reference-atlas 및 star-knight-sprite 2자세 캐시로 연결. 몸통 높이52px/feet21 기준(올린 검 높이는 몸 크기 계산 제외), 대기/복귀 idle·windup/strike 방패준비·이동WeakMap방향/공격aim반전·bodyY/귀환표식. upper fallback 및 원정초상 ready 캐시 갱신, server/deploy/publicQA 목록 준비(실행없음). 검/방패/예고/전투/저장 판정 불변. 독립 걷기/타격 프레임 없음, 실제 crop/무장 정렬/좌우/크기/가독성 미검증. 누적7종 runtime 미검증. 테스트/푸시/배포 없음·로컬커밋만·배포나중묶음. 운영release-20261013-213959-7366e5/마지막 성공검증 유지. 수정 PNG/star-knight/upper/journal/server/deploy/QA/4기록·실행중 세션없음. 다음 상층 남은 starBearer(성운기수) 외형 시안, 배포지시 때 누적 검증.
+- [성운기사 승인·로컬구현/미검증] 2026-10-14 승인v2를 star-knight-reference-atlas 및 star-knight-sprite 2자세 캐시로 연결. 몸통 높이52px/feet21 기준(올린 검 높이는 몸 크기 계산 제외), 대기/복귀 idle·windup/strike 방패준비·이동WeakMap방향/공격aim반전·bodyY/귀환표식. upper fallback 및 원정초상 ready 캐시 갱신, server/deploy/publicQA 목록 준비(실행없음). 검/방패/예고/전투/저장 판정 불변. 독립 걷기/타격 프레임 없음, 실제 crop/무장 정렬/좌우/크기/가독성 미검증. 누적7종 runtime 미검증. 테스트/푸시/배포 없음·로컬커밋만·배포나중묶음. 운영release-20261013-213959-7366e5/마지막 성공검증 유지. 수정 PNG/star-knight/upper/journal/server/deploy/QA/4기록·실행중 세션없음. 다음 상층 남은 starBearer(별무리 운반체) 외형 시안, 배포지시 때 누적 검증.
 
 - [성운기사 v2·컨펌 대기] 2026-10-14 사용자 저격기사와 구분 방향 합의 후 v1 내장imagegen 편집1회. star-knight-v2.png/prompts-star-knight-v2.md 보존. 후드 제거/노출 철제투구/짧은 어깨망토/넓은 검/중갑/큰 철방패, 왼쪽 대기·오른쪽 방패 전진 검 준비. 두 자세 무장손 일관성 및 후드 제거 시각 확인. 정확 크기·52px 가독성·모션 미검증. runtime 미반영·테스트/푸시/배포 없음·시안 로컬커밋만. 기존 누적6종 미검증/운영release-20261013-213959-7366e5/마지막 성공검증 유지. Bad Request 원인 미확인, 이번 이미지 생성 성공. 수정 시안/프롬프트/4기록·실행중 세션없음. 다음 v2 컨펌 후 기존 검/방패 state 외형 연결 또는 보완.
 
@@ -117,7 +117,7 @@
 아래 블록을 새 챗/다른 AI에 붙여 넣는다. 세부 상태는 저장소 문서를 기준으로 다시 확인한다.
 
 ```text
-- [성운기사 승인·로컬구현/미검증] 2026-10-14 승인v2를 star-knight-reference-atlas 및 star-knight-sprite 2자세 캐시로 연결. 몸통 높이52px/feet21 기준(올린 검 높이는 몸 크기 계산 제외), 대기/복귀 idle·windup/strike 방패준비·이동WeakMap방향/공격aim반전·bodyY/귀환표식. upper fallback 및 원정초상 ready 캐시 갱신, server/deploy/publicQA 목록 준비(실행없음). 검/방패/예고/전투/저장 판정 불변. 독립 걷기/타격 프레임 없음, 실제 crop/무장 정렬/좌우/크기/가독성 미검증. 누적7종 runtime 미검증. 테스트/푸시/배포 없음·로컬커밋만·배포나중묶음. 운영release-20261013-213959-7366e5/마지막 성공검증 유지. 수정 PNG/star-knight/upper/journal/server/deploy/QA/4기록·실행중 세션없음. 다음 상층 남은 starBearer(성운기수) 외형 시안, 배포지시 때 누적 검증.
+- [성운기사 승인·로컬구현/미검증] 2026-10-14 승인v2를 star-knight-reference-atlas 및 star-knight-sprite 2자세 캐시로 연결. 몸통 높이52px/feet21 기준(올린 검 높이는 몸 크기 계산 제외), 대기/복귀 idle·windup/strike 방패준비·이동WeakMap방향/공격aim반전·bodyY/귀환표식. upper fallback 및 원정초상 ready 캐시 갱신, server/deploy/publicQA 목록 준비(실행없음). 검/방패/예고/전투/저장 판정 불변. 독립 걷기/타격 프레임 없음, 실제 crop/무장 정렬/좌우/크기/가독성 미검증. 누적7종 runtime 미검증. 테스트/푸시/배포 없음·로컬커밋만·배포나중묶음. 운영release-20261013-213959-7366e5/마지막 성공검증 유지. 수정 PNG/star-knight/upper/journal/server/deploy/QA/4기록·실행중 세션없음. 다음 상층 남은 starBearer(별무리 운반체) 외형 시안, 배포지시 때 누적 검증.
 - [성운기사 v2·컨펌 대기] 2026-10-14 사용자 저격기사와 구분 방향 합의 후 v1 내장imagegen 편집1회. star-knight-v2.png/prompts-star-knight-v2.md 보존. 후드 제거/노출 철제투구/짧은 어깨망토/넓은 검/중갑/큰 철방패, 왼쪽 대기·오른쪽 방패 전진 검 준비. 두 자세 무장손 일관성 및 후드 제거 시각 확인. 정확 크기·52px 가독성·모션 미검증. runtime 미반영·테스트/푸시/배포 없음·시안 로컬커밋만. 기존 누적6종 미검증/운영release-20261013-213959-7366e5/마지막 성공검증 유지. Bad Request 원인 미확인, 이번 이미지 생성 성공. 수정 시안/프롬프트/4기록·실행중 세션없음. 다음 v2 컨펌 후 기존 검/방패 state 외형 연결 또는 보완.
 - [성운기사 시안·컨펌 대기] 2026-10-14 star-knight-v1.png 및 exact prompt 보존. 내장 imagegen 1회, 승인 저격기사 비율/톤 참조. 왼쪽 대기/오른쪽 방패 전진·검 준비, 낡은 철갑/폐쇄투구/각진 철방패/보라 별 문양. 칼손/방패손 좌우 일관성 시각 확인. 요청한 후드 제거/짧은 망토는 생성 결과에 반영되지 않아 저격기사와 실루엣 유사성 제약 남음. 실제 게임 크기/가독성 미검증. runtime 미반영·테스트/푸시/배포 없음·시안 로컬 커밋만. 누적 6종 runtime 변경 미검증, 운영 release-20261013-213959-7366e5 및 마지막 성공검증 유지. 수정 시안/프롬프트/4기록, 실행중 세션 없음. 다음 사용자 컨펌 또는 투구/망토 구분 보완 시안.
 Spirebound 작업을 이어가자. 답변은 한국어, 기본 5줄 이내.
@@ -236,6 +236,7 @@ docs/WORK_STATUS.md → docs/TODO.md → docs/WORK_LOG.md 최근 항목 → docs
 
 ## 저장 보완 재개 체크포인트
 2026-10-07 재개: 사용자 브라우저에서 저장 보완 해결 여부는 미확인. 같은 브라우저 새로고침 → 이어하기 → 일시정지 저장 결과, 기기/브라우저, 실패 시 정확한 문구를 요청했다. 사이트 데이터와 저장 원본은 보존한다. 답변 후 해당 오류 경로의 후속 수정 여부를 정한다. 코드 변경·신규 테스트·재배포·푸시 없음. 기존 마지막 검증은 전체415개·공개 Edge/HTTPS QA 통과이며 사용자 실증과 구분한다. 실행 중 명령/세션 없음.
+
 
 
 
