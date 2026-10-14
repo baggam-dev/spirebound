@@ -935,3 +935,6 @@ e50369c / release-20261012-173829-3baf4d 활성. 서버Python25개/Nginx/인증�
 
 ### 승인 융합체 구현·이관 준비
 - [별무리 운반체 승인·구현/푸시 준비] 2026-10-14 v2 승인원본 star-bearer-reference-atlas 및 star-bearer-sprite 2자세 연결. 몸높이52/feet21·대기/충전windup·strike·WeakMap좌우/bodyY/귀환표식·초상ready/fallback·server/deploy/publicQA 목록 준비. 기존지원170px/느린이동/ring/저장판정 불변. 독립핵회전/걷기없음·crop/크기/가독성 실동작 미검증. 누적8단위 미검증·미배포. 사용자 이번 누적푸시 명시승인, 상시승인아님. 테스트/배포 미실행·운영release-20261013-213959-7366e5/마지막성공검증 유지. docs/NEXT_CHAT_PROMPT.md 이관프롬프트 준비·다음 royalGuard 망령근위병 시안. 현재 sprite/PNG/upper/journal/server/deploy/QA/기록/인계 수정·실행중 세션없음·다음 커밋→git push origin main→성공기록푸시.
+
+### 누적 푸시 성공 및 새챗 인계
+- [융합체 구현·누적푸시/이관 준비 완료] 2026-10-14 c0b6f5c까지 origin/main 푸시 성공(e9182a0→c0b6f5c). 별무리 운반체 v2 승인·runtime/초상 연결 완료, 누적8단위는 테스트 미실행·미검증·미배포. 운영release-20261013-213959-7366e5 불변. 사용자 이번푸시만 승인, 이후 기본로컬커밋/별도배포지시 규칙 유지. 새챗 프롬프트 docs/NEXT_CHAT_PROMPT.md 준비, 다음 망령근위병 royalGuard 시안. Bad Request 원인 미확인. 실행중세션없음·차단없음. 이 성공기록도 별도커밋/푸시 후 작업종료.
