@@ -1,5 +1,6 @@
 // Transient feedback only. Enemy coordinates, AI, collision and rewards are untouched.
 function style(e){
+ if(e.type==='demonBat')return e.selfDestruct?'batExplosion':'bat';
  if(e.variant==='slime'||e.type==='minislime')return 'slime';
  if(e.variant==='prism'||e.type==='pulseTurret')return 'crystal';
  if(e.type==='flower')return 'petal';
@@ -50,7 +51,16 @@ export function drawEnemyFeedback(c,f){
  }
  c.scale(f.scale||1,f.scale||1);const fade=(1-age)**1.3,spread=1-(1-age)**2,red=f.returning;
  c.globalAlpha=fade*.85;
- if(f.style==='slime'){
+ if(f.style==='batExplosion'){
+  // Visual only: the existing combat update has already resolved the single hit.
+  c.strokeStyle=red?'#eaa4bc':'#d88b9f';c.lineWidth=2;
+  c.beginPath();c.arc(0,0,48*spread,0,Math.PI*2);c.stroke();
+  if(age<.25){c.globalAlpha=fade*(1-age/.25)*.65;c.fillStyle='#ffe0bb';c.beginPath();c.arc(0,-8,13+age*28,0,Math.PI*2);c.fill();}
+  c.globalAlpha=fade*.8;
+  for(let i=0;i<10;i++){const a=i*Math.PI/5,r=8+spread*35;box(c,Math.cos(a)*r,Math.sin(a)*r-8-age*8,3,3,i%2?'#bb698b':'#f2ae82');}
+ }else if(f.style==='bat'){
+  for(let i=0;i<8;i++){const a=i*Math.PI/4;box(c,Math.cos(a)*(8+spread*22),-8+Math.sin(a)*12+age*18,4,3,i%2?'#805279':'#b392b1');}
+ }else if(f.style==='slime'){
   const color=red?'#cf7480':'#85b57a';box(c,-17-8*spread,4+age*8,34+16*spread,Math.max(2,13*(1-age)),color);
   if(f.split){for(const side of [-1,1]){box(c,side*(8+spread*17)-5,-8*Math.sin(age*Math.PI),10,7,color);box(c,side*(8+spread*17)-3,-2-8*Math.sin(age*Math.PI),3,2,'#daedb4');}}
   for(let i=0;i<8;i++){const a=i*Math.PI/4,x=Math.cos(a)*(8+spread*24),y=Math.sin(a)*9-16*Math.sin(age*Math.PI)+age*17;box(c,x,y,4,3,color);box(c,x,y,2,1,'#dbe8b4');}
