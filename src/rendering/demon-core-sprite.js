@@ -36,8 +36,8 @@ export function drawDemonCoreSprite(c,e,time=0,{attack=null,staticPose=false,red
  if(moving)arm(c,p.side,p.stage);
  // The generated lower sill is a separate foreground layer, never baked into the body.
  if(wall){c.save();c.beginPath();c.rect(-151,28,302,50);c.clip();c.drawImage(images.get('wall'),-150,-74,300,150);c.restore();}
- if(!staticPose&&p.stage===1&&eye){
-  c.fillStyle='#e9c66a';c.globalAlpha*=reduced?.18:.2+p.progress*.25;for(const x of [-14,14]){c.beginPath();c.ellipse(x,-91,4,2,0,0,Math.PI*2);c.fill();}
+ if(!staticPose&&(p.stage===1||p.stage===2)&&eye){
+  c.fillStyle='#e9c66a';c.globalAlpha*=reduced?.18:p.stage===2?.55:.2+p.progress*.25;for(const x of [-14,14]){c.beginPath();c.ellipse(x,-91,4,2,0,0,Math.PI*2);c.fill();}
  }
  c.restore();
  if(!staticPose&&p.kind==='footJump'&&p.target&&Number.isFinite(p.target.x)&&Number.isFinite(p.target.y)){

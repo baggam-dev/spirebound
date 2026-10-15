@@ -5,6 +5,7 @@ import {frostAttackRate} from './frost.js';
 import {runRandom} from '../game/random.js';
 import {DEMON_SWEEP,isDemonSweep,demonSweepSector,demonSweepIntersects} from './demon-sweep.js';
 import {CORE_MOTION} from './demon-core-motion.js';
+import {DEMON_EYE,DEMON_TONGUE,demonEyeOffsets} from './demon-attack-shapes.js';
 
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
@@ -89,7 +90,7 @@ function resolve(s,r,p,bullets,hurt){
   const start={x:owner.x,y:owner.y},end={x:a.tx,y:a.ty};if(!segmentBlocked(start,end,r.obstacles,32)){owner.x=end.x;owner.y=end.y;if(segmentDistance(p,start,end)<42)hurt(9,'대악마 발 돌진');}
  }
  if(a.kind==='eyeRay'){
-  for(const offset of (enhanced?[-.36,-.18,0,.18,.36]:[-.22,0,.22])){const angle=a.aim+offset;if(Math.abs(Math.sin(angle)*(p.x-a.x)-Math.cos(angle)*(p.y-a.y))<15&&Math.cos(angle)*(p.x-a.x)+Math.sin(angle)*(p.y-a.y)>0&&!segmentBlocked({x:a.x,y:a.y},p,r.obstacles,2)){hurt(9,'대악마 눈 광선');break;}}
+  for(const offset of demonEyeOffsets(enhanced)){const angle=a.aim+offset;if(Math.abs(Math.sin(angle)*(p.x-a.x)-Math.cos(angle)*(p.y-a.y))<DEMON_EYE.halfWidth&&Math.cos(angle)*(p.x-a.x)+Math.sin(angle)*(p.y-a.y)>0&&!segmentBlocked({x:a.x,y:a.y},p,r.obstacles,2)){hurt(DEMON_EYE.damage,'대악마 눈 광선');break;}}
  }
  if(a.kind==='eyeOrb')for(let i=0;i<(enhanced?7:3);i++){const offset=(i-(enhanced?3:1))*(enhanced?.16:.25);shot(owner,a.aim+offset,bullets,enhanced?345:305);if(enhanced)bullets.at(-1).demonCurve=i%2?.4:-.4;}
  if(a.kind==='coreBurst')for(const offset of [-.48,-.32,-.16,0,.16,.32,.48])shot(owner,a.aim+offset,bullets,285,8);
@@ -98,7 +99,7 @@ function resolve(s,r,p,bullets,hurt){
   if(d.phase===2){owner.x=a.tx;owner.y=a.ty;safeSpawn(owner,r.obstacles,32);}d.trails=d.trails.slice(enhanced?-32:-12);
  }
  if(a.kind==='mouthPull'||a.kind==='mouthPush'){if(!enhanced)d.trails=[];d.force={kind:a.kind,x:owner.x,y:owner.y,time:enhanced?1.2:.8};}
- if(a.kind==='mouthTongue'&&dist(owner,p)<155&&Math.abs(Math.atan2(Math.sin(Math.atan2(p.y-owner.y,p.x-owner.x)-a.aim),Math.cos(Math.atan2(p.y-owner.y,p.x-owner.x)-a.aim)))<.7&&!segmentBlocked(owner,p,r.obstacles))hurt(9,'대악마 혀 공격');
+ if(a.kind==='mouthTongue'&&dist(owner,p)<DEMON_TONGUE.radius&&Math.abs(Math.atan2(Math.sin(Math.atan2(p.y-owner.y,p.x-owner.x)-a.aim),Math.cos(Math.atan2(p.y-owner.y,p.x-owner.x)-a.aim)))<DEMON_TONGUE.halfAngle&&!segmentBlocked(owner,p,r.obstacles))hurt(DEMON_TONGUE.damage,'대악마 혀 공격');
  if(owner.part==='core'&&!isDemonSweep(a.kind))d.coreFlash={kind:a.kind,x:a.x,y:a.y,tx:a.tx,ty:a.ty,aim:a.aim,time:CORE_MOTION.duration};
  d.attack=null;d.attackClock=d.phase===3?1.2:d.phase===2?1.45:1.35;d.recovery=owner.part==='core'?CORE_MOTION.duration:d.force?.time||.4;
 }

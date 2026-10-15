@@ -6,6 +6,8 @@ import {drawDemonCoreSprite} from './demon-core-sprite.js';
 import {DEMON_SWEEP,isDemonSweep} from '../combat/demon-sweep.js';
 import {drawDemonSweep} from './demon-sweep.js';
 import {drawDemonCoreImpact} from './demon-core-impact.js';
+import {drawDemonCoreAttackEffects,drawDemonTongueWarning} from './demon-core-attack-effects.js';
+import {demonEyeOffsets,demonRayLength} from '../combat/demon-attack-shapes.js';
 
 const color={hand:'#b75c96',foot:'#9a698d',eye:'#d7a4e5',nose:'#9a608f',mouth:'#bd6c9e',core:'#9b4e82'};
 function box(c,x,y,w,h,fill){c.fillStyle=fill;c.fillRect(Math.round(x),Math.round(y),w,h);}
@@ -24,14 +26,16 @@ export function drawDemonGround(c,r,time=0,reduced=false){
  if(d.force&&d.pressureVersion!==1){drawSoftField(c,d.force.x,d.force.y,d.pressureVersion===1?360:180,'#c883b6',.2*d.force.time/.8);c.strokeStyle='#e4a9d077';c.lineWidth=1;for(let i=0;i<8;i++){const angle=i*Math.PI/4+time*.3,x=d.force.x+Math.cos(angle)*100,y=d.force.y+Math.sin(angle)*100,sign=d.force.kind==='mouthPull'?-1:1;c.beginPath();c.moveTo(x,y);c.lineTo(x+Math.cos(angle)*20*sign,y+Math.sin(angle)*20*sign);c.stroke();}}
  if(d.sweepFlash?.time>DEMON_SWEEP.recover)drawDemonSweep(c,d.sweepFlash,{flash:true,reduced});
  drawDemonCoreImpact(c,d,reduced);
+ drawDemonCoreAttackEffects(c,d,r.obstacles,reduced);
  for(const a of (d.pressureVersion===1?d.attacks:d.attack?[d.attack]:[])){
   const shade=a.kind.startsWith('foot')?'#d2a0c9':a.kind.startsWith('mouth')?'#e4a0c8':'#cc96df';
   if(isDemonSweep(a.kind))drawDemonSweep(c,a,{reduced});
+  if(a.kind==='mouthTongue')drawDemonTongueWarning(c,a,r.obstacles);
   if(['footJump','noseTrail'].includes(a.kind))drawSoftField(c,a.tx,a.ty,a.kind==='footJump'?95:80,shade,.63);
-  if(['eyeRay','footDash','mouthTongue'].includes(a.kind)){
+  if(['eyeRay','footDash'].includes(a.kind)){
    c.strokeStyle=shade+'99';c.lineWidth=a.kind==='eyeRay'?1:2;
-   const offsets=a.kind==='eyeRay'?(d.pressureVersion===1?[-.36,-.18,0,.18,.36]:[-.22,0,.22]):[0];
-   for(const offset of offsets){const angle=a.aim+offset;c.beginPath();c.moveTo(a.x,a.y);c.lineTo(a.x+Math.cos(angle)*850,a.y+Math.sin(angle)*850);c.stroke();}
+   const offsets=a.kind==='eyeRay'?demonEyeOffsets(d.pressureVersion===1):[0];
+   for(const offset of offsets){const angle=a.aim+offset,length=a.kind==='eyeRay'?demonRayLength(a,angle,r.obstacles,1200,2):850;c.beginPath();c.moveTo(a.x,a.y);c.lineTo(a.x+Math.cos(angle)*length,a.y+Math.sin(angle)*length);c.stroke();}
   }
   if(['hand','eyeOrb','coreBurst'].includes(a.kind))drawSoftField(c,a.x,a.y,a.kind==='coreBurst'?82:44,shade,.42);
   if(['mouthPull','mouthPush'].includes(a.kind))drawSoftField(c,a.x,a.y,d.pressureVersion===1?360:245,shade,.22);
