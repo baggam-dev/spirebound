@@ -2,6 +2,7 @@ import {drawDemonPressureGround} from './demon-pressure-visuals.js';
 import {drawSoftField} from './ground-visuals.js';
 import {drawDemonSprite} from './demon-sprite.js';
 import {drawShadowAura} from './shadow-aura.js';
+import {drawDemonCoreSprite} from './demon-core-sprite.js';
 
 const color={hand:'#b75c96',foot:'#9a698d',eye:'#d7a4e5',nose:'#9a608f',mouth:'#bd6c9e',core:'#9b4e82'};
 function box(c,x,y,w,h,fill){c.fillStyle=fill;c.fillRect(Math.round(x),Math.round(y),w,h);}
@@ -37,6 +38,7 @@ export function drawDemonGround(c,r,time=0,reduced=false){
 export function drawDemon(c,e,time=0,reduced=false,staticPose=false,room=null){
  if(e.variant!=='demon')return;
  const d=room?.demon,attack=(d?.attacks||[]).find(a=>a.owner===e.part)||(d?.attack?.owner===e.part?d.attack:null);
+ if(drawDemonCoreSprite(c,e,time,{attack,reduced,staticPose,wall:!staticPose}))return;
  const auraRendered=e.part!=='core'&&drawShadowAura(c,e,time,{color:'#895496',opacity:.16,width:126,height:96,reduced,staticPose});
  if(drawDemonSprite(c,e,time,{attack,staticPose,wall:d?.phase===3})){
   if(e.demonShield){c.save();c.translate(Math.round(e.x),Math.round(e.y));drawDemonShield(c);c.restore();}return;

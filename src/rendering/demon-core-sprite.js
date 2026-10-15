@@ -1,0 +1,57 @@
+// Layered display assets for the approved wall-breach boss. No combat/save writes.
+const images=new Map(),poses=new WeakMap();
+const sizes={body:[1536,1024],arm:[1254,1254],wall:[1774,887],foot:[1254,1254]};
+export const demonCoreSpriteState=()=>({ready:images.size===4});
+export const demonCoreSpriteReady=typeof Image==='undefined'?Promise.resolve(false):Promise.all(Object.entries(sizes).map(([name,[w,h]])=>new Promise(resolve=>{
+ const image=new Image();image.onload=()=>{if(image.naturalWidth!==w||image.naturalHeight!==h){resolve(false);return;}images.set(name,image);resolve(true);};image.onerror=()=>resolve(false);image.src=new URL(`../../assets/images/demon-core-${name}-atlas.png`,import.meta.url).href;
+}))).then(results=>results.every(Boolean));
+// Explicit rectangles preserve shoulder anchors; generated poses are not equal cells.
+const arms=[
+ {x:210,y:0,w:370,h:637,ax:325,ay:165},
+ {x:665,y:0,w:580,h:630,ax:780,ay:165},
+ {x:25,y:635,w:675,h:614,ax:565,ay:785},
+ {x:830,y:632,w:375,h:620,ax:955,ay:790}
+];
+const feet=[{x:25,y:20,w:610,h:590},{x:695,y:25,w:559,h:600},{x:5,y:690,w:680,h:550},{x:680,y:640,w:574,h:605}];
+function sample(c,image,r,x,y,scale){c.drawImage(image,r.x,r.y,r.w,r.h,x,y,r.w*scale,r.h*scale);}
+function arm(c,side,index){
+ const r=arms[index];c.save();c.translate(side*64,-61);c.scale(side,1);sample(c,images.get('arm'),r,(r.x-r.ax)*.22,(r.y-r.ay)*.22,.22);c.restore();
+}
+function foot(c,x,y,index,opacity=1,lift=0){
+ const r=feet[index],scale=.16;c.save();c.globalAlpha*=Math.max(0,Math.min(1,opacity));sample(c,images.get('foot'),r,x-r.w*scale/2,y+24-r.h*scale-lift,scale);c.restore();
+}
+function observe(e,attack,time,staticPose){
+ if(staticPose)return {stage:0,kind:null,side:1,clock:0};
+ let p=poses.get(e);if(!p){p={last:time,clock:0,attack:null,kind:null,side:1,turn:0,release:-1};poses.set(e,p);}
+ const dt=Math.max(0,Math.min(.1,time-p.last));p.last=time;if(!(e.frozen>0))p.clock+=dt;
+ if(attack&&attack!==p.attack){p.attack=attack;p.kind=attack.kind;p.duration=Math.max(.01,attack.time);p.target={x:attack.tx,y:attack.ty};if(attack.kind==='hand')p.side=p.turn++%2?-1:1;p.release=-1;}
+ if(!attack&&p.attack){p.attack=null;p.release=p.clock;}
+ p.stage=attack?1:p.release>=0&&p.clock-p.release<.14?2:p.release>=0&&p.clock-p.release<.48?3:0;
+ p.progress=attack?Math.max(0,Math.min(1,1-attack.time/p.duration)):0;return p;
+}
+export function drawDemonCoreSprite(c,e,time=0,{attack=null,staticPose=false,reduced=false,wall=false}={}){
+ if(e.variant!=='demon'||e.part!=='core'||images.size!==4)return false;
+ const p=observe(e,attack,time,staticPose),mouth=p.kind?.startsWith('mouth')||p.kind==='coreBurst',eye=p.kind?.startsWith('eye'),sweep=p.kind==='hand';
+ const face=p.stage===0?0:mouth?(p.stage===1?1:p.stage===2?2:5):eye?(p.stage===1?3:p.stage===2?4:5):0;
+ c.save();c.translate(Math.round(e.x),Math.round(e.y));c.imageSmoothingEnabled=false;
+ if(wall)c.drawImage(images.get('wall'),-150,-74,300,150);
+ // Arms sit below the torso shoulders; only the selected arm changes pose.
+ const moving=sweep&&p.stage>0;
+ if(!moving||p.side!==-1)arm(c,-1,0);if(!moving||p.side!==1)arm(c,1,0);
+ c.drawImage(images.get('body'),face%3*512,Math.floor(face/3)*512,512,512,-90,-140,180,180);
+ if(moving)arm(c,p.side,p.stage);
+ // The generated lower sill is a separate foreground layer, never baked into the body.
+ if(wall){c.save();c.beginPath();c.rect(-151,28,302,50);c.clip();c.drawImage(images.get('wall'),-150,-74,300,150);c.restore();}
+ if(!staticPose&&p.stage===1&&eye){
+  c.fillStyle='#e9c66a';c.globalAlpha*=reduced?.18:.2+p.progress*.25;for(const x of [-14,14]){c.beginPath();c.ellipse(x,-91,4,2,0,0,Math.PI*2);c.fill();}
+ }
+ c.restore();
+ if(!staticPose&&p.kind==='footJump'&&p.target&&Number.isFinite(p.target.x)&&Number.isFinite(p.target.y)){
+  c.save();c.imageSmoothingEnabled=false;
+  if(p.stage===1)foot(c,p.target.x,p.target.y,p.progress<.65?0:1,reduced?1:Math.min(1,p.progress*4),reduced?0:60*(1-p.progress));
+  else if(p.stage===2)foot(c,p.target.x,p.target.y,2);
+  else if(p.stage===3){const t=Math.max(0,Math.min(1,(p.clock-p.release-.14)/.34));foot(c,p.target.x,p.target.y,3,1-t,reduced?0:t*55);}
+  c.restore();
+ }
+ return true;
+}
