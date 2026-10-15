@@ -1,6 +1,7 @@
-import {DEMON_SWEEP,isDemonSweep,demonSweepSide} from '../combat/demon-sweep.js';
+import {isDemonSweep} from '../combat/demon-sweep.js';
+import {CORE_MOTION,demonCorePose} from '../combat/demon-core-motion.js';
 // Layered display assets for the approved wall-breach boss. No combat/save writes.
-const images=new Map(),poses=new WeakMap();
+const images=new Map();
 const sizes={body:[1536,1024],arm:[1254,1254],wall:[1774,887],foot:[1254,1254]};
 export const demonCoreSpriteState=()=>({ready:images.size===4});
 export const demonCoreSpriteReady=typeof Image==='undefined'?Promise.resolve(false):Promise.all(Object.entries(sizes).map(([name,[w,h]])=>new Promise(resolve=>{
@@ -21,20 +22,9 @@ function arm(c,side,index){
 function foot(c,x,y,index,opacity=1,lift=0){
  const r=feet[index],scale=.16;c.save();c.globalAlpha*=Math.max(0,Math.min(1,opacity));sample(c,images.get('foot'),r,x-r.w*scale/2,y+24-r.h*scale-lift,scale);c.restore();
 }
-function observe(e,attack,time,staticPose){
- if(staticPose)return {stage:0,kind:null,side:1,clock:0};
- let p=poses.get(e);if(!p){p={last:time,clock:0,attack:null,kind:null,side:1,release:-1};poses.set(e,p);}
- const dt=Math.max(0,Math.min(.1,time-p.last));p.last=time;if(!(e.frozen>0))p.clock+=dt;
- if(attack&&attack!==p.attack){p.attack=attack;p.kind=attack.kind;p.duration=Math.max(.01,attack.time);p.target={x:attack.tx,y:attack.ty};if(isDemonSweep(attack.kind))p.side=demonSweepSide(attack.kind);p.release=-1;}
- if(!attack&&p.attack){p.attack=null;p.release=p.clock;}
- p.stage=attack?1:p.release>=0&&p.clock-p.release<.14?2:p.release>=0&&p.clock-p.release<.48?3:0;
- p.progress=attack?Math.max(0,Math.min(1,1-attack.time/p.duration)):0;return p;
-}
-export function drawDemonCoreSprite(c,e,time=0,{attack=null,staticPose=false,reduced=false,wall=false,sweepFlash=null}={}){
+export function drawDemonCoreSprite(c,e,time=0,{attack=null,staticPose=false,reduced=false,wall=false,sweepFlash=null,coreFlash=null,enhanced=false}={}){
  if(e.variant!=='demon'||e.part!=='core'||images.size!==4)return false;
- const p=observe(e,attack,time,staticPose);
- if(!staticPose&&sweepFlash){p.kind=sweepFlash.kind;p.side=demonSweepSide(sweepFlash.kind);p.stage=sweepFlash.time>DEMON_SWEEP.recover?2:3;}
- else if(!attack&&isDemonSweep(p.kind))p.stage=0;
+ const p=demonCorePose({attack,staticPose,sweepFlash,coreFlash,enhanced});
  const mouth=p.kind?.startsWith('mouth')||p.kind==='coreBurst',eye=p.kind?.startsWith('eye'),sweep=isDemonSweep(p.kind);
  const face=p.stage===0?0:mouth?(p.stage===1?1:p.stage===2?2:5):eye?(p.stage===1?3:p.stage===2?4:5):0;
  c.save();c.translate(Math.round(e.x),Math.round(e.y));c.imageSmoothingEnabled=false;
@@ -54,7 +44,7 @@ export function drawDemonCoreSprite(c,e,time=0,{attack=null,staticPose=false,red
   c.save();c.imageSmoothingEnabled=false;
   if(p.stage===1)foot(c,p.target.x,p.target.y,p.progress<.65?0:1,reduced?1:Math.min(1,p.progress*4),reduced?0:60*(1-p.progress));
   else if(p.stage===2)foot(c,p.target.x,p.target.y,2);
-  else if(p.stage===3){const t=Math.max(0,Math.min(1,(p.clock-p.release-.14)/.34));foot(c,p.target.x,p.target.y,3,1-t,reduced?0:t*55);}
+  else if(p.stage===3){const t=Math.max(0,Math.min(1,(p.elapsed-CORE_MOTION.strike)/CORE_MOTION.recover));foot(c,p.target.x,p.target.y,3,1-t,reduced?0:t*55);}
   c.restore();
  }
  return true;

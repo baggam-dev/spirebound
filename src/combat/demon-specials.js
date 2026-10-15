@@ -12,7 +12,7 @@ export function tryDemonBolt(r,x,y,p,routeOpen){
  if(!routeOpen(next,p,targets))return false;
  r.obstacles=next;return true;
 }
-export function clearDemonSpecials(r,clearBolts=true){const d=r.demon;d.special=null;d.specialClock=3;d.summonClock=5;d.fields=[];d.flash=null;d.sweepFlash=null;d.attacks=[];d.force=null;if(clearBolts)r.obstacles=r.obstacles.filter(o=>!o.demonBolt);}
+export function clearDemonSpecials(r,clearBolts=true){const d=r.demon;d.special=null;d.specialClock=3;d.summonClock=5;d.fields=[];d.flash=null;d.sweepFlash=null;d.coreFlash=null;d.attacks=[];d.force=null;if(clearBolts)r.obstacles=r.obstacles.filter(o=>!o.demonBolt);}
 export function updateDemonSpecials(s,r,p,dt,bullets,hurt,routeOpen){
  const d=r.demon;if(d.phase!==3)return;
  if(d.flash){d.flash.time=Math.max(0,d.flash.time-dt);if(!d.flash.time)d.flash=null;}

@@ -1,9 +1,14 @@
 import {DEMON_SWEEP,isDemonSweep} from '../combat/demon-sweep.js';
+import {CORE_MOTION,coreMotionKinds} from '../combat/demon-core-motion.js';
 const kinds=['hand','footJump','footDash','eyeRay','eyeOrb','noseTrail','mouthPull','mouthPush','mouthTongue','coreBurst','coreSweepLeft','coreSweepRight'];
 const parts=['hand','foot','eye','nose','mouth','core'];
-export function validateDemonSweepState(d,check,number){
- for(const a of [d.attack,...(Array.isArray(d.attacks)?d.attacks:[])])if(a&&isDemonSweep(a.kind))check(d.phase===3&&a.owner==='core'&&a.aim===Math.PI/2&&number(a.time,0,DEMON_SWEEP.windup));
- if(d.sweepFlash!==undefined&&d.sweepFlash!==null){const f=d.sweepFlash;check(d.phase===3&&isDemonSweep(f.kind)&&number(f.x,0,960)&&number(f.y,0,540)&&number(f.time,0,DEMON_SWEEP.strike+DEMON_SWEEP.recover));check(!d.attack&&(!Array.isArray(d.attacks)||d.attacks.length===0));}
+export function validateDemonMotionState(d,check,number){
+ for(const a of [d.attack,...(Array.isArray(d.attacks)?d.attacks:[])])if(a){
+  if(isDemonSweep(a.kind))check(d.phase===3&&a.owner==='core'&&a.aim===Math.PI/2&&number(a.time,0,DEMON_SWEEP.windup));
+  if(a.windup!==undefined)check(d.phase===3&&a.owner==='core'&&number(a.windup,.01,1.1)&&number(a.time,0,a.windup));
+ }
+ if(d.sweepFlash!==undefined&&d.sweepFlash!==null){const f=d.sweepFlash;check(d.phase===3&&isDemonSweep(f.kind)&&number(f.x,0,960)&&number(f.y,0,540)&&number(f.time,0,CORE_MOTION.duration));check(!d.coreFlash&&!d.attack&&(!Array.isArray(d.attacks)||d.attacks.length===0));}
+ if(d.coreFlash!==undefined&&d.coreFlash!==null){const f=d.coreFlash;check(d.phase===3&&coreMotionKinds.includes(f.kind)&&number(f.x,0,960)&&number(f.y,0,540)&&number(f.tx,0,960)&&number(f.ty,0,540)&&number(f.aim,-Math.PI,Math.PI)&&number(f.time,0,CORE_MOTION.duration));check(!d.sweepFlash&&!d.attack&&(!Array.isArray(d.attacks)||d.attacks.length===0));}
 }
 export function validateDemonPressure(r,s,check,number){
  const d=r.demon;if(d?.pressureVersion===undefined)return;

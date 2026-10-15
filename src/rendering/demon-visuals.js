@@ -5,6 +5,7 @@ import {drawShadowAura} from './shadow-aura.js';
 import {drawDemonCoreSprite} from './demon-core-sprite.js';
 import {DEMON_SWEEP,isDemonSweep} from '../combat/demon-sweep.js';
 import {drawDemonSweep} from './demon-sweep.js';
+import {drawDemonCoreImpact} from './demon-core-impact.js';
 
 const color={hand:'#b75c96',foot:'#9a698d',eye:'#d7a4e5',nose:'#9a608f',mouth:'#bd6c9e',core:'#9b4e82'};
 function box(c,x,y,w,h,fill){c.fillStyle=fill;c.fillRect(Math.round(x),Math.round(y),w,h);}
@@ -22,6 +23,7 @@ export function drawDemonGround(c,r,time=0,reduced=false){
  if(d.pressureVersion!==1)for(const t of d.trails)drawSoftField(c,t.x,t.y,t.radius,'#aa75bc',Math.min(.58,t.time/4*.58));
  if(d.force&&d.pressureVersion!==1){drawSoftField(c,d.force.x,d.force.y,d.pressureVersion===1?360:180,'#c883b6',.2*d.force.time/.8);c.strokeStyle='#e4a9d077';c.lineWidth=1;for(let i=0;i<8;i++){const angle=i*Math.PI/4+time*.3,x=d.force.x+Math.cos(angle)*100,y=d.force.y+Math.sin(angle)*100,sign=d.force.kind==='mouthPull'?-1:1;c.beginPath();c.moveTo(x,y);c.lineTo(x+Math.cos(angle)*20*sign,y+Math.sin(angle)*20*sign);c.stroke();}}
  if(d.sweepFlash?.time>DEMON_SWEEP.recover)drawDemonSweep(c,d.sweepFlash,{flash:true,reduced});
+ drawDemonCoreImpact(c,d,reduced);
  for(const a of (d.pressureVersion===1?d.attacks:d.attack?[d.attack]:[])){
   const shade=a.kind.startsWith('foot')?'#d2a0c9':a.kind.startsWith('mouth')?'#e4a0c8':'#cc96df';
   if(isDemonSweep(a.kind))drawDemonSweep(c,a,{reduced});
@@ -42,7 +44,7 @@ export function drawDemonGround(c,r,time=0,reduced=false){
 export function drawDemon(c,e,time=0,reduced=false,staticPose=false,room=null){
  if(e.variant!=='demon')return;
  const d=room?.demon,attack=(d?.attacks||[]).find(a=>a.owner===e.part)||(d?.attack?.owner===e.part?d.attack:null);
- if(drawDemonCoreSprite(c,e,time,{attack,reduced,staticPose,wall:!staticPose,sweepFlash:d?.sweepFlash}))return;
+ if(drawDemonCoreSprite(c,e,time,{attack,reduced,staticPose,wall:!staticPose,sweepFlash:d?.sweepFlash,coreFlash:d?.coreFlash,enhanced:d?.pressureVersion===1}))return;
  const auraRendered=e.part!=='core'&&drawShadowAura(c,e,time,{color:'#895496',opacity:.16,width:126,height:96,reduced,staticPose});
  if(drawDemonSprite(c,e,time,{attack,staticPose,wall:d?.phase===3})){
   if(e.demonShield){c.save();c.translate(Math.round(e.x),Math.round(e.y));drawDemonShield(c);c.restore();}return;
