@@ -3,6 +3,7 @@ import {emitShot} from './patterns.js';
 import {updateDemonSpecials,clearDemonSpecials} from './demon-specials.js';
 import {frostAttackRate} from './frost.js';
 import {runRandom} from '../game/random.js';
+import {DEMON_SWEEP,isDemonSweep,demonSweepSector,demonSweepIntersects} from './demon-sweep.js';
 
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
@@ -16,10 +17,10 @@ const names={hand:'기어가는 손',foot:'뛰는 발',eye:'박쥐의 눈',nose:
 export const demonPartName=part=>names[part]||'대악마';
 function spawn(r,phase){r.enemies=parts[phase].map(([part,x,y,hp],id)=>({id,type:'boss',variant:'demon',part,x,y,hp,max:hp,cd:1,tier:9,balanceVersion:1,bossHealthVersion:1,bossPowerVersion:18,...(r.demon.pressureVersion===1&&part==='foot'?{demonShield:true,demonShieldClock:5}: {})}));for(const e of r.enemies)safeSpawn(e,r.obstacles,32);r.nextEnemyId=r.enemies.length;r.bossTotalHp=r.enemies.reduce((n,e)=>n+e.max,0);}
 export function challengeDemon(s){const r=s.floors[s.floor][s.room];if(s.campaign!=='expanded'||s.floor!==9||s.key||!r.demonPending||r.enemies.length)return false;r.demonPending=false;r.demon={phase:1,turn:0,attackClock:1.8,footPressureClock:3.8,attack:null,recovery:0,handFinger:0,footTurn:1,eyeTurn:0,mouthTurn:0,lastCore:null,trails:[]};if(s.generationVersion>=32){Object.assign(r.demon,{pressureVersion:1,attacks:[],partClocks:{hand:1,foot:1.8},specialClock:3,summonClock:5,fields:[]});}spawn(r,1);s.entryGrace=1;return true;}
-export function resetDemonAttack(r){if(!r.demon)return;r.demon.attack=null;r.demon.force=null;if(r.demon.pressureVersion===1){r.demon.attacks=[];r.demon.partClocks={};r.demon.special=null;r.demon.specialClock=3;r.demon.fields=[];}r.demon.trails=[];r.demon.attackClock=Math.max(1,r.demon.attackClock);r.demon.recovery=0;}
+export function resetDemonAttack(r){if(!r.demon)return;r.demon.attack=null;r.demon.force=null;r.demon.sweepFlash=null;if(r.demon.pressureVersion===1){r.demon.attacks=[];r.demon.partClocks={};r.demon.special=null;r.demon.specialClock=3;r.demon.fields=[];}r.demon.trails=[];r.demon.attackClock=Math.max(1,r.demon.attackClock);r.demon.recovery=0;}
 export function advanceDemonPhase(r,bullets){
  const d=r.demon;if(!d||r.enemies.some(e=>e.variant==='demon'&&e.hp>0)||d.phase>=3)return false;
- d.phase++;if(d.pressureVersion===1){d.attacks=[];d.partClocks={};clearDemonSpecials(r,false);if(d.phase===3)d.specialClock=0;}d.attack=null;d.force=null;d.attackClock=1.4;d.recovery=1.0;d.trails=[];
+ d.phase++;if(d.pressureVersion===1){d.attacks=[];d.partClocks={};clearDemonSpecials(r,false);if(d.phase===3)d.specialClock=0;}d.attack=null;d.force=null;d.sweepFlash=null;d.attackClock=1.4;d.recovery=1.0;d.trails=[];
  for(const b of bullets)if(b.enemy)b.life=0;
  spawn(r,d.phase);return true;
 }
@@ -61,9 +62,10 @@ function chooseAttack(s,r,p,forced=null){
  let owner,kind;
  if(d.phase===1){owner=forced||(d.footPressureClock<=0?living(r,'foot'):null);owner??=available[d.turn%available.length];kind=owner.part==='hand'?'hand':d.footPressureClock<=0?'footJump':d.footTurn++%2?'footDash':'footJump';if(kind==='footJump')d.footPressureClock=8.2;}
  else if(d.phase===2){owner=forced||available[d.turn%available.length];kind=owner.part==='eye'?(d.eyeTurn++%2?'eyeOrb':'eyeRay'):owner.part==='nose'?'noseTrail':['mouthPull','mouthPush','mouthTongue'][d.mouthTurn++%3];}
- else{owner=available[0];const options=['hand','footJump','eyeRay','eyeOrb','noseTrail','mouthPull','mouthTongue','coreBurst'].filter(k=>k!==d.lastCore);kind=options[Math.floor(runRandom(s)*options.length)];d.lastCore=kind;}
+ else{owner=available[0];const near=dist(owner,p)<210&&p.y>owner.y-20,options=['hand','footJump','eyeRay','eyeOrb','noseTrail','mouthPull','mouthTongue','coreBurst',...(near?['coreSweepLeft','coreSweepRight']:[])].filter(k=>k!==d.lastCore);kind=options[Math.floor(runRandom(s)*options.length)];d.lastCore=kind;}
  d.turn++;const target={x:clamp(p.x,115,845),y:clamp(p.y,100,440)};
  const a={kind,owner:owner.part,time:kind==='footJump'||kind==='eyeRay'?1.1:.85,x:owner.x,y:owner.y,tx:target.x,ty:target.y,aim:Math.atan2(p.y-owner.y,p.x-owner.x)};
+ if(isDemonSweep(kind)){a.time=DEMON_SWEEP.windup;a.aim=Math.PI/2;}
  if(kind==='hand'){a.finger=d.handFinger;d.handFinger=(d.handFinger+1)%5;}
  if(kind==='noseTrail'){a.tx=clamp(p.x+(p.x>owner.x?110:-110),135,825);a.ty=clamp(p.y,110,430);}
  d.attack=a;return a;
@@ -72,6 +74,11 @@ function trailHit(d,p,hurt){for(const t of d.trails)if(t.time>0&&dist(t,p)<t.rad
 function resolve(s,r,p,bullets,hurt){
  const d=r.demon,a=d.attack,enhanced=d.pressureVersion===1,owner=living(r,a.owner);if(!owner){d.attack=null;d.attackClock=.7;return;}
  if(a.kind==='hand')handAttack(owner,a,bullets,enhanced);
+ if(isDemonSweep(a.kind)){
+  const origin=demonSweepSector(a);
+  if(demonSweepIntersects(a,p)&&!segmentBlocked(a,p,r.obstacles,2)&&!segmentBlocked(origin,p,r.obstacles,2))hurt(DEMON_SWEEP.damage,a.kind==='coreSweepLeft'?'대악마 왼팔 휘두르기':'대악마 오른팔 휘두르기');
+  d.sweepFlash={kind:a.kind,x:a.x,y:a.y,time:DEMON_SWEEP.strike+DEMON_SWEEP.recover};
+ }
  if(a.kind==='footJump'){
   if(d.phase===1){owner.x=a.tx;owner.y=a.ty;safeSpawn(owner,r.obstacles,32);}
   if(dist({x:a.tx,y:a.ty},p)<95&&!segmentBlocked({x:a.tx,y:a.ty},p,r.obstacles))hurt(18,'대악마 발 착지');
@@ -91,10 +98,11 @@ function resolve(s,r,p,bullets,hurt){
  }
  if(a.kind==='mouthPull'||a.kind==='mouthPush'){if(!enhanced)d.trails=[];d.force={kind:a.kind,x:owner.x,y:owner.y,time:enhanced?1.2:.8};}
  if(a.kind==='mouthTongue'&&dist(owner,p)<155&&Math.abs(Math.atan2(Math.sin(Math.atan2(p.y-owner.y,p.x-owner.x)-a.aim),Math.cos(Math.atan2(p.y-owner.y,p.x-owner.x)-a.aim)))<.7&&!segmentBlocked(owner,p,r.obstacles))hurt(9,'대악마 혀 공격');
- d.attack=null;d.attackClock=d.phase===3?1.2:d.phase===2?1.45:1.35;d.recovery=d.force?.time||.4;
+ d.attack=null;d.attackClock=d.phase===3?1.2:d.phase===2?1.45:1.35;d.recovery=isDemonSweep(a.kind)?DEMON_SWEEP.strike+DEMON_SWEEP.recover:d.force?.time||.4;
 }
+function updateSweepFlash(r,dt){const d=r.demon,f=d.sweepFlash;if(!f)return;const e=living(r,'core');if(!e){d.sweepFlash=null;return;}if(!(e.frozen>0))f.time=Math.max(0,f.time-dt*frostAttackRate(e));if(!f.time)d.sweepFlash=null;else d.recovery=Math.max(d.recovery,f.time);}
 export function updateDemon(s,r,p,dt,bullets,hurt){
- const d=r.demon;if(!d)return;if(!r.enemies.some(e=>e.variant==='demon'&&e.hp>0)){if(d.pressureVersion===1&&d.phase===3)clearDemonSpecials(r);return;}if(d.pressureVersion===1){updatePressureDemon(s,r,p,dt,bullets,hurt);return;}
+ const d=r.demon;if(!d)return;if(!r.enemies.some(e=>e.variant==='demon'&&e.hp>0)){d.sweepFlash=null;if(d.pressureVersion===1&&d.phase===3)clearDemonSpecials(r);return;}if(d.pressureVersion===1){updatePressureDemon(s,r,p,dt,bullets,hurt);return;}updateSweepFlash(r,dt);
  d.footPressureClock=Math.max(0,(d.footPressureClock??3.8)-dt);
  for(const t of d.trails)t.time=Math.max(0,t.time-dt);d.trails=d.trails.filter(t=>t.time>0);trailHit(d,p,hurt);
  if(d.phase===2&&!living(r,'nose'))d.trails=[];
@@ -108,7 +116,7 @@ export function updateDemon(s,r,p,dt,bullets,hurt){
   if(target){const angle=steering(e,target,r.obstacles,32),radial=strafe&&dist(e,p)<=220?0:1;moveBody(e,(Math.cos(angle)*radial+Math.sin(angle)*strafe)*speed*dt,(Math.sin(angle)*radial-Math.cos(angle)*strafe)*speed*dt,r.obstacles,32);e.x=clamp(e.x,65,895);e.y=clamp(e.y,80,460);}
  }
  if(d.recovery>0){d.recovery=Math.max(0,d.recovery-dt);return;}
- if(d.attack){d.attack.time=Math.max(0,d.attack.time-dt);if(!d.attack.time)resolve(s,r,p,bullets,hurt);return;}
+ if(d.attack){if(isDemonSweep(d.attack.kind)&&living(r,d.attack.owner)?.frozen>0)return;d.attack.time=Math.max(0,d.attack.time-dt);if(!d.attack.time)resolve(s,r,p,bullets,hurt);return;}
  d.attackClock=Math.max(0,d.attackClock-dt);if(!d.attackClock)chooseAttack(s,r,p);
 }
 
@@ -116,7 +124,7 @@ export function updateDemon(s,r,p,dt,bullets,hurt){
 // the core's separately telegraphed three-second special.
 function updatePressureDemon(s,r,p,dt,bullets,hurt){
  const d=r.demon;
- d.recovery=Math.max(0,d.recovery-dt);d.footPressureClock=Math.max(0,d.footPressureClock-dt);
+ d.recovery=Math.max(0,d.recovery-dt);updateSweepFlash(r,dt);d.footPressureClock=Math.max(0,d.footPressureClock-dt);
  for(const t of d.trails)t.time=Math.max(0,t.time-dt);d.trails=d.trails.filter(t=>t.time>0);trailHit(d,p,hurt);
  if(d.phase===2&&!living(r,'nose'))d.trails=[];
  if(d.force){const f=d.force;if((d.phase===2&&!living(r,'mouth'))||f.time<=0)d.force=null;else{const a=Math.atan2(f.y-p.y,f.x-p.x),sign=f.kind==='mouthPull'?1:-1;if(!(p.actionStun>0)&&dist(f,p)<360&&!segmentBlocked(f,p,r.obstacles))moveBody(p,Math.cos(a)*225*sign*dt,Math.sin(a)*225*sign*dt,r.obstacles,14);f.time=Math.max(0,f.time-dt);}}
@@ -135,13 +143,13 @@ function updatePressureDemon(s,r,p,dt,bullets,hurt){
   d.partClocks[e.part]=Math.max(0,(d.partClocks[e.part]??.4)-dt*frostAttackRate(e));
  }
  d.attacks=d.attacks.filter(a=>living(r,a.owner));
- for(const a of [...d.attacks]){const e=living(r,a.owner);if(e.frozen>0)continue;a.time=Math.max(0,a.time-dt*frostAttackRate(e));if(!a.time){d.attack=a;resolve(s,r,p,bullets,hurt);d.attacks=d.attacks.filter(n=>n!==a);d.partClocks[a.owner]=a.owner==='hand'?.65:a.owner==='foot'?.6:a.owner==='eye'?.7:a.owner==='nose'?.9:a.owner==='mouth'?.65:.35;d.recovery=0;}}
+ for(const a of [...d.attacks]){const e=living(r,a.owner);if(e.frozen>0)continue;a.time=Math.max(0,a.time-dt*frostAttackRate(e));if(!a.time){d.attack=a;resolve(s,r,p,bullets,hurt);d.attacks=d.attacks.filter(n=>n!==a);d.partClocks[a.owner]=a.owner==='hand'?.65:a.owner==='foot'?.6:a.owner==='eye'?.7:a.owner==='nose'?.9:a.owner==='mouth'?.65:.35;if(!isDemonSweep(a.kind))d.recovery=0;}}
  d.attack=null;
  if(!d.recovery)for(const e of r.enemies.filter(e=>e.variant==='demon'&&e.hp>0)){
   if(e.frozen>0||d.attacks.some(a=>a.owner===e.part)||d.attacks.length>=2||d.partClocks[e.part]>0)continue;
   // Use the established pattern selection, but let each part select its own turn.
   const a=chooseAttack(s,r,p,e);
-  if(a){if(e.part==='foot'&&a.kind==='footJump')d.footPressureClock=4.5;if(e.part==='mouth')a.kind='mouthPull';a.owner=e.part;a.x=e.x;a.y=e.y;a.aim=Math.atan2(p.y-e.y,p.x-e.x);a.time=a.kind==='footJump'?.75:a.kind==='eyeRay'?.65:.42;if(a.kind==='noseTrail'){a.tx=clamp(p.x+(p.x>e.x?110:-110),135,825);a.ty=clamp(p.y,110,430);}d.attacks.push(a);d.attack=null;}
+  if(a){if(e.part==='foot'&&a.kind==='footJump')d.footPressureClock=4.5;if(e.part==='mouth')a.kind='mouthPull';a.owner=e.part;a.x=e.x;a.y=e.y;a.aim=isDemonSweep(a.kind)?Math.PI/2:Math.atan2(p.y-e.y,p.x-e.x);a.time=isDemonSweep(a.kind)?DEMON_SWEEP.windup:a.kind==='footJump'?.75:a.kind==='eyeRay'?.65:.42;if(a.kind==='noseTrail'){a.tx=clamp(p.x+(p.x>e.x?110:-110),135,825);a.ty=clamp(p.y,110,430);}d.attacks.push(a);d.attack=null;}
  }
  updateDemonSpecials(s,r,p,dt,bullets,hurt,routeOpen);
 }

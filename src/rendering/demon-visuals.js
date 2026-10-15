@@ -3,6 +3,8 @@ import {drawSoftField} from './ground-visuals.js';
 import {drawDemonSprite} from './demon-sprite.js';
 import {drawShadowAura} from './shadow-aura.js';
 import {drawDemonCoreSprite} from './demon-core-sprite.js';
+import {DEMON_SWEEP,isDemonSweep} from '../combat/demon-sweep.js';
+import {drawDemonSweep} from './demon-sweep.js';
 
 const color={hand:'#b75c96',foot:'#9a698d',eye:'#d7a4e5',nose:'#9a608f',mouth:'#bd6c9e',core:'#9b4e82'};
 function box(c,x,y,w,h,fill){c.fillStyle=fill;c.fillRect(Math.round(x),Math.round(y),w,h);}
@@ -19,8 +21,10 @@ export function drawDemonGround(c,r,time=0,reduced=false){
  c.restore();}
  if(d.pressureVersion!==1)for(const t of d.trails)drawSoftField(c,t.x,t.y,t.radius,'#aa75bc',Math.min(.58,t.time/4*.58));
  if(d.force&&d.pressureVersion!==1){drawSoftField(c,d.force.x,d.force.y,d.pressureVersion===1?360:180,'#c883b6',.2*d.force.time/.8);c.strokeStyle='#e4a9d077';c.lineWidth=1;for(let i=0;i<8;i++){const angle=i*Math.PI/4+time*.3,x=d.force.x+Math.cos(angle)*100,y=d.force.y+Math.sin(angle)*100,sign=d.force.kind==='mouthPull'?-1:1;c.beginPath();c.moveTo(x,y);c.lineTo(x+Math.cos(angle)*20*sign,y+Math.sin(angle)*20*sign);c.stroke();}}
+ if(d.sweepFlash?.time>DEMON_SWEEP.recover)drawDemonSweep(c,d.sweepFlash,{flash:true,reduced});
  for(const a of (d.pressureVersion===1?d.attacks:d.attack?[d.attack]:[])){
   const shade=a.kind.startsWith('foot')?'#d2a0c9':a.kind.startsWith('mouth')?'#e4a0c8':'#cc96df';
+  if(isDemonSweep(a.kind))drawDemonSweep(c,a,{reduced});
   if(['footJump','noseTrail'].includes(a.kind))drawSoftField(c,a.tx,a.ty,a.kind==='footJump'?95:80,shade,.63);
   if(['eyeRay','footDash','mouthTongue'].includes(a.kind)){
    c.strokeStyle=shade+'99';c.lineWidth=a.kind==='eyeRay'?1:2;
@@ -31,14 +35,14 @@ export function drawDemonGround(c,r,time=0,reduced=false){
   if(['mouthPull','mouthPush'].includes(a.kind))drawSoftField(c,a.x,a.y,d.pressureVersion===1?360:245,shade,.22);
   c.fillStyle='#f4d9f2';c.font='11px Galmuri, monospace';c.textAlign='center';
   const finger=['엄지 부채','검지 저격','중지 관통','약지 곡사','새끼 산탄'];
-  c.fillText(a.kind==='hand'?finger[a.finger]:({footJump:'발 착지',footDash:'발 돌진',eyeRay:'눈 광선',eyeOrb:'눈 탄환',noseTrail:'독길',mouthPull:'흡입',mouthPush:'밀어내기',mouthTongue:'혀 공격',coreBurst:'심연 탄막'})[a.kind],a.x,a.y-65);
+  c.fillText(a.kind==='hand'?finger[a.finger]:({footJump:'발 착지',footDash:'발 돌진',eyeRay:'눈 광선',eyeOrb:'눈 탄환',noseTrail:'독길',mouthPull:'흡입',mouthPush:'밀어내기',mouthTongue:'혀 공격',coreBurst:'심연 탄막',coreSweepLeft:'왼팔 휘두르기 · 범위 밖으로',coreSweepRight:'오른팔 휘두르기 · 범위 밖으로'})[a.kind],a.x,a.y-65);
  }
  c.restore();drawDemonPressureGround(c,r,time,reduced);
 }
 export function drawDemon(c,e,time=0,reduced=false,staticPose=false,room=null){
  if(e.variant!=='demon')return;
  const d=room?.demon,attack=(d?.attacks||[]).find(a=>a.owner===e.part)||(d?.attack?.owner===e.part?d.attack:null);
- if(drawDemonCoreSprite(c,e,time,{attack,reduced,staticPose,wall:!staticPose}))return;
+ if(drawDemonCoreSprite(c,e,time,{attack,reduced,staticPose,wall:!staticPose,sweepFlash:d?.sweepFlash}))return;
  const auraRendered=e.part!=='core'&&drawShadowAura(c,e,time,{color:'#895496',opacity:.16,width:126,height:96,reduced,staticPose});
  if(drawDemonSprite(c,e,time,{attack,staticPose,wall:d?.phase===3})){
   if(e.demonShield){c.save();c.translate(Math.round(e.x),Math.round(e.y));drawDemonShield(c);c.restore();}return;
