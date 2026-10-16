@@ -14,7 +14,7 @@ export function judgmentStripe(a,step=a.step){return a.axis==='horizontal'?{x:30
 export function pointInStripe(p,z){return p.x>=z.x&&p.x<=z.x+z.w&&p.y>=z.y&&p.y<=z.y+z.h;}
 export function segmentDistance(p,a,b){const dx=b.x-a.x,dy=b.y-a.y,len=dx*dx+dy*dy,t=len?Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/len)):0;return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy);}
 function walk(e,p,r,dt,speed){const a=steering(e,p,r.obstacles,22);moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,r.obstacles,22);e.x=Math.max(55,Math.min(905,e.x));e.y=Math.max(75,Math.min(465,e.y));e.facing=a;}
-function shot(e,a,bullets,speed=230){emitShot(e,a,speed,bullets);const b=bullets.at(-1);b.damage=9;b.source=e.variant==='king'?'타락한 왕의 검기':'상층 암흑탄';b.dark=true;}
+function shot(e,a,bullets,speed=230){emitShot(e,a,speed,bullets);const b=bullets.at(-1);b.damage=9;b.source=e.variant==='king'?'타락한 왕의 검기':e.type==='astralSniper'?'별자리 저격수 별빛 화살':'상층 암흑탄';b.dark=true;}
 function ring(e,a,bullets){for(const offset of ringOffsets)shot(e,a.aim+offset,bullets,fastKing(e)?240:185);}
 function dashEnd(e,p,r){const end={x:Math.max(60,Math.min(900,p.x)),y:Math.max(80,Math.min(460,p.y))},steps=Math.max(1,Math.ceil(dist(e,end)/5));let last={x:e.x,y:e.y};for(let i=1;i<=steps;i++){const next={x:e.x+(end.x-e.x)*i/steps,y:e.y+(end.y-e.y)*i/steps};if(segmentBlocked(last,next,r.obstacles,25)){last.blocked=true;break;}last=next;}return last;}
 export function startUpperAttack(e,kind,p,r){const end=kind==='dash'?dashEnd(e,p,r):{x:p.x,y:p.y};e.darkAttack={kind,time:fastKing(e)?(kind==='judgment'?.8:kind==='slash'?.32:.45):kind==='judgment'?1.1:kind==='slash'?.5:e.type==='astralSniper'?.6:e.variant==='king'&&kingPhase(e)>=2?.65:.85,x:e.x,y:e.y,tx:end.x,ty:end.y,aim:angle(e,p),step:0};if(kind==='dash'&&end.blocked)e.darkAttack.coverStopped=true;e.facing=e.darkAttack.aim;
@@ -65,10 +65,18 @@ export function updateUpper(e,p,r,dt,bullets,hurt){
  e.cd=Math.max(0,(e.cd??1)-dt*(e.gateFury?1.3:1));const slowed=e.slow>0?(e.slowFactor??1):1,ready=e.cd<=0&&warningCount(r,e)<2;
  if(e.variant==='king'){const phase=kingPhase(e);if(dist(e,p)>95)walk(e,p,r,dt,[0,60,90,110][phase]*slowed);if(ready)startUpperAttack(e,chooseKingAttack(e,p),p,r);return;}
  if(e.type==='starBearer'){walk(e,p,r,dt,20*slowed);if(ready)startUpperAttack(e,'ring',p,r);return;}
+ if(e.type==='astralSniper'&&!e.gateTitle||e.type==='gravityMage'&&!e.gravity)moveRangedUpper(e,p,r,dt,slowed);
  if(e.type==='gravityMage'&&e.escapeDepth){if(ready)startUpperAttack(e,'ring',p,r);return;}
  if(e.type==='gravityMage'){if(ready){e.gravity={x:p.x,y:p.y,time:2.2};e.cd=2.8;}if(e.gravity){const g=e.gravity;g.time=Math.max(0,g.time-dt);if(g.time<1.7&&dist(p,g)<115){const a=angle(p,g);moveBody(p,Math.cos(a)*85*dt,Math.sin(a)*85*dt,r.obstacles,14);}if(!g.time)delete e.gravity;}return;}
  if(['starKnight','royalGuard','riftHunter'].includes(e.type))walk(e,p,r,dt,(e.gateTitle?96.8:78)*slowed);
  if(ready&&e.gateTitle){startUpperAttack(e,e.type==='starKnight'?((e.darkTurn??0)%2?'dash':'slash'):((e.darkTurn??0)%3===2?'ring':'fan'),p,r);return;}
  if(ready)startUpperAttack(e,e.type==='astralSniper'?'fan':e.type==='pulseTurret'?'ring':e.type==='riftHunter'?'blink':'slash',p,r);
+}
+// Approach from range, retreat when crowded, otherwise make a slow lateral step.
+// resolve() already stops this movement during attack preparation/release.
+function moveRangedUpper(e,p,r,dt,slowed){
+ const distance=dist(e,p),theta=angle(p,e),side=(e.id||0)%2?1:-1;
+ const target=distance>350?p:{x:Math.max(65,Math.min(895,p.x+Math.cos(theta+side*.22)*290)),y:Math.max(85,Math.min(455,p.y+Math.sin(theta+side*.22)*290))};
+ walk(e,target,r,dt,(e.type==='gravityMage'?28:34)*slowed);
 }
 export function challengeKing(s){const r=s.floors[s.floor][s.room];if(s.key||!r.kingPending||r.enemies.length)return false;r.kingPending=false;r.enemies=[{id:0,type:'boss',variant:'king',x:480,y:180,hp:11700,max:11700,cd:1.5,tier:7,balanceVersion:1,bossHealthVersion:1,bossPowerVersion:18,kingStage:1}];if(s.generationVersion>=31)r.enemies[0].bossPressureVersion=1;s.entryGrace=1;return true;}

@@ -9,7 +9,7 @@ import {challengeKing} from '../combat/upper-floors.js';
 import {challengeCommander} from '../combat/commander.js';
 import {challengeDemon} from '../combat/demon.js';
 export const practiceBosses=[{id:'warden',floor:1,name:'2층 수호자'},{id:'prism',floor:3,name:'4층 프리즘'},{id:'slime',floor:5,name:'6층 슬라임 군체'},{id:'gate',floor:6,name:'왕 문지기 · 칼드와 베라'},{id:'king',floor:7,name:'모르도'}];
-const hiddenPracticeBoss={id:'commander',floor:8,name:'9층 악마 군단장'};
+const hiddenPracticeBoss={id:'commander',floor:8,name:'9층 서리군단장 벨카르'};
 const hiddenFinalBoss={id:'demon',floor:9,name:'10층 대악마'};
 export function createPractice(bossId,main,seed=Math.floor(Math.random()*4294967296)){
  const boss=practiceBosses.find(b=>b.id===bossId)||(bossId==='commander'?hiddenPracticeBoss:bossId==='demon'?hiddenFinalBoss:null);if(!boss||!mainSkills.includes(main))throw Error('잘못된 테스트 설정');

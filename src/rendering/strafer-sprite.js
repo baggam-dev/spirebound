@@ -1,3 +1,4 @@
+import {drawFeedbackSprite} from './feedback-sprites.js';
 import {characterSizes} from './character-sizes.js';
 const frames=[],motion=new WeakMap(),scale=characterSizes.grunt/460;
 export const straferSpriteState=()=>({ready:frames.length===6});
@@ -19,6 +20,7 @@ export const straferSpriteReady=typeof Image==='undefined'?Promise.resolve(false
  }catch{frames.length=0;resolve(false);}};atlas.onerror=()=>resolve(false);atlas.src=new URL('../../assets/images/strafer-reference-atlas.png',import.meta.url).href;
 });
 export function drawStraferSprite(c,e,time=0,reduced=false,staticPose=false){
+ if(e.type==='strafer'&&drawFeedbackSprite(c,e,time,{reduced,staticPose}))return true;
  if(e.type!=='strafer'||frames.length!==6)return false;
  let face=1,index=0;
  if(!staticPose){

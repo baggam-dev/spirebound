@@ -39,7 +39,7 @@ import {updatePattern} from '../combat/patterns.js';
 import {updateRanged,advanceRicochet} from '../combat/ranged.js';
 import {hitEnemy,tickEffects,xpRequired} from '../progression/progression.js';
 import {takeDamage,killRecovery,monsterPotionReward} from '../combat/survival.js';
-import {ENEMY_COOLDOWN_FACTOR,CHARGE_DURATION,CHARGE_WARNING,attackProfile,chargeProfile} from '../combat/balance.js';
+import {ENEMY_COOLDOWN_FACTOR,CHARGE_DURATION,CHARGE_WARNING,attackProfile,chargeProfile,chargerRecovering} from '../combat/balance.js';
 import {runRandom} from './random.js';
 import {absorbGuardian} from '../combat/utility.js';
 import {tickFinalEscape} from '../world/final-escape.js';
@@ -110,14 +110,14 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(returnEnemyTypes.includes(e.type)){hurt(updateReturnEnemy(e,p,r.obstacles,dt,s.projectiles),enemyName(e)+' 돌진');continue;}
   if(e.type==='brute'){const jumping=e.phase==='air';hurt(updateBrute(e,p,r.obstacles,dt,s.key),jumping?'도약 거인 점프 착지':'도약 거인 근접 공격',jumping?'bruteJump':null);continue;}
   e.cd-=dt;const profile=attackProfile(e);let a=steering(e,p,r.obstacles,18),speed=e.type==='chaser'&&!s.key&&!r.tutorial?65:52;
-  if(e.type==='charger'){const charge=chargeProfile(e);if(e.cd<charge.duration+charge.warning&&e.chargeAngle===undefined)e.chargeAngle=Math.atan2(p.y-e.y,p.x-e.x);if(e.cd<charge.duration){a=e.chargeAngle??a;speed=charge.speed;}else speed=e.cd<charge.duration+charge.warning?0:35;}
-  speed*=(e.trialChampion?1.15:1)*(1+(e.tier||0)*.035+(e.escapeDepth||0)*.07)*(e.slow>0?e.slowFactor:1);const beforeMove={x:e.x,y:e.y};moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,r.obstacles,18);if(e.type==='charger'&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration&&segmentBlocked(beforeMove,{x:beforeMove.x+Math.cos(a)*speed*dt,y:beforeMove.y+Math.sin(a)*speed*dt},r.obstacles,18)){openGuard(e,1.1);delete e.chargeAngle;e.cd=1.5;continue;}e.x=Math.max(40,Math.min(920,e.x));e.y=Math.max(60,Math.min(480,e.y));
-  if(e.cd<=0){e.cd=Math.max(2.3*ENEMY_COOLDOWN_FACTOR*profile.recovery,e.type==='charger'?chargeProfile(e).duration+chargeProfile(e).warning+.1:0);delete e.chargeAngle;}
+  if(e.type==='charger'){const charge=chargeProfile(e);if(e.cd<charge.duration+charge.warning&&e.chargeAngle===undefined)e.chargeAngle=Math.atan2(p.y-e.y,p.x-e.x);if(e.cd<charge.duration){a=e.chargeAngle??a;speed=charge.speed;}else speed=e.cd<charge.duration+charge.warning||chargerRecovering(e)?0:35;}
+  speed*=(e.trialChampion?1.15:1)*(1+(e.tier||0)*.035+(e.escapeDepth||0)*.07)*(e.slow>0?e.slowFactor:1);const beforeMove={x:e.x,y:e.y};moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,r.obstacles,18);if(e.type==='charger'&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration&&segmentBlocked(beforeMove,{x:beforeMove.x+Math.cos(a)*speed*dt,y:beforeMove.y+Math.sin(a)*speed*dt},r.obstacles,18)){openGuard(e,1.1);delete e.chargeAngle;e.cd=Math.max(1.5,chargeProfile(e).duration+chargeProfile(e).warning+chargeProfile(e).recovery);continue;}e.x=Math.max(40,Math.min(920,e.x));e.y=Math.max(60,Math.min(480,e.y));
+  if(e.cd<=0){e.cd=Math.max(2.3*ENEMY_COOLDOWN_FACTOR*profile.recovery,e.type==='charger'?chargeProfile(e).duration+chargeProfile(e).warning+chargeProfile(e).recovery:0);delete e.chargeAngle;}
   if(e.type==='chaser')hurt(updateChaserAttack(e,p,r.obstacles,dt),enemyName(e)+' 단검 베기',null,e);
-  else if(distance(e,p)<23&&!segmentBlocked(e,p,r.obstacles,0))hurt(e.type==='charger'&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration?18:9,enemyName(e)+' 접촉');
+  else if(!chargerRecovering(e)&&distance(e,p)<23&&!segmentBlocked(e,p,r.obstacles,0))hurt(e.type==='charger'&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration?18:9,enemyName(e)+' 접촉');
  }
  hitOrigin=null;
- for(const e of r.enemies)if(e.type!=='chaser'&&e.hp>0&&!enemyAirborne(e)&&!(e.spawnGrace>0)&&!(e.counterReason&&e.opening>0)&&!r.enemies.some(n=>n.kingTransition>0)&&!e.darkAttack?.moving&&distance(e,p)<enemyRadius(e)+14&&!segmentBlocked(e,p,r.obstacles,0))hurt(9,enemyName(e)+' 접촉',null,e);
+ for(const e of r.enemies)if(e.type!=='chaser'&&!chargerRecovering(e)&&e.hp>0&&!enemyAirborne(e)&&!(e.spawnGrace>0)&&!(e.counterReason&&e.opening>0)&&!r.enemies.some(n=>n.kingTransition>0)&&!e.darkAttack?.moving&&distance(e,p)<enemyRadius(e)+14&&!segmentBlocked(e,p,r.obstacles,0))hurt(9,enemyName(e)+' 접촉',null,e);
  // A lethal hit ends the simulation before drops or life-steal can heal the player.
  if(p.hp<=0){events.push('dead');return {events,effects};}
  for(const b of s.projectiles){

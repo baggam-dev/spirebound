@@ -1,5 +1,5 @@
 // Approved v2 package. Cached crops share one scale; drawing never changes actors.
-const frames=[],motion=new WeakMap(),scale=.18;
+const frames=[],motion=new WeakMap(),scale=.135;
 export const demonBatSpriteState=()=>({ready:frames.length===4});
 export const demonBatSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
  const atlas=new Image();atlas.onload=()=>{try{
@@ -32,7 +32,7 @@ export function drawDemonBatSprite(c,e,time=0,reduced=false,staticPose=false){
  const f=frames[frame],bob=staticPose||reduced||e.frozen>0||e.attackPhase?0:Math.sin(time*7+(e.id||0))*2;
  c.save();c.translate(Math.round(e.x),Math.round(e.y));
  if(!staticPose){c.fillStyle='#0005';c.fillRect(-16,16,32,5);}
- c.translate(0,bob);c.scale(face,1);c.imageSmoothingEnabled=false;c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));
+ c.translate(0,4+bob*.75);c.scale(face,1);c.imageSmoothingEnabled=false;c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));
  if(!staticPose&&e.escapeDepth){c.strokeStyle='#e7a0a0';c.lineWidth=1.5;c.beginPath();c.moveTo(-15,10);c.lineTo(-21,7);c.moveTo(15,10);c.lineTo(21,7);c.stroke();}
  c.restore();return true;
 }

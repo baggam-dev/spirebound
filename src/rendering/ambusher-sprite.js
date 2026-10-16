@@ -1,3 +1,4 @@
+import {drawFeedbackSprite} from './feedback-sprites.js';
 import {characterSizes} from './character-sizes.js';
 const frames=[],motion=new WeakMap(),scale=characterSizes.grunt/420;
 export const ambusherSpriteState=()=>({ready:frames.length===6});
@@ -19,6 +20,7 @@ export const ambusherSpriteReady=typeof Image==='undefined'?Promise.resolve(fals
  }catch{frames.length=0;resolve(false);}};atlas.onerror=()=>resolve(false);atlas.src=new URL('../../assets/images/ambusher-reference-atlas.png',import.meta.url).href;
 });
 export function drawAmbusherSprite(c,e,time=0,reduced=false,staticPose=false){
+ if(e.type==='ambusher'&&drawFeedbackSprite(c,e,time,{reduced,staticPose}))return true;
  if(e.type!=='ambusher'||frames.length!==6)return false;
  let face=1,index=0;
  if(!staticPose){

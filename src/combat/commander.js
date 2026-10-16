@@ -14,7 +14,7 @@ export function challengeCommander(s){
 }
 function fireSpread(e,a,bullets){
  const offsets=commanderOffsets(a.count);
- for(const offset of offsets){emitShot(e,a.aim+offset,commanderProfile(e).speed,bullets);const b=bullets.at(-1);b.damage=9;b.source='악마 군단장 빙결 화살';b.frostArrow=true;}
+ for(const offset of offsets){emitShot(e,a.aim+offset,commanderProfile(e).speed,bullets);const b=bullets.at(-1);b.damage=9;b.source='서리군단장 벨카르 빙결 화살';b.frostArrow=true;}
 }
 function blinkDestination(e,p,r){
  const state=e.commander,candidates=[{x:175,y:150},{x:785,y:150},{x:175,y:390},{x:785,y:390},{x:480,y:120},{x:480,y:420}];
@@ -33,7 +33,7 @@ export function updateCommander(e,p,r,dt,bullets,hurt){
  c.snipeClock??=5.5;c.strafeClock??=3.5;c.strafeDirection??=1;
  c.blinkFlash=Math.max(0,(c.blinkFlash||0)-dt);
  const phase=commanderPhase(e),q=commanderProfile(e);
- if(phase>c.phase){c.phase=phase;c.transition=1.1;c.volleyClock=1.6;c.blinkClock=Math.max(1.8,c.blinkClock);c.rainClock=Math.max(2.5,c.rainClock);c.snipeClock=Math.max(2,c.snipeClock);delete c.volley;delete c.rain;delete c.blink;delete c.snipe;delete c.ricochet;if(pressureBoss(e)){c.volleyClock=.8;c.blinkClock=1.8;c.rainClock=Math.min(4,c.rainClock);c.ricochetClock=2;}for(const b of bullets)if(b.enemy)b.life=0;return;}
+ if(phase>c.phase){c.phase=phase;c.transition=1.1;c.volleyClock=1.6;c.blinkClock=Math.max(1.8,c.blinkClock);c.rainClock=Math.max(2.5,c.rainClock);c.snipeClock=Math.max(2,c.snipeClock);delete c.volley;delete c.rain;delete c.blink;delete c.snipe;delete c.ricochet;if(pressureBoss(e)){c.volleyClock=1.3;c.blinkClock=2.4;c.rainClock=Math.max(4,c.rainClock);c.ricochetClock=3;}for(const b of bullets)if(b.enemy)b.life=0;return;}
  if(c.transition>0){c.transition=Math.max(0,c.transition-dt);return;}
  if(pressureBoss(e)&&!c.rain&&!c.blink&&!c.snipe&&!c.ricochet&&(!c.volley||c.volley.fired===0&&c.volley.time>.15))moveCommander(e,p,r,dt);
  if(pressureBoss(e))c.ricochetClock=Math.max(0,(c.ricochetClock??3)-dt);
@@ -41,15 +41,15 @@ export function updateCommander(e,p,r,dt,bullets,hurt){
  if(c.rain){
   c.rain.time=Math.max(0,c.rain.time-dt);
   if(!c.rain.time){
-   if(Math.hypot(p.x-c.rain.x,p.y-c.rain.y)<c.rain.radius)hurt(18,'악마 군단장 화살비');
+   if(Math.hypot(p.x-c.rain.x,p.y-c.rain.y)<c.rain.radius)hurt(18,'서리군단장 벨카르 화살비');
    c.rainFlash={x:c.rain.x,y:c.rain.y,time:.4,radius:c.rain.radius};delete c.rain;c.volleyClock=Math.max(c.volleyClock,.75);c.blinkClock=Math.max(c.blinkClock,.8);
   }
   return;
  }
  if(c.rainFlash){c.rainFlash.time=Math.max(0,c.rainFlash.time-dt);if(!c.rainFlash.time)delete c.rainFlash;}
- if(c.blink){c.blink.time=Math.max(0,c.blink.time-dt);if(!c.blink.time){e.x=c.blink.x;e.y=c.blink.y;c.blinkFlash=.35;c.blinkClock=q.blink;delete c.blink;if(pressureBoss(e))c.volley={aim:Math.atan2(p.y-e.y,p.x-e.x),count:q.count,time:.30,fired:0};}return;}
- if(c.ricochet){const a=c.ricochet;a.time=Math.max(0,a.time-dt);if(!a.time){for(const offset of commanderOffsets(a.count)){emitShot(e,a.aim+offset,q.reflectSpeed,bullets);Object.assign(bullets.at(-1),{ricochet:true,bounces:1,life:5,damage:9,source:'악마 군단장 반사탄'});}delete c.ricochet;c.volleyClock=Math.max(c.volleyClock,.45);}return;}
- if(c.snipe){c.snipe.time=Math.max(0,c.snipe.time-dt);if(!c.snipe.time){emitShot(e,c.snipe.aim,q.snipeSpeed,bullets);const b=bullets.at(-1);b.damage=11;b.source='악마 군단장 저격 화살';b.frostArrow=true;delete c.snipe;c.volleyClock=Math.max(c.volleyClock,.55);}return;}
+ if(c.blink){c.blink.time=Math.max(0,c.blink.time-dt);if(!c.blink.time){e.x=c.blink.x;e.y=c.blink.y;c.blinkFlash=.35;c.blinkClock=q.blink;delete c.blink;if(pressureBoss(e))c.volley={aim:Math.atan2(p.y-e.y,p.x-e.x),count:q.count,time:.55,fired:0};}return;}
+ if(c.ricochet){const a=c.ricochet;a.time=Math.max(0,a.time-dt);if(!a.time){for(const offset of commanderOffsets(a.count)){emitShot(e,a.aim+offset,q.reflectSpeed,bullets);Object.assign(bullets.at(-1),{ricochet:true,bounces:1,life:5,damage:9,source:'서리군단장 벨카르 반사탄'});}delete c.ricochet;c.volleyClock=Math.max(c.volleyClock,.85);}return;}
+ if(c.snipe){c.snipe.time=Math.max(0,c.snipe.time-dt);if(!c.snipe.time){emitShot(e,c.snipe.aim,q.snipeSpeed,bullets);const b=bullets.at(-1);b.damage=11;b.source='서리군단장 벨카르 저격 화살';b.frostArrow=true;delete c.snipe;c.volleyClock=Math.max(c.volleyClock,.9);}return;}
  if(!c.rainClock){c.rain={x:clamp(p.x,145,815),y:clamp(p.y,125,415),radius:120,time:q.rainWindup};c.rainClock=q.rain;delete c.volley;return;}
  if(c.volley){
   const a=c.volley;a.time=Math.max(0,a.time-dt);

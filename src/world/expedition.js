@@ -1,14 +1,16 @@
 export const enemyGuide={
+ kald:{name:'왕의 방패, 칼드',tip:'왕실 문장이 새겨진 큰 방패로 길을 막는 수문장. 전방을 피해 측면에서 공격하고 돌진을 장애물로 막으세요.'},
+ vera:{name:'별의 눈, 베라',tip:'별빛 렌즈와 초승달 장궁을 쓰는 수문장. 거리를 유지하며 이동하고 별빛 화살과 고리 탄막을 쏩니다.'},
  demonBat:{name:'폭렬 박쥐',tip:'가까이 다가와 짧게 예고한 뒤 돌진·자폭합니다. 옆으로 벗어나세요.'},
  spikeNest:{name:'심연 가시핵',tip:'고정된 자리에서 발밑에 가시를 예고합니다. 예고 지점을 벗어나세요.'},
  demonSoldier:{name:'악마 병사',tip:'접근하여 짧은 전방 베기를 합니다. 측면으로 돌아가세요.'},
  demonArcher:{name:'악마 사수',tip:'고정 조준 후 두 갈래 화살을 발사합니다.'},
  demonCaptain:{name:'악마 부대장',tip:'갑옷을 입고 추격하다가 예고된 방향으로 돌진합니다.'},
  demon:{name:'대악마의 신체',tip:'손·발, 눈·코·입, 벽 너머 본체의 세 단계를 차례로 무너뜨리세요. 본체 근처에서는 좌우 팔의 휘두르기 예고 범위 밖으로 피하세요.'},
- commander:{name:'악마 군단장',tip:'측면을 돌며 빠른 측면 이동과 네 갈래에서 여섯 갈래로 강화되는 빙결 연사·고정 조준 저격·벽 반사탄을 씁니다. 저격선과 화살비 착탄 지점에서 벗어나고 점멸 뒤 위치를 확인하세요.'},
+ commander:{name:'서리군단장 벨카르',tip:'측면을 돌며 빠른 측면 이동과 네 갈래에서 여섯 갈래로 강화되는 빙결 연사·고정 조준 저격·벽 반사탄을 씁니다. 저격선과 화살비 착탄 지점에서 벗어나고 점멸 뒤 위치를 확인하세요.'},
  king:{name:'타락한 왕, 모르도',tip:'검은 왕 → 타락 → 마왕의 세 단계. 보라 전조를 피하고 검이 멈추면 공격하세요.'},
- astralSniper:{name:'별자리 저격수',tip:'고정된 조준선에서 벗어나 검기를 피하세요.'},
- gravityMage:{name:'인력술사',tip:'보라 원이 활성화되기 전에 벗어나세요. 점멸로 탈출할 수 있습니다.'},
+ astralSniper:{name:'별자리 저격수',tip:'별빛 장궁을 들고 거리를 유지하며 이동합니다. 조준이 고정되면 옆으로 빠져 화살을 피하세요.'},
+ gravityMage:{name:'인력술사',tip:'천천히 이동하다 인력장을 시전하는 동안 멈춥니다. 보라 원이 활성화되기 전에 벗어나거나 점멸로 탈출하세요.'},
  starKnight:{name:'성운 기사',tip:'전방 방패는 직격 피해를 줄입니다. 후방 공격과 장판·지속 피해로 공략하세요.'},
  starBearer:{name:'별무리 운반체',tip:'주변 적의 공격 준비를 가속합니다. 우선 처치하세요.'},
  royalGuard:{name:'망령 근위병',tip:'넓은 전방 베기를 사용합니다. 소환체는 보상을 주지 않습니다.'},
@@ -30,7 +32,7 @@ export const enemyGuide={
  prism:{name:'프리즘의 수호자',tip:'반사 결정탄·오중 광선·회전 연사. 광선 예고 방향에서 벗어나세요.'},
  slime:{name:'독성 군체',tip:'거대 1 → 중형 2 → 소형 4. 모든 분열체를 처치해야 끝납니다.'}
 };
-export function enemyKey(e){return e.type==='boss'?(e.variant||'warden'):e.type;}
+export function enemyKey(e){if(e.gateTitle&&e.type==='starKnight')return 'kald';if(e.gateTitle&&e.type==='astralSniper')return 'vera';return e.type==='boss'?(e.variant||'warden'):e.type;}
 export function enemyName(e){if(e.variant==='demon')return ({hand:'대악마의 손',foot:'대악마의 발',eye:'대악마의 눈',nose:'대악마의 코',mouth:'대악마의 입',core:'대악마 본체'})[e.part]||enemyGuide.demon.name;return Object.hasOwn(enemyGuide,enemyKey(e))?enemyGuide[enemyKey(e)].name:'알 수 없는 적';}
 export function observeRoom(s,room){
  for(const e of room.enemies){const key=enemyKey(e);if(!Object.hasOwn(enemyGuide,key))continue;const entry=(s.bestiary??={})[key]??={kills:0,traits:[]};if(e.elite&&!entry.traits.includes(e.elite))entry.traits.push(e.elite);}

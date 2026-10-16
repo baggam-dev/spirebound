@@ -1,0 +1,23 @@
+{"keys":["astralSniper","gravityMage","starKnight","starBearer","royalGuard","riftHunter","kald","vera","brute","demonSoldier","demonArcher","demonCaptain","ambusher","ringcaster","strafer","king1","king2","king3","commander1","commander2"],"count":20,"scenes":60,"actorUnchanged":true,"pauseStable":true,"delta":0,"example":[]}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   "Cannot set properties of null (setting 'hidden')"
++ ]
+- []
+
+    at file:///C:/baggam-dev/spirebound/tools/qa/feedback-release-qa.mjs:34:9 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [ "Cannot set properties of null (setting 'hidden')" ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

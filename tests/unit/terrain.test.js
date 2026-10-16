@@ -14,5 +14,5 @@ test('new runs actually contain persisted obstacle arrays',()=>{let count=0;for(
 test('minimap neighbor lookup shares tutorial entrance restrictions even from another room',()=>{
  const s=newRun(91),doors=index=>[0,1,2,3].map(d=>neighbor(s,d,index)>=0);
  assert.equal(doors(0).filter(Boolean).length,1);assert.equal(neighbor(s,edgeTo(s,0,1),0),1);s.room=1;assert.equal(doors(0).filter(Boolean).length,1);assert.equal(neighbor(s,edgeTo(s,0,1),0),1);
- s.tutorialComplete=true;assert.equal(doors(0).filter(Boolean).length,2);assert.equal(neighbor(s,edgeTo(s,0,5),0),5);s.tutorialComplete=false;s.key=true;assert.equal(doors(0).filter(Boolean).length,2);assert.equal(neighbor(s,edgeTo(s,0,5),0),5);
+ s.tutorialComplete=true;assert.equal(doors(0).filter(Boolean).length,2);assert.equal(neighbor(s,edgeTo(s,0,3),0),3);s.tutorialComplete=false;s.key=true;assert.equal(doors(0).filter(Boolean).length,2);assert.equal(neighbor(s,edgeTo(s,0,3),0),3);
 });

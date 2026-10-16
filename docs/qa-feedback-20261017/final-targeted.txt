@@ -1,0 +1,30 @@
+✔ compact early floors include all facilities and preserve saved maps and tutorial gates (6888.7526ms)
+✔ trial charger gives a full contact-free stationary recovery after each charge and reload (23.4355ms)
+✔ sniper and gravity caster move between attacks and hold their position while channeling (1.0308ms)
+✔ Velkar both stages have deliberate recovery, blink followup and serializable longer clocks (123.7052ms)
+✔ named guardians have separate identity and art while display scale never changes combat radius (43.5963ms)
+✔ upper floors provide rest, elite gate and explicit king challenge (1417.6454ms)
+✔ gate rewards once and king alone begins eight floor descent (68.8883ms)
+✔ king phase thresholds, telegraphs and summons survive long combat and saves (569.5457ms)
+✔ telegraph deals no early damage and slash can be avoided behind king (20.3728ms)
+✔ every new enemy runs and round trips in ascent and descent (536.7073ms)
+✔ dash moves over time, damages only swept corridor, and stops before cover (4.683ms)
+✔ saved dash resumes at identical coordinates and cannot damage twice (139.1336ms)
+✔ ring locks its preview direction and all projectiles leave the visible safe gap (2.4353ms)
+✔ king avoids empty melee at range and immediate pattern repeats (0.9654ms)
+✔ both judgment orientations use the same rectangle for hit tests and previews (9.7097ms)
+✔ judgment ends with a heavy marked strike and a long kneeling opening (4.8754ms)
+✔ phase changes clear attacks and enemy shots, freeze danger and round trip mid-transition (193.2784ms)
+✔ summon timer runs during long openings and freeze with a visible one second portal (47.5724ms)
+✔ attack flash expires during recovery and while frozen (35.9078ms)
+✔ king and guards cap overlapping new warnings at two (24.5237ms)
+✔ knight shield reduces frontal arrows and tower shots but not rear or damage over time (20.1448ms)
+✔ new state validation rejects malformed moving dash and summon portal (31.636ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8193.2498

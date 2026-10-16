@@ -20,7 +20,7 @@ export const wardenSpriteReady=Promise.all([originalReady,wardenMotionReady,ward
 export function drawWardenSprite(c,e,p,attack,red=false){
  if(frames.length!==2||e.type!=='boss'||e.variant&&e.variant!=='warden')return false;
  const face=Number.isFinite(e.patternAim)&&['windup','strike','air'].includes(attack.stage)?(Math.cos(e.patternAim)<0?-1:1):p.face||1;
- const f=frames[['windup','air'].includes(attack.stage)?1:0];c.save();c.scale(face,1);c.imageSmoothingEnabled=false;const recovering=attack.stage==='recover'&&drawWardenRecover(c,e),walking=!recovering&&attack.stage==='idle'&&drawWardenWalk(c,p);
+ const f=frames[['windup','air'].includes(attack.stage)?1:0];c.save();c.translate(0,29);c.scale(1.1,1.1);c.translate(0,-29);c.scale(face,1);c.imageSmoothingEnabled=false;const recovering=attack.stage==='recover'&&drawWardenRecover(c,e),walking=!recovering&&attack.stage==='idle'&&drawWardenWalk(c,p);
  if(recovering){const progress=wardenRecoverProgress(e);if(progress>.8){c.save();c.globalAlpha*=(progress-.8)/.2;if(!drawWardenMotion(c,{...p,moving:false},{stage:'idle'}))c.drawImage(frames[0].canvas,Math.round(frames[0].x),Math.round(frames[0].y));c.restore();}}
  else if(!walking&&!drawWardenMotion(c,p,attack))c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));
  if(red){c.strokeStyle='#ee8791';c.lineWidth=2;c.beginPath();c.moveTo(-22,20);c.lineTo(-27,13);c.moveTo(22,20);c.lineTo(27,13);c.stroke();}c.restore();return true;

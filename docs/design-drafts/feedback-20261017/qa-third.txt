@@ -1,0 +1,19 @@
+{"keys":["astralSniper","gravityMage","starKnight","starBearer","royalGuard","riftHunter","demonSoldier","demonArcher","demonCaptain","ambusher","ringcaster","strafer","kald","vera","brute","king1","king2","king3","commander1","commander2"],"count":20,"scenes":60,"actorUnchanged":true,"pauseStable":false,"delta":665,"example":[[69326,76,77],[69329,188,189],[69330,161,162],[69336,209,210],[69337,193,194],[69338,165,166],[69341,103,104],[69425,146,147],[69426,129,130],[69432,127,128],[74997,103,104],[75000,197,198]]}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at file:///C:/baggam-dev/spirebound/tools/qa/feedback-release-qa.mjs:24:214 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

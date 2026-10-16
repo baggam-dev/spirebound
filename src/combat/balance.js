@@ -11,6 +11,7 @@ export function migrateEnemies(s){for(const [tier,rooms] of s.floors.entries())f
 
 export function attackProfile(e){const depth=e.escapeDepth||0,tier=depth?5:(e.tier||0);return {speed:(1.12+tier*.035+depth*.035)*(e.trialChampion?1.15:1),count:(e.trialChampion?1:0)+Math.floor(tier/2)+(depth?1+Math.floor(depth/2):0),recovery:Math.max(.42,1-tier*.065-depth*.06)*(e.trialChampion?.6:1)};}
 
-export const chargeProfile=e=>({duration:e.trialChampion?.65:CHARGE_DURATION,warning:e.trialChampion?.28:CHARGE_WARNING,speed:e.trialChampion?305:235});
+export const chargeProfile=e=>({duration:e.trialChampion?.65:CHARGE_DURATION,warning:e.trialChampion?.4:CHARGE_WARNING,speed:e.trialChampion?305:235,recovery:e.trialChampion?1:.1});
+export const chargerRecovering=e=>e.type==='charger'&&!!e.trialChampion&&e.cd>=chargeProfile(e).duration+chargeProfile(e).warning;
 
 export function strengthenGateKnight(e){if(e.type!=='starKnight'||!e.gateTitle||e.gateKnightBuff===1)return e;const ratio=e.max>0?e.hp/e.max:1;e.max=Math.ceil(e.max*1.1);e.hp=e.hp<=0?0:Math.ceil(e.max*ratio);e.gateKnightBuff=1;return e;}

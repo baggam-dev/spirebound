@@ -1,3 +1,4 @@
+import {drawFeedbackSprite} from './feedback-sprites.js';
 import {characterSizes} from './character-sizes.js';
 const frames=[],scale=characterSizes.grunt/550;
 export const ringcasterSpriteState=()=>({ready:frames.length===4});
@@ -17,6 +18,7 @@ export const ringcasterSpriteReady=typeof Image==='undefined'?Promise.resolve(fa
  }catch{frames.length=0;resolve(false);}};atlas.onerror=()=>resolve(false);atlas.src=new URL('../../assets/images/ringcaster-reference-atlas.png',import.meta.url).href;
 });
 export function drawRingcasterSprite(c,e,staticPose=false){
+ if(e.type==='ringcaster'&&drawFeedbackSprite(c,e,0,{staticPose}))return true;
  if(e.type!=='ringcaster'||frames.length!==4)return false;
  const index=staticPose?0:e.attackPhase==='warning'?1:e.attackPhase==='recover'?(e.attackTime>2.22?2:3):0,f=frames[index];
  const face=!staticPose&&Number.isFinite(e.aim)&&Math.cos(e.aim)<0?-1:1;

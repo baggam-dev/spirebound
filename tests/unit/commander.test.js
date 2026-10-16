@@ -17,22 +17,22 @@ test('commander challenge is exclusive to expanded ninth floor and survives save
 test('volley repeats fixed aim with two then three frost arrows',()=>{
  const {e,p,r}=fight(),bullets=[];e.commander.volleyClock=0;e.commander.rainClock=20;e.commander.blinkClock=10;
  updateCommander(e,p,r,.01,bullets,()=>{});assert.equal(e.commander.volley.count,2);p.x=750;
- updateCommander(e,p,r,.55,bullets,()=>{});assert.equal(bullets.length,2);updateCommander(e,p,r,.27,bullets,()=>{});assert.equal(bullets.length,4);
+ updateCommander(e,p,r,.7,bullets,()=>{});assert.equal(bullets.length,2);updateCommander(e,p,r,.35,bullets,()=>{});assert.equal(bullets.length,4);
  assert.equal(bullets.every(b=>b.frostArrow),true);assert.deepEqual(bullets.slice(0,2).map(b=>[b.vx,b.vy]),bullets.slice(2).map(b=>[b.vx,b.vy]));
  e.hp=e.max/2;updateCommander(e,p,r,.01,bullets,()=>{});assert.equal(commanderPhase(e),2);assert.equal(e.commander.transition,1.1);assert.equal(bullets.every(b=>b.life===0),true);
  updateCommander(e,p,r,1.1,bullets,()=>{});e.commander.volleyClock=0;updateCommander(e,p,r,.01,bullets,()=>{});assert.equal(e.commander.volley.count,3);
 });
-test('rain fixes its target, then repeats after twenty seconds without a simultaneous blink',()=>{
+test('rain fixes its target, then repeats after twenty six seconds without a simultaneous blink',()=>{
  const {e,p,r}=fight(),bullets=[];let hits=0;const c=e.commander;c.rainClock=.01;c.blinkClock=.01;
- updateCommander(e,p,r,.02,bullets,()=>hits++);assert.deepEqual([c.rain.x,c.rain.y],[p.x,415]);assert.equal(c.rainClock,20);p.x=200;
- updateCommander(e,p,r,1.05,bullets,()=>hits++);assert.equal(hits,0);assert.equal(c.blinkClock,.8);assert.ok(c.rainFlash);assert.ok(c.rainClock>18);
- c.rainClock=.01;c.blinkClock=10;p.x=480;updateCommander(e,p,r,.02,bullets,()=>hits++);updateCommander(e,p,r,1.05,bullets,()=>hits++);assert.equal(hits,1);
+ updateCommander(e,p,r,.02,bullets,()=>hits++);assert.deepEqual([c.rain.x,c.rain.y],[p.x,415]);assert.equal(c.rainClock,26);p.x=200;
+ updateCommander(e,p,r,1.3,bullets,()=>hits++);assert.equal(hits,0);assert.equal(c.blinkClock,.8);assert.ok(c.rainFlash);assert.ok(c.rainClock>18);
+ c.rainClock=.01;c.blinkClock=10;p.x=480;updateCommander(e,p,r,.02,bullets,()=>hits++);updateCommander(e,p,r,1.3,bullets,()=>hits++);assert.equal(hits,1);
 });
 test('blink warns at a safe landing before moving and serializes mid-windup',()=>{
  const {s,e,p,r}=fight(),c=e.commander,bullets=[];c.blinkClock=.01;c.rainClock=20;c.volleyClock=20;
  const origin={x:e.x,y:e.y};updateCommander(e,p,r,.02,bullets,()=>{});assert.deepEqual({x:e.x,y:e.y},origin);assert.ok(c.blink&&Math.hypot(c.blink.x-p.x,c.blink.y-p.y)>=150);
  const saved=parseSave(encodeSave(s));assert.ok(currentRoom(saved).enemies[0].commander.blink);
- updateCommander(e,p,r,.4,bullets,()=>{});assert.notDeepEqual({x:e.x,y:e.y},origin);assert.equal(c.blink,undefined);assert.equal(c.blinkClock,10);
+ updateCommander(e,p,r,.4,bullets,()=>{});assert.notDeepEqual({x:e.x,y:e.y},origin);assert.equal(c.blink,undefined);assert.equal(c.blinkClock,13);
 });
 test('frost slow expires and re-entry clears stale telegraphs',()=>{
  const {s,e,p}=fight();s.entryGrace=0;p.frostSlow=1.35;const y=p.y;stepRun(s,.5,{x:0,y:-1});assert.ok(p.y<y&&p.y>y-87);assert.ok(Math.abs(p.frostSlow-.85)<1e-9);
@@ -53,7 +53,7 @@ test('commander keeps flanking, telegraphs a fixed sniper shot, and resumes afte
  assert.ok(c.snipe);assert.equal(bullets.length,0);
  const aimed=c.snipe.aim;p.x+=100;
  assert.ok(currentRoom(parseSave(encodeSave(s))).enemies[0].commander.snipe);
- updateCommander(e,p,r,.72,bullets,()=>{});
+ updateCommander(e,p,r,.9,bullets,()=>{});
  assert.equal(bullets.length,1);assert.equal(bullets[0].frostArrow,true);
  assert.ok(Math.abs(Math.atan2(bullets[0].vy,bullets[0].vx)-aimed)<1e-9);
  for(let i=0;i<180;i++)updateCommander(e,p,r,1/60,bullets,()=>{});

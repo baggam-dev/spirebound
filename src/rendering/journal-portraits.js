@@ -1,3 +1,4 @@
+import {drawFeedbackSprite,feedbackSpritesReady,feedbackSpriteState} from './feedback-sprites.js';
 import {drawAmbusherSprite,ambusherSpriteReady,ambusherSpriteState} from './ambusher-sprite.js';
 import {drawRingcasterSprite,ringcasterSpriteReady,ringcasterSpriteState} from './ringcaster-sprite.js';
 import {drawStraferSprite,straferSpriteReady,straferSpriteState} from './strafer-sprite.js';
@@ -41,17 +42,18 @@ import {enemyGuide} from '../world/expedition.js';
 const cache=new Map(),pendingRoots=new WeakSet();
 // Render once, using the same bodies as combat. Never mutate the expedition.
 function portrait(key,part){
- const id=key+':'+part+':'+(key==='ambusher'?ambusherSpriteState().ready:key==='ringcaster'?ringcasterSpriteState().ready:key==='strafer'?straferSpriteState().ready:key==='demonCaptain'?demonCaptainSpriteState().ready:key==='demonArcher'?demonArcherSpriteState().ready:key==='demonSoldier'?demonSoldierSpriteState().ready:key==='spikeNest'?spikeNestSpriteState().ready:key==='demonBat'?demonBatSpriteState().ready:key==='demon'?demonSpriteState().parts.join(',')+':'+demonCoreSpriteState().ready+':'+shadowAuraState().ready:key==='commander'?commanderPhase1SpriteState().ready+':'+commanderPhase2SpriteState().ready+':'+shadowAuraState().ready:key==='king'?mordoPhase1SpriteState().ready+':'+mordoPhase2SpriteState().ready+':'+mordoPhase3SpriteState().ready+':'+shadowAuraState().ready:key==='riftHunter'?riftHunterSpriteState().ready+':'+shadowAuraState().ready:key==='pulseTurret'?pulseTurretSpriteState().ready:key==='royalGuard'?royalGuardSpriteState().ready:key==='starBearer'?starBearerSpriteState().ready:key==='starKnight'?starKnightSpriteState().ready:key==='gravityMage'?gravityMageSpriteState().ready:key==='astralSniper'?astralSniperSpriteState().ready:['slime','minislime'].includes(key)?slimeSpriteState().ready:key==='prism'?prismSpriteState().ready:key==='flower'?flowerSpriteState().ready:key==='warden'?wardenSpriteState().ready:gruntSpriteState().types.includes(key));if(cache.has(id))return cache.get(id);
+ const id=key+':'+part+':'+feedbackSpriteState().ready+':'+(key==='ambusher'?ambusherSpriteState().ready:key==='ringcaster'?ringcasterSpriteState().ready:key==='strafer'?straferSpriteState().ready:key==='demonCaptain'?demonCaptainSpriteState().ready:key==='demonArcher'?demonArcherSpriteState().ready:key==='demonSoldier'?demonSoldierSpriteState().ready:key==='spikeNest'?spikeNestSpriteState().ready:key==='demonBat'?demonBatSpriteState().ready:key==='demon'?demonSpriteState().parts.join(',')+':'+demonCoreSpriteState().ready+':'+shadowAuraState().ready:key==='commander'?commanderPhase1SpriteState().ready+':'+commanderPhase2SpriteState().ready+':'+shadowAuraState().ready:key==='king'?mordoPhase1SpriteState().ready+':'+mordoPhase2SpriteState().ready+':'+mordoPhase3SpriteState().ready+':'+shadowAuraState().ready:key==='riftHunter'?riftHunterSpriteState().ready+':'+shadowAuraState().ready:key==='pulseTurret'?pulseTurretSpriteState().ready:key==='royalGuard'?royalGuardSpriteState().ready:key==='starBearer'?starBearerSpriteState().ready:key==='starKnight'?starKnightSpriteState().ready:key==='gravityMage'?gravityMageSpriteState().ready:key==='astralSniper'?astralSniperSpriteState().ready:['slime','minislime'].includes(key)?slimeSpriteState().ready:key==='prism'?prismSpriteState().ready:key==='flower'?flowerSpriteState().ready:key==='warden'?wardenSpriteState().ready:gruntSpriteState().types.includes(key));if(cache.has(id))return cache.get(id);
  const source=document.createElement('canvas');source.width=384;source.height=384;
  const c=source.getContext('2d'),boss=['warden','prism','slime','king','commander','demon'].includes(key);
  const e={x:192,y:250,type:boss?'boss':key,hp:100,max:100,id:0,tier:0,part:part||'core'};
  if(boss&&key!=='warden')e.variant=key;
+ if(key==='kald'){e.type='starKnight';e.gateTitle='왕의 방패, 칼드';}if(key==='vera'){e.type='astralSniper';e.gateTitle='별의 눈, 베라';}
  if(key==='slime')e.stage=0;
  if(key==='king')e.hp=25; // The final form includes all identifying features.
  if(key==='commander')e.commander={phase:1};
- if(e.variant==='demon')drawDemon(c,e,0,false,true);
+ if(['kald','vera'].includes(key)&&drawFeedbackSprite(c,e,0,{staticPose:true,reduced:true})){}else if(e.variant==='demon')drawDemon(c,e,0,false,true);
  else if(e.variant==='commander')drawCommander(c,e,0,false,true);
- else if(e.variant==='king'||upperTypes.includes(key))drawUpper(c,e,0,false,true);
+ else if(e.variant==='king'||e.gateTitle||upperTypes.includes(key))drawUpper(c,e,0,false,true);
  else if(infernalTypes.includes(key))drawInfernal(c,e,0,true,true);
  else if(key==='prism')drawPrism(c,e,[],[],0);
  else if(['slime','flower','minislime'].includes(key))drawPoisonEnemy(c,e,0,{}, {staticPose:true,reduced:true});
@@ -65,7 +67,7 @@ function portrait(key,part){
  cache.set(id,result);return result;
 }
 export function renderJournalPortraits(root){
- if(!pendingRoots.has(root)){pendingRoots.add(root);Promise.all([ambusherSpriteReady,ringcasterSpriteReady,straferSpriteReady,demonCaptainSpriteReady,demonArcherSpriteReady,demonSoldierSpriteReady,spikeNestSpriteReady,demonBatSpriteReady,demonCoreSpriteReady,demonSpriteReady,gruntSpriteReady,wardenSpriteReady,flowerSpriteReady,prismSpriteReady,slimeSpriteReady,commanderPhase1SpriteReady,commanderPhase2SpriteReady,mordoPhase1SpriteReady,mordoPhase2SpriteReady,mordoPhase3SpriteReady,riftHunterSpriteReady,shadowAuraReady,pulseTurretSpriteReady,royalGuardSpriteReady,starBearerSpriteReady,starKnightSpriteReady,astralSniperSpriteReady,gravityMageSpriteReady]).then(()=>{if(root.isConnected)renderJournalPortraits(root);});}
+ if(!pendingRoots.has(root)){pendingRoots.add(root);Promise.all([feedbackSpritesReady,ambusherSpriteReady,ringcasterSpriteReady,straferSpriteReady,demonCaptainSpriteReady,demonArcherSpriteReady,demonSoldierSpriteReady,spikeNestSpriteReady,demonBatSpriteReady,demonCoreSpriteReady,demonSpriteReady,gruntSpriteReady,wardenSpriteReady,flowerSpriteReady,prismSpriteReady,slimeSpriteReady,commanderPhase1SpriteReady,commanderPhase2SpriteReady,mordoPhase1SpriteReady,mordoPhase2SpriteReady,mordoPhase3SpriteReady,riftHunterSpriteReady,shadowAuraReady,pulseTurretSpriteReady,royalGuardSpriteReady,starBearerSpriteReady,starKnightSpriteReady,astralSniperSpriteReady,gravityMageSpriteReady]).then(()=>{if(root.isConnected)renderJournalPortraits(root);});}
  for(const canvas of root.querySelectorAll('canvas[data-enemy]')){
   const key=canvas.dataset.enemy,part=canvas.dataset.part;
   if(!Object.hasOwn(enemyGuide,key)||part&&!['hand','foot','eye','nose','mouth','core'].includes(part))continue;
