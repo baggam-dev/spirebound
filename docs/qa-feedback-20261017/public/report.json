@@ -1,0 +1,124 @@
+{
+  "gallery": {
+    "keys": [
+      "ambusher",
+      "astralSniper",
+      "brute",
+      "commander1",
+      "commander2",
+      "demonArcher",
+      "demonCaptain",
+      "demonSoldier",
+      "gravityMage",
+      "kald",
+      "king1",
+      "king2",
+      "king3",
+      "riftHunter",
+      "ringcaster",
+      "royalGuard",
+      "starBearer",
+      "starKnight",
+      "strafer",
+      "vera"
+    ],
+    "count": 20,
+    "scenes": 60,
+    "actorUnchanged": true,
+    "pauseStable": true,
+    "delta": 0,
+    "example": []
+  },
+  "aura": {
+    "phase1AuraAbsent": true
+  },
+  "fallback": true,
+  "views": 4,
+  "combatViews": [
+    {
+      "scene": "gate",
+      "floor": 7,
+      "rooms": 10,
+      "mobile": false
+    },
+    {
+      "scene": "king2",
+      "floor": 8,
+      "rooms": 8,
+      "mobile": false
+    },
+    {
+      "scene": "king3",
+      "floor": 8,
+      "rooms": 8,
+      "mobile": false
+    },
+    {
+      "scene": "commander1",
+      "floor": 9,
+      "rooms": 8,
+      "mobile": false
+    },
+    {
+      "scene": "commander2",
+      "floor": 9,
+      "rooms": 8,
+      "mobile": false
+    },
+    {
+      "scene": "slime",
+      "floor": 6,
+      "rooms": 10,
+      "mobile": false
+    },
+    {
+      "scene": "warden",
+      "floor": 2,
+      "rooms": 6,
+      "mobile": false
+    },
+    {
+      "scene": "gate",
+      "floor": 7,
+      "rooms": 10,
+      "mobile": true
+    },
+    {
+      "scene": "king2",
+      "floor": 8,
+      "rooms": 8,
+      "mobile": true
+    },
+    {
+      "scene": "king3",
+      "floor": 8,
+      "rooms": 8,
+      "mobile": true
+    },
+    {
+      "scene": "commander1",
+      "floor": 9,
+      "rooms": 8,
+      "mobile": true
+    },
+    {
+      "scene": "commander2",
+      "floor": 9,
+      "rooms": 8,
+      "mobile": true
+    },
+    {
+      "scene": "slime",
+      "floor": 6,
+      "rooms": 10,
+      "mobile": true
+    },
+    {
+      "scene": "warden",
+      "floor": 2,
+      "rooms": 6,
+      "mobile": true
+    }
+  ],
+  "errors": []
+}
