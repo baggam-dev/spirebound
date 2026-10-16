@@ -28,7 +28,7 @@ export function mountBestiary(root,onClose){
   const keys=Object.keys(enemyGuide).filter(k=>(category==='전체'||groups[category].includes(k))&&enemyGuide[k].name.replace(/\s/g,'').includes(query.replace(/\s/g,'')));
   if(keys.length&&!keys.includes(selected)){selected=keys[0];part='core';}
   cards.innerHTML=keys.length?keys.map(k=>`<button class="bestiary-card" data-monster="${k}" aria-pressed="${k===selected}">${portrait(k)}<span>${escapeHtml(enemyGuide[k].name)}</span></button>`).join(''):'<p>검색 결과가 없습니다.</p><button data-clear-search>검색 초기화</button>';
-  root.querySelector('#bestiaryCount').textContent=`${keys.length}종 표시 / 전체 30종`;
+  root.querySelector('#bestiaryCount').textContent=`${keys.length}종 표시 / 전체 ${Object.keys(enemyGuide).length}종`;
   if(keys.length)showDetail();else detail.innerHTML='<p>다른 이름이나 분류로 찾아보세요.</p>';
  }
  search.addEventListener('input',()=>{query=search.value;showList();});

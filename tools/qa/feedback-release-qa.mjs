@@ -26,7 +26,7 @@ try{
  for(const mobile of [false,true]){
   const ctx=await browser.newContext({viewport:mobile?{width:844,height:390}:{width:1440,height:1000},isMobile:mobile,hasTouch:mobile});const p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));await p.goto(base,{waitUntil:'domcontentloaded'});await p.locator('#titleBestiary').click();await p.locator('[data-bestiary-select="kald"]').count();
   await p.evaluate(async()=>{await (await import('/src/rendering/feedback-sprites.js')).feedbackSpritesReady;(await import('/src/rendering/journal-portraits.js')).renderJournalPortraits(document);await document.fonts.ready;});
-  await p.locator('#bestiarySearch').fill('칼드');await p.waitForTimeout(150);assert.ok((await p.locator('.bestiary').innerText()).includes('칼드'));await p.screenshot({path:join(out,`kald-${mobile?'mobile':'desktop'}.png`)});
+  await p.locator('#bestiarySearch').fill('칼드');assert.ok((await p.locator('#bestiaryCount').innerText()).includes('전체 32종'));await p.waitForTimeout(150);assert.ok((await p.locator('.bestiary').innerText()).includes('칼드'));await p.screenshot({path:join(out,`kald-${mobile?'mobile':'desktop'}.png`)});
   await p.locator('#bestiarySearch').fill('베라');await p.waitForTimeout(150);assert.ok((await p.locator('.bestiary').innerText()).includes('베라'));await p.screenshot({path:join(out,`vera-${mobile?'mobile':'desktop'}.png`)});await ctx.close();
  }
  const combatViews=[];
