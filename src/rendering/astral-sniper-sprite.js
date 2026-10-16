@@ -1,3 +1,4 @@
+import {locomotion,drawWalkingFrame} from './locomotion.js';
 import {characterSizes} from './character-sizes.js';
 const frames=[],motion=new WeakMap();
 export const astralSniperSpriteState=()=>({ready:frames.length===2});
@@ -9,10 +10,10 @@ export const astralSniperSpriteReady=typeof Image==='undefined'?Promise.resolve(
   }resolve(true);
  }catch{frames.length=0;resolve(false);}};atlas.onerror=()=>resolve(false);atlas.src=new URL('../../assets/images/astral-sniper-reference-atlas.png',import.meta.url).href;
 });
-export function drawAstralSniperSprite(c,e,attack){
+export function drawAstralSniperSprite(c,e,attack,time=0,{reduced=false,staticPose=false}={}){
  if(frames.length!==2||e.type!=='astralSniper')return false;
  let p=motion.get(e);if(!p){p={x:e.x,face:1};motion.set(e,p);}const dx=e.x-p.x;if(Math.abs(dx)>.1)p.face=Math.sign(dx);p.x=e.x;
  const active=['windup','strike'].includes(attack.stage),aim=e.darkAttack?.aim??e.darkFlash?.aim??e.facing,face=active&&Number.isFinite(aim)?(Math.cos(aim)<0?-1:1):p.face,f=frames[active?1:0];
- c.save();c.translate(Math.round(e.x),Math.round(e.y));c.fillStyle='#0005';c.fillRect(-21,19,42,7);c.translate(0,attack.bodyY||0);c.scale(face,1);c.imageSmoothingEnabled=false;c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));
+ c.save();c.translate(Math.round(e.x),Math.round(e.y));c.fillStyle='#0005';c.fillRect(-21,19,42,7);c.translate(0,attack.bodyY||0);c.scale(face,1);c.imageSmoothingEnabled=false;const g=locomotion(e,time,{staticPose,reduced,blocked:e.kingTransition>0||e.kneel>0||e.darkAttack?.kind==='blink'||e.darkAttack?.moving,stride:22});drawWalkingFrame(c,f,g,{feet:21,hip:6,weight:1});
  if(e.escapeDepth){c.strokeStyle='#df899e';c.lineWidth=1.5;c.beginPath();c.moveTo(-16,12);c.lineTo(-21,8);c.moveTo(16,12);c.lineTo(21,8);c.stroke();}c.restore();return true;
 }

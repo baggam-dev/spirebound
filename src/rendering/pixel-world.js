@@ -137,8 +137,8 @@ export function drawCrystalBody(c,e,time=0){const attack=bossPose(e);c.save();c.
  line(c,[[-15,y-5],[-4,y-16],[8,y-9]],'#f0ffff99',1);line(c,[[-10,y+12],[4,y+7],[14,y+2]],'#354f6b',2);
  for(let i=0;i<3;i++){const a=(attack.stage==='idle'?time*.8:attack.charge*1.5+(e.prismShot||0)*.5)+i*Math.PI*2/3,orbit=attack.stage==='recover'?27:34+attack.charge*9,x=Math.cos(a)*orbit,z=Math.sin(a)*12-10;diamond(c,x,z,7,ink);diamond(c,x,z,5,attack.stage==='strike'?'#fff0cf':'#a5a3d0');box(c,x-2,z-3,3,2,'#e7faff');}
  for(const side of [-1,1]){diamond(c,side*22,y+13,5,'#51617b');box(c,side*22-1,y+10,2,5,'#c2d9dd');}c.restore();}
-export function drawOrganicBody(c,e,r,time=0,room={}){const attack=bossPose(e,room);c.save();c.translate(Math.round(e.x),Math.round(e.y));const red=!!e.escapeDepth;
- if(drawSlimeSprite(c,e,time,attack)){c.restore();return;}
+export function drawOrganicBody(c,e,r,time=0,room={},options={}){const attack=bossPose(e,room);c.save();c.translate(Math.round(e.x),Math.round(e.y));const red=!!e.escapeDepth;
+ if(drawSlimeSprite(c,e,time,attack,options)){c.restore();return;}
  if(e.type==='flower'&&drawFlowerSprite(c,e,time,room)){
   // The approved rooted flower uses cached idle/open tops and a fixed root base.
  }else if(e.type==='flower'){

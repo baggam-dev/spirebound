@@ -84,9 +84,9 @@ export function drawHazards(ctx,room,time=0){
   if(h.phase==='flight'){const t=1-h.time/h.flight,x=h.fromX+(h.x-h.fromX)*t,y=h.fromY+(h.y-h.fromY)*t-Math.sin(t*Math.PI)*85;ctx.setLineDash([]);ctx.fillStyle='#e5bdff';ctx.beginPath();ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();}
  }ctx.restore();
 }
-export function drawPoisonEnemy(ctx,e,time=0,room={}){
+export function drawPoisonEnemy(ctx,e,time=0,room={},options={}){
  if(e.variant!=='slime'&&!['flower','minislime'].includes(e.type))return;
- ctx.save();if(e.phase==='splitJump'){ctx.strokeStyle='#e5ec9c';ctx.setLineDash([5,5]);drawSoftField(ctx,e.landX,e.landY,slimeRadius(e)+15,'#e5ec9c',.6);ctx.setLineDash([]);ctx.translate(0,-Math.sin(Math.PI*(1-e.phaseTime/1.1))*90);}drawOrganicBody(ctx,e,slimeRadius(e),time,room);
+ ctx.save();if(e.phase==='splitJump'){ctx.strokeStyle='#e5ec9c';ctx.setLineDash([5,5]);drawSoftField(ctx,e.landX,e.landY,slimeRadius(e)+15,'#e5ec9c',.6);ctx.setLineDash([]);ctx.translate(0,-Math.sin(Math.PI*(1-e.phaseTime/1.1))*90);}drawOrganicBody(ctx,e,slimeRadius(e),time,room,options);
  ctx.restore();
 }
 

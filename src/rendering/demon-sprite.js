@@ -1,3 +1,4 @@
+import {locomotion,drawWalkingFrame,drawGlidingFrame} from './locomotion.js';
 // Display-only frames. Combat owners, attack timing and collision stay in combat/demon.js.
 const frames=new Map(),motion=new WeakMap();
 const specs={hand:{width:110,height:84},foot:{width:100,height:84},eye:{width:120,height:76},nose:{width:110,height:72},mouth:{width:120,height:76},core:{width:230,height:155}};
@@ -25,7 +26,7 @@ function load(part){return new Promise(resolve=>{
  }catch{frames.delete(part);resolve(false);}};atlas.onerror=()=>resolve(false);atlas.src=new URL(`../../assets/images/demon-${part}-reference-atlas.png`,import.meta.url).href;
 });}
 export const demonSpriteReady=typeof Image==='undefined'?Promise.resolve(false):Promise.all(Object.keys(specs).map(load)).then(results=>results.every(Boolean));
-export function drawDemonSprite(c,e,time=0,{attack=null,staticPose=false,wall=false}={}){
+export function drawDemonSprite(c,e,time=0,{attack=null,staticPose=false,wall=false,reduced=false}={}){
  if(e.variant!=='demon'||!frames.has(e.part))return false;
  const part=e.part,entry=frames.get(part),active=!staticPose&&!!attack;
  let face=1;
@@ -36,7 +37,11 @@ export function drawDemonSprite(c,e,time=0,{attack=null,staticPose=false,wall=fa
  const frame=part==='core'&&staticPose?entry.full:entry.poses[active&&entry.poses.length>1?1:0],feet=part==='core'?36:24;
  const bob=staticPose||e.frozen>0?0:Math.round(Math.sin(time*4)*1.5);
  c.save();c.translate(Math.round(e.x),Math.round(e.y));c.scale(face,1);c.imageSmoothingEnabled=false;
- c.drawImage(frame,-Math.round(frame.width/2),feet-frame.height+bob);
+  const f={canvas:frame,x:-Math.round(frame.width/2),y:feet-frame.height+bob};
+ const g=locomotion(e,time,{staticPose,reduced,blocked:part==='core'||active,stride:part==='foot'?34:26});
+ if(part==='hand'||part==='mouth'||part==='nose')drawWalkingFrame(c,f,g,{feet,hip:feet-18,weight:.65});
+ else if(part==='foot'){c.save();c.translate(0,g.moving?-g.lift*3:0);drawGlidingFrame(c,f,g,{feet,mode:'crawl'});c.restore();}
+ else drawGlidingFrame(c,f,g,{feet});
  // Separate stone sill hides the upper-body crop only during the third phase.
  if(part==='core'&&wall&&!staticPose){c.fillStyle='#252a2b';c.fillRect(-127,35,254,12);for(let i=0;i<8;i++){c.fillStyle=i%2?'#4e5151':'#48504c';c.fillRect(-123+i*32,35,27,4);}}
  c.restore();return true;

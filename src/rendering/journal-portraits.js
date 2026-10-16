@@ -54,7 +54,7 @@ function portrait(key,part){
  else if(e.variant==='king'||upperTypes.includes(key))drawUpper(c,e,0,false,true);
  else if(infernalTypes.includes(key))drawInfernal(c,e,0,true,true);
  else if(key==='prism')drawPrism(c,e,[],[],0);
- else if(['slime','flower','minislime'].includes(key))drawPoisonEnemy(c,e);
+ else if(['slime','flower','minislime'].includes(key))drawPoisonEnemy(c,e,0,{}, {staticPose:true,reduced:true});
  else if(key==='brute')drawEnemyDetails(c,e);
  else if(key==='ambusher'){if(!drawAmbusherSprite(c,e,0,true,true)){drawPixelActor(c,e);drawReturnEnemy(c,e);}}else if(key==='ringcaster'){if(!drawRingcasterSprite(c,e,true)){drawPixelActor(c,e);drawReturnEnemy(c,e);}}else if(key==='strafer'){if(!drawStraferSprite(c,e,0,true,true)){drawPixelActor(c,e);drawReturnEnemy(c,e);}}else {drawPixelActor(c,e);drawReturnEnemy(c,e);}
  // Fit the visible body to the tile, including wings, horns and the large core.
