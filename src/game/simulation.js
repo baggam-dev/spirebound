@@ -142,7 +142,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  if(r.demon&&advanceDemonPhase(r,s.projectiles))events.push('demonPhase');
  for(const e of defeated){
   recordRankingDefeat(s,e);
-  effects.push(enemyDeathEffect(e,!!s.key));
+  effects.push(enemyDeathEffect(e,!!s.key,enemyHealthBefore.get(e)));
   const shardStart=s.projectiles.length;frostShatter(e.frostWeapon||p,e,s.projectiles);if(e.frostWeapon)for(const shard of s.projectiles.slice(shardStart)){shard.weapon=e.frostWeapon;shard.turretShot=true;}if(!e.selfDestruct)recordDefeat(s,e);
   if(e.summoned){eliteDeath(e,r);continue;}
   if(splitSlime(e,r,p,()=>runRandom(s)))continue;
