@@ -9,7 +9,7 @@ export const demonSoldierSpriteReady=typeof Image==='undefined'?Promise.resolve(
    {x:590,y:15,w:375,h:485,ax:780,feet:485},
    {x:1080,y:15,w:395,h:485,ax:1280,feet:485},
    {x:65,y:515,w:465,h:480,ax:285,feet:985},
-   {x:530,y:535,w:610,h:460,ax:755,feet:985},
+   {x:530,y:535,w:610,h:460,ax:755,feet:985,clip:[[590,535],[1140,535],[1140,995],[530,995],[530,900],[590,800]]},
    {x:1095,y:525,w:390,h:480,ax:1290,feet:995,clip:[[1160,525],[1485,525],[1485,1005],[1095,1005],[1095,820],[1160,730]]}
   ]){
    const canvas=document.createElement('canvas');canvas.width=Math.ceil(f.w*scale);canvas.height=Math.ceil(f.h*scale);

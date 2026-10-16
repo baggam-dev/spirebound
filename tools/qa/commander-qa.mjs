@@ -6,7 +6,7 @@ const base=process.env.SPIREBOUND_URL||'http://localhost:5173',output=resolve(pr
 await mkdir(output,{recursive:true});
 const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[];
 try{
- for(const [width,height,mobile] of [[1280,800,false],[390,844,true]]){
+ for(const [width,height,mobile] of [[1280,800,false],[844,390,true]]){
   const context=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile});
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`);});
   await page.goto(base);await page.locator('#bossPractice').click();if(await page.locator('#practiceBoss option[value="commander"]').count())throw Error('Hidden boss is exposed in public practice menu');

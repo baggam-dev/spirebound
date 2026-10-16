@@ -9,7 +9,7 @@ export const demonBatSpriteReady=typeof Image==='undefined'?Promise.resolve(fals
    {x:55,y:340,w:610,h:305,ax:370,ay:515,clip:[[55,340],[620,340],[620,510],[665,555],[665,645],[55,645]]},
    {x:640,y:100,w:555,h:510,ax:995,ay:535,clip:[[640,100],[1195,100],[1195,610],[710,610],[710,510],[640,400]]},
    {x:65,y:755,w:570,h:375,ax:370,ay:980},
-   {x:620,y:730,w:585,h:365,ax:1055,ay:1020}
+   {x:620,y:730,w:585,h:365,ax:1055,ay:1020,clip:[[620,730],[1205,730],[1205,1095],[820,1095],[790,950],[620,850]]}
   ]){
    const canvas=document.createElement('canvas');canvas.width=Math.ceil(f.w*scale);canvas.height=Math.ceil(f.h*scale);
    const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';

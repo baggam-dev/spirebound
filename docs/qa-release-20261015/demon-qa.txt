@@ -1,0 +1,1 @@
+{"viewports":2,"phases":3,"partGallery":6,"hiddenPractice":true,"expandedSeason":"SPIREBOUND","offlineFixture":true,"pageErrors":0}
