@@ -1,28 +1,39 @@
 import {drawGroundField} from '../rendering/ground-visuals.js';
 import {bindDefenses,enemyDamageFactor} from './enemy-defense.js';
 import {relicStat} from '../progression/relics.js';
+import {segmentBlocked} from '../world/terrain.js';
 // Player effects are separate from hostile hazards. Fire triggers on first
 // contact; poison also applies after piercing. Secondary arrows scale damage.
 const near=(a,b,r)=>Math.hypot(a.x-b.x,a.y-b.y)<=r;
 const grounded=e=>e.phase!=='air'&&e.phase!=='splitJump'&&e.attackPhase!=='leap';
-function damage(e,amount,poison=false){if(e.hp<=0||amount<=0)return;const before=e.hp;e.hp-=amount*enemyDamageFactor(e);if(poison&&before>0&&e.hp<=0)e.poisonKilled=true;}
+function damage(e,amount,poison=false){if(e.hp<=0||amount<=0)return 0;const before=e.hp;e.hp-=amount*enemyDamageFactor(e);if(poison&&before>0&&e.hp<=0)e.poisonKilled=true;return before-Math.max(0,e.hp);}
 function stack(e,key,time,dps,cap){const list=e[key]??=[];list.push({time,dps});if(list.length>cap)list.shift();}
 export function fireFieldSpec(p){return p.fire>=3?{r:(35+40/3*p.fire)*(p.evolutions?.fire==='ember'?1.2:1),time:p.evolutions?.fire==='flare'?1:1.5,dps:30*(1+relicStat(p,'fire'))*(p.effectScale??1)}:null;}
 export function markFireKill(e,spec,stacks=e.burnStacks?.filter(s=>s.time>0).length||0){if(e.hp<=0&&spec&&stacks>=3&&!e.fireFieldSpawned)e.pendingFireField??={...spec};}
 export function resolveFireFields(room){for(const e of room.enemies)if(e.hp<=0&&e.pendingFireField&&!e.fireFieldSpawned){e.fireFieldSpawned=true;const zones=room.fireZones??=[];zones.push({x:e.x,y:e.y,...e.pendingFireField});if(zones.length>24)zones.shift();delete e.pendingFireField;}}
-export function elementalImpact(p,target,enemies,room){
+export function elementalImpact(p,target,enemies,room,shot={}){
  bindDefenses(enemies);const effects=[],boost=(1+relicStat(p,'dot'))*(p.effectScale??1);
  if(p.fire){
   const wide=p.evolutions?.fire==='ember',strong=p.evolutions?.fire==='flare';
   const radius=(40+15*p.fire)*(wide?1.2:1),blast=((19+7*(p.fire-1))*(p.effectScale??1)+p.damage*.4*(1+relicStat(p,'element')))*(1+relicStat(p,'fire'))*(strong?1.25:wide?.85:1)*.9;
   for(const e of enemies)if(grounded(e)&&near(e,target,radius)){
-   const alive=e.hp>0;damage(e,blast);if(alive)markFireKill(e,fireFieldSpec(p));if(e.hp>0&&p.fire>=2){stack(e,'burnStacks',2,(6+3*(p.fire-2))*boost,6);if(p.fire>=3)e.burnField=fireFieldSpec(p);}
+   const alive=e.hp>0,center=p.blastTip&&near(e,target,radius*(p.blastTip>=3?.5:.35))&&!segmentBlocked(target,e,room?.obstacles||[],1);
+   const dealt=damage(e,blast*(center?(p.blastTip>=2?1.25:1.15):1));if(alive)markFireKill(e,fireFieldSpec(p));
+   if(e.hp>0&&p.fire>=2){stack(e,'burnStacks',2,(6+3*(p.fire-2))*boost,6);if(p.fire>=3)e.burnField=fireFieldSpec(p);
+    if(dealt>0&&p.emberMark&&e.burnStacks.length>=3&&!(e.emberCooldown>0)&&!segmentBlocked(target,e,room?.obstacles||[],1)){
+     damage(e,blast*(p.emberMark>=2?.35:.2));e.emberCooldown=p.emberMark>=3?1.4:2;
+     effects.push({x:e.x,y:e.y,r:17,t:.25,color:'#f2b974',slash:true});
+    }
+   }
   }
   effects.push({x:target.x,y:target.y,r:radius,t:.22,color:'#ff9b49',instant:true});
  }
  if(p.poison&&target.hp>0){
   const lasting=p.evolutions?.poison==='ember',potent=p.evolutions?.poison==='flare';
-  stack(target,'poisonStacks',lasting?4.5:potent?2:3,(p.poison===1?4.8:2+2*p.poison)*boost*(lasting?.8:potent?1.25:1),8);
+  const infected=target.poisonStacks?.some(dot=>dot.time>0),duration=(lasting?4.5:potent?2:3)+(p.venomPenetration?.5:0),dps=(p.poison===1?4.8:2+2*p.poison)*boost*(lasting?.8:potent?1.25:1)*(p.venomPenetration>=2?1.1:1);
+  stack(target,'poisonStacks',duration,dps,8);delete target.sporeDot;
+  if(p.venomPenetration>=3&&infected&&shot.venomPrimary&&shot.validDirect&&!(target.venomCooldown>0)){stack(target,'poisonStacks',duration,dps,8);target.venomCooldown=1.5;}
+  if(p.plagueSpore)target.sporeLevel=p.plagueSpore;
   target.poisonRadius=30+12*p.poison;target.poisonLevel=p.poison;target.poisonGasDps=(2+2*p.poison)*boost;target.poisonBlast=24*boost;
   effects.push({x:target.x,y:target.y,r:18,t:.35,color:'#83ed79'});
  }
@@ -35,7 +46,16 @@ export function tickElements(room,dt,poisonLevel=0){bindDefenses(room.enemies);
   const times=e.poisonStacks.map(s=>s.time).sort((a,b)=>b-a);
   return {owner:e,x:e.x,y:e.y,r:e.poisonRadius,active:Math.min(dt,times[1]),dps:e.poisonGasDps??(2+2*e.poisonLevel)};
  });
+ // Snapshot original sources before any spreading. Spore-only victims never
+ // enter this list, and each source triggers at most once per simulation step.
+ for(const e of enemies){e.emberCooldown=Math.max(0,(e.emberCooldown||0)-dt);e.venomCooldown=Math.max(0,(e.venomCooldown||0)-dt);e.sporeCooldown=Math.max(0,(e.sporeCooldown||0)-dt);}
+ for(const source of gas){const e=source.owner;if(!e.sporeLevel||e.sporeCooldown>0)continue;
+  const radius=Math.min(source.r,e.sporeLevel>=3?72:48),dot=e.poisonStacks.filter(n=>n.time>0).sort((a,b)=>b.dps-a.dps)[0];if(!dot)continue;
+  const targets=enemies.filter(n=>n!==e&&n.hp>0&&grounded(n)&&!n.poisonStacks?.some(d=>d.time>0)&&!n.sporeDot&&near(n,e,radius)&&!segmentBlocked(e,n,room.obstacles||[],1)).sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y)).slice(0,e.sporeLevel>=2?2:1);
+  if(targets.length){for(const n of targets){n.sporeDot={time:1.5,dps:dot.dps*.5};effects.push({x:e.x,y:e.y,toX:n.x,toY:n.y,t:.22,color:'#a6cc83'});}e.sporeCooldown=2;}
+ }
  for(const e of enemies){
+  if(e.sporeDot){const dot=e.sporeDot;if(e.hp>0&&grounded(e))damage(e,Math.min(dt,dot.time)*dot.dps);dot.time=Math.max(0,dot.time-dt);if(!dot.time)delete e.sporeDot;}
   for(const key of ['burnStacks','poisonStacks'])if(e[key]){
    if(key==='burnStacks'){
     // Advance to each pulse/expiration boundary, including large simulation steps.
@@ -64,6 +84,7 @@ export function drawElements(ctx,room,time=0){
  for(const e of room.enemies){
   if(e.poisonStacks?.length>=2){drawGroundField(ctx,{x:e.x,y:e.y,r:e.poisonRadius},'gas',time);}
   if(e.poisonStacks?.length){ctx.fillStyle='#8dea77';ctx.font='11px Galmuri, monospace';ctx.fillText('독 '+e.poisonStacks.length,e.x-15,e.y+31);}
+  if(e.sporeDot){ctx.fillStyle='#a6cc83';ctx.fillRect(e.x+12,e.y-18,3,3);}
   if(e.burnStacks?.length){ctx.fillStyle='#ff9b49';ctx.fillRect(e.x-20,e.y-8,4,12);}
   if(e.frozen>0){drawSoftField(ctx,e.x,e.y-3,32,'#9ceaff',.31);ctx.fillStyle='#d8f5ff99';for(const [dx,dy] of [[-17,-16],[15,-7],[-13,12],[12,16]]){ctx.fillRect(e.x+dx,e.y+dy,2,6);ctx.fillRect(e.x+dx-2,e.y+dy+2,6,2);}}else if(e.frostStacks){ctx.fillStyle='#b4ecff';ctx.font='11px Galmuri, monospace';ctx.fillText('서리 '+e.frostStacks,e.x-15,e.y+40);}
   if(e.trialChampion){drawSoftField(ctx,e.x,e.y-3,34,'#b98bdf',.31);ctx.fillStyle='#dbb0ff';ctx.fillRect(e.x-2,e.y-36,4,4);ctx.font='12px Galmuri, monospace';ctx.textAlign='center';ctx.fillText('시련의 용사',e.x,e.y-44);}

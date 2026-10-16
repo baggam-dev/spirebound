@@ -1,3 +1,4 @@
+import {draftMarkup,mountDraft} from '../ui/skill-draft.js';
 import {drawSpectralBlade} from '../rendering/spectral-blade.js';
 import {bestiaryMarkup,mountBestiary} from '../ui/bestiary.js';
 import {doorFramePoint} from '../world/doors.js';
@@ -24,9 +25,9 @@ import {drawElementHit,limitElementHits} from '../rendering/element-hit-visuals.
 import {drawDoorFrame,drawPixelActor,drawWorldDetails,drawObjectDetails,drawProjectile,drawImpact,drawSpellDetails} from '../rendering/pixel-world.js';
 import {bindCombatAction} from '../ui/touch-actions.js';
 import {relicPreviewMarkup} from '../ui/relic-preview.js';
-import {recipePreviewMarkup} from '../ui/recipe-preview.js';
+
 import {prismStatus} from '../combat/combat-status.js';
-import {skillPreviewMarkup} from '../ui/skill-preview.js';
+
 import {drawHitFeedback} from '../rendering/hit-feedback.js';
 import {drawBlinkTrail} from '../rendering/blink-visuals.js';
 import {drawArrowImpact,limitArrowImpacts} from '../rendering/arrow-impact-visuals.js';
@@ -54,7 +55,7 @@ import {drawReturnEnemy} from '../combat/return-enemies.js';
 import {drawInfernal,drawInfernalGround,infernalTypes} from '../combat/infernal-enemies.js';
 import {bossHealth} from '../combat/poison.js';
 import {drawOpenings} from '../combat/tactics.js';
-import {mainSkills,chooseMain,skillGrade,gradeLabels} from '../progression/skill-tree.js';
+import {mainSkills,chooseMain,mainChoices,rerollMain,skillGrade} from '../progression/skill-tree.js';
 import {drawEssences} from '../progression/essences.js';
 import {relicInfo,claimRelic,relicStat,relicSummary,ownedRelics} from '../progression/relics.js';
 import {evolutions,pendingEvolution,chooseEvolution,evolutionSummary} from '../progression/evolutions.js';
@@ -167,9 +168,9 @@ function levelUp(){
  if(!s.player.mainSkill){mainPanel();return;}
  stop('level');const choices=levelChoices(s,()=>runRandom(s));save();
  if(!choices.length){s.player.hp=Math.min(s.player.max,s.player.hp+1);consumeLevelChoice(s);emitInteraction(s,'level',room(),{level:s.player.level});resume();return;}
- panel('<small>CHOOSE YOUR PATH</small><h2>새로운 깨달음</h2><p>'+ (choices[0]?.growth?'기술 강화를 마쳤습니다. 이번 도전의 기본 능력을 추가로 성장시키세요.':'궁극기는 5·10레벨 미습득 시 확정 후보, 그 외 5레벨 이후 30% 확률로 등장합니다.')+'</p><div class="cards">'+choices.map((k,i)=>'<button class="skill-'+k.grade+'" id="u'+i+'">'+iconSVG(k.icon||k.id)+'<b>'+ '['+(k.growth?'추가 성장':gradeLabels[k.grade])+'] '+k.name+(k.growth?'':' '+((s.player[k.id]||0)+1)+' / '+k.max)+'</b><span>'+k.description+'</span>'+skillPreviewMarkup(s.player,k.id)+recipePreviewMarkup(s.player,k.id)+'</button>').join('')+'</div><button id="reroll" '+((s.rerolls??1)>0&&!choices.every(k=>k.growth)?'':'disabled')+'>후보 새로고침 · '+(s.rerolls??1)+'회</button>');
+ panel(draftMarkup(s,choices));mountDraft($('overlay').firstElementChild);let consumed=false;
  button('reroll',()=>{if(rerollSkills(s)){save();levelUp();}});
- choices.forEach((k,i)=>button('u'+i,()=>{const was=ultimateUnlocked(s.player),previous=combinations(s.player).map(c=>c.name);if(!applyLevelReward(s,k.id))return;if(k.id==='ultimate')s.skill=0;const unlocked=combinations(s.player).filter(c=>!previous.includes(c.name));if(unlocked.length)toast('조합 완성 · '+unlocked.map(c=>c.name).join(' / '));if(!was&&ultimateUnlocked(s.player)){s.skill=0;toast('궁극기 화살비 해금 · F');}consumeLevelChoice(s);emitInteraction(s,'level',room(),{level:s.player.level});resume();save();}));
+ choices.forEach((k,i)=>button('u'+i,()=>{if(consumed||mode!=='level')return;const was=ultimateUnlocked(s.player),previous=combinations(s.player).map(c=>c.name);if(!applyLevelReward(s,k.id))return;consumed=true;if(k.id==='ultimate')s.skill=0;const unlocked=combinations(s.player).filter(c=>!previous.includes(c.name));if(unlocked.length)toast('조합 완성 · '+unlocked.map(c=>c.name).join(' / '));if(!was&&ultimateUnlocked(s.player)){s.skill=0;toast('궁극기 화살비 해금 · F');}consumeLevelChoice(s);emitInteraction(s,'level',room(),{level:s.player.level});resume();save();}));
 }
 let endResult={ok:true};
 function finish(won){if(s.practice){s.status=won?'won':'dead';practiceResult();return;}if(s.status!=='playing')return;s.status=won?'won':'dead';stop('result');finishRanking(s);rankClient.draft(s);endResult=store.complete(s,won);lease.release();resultPanel();}
@@ -246,7 +247,7 @@ function draw(){updateHUD(s);ctx.clearRect(0,0,960,540);rect(0,0,960,540,'#11191
 }
 
 function dispatch(action){
- if(mode==='rank-start')return;
+ if(mode==='rank-start'||['main','level','evolution'].includes(mode))return;
  if(action==='pause'){if(['pause','bag','shrine'].includes(mode))resume();else pause();return;}
  if(action==='help'){showInfo('help');return;}
  if(action==='bag'){if(mode==='bag')resume();else bag();return;}
@@ -285,7 +286,12 @@ function bestiaryPanel(){
 }
 function journalPanel(){if(!s||mode==='level')return;stop('journal');if(s.status==='playing')save();panel(journalMarkup(s));renderJournalPortraits($('overlay'));button('closeJournal',()=>s.status==='playing'?pause():resultPanel());}
 
-function mainPanel(){stop('main');save();panel('<small>MAIN TREE · 이번 도전에서 하나만 선택</small><h2>주력 사격을 선택하세요</h2><p>선택한 메인과 보조 기술만 성장합니다. 기존 다른 속성 투자분은 기술 선택 횟수로 돌려드립니다.</p><div class="cards main-cards">'+mainSkills.map(id=>{const k=skills.find(k=>k.id===id);return '<button class="skill-main" id="main-'+id+'">'+iconSVG(id)+'<b>'+k.name+'</b><span>'+k.description+'</span></button>';}).join('')+'</div>');mainSkills.forEach(id=>button('main-'+id,()=>{if(chooseMain(s,id)){save();resume();}}));}
+function mainPanel(){
+ stop('main');const offers=mainChoices(s);save();const choices=offers.map(id=>skills.find(k=>k.id===id));
+ panel(draftMarkup(s,choices,true));mountDraft($('overlay').firstElementChild);
+ button('rerollMain',()=>{if(rerollMain(s)){save();mainPanel();}});
+ offers.forEach(id=>button('main-'+id,()=>{if(mode==='main'&&chooseMain(s,id)){save();resume();}}));
+}
 
 
 function practiceMenu(){stop('practice');panel('<small>BOSS PRACTICE</small><h2>보스 테스트</h2><p>10레벨 · 메인 3레벨 + 보조 랜덤 7포인트<br>유물 3~5개 · 정수 3~5개 · 물약 3개<br>일반 도전 저장과 기록은 유지됩니다. 테스트는 새로고침 시 종료됩니다.</p><label>보스 <select id="practiceBoss">'+practiceBosses.map(b=>'<option value="'+b.id+'">'+b.name+'</option>').join('')+'</select></label><br><label>메인 기술 <select id="practiceMain">'+mainSkills.map(id=>'<option value="'+id+'">'+skills.find(k=>k.id===id).name+'</option>').join('')+'</select></label><br><button id="rollPractice">빌드 생성</button><button id="practiceBack">입구로</button>');button('rollPractice',()=>practicePreview($('practiceBoss').value,$('practiceMain').value));button('practiceBack',title);}

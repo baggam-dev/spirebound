@@ -7,20 +7,20 @@ const base=process.env.SPIREBOUND_URL||'http://localhost:5173';
 const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[];
 if(process.env.QA_OUTPUT)await mkdir(process.env.QA_OUTPUT,{recursive:true});
 try{
- for(const [width,height,mobile] of [[1280,800,false],[390,844,true]]){
+ for(const [width,height,mobile] of [[1280,800,false],[844,390,true]]){
   for(const fixture of ['main','utility']){
    const context=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile});
    const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(base);
    await page.evaluate(async kind=>{
     const {newRun}=await import('/src/game/engine.js'),{encodeSave,SAVE_KEY}=await import('/src/persistence/storage.js');
     const s=newRun(44);s.tutorialComplete=true;s.player.level=kind==='main'?2:4;
-    if(kind==='main'){s.pendingLevels=1;s.levelQueue=[2];}
+    if(kind==='main'){s.pendingLevels=1;s.levelQueue=[2];s.mainChoices=['precision','fire','frost'];}
     else{s.player.mainSkill='precision';s.player.precision=1;}
     localStorage.setItem(SAVE_KEY,encodeSave(s));
    },fixture);
    await page.reload();await page.locator('#continue').click();
    if(fixture==='main'){
-    await page.locator('#main-precision').waitFor();assert.equal(await page.locator('.main-cards button').count(),5);
+    await page.locator('#main-precision').waitFor();assert.equal(await page.locator('.draft-cards button').count(),3);
     if(process.env.QA_OUTPUT)await page.screenshot({path:join(process.env.QA_OUTPUT,`main-${mobile?'mobile':'desktop'}.png`)});
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
     await page.locator('#main-precision').click();await page.waitForFunction(()=>!document.querySelector('#main-precision'));

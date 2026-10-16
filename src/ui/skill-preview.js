@@ -3,6 +3,7 @@ import {attackInterval,relicStat} from '../progression/relics.js';
 import {bladeProfile} from '../combat/spectral-blade.js';
 import {frostThreshold} from '../combat/frost.js';
 import {lightningSpec} from '../combat/lightning.js';
+import {synergyInfo,synergyStep} from '../progression/synergies.js';
 import {applyGrowth} from '../progression/growth.js';
 
 // Measure a cloned build against a full-health, unarmored target 100 units away.
@@ -37,6 +38,7 @@ export function skillPreview(player,id){
  if(id==='repeat')row('추가 연속탄','없음','0.16초 후 60% 피해 1발');
  if(id==='homing')row('별도 유도 화살',player.homing?'1.5초마다 1발':'없음','1.5초마다 100% 일반탄 1발');
  if(id==='ultimate')row('궁극기','미습득','선택 후 화살비 / 석궁 결정');
+ if(synergyInfo(id))row('전용 성장',synergyStep(player,id),synergyStep(next,id));
  if(id==='growthHealth')row('최대 체력',player.max,next.max,'♥',0);
  return rows;
 }

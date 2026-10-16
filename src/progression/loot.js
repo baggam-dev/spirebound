@@ -1,5 +1,6 @@
 import {relics,ownedRelics,grantRelic,relicInfo,weightedRelic} from './relics.js';
 import {skills,applySkill} from './progression.js';
+import {allowedSkill} from './skill-tree.js';
 import {seededRandom} from '../game/random.js';
 import {encounter} from '../world/encounters.js';
 import {promoteElite} from '../combat/elites.js';
@@ -21,7 +22,7 @@ export const lootTable=[
 export const trialRelic={id:'relic',name:'유물 1개',weight:4};
 export const lootInfo=id=>id==='relic'?trialRelic:lootTable.find(k=>k.id===id);
 const roomOf=s=>s.floors[s.floor][s.room];
-const skillPool=(p,id)=>skills.filter(k=>k.id!=='ultimate'&&(p[k.id]||0)<k.max&&(id==='main'?k.id===p.mainSkill:id==='unique'?k.grade==='unique':k.tree==='support'&&k.grade!=='unique'));
+const skillPool=(p,id)=>skills.filter(k=>k.id!=='ultimate'&&allowedSkill(p,k.id)&&(p[k.id]||0)<k.max&&(id==='main'?k.id===p.mainSkill:id==='unique'?k.grade==='unique':k.tree==='support'&&k.grade!=='unique'));
 export function eligibleLoot(p,id){if(id==='relic')return ownedRelics(p).length<relics.length;if(id==='heal')return p.hp<p.max;if(['support','main','unique'].includes(id))return skillPool(p,id).length>0;return !!lootInfo(id);}
 export function drawLoot(p,random,positive=false,excluded=[],trial=false){
  const pool=(trial?[...lootTable.filter(k=>k.id!=='relic'),trialRelic]:lootTable).filter(k=>(!positive||!k.trap)&&!excluded.includes(k.id)&&(!positive||eligibleLoot(p,k.id)));
@@ -36,7 +37,7 @@ export function applyLoot(s,item){
  const p=s.player,r=roomOf(s);let reward=item;
  // A saved offer can become capped while the player explores another room.
  const legacyBlade=item.id==='support'&&item.skill==='aura'&&(p.aura||0)<3;
- if(!eligibleLoot(p,item.id)&&!legacyBlade||item.skill&&(p[item.skill]||0)>=skills.find(k=>k.id===item.skill).max)reward=drawLoot(p,lootRandom(s,811),true);
+ if(!eligibleLoot(p,item.id)&&!legacyBlade||item.skill&&!allowedSkill(p,item.skill)||item.skill&&(p[item.skill]||0)>=skills.find(k=>k.id===item.skill).max)reward=drawLoot(p,lootRandom(s,811),true);
  const id=reward.id;if(id==='relic'&&!grantRelic(p,reward.relic)){const available=relics.find(r=>!ownedRelics(p).includes(r.id));if(available){grantRelic(p,available.id);reward={id:'relic',relic:available.id};}else{p.damage+=3;reward={id:'attack3'};}}
  if(id==='heal')p.hp=Math.min(p.max,p.hp+1);
  if(id==='potion')p.potions++;

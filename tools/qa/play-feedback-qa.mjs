@@ -6,7 +6,7 @@ const browser=await chromium.launch({channel:'msedge',headless:true}),base=proce
 try{for(const [width,height,touch] of [[1280,800,false],[1900,900,true],[844,390,true]])for(const mode of ['click','space','selection','blocked']){
  const ctx=await browser.newContext({viewport:{width,height},hasTouch:touch});const page=await ctx.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(base);
  await page.evaluate(async mode=>{const {newRun}=await import('/src/game/engine.js'),{encodeSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=newRun(17);if(mode==='selection'){s.player.level=2;s.pendingLevels=1;s.levelQueue=[2];}if(mode==='blocked'){s.player.y=65;}localStorage.setItem(SAVE_KEY,encodeSave(s));},mode);
- await page.reload();await page.locator('#continue').click();if(mode==='selection')await page.locator('#main-fire').click();await page.waitForFunction(()=>document.querySelector('#overlay').childElementCount===0);
+ await page.reload();await page.locator('#continue').click();if(mode==='selection')await page.locator('[id^="main-"]').first().click();await page.waitForFunction(()=>document.querySelector('#overlay').childElementCount===0);
  if(mode==='space')await page.keyboard.press('Space');else if(touch)await page.locator('#dodge').tap();else await page.locator('#dodge').click();
  await page.waitForTimeout(150);
  if(mode==='blocked'){assert.match(await page.locator('#notice').textContent(),/막혀/);assert.equal(await page.locator('#dodge').isDisabled(),false);await page.keyboard.down('s');await page.waitForTimeout(120);await page.keyboard.up('s');await page.keyboard.press('Space');await page.waitForTimeout(150);}
