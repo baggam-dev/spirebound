@@ -1,3 +1,4 @@
+import {drawAmbusherSprite} from './ambusher-sprite.js';
 import {drawRingcasterSprite} from './ringcaster-sprite.js';
 import {drawStraferSprite} from './strafer-sprite.js';
 import {drawWardenSprite} from './warden-sprite.js';
@@ -32,7 +33,7 @@ function pose(e,time,attack=0,stride=.16){
 }
 function bow(c,x,y,pull=0){line(c,[[x,y-15],[x+5,y-11],[x+8,y],[x+5,y+11],[x,y+15]],ink,5);line(c,[[x,y-15],[x+5,y-11],[x+8,y],[x+5,y+11],[x,y+15]],'#c9a066',3);line(c,[[x,y-15],[x-pull,y],[x,y+15]],'#efe0b6',1);box(c,x-10-pull,y-1,23,2,'#f4deb0');diamond(c,x+14,y,3,'#d9e8df');}
 export function drawPixelActor(c,e,time=0,run=null){
- if(drawRingcasterSprite(c,e)||drawStraferSprite(c,e,time))return;
+ if(drawAmbusherSprite(c,e,time)||drawRingcasterSprite(c,e)||drawStraferSprite(c,e,time))return;
  const hero=e.type==='player',boss=e.type==='boss',p=pose(hero&&run?run.player:e,time,hero?run?.attack||0:0,hero?.09:.16),red=!!run?.key;
  c.save();c.translate(Math.round(e.x),Math.round(e.y));
  box(c,boss?-30:-15,17,boss?60:30,5,'#0005');
