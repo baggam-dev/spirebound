@@ -1,0 +1,3 @@
+{"mobile":false,"actors":19,"changed":56,"frozen":19,"staticPortraits":true,"actorUnchanged":true}
+{"mobile":true,"actors":19,"changed":56,"frozen":19,"staticPortraits":true,"actorUnchanged":true}
+{"pageErrors":0}
