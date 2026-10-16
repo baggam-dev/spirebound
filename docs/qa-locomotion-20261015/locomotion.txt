@@ -1,0 +1,12 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Error: Static portrait walked 10
+    at eval (eval at evaluate (:311:30), <anonymous>:15:77)
+    at async <anonymous>:337:30
+    at C:\baggam-dev\spirebound\tools\qa\locomotion-qa.mjs:14:27 {
+  log: []
+}
+
+Node.js v24.14.0

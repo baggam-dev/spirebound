@@ -1,0 +1,1 @@
+{"viewports":3,"resultJournal":true,"allPortraitsVisible":true,"demonParts":6,"clippedPortraits":0,"oldSaveWithoutBestiary":true,"pageErrors":0,"productionRecordsSubmitted":0}
