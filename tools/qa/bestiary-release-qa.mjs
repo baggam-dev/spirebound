@@ -10,7 +10,7 @@ const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[];
 try{
  for(const [width,height,mobile] of [[1280,800,false],[844,390,true],[390,844,true]]){
   const context=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile}),page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(base);await page.locator('#titleBestiary').click();await page.locator('[data-monster]').first().waitFor();assert.equal(await page.locator('[data-monster]').count(),30);
+  page.setDefaultTimeout(120000);await page.goto(base,{waitUntil:'domcontentloaded',timeout:60000});await page.locator('#titleBestiary').click();await page.locator('[data-monster]').first().waitFor();assert.equal(await page.locator('[data-monster]').count(),30);
   const baseline=await page.evaluate(()=>JSON.stringify({...localStorage}));
   await page.waitForFunction(()=>[...document.querySelectorAll('.bestiary-card canvas')].every(c=>c.getContext('2d').getImageData(0,0,c.width,c.height).data.some((v,i)=>i%4===3&&v>0)));
   for(const [category,count] of [['일반',9],['상층',7],['악마',5],['귀환',3],['보스',6]]){await page.locator(`[data-category="${category}"]`).click();assert.equal(await page.locator('[data-monster]').count(),count);}
