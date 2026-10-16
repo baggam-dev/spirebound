@@ -7,14 +7,14 @@ function values(p){const a=previewStats(p);return {
  '현재 체력':p.hp,'궁극기 재사용(초)':p.ultimate?ultimateCooldown(p):null,
  '점멸 재사용(초)':dodgeCooldown(p),'점멸 거리':blinkDistance(p),
  '장비 보호막 충전(초)':p.armor?shieldCooldown(p):null,
- '오라 초당 피해':a.aura,'오라 반경':a.auraRadius,
- '오라 보호막 충전(초)':p.aura>=3?60-relicStat(p,'auraShield'):null,
+ '베르가스 참격 피해':a.aura,'요격 사거리':a.auraRadius,'베르가스 재사용(초)':a.auraCooldown,
+ '계승 수호 충전(초)':p.legacyAuraGuard?60-relicStat(p,'auraShield'):null,
  '화상 1중첩 / 초':a.burn,'독 1중첩 / 초':a.poison};}
 export function relicRequirements(p,id){const stats=relicInfo(id)?.stats||{},notes=[];
  if(stats.shield&&!p.armor)notes.push('장비 보호막 획득 후 적용');
  if((stats.ultimateCooldown||stats.ultimateDamage)&&!p.ultimate)notes.push('궁극기 습득 후 적용');
- if((stats.auraDamage||stats.auraRange)&&!p.aura)notes.push('근접 오라 습득 후 적용');
- if(stats.auraShield&&!(p.aura>=3))notes.push('근접 오라 3레벨 필요');
+ if((stats.auraDamage||stats.auraRange)&&!p.aura)notes.push('망령검: 베르가스 습득 후 적용');
+ if(stats.auraShield&&!p.aura&&!p.legacyAuraGuard)notes.push('베르가스 습득 후 적용 · 계승 수호는 구저장 전용');
  if(stats.fire&&!p.fire)notes.push('화염 화살 필요');
  if(stats.dot&&!(p.fire>=2||p.poison))notes.push('화염 화살 2레벨 또는 독 화살 필요');
  if(stats.element&&!(p.fire||p.poison||p.frost||p.chain))notes.push('속성 화살 습득 후 적용');

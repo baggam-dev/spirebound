@@ -1,0 +1,5 @@
+# 베르가스 투명 단일 검 — 정확 프롬프트
+
+내장 imagegen 편집. 참조/편집 대상 `vergas-v1.png`, transparent_background=true. 결과 원본 `vergas-isolated-v1.png`, 동일 파일 runtime 복사 `assets/images/vergas-blade-v1.png`. 배경 알파 좌표 표본은 0으로 확인했으며 전체 윤곽 알파·실제 축소 가독성은 미검증이다.
+
+Use case: background-extraction / precise-object-edit. The reference image is the APPROVED Vergas sword concept board. Extract/reproduce ONLY the single large sword on the left, preserving its exact silhouette, smoky silver double-edged leaf tip, recessed black fuller, tiny violet inset stones, worn bronze hooked crossguard, black wrapped grip and hollow angular pommel. Create ONE isolated full-length sword sprite on a genuinely transparent background. No concept board, no small duplicates, no text, no aura, no glow, no smoke, no trails, no shadows. Keep pixel art clusters, no smooth rendering. Rotate the entire sword so its tip points straight UP and grip points straight DOWN on the vertical centerline, blade and handle fully inside image with comfortable 8 percent padding on every side. Preserve approved shape and colors, no redesign. Narrow vertical composition. Clear alpha around the weapon, clean hard silhouette.

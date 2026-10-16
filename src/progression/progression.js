@@ -26,7 +26,7 @@ export const skills = [
  {id:'power',name:'화살 연마',description:'화살 직격 및 속성 피해 +12%',max:5},
  {id:'repeat',name:'연속 화살',description:'희귀 · 0.16초 후 같은 방향 추가 1발 · 피해/지속 피해 60% · 주력 속성 발동',max:1},
  {id:'ultimate',name:'궁극기 습득',description:'화살비 또는 자동 저격 석궁 중 하나를 선택합니다.',max:1},
- {id:'aura',name:'근접 오라',description:'반경 90/115/140 · 초당 피해 24/48/72 · 3레벨 60초마다 1회 방어',max:3},
+ {id:'aura',name:'망령검: 베르가스',description:'접근한 적을 자동 요격 · 피해 34/43/52 · 재사용 1.70/1.35/1.20초 · 3레벨 단죄/검무 분기',max:3},
  {id:'homing',name:'추적 화살',description:'유니크 · 1.5초마다 별도 무속성 유도 화살 1발 · 일반 공격력 100% · 갈래/연속 복제 없음',max:1},
 ].map(k=>({...k,tree:mainSkills.includes(k.id)?'main':'support',grade:skillGrade(k.id),weight:k.id==='homing'?.04:['split','repeat'].includes(k.id)?.18:1}));
 export const recipes = [
@@ -35,7 +35,7 @@ export const recipes = [
  {name:'뇌우',needs:['chain','haste'],description:'번개 전이 거리 +40 · 레벨별 전이 45/55/65%, 이후 80% 유지'},
 ];
 export function combinations(p){return recipes.filter(r=>r.needs.every(id=>p[id]>0));}
-export function migrateRun(s){if(!s.upgrade21){s.player.ultimate=s.player.evolutions?.ultimate?1:0;if(s.player.evolutions?.ultimate==='field')s.player.evolutions.ultimate='turret';s.upgrade21=true;}s.player.relics=ownedRelics(s.player);delete s.player.relic;if(!s.combatVersion){for(const r of s.floors.flat())r.fireZones=[];s.combatVersion=17;}migrateHealth(s);migrateEnemies(s);s.player.speed=MOVE_SPEED;if(!s.skillSystemVersion){s.player.poison=s.player.fire||0;s.player.fire=0;if(s.player.evolutions?.fire){s.player.evolutions.poison=s.player.evolutions.fire;delete s.player.evolutions.fire;}if(s.choices)s.choices=s.choices.map(id=>id==='fire'?'poison':id);s.skillSystemVersion=13;}for(const skill of skills)s.player[skill.id]??=0;if(s.skillSystemVersion<14){s.skillSystemVersion=14;s.choices=null;}return s;}
+export function migrateRun(s){if(!s.upgrade21){s.player.ultimate=s.player.evolutions?.ultimate?1:0;if(s.player.evolutions?.ultimate==='field')s.player.evolutions.ultimate='turret';s.upgrade21=true;}s.player.relics=ownedRelics(s.player);delete s.player.relic;if(!s.combatVersion){for(const r of s.floors.flat())r.fireZones=[];s.combatVersion=17;}migrateHealth(s);migrateEnemies(s);s.player.speed=MOVE_SPEED;if(!s.skillSystemVersion){s.player.poison=s.player.fire||0;s.player.fire=0;if(s.player.evolutions?.fire){s.player.evolutions.poison=s.player.evolutions.fire;delete s.player.evolutions.fire;}if(s.choices)s.choices=s.choices.map(id=>id==='fire'?'poison':id);s.skillSystemVersion=13;}for(const skill of skills)s.player[skill.id]??=0;if(s.skillSystemVersion<14){s.skillSystemVersion=14;s.choices=null;}if(!s.spectralBladeVersion){s.player.legacyAuraGuard=(s.player.aura||0)>=3;s.spectralBladeVersion=1;delete s.auraVisual;}return s;}
 export function skillChoices(p,random=Math.random){const pool=skills.filter(k=>k.id!=='ultimate'&&allowedSkill(p,k.id)&&(p[k.id]||0)<k.max),chosen=[];while(pool.length&&chosen.length<3){let roll=random()*pool.reduce((n,k)=>n+k.weight,0),i=0;while(i<pool.length-1&&roll>=pool[i].weight)roll-=pool[i++].weight;chosen.push(pool.splice(i,1)[0]);}return chosen;}
 export function applySkill(p,id){const skill=skills.find(k=>k.id===id);if(!skill||!allowedSkill(p,id)||(p[id]||0)>=skill.max)return false;if(mainSkills.includes(id))p.mainSkill??=id;p[id]=(p[id]||0)+1;return true;}
 // Both minimap cells and its bounds must derive only from explored rooms.

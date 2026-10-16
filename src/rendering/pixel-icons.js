@@ -61,14 +61,14 @@ export function iconSVG(id){
   case 'haste':for(let i=0;i<3;i++){line(2+i*4,4,5+i*4,8,i===1?3:1);line(5+i*4,8,2+i*4,12,i===1?3:1);}break;
   case 'power':rect(4,5,8,7);rect(4,3,2,4,3);rect(7,2,2,5,3);rect(10,3,2,4,3);rect(6,12,5,2,2);break;
   case 'repeat':arrow(5);arrow(11,2);break;
-  case 'aura':circle(8,8,6,2);line(4,12,11,4);line(5,12,12,4,3);line(3,9,7,13);break;
+  case 'aura':line(6,11,12,3,3);line(6,10,12,3);line(4,8,9,12,3);line(3,14,6,10,2);break;
   case 'homing':circle(10,5,3,2);line(2,13,3,8);line(3,8,10,5);line(6,5,10,5,3);line(10,5,9,9,3);break;
   case 'ultimate':for(let x=3;x<15;x+=4){line(x,2,x,12);line(x-2,10,x,13,3);line(x+2,10,x,13,3);}break;
   case 'blink':diamond(8,8,5,3);line(1,5,5,5);line(0,9,4,9,2);rect(7,6,3,4);break;
   case 'shield':line(3,3,12,3);line(3,3,4,10);line(12,3,11,10);line(4,10,8,14);line(11,10,8,14);line(6,7,8,9,3);line(8,9,11,5,3);break;
   default:diamond(8,8,5);put(8,8,3);
  }
- const palettes={potion:['#e86679','#923346','#ffd4d8'],fire:['#ef7843','#a03931','#fff0a9'],frost:['#a4e6ff','#3975ab','#ffffff'],poison:['#9bdd69','#35552f','#e7ff98'],chain:['#e3caff','#9270c8','#ffffff'],precision:['#f2d488','#9a7137','#fff9d7'],focus:['#f2d488','#9a7137','#fff9d7'],firstAid:['#a6dbab','#427a60','#f0fff2'],guardian:['#b6d9ee','#47798e','#f0fbff'],heart:['#ff6d91','#903a5d','#ffe0e9'],shield:['#cde5ee','#729cad','#fff'],aura:['#e1efac','#6d9983','#fff'],ruby:['#e46b77','#873b69','#ffcbc2'],sun:['#ffcb6b','#d98243','#fffad1']};
+ const palettes={potion:['#e86679','#923346','#ffd4d8'],fire:['#ef7843','#a03931','#fff0a9'],frost:['#a4e6ff','#3975ab','#ffffff'],poison:['#9bdd69','#35552f','#e7ff98'],chain:['#e3caff','#9270c8','#ffffff'],precision:['#f2d488','#9a7137','#fff9d7'],focus:['#f2d488','#9a7137','#fff9d7'],firstAid:['#a6dbab','#427a60','#f0fff2'],guardian:['#b6d9ee','#47798e','#f0fbff'],heart:['#ff6d91','#903a5d','#ffe0e9'],shield:['#cde5ee','#729cad','#fff'],aura:['#c8cbd0','#957750','#c7afe3'],ruby:['#e46b77','#873b69','#ffcbc2'],sun:['#ffcb6b','#d98243','#fffad1']};
  const colors=palettes[id]||['#d7bd83','#88725e','#fff0c5'];
  const result='<svg class="pixel-icon" viewBox="0 0 16 16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">'+[...pixels].map(([key,c])=>{const [x,y]=key.split(',');return `<rect x="${x}" y="${y}" width="1" height="1" fill="${colors[c-1]}"/>`;}).join('')+'</svg>';
  cache.set(id,result);return result;

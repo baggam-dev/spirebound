@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import {newRun,currentRoom} from '../../src/game/engine.js';
 import {stepRun,enterRoom} from '../../src/game/simulation.js';
 import {hitEnemy} from '../../src/progression/progression.js';
-import {frostShatter,auraProfile,skillGrade} from '../../src/progression/skill-tree.js';
+import {frostShatter,skillGrade} from '../../src/progression/skill-tree.js';
+import {bladeProfile} from '../../src/combat/spectral-blade.js';
 import {chargeProfile,attackProfile} from '../../src/combat/balance.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 const enemy=(id,x=600,hp=100)=>({id,x,y:300,type:'archer',hp,max:100,cd:999,balanceVersion:1});
@@ -19,14 +20,14 @@ test('frozen shard victims chain without exponential damage and grant one kill e
 test('shards at all levels add frost stacks and scale direct damage',()=>{
  for(const level of [2,3]){const s=newRun(2),r=currentRoom(s);s.player.frost=level;s.player.damage=30;s.attack=999;r.enemies=[enemy(1,610)];frostShatter(s.player,{x:550,y:300,hp:0,frozen:1},s.projectiles);stepRun(s,.2);assert.ok(Math.abs(r.enemies[0].hp-(100-30*.92*(.3+.05*level)))<1e-8);assert.equal(r.enemies[0].frostStacks,1);}
 });
-test('aura deaths preserve frozen state even when the frame expires its timer',()=>{
- const s=newRun(4),r=currentRoom(s);s.player.frost=1;s.player.aura=3;s.attack=999;const e=enemy(0,520,1);e.frozen=.01;r.enemies=[e];stepRun(s,.1);assert.equal(s.kills,1);assert.equal(s.projectiles.length,6);
+test('Vergas deaths preserve frozen state even when the frame expires its timer',()=>{
+ const s=newRun(4),r=currentRoom(s);s.player.frost=1;s.player.aura=3;s.attack=999;const e=enemy(0,520,1);e.frozen=.11;r.obstacles=[];r.enemies=[e];stepRun(s,.01);stepRun(s,.1);assert.equal(s.kills,1);assert.equal(s.projectiles.length,6);
 });
 test('shards resume identically across saves and disappear on room entry',()=>{
  const s=newRun(2);s.player.frost=3;s.attack=999;frostShatter(s.player,{x:550,y:300,hp:0,frozen:1},s.projectiles);const t=parseSave(encodeSave(s));stepRun(s,.1);stepRun(t,.1);assert.deepEqual(s.projectiles,t.projectiles);enterRoom(t);assert.equal(t.projectiles.length,0);
 });
-test('aura radius and DPS grow each level, and trial charge pressure exceeds ordinary enemies',()=>{
- assert.deepEqual([1,2,3].map(auraProfile),[{radius:90,dps:24},{radius:115,dps:48},{radius:140,dps:72}]);const a=chargeProfile({}),b=chargeProfile({trialChampion:true});assert.ok(b.speed>a.speed&&b.speed*b.duration>a.speed*a.duration);assert.ok(b.warning>=.25);assert.ok(attackProfile({trialChampion:true}).recovery<attackProfile({}).recovery);
+test('Vergas damage grows and cooldown falls each level, and trial charge pressure exceeds ordinary enemies',()=>{
+ const profiles=[1,2,3].map(aura=>bladeProfile({aura}));assert.deepEqual(profiles.map(p=>p.damage),[34,43,52]);assert.ok(profiles[2].cooldown<profiles[1].cooldown&&profiles[1].cooldown<profiles[0].cooldown);const a=chargeProfile({}),b=chargeProfile({trialChampion:true});assert.ok(b.speed>a.speed&&b.speed*b.duration>a.speed*a.duration);assert.ok(b.warning>=.25);assert.ok(attackProfile({trialChampion:true}).recovery<attackProfile({}).recovery);
 });
 test('tiers distinguish main, rare and unique while ordinary supports remain normal',()=>{
  assert.equal(skillGrade('fire'),'main');assert.equal(skillGrade('split'),'rare');assert.equal(skillGrade('repeat'),'rare');assert.equal(skillGrade('homing'),'unique');assert.equal(skillGrade('aura'),'normal');

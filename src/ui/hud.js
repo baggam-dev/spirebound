@@ -22,7 +22,7 @@ export function createHUD(){
   el('shieldStatus').innerHTML=shieldStatusMarkup(s);
   const stats=displayedStats(p),dps=meter(s);el('statReadout').innerHTML=`<b>LV ${p.level}</b><span>공격력 ${stats.attack.toFixed(1)}</span><span>공속 ${stats.rate.toFixed(2)}/초</span><span>이속 ${stats.speed.toFixed(0)}</span><span title="최근 5초간 실제로 준 피해 ÷ 5. 범위 피해 포함. 조건부 유물 효과는 공격력 숫자에 미포함.">DPS ${dps.toFixed(1)}</span>`;
   const required=xpRequired(p.level);el('xpFill').style.width=Math.min(100,p.xp/required*100)+'%';el('xpTrack').setAttribute('aria-valuemax',required);el('xpTrack').setAttribute('aria-valuenow',p.xp);el('xpLabel').textContent=`LV ${p.level} · ${p.xp} / ${required}`;
-  const aura=el('skillStrip').querySelector('[aria-label^="근접 오라"]');if(aura)aura.dataset.cooldown=p.aura>=3?(s.auraShield>0?Math.ceil(s.auraShield)+'s':'방어 준비'):'';
+  const aura=el('skillStrip').querySelector('[aria-label^="망령검: 베르가스"]');if(aura)aura.dataset.cooldown=s.bladeCooldown>0?s.bladeCooldown.toFixed(1)+'s':'요격 준비';
   el('hexStatus').textContent=(p.incantations||[]).map(id=>incantationInfo(id).name).join(' · ');el('hexStatus').title=(p.incantations||[]).map(id=>incantationInfo(id).description).join('\n');
  };
 }

@@ -1,4 +1,5 @@
 export const evolutions={
+ aura:[{id:'judgment',name:'단죄의 칼날',description:'베르가스 단발 피해 +65% · 사거리 116 · 넓은 베기 · 재사용 25% 증가'},{id:'dance',name:'집요한 검무',description:'베르가스 65% 피해로 2회 베기 · 재사용 15% 감소 · 2타 전 대상 재확인'}],
  split:[{id:'fan',name:'넓은 부채',description:'넓게 퍼지는 추가탄 · 추가탄 피해 50%'},{id:'focus',name:'집중 사격',description:'좁은 탄 간격 · 공격 간격 15% 증가'}],
  pierce:[{id:'depth',name:'심층 관통',description:'관통 +2 · 직격 피해 15% 감소'},{id:'impact',name:'충격 화살',description:'관통 제거 · 직격 피해 25% 증가'}],
  haste:[{id:'tempo',name:'고속 리듬',description:'공격 간격 15% 감소 · 직격 피해 15% 감소'},{id:'stride',name:'기동 사냥',description:'이동 중 이동속도 +12% · 기본 공격속도 유지'}],

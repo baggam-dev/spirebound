@@ -16,7 +16,7 @@ export function steerArrow(b,enemies,obstacles,dt,blocked){
  if(!target)return;const current=Math.atan2(b.vy,b.vx),aim=Math.atan2(target.y-b.y,target.x-b.x),delta=Math.atan2(Math.sin(aim-current),Math.cos(aim-current)),angle=current+Math.max(-2.8*dt,Math.min(2.8*dt,delta)),speed=Math.hypot(b.vx,b.vy);b.vx=Math.cos(angle)*speed;b.vy=Math.sin(angle)*speed;
 }
 
-export const auraProfile=level=>({radius:65+25*level,dps:24*level});
+
 export function skillGrade(id){return mainSkills.includes(id)?'main':['homing','ultimate'].includes(id)?'unique':['split','repeat'].includes(id)?'rare':'normal';}
 export const gradeLabels={main:'메인',normal:'일반 보조',rare:'레어 보조',unique:'유니크 보조'};
 export function frostShatter(p,e,projectiles){

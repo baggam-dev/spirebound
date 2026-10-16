@@ -129,7 +129,7 @@ export const relics=[
  {
   "id": "blade",
   "name": "검무의 반지",
-  "description": "근접 오라 피해 +30%",
+  "description": "베르가스 참격 피해 +30%",
   "stats": {
    "auraDamage": 0.3
   }
@@ -137,7 +137,7 @@ export const relics=[
  {
   "id": "orbit",
   "name": "궤도의 팔찌",
-  "description": "근접 오라 반경 +20%",
+  "description": "베르가스 요격 사거리 +20%",
   "stats": {
    "auraRange": 0.2
   }
@@ -189,7 +189,7 @@ export const relics=[
  {
   "id": "halo",
   "name": "순백의 고리",
-  "description": "오라 보호막 재충전 15초 단축",
+  "description": "베르가스 재사용 15% 감소 · 구저장 계승 수호 재충전 15초 단축",
   "stats": {
    "auraShield": 15
   }

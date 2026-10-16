@@ -1,3 +1,4 @@
+import {tickSpectralBlade,resetSpectralBlade} from '../combat/spectral-blade.js';
 import {updateChaserAttack} from '../combat/chaser.js';
 import {recoverPlayerPosition} from '../world/player-position.js';
 import {doorCenter,doorArrival} from '../world/doors.js';
@@ -22,7 +23,7 @@ import {enterShrine,prepareIncantations,shrineLocked} from '../world/shrine.js';
 import {updateReturnEnemy,returnEnemyTypes} from '../combat/return-enemies.js';
 import {updateInfernal,infernalTypes} from '../combat/infernal-enemies.js';
 import {coordinateAttack,openGuard} from '../combat/tactics.js';
-import {steerArrow,auraProfile,frostShatter} from '../progression/skill-tree.js';
+import {steerArrow,frostShatter} from '../progression/skill-tree.js';
 import {prepareChest,prepareTrialLoot} from '../progression/loot.js';
 import {tickElements,resolveFireFields} from '../combat/elements.js';
 import {dropEssences,collectEssences,essenceInfo} from '../progression/essences.js';
@@ -51,7 +52,7 @@ export function collisionTime(a,b,c,radius){
 export function enemyRadius(e){return e.variant==='slime'||e.type==='minislime'?slimeRadius(e):(e.type==='boss'?32:e.type==='brute'||e.type==='demonCaptain'?24:e.type==='demonBat'?14:19)*(e.scale??1);}
 export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||e.attackPhase==='leap';}
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
-export function enterRoom(s){
+export function enterRoom(s){resetSpectralBlade(s);
  recoverPlayerPosition(s.player,currentRoom(s).obstacles);trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
  s.player.actionStun=0;s.player.electricGrace=0;resetDemonAttack(r);
  // Do not preserve an off-screen attack aimed at the previous visit's position.
@@ -90,10 +91,8 @@ export function stepRun(s,dt,input={x:0,y:0}){
  updateHazards(r,dt,p,raw=>hurt(raw,raw>=12?'독성 군체 독':'꽃봉우리 독'));
  if(s.entryGrace<=0)updateDemon(s,r,p,dt,s.projectiles,(raw,source)=>hurt(raw,source));
  const target=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!segmentBlocked(p,e,r.obstacles,3)).sort((a,b)=>distance(a,p)-distance(b,p))[0];
- s.auraVisual=Math.max(0,(s.auraVisual||0)-dt);const auraFlash=s.auraVisual<=0;if(auraFlash)s.auraVisual=.2;
- if(p.aura)hitOrigin=null;
- if(p.aura)for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,p)<=auraProfile(p.aura).radius*(1+relicStat(p,'auraRange'))&&!segmentBlocked(p,e,r.obstacles,1)){const before=e.hp;if(auraFlash)effects.push({x:e.x,y:e.y,r:24,t:.16,color:'#f8ffe6',slash:true});e.hp-=auraProfile(p.aura).dps*(1+relicStat(p,'auraDamage'))*dt*enemyDamageFactor(e,p);metrics.damageDealt+=before-Math.max(0,e.hp);}
- if(target&&s.attack<=0&&!(p.actionStun>0)){fireArrow(s,target);events.push('shot');}
+ tickSpectralBlade(s,r,dt,effects);
+ if(target&&target.hp>0&&s.attack<=0&&!(p.actionStun>0)){fireArrow(s,target);events.push('shot');}
  for(const e of r.enemies){
   hitOrigin=e;const hpBefore=Math.max(0,e.hp);tickEffects(e,dt);metrics.damageDealt+=hpBefore-Math.max(0,e.hp);const upper=e.variant==='king'||upperTypes.includes(e.type);const transitioning=upper&&tickUpperState(e,p,r,s.entryGrace>0?0:dt,s.projectiles);if(e.hp<=0||e.frozen>0||transitioning||r.enemies.some(n=>n.variant==='king'&&n.kingTransition>0))continue;
   if(e.cd>0)e.cd+=dt*(1-frostAttackRate(e));if(e.jumpCooldown>0)e.jumpCooldown+=dt*(1-frostAttackRate(e));

@@ -1,6 +1,6 @@
 import {hitEnemy,skills} from '../progression/progression.js';
 import {attackInterval,relicStat} from '../progression/relics.js';
-import {auraProfile} from '../progression/skill-tree.js';
+import {bladeProfile} from '../combat/spectral-blade.js';
 import {frostThreshold} from '../combat/frost.js';
 import {lightningSpec} from '../combat/lightning.js';
 import {applyGrowth} from '../progression/growth.js';
@@ -13,8 +13,8 @@ export function previewStats(player){
  const effects=hitEnemy(p,target,[target],[],1,true,{fireZones:[]},p,{primary:true});
  return {hit:100000-target.hp,rate:1/attackInterval(p),radius:effects.find(e=>e.instant)?.r||0,
   poison:target.poisonStacks?.[0]?.dps||0,burn:target.burnStacks?.[0]?.dps||0,
-  aura:p.aura?auraProfile(p.aura).dps*(1+relicStat(p,'auraDamage')):0,
-  auraRadius:p.aura?auraProfile(p.aura).radius*(1+relicStat(p,'auraRange')):0};
+  aura:p.aura?bladeProfile(p).damage:0,auraCooldown:p.aura?bladeProfile(p).cooldown:0,
+  auraRadius:p.aura?bladeProfile(p).radius:0};
 }
 export function skillPreview(player,id){
  const next=structuredClone(player),skill=skills.find(k=>k.id===id);
@@ -31,7 +31,7 @@ export function skillPreview(player,id){
  if(id==='precision')row('같은 대상 강화탄',player.precision?'3번째 적중':'없음',next.precision>=3?'3번째 적중 · 분기 선택':'3번째 적중');
  if(id==='weakpoint')row('연속 직격 보너스',(player.weakpoint||0)*10,next.weakpoint*10,'%',0);
  if(id==='finisher')row('체력 35% 이하 보너스',(player.finisher||0)*15,next.finisher*15,'%',0);
- if(id==='aura'){row('오라 초당 피해',a.aura,b.aura);row('오라 반경',a.auraRadius,b.auraRadius,'',0);if(next.aura===3)row('오라 보호막','없음',(60-relicStat(next,'auraShield'))+'초마다 1회 방어');}
+ if(id==='aura'){row('베르가스 참격 피해',a.aura,b.aura);row('요격 사거리',a.auraRadius,b.auraRadius,'',0);row('재사용',a.auraCooldown,b.auraCooldown,'초',2);if(next.aura===3)row('검의 해방','미선택','단죄의 칼날 / 집요한 검무');}
  if(id==='split')row('동시 화살',1+(player.split||0),1+next.split,'발',0);
  if(id==='pierce')row('추가 관통',player.evolutions?.pierce==='impact'?0:(player.pierce||0)+(player.evolutions?.pierce==='depth'?2:0),next.evolutions?.pierce==='impact'?0:next.pierce+(next.evolutions?.pierce==='depth'?2:0),'체',0);
  if(id==='repeat')row('추가 연속탄','없음','0.16초 후 60% 피해 1발');

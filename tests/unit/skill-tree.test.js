@@ -33,8 +33,8 @@ test('repeat adds one delayed same-direction primary without repeating the split
 test('homing has a bounded turn rate, avoids walls and keeps projectile speed',()=>{
  const b={x:0,y:0,vx:420,vy:0,homing:true,hit:[]};steerArrow(b,[enemy(0,0,200)],[],.1,()=>false);assert.ok(Math.abs(Math.atan2(b.vy,b.vx)-.28)<1e-9);assert.ok(Math.abs(Math.hypot(b.vx,b.vy)-420)<1e-9);const before={...b};steerArrow(b,[enemy(0,0,200)],[],.1,()=>true);assert.deepEqual(b,before);
 });
-test('aura hits nearby grounded enemies only and damage support does not automatically unlock the ultimate',()=>{
- const s=newRun(1),r=currentRoom(s);s.player.aura=2;s.attack=999;r.enemies=[enemy(0,520),enemy(1,700)];stepRun(s,.5);assert.equal(r.enemies[0].hp,976);assert.equal(r.enemies[1].hp,1000);assert.equal(s.metrics.damageDealt,24);const e=enemy();hitEnemy({damage:20,power:5},e,[e]);assert.equal(e.hp,968);assert.equal(ultimateUnlocked({fire:1,power:2,aura:1,repeat:1}),false);
+test('Vergas strikes nearby grounded enemies after preparation and damage support does not automatically unlock the ultimate',()=>{
+ const s=newRun(1),r=currentRoom(s);s.player.aura=2;s.attack=999;r.obstacles=[];r.enemies=[enemy(0,520),enemy(1,700)];stepRun(s,.01);stepRun(s,.11);assert.equal(r.enemies[0].hp,957);assert.equal(r.enemies[1].hp,1000);assert.equal(s.metrics.damageDealt,43);const e=enemy();hitEnemy({damage:20,power:5},e,[e]);assert.equal(e.hp,968);assert.equal(ultimateUnlocked({fire:1,power:2,aura:1,repeat:1}),false);
 });
 test('main lock, delayed homing shots and frozen states round-trip and reject corruption',()=>{
  const s=newRun(4);s.pendingLevels=1;chooseMain(s,'frost');s.player.repeat=1;s.player.homing=1;currentRoom(s).enemies=[enemy()];hitEnemy(s.player,currentRoom(s).enemies[0],currentRoom(s).enemies);fireArrow(s,{x:800,y:300});const loaded=parseSave(encodeSave(s));assert.equal(loaded.player.mainSkill,'frost');assert.equal(loaded.projectiles.at(-1).delay,.16);assert.equal(currentRoom(loaded).enemies[0].frostStacks,1);loaded.player.fire=1;assert.throws(()=>encodeSave(loaded));s.projectiles.at(-1).delay=-1;assert.throws(()=>encodeSave(s));
@@ -42,7 +42,7 @@ test('main lock, delayed homing shots and frozen states round-trip and reject co
 test('freezing stops unlaunched poison warnings but does not stop airborne projectiles',()=>{
  const e=enemy();e.frozen=1;const r={enemies:[e],hazards:[{owner:0,kind:'puddle',phase:'warning',time:.8,flight:.65,duration:2,x:800,y:400,r:30,damage:9},{owner:0,kind:'puddle',phase:'flight',time:.6,duration:2,x:800,y:400,r:30,damage:9}]};updateHazards(r,.2,{x:100,y:100},()=>{});assert.equal(r.hazards[0].time,.8);assert.ok(Math.abs(r.hazards[1].time-.4)<1e-9);
 });
-test('aura respects intervening cover and cannot damage airborne enemies',()=>{
+test('Vergas respects intervening cover and cannot damage airborne enemies',()=>{
  const s=newRun(1),r=currentRoom(s);s.attack=999;s.entryGrace=1;s.player.aura=3;r.obstacles=[{x:498,y:280,w:10,h:40,type:'rock'}];const a=enemy(0,520),b=enemy(1,450);b.phase='air';b.phaseTime=1;r.enemies=[a,b];stepRun(s,.1);assert.equal(a.hp,1000);assert.equal(b.hp,1000);
 });
 test('fire splash and field have enlarged radius and increased damage',()=>{
