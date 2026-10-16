@@ -17,7 +17,7 @@ export function steerArrow(b,enemies,obstacles,dt,blocked){
 }
 
 
-export function skillGrade(id){return mainSkills.includes(id)?'main':['homing','ultimate'].includes(id)?'unique':['split','repeat'].includes(id)?'rare':'normal';}
+export function skillGrade(id){return mainSkills.includes(id)?'main':['homing','ultimate','aura'].includes(id)?'unique':['split','repeat'].includes(id)?'rare':'normal';}
 export const gradeLabels={main:'메인',normal:'일반 보조',rare:'레어 보조',unique:'유니크 보조'};
 export function frostShatter(p,e,projectiles){
  const frozen=e.frozen>0||e.frozenDeath,stacks=frozen?3:e.frostStackTime>0?e.frostStacks||0:0;

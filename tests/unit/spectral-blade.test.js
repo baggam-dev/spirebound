@@ -4,6 +4,8 @@ import {newRun,currentRoom} from '../../src/game/engine.js';
 import {tickSpectralBlade,spectralBladeState} from '../../src/combat/spectral-blade.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 import {takeDamage} from '../../src/combat/survival.js';
+import {skills,skillChoices,skillOfferWeight} from '../../src/progression/progression.js';
+import {applyLoot,eligibleLoot} from '../../src/progression/loot.js';
 
 function fight(branch){const s=newRun(31),r=currentRoom(s);s.player.aura=3;s.player.evolutions=branch?{aura:branch}:{};s.metrics={damageDealt:0};s.entryGrace=0;r.obstacles=[];r.enemies=[{id:0,type:'archer',x:540,y:300,hp:1000,max:1000,cd:999,balanceVersion:1}];return {s,r,e:r.enemies[0],tick:dt=>tickSpectralBlade(s,r,dt,[])};}
 
@@ -25,4 +27,19 @@ test('saved cooldown prevents a repeated slash after loading and rejects corrupt
 });
 test('old level-three aura keeps its guard once; newly learned Vergas does not grant a shield',()=>{
  const {s}=fight();delete s.spectralBladeVersion;const loaded=parseSave(encodeSave(s));assert.equal(loaded.player.legacyAuraGuard,true);assert.equal(takeDamage(loaded,20),'blocked');assert.equal(takeDamage(s,20),'hurt');assert.equal(parseSave(encodeSave(loaded)).player.legacyAuraGuard,true);
+});
+test('Vergas remains unique while acquisition is rare and owned upgrades use normal weight',()=>{
+ const {s}=fight(),skill=skills.find(k=>k.id==='aura');assert.equal(skill.grade,'unique');
+ s.player.aura=0;assert.equal(skillOfferWeight(s.player,skill),.04);
+ s.player.aura=1;assert.equal(skillOfferWeight(s.player,skill),1);
+ s.player.aura=3;assert.ok(!skillChoices(s.player,()=>.5).some(k=>k.id==='aura'));
+ assert.equal(skill.weight,.04);assert.equal(skill.max,3);
+});
+test('saved ordinary-support Vergas rewards remain claimable even when all ordinary supports are capped',()=>{
+ const {s,r}=fight();s.player.aura=1;s.player.mainSkill='precision';s.player.precision=1;
+ for(const skill of skills)if(skill.tree==='support'&&skill.grade!=='unique')s.player[skill.id]=skill.max;
+ r.chestReward={id:'support',skill:'aura'};
+ const loaded=parseSave(encodeSave(s));assert.equal(eligibleLoot(loaded.player,'support'),false);
+ const reward=currentRoom(loaded).chestReward;assert.deepEqual(applyLoot(loaded,reward),reward);assert.equal(loaded.player.aura,2);
+ assert.doesNotThrow(()=>parseSave(encodeSave(loaded)));
 });

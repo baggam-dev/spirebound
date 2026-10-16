@@ -35,7 +35,8 @@ export function lootLabel(item){return (item.relic?'유물 · '+relicInfo(item.r
 export function applyLoot(s,item){
  const p=s.player,r=roomOf(s);let reward=item;
  // A saved offer can become capped while the player explores another room.
- if(!eligibleLoot(p,item.id)||item.skill&&(p[item.skill]||0)>=skills.find(k=>k.id===item.skill).max)reward=drawLoot(p,lootRandom(s,811),true);
+ const legacyBlade=item.id==='support'&&item.skill==='aura'&&(p.aura||0)<3;
+ if(!eligibleLoot(p,item.id)&&!legacyBlade||item.skill&&(p[item.skill]||0)>=skills.find(k=>k.id===item.skill).max)reward=drawLoot(p,lootRandom(s,811),true);
  const id=reward.id;if(id==='relic'&&!grantRelic(p,reward.relic)){const available=relics.find(r=>!ownedRelics(p).includes(r.id));if(available){grantRelic(p,available.id);reward={id:'relic',relic:available.id};}else{p.damage+=3;reward={id:'attack3'};}}
  if(id==='heal')p.hp=Math.min(p.max,p.hp+1);
  if(id==='potion')p.potions++;
