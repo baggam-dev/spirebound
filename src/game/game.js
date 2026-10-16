@@ -1,3 +1,4 @@
+import {bestiaryMarkup,mountBestiary} from '../ui/bestiary.js';
 import {doorFramePoint} from '../world/doors.js';
 import {renderHUDMinimap,updateMobileActions} from '../ui/mobile-hud.js';
 import {gruntHealthOffset,bruteHealthOffset,heroStunOffset} from '../rendering/character-sizes.js';
@@ -102,7 +103,7 @@ function panel(html){$('overlay').innerHTML=`<div class="panel" role="dialog" ar
 const modalFocusables='button:not([disabled]):not([hidden]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 $('overlay').addEventListener('keydown',event=>{
  if(event.key==='Escape'){
-  const back=['settingsBack','closeInfo','rankBack','closeJournal','closeBag','leaveRoute','practiceBack','choosePractice','endPractice'].map($).find(item=>item?.getClientRects().length);
+  const back=['closeBestiary','settingsBack','closeInfo','rankBack','closeJournal','closeBag','leaveRoute','practiceBack','choosePractice','endPractice'].map($).find(item=>item?.getClientRects().length);
   if(back){event.preventDefault();event.stopPropagation();back.click();return;}
  }
  if(event.key!=='Tab')return;const dialog=$('overlay').firstElementChild;if(!dialog)return;
@@ -117,9 +118,9 @@ function title(){
  stop('title');lease.release();s=null;resetTransient();$('route').hidden=true;$('skill').hidden=true;$('utility').hidden=true;$('interact').hidden=true;
  $('floor').textContent='잊힌 탑의 입구';$('phase').textContent='THE FORSAKEN SPIRE';$('health').textContent='♥♥♥♥♥';$('level').textContent='LV 1';$('timer').textContent='00:00';$('objective').textContent='탑에 들어가 탈출 열쇠를 찾으세요.';
  const loaded=store.read(),exists=!!loaded.run;
- panel(`<img class="title-art" src="assets/images/title-art.png" alt="SPIREBOUND · 거대한 탑 입구 앞의 모험가"><h2 class="title-accessible">SPIREBOUND</h2><div class="title-content"><p class="title-lore">탑에 들어간 이들은 돌아오지 않았다.<br>탑의 꼭대기에는 탈출의 열쇠가 숨겨져 있다.<br>왕을 쓰러뜨려도 여정은 끝나지 않는다.<br><strong>살아서 내려와라.</strong></p><div class="title-actions"><p class="title-hint">이동하며 자동 공격 · 진행 상황은 이 브라우저에 저장됩니다.</p>${exists?`<p>저장된 도전: ${loaded.run.floor+1}/${loaded.run.floors.length}층 · ${timeString(loaded.run.elapsed)}${loaded.recovered?' · 백업 복구 가능':''}</p><button class="primary" id="continue">이어하기</button>`:''}${loaded.error?`<p role="alert">${escapeHtml(loaded.error)} 원본을 보관하려면 아래에서 백업을 받으세요.</p><button id="dataRecovery">기록 백업·가져오기</button>`:''}<button ${exists?'':'class="primary"'} id="start">${exists?'새 도전 · 현재 저장 교체':'새 도전 →'}</button></div><div class="title-secondary"><button id="rank">RANK</button><button id="guide">조작 안내</button><button id="records">도전 기록</button><button id="bossPractice">보스 테스트</button><button id="titleSettings">소리·화면 설정</button></div></div>`);
+ panel(`<img class="title-art" src="assets/images/title-art.png" alt="SPIREBOUND · 거대한 탑 입구 앞의 모험가"><h2 class="title-accessible">SPIREBOUND</h2><div class="title-content"><p class="title-lore">탑에 들어간 이들은 돌아오지 않았다.<br>탑의 꼭대기에는 탈출의 열쇠가 숨겨져 있다.<br>왕을 쓰러뜨려도 여정은 끝나지 않는다.<br><strong>살아서 내려와라.</strong></p><div class="title-actions"><p class="title-hint">이동하며 자동 공격 · 진행 상황은 이 브라우저에 저장됩니다.</p>${exists?`<p>저장된 도전: ${loaded.run.floor+1}/${loaded.run.floors.length}층 · ${timeString(loaded.run.elapsed)}${loaded.recovered?' · 백업 복구 가능':''}</p><button class="primary" id="continue">이어하기</button>`:''}${loaded.error?`<p role="alert">${escapeHtml(loaded.error)} 원본을 보관하려면 아래에서 백업을 받으세요.</p><button id="dataRecovery">기록 백업·가져오기</button>`:''}<button ${exists?'':'class="primary"'} id="start">${exists?'새 도전 · 현재 저장 교체':'새 도전 →'}</button></div><div class="title-secondary"><button id="rank">RANK</button><button id="guide">조작 안내</button><button id="records">도전 기록</button><button id="titleBestiary">몬스터 도감</button><button id="bossPractice">보스 테스트</button><button id="titleSettings">소리·화면 설정</button></div></div>`);
  button('start',()=>start());
- button('rank',()=>rankUI.board(title));button('bossPractice',practiceMenu);button('continue',continueRun);button('guide',()=>showInfo('help'));button('records',()=>showInfo('history'));button('dataRecovery',()=>location.assign('upgrade.html'));button('titleSettings',settingsPanel);
+ button('rank',()=>rankUI.board(title));button('bossPractice',practiceMenu);button('continue',continueRun);button('guide',()=>showInfo('help'));button('records',()=>showInfo('history'));button('dataRecovery',()=>location.assign('upgrade.html'));button('titleSettings',settingsPanel);button('titleBestiary',bestiaryPanel);
 }
 function start(seed,campaign='expanded'){if(launching)return;beginRun(newRun(Number.isInteger(seed)&&seed>=0&&seed<=4294967295?seed:undefined,{campaign}),true);}
 async function beginRun(candidate,online){
@@ -277,6 +278,10 @@ function routePanel(){if(!s?.key||s.status!=='playing')return;stop('route');save
 button('route',routePanel);
 
 function relicPanel(){const r=room();stop('relic');save();panel('<small>RELIC COLLECTION</small><h2>수호자의 유물함</h2><p>획득한 유물은 모두 누적 적용됩니다. 하나를 선택하세요.<br>현재: '+(relicSummary(s.player))+'</p><div class="cards">'+r.relicOffers.map((id,i)=>'<button id="relic'+i+'">'+iconSVG(id)+'<b>'+relicInfo(id).name+'</b><span>'+relicInfo(id).description+'</span>'+relicPreviewMarkup(s.player,id)+'</button>').join('')+'</div><button id="skipRelic">유물함 지나가기</button>');r.relicOffers.forEach((id,i)=>button('relic'+i,()=>{if(claimRelic(s,id)){save();resume();}}));button('skipRelic',()=>{if(claimRelic(s,'skip')){save();resume();}});}
+function bestiaryPanel(){
+ const back=mode==='title'?title:mode==='result'?resultPanel:pause;
+ stop('bestiary');panel(bestiaryMarkup());const dialog=$('overlay').firstElementChild;dialog.classList.add('bestiary-panel');mountBestiary(dialog,back);
+}
 function journalPanel(){if(!s||mode==='level')return;stop('journal');if(s.status==='playing')save();panel(journalMarkup(s));renderJournalPortraits($('overlay'));button('closeJournal',()=>s.status==='playing'?pause():resultPanel());}
 
 function mainPanel(){stop('main');save();panel('<small>MAIN TREE · 이번 도전에서 하나만 선택</small><h2>주력 사격을 선택하세요</h2><p>선택한 메인과 보조 기술만 성장합니다. 기존 다른 속성 투자분은 기술 선택 횟수로 돌려드립니다.</p><div class="cards main-cards">'+mainSkills.map(id=>{const k=skills.find(k=>k.id===id);return '<button class="skill-main" id="main-'+id+'">'+iconSVG(id)+'<b>'+k.name+'</b><span>'+k.description+'</span></button>';}).join('')+'</div>');mainSkills.forEach(id=>button('main-'+id,()=>{if(chooseMain(s,id)){save();resume();}}));}
