@@ -9,3 +9,7 @@
 검증: 전체482 통과(API 포함), 성장21상태, UI4화면, 효과66장면, 메인5종 저장 왕복 전투, fallback/정지/Canvas 복원 통과. 실제 iPhone 및 장시간 난이도 밸런스는 미검증.
 개발 서버 이미지 허용 누락과 모바일 제목 고정 스타일 충돌 수정. QA 픽셀 프로브는 willReadFrequently로 CPU 렌더를 처음부터 고정해 엄격 동일성 비교 유지.
 배포: 진행 예정. 최종 결과는 이 파일과 WORK_STATUS 상단에 기록.
+
+## 최종 배포 결과
+[완료] 2026-10-16 스킬 일괄 개선 배포 완료. 운영 release-20261016-232040-8ac8ef / https://168.107.21.43/ / runtime a7c1cd1. 두루마리 UI·5중3 메인·전용보조8종·유니크 베르가스·플레이어/적 공격 VFX 반영. 전체482/API 통합 및 서버25 통과, 로컬 성장21상태·공개 UI4화면/효과66/5메인 저장 왕복·fallback 통과. 공개TLS/121자산 일치/아틀라스/HTTP308/health·쿠키 확인, 브라우저 오류0·운영 점수 제출0. 실제 iPhone 및 장시간 밸런스 플레이 미검증. 증거 docs/qa-skill-release-20261016/RELEASE_SUMMARY.md 및 public/. 실행 중 세션 없음(서버 종료), 차단 없음. 다음 실제 플레이 피드백에 따른 시너지 수치 조정 또는 후속 연출 설계. 이번 배포 승인 소진: 이후 평상시 수정·문서·로컬커밋, 새 명시 배포 전 테스트/푸시/배포/공개검증 금지. 새 디자인은 시안 확인 규칙 복귀.
+공개 검증: public-https.txt / public/skill-renewal-report.json / public/renewal.txt. 배포 로그 deploy.txt. 모바일 PNG public/support-mobile.png 육안 확인 완료. 모든 검증 명령 종료.
