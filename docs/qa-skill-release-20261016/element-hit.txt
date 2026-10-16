@@ -1,0 +1,11 @@
+{
+  "result": {
+    "elementsDistinct": true,
+    "pauseStable": true,
+    "expiredCleared": true,
+    "canvasStateRestored": true,
+    "maxEffects": 48,
+    "medianDrawMs": 1
+  },
+  "errors": []
+}

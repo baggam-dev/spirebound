@@ -1,4 +1,5 @@
 import {skillVisualProfile,drawSkillHitMark} from './skill-visuals.js';
+import {drawElementCrown} from './skill-burst-art.js';
 // Short, local hit accents. No combat RNG, damage, or persistent particle state.
 const duration={fire:.3,frost:.34,poison:.4,chain:.22};
 export function elementHitEffects(player,point,origin,elemental=true,shard=false){
@@ -46,5 +47,5 @@ export function drawElementHit(c,f){
    stroke(c,points,'#8e80e1',4);stroke(c,points,'#e5e5ff',1);}
   if(age<.4)spark(c,0,0,5,'#fff5c9');
  }
- drawSkillHitMark(c,f,age);c.restore();return true;
+ drawElementCrown(c,f.hitElement,age,v.level);drawSkillHitMark(c,f,age);c.restore();return true;
 }

@@ -14,8 +14,8 @@ export function drawGroundField(c,z,kind,time=0){
   c.beginPath();c.arc(z.x,z.y,Math.max(0,z.r-2),0,Math.PI*2);c.clip();
   for(let i=0;i<12;i++){const a=i*2.4,rad=z.r*Math.sqrt((i+.5)/12)*.85,x=Math.round(z.x+Math.cos(a)*rad),y=Math.round(z.y+Math.sin(a)*rad),phase=(time*(fire?1.6:.65)+i*.31)%1;
    c.fillStyle=color;c.globalAlpha=fire?.55:.28;
-   if(fire){const h=4+Math.round(phase*9);c.fillRect(x-2,y-h,4,h);c.fillStyle='#ffe3a1';c.fillRect(x-1,y-h+2,2,3);}
-   else{c.fillRect(x-5,y-Math.round(phase*9),10,3);c.fillRect(x-2,y-3-Math.round(phase*9),7,3);}
+   if(fire){const h=4+Math.round(phase*9);c.fillStyle='#a84935';c.fillRect(x-3,y-h,6,h);c.fillStyle='#ed9556';c.fillRect(x-2,y-h-2,3,h+1);c.fillRect(x+1,y-h+3,2,h-2);c.fillStyle='#ffe3a1';c.fillRect(x-1,y-h+2,2,3);}
+   else{c.fillRect(x-5,y-Math.round(phase*9),10,3);c.fillRect(x-2,y-3-Math.round(phase*9),7,3);if(!hostile){c.fillStyle='#b9dba0';c.fillRect(x+3,y-6-Math.round(phase*7),2,2);c.fillStyle='#547b57';c.fillRect(x-4,y+2,7,2);}}
   }
  }
  c.restore();

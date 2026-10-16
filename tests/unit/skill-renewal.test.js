@@ -34,7 +34,7 @@ test('fire powder only boosts the explosion center; ember cannot recursively tri
  const base=[foe(0),foe(1,35)],boosted=[foe(0),foe(1,35)],p={fire:2,damage:20};
  elementalImpact(p,base[0],base,{enemies:base});elementalImpact({...p,blastTip:2},boosted[0],boosted,{enemies:boosted});
  assert.ok(boosted[0].hp<base[0].hp);assert.equal(boosted[1].hp,base[1].hp);
- const e=foe(0),r={enemies:[e]};let triggers=0;for(let i=0;i<4;i++)triggers+=elementalImpact({...p,emberMark:3},e,[e],r).filter(f=>f.slash).length;
+ const e=foe(0),r={enemies:[e]};let triggers=0;for(let i=0;i<4;i++)triggers+=elementalImpact({...p,emberMark:3},e,[e],r).filter(f=>f.synergyEffect==='ember').length;
  assert.equal(triggers,1);assert.equal(e.emberCooldown,1.4);assert.equal(r.fireZones,undefined);
 });
 test('frost bond preserves two-hit freeze and immunity while adding a thaw slow',()=>{

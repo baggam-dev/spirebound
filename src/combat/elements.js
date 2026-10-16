@@ -22,11 +22,11 @@ export function elementalImpact(p,target,enemies,room,shot={}){
    if(e.hp>0&&p.fire>=2){stack(e,'burnStacks',2,(6+3*(p.fire-2))*boost,6);if(p.fire>=3)e.burnField=fireFieldSpec(p);
     if(dealt>0&&p.emberMark&&e.burnStacks.length>=3&&!(e.emberCooldown>0)&&!segmentBlocked(target,e,room?.obstacles||[],1)){
      damage(e,blast*(p.emberMark>=2?.35:.2));e.emberCooldown=p.emberMark>=3?1.4:2;
-     effects.push({x:e.x,y:e.y,r:17,t:.25,color:'#f2b974',slash:true});
+     effects.push({x:e.x,y:e.y,r:17,t:.25,duration:.25,color:'#f2b974',synergyEffect:'ember'});
     }
    }
   }
-  effects.push({x:target.x,y:target.y,r:radius,t:.22,color:'#ff9b49',instant:true});
+  effects.push({x:target.x,y:target.y,r:radius,t:.22,duration:.22,color:'#ff9b49',instant:true,playerBlast:'fire'});
  }
  if(p.poison&&target.hp>0){
   const lasting=p.evolutions?.poison==='ember',potent=p.evolutions?.poison==='flare';
@@ -52,7 +52,7 @@ export function tickElements(room,dt,poisonLevel=0){bindDefenses(room.enemies);
  for(const source of gas){const e=source.owner;if(!e.sporeLevel||e.sporeCooldown>0)continue;
   const radius=Math.min(source.r,e.sporeLevel>=3?72:48),dot=e.poisonStacks.filter(n=>n.time>0).sort((a,b)=>b.dps-a.dps)[0];if(!dot)continue;
   const targets=enemies.filter(n=>n!==e&&n.hp>0&&grounded(n)&&!n.poisonStacks?.some(d=>d.time>0)&&!n.sporeDot&&near(n,e,radius)&&!segmentBlocked(e,n,room.obstacles||[],1)).sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y)).slice(0,e.sporeLevel>=2?2:1);
-  if(targets.length){for(const n of targets){n.sporeDot={time:1.5,dps:dot.dps*.5};effects.push({x:e.x,y:e.y,toX:n.x,toY:n.y,t:.22,color:'#a6cc83'});}e.sporeCooldown=2;}
+  if(targets.length){for(const n of targets){n.sporeDot={time:1.5,dps:dot.dps*.5};effects.push({x:e.x,y:e.y,toX:n.x,toY:n.y,t:.3,duration:.3,color:'#a6cc83',synergyEffect:'spore'});}e.sporeCooldown=2;}
  }
  for(const e of enemies){
   if(e.sporeDot){const dot=e.sporeDot;if(e.hp>0&&grounded(e))damage(e,Math.min(dt,dot.time)*dot.dps);dot.time=Math.max(0,dot.time-dt);if(!dot.time)delete e.sporeDot;}

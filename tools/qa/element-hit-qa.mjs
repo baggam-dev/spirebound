@@ -20,11 +20,11 @@ try{
     if(element==='chain')drawElementHit(c,{...f,toX:x+68,toY:y+8,t:f.duration*(1-age)});
    }
   }
-  const canvas=document.createElement('canvas');canvas.width=960;canvas.height=540;const probe=canvas.getContext('2d');
+  const canvas=document.createElement('canvas');canvas.width=960;canvas.height=540;const probe=canvas.getContext('2d',{willReadFrequently:true});
   const effects=Array.from({length:48},(_,i)=>elementHitEffects({[['fire','frost','poison','chain'][i%4]]:1},{x:70+i%12*72,y:90+Math.floor(i/12)*110},{x:20,y:90})[0]);
   const snapshot=()=>probe.getImageData(0,0,960,540).data.toString();const signatures=[];
   for(const element of ['fire','frost','poison','chain']){probe.clearRect(0,0,960,540);const f=Object.freeze({...elementHitEffects({[element]:1},{x:200,y:200},{x:100,y:200})[0],t:.1});
-   const matrix=probe.getTransform().toString();probe.globalAlpha=.7;drawElementHit(probe,f);const one=snapshot();probe.clearRect(0,0,960,540);drawElementHit(probe,f);if(snapshot()!==one)throw Error('Unstable paused image');if(probe.globalAlpha!==.7||probe.getTransform().toString()!==matrix)throw Error('Canvas state leaked');signatures.push(one);
+   const matrix=probe.getTransform().toString();probe.globalAlpha=.7;drawElementHit(probe,f);const one=snapshot(),firstBytes=probe.getImageData(0,0,960,540).data;probe.clearRect(0,0,960,540);drawElementHit(probe,f);if(snapshot()!==one){const second=probe.getImageData(0,0,960,540).data,diffs=[];for(let i=0;i<second.length;i++)if(second[i]!==firstBytes[i]&&diffs.length<8)diffs.push([i,firstBytes[i],second[i]]);throw Error('Unstable paused image: '+element+' '+JSON.stringify(diffs));}if(probe.globalAlpha!==.7||probe.getTransform().toString()!==matrix)throw Error('Canvas state leaked');signatures.push(one);
    probe.clearRect(0,0,960,540);drawElementHit(probe,{...f,t:0});if(probe.getImageData(0,0,960,540).data.some(v=>v!==0))throw Error('Expired hit remains visible');
   }
   if(new Set(signatures).size!==4)throw Error('Elements visually identical');

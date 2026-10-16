@@ -20,5 +20,6 @@ export function drawArrowImpact(c,f){
  c.fillRect(3+Math.round((1-life)*5),-1,6,2);
  c.fillRect(-6,-7-Math.round((1-life)*3),2,4);
  c.fillRect(-6,3+Math.round((1-life)*3),2,4);
+ if(f.precision){const reach=5+(1-life)*12;c.strokeStyle='#dbc38c';c.lineWidth=1;c.beginPath();c.moveTo(-reach,-4);c.lineTo(-reach,4);c.moveTo(reach,-4);c.lineTo(reach,4);c.stroke();c.fillStyle='#fff3ce';c.fillRect(-1,-9,2,4);c.fillRect(-1,6,2,4);}
  c.restore();return true;
 }

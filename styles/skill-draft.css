@@ -6,3 +6,9 @@
 @media(prefers-reduced-motion:reduce){.skill-draft *{scroll-behavior:auto}}
 
 .skill-draft .draft-card em{margin:0;color:#695134;font-size:10px;line-height:1.5;font-style:normal}.skill-draft .draft-card em:empty{display:none}
+
+/* Global mobile header rules must not resize the modal's semantic header. */
+body:has(.skill-draft-panel)>header{display:none!important}.skill-draft .draft-header{height:auto!important;min-height:0!important;flex:none}.skill-draft .draft-header small{display:block}
+@media(orientation:landscape) and (max-height:550px){.skill-draft .draft-header h2{line-height:1.15;margin:1px 0 3px}.skill-draft .draft-header small{font-size:8px}.skill-draft .draft-card .draft-brief{min-height:33px}}
+
+.skill-draft .draft-header{position:static!important;inset:auto!important;z-index:auto!important;width:auto!important;transform:none!important}

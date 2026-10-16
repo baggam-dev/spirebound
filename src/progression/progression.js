@@ -51,7 +51,7 @@ export function hitEnemy(p,e,enemies,obstacles=[],scale=1,elemental=true,room=nu
  if(shot.primary&&p.precision){const burst=(e.precisionHits||0)>=(p.evolutions?.precision==='sniper'?1:2);recordPrecisionHit(p,e);if(burst)effects.push({x:e.x,y:e.y-28,t:.65,color:'#f9e2a5',text:'약점!'});}
  shot={...shot,validDirect:e.hp<beforeDirect,venomPrimary:shot.venomPrimary??shot.primary};
  if(p.chain&&elemental&&shot.validDirect)p.chargeBonus=chargePrimary(sourcePlayer,shot);
- if(p.chargeBonus)effects.push({x:e.x,y:e.y-28,t:.5,color:'#dcc4ff',text:'축전 방전'});
+ if(p.chargeBonus)effects.push({x:e.x,y:e.y-28,t:.5,color:'#dcc4ff',text:'축전 방전'},{x:e.x,y:e.y,t:.28,duration:.28,synergyEffect:'charge'});
  if(wasAlive)markFireKill(e,fireFieldSpec(p));
  if(elemental)effects.push(...elementalImpact(p,e,enemies,room,shot));
  else if(p.poison)effects.push(...elementalImpact({...p,fire:0},e,enemies,room,shot));

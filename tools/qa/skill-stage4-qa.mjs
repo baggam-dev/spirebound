@@ -37,5 +37,5 @@ try{
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await context.close();
   }
  }
- assert.deepEqual(errors,[]);console.log(JSON.stringify({viewports:2,mainChoices:5,utilityChoice:true,keyboardAndTouch:true,save:true,pageErrors:0}));
+ assert.deepEqual(errors,[]);console.log(JSON.stringify({viewports:2,mainChoices:3,utilityChoice:true,keyboardAndTouch:true,save:true,pageErrors:0}));
 }finally{await browser.close();}

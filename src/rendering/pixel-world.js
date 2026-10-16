@@ -10,6 +10,7 @@ import {drawGruntSprite} from './grunt-sprite.js';
 import {objectPoint} from '../world/object-positions.js';
 import {interactionAge} from './interaction-visuals.js';
 import {bossPose} from './boss-poses.js';
+import {drawSynergyTrail,drawHostileProjectile} from './combat-vfx.js';
 import {drawElementNock,drawSkillTrail} from './skill-visuals.js';
 import {segmentBlocked} from '../world/terrain.js';
 // Presentation only: animation history never enters the saved run or combat RNG.
@@ -17,7 +18,7 @@ const motion = new WeakMap();
 const ink = '#111720';
 const palettes = {fire:['#ff713d','#ffe7a0'],frost:['#71c9ef','#e8fcff'],poison:['#73cc68','#d7ff99'],chain:['#a18aff','#f5e9ff'],precision:['#dbc18a','#fff0c6']};
 export function shotPreparation(run){
- const p=run?.player,element=p?.fire?'fire':p?.poison?'poison':p?.frost?'frost':p?.chain?'chain':null;
+ const p=run?.player,element=p?.fire?'fire':p?.poison?'poison':p?.frost?'frost':p?.chain?'chain':p?.precision?'precision':null;
  if(!element||!(run.attack>0&&run.attack<.18))return null;
  const room=run.floors?.[run.floor]?.[run.room];
  if(!room?.enemies?.some(enemy=>enemy.hp>0&&!['air','splitJump'].includes(enemy.phase)&&enemy.attackPhase!=='leap'&&!segmentBlocked(p,enemy,room.obstacles,3)))return null;
@@ -101,12 +102,12 @@ export function drawObjectDetails(c,s,r){c.save();const t=s.elapsed;
  if(r.type==='fountain'){box(c,456,121,48,4,'#384e59');box(c,462,102,36,2,r.used?'#526565':'#afd8d2');if(!r.used){for(let i=0;i<3;i++){const x=465+(i*11+Math.floor(t*9))%30;box(c,x,109+i%2*5,6,1,'#ceeee3');}box(c,478,89,4,15,'#78bdbd');box(c,479,88,2,12,'#d3f5ed');}}
  if(['up','down','exit'].includes(r.type)){for(let i=0;i<5;i++){box(c,458+i*3,90+i*7,43-i*6,1,'#d6ceb077');box(c,455+i*3,91+i*7,2,4,'#273735');}box(c,451,87,4,39,'#4e5d58');box(c,505,87,4,39,'#4e5d58');box(c,450,85,6,3,'#a5ac8c');box(c,504,85,6,3,'#a5ac8c');}
  c.restore();}
-export function drawProjectile(c,b,time=0,player={}){if(b.delay>0)return;const [color,light]=palettes[b.element]||[({sunFairy:'#ff993f',snowFairy:'#99ddff',stormFairy:'#ffe16a',turret:'#cfb786'})[b.passive]|| (b.demonIce?'#85e6ff':b.frostArrow?'#8bd5f4':b.dark?'#c792ee':b.ricochet?'#74e1dd':b.poisonShot?'#d59bea':b.enemy?'#ed8877':b.seeker?'#bfdaee':'#d9c492'),b.frostArrow?'#e7fbff':'#fff2cd'];
+export function drawProjectile(c,b,time=0,player={},reduced=false){if(b.delay>0)return;const [color,light]=palettes[b.element]||[({sunFairy:'#ff993f',snowFairy:'#99ddff',stormFairy:'#ffe16a',turret:'#cfb786'})[b.passive]|| (b.demonIce?'#85e6ff':b.frostArrow?'#8bd5f4':b.dark?'#c792ee':b.ricochet?'#74e1dd':b.poisonShot?'#d59bea':b.enemy?'#ed8877':b.seeker?'#bfdaee':'#d9c492'),b.frostArrow?'#e7fbff':'#fff2cd'];
  c.save();c.translate(Math.round(b.x),Math.round(b.y));c.rotate(Math.atan2(b.vy??0,b.vx??1));
  if(b.frostShard&&!b.enemy){c.scale(.5,.5);c.globalAlpha*=.75;}
- if(b.enemy){const size=b.demonIce?5:b.poisonShot==='orb'?6:3;diamond(c,0,0,size+1,ink);diamond(c,0,0,size,color);box(c,-1,-1,2,2,light);}
+ if(drawHostileProjectile(c,b,time,reduced)){}else if(b.enemy){const size=b.demonIce?5:b.poisonShot==='orb'?6:3;diamond(c,0,0,size+1,ink);diamond(c,0,0,size,color);box(c,-1,-1,2,2,light);}
  else{box(c,-17,-2,14,4,color+'44');box(c,-10,-1,16,2,light);diamond(c,5,0,b.frostShard?4:3,color);box(c,-9,-3,3,2,color);box(c,-9,2,3,2,color);
-  if(b.element){c.save();drawSkillTrail(c,b.element,b.weapon||player,time);c.restore();
+  if(b.element){c.save();if(!reduced)drawSkillTrail(c,b.element,b.weapon||player,time);drawSynergyTrail(c,b.element,b.weapon||player,time,reduced);c.restore();
    if(b.element==='chain')line(c,[[-20,0],[-14,-4],[-11,2],[-5,-2]],color,1);
    if(b.element==='fire'){box(c,-7,-3,9,6,color);box(c,-3,-1,7,2,light);box(c,-11,-2,4,3,'#e64f36');}
    if(b.element==='frost'){diamond(c,3,0,4,color);line(c,[[-3,0],[7,0]],light,1);box(c,-12,-4,2,8,color+'88');box(c,-15,-1,8,2,color+'88');}

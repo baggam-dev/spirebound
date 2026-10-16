@@ -1,0 +1,9 @@
+{
+  "report": {
+    "distinctStages": 21,
+    "pauseStable": true,
+    "stateUnchanged": true,
+    "canvasRestored": true
+  },
+  "errors": []
+}
