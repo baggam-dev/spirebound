@@ -1,0 +1,15 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Error: unsupported_version
+    at failure (https://168.107.21.43/src/ranking/ranking-client.js:7:45)
+    at RankingClient.request (https://168.107.21.43/src/ranking/ranking-client.js:13:357)
+    at async RankingClient.start (https://168.107.21.43/src/ranking/ranking-client.js:18:26)
+    at async eval (eval at evaluate (:311:30), <anonymous>:1:219)
+    at async <anonymous>:337:30
+    at C:\baggam-dev\spirebound\tools\qa\public-https-qa.mjs:23:26 {
+  log: []
+}
+
+Node.js v24.14.0

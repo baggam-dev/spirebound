@@ -13,6 +13,13 @@ function Invoke-Checked([string]$Program, [string[]]$Arguments) {
     if ($LASTEXITCODE -ne 0) { throw "$Program failed (exit $LASTEXITCODE)." }
 }
 try {
+    $versionSource = [IO.File]::ReadAllText((Join-Path $projectRoot 'src/game/version.js'))
+    if ($versionSource -notmatch "export const RELEASE='([^']+)';") { throw 'Cannot read the client release version.' }
+    $clientVersion = $Matches[1]
+    $apiSettings = Get-Content -LiteralPath (Join-Path $projectRoot 'api/config.json') -Raw | ConvertFrom-Json
+    if (!$apiSettings.versions -or $apiSettings.versions[-1] -cne $clientVersion) {
+        throw "API latest version does not match client release $clientVersion. Update api/config.json before deploying."
+    }
     if ($Server -notmatch '^\d{1,3}(\.\d{1,3}){3}$') { throw 'Server must be an IPv4 address.' }
     if (!(Test-Path -LiteralPath $KeyPath -PathType Leaf) -and !$PackageOnly) { throw "SSH key not found: $KeyPath" }
     New-Item -ItemType Directory -Path $stage | Out-Null

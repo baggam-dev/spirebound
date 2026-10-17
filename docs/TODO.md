@@ -1,3 +1,11 @@
+[추가 버전 수정 재검증 완료·재배포 준비] 실제api/config.json을사용한JS생성6지도계약1/1통과·API최신0.39=클라이언트RELEASE일치. deploy.ps1은 불일치시패키징전차단, 구문검토통과. 로컬온라인QA도하드코딩0.38대신RELEASE사용. 앞선관련12·주인공4frames검증유효, 첫공개실패unsupported_version 원본보존. 다음버전동기화커밋푸시→공식재배포→공개실제새도전2뷰포트 및2캠페인API/hero확인. 운영현011942·차단없음.
+
+[공개검증 추가실패·원인2 수정중] release-20261018-011942-f4a4d6에서 새지도검증통과후 unsupported_version 확인. src/game/version.js=0.39.0-prebeta/APIconfig=0.38.0-prebeta 불일치 추가발견. 초기계약테스트가버전설정을가짜current값으로만들어누락→실제api/config.json 사용/최신RELEASE일치assert로수정. config0.39동기화·공식배포스크립트버전불일치차단가드추가. DB/기존기록삭제없음·최신버전표정책유지. 첫공개실패로그 docs/qa-ranking-opening-20261017/public-{browser,https}.txt 보존. 다음실제설정계약재검증→커밋푸시재배포→실제버튼/2캠페인start/hero확인. 2층PNG시안제작완료·초안환경20261018에보존예정/runtime미반영.
+
+[랭킹 수정 배포 완료·공개검증중] release-20261018-011942-f4a4d6 / runtime1bdaf72 / https://168.107.21.43/. 서버27/nginx/인증서/index/health통과, 이전214239. 로컬관련12·JS생성6지도·PC가로터치정상hero4frames통과. 공개실제새도전버튼PC/터치+hero4frames/2캠페인API starts·TLS147코드PNG세션이관 진행(세션반환값참조). 개발서버42332종료. 다음2층 일반/보스+소품3 PNG시안 내장imagegen868생성중·프롬프트 docs/design-drafts/environment-20261018/prompt-floor2-v1.md. 승인전2층runtime반영없음. 다음공개결과·PNG육안→4기록/최종푸시. 차단없음.
+
+[랭킹 수정 운영 배포 중] 검증기록1bdaf72/수정a5091ea/heroQA2d143fb main누적푸시완료. 관련12/12·실제생성6지도 및PC가로터치정상hero4frames확인. 공식deploy.ps1 진행·로그 docs/qa-ranking-opening-20261017/deploy.txt, runtime1bdaf72. 다음새릴리스확인→공개실제시작버튼2뷰포트·2캠페인runs·주인공ready·HTTPS자산검증. 개발서버42332:5174유지·차단없음·배포전운영214239. 다음2층청회색군사회랑 일반/보스+소품3시안권장·구상만/runtime미반영.
+
 [랭킹 수정 배포 전 검증 완료] 랭킹/API/실제JS생성계약 회귀12/12통과(8층10층×3seed 생성6지도 API허용·재요청동일, Python API/HTTP/SQLite포함). PC1280×800·가로터치844×390 heroSpriteReady=true/4frames/58px 및환경ready 통과 errors0·정상승인주인공PNG육안확인. 상세 docs/qa-ranking-opening-20261017/local-tests.txt 및 local/result.json. runtime추가수정없음·2d143fb/a5091ea누적. 다음검증기록커밋·누적푸시·공식배포→공개HTTPS새도전2캠페인 및PC/가로터치실제시작버튼/hero확인. localhost5174세션42332유지·운영214239유지·차단없음. 2층구상검토는next-floor2.md 최신절, 시안/런타임미착수.
 
 [랭킹/주인공 배포 진행] 2026-10-17 사용자 배포및다음검토명시. 범위 로컬2d143fb/a5091ea: API신5/6방허용·구지도호환/오류문구/실제생성지도계약회귀·주인공ready캡처. 시작트리깨끗함. 랭킹/API/실제JS생성계약 테스트세션46139·localhost5174서버42332. 다음결과→주인공PNGready 및실제정상외형 확인→커밋푸시배포→공개버튼새도전·코드자산·주인공확인. 운영214239 유지·2층은구상검토만/runtime미반영.

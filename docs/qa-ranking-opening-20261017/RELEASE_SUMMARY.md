@@ -5,3 +5,8 @@
 로컬: 관련 회귀12/12(Python API/HTTP/SQLite 및 실제JS 생성6지도 포함), PC1280×800/가로터치844×390 승인주인공4프레임·58px·환경ready·오류0. 두 실제PNG를 육안 확인했다. local-tests.txt, local/result.json 및 hero-*.png.
 
 다음: 검증기록/누적푸시→공식배포→공개147코드/PNG/TLS/API 및2캠페인 runs시작, PC/가로터치 실제새도전버튼과hero확인. 운영점수는 제출하지 않는다. 이전캡처를 정상주인공 증거로 사용하지 않는다. 실제기기/저사양장시간/전층수동플레이는 검증범위 아님.
+
+
+## 첫 배포 공개 실패와 추가 수정
+
+release-20261018-011942-f4a4d6 서버27검사와health는통과했으나 공개 실제 시작 버튼과새2캠페인검사에서 unsupported_version 발생. 클라이언트는0.39인데 api/config.json이0.38이었다. 첫계약회귀가허용버전을RELEASE로가짜생성한것도누락원인. config0.39동기화, 실제config계약회귀로변경, 공식배포전버전불일치차단가드추가, 로컬랭킹QA의하드코딩제거. 실제config계약1/1통과. public-browser.txt/public-https.txt 첫실패원본보존. DB/계정/기록삭제없음, 이전버전개인기록보존·최신버전만공개표시정책유지. 재배포 후실제버튼/API시작과hero를다시확인한다.

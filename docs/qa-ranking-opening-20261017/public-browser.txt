@@ -1,0 +1,19 @@
+viewport 1280
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Online start rejected
+
+1 !== 0
+
+    at file:///C:/baggam-dev/spirebound/tools/qa/ranking-opening-release-qa.mjs:18:11 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

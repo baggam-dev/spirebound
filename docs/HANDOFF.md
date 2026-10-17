@@ -1,5 +1,10 @@
 복사 가능한 최신 인계 블록:
 ```text
+[추가 버전 수정 재검증 완료·재배포 준비] 실제api/config.json을사용한JS생성6지도계약1/1통과·API최신0.39=클라이언트RELEASE일치. deploy.ps1은 불일치시패키징전차단, 구문검토통과. 로컬온라인QA도하드코딩0.38대신RELEASE사용. 앞선관련12·주인공4frames검증유효, 첫공개실패unsupported_version 원본보존. 다음버전동기화커밋푸시→공식재배포→공개실제새도전2뷰포트 및2캠페인API/hero확인. 운영현011942·차단없음.
+```
+
+복사 가능한 최신 인계 블록:
+```text
 [랭킹 수정 배포 전 검증 완료] 랭킹/API/실제JS생성계약 회귀12/12통과(8층10층×3seed 생성6지도 API허용·재요청동일, Python API/HTTP/SQLite포함). PC1280×800·가로터치844×390 heroSpriteReady=true/4frames/58px 및환경ready 통과 errors0·정상승인주인공PNG육안확인. 상세 docs/qa-ranking-opening-20261017/local-tests.txt 및 local/result.json. runtime추가수정없음·2d143fb/a5091ea누적. 다음검증기록커밋·누적푸시·공식배포→공개HTTPS새도전2캠페인 및PC/가로터치실제시작버튼/hero확인. localhost5174세션42332유지·운영214239유지·차단없음. 2층구상검토는next-floor2.md 최신절, 시안/런타임미착수.
 ```
 
