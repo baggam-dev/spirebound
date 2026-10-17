@@ -1,3 +1,4 @@
+import {basicShotPower} from './roll.js';
 import {segmentBlocked} from '../world/terrain.js';
 import {enemyDamageFactor} from './enemy-defense.js';
 import {relicStat} from '../progression/relics.js';
@@ -10,9 +11,9 @@ const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 export function bladeProfile(p){
  const level=Math.min(3,Math.max(0,p.aura||0)),branch=p.evolutions?.aura;
  const heavy=branch==='judgment',swift=branch==='dance';
- return {radius:(heavy?116:96)*(1+relicStat(p,'auraRange')),halfAngle:heavy?1.05:.76,
-  damage:([0,34,43,52][level])*(heavy?1.65:swift?.65:1)*(1+relicStat(p,'auraDamage')),
-  cooldown:([0,1.7,1.35,1.2][level])*(heavy?1.25:swift?.85:1)*(1-Math.min(.5,relicStat(p,'auraShield')/100)),
+ return {radius:(heavy?200:180)*(1+relicStat(p,'auraRange')),halfAngle:heavy?1.25:Math.PI/3,
+  damage:basicShotPower(p)*([0,2,4,6][level])*(heavy?1.2:swift?.5:1)*(1+relicStat(p,'auraDamage')),
+  cooldown:([0,3.2,3,2.8][level])*(heavy?1.25:1)*(1-Math.min(.5,relicStat(p,'auraShield')/100)),
   windup:level>=2?.1:.16,strikes:swift?2:1};
 }
 export function resetSpectralBlade(s){states.delete(s);}

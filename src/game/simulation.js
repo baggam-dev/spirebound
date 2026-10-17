@@ -1,3 +1,5 @@
+import {tickRoll,tickRollMines,rollImmune} from '../combat/roll.js';
+import {syncUnlocks} from '../progression/skill-overhaul.js';
 import {tickSpectralBlade,resetSpectralBlade} from '../combat/spectral-blade.js';
 import {updateChaserAttack} from '../combat/chaser.js';
 import {recoverPlayerPosition} from '../world/player-position.js';
@@ -41,7 +43,7 @@ import {hitEnemy,tickEffects,xpRequired} from '../progression/progression.js';
 import {takeDamage,killRecovery,monsterPotionReward} from '../combat/survival.js';
 import {ENEMY_COOLDOWN_FACTOR,CHARGE_DURATION,CHARGE_WARNING,attackProfile,chargeProfile,chargerRecovering} from '../combat/balance.js';
 import {runRandom} from './random.js';
-import {absorbGuardian} from '../combat/utility.js';
+import {absorbGuardian,tickBloodContract} from '../combat/utility.js';
 import {tickFinalEscape} from '../world/final-escape.js';
 
 const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
@@ -52,8 +54,8 @@ export function collisionTime(a,b,c,radius){
 export function enemyRadius(e){return e.variant==='slime'||e.type==='minislime'?slimeRadius(e):(e.type==='boss'?32:e.type==='brute'||e.type==='demonCaptain'?24:e.type==='demonBat'?14:19)*(e.scale??1);}
 export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||e.attackPhase==='leap';}
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
-export function enterRoom(s){resetSpectralBlade(s);
- recoverPlayerPosition(s.player,currentRoom(s).obstacles);trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
+export function enterRoom(s){resetSpectralBlade(s);delete s.roll;s.bloodBossHealth={};
+ recoverPlayerPosition(s.player,currentRoom(s).obstacles);trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.rollMines=[];r.fairyBeam=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
  s.player.actionStun=0;s.player.electricGrace=0;resetDemonAttack(r);
  // Do not preserve an off-screen attack aimed at the previous visit's position.
  for(const e of r.enemies){resetCommanderAttack(e);if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}if(e.type==='chaser'){e.chaserWindup=0;e.chaserStrike=0;e.chaserCooldown=0;delete e.chaserAim;}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
@@ -71,8 +73,10 @@ export function stepRun(s,dt,input={x:0,y:0}){
  events.push(...tickFinalEscape(s,currentRoom(s),dt));
  s.entryGrace=Math.max(0,(s.entryGrace||0)-dt);let r=currentRoom(s);
  let hitOrigin=null;
- const hurt=(raw,source='알 수 없는 공격',kind=null,origin=hitOrigin)=>{if(s.entryGrace>0||p.hp<=0||s.invulnerable>0||raw<=0)return;if(absorbGuardian(s)){s.invulnerable=.65;effects.push({x:p.x,y:p.y-35,t:.8,color:'#b8d9f1',text:'수호!'});metrics.shields++;return;}const before=p.hp,result=takeDamage(s,r.trialState==='active'?Math.min(raw,9):raw,kind);if(before>p.hp)effects.push({x:p.x,y:p.y-35,t:1,color:'#ff7188',text:'-'+(before-p.hp)+' ♥',hitSource:source,hitAngle:origin?Math.atan2(origin.y-p.y,origin.x-p.x):null});metrics.damageTaken+=before-p.hp;recordHit(s,source,before-p.hp,result==='blocked');if(result==='blocked'){metrics.shields++;events.push('shield');}};
- const n=Math.max(1,Math.hypot(input.x,input.y)),frostSlow=p.frostSlow>0?.72:1;moveBody(p,input.x/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),input.y/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),r.obstacles);p.frostSlow=Math.max(0,(p.frostSlow||0)-dt);
+ const hurt=(raw,source='알 수 없는 공격',kind=null,origin=hitOrigin)=>{if(s.entryGrace>0||p.hp<=0||s.invulnerable>0||rollImmune(s)||raw<=0)return;if(absorbGuardian(s)){s.invulnerable=.65;effects.push({x:p.x,y:p.y-35,t:.8,color:'#b8d9f1',text:'수호!'});metrics.shields++;return;}const before=p.hp,result=takeDamage(s,r.trialState==='active'?Math.min(raw,9):raw,kind);if(before>p.hp)effects.push({x:p.x,y:p.y-35,t:1,color:'#ff7188',text:'-'+(before-p.hp)+' ♥',hitSource:source,hitAngle:origin?Math.atan2(origin.y-p.y,origin.x-p.x):null});metrics.damageTaken+=before-p.hp;recordHit(s,source,before-p.hp,result==='blocked');if(result==='blocked'){metrics.shields++;events.push('shield');}};
+ if(Math.hypot(input.x,input.y)>.01)p.lastMove={x:input.x,y:input.y};
+ const rolling=tickRoll(s,r,dt,effects);if(!rolling){const n=Math.max(1,Math.hypot(input.x,input.y)),frostSlow=p.frostSlow>0?.72:1;moveBody(p,input.x/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),input.y/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),r.obstacles);}p.frostSlow=Math.max(0,(p.frostSlow||0)-dt);
+
  const d=p.y<48?0:p.x>930?1:p.y>492?2:p.x<30?3:-1;
  if(d>=0){const next=neighbor(s,d),aligned=Math.abs((d%2?p.y:p.x)-doorCenter(r,d))<(d%2?35:40);
   if(next>=0&&aligned&&!roomLocked(s,r)){s.room=next;r=currentRoom(s);Object.assign(p,doorArrival(r,(d+2)%4));enterRoom(s);events.push('room');}
@@ -82,7 +86,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  r.gateBanner=Math.max(0,(r.gateBanner||0)-dt);observeRoom(s,r);bindDefenses(r.enemies);if(r.enemies.some(e=>e.type==='boss'))bossHealth(r);
  for(const item of collectEssences(s,r))effects.push({x:p.x,y:p.y-45,t:1.2,color:essenceInfo(item.id).color,text:essenceInfo(item.id).label,essencePickup:true,fromX:item.x,fromY:item.y});
  const enemyHealthBefore=new Map(r.enemies.map(e=>[e,e.hp]));
- tickRain(s,dt);tickPassives(s,dt);effects.push(...tickThunder(s,dt));
+ tickRollMines(s,r,dt,effects);tickRain(s,dt);tickPassives(s,dt);effects.push(...tickThunder(s,dt));
  const elementBefore=r.enemies.reduce((n,e)=>n+Math.max(0,e.hp),0);effects.push(...tickElements(r,dt,p.poison||0));metrics.damageDealt+=elementBefore-r.enemies.reduce((n,e)=>n+Math.max(0,e.hp),0);
  tickBlasts(r,dt,p,raw=>hurt(raw,'정예 지연 폭발'),effects);
  if(s.entryGrace<=0)updateElites(r,dt,s.projectiles,p);
@@ -92,7 +96,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  if(s.entryGrace<=0)updateDemon(s,r,p,dt,s.projectiles,(raw,source)=>hurt(raw,source));
  const target=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!segmentBlocked(p,e,r.obstacles,3)).sort((a,b)=>distance(a,p)-distance(b,p))[0];
  tickSpectralBlade(s,r,dt,effects);
- if(target&&target.hp>0&&s.attack<=0&&!(p.actionStun>0)){fireArrow(s,target);events.push('shot');}
+ if(target&&target.hp>0&&s.attack<=0&&!rolling&&!(p.actionStun>0)){fireArrow(s,target);events.push('shot');}
  for(const e of r.enemies){
   hitOrigin=e;const hpBefore=Math.max(0,e.hp);tickEffects(e,dt);metrics.damageDealt+=hpBefore-Math.max(0,e.hp);const upper=e.variant==='king'||upperTypes.includes(e.type);const transitioning=upper&&tickUpperState(e,p,r,s.entryGrace>0?0:dt,s.projectiles);if(e.hp<=0||e.frozen>0||transitioning||r.enemies.some(n=>n.variant==='king'&&n.kingTransition>0))continue;
   if(e.cd>0)e.cd+=dt*(1-frostAttackRate(e));if(e.jumpCooldown>0)e.jumpCooldown+=dt*(1-frostAttackRate(e));
@@ -138,6 +142,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  if(p.hp<=0){events.push('dead');return {events,effects};}
  r.nextEnemyId=Math.max(r.nextEnemyId||0,...r.enemies.map(e=>e.id+1));
  resolveFireFields(r);
+ tickBloodContract(s,r,dt,effects);
  const defeated=r.enemies.filter(e=>e.hp<=0);r.enemies=r.enemies.filter(e=>e.hp>0);
  if(r.demon&&advanceDemonPhase(r,s.projectiles))events.push('demonPhase');
  for(const e of defeated){
@@ -162,6 +167,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  }
  while(p.xp>=xpRequired(p.level)){p.xp-=xpRequired(p.level);p.level++;s.pendingLevels++;(s.levelQueue??=[]).push(p.level);}
 
+ syncUnlocks(s);
  if(r.tutorial&&!s.key&&!r.enemies.length)s.tutorialComplete=true;
  if(r.chestBattle==='active'&&!r.enemies.some(e=>!e.summoned)){r.chestBattle='done';r.enemies=[];r.hazards=[];s.projectiles=[];}
  if(r.trialState==='active'&&!r.enemies.length){r.trialState='reward';prepareTrialLoot(s);events.push('trialReward');}

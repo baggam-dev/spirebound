@@ -27,7 +27,7 @@ export function skillPreview(player,id){
  if(Math.abs(a.rate-b.rate)>.001)row('초당 사격',a.rate,b.rate,'회',2);
  if(id==='fire'){row('폭발 반경',a.radius,b.radius,'',0);if(b.burn!==a.burn)row('화상 1중첩 / 초',a.burn,b.burn);if(next.fire===3)row('3중첩 화상 처치','장판 없음','화염 장판 생성');}
  if(id==='poison'){row('독 1중첩 / 초',a.poison,b.poison);row('독가스 반경',player.poison?30+12*player.poison:0,30+12*next.poison,'',0);if(next.poison===3)row('독 처치','폭발 없음','독 폭발 해금');}
- if(id==='frost'){row('빙결까지 적중',player.frost?frostThreshold(player.frost):'없음',frostThreshold(next.frost),'회',0);row('빙결 적 사망 파편',player.frost?(player.frost>=4?12:6):0,next.frost>=4?12:6,'발',0);}
+ if(id==='frost'){row('빙결까지 적중',player.frost?frostThreshold(player.frost):'없음',frostThreshold(next.frost),'회',0);row('빙결 적 사망 파편',player.frost?(player.frost>=3?12:6):0,next.frost>=3?12:6,'발',0);}
  if(id==='chain'){row('전이 대상 최대',player.chain?lightningSpec(player).count:0,lightningSpec(next).count,'체',0);row('3초마다 천둥',player.chain||0,next.chain,'체',0);}
  if(id==='precision')row('같은 대상 강화탄',player.precision?'3번째 적중':'없음',next.precision>=3?'3번째 적중 · 분기 선택':'3번째 적중');
  if(id==='weakpoint')row('연속 직격 보너스',(player.weakpoint||0)*10,next.weakpoint*10,'%',0);
@@ -37,6 +37,7 @@ export function skillPreview(player,id){
  if(id==='pierce')row('추가 관통',player.evolutions?.pierce==='impact'?0:(player.pierce||0)+(player.evolutions?.pierce==='depth'?2:0),next.evolutions?.pierce==='impact'?0:next.pierce+(next.evolutions?.pierce==='depth'?2:0),'체',0);
  if(id==='repeat')row('추가 연속탄','없음','0.16초 후 60% 피해 1발');
  if(id==='homing')row('별도 유도 화살',player.homing?'1.5초마다 1발':'없음','1.5초마다 100% 일반탄 1발');
+ if(['rollMastery','sunFairy','snowFairy','stormFairy','fairyKing'].includes(id))row('새로운 능력','없음',skill.description);
  if(id==='ultimate')row('궁극기','미습득','선택 후 화살비 / 석궁 결정');
  if(synergyInfo(id))row('전용 성장',synergyStep(player,id),synergyStep(next,id));
  if(id==='growthHealth')row('최대 체력',player.max,next.max,'♥',0);

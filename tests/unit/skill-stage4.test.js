@@ -23,16 +23,6 @@ test('precision main guarantees an early direct synergy and only primary arrows 
  const turret=[];emitWeaponVolley(turret,weaponSnapshot(p),p,e,1,true);assert.ok(turret.every(b=>!b.primary&&!b.focused));
 });
 
-test('precision level-three branches differ and focus only boosts direct player arrows',()=>{
- const s=newRun(2),p=s.player;p.mainSkill='precision';p.precision=3;
- assert.equal(chooseEvolution(p,'precision','sniper'),true);
- const e={id:1,type:'chaser',x:100,y:100,hp:1000,max:1000};const first=e.hp;hitEnemy(p,e,[e],[],1,true,null,p,{primary:true});const hit1=first-e.hp;const second=e.hp;hitEnemy(p,e,[e],[],1,true,null,p,{primary:true});assert.ok(second-e.hp>hit1*1.4);
- const normal=attackInterval(p);assert.equal(chooseUtility(s,'focus'),false);p.level=4;assert.equal(chooseUtility(s,'focus'),true);assert.equal(castUtility(s),'focus');assert.ok(attackInterval(p)<normal);
- const target={id:2,type:'chaser',x:120,y:100,hp:500,max:500};let before=target.hp;hitEnemy(p,target,[target],[],1,true,null,p,{primary:true,focused:false});const unbuffed=before-target.hp;before=target.hp;target.precisionHits=0;hitEnemy(p,target,[target],[],1,true,null,p,{primary:true,focused:true});assert.ok(before-target.hp>unbuffed*1.19);
- const restored=parseSave(encodeSave(s));assert.equal(restored.player.utility,'focus');assert.equal(restored.player.focusTime,5);advanceClock(restored,5,false);assert.equal(restored.player.focusTime,0);
-});
+test('precision branches retain focus while awakening spends health for cadence and not extra damage',()=>{const s=newRun(2),p=s.player;p.mainSkill='precision';p.precision=3;assert.ok(chooseEvolution(p,'precision','sniper'));assert.equal(chooseUtility(s,'focus'),false);p.level=5;s.floors[1].find(r=>r.type==='boss').used=true;const normal=attackInterval(p);assert.ok(chooseUtility(s,'focus'));assert.equal(castUtility(s),'focus');assert.equal(p.hp,4);assert.ok(attackInterval(p)<normal/1.6);const restored=parseSave(encodeSave(s));assert.equal(restored.player.focusTime,7);advanceClock(restored,7,false);assert.equal(restored.player.focusTime,0);});
 
-test('first aid is floor bounded and guardian intercepts one live hit without changing enemy movement',()=>{
- const heal=newRun(3);heal.player.level=4;heal.player.hp=3;assert.equal(chooseUtility(heal,'firstAid'),true);assert.equal(castUtility(heal),'firstAid');assert.equal(heal.player.hp,4);assert.equal(castUtility(heal),false);advanceClock(heal,20,false);assert.equal(castUtility(heal),false);assert.deepEqual(parseSave(encodeSave(heal)).utilityHealedFloors,[0]);
- const s=newRun(4);s.player.level=4;assert.equal(chooseUtility(s,'guardian'),true);assert.equal(castUtility(s),'guardian');const r=currentRoom(s);r.enemies=[];s.entryGrace=0;s.projectiles=[{x:s.player.x-30,y:s.player.y,vx:600,vy:0,life:1,enemy:true,damage:20,hit:[]}];const hp=s.player.hp;stepRun(s,.1);assert.equal(s.player.hp,hp);assert.equal(s.guardianCharges,0);assert.equal(s.projectiles.length,0);
-});
+test('blood pact needs kills while guardian intercepts one live hit without slowing enemies',()=>{const s=newRun(4);s.player.level=5;s.floors[1].find(r=>r.type==='boss').used=true;assert.ok(chooseUtility(s,'guardian'));assert.equal(castUtility(s),'guardian');assert.equal(s.guardianTime,10);const r=currentRoom(s);r.enemies=[];s.entryGrace=0;s.projectiles=[{x:s.player.x-30,y:s.player.y,vx:600,vy:0,life:1,enemy:true,damage:20,hit:[]}];const hp=s.player.hp;stepRun(s,.1);assert.equal(s.player.hp,hp);assert.equal(s.guardianCharges,0);assert.equal(s.projectiles.length,0);});

@@ -1,0 +1,12 @@
+✔ all boss/main combinations generate valid level ten builds with requested budgets (238.7947ms)
+✔ same practice seed recreates build and boss state (17.0796ms)
+✔ practice store writes and completion leave normal save and history untouched (27.2927ms)
+✔ slime practice ends only after final split bodies die (10.2089ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 760.0793

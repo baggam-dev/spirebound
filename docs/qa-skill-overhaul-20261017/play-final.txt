@@ -1,0 +1,1 @@
+{"rows":[{"mobile":false,"rollMoves":true,"cooldownSaved":true,"shieldLive":true,"damageFinite":true,"pauseStable":true,"reload":true},{"mobile":true,"rollMoves":true,"cooldownSaved":true,"shieldLive":true,"damageFinite":true,"pauseStable":true,"reload":true}],"errors":[]}

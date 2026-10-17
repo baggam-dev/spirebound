@@ -23,7 +23,7 @@ test('skipping relics preserves the equipped item and claims the cache without c
 });
 test('relic benefits use exact distance boundaries, shield limits and cooldowns',()=>{
  const p={relic:'lens',x:0,y:0};assert.equal(directRelicFactor(p,{x:139,y:0}),1);assert.equal(directRelicFactor(p,{x:140,y:0}),1);assert.equal(directRelicFactor(p,{x:280,y:0}),1.2);
- assert.equal(shieldCooldown({armor:2,relic:'iron'}),27);assert.equal(shieldCooldown({armor:99,relic:'iron'}),12);assert.equal(dodgeCooldown({relic:'iron'}),10);assert.equal(dodgeCooldown({}),10);
+ assert.equal(shieldCooldown({armor:2,relic:'iron'}),27);assert.equal(shieldCooldown({armor:99,relic:'iron'}),12);assert.equal(dodgeCooldown({relic:'iron'}),4);assert.equal(dodgeCooldown({}),4);
  const s=newRun();s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};s.player.split=4;s.player.chain=1;s.player.relic='rain';assert.ok(castUltimate(s));assert.equal(s.skill,20);
 });
 test('boots and stride bonuses are symmetric and diagonal motion is normalized',()=>{
@@ -52,6 +52,6 @@ test('new save fields reject invalid relics, codex keys and damage history',()=>
 test('damage diagnostics include capped burn, field and instant ultimate damage',()=>{
  const s=newRun(7),r=currentRoom(s);ensureMetrics(s);s.attack=999;r.enemies=[{id:0,type:'archer',x:600,y:300,hp:50,max:50,cd:999,burn:2,burnDamage:5}];stepRun(s,.1);assert.equal(s.metrics.damageDealt,.5);
  s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};s.player.split=4;s.player.chain=1;assert.ok(castUltimate(s));assert.equal(s.metrics.damageDealt,50);
- r.enemies=[{id:1,type:'archer',x:500,y:300,hp:500,max:500,cd:999}];s.player.evolutions={ultimate:'burst'};s.skill=0;castUltimate(s);stepRun(s,.1);assert.equal(s.metrics.damageDealt,100);
+ r.enemies=[{id:1,type:'archer',x:500,y:300,hp:500,max:500,cd:999}];s.player.evolutions={ultimate:'burst'};s.skill=0;castUltimate(s);stepRun(s,.1);assert.equal(s.metrics.damageDealt,169);
 });
 

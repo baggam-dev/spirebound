@@ -1,0 +1,48 @@
+{
+  "rows": [
+    {
+      "kind": "ordinary",
+      "oldRelease": "ad24ae8",
+      "newSaveRoundTrip": true,
+      "originalBytes": 98701,
+      "refund": 0
+    },
+    {
+      "kind": "capped",
+      "oldRelease": "ad24ae8",
+      "newSaveRoundTrip": true,
+      "originalBytes": 98741,
+      "refund": 2
+    },
+    {
+      "kind": "fairies",
+      "oldRelease": "ad24ae8",
+      "newSaveRoundTrip": true,
+      "originalBytes": 98757,
+      "refund": 0
+    },
+    {
+      "kind": "pending",
+      "oldRelease": "ad24ae8",
+      "newSaveRoundTrip": true,
+      "originalBytes": 98810,
+      "refund": 1
+    },
+    {
+      "kind": "turret",
+      "oldRelease": "ad24ae8",
+      "newSaveRoundTrip": true,
+      "originalBytes": 99278,
+      "refund": 0
+    },
+    {
+      "kind": "utility",
+      "oldRelease": "ad24ae8",
+      "newSaveRoundTrip": true,
+      "originalBytes": 98724,
+      "refund": 0
+    }
+  ],
+  "oldSourceFolder": "C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{409d28da-fe10-41eb-9410-b1d4d36bfc48}\\AC\\Temp\\spirebound-old-skill-owMGTb",
+  "sourcePreserved": true
+}

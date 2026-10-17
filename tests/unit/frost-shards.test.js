@@ -27,8 +27,8 @@ test('shards resume identically across saves and disappear on room entry',()=>{
  const s=newRun(2);s.player.frost=3;s.attack=999;frostShatter(s.player,{x:550,y:300,hp:0,frozen:1},s.projectiles);const t=parseSave(encodeSave(s));stepRun(s,.1);stepRun(t,.1);assert.deepEqual(s.projectiles,t.projectiles);enterRoom(t);assert.equal(t.projectiles.length,0);
 });
 test('Vergas damage grows and cooldown falls each level, and trial charge pressure exceeds ordinary enemies',()=>{
- const profiles=[1,2,3].map(aura=>bladeProfile({aura}));assert.deepEqual(profiles.map(p=>p.damage),[34,43,52]);assert.ok(profiles[2].cooldown<profiles[1].cooldown&&profiles[1].cooldown<profiles[0].cooldown);const a=chargeProfile({}),b=chargeProfile({trialChampion:true});assert.ok(b.speed>a.speed&&b.speed*b.duration>a.speed*a.duration);assert.ok(b.warning>=.25);assert.ok(attackProfile({trialChampion:true}).recovery<attackProfile({}).recovery);
+ const profiles=[1,2,3].map(aura=>bladeProfile({aura,damage:17}));assert.deepEqual(profiles.map(p=>p.damage),[34,68,102]);assert.ok(profiles[2].cooldown<profiles[1].cooldown&&profiles[1].cooldown<profiles[0].cooldown);const a=chargeProfile({}),b=chargeProfile({trialChampion:true});assert.ok(b.speed>a.speed&&b.speed*b.duration>a.speed*a.duration);assert.ok(b.warning>=.25);assert.ok(attackProfile({trialChampion:true}).recovery<attackProfile({}).recovery);
 });
 test('tiers distinguish main, rare and unique while ordinary supports remain normal',()=>{
- assert.equal(skillGrade('fire'),'main');assert.equal(skillGrade('split'),'rare');assert.equal(skillGrade('repeat'),'rare');assert.equal(skillGrade('homing'),'unique');assert.equal(skillGrade('aura'),'unique');
+ assert.equal(skillGrade('fire'),'main');assert.equal(skillGrade('split'),'rare');assert.equal(skillGrade('repeat'),'unique');assert.equal(skillGrade('homing'),'unique');assert.equal(skillGrade('aura'),'unique');
 });

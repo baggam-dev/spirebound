@@ -1,0 +1,1081 @@
+✔ every browser module dependency resolves inside src, including side-effect imports (198.2243ms)
+✔ ranking API SQLite and HTTP integration suite (3701.8912ms)
+✔ development API proxy forwards cookies and overrides claimed client IP (90.4406ms)
+✔ server serves game modules and refuses repository files and unsupported methods (62.5512ms)
+✖ ultimate requires an explicit choice and casts three local pulses with cooldown (54.429ms)
+✔ brute locks a safe landing, crosses cover, and leaves a recovery window (2.5542ms)
+✔ short melee attack is telegraphed and can be escaped without dodge (0.3488ms)
+✔ treasure grants one fixed random reward and rejects repeats or occupied rooms (47.9388ms)
+✔ events enforce affordable visible costs and cannot be purchased twice (19.4261ms)
+✔ trial battle, save, clear and reward have exactly-once transitions (39.6651ms)
+✔ skill evolution requires level three, locks once, and resumes pending choice after save (37.5187ms)
+✔ lightning branches trade concentrated damage for additional sustained links (2.1733ms)
+✔ arrow branches change spread, penetration and timing without multiplying primary arrows (12.5624ms)
+✖ arrow rain deals three bounded pulses only within its region and expires (10.4178ms)
+✔ guardian protection ends with its owner; explosive elite detonates only after warning (0.9132ms)
+✔ volley elite warns for a full interval and locks aim before its added shots (0.9338ms)
+✔ return paths offer distinct routes in new maps and never reveal unseen rooms (746.5402ms)
+✔ new choice and hazard state is validated rather than silently accepting invalid ids (13.4253ms)
+✔ leaving a trial preserves damage and does not grant its reward early (9.801ms)
+✔ elite reward is not repeated after saving its delayed explosion (26.8412ms)
+✔ plain and precision arrows mark actual contact, even on a lethal hit (103.1265ms)
+✔ elemental contacts keep their own visuals without a duplicate plain spark (54.0244ms)
+✔ dense contact effects keep newest sparks and unrelated cues (0.3674ms)
+✔ upper rosters cover six/seven-floor and nine/eight-floor formations with one support cap (14.9254ms)
+✔ deployment respects four entrances, cover, separation and saved positions (4249.8207ms)
+✔ future deployment layouts vary flanks while current ranking generation keeps the old stencil (70.0631ms)
+✔ new runs persist the upper-floor layout generation (317.6224ms)
+✔ upper introduction packs stay simple and do not retain elite health (67.2477ms)
+✔ gate announces both guardians, survivor fury, and rewards exactly once across reload (180.9508ms)
+✔ return notice survives reload and enrage creates fresh deployment without altering facilities (397.2451ms)
+✔ lower descent mixes upper pursuers without adding extra enemy counts (16.0413ms)
+✔ ultimate telemetry counts actual damage and excludes overkill (129.5731ms)
+✔ health upgrade preserves damage and death, never stacks, and leaves bosses unchanged (1.2685ms)
+✔ new spawns and frenzy are strengthened once; saves preserve health (64.252ms)
+✔ charge extends travel with a shorter readable warning and melee extends modestly (0.239ms)
+✔ all descent raw damage resolves to one heart while ascent and shields retain their rules (131.475ms)
+✔ descent heavy projectiles produce one-heart damage in live simulation (20.8399ms)
+✔ gate guardians use combo/dash and fan/ring patterns with faster recovery (43.0511ms)
+✔ king health increases exactly 30 percent and phase recovery is shorter (15.829ms)
+✖ prism shield covers direct, DoT and ultimate, releases immediately after last summon death and resumes (357.6324ms)
+✔ multiple summons protect until the last dies, ordinary guardian reduction does not multiply (215.6241ms)
+✔ large slime opens with puddles and shorter cadence while preserving minislime summon (7.5452ms)
+✔ escape key is shown alongside relics without consuming a relic slot (20.4564ms)
+✔ warden lift occurs only during the existing leap phase (21.9231ms)
+✔ prism charge and release follow real warning and beam timing (5.2683ms)
+✔ slime pose follows its own hazard, never another enemy warning (3.6943ms)
+✔ king windup changes to follow-through only after the real attack resolves (8.9852ms)
+✔ render pose is read-only and reconstructs identically after save or pause (7.7764ms)
+✔ all boss/main combinations generate valid level ten builds with requested budgets (1609.4494ms)
+✔ same practice seed recreates build and boss state (102.3301ms)
+✔ practice store writes and completion leave normal save and history untouched (136.9154ms)
+✔ slime practice ends only after final split bodies die (60.2809ms)
+✔ new commanders increase volley density and speed while legacy saves keep old attacks (963.7532ms)
+✔ reflection warns before firing two or four rounds, survives save and bounces once (275.6167ms)
+✔ phase two blinks into a telegraphed volley and casts rain on an relieved 10.4 second clock (97.2458ms)
+✔ new commander travels farther and continues movement during early volley preparation (170.449ms)
+✔ only new king phase three accelerates judgment and its dash without losing telegraphs (674.3731ms)
+✔ commander slight relief slows special shots five percent and keeps speeds while extending attack recovery (246.5265ms)
+✔ knife reach triggers before contact, resolves rapidly and respects cooldown (8.1143ms)
+✔ escaping blade reach and walls avoid damage at resolution (2.444ms)
+✔ simulation replaces immediate contact and save/resume retains blade timing (408.1535ms)
+✔ freezing prevents chaser blade progression (144.463ms)
+✔ wide slash intersects player circle at radial and angular boundaries (1.6329ms)
+✔ windup locks direction and survives save without following escape behind (163.6409ms)
+✔ compact rendering keeps critical feedback while bounding crowded accents (11.0723ms)
+✔ mobile pickup labels stay separated at the lower screen edge without moving inputs (2.9633ms)
+✖ fire reduces firing frequency by thirty-three percent with every attack-speed build (29.4727ms)
+✔ new room combinations preserve population limits and single upper support (56.8982ms)
+✔ boss openings distinguish earned counters and judgment recovery (1.2599ms)
+✔ same archer gains rounds, speed and shorter recovery with ascent and escape (12.0458ms)
+✔ split has one full arrow and discounted secondary arrows; haste grows ten percent (167.9783ms)
+✔ third prism pattern emits three rotated volleys and survives saved salvo state (5.1359ms)
+✔ legacy boss HP upgrade preserves wounds and is idempotent without extending maps (91.2613ms)
+✔ prism counts only living guardians owned by this boss (8.5575ms)
+✔ equipment and legacy guard shields have independent readiness and timers (1.9115ms)
+✔ commander challenge is exclusive to expanded ninth floor and survives save (396.1327ms)
+✔ volley repeats fixed aim with two then three frost arrows (47.5155ms)
+✔ rain fixes its target, then repeats after twenty six seconds without a simultaneous blink (37.872ms)
+✔ blink warns at a safe landing before moving and serializes mid-windup (80.9128ms)
+✔ frost slow expires and re-entry clears stale telegraphs (163.1877ms)
+✔ a landed frost arrow slows movement without freezing dodge or corrupting save (118.5074ms)
+✔ commander keeps flanking, telegraphs a fixed sniper shot, and resumes after save (117.0994ms)
+✔ cover-stopped gate dash exposes a saved counter window, unobstructed dash does not (11.7352ms)
+✔ king counter window requires avoiding every strike in the combo (1.7476ms)
+✔ counter window survives reload and allows contact without free collision damage (269.9659ms)
+✔ formation first attacks stagger frontline ranged and support while limiting support count (15.6431ms)
+✔ both core arms intersect player circles at front and angular edges, never behind (6.1797ms)
+✔ saved combat flashes determine strike and recovery without inferring canceled attacks (1.6808ms)
+✔ core arrival starts only on actual phase-three spawn event and never from draw/load (5.8458ms)
+✔ core hits distinguish reused part ids, have a cooldown and preserve actor/room state (1.5261ms)
+✔ attacks and specials immediately cancel presentation without extending combat clocks (1.3474ms)
+✔ core keeps its own detached snapshot while other parts use the shared presentation (5.1648ms)
+✔ actual phase spawn and final core removal keep key reward immediate and single (222.4718ms)
+✔ new demon uses separate clocks and wider hand salvos; old runs stay serial (400.3157ms)
+✔ foot shield blocks a complete elemental hit once and recharges without stacking (135.758ms)
+✔ large footprints exceed four while blocking shots and preserving the exit route (101.9951ms)
+✔ eye adds seven curved projectiles and nose trail remains continuous during strong mouth pull (109.2813ms)
+✔ three-second specials lock their target, resume deterministically, deal two then one hearts (523.469ms)
+✔ electric aura stuns every player action without damage and has a shared retrigger grace (127.4181ms)
+✔ summons are two per interval, capped at eight and award no kills, XP or rankings (174.2999ms)
+✔ phase changes retain pits; reentry cancels pending specials; death clears bolts and summons (248.1979ms)
+✔ two minutes of every phase stay bounded and round-trip at each checkpoint (6492.7008ms)
+✔ specials telegraph the room edge rather than leaving a safe border band (92.1131ms)
+✔ final boss is hidden, enters with two separate targets and round trips (414.4503ms)
+✔ five fingers produce distinct bounded salvos (112.0141ms)
+✔ footprint pits persist through all phases, block shots, and keep an open route (128.6857ms)
+✔ part extinction advances two phases before only the final core grants a key (268.2383ms)
+✔ live simulation does not grant final rewards at phase boundaries (129.5955ms)
+✔ eye ray hits once, mouth force moves over time, and pull removes poison combo (87.6999ms)
+✔ final shadow attacks do not repeat immediately and keep the core fixed (95.3299ms)
+✔ foot pressure adds a jump and final core fires a readable seven-shot spread (117.5901ms)
+✔ active parts reposition and accelerated projectiles retain a warning interval (209.7391ms)
+✔ a minute of live combat stays bounded and re-entry clears only the old warning (321.1689ms)
+✔ each elemental projectile emits a localized contact effect only on an actual hit (896.2992ms)
+✔ lethal poison contact still splashes; ordinary arrows do not create elemental flashes (140.3354ms)
+✔ piercing and frost-shard visuals respect actual elemental application (4.9518ms)
+✔ dense hit effects keep newest contacts without dropping damage text or other cues (2.2095ms)
+✔ element nock follows only a visible pending auto shot (8.2763ms)
+✔ all arrow counts retain exactly one aimed primary and alternate unmatched sides (433.1334ms)
+✔ fire levels grow splash damage and radius; burn starts at two and floor at three (4.4585ms)
+✔ burn stacks expire individually and overlapping fire zones do not multiply damage (4.2489ms)
+✔ poison gains damage and gas radius by level; gas requires two live stacks (3.2902ms)
+✔ poison stack cap is bounded and gas only lasts until second latest stack expires (1.2065ms)
+✔ max poison corpse explosions chain once, and direct kills do not trigger them (1.4319ms)
+✔ fire activates only on first contact; explicitly spent fire procs stay spent (167.7589ms)
+✔ element timers, fields and volley direction resume deterministically and reject malformed stacks (339.806ms)
+✔ legacy fire investments, evolution and pending offers become poison exactly once (163.9481ms)
+✔ new elite density rises from third to sixth floor across seeded populations (4287.8469ms)
+✔ trial uses three durable purple champions with stronger attack profiles (82.4229ms)
+✔ poison arrows infect every pierced target, respect penetration count and do not hit twice (174.1415ms)
+✔ poison piercing continues after saving an arrow whose first impact is spent (110.174ms)
+✔ actual damage emits a hit reaction without moving or stunning its target (271.3293ms)
+✔ death feedback is emitted once while removal and rewards remain immediate (136.8074ms)
+✔ slime split stays distinct and surviving summons removed by boss cleanup do not fake deaths (173.4818ms)
+✔ continuous damage is throttled, death cancels hit glints, and crowd caps keep other cues (6.0222ms)
+✔ death snapshots have no live enemy references or state mutations (1.3402ms)
+✔ hit feedback records only the lost health interval for normal enemies and the first boss (3.0762ms)
+✔ floors are connected with correct counts and boss placement (994.3085ms)
+✔ pause freezes time and cooldowns (580.507ms)
+✔ frenzy and save preserve map and facilities (352.6499ms)
+✔ exit needs key and death stops time (97.7821ms)
+✔ explicit expanded draft adds connected ninth and two-room final floors without changing classic (231.6225ms)
+✔ expanded draft saves its topology and permits ascent and descent in the shared ranking (357.8244ms)
+✔ split and repeat volleys do not turn into the independent seeker (1929.397ms)
+✔ fire explosion has stronger base damage and level growth (4.2848ms)
+✔ fire field requires existing three stacks, max fire and a fire killing hit (5.2547ms)
+✔ explosion and simultaneous burn can finish three-stack enemies but field damage cannot chain (5.1624ms)
+✔ burn expirations do not count dead stacks at a later lethal tick (1.4537ms)
+✔ tutorial cannot be bypassed and pays exactly one level; escape never repeats it (1675.6528ms)
+✔ raw chest weights total one hundred and invalid rewards redraw only positives (60.4307ms)
+✔ chest roll survives save, one payout only, and skill reward respects main lock (148.3858ms)
+✔ permanent move and attack rewards survive migration and affect actual movement/cadence (74.7385ms)
+✔ small chest bosses award relics but never stairs keys or XP (478.6755ms)
+✔ three elite trap spawns valid distinct enemies with entry grace (92.2153ms)
+✔ trials occur only on floors three and five, preserve active encounters on escape (102.2022ms)
+✔ trial offers are three saved distinct positives, one claim, reject corrupt rewards (85.7688ms)
+✔ essence drop thresholds double on descent with trial priority over elite (7.1385ms)
+✔ bosses always drop one essence and rarely a second at their position (1.2081ms)
+✔ all five essences persist on the ground and are collected once, including health above ten (314.3518ms)
+✔ essences cannot be collected remotely or through cover (107.9639ms)
+✔ 32 relics stack persistently, old single slot migrates and duplicates have no effect (200.6131ms)
+✖ relic attack speed and ultimate damage/cooldown affect actual casts (74.9987ms)
+✔ legacy guard shield absorbs one hit, respects invulnerability, pause and recharge, independently of armor (120.6498ms)
+✖ blink travels 175 units, respects walls, cooldown and existing longer invulnerability (66.9473ms)
+✔ fire explosion hits full radius instantly and burn pulses every half second across saves (128.7566ms)
+✔ trial relic has increased weight and a single saved payout (88.8729ms)
+✔ trial rosters vary across seeds and higher floors have clearly larger health pools (4155.3133ms)
+✔ slime encounter drops exactly once after all split stages and final boss offers a relic (77.0479ms)
+✔ new save fields reject duplicate relics, unknown essences and invalid shield clocks (102.2097ms)
+✔ boss health migration preserves remaining health ratio and only applies once (174.0834ms)
+✔ shrine chooses on entry, pauses enemies, then retains elite combat and exit lock (272.9793ms)
+✔ shrine has ten blessings and five curses, including double-curse offers that persist on reload (5472.188ms)
+✔ legacy unused shrine is populated once on entry, used shrines never regain rewards (25.5603ms)
+✔ all incantations apply once, affect combat stats, and preserve valid saves (973.8668ms)
+✔ prism first summons at two seconds, caps three living elites, and all summoned deaths have no rewards (114.6596ms)
+✔ prism summon timer is preserved rather than restarted on resume (87.1833ms)
+✔ slime splitting leaves a puddle and airborne children land at separated telegraphed destinations (58.8806ms)
+✔ airborne split progression resumes identically from saved mid-jump state (89.1273ms)
+✔ slime has needle and orb projectile patterns and shrinking close gas (2.9947ms)
+✔ boss health bar uses actual total health through splits and final fragment deaths (33.7864ms)
+✔ return variants replace part of existing packs without increasing count or appearing on ascent (8.0997ms)
+✔ new return attackers telegraph and produce distinct attacks with saved state (5.3037ms)
+✔ multiple elites award at most one potion per room even after save and reentry (61.0013ms)
+✖ pixel icons have distinct relic and skill silhouettes and hearts never show unused diamonds (24.5045ms)
+✔ DPS readout measures the last five seconds and resets between runs (0.8595ms)
+✔ invalid incantations, multipliers, summoning clocks and jump destinations are rejected (43.3076ms)
+✔ ascent trial strength does not enable descent-only enemy variants (3.0764ms)
+✔ grounded contact and rapid chaser blades share one-heart immunity (625.7022ms)
+✔ airborne bodies cannot contact hit, entry grace protects nearby bodies (38.4163ms)
+✔ ricochet projectile inflicts one heart (29.8559ms)
+✔ ascent gates require a clear room; descent gates allow living bosses and stairs (39.6174ms)
+✔ fountain generation includes empty, bounded solo fights, and full combined fights (3107.3055ms)
+✔ combined chest and fountain each pay once and persist independently (207.1934ms)
+✔ trial enemies equal floor number with bounded repeats, stagger and persistent count (4573.9966ms)
+✔ essence counts save without applying bonuses twice and show multiplicative cooldown (113.1464ms)
+✔ potion heals one, locks three seconds, persists and does not consume at full health (192.4767ms)
+✔ trial contact, projectile and delayed elite explosion are all one heart (252.2713ms)
+✔ frost levels freeze on 4,3,2,2 hits and scale direct elemental damage (7.3156ms)
+✔ frost shard sizes reflect stack count, level four frozen deaths emit twelve (2.6178ms)
+✔ element relic boosts frost direct bonus and shards, not duration (2.2845ms)
+✖ ultimate is a single saved offer at 5 and 10, random later, preserved on reroll (79.3071ms)
+✖ multiple level gains preserve the level five guarantee in the queue (57.6066ms)
+✖ rain hits three times at fixed cast location and preserves partial pulses on reload (49.5441ms)
+✔ turrets shoot, overlap at most twice and retain remaining lifetime across save (110.5209ms)
+✔ three unique fairies each fire one guided shot per 1.5 seconds (85.7513ms)
+✖ fairy secondary effects are independent and cannot trigger frost death chains (47.3728ms)
+✖ unique weights are lower, blink cloak extends immunity and orbit/bell work (79.9925ms)
+✔ legacy ultimate branch migrates to chosen tower and malformed new states are rejected (129.2771ms)
+✔ bonus skill rewards do not roll the level-up-only ultimate offer (43.2919ms)
+✖ one cooldown relic gives two to three seconds of natural turret overlap (204.285ms)
+✔ tower has 308 range from installation and fires a 100 percent snapshotted volley every 0.6 second (53.2126ms)
+✔ chests allocate eight percent to relics and trial offers never duplicate rewards (38788.4695ms)
+✔ final seal needs the key, takes three timed waves and survives reload (277.1167ms)
+✔ new season scores require the broken seal; previous saves keep their old exit (184.274ms)
+✔ malformed seal progress is rejected rather than loading an invalid victory (98.7929ms)
+✔ new escape warns nine waves and increases total summons from fifteen to fifty-four (406.5287ms)
+✔ pressure remains capped with live enemies and ids never collide (67.7502ms)
+✔ portal avoids players, blocked points, and cancels when player enters warning (58.5567ms)
+✔ pressure continuation never duplicates warned or spawned enemies (111.7068ms)
+✔ summoned pressure enemies cannot farm xp, kills or ranked kills (392.3406ms)
+✔ invalid pressure metadata is rejected and old ascent still starts legacy waves (192.3051ms)
+✔ eight connected floors place three bosses and flowers only on upper ascent floors (3987.0674ms)
+✔ all eight ascent and descent transitions preserve gates, maps and key timing (128.0433ms)
+✔ legacy two and four floor saves keep their maps and final key floor (262.6646ms)
+✔ prism emits 18 reflected rounds and fixed five beams resume identically (3.6753ms)
+✔ frozen death emits six distinct radial shards exactly once, with level-scaled damage (4.0618ms)
+✔ a lethal frost hit applies its stack and can freeze before shattering (4.6746ms)
+✔ frozen shard victims chain without exponential damage and grant one kill each (156.066ms)
+✔ shards at all levels add frost stacks and scale direct damage (175.9808ms)
+✔ Vergas deaths preserve frozen state even when the frame expires its timer (57.963ms)
+✔ shards resume identically across saves and disappear on room entry (127.1466ms)
+✖ Vergas damage grows and cooldown falls each level, and trial charge pressure exceeds ordinary enemies (6.2423ms)
+✖ tiers distinguish main, rare and unique while ordinary supports remain normal (1.4ms)
+✔ gate knight health upgrade preserves health ratio and cannot stack across reloads (215.481ms)
+✔ gate knight walks ten percent faster and has shorter post-attack cooldown (4.4725ms)
+✔ gate archer moves while preparing then locks origin and aim for final 0.3 seconds (16.8635ms)
+✔ ordinary snipers reposition; gate movement obeys freeze, opening and slow (1.9931ms)
+✔ elite blast emits one burst at the unchanged damage time (11.7675ms)
+✔ fields fade to transparent at the real radius without outlines (4.917ms)
+✔ exhausted skill pool provides saved repeatable growth choices with real benefits (607.7628ms)
+✖ normal skill pool and guaranteed ultimate take precedence over fallback rewards (119.2676ms)
+✔ growth rewards respect stat caps (65.0362ms)
+✔ growth snapshots are recorded once per floor and direction and survive reload (249.0726ms)
+✔ boss record excludes dormant rooms and descent, accumulates through reload and completes once (140.472ms)
+✔ simulation observes growth without retroactively creating missing floor records (107.2693ms)
+✔ restoring excludes capped growth candidates and persists the corrected list (122.3855ms)
+✔ fully stale saved choices rebuild without rerolling ultimate eligibility or consuming a level (62.4107ms)
+✔ start at five hearts, containers cap at ten and haste does not grow health (144.5589ms)
+✔ legacy health conversion keeps health ratio and is idempotent (1.0312ms)
+✔ light, heavy and boss slam attacks deal integer hearts (0.5574ms)
+✔ laser and brute jump deal two hearts in ascent and descent, including trials (794.1079ms)
+✔ heavy exceptions preserve shields and immunity; descent melee stays one heart (57.2485ms)
+✔ death summary excludes shields and old damage, escapes names and limits to three (15.8978ms)
+✔ projectile feedback identifies incoming direction and ignored damage creates no feedback (253.9193ms)
+✔ sixth through ninth floors favor their own packs and ninth has every demon role (329.0084ms)
+✔ infernal attacks telegraph, lock their target, and serialize through save (267.6266ms)
+✔ fast bat self-destructs after a warning while soldier and captain retain dodge windows (3.0603ms)
+✔ previous classic and expanded saves load without being relabeled (323.8568ms)
+✔ live bat explosion resolves through combat without awarding a player kill (144.424ms)
+✔ floating touch origin, second fingers, cancellation and rotation never leave movement stuck (15.7219ms)
+✔ king first phase fires two five-arrow rows with locked aim and staggered angles (23.5833ms)
+✔ king summons only upper ranged types and never exceeds two living summons (4.9031ms)
+✔ lightning levels increase first target damage and chain power with 80 percent retention (9.1369ms)
+✔ lightning branches provide strong single target and sustained five-target chain (1.5715ms)
+✔ thunder strikes exactly skill-level distinct targets every three seconds without chained effects (579.7343ms)
+✔ single boss receives one thunder hit and untargetable enemies are excluded (52.9213ms)
+✔ thunder damage matches normal direct arrow with relic and evolution modifiers, excludes lightning bonus (64.8497ms)
+✔ thunder timer and random targets continue identically after save and damage telemetry excludes overkill (191.413ms)
+✔ walking uses actual movement, ignores duplicate draws and stops without moving actors (14.9958ms)
+✔ freeze, static portraits, reduced effects and blocked transitions never walk (2.8905ms)
+✔ arrival is explicit, uses update time, and does not replay after reset or load (11.2005ms)
+✔ all three hit forms respect cooldown and threat, freeze, phase and reduced priorities (3.2679ms)
+✔ lethal snapshots preserve the visible phase instead of dead hp forcing phase three (3.8156ms)
+✔ seeker is an independent normal 100% arrow; split arrows retain elements (392.1096ms)
+✔ turret snapshots elemental volleys and seekers without duplicating fairies (940.1905ms)
+✔ turret damage is frozen and delayed arrow stays at installation after player moves (129.524ms)
+✔ build corruption rejected and legacy turret snapshots once (205.9111ms)
+✖ rain is 50 per pulse; retirement has no attacks (126.9995ms)
+✔ four slime fragments maintain bounded hazards over a minute (164.3166ms)
+✔ random objects remain accessible, separated and stable through save and return (5957.883ms)
+✔ legacy rooms retain original object and extra chest anchors (4.4103ms)
+✔ all shifted door pairs are safe, traversable, and persist without repeated transforms (12658.8791ms)
+✔ mismatched door pairs are rejected on saving (44.5413ms)
+✔ all ordinary bestiary types receive bounded view reactions, with no boss overlap or actor writes (12.2935ms)
+✔ seen-room load and room reentry do not replay arrival, while new summons do (2.1255ms)
+✔ melee, charge, ranged, aerial, elite and hazard threats take priority without cancellation (2.2569ms)
+✔ ordinary death snapshots keep style/timing and root anchors, self-destruct stays distinct (5.7302ms)
+✔ hero reaction is visual only, reduced mode quiet, defeat immediate with no result delay (1.8243ms)
+✔ ordinary removals and rewards remain immediate with one detached death effect (219.0673ms)
+✔ boss cycles all six patterns with telegraphs and recovery (29.0683ms)
+✔ slam locks location and can be avoided by normal movement without invulnerability (2.2874ms)
+✔ slam damage occurs once and grants a long recovery window (1.3491ms)
+✔ burst aim is fixed, and saved phases resume with identical projectiles (2.0969ms)
+✔ staggered fan alternates angles and dead enemies cannot fire (1.313ms)
+✔ compact early floors include all facilities and preserve saved maps and tutorial gates (22906.8454ms)
+✔ trial charger gives a full contact-free stationary recovery after each charge and reload (91.4691ms)
+✔ sniper and gravity caster move between attacks and hold their position while channeling (4.7899ms)
+✔ Velkar both stages have deliberate recovery, blink followup and serializable longer clocks (524.9395ms)
+✔ named guardians have separate identity and art while display scale never changes combat radius (149.1776ms)
+✔ opening enemies take exactly three unmodified arrows and survive saving (242.434ms)
+✔ first fire arrow kills a healthy floor-one basic enemy including splash (88.0253ms)
+✖ blocked blink preserves cooldown and immunity; open direction still works (89.1885ms)
+✔ diagonal blink at left doorway never wraps outside and clamps into lower wall (181.5117ms)
+✔ all doorway directions and campaign rooms remain clear after blink (226.2499ms)
+✔ existing stuck save is repaired without changing build, health, cooldowns or seal (832.8747ms)
+✔ idle and room entry recover invalid player without requiring blink or granting immunity (142.505ms)
+✔ recovery leaves valid positions and open doorway movement untouched (87.6802ms)
+✔ flower remains fixed, warns, flies and waits until its two-second puddle expires (19.5822ms)
+✔ frenzy flower emits two or three puddles, never refires over its existing zones (3.4811ms)
+✔ overlapping poison pulses once per second, while dead-owner aura disappears (2.9668ms)
+✔ slime splits 1 to 2 to 4, unique ids survive reload, last fragment opens seventh floor (390.1811ms)
+✔ only first two slime generations summon and summons give no XP, seal or drops (120.3135ms)
+✔ poison phases and summons resume deterministically with validated saves (540.7503ms)
+✔ descending escape increases crowd size and attack pressure while preserving map (2055.3159ms)
+✔ flower targets walls and corners in ascent and descent, with warning and escape time (4.3395ms)
+✔ Prism arrival is explicit first entry only with no draw, revisit or load replay (8.5466ms)
+✔ Prism hits respect threat recovery, cooldown, reduced and static views without actor writes (3.2252ms)
+✔ shielded Prism reaction uses actual reduced health loss, preserving the shield rule (4.6021ms)
+✔ Prism reward and summoned-enemy cleanup remain immediate and do not emit fake deaths (279.5186ms)
+✔ minimap excludes unseen rooms and their bounds, including after reload (5.7496ms)
+✔ old saves gain modest speed increase without losing build or map (132.9584ms)
+✔ offers are unique, exclude capped skills, and combinations activate only with both skills (85.6439ms)
+✔ fire splashes on primary hits and low level has no lingering burn (9.3328ms)
+✔ lightning chains to distinct nearby enemies and thunderstorm increases range (2.8207ms)
+✔ fast rounds bounce once then disappear at the next wall (5.395ms)
+✔ cover absorbs fast bullets and swept collision detects crossed player (1.2651ms)
+✔ laser aim stays fixed, survives save, and cover stops beam and damage (1.8599ms)
+✔ laser damages only once per burst and can be avoided by walking (0.8459ms)
+✔ ricochet fires a fixed symmetric pair only after warning (1.635ms)
+✔ online start issues session before run and survives save continuation (231.8485ms)
+✔ expanded season starts online and only drafts a completed final demon run (98.1343ms)
+✔ continued ASCENT-1 and ASCENT-2 saves remain local after their seasons close (122.487ms)
+✔ offline, legacy and practice results cannot create online drafts (210.7549ms)
+✔ submission intent persists before network failure and reload can retry (67.2894ms)
+✔ double submit makes one request and receipts never resubmit (63.6958ms)
+✔ storage failures preserve an in-memory draft and visibly report persistence failure (57.2495ms)
+✔ name normalization and rendered nickname escaping (142.8605ms)
+✔ timeout aborts request and does not grant online eligibility (152.5627ms)
+✔ score examples, caps, second boundary and invalid metrics (8.3681ms)
+✔ actual entry counts once, map reveal does not count, pause excludes time (238.553ms)
+✔ death processing counts original slime once and excludes summoned and split children (142.8099ms)
+✔ save continuation preserves enemy identity and deduplicates defeat (219.5174ms)
+✔ replacement descent wave with reused local IDs earns new distinct kills (154.9952ms)
+✔ surviving enemies in preserved descent rooms keep their identity (135.8158ms)
+✔ legacy saves, practice, death and king kill alone cannot yield a score (498.9805ms)
+✔ score snapshot and completion history persist once (180.0084ms)
+✔ malformed ranking counters, identifiers and snapshots are rejected (377.1267ms)
+✔ new expanded season keeps both former runs loadable without joining the new ranking (1280.4974ms)
+✔ recipe choice explains a newly completed effect without changing the build (221.7813ms)
+✔ incompatible main build does not advertise an unavailable fire recipe (135.6198ms)
+✔ relic previews preserve player and compare live movement and attack stats (248.0575ms)
+✔ inactive effects describe prerequisite and ultimate cooldown uses selected branch (131.8588ms)
+✔ exchange preview removes sacrificed relic including heart loss without changing the build (105.9602ms)
+✔ every boss offers deterministic unowned relics once including the final boss (412.5163ms)
+✔ relics accumulate without duplicates and cannot be reclaimed after save (214.5972ms)
+✔ skipping relics preserves the equipped item and claims the cache without changing cooldowns (46.0056ms)
+✖ relic benefits use exact distance boundaries, shield limits and cooldowns (6.0144ms)
+✔ boots and stride bonuses are symmetric and diagonal motion is normalized (120.4881ms)
+✔ ember relic strengthens burn with no direct arrow penalty (4.8898ms)
+✔ journal observes only current enemies and retains discovered elite traits (78.0989ms)
+✔ successful hits record source and floor totals; ignored hits are absent and history is bounded (149.4505ms)
+✔ lethal projectile records its actual source before death and does not count invulnerable hits (231.8263ms)
+✔ new save fields reject invalid relics, codex keys and damage history (115.3161ms)
+✖ damage diagnostics include capped burn, field and instant ultimate damage (65.8473ms)
+✔ remaining boss transforms preserve identity, clocks and saved actors (9.1117ms)
+✔ entry history and phase-spawn events do not replay on load or slime splitting (2.7736ms)
+✔ hazards, attacks and recovery cancel view reactions without altering any threat (2.0197ms)
+✔ slime split stays immediate and distinct, final and named snapshots have no live references (353.9215ms)
+✔ stairs take priority over unexplored rooms and require all enemies before descending (292.245ms)
+✔ unvisited rooms require all kills even after first descent visit is saved (595.7743ms)
+✔ guardian alone unlocks visited rooms and re-entry never rolls a new lock (352.7642ms)
+✔ visited room guardian rate is approximately thirty percent and deterministic (5870.2772ms)
+✔ old descending saves without seal metadata retain access and blocked exit cannot be used (49.9789ms)
+✔ live movement cannot cross a sealed exit and can cross after clearance (118.7983ms)
+✔ both approach layers cover every exit branch for visited and unseen campaigns (18372.5506ms)
+✔ forced guardian alone opens passage and persists through save and reentry (197.7635ms)
+✔ legacy saves and random locks outside forced approach keep original seeded results (7851.466ms)
+✔ empty approach gets a living guardian with a unique id and never respawns it (53.2075ms)
+✔ save rejects approach metadata on wrong location, generation, or seal (159.1995ms)
+✔ all room shapes retain connected entrances and fixed object access (24.6562ms)
+✔ new shapes persist on reload and descent while boss rooms stay unchanged (1795.652ms)
+✔ ascent floors 1 and 2 fire one fan without shortening their attack cadence (10.1593ms)
+✔ higher ascent floors and returning scatter enemies retain both rows (3.3891ms)
+✔ trade requires a selected owned relic and consumes neither potions nor event on invalid selection (372.7106ms)
+✔ legacy seal appears as a relic and heals at twenty kills (120.5697ms)
+✔ blood contract grants one block with thirty-five second recharge (75.9233ms)
+✔ fallback lease blocks second writer and releases cleanly (19.2744ms)
+✔ fallback lease notices ownership loss and never removes new owner (1.0535ms)
+✔ swept hit detects crossed targets and arrows hit nearest enemy first (301.4058ms)
+✔ arrow hits target before wall but never enemy behind cover (139.2699ms)
+✔ lethal hit cannot be reversed by same-frame kill recovery (79.3556ms)
+✔ paused caller leaves pending projectiles exactly intact; save resumes identical simulation (224.5678ms)
+✔ room entry clears stale attacks and gives bounded arrival time (73.7831ms)
+✔ seed generates same maps and run randomness, with independent run identity (143.1277ms)
+✔ preview does not mutate run and shows fire attack speed reduction (140.2082ms)
+✖ frost fourth level describes twelve shards and Vergas third level branch (107.5303ms)
+✔ every available skill and growth reward has finite preview rows (81.885ms)
+✔ main offers persist across saves and reject a main outside the three choices (371.5725ms)
+✔ main reroll spends the same single reroll used by later supports (159.5746ms)
+✔ every dedicated support respects its main and prerequisite (1.9549ms)
+✖ ultimate guarantee and a useful synergy survive the same three-card offer (95.7073ms)
+✔ fire powder only boosts the explosion center; ember cannot recursively trigger (5.0256ms)
+✔ frost bond preserves two-hit freeze and immunity while adding a thaw slow (2.6767ms)
+✔ shard bonuses are stored once and keep existing shard count and base scale (134.7494ms)
+✔ poison stacks stay capped and spores do not seed a second generation (8.482ms)
+✔ charge counts each primary projectile once and consumes on the following primary (1.2932ms)
+✔ focused conduction retains a useful first-link bonus and extends reach (5.1337ms)
+✔ new synergy snapshots and pre-renewal snapshots both load (197.8245ms)
+✔ draft uses three readable cards and preserves unique rarity and recipe hints without mutations (100.0535ms)
+✔ precision main guarantees an early direct synergy and only primary arrows advance a saved mark (299.1959ms)
+✖ precision level-three branches differ and focus only boosts direct player arrows (134.2545ms)
+✖ first aid is floor bounded and guardian intercepts one live hit without changing enemy movement (57.2049ms)
+✔ first main consumes one earned point and permanently excludes other elements (235.3011ms)
+✔ legacy mixed elements preserve total investment through explicit main choice and one-time refunds (272.568ms)
+✔ choosing an unlearned main from an old build spends one refunded point (97.6603ms)
+✔ rare support weights are lower and offers never duplicate (286.8149ms)
+✔ level one frost freezes on the fourth primary impact and cannot permanently lock enemies (12.6764ms)
+✔ frozen attack phases and elite salvos stop and resume without restarting telegraphs (80.5196ms)
+✔ repeat adds one delayed same-direction primary without repeating the split fan (81.5663ms)
+✔ homing has a bounded turn rate, avoids walls and keeps projectile speed (8.8552ms)
+✖ Vergas strikes nearby grounded enemies after preparation and damage support does not automatically unlock the ultimate (112.1749ms)
+✔ main lock, delayed homing shots and frozen states round-trip and reject corruption (156.1042ms)
+✔ freezing stops unlaunched poison warnings but does not stop airborne projectiles (1.7152ms)
+✔ Vergas respects intervening cover and cannot damage airborne enemies (46.5183ms)
+✔ fire splash and field have enlarged radius and increased damage (1.8408ms)
+✔ split secondary arrows carry the chosen element with proportional damage (74.9322ms)
+✔ player explosion budget never discards hostile fields or damage labels (6.0871ms)
+✔ synergy budget retains newest effects and unrelated warnings (2.1806ms)
+✔ mobile density deduplicates player effects while retaining every hostile warning (2.1593ms)
+✔ contact appearance snapshots the hit level and evolution without retaining mutable player state (6.3992ms)
+✔ legacy projectiles can use current build appearance without adding persistent fields (1.0905ms)
+✔ evolved chain appearance follows real links without creating fake destinations (5.0856ms)
+✔ upper ordinary archers fire two ascent arrows and three return arrows on the telegraphed angles (13.793ms)
+✔ gate archer and king fan patterns retain their current counts (1.2233ms)
+✔ sound settings persist separately from run saves and reject malformed values (5.7873ms)
+✔ cues need a user gesture, obey mute and throttle repeated attacks (2.9251ms)
+✔ a wall appearing during preparation blocks damage; an escaping enemy is not hit (271.6118ms)
+✔ dance rechecks its target and never hits a dead target twice (85.2021ms)
+✔ precision blade favors an existing mark without advancing it (57.1319ms)
+✔ blade poison cannot create poison gas, explosions or primary marks (56.5524ms)
+✔ saved cooldown prevents a repeated slash after loading and rejects corruption (162.8316ms)
+✔ old level-three aura keeps its guard once; newly learned Vergas does not grant a shield (135.4656ms)
+✔ Vergas remains unique while acquisition is rare and owned upgrades use normal weight (48.7608ms)
+✔ saved ordinary-support Vergas rewards remain claimable even when all ordinary supports are capped (145.9457ms)
+✔ versioned save round trips projectiles, phases, food, and metrics (232.681ms)
+✔ rejects broken values, impossible current room, unsupported version and corrupt checksum (161.2683ms)
+✔ backup recovers last good save and terminal tombstone prevents dead-run resurrection (188.4029ms)
+✔ storage exceptions become explicit failure, not a false save confirmation (62.2511ms)
+✔ quota on the optional backup still saves the current run without losing the old main (175.446ms)
+✔ invalid game state is reported separately from browser storage errors (138.8703ms)
+✔ legacy raw saves are accepted and strengthened only once (279.0577ms)
+✔ storm arrow turns once toward a visible forward enemy, never through cover or backward (6.7878ms)
+✔ new run storm volley changes route and survives a save; older run keeps straight path (379.1091ms)
+✔ shield blocks once, respects dodge, and cooldown freezes during pause (214.3323ms)
+✔ seal heals every twenty kills only; potion drops cap at one per room (113.0614ms)
+✔ reroll consumes one run charge, preserves points and stores exact candidates (375.7649ms)
+✔ legacy reroll allowance is once only and invalid contexts do not spend it (177.8383ms)
+✔ two warnings defer another start but never interrupt an attack already telegraphed (2.2087ms)
+✔ charging into cover stops contact damage and creates a saved opening (150.9132ms)
+✔ volley elites stop their normal AI after their added salvo (141.4366ms)
+✔ warden slam, prism laser and expired slime aura expose their owner (6.9409ms)
+✔ support-led formations contain a guardian, escorts and staggered initial clocks (1.6742ms)
+✔ crowded charging packs do not starve ranged attacks or reset deferred cooldowns (1435.5279ms)
+✔ layouts preserve central routes, facilities, perimeter and some empty rooms (76.7497ms)
+✔ movement and dodge cannot tunnel through cover, sliding remains possible (2.26ms)
+✔ enemies can route around cover to player (32.0801ms)
+✔ spawns are clear and terrain survives frenzy and serialization (5669.5705ms)
+✔ doors describe visited-room edges without revealing neighboring rooms (2.6152ms)
+✔ new runs actually contain persisted obstacle arrays (1063.6698ms)
+✔ minimap neighbor lookup shares tutorial entrance restrictions even from another room (58.857ms)
+✔ secondary touch activates immediately once; keyboard and mouse clicks still work (5.7522ms)
+✔ monster potion rewards convert only at five potions and only on a successful roll (185.8479ms)
+✖ rain landings coincide with all three damage pulses including immediate first impact (243.1189ms)
+✔ crossbow recoil follows an actual shot and remains idle without a target (150.0992ms)
+✔ ultimate poses are read-only, deterministic on pause and survive serialized state (136.5461ms)
+✔ transfer copies only allowed records and never a session lease (12.06ms)
+✔ existing HTTPS records are not overwritten or mixed with another run backup (1.2026ms)
+✔ rejects unrelated keys and rolls back partial imports on quota failure (2.2949ms)
+✔ knight strike lands at half a second and reaches the expanded warning edge (6.966ms)
+✔ king second phase changes pursuit, fan count, available attacks and combo cadence (554.4883ms)
+✔ gravity activates after half a second with stronger pull and a shorter recast (3.2877ms)
+✔ rare ascent visitors are restricted to floors three through six and replace one enemy (55.9595ms)
+✔ slime ordinary salvos scale five/two/zero with phase and persist their timer (5.9287ms)
+✔ upper floors provide rest, elite gate and explicit king challenge (4631.5886ms)
+✔ gate rewards once and king alone begins eight floor descent (150.9539ms)
+✔ king phase thresholds, telegraphs and summons survive long combat and saves (2034.3172ms)
+✔ telegraph deals no early damage and slash can be avoided behind king (96.9626ms)
+✔ every new enemy runs and round trips in ascent and descent (2655.1181ms)
+✔ dash moves over time, damages only swept corridor, and stops before cover (10.7078ms)
+✔ saved dash resumes at identical coordinates and cannot damage twice (301.8099ms)
+✔ ring locks its preview direction and all projectiles leave the visible safe gap (3.8792ms)
+✔ king avoids empty melee at range and immediate pattern repeats (1.8566ms)
+✔ both judgment orientations use the same rectangle for hit tests and previews (4.4898ms)
+✔ judgment ends with a heavy marked strike and a long kneeling opening (2.4032ms)
+✔ phase changes clear attacks and enemy shots, freeze danger and round trip mid-transition (226.8421ms)
+✔ summon timer runs during long openings and freeze with a visible one second portal (155.5969ms)
+✔ attack flash expires during recovery and while frozen (99.2292ms)
+✔ king and guards cap overlapping new warnings at two (59.3744ms)
+✔ knight shield reduces frontal arrows and tower shots but not rear or damage over time (118.3853ms)
+✔ new state validation rejects malformed moving dash and summon portal (118.1633ms)
+✔ Velkar arrival is explicit, update-timed and cleared on reload without actor writes (6.3225ms)
+✔ Velkar hit poses respect both phases, cooldown, threat priority and reduced/static views (3.6266ms)
+✔ Velkar transition resumes from combat state and lethal snapshot preserves the last phase (3.4942ms)
+✔ cached navigation preserves original direction across shapes, radii and geometry edits (270.2506ms)
+✔ wall image is reused, invalidated on edits and bounded across room changes (6.2959ms)
+✔ outer and inner wall faces use the same world-aligned block palette (3.356ms)
+✔ infernal masonry uses one palette for inner and outer walls and refreshes cached floor themes (4.8543ms)
+✔ middle-floor masonry shares each themed palette across inner and outer walls (9.1586ms)
+✔ eligible rooms split evenly between legacy and thin layout families (21.4368ms)
+✔ thin walls reduce footprint and connect every doorway, object and open pocket (211.4966ms)
+✔ melee enemies can follow the existing steering around new walls (208.4316ms)
+✔ stone wall outlines omit shared joins including partially touching blocks (4.6577ms)
+✔ Warden first-entry arrival is update-timed and does not replay after visit or load (6.2562ms)
+✔ Warden weak and strong hits respect cooldown, static/reduced and every combat pose priority (2.2603ms)
+✔ Warden detached death preserves the displayed direction and leaves other boss durations alone (3.8221ms)
+✔ Warden removal and reward are immediate despite its one-second visual snapshot (192.5109ms)
+ℹ tests 516
+ℹ suites 0
+ℹ pass 490
+ℹ fail 26
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 223789.2582
+
+✖ failing tests:
+
+test at tests\unit\abilities.test.js:8:1
+✖ ultimate requires an explicit choice and casts three local pulses with cooldown (54.429ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(applySkill(s.player,'ultimate'))
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/abilities.test.js:8:323)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\unit\adventures.test.js:33:1
+✖ arrow rain deals three bounded pulses only within its region and expires (10.4178ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  466 !== 450
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/adventures.test.js:34:321)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 466,
+    expected: 450,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\boss-feedback.test.js:6:1
+✖ prism shield covers direct, DoT and ultimate, releases immediately after last summon death and resumes (357.6324ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Math.abs(hp-e.hp-50/3)<1e-8)
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/boss-feedback.test.js:6:564)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\unit\combat-refresh.test.js:8:1
+✖ fire reduces firing frequency by thirty-three percent with every attack-speed build (29.4727ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Math.abs(normal/attackInterval({...p,fire})-.67)<1e-10)
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/combat-refresh.test.js:11:36)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\unit\feedback18.test.js:36:1
+✖ relic attack speed and ultimate damage/cooldown affect actual casts (74.9987ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  426.56 !== 432.5
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/feedback18.test.js:38:198)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 426.56,
+    expected: 432.5,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\feedback18.test.js:43:1
+✖ blink travels 175 units, respects walls, cooldown and existing longer invulnerability (66.9473ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  480 !== 655
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/feedback18.test.js:44:78)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 480,
+    expected: 655,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\feedback19.test.js:72:1
+✖ pixel icons have distinct relic and skill silhouettes and hearts never show unused diamonds (24.5045ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  19 !== 20
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/feedback19.test.js:73:112)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 19,
+    expected: 20,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\feedback21.test.js:14:1
+✖ ultimate is a single saved offer at 5 and 10, random later, preserved on reroll (79.3071ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(levelChoices(s,()=>.99).some(k=>k.id==='ultimate'))
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/feedback21.test.js:14:208)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\unit\feedback21.test.js:15:1
+✖ multiple level gains preserve the level five guarantee in the queue (57.6066ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(levelChoices(s,()=>.99).some(k=>k.id==='ultimate'))
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/feedback21.test.js:15:200)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\unit\feedback21.test.js:16:1
+✖ rain hits three times at fixed cast location and preserves partial pulses on reload (49.5441ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  966 !== 950
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/feedback21.test.js:16:244)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 966,
+    expected: 950,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\feedback21.test.js:19:1
+✖ fairy secondary effects are independent and cannot trigger frost death chains (47.3728ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   dps: 10,
+  -   dps: 20,
+      time: 3
+    }
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/feedback21.test.js:19:227)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { time: 3, dps: 10 },
+    expected: { time: 3, dps: 20 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\feedback21.test.js:20:1
+✖ unique weights are lower, blink cloak extends immunity and orbit/bell work (79.9925ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 2.45
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/feedback21.test.js:20:429)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2.45,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\feedback22.test.js:10:1
+✖ one cooldown relic gives two to three seconds of natural turret overlap (204.285ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  14 !== 19
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/feedback22.test.js:14:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 14,
+    expected: 19,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\frost-shards.test.js:29:1
+✖ Vergas damage grows and cooldown falls each level, and trial charge pressure exceeds ordinary enemies (6.2423ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   NaN,
+  +   NaN,
+  +   NaN
+  -   34,
+  -   43,
+  -   52
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/frost-shards.test.js:30:64)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ NaN, NaN, NaN ],
+    expected: [ 34, 43, 52 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\frost-shards.test.js:32:1
+✖ tiers distinguish main, rare and unique while ordinary supports remain normal (1.4ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'unique' !== 'rare'
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/frost-shards.test.js:33:90)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'unique',
+    expected: 'rare',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\growth.test.js:5:1
+✖ normal skill pool and guaranteed ultimate take precedence over fallback rewards (119.2676ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'growthPower',
+  +   'growthHealth',
+  +   'growthHaste'
+  -   'ultimate'
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/growth.test.js:5:276)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'growthPower', 'growthHealth', 'growthHaste' ],
+    expected: [ 'ultimate' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\next-feedback.test.js:26:1
+✖ rain is 50 per pulse; retirement has no attacks (126.9995ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  9800 !== 9850
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/next-feedback.test.js:27:116)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 9800,
+    expected: 9850,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\play-feedback.test.js:13:1
+✖ blocked blink preserves cooldown and immunity; open direction still works (89.1885ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(s.player.x<480)
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/play-feedback.test.js:14:292)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\unit\relics.test.js:24:1
+✖ relic benefits use exact distance boundaries, shield limits and cooldowns (6.0144ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  4 !== 10
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/relics.test.js:26:122)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 4,
+    expected: 10,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\relics.test.js:52:1
+✖ damage diagnostics include capped burn, field and instant ultimate damage (65.8473ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  34.5 !== 50
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/relics.test.js:54:129)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 34.5,
+    expected: 50,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\skill-preview.test.js:3:1
+✖ frost fourth level describes twelve shards and Vergas third level branch (107.5303ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(skillPreview(p,'frost').some(r=>r.after==='12발'))
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/skill-preview.test.js:3:128)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\unit\skill-renewal.test.js:28:1
+✖ ultimate guarantee and a useful synergy survive the same three-card offer (95.7073ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(choices.some(k=>k.id==='ultimate'))
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/skill-renewal.test.js:30:129)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\unit\skill-stage4.test.js:26:1
+✖ precision level-three branches differ and focus only boosts direct player arrows (134.2545ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/skill-stage4.test.js:30:95)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\skill-stage4.test.js:35:1
+✖ first aid is floor bounded and guardian intercepts one live hit without changing enemy movement (57.2049ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/skill-stage4.test.js:36:67)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\skill-tree.test.js:36:1
+✖ Vergas strikes nearby grounded enemies after preparation and damage support does not automatically unlock the ultimate (112.1749ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  932 !== 957
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/skill-tree.test.js:37:156)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 932,
+    expected: 957,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\ultimate-visuals.test.js:9:1
+✖ rain landings coincide with all three damage pulses including immediate first impact (243.1189ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  966 !== 950
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/ultimate-visuals.test.js:10:63)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 966,
+    expected: 950,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -5,8 +5,8 @@ const box=(c,x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.ro
 function line(c,points,color,width=2){c.strokeStyle=color;c.lineWidth=width;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(Math.round(x),Math.round(y)):c.moveTo(Math.round(x),Math.round(y)));c.stroke();}
 function clipArena(c){c.beginPath();c.rect(25,45,910,455);c.clip();}
 export function rainVisualState(z){
- const pulse=Math.max(0,Math.min(2,z.pulses-1)),age=Math.max(0,z.elapsed-pulse*.6);
- return {pulse,impact:z.pulses>0?clamp(1-age/.28):0,fall:z.pulses<3?clamp((z.elapsed-(z.pulses*.6-.3))/.3):0,opacity:clamp((1.8-z.elapsed)/.3)};
+ const pulse=Math.max(0,Math.min(5,z.pulses-1)),age=Math.max(0,z.elapsed-pulse*.3);
+ return {pulse,impact:z.pulses>0?clamp(1-age/.28):0,fall:z.pulses<6?clamp((z.elapsed-(z.pulses*.3-.18))/.18):0,opacity:clamp((1.8-z.elapsed)/.3)};
 }
 export function turretVisualState(t){
  return {build:clamp((CROSSBOW.lifetime-t.time)/.28),recoil:clamp(1-(CROSSBOW.interval-t.clock)/.14),opacity:clamp(t.time/1.2),remaining:clamp(t.time/CROSSBOW.lifetime)};

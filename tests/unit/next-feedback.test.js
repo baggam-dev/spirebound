@@ -24,7 +24,7 @@ test('build corruption rejected and legacy turret snapshots once',()=>{
  const s=setup();currentRoom(s).turrets=[{x:480,y:300,time:19,clock:0,aim:0}];tickPassives(s,.01);assert.equal(currentRoom(s).turrets[0].build.damage,20);const copy=parseSave(encodeSave(s));currentRoom(copy).turrets[0].build.fire=99;assert.throws(()=>encodeSave(copy));s.projectiles[0].weapon.damage=-1;assert.throws(()=>encodeSave(s));
 });
 test('rain is 50 per pulse; retirement has no attacks',()=>{
- const s=setup();s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};castUltimate(s);tickRain(s,1.3);assert.equal(currentRoom(s).enemies[0].hp,9850);s.skill=0;s.player.evolutions.ultimate='turret';castUltimate(s);s.skill=0;castUltimate(s);s.skill=0;castUltimate(s);assert.equal(turretEndings(currentRoom(s)).length,1);tickPassives(s,19);assert.equal(currentRoom(s).turrets.length,0);s.projectiles=[];tickPassives(s,.5);assert.equal(turretEndings(currentRoom(s)).length,0);assert.equal(s.projectiles.length,0);
+ const s=setup();s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};castUltimate(s);tickRain(s,1.5);assert.equal(currentRoom(s).enemies[0].hp,9160);s.skill=0;s.player.evolutions.ultimate='turret';castUltimate(s);s.skill=0;castUltimate(s);s.skill=0;castUltimate(s);assert.equal(turretEndings(currentRoom(s)).length,1);tickPassives(s,19);assert.equal(currentRoom(s).turrets.length,0);s.projectiles=[];tickPassives(s,.5);assert.equal(turretEndings(currentRoom(s)).length,0);assert.equal(s.projectiles.length,0);
 });
 test('four slime fragments maintain bounded hazards over a minute',()=>{
  const room={obstacles:[],hazards:[],enemies:Array.from({length:4},(_,i)=>({...foe(i,200+i*150,200),type:'boss',variant:'slime',stage:2,cd:i*.35,gasClock:i*.6}))};let max=0;

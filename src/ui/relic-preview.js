@@ -5,7 +5,7 @@ import {shieldCooldown} from '../combat/survival.js';
 function values(p){const a=previewStats(p);return {
  '첫 적중 피해¹':a.hit,'초당 사격':a.rate,'이동속도':movementSpeed(p),'최대 체력':p.max,
  '현재 체력':p.hp,'궁극기 재사용(초)':p.ultimate?ultimateCooldown(p):null,
- '점멸 재사용(초)':dodgeCooldown(p),'점멸 거리':blinkDistance(p),
+ '구르기 재사용(초)':dodgeCooldown(p),'구르기 거리':blinkDistance(p),
  '장비 보호막 충전(초)':p.armor?shieldCooldown(p):null,
  '베르가스 참격 피해':a.aura,'요격 사거리':a.auraRadius,'베르가스 재사용(초)':a.auraCooldown,
  '계승 수호 충전(초)':p.legacyAuraGuard?60-relicStat(p,'auraShield'):null,

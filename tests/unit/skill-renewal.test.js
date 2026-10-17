@@ -27,7 +27,7 @@ test('every dedicated support respects its main and prerequisite',()=>{
 });
 test('ultimate guarantee and a useful synergy survive the same three-card offer',()=>{
  const s=run();Object.assign(s.player,{mainSkill:'fire',fire:2,level:5});s.levelQueue=[5];
- const choices=levelChoices(s,()=>.99);assert.equal(choices.length,3);assert.equal(new Set(choices.map(k=>k.id)).size,3);assert.ok(choices.some(k=>k.id==='ultimate'));assert.ok(choices.some(k=>k.id==='fire'||exclusiveMain(k.id)==='fire'));
+ const choices=levelChoices(s,()=>.99);assert.equal(choices.length,3);assert.equal(new Set(choices.map(k=>k.id)).size,3);assert.ok(!choices.some(k=>k.id==='ultimate'));assert.ok(choices.some(k=>k.id==='fire'||exclusiveMain(k.id)==='fire'));
  const loaded=parseSave(encodeSave(s));assert.deepEqual(levelChoices(loaded,()=>{throw Error('must restore');}).map(k=>k.id),choices.map(k=>k.id));
 });
 test('fire powder only boosts the explosion center; ember cannot recursively trigger',()=>{

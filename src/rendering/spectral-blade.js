@@ -11,7 +11,7 @@ export function drawSpectralBlade(c,s,reduced=false){
   c.save();c.fillStyle=e.bladeDot.kind==='fire'?'#e6a16c':'#a7cb82';c.fillRect(Math.round(e.x-3),Math.round(e.y-22),3,5);c.restore();
  }
  const state=spectralBladeState(s),profile=bladeProfile(p),time=s.elapsed||0;
- let x=p.x-25,y=p.y-12+(reduced?0:Math.sin(time*2.7)*2),angle=-.22;
+ let x=p.x+(reduced?-30:Math.cos(time*.85)*33),y=p.y-20+(reduced?0:Math.sin(time*2.7)*5),angle=-.22+(reduced?0:Math.sin(time*1.1)*.12);
  let swing=0;
  if(state){
   const active=state.time-profile.windup,end=.18*(profile.strikes-1)+.12;
@@ -23,7 +23,7 @@ export function drawSpectralBlade(c,s,reduced=false){
    if(!reduced){c.save();c.strokeStyle=bladeColor(p);c.globalAlpha=.45;c.lineWidth=p.evolutions?.aura==='judgment'?5:3;c.beginPath();c.arc(p.x,p.y-7,profile.radius*.82,state.aim-profile.halfAngle,state.aim+profile.halfAngle);c.stroke();c.globalAlpha=.8;c.strokeStyle='#eee6fb';c.lineWidth=1;c.beginPath();c.arc(p.x,p.y-7,profile.radius*.84,angle-Math.PI/2-.3,angle-Math.PI/2+.3);c.stroke();c.restore();}
   }else{const back=Math.max(0,1-(active-end)/.16);x+=(p.x+Math.cos(state.aim)*profile.radius*.72-x)*back;y+=(p.y+Math.sin(state.aim)*profile.radius*.72-7-y)*back;angle=state.aim+Math.PI/2;}
  }
- c.save();c.translate(Math.round(x),Math.round(y));c.rotate(angle);c.imageSmoothingEnabled=false;
+ c.save();c.translate(Math.round(x),Math.round(y));c.rotate(angle);c.scale(1.25,1.25);c.imageSmoothingEnabled=false;
  // Alpha cutout retains the original; crop transparent padding only at draw.
  if(image)c.drawImage(image,-4,-20);
  else{c.fillStyle='#c8cbd0';c.fillRect(-1,-22,3,29);c.fillStyle='#9b8053';c.fillRect(-5,6,11,2);c.fillStyle='#595060';c.fillRect(-1,8,3,8);}

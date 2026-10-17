@@ -23,11 +23,11 @@ export const trialRelic={id:'relic',name:'유물 1개',weight:4};
 export const lootInfo=id=>id==='relic'?trialRelic:lootTable.find(k=>k.id===id);
 const roomOf=s=>s.floors[s.floor][s.room];
 const skillPool=(p,id)=>skills.filter(k=>k.id!=='ultimate'&&allowedSkill(p,k.id)&&(p[k.id]||0)<k.max&&(id==='main'?k.id===p.mainSkill:id==='unique'?k.grade==='unique':k.tree==='support'&&k.grade!=='unique'));
-export function eligibleLoot(p,id){if(id==='relic')return ownedRelics(p).length<relics.length;if(id==='heal')return p.hp<p.max;if(['support','main','unique'].includes(id))return skillPool(p,id).length>0;return !!lootInfo(id);}
+export function eligibleLoot(p,id){if(id==='relic')return relics.some(r=>!['sunFairy','snowFairy','stormFairy'].includes(r.id)&&!ownedRelics(p).includes(r.id));if(id==='heal')return p.hp<p.max;if(['support','main','unique'].includes(id))return skillPool(p,id).length>0;return !!lootInfo(id);}
 export function drawLoot(p,random,positive=false,excluded=[],trial=false){
  const pool=(trial?[...lootTable.filter(k=>k.id!=='relic'),trialRelic]:lootTable).filter(k=>(!positive||!k.trap)&&!excluded.includes(k.id)&&(!positive||eligibleLoot(p,k.id)));
  let roll=random()*pool.reduce((n,k)=>n+k.weight,0),item=pool.at(-1);for(const k of pool){roll-=k.weight;if(roll<0){item=k;break;}}
- if(!eligibleLoot(p,item.id))return drawLoot(p,random,true,excluded,trial);const result={id:item.id};if(item.id==='relic'){const available=relics.filter(r=>!ownedRelics(p).includes(r.id));result.relic=weightedRelic(available,random).id;}if(['support','main','unique'].includes(item.id)){const list=skillPool(p,item.id);result.skill=list[Math.floor(random()*list.length)].id;}if(item.id==='boss')result.boss=['warden','prism','slime'][Math.floor(random()*3)];return result;
+ if(!eligibleLoot(p,item.id))return drawLoot(p,random,true,excluded,trial);const result={id:item.id};if(item.id==='relic'){const available=relics.filter(r=>!['sunFairy','snowFairy','stormFairy'].includes(r.id)&&!ownedRelics(p).includes(r.id));result.relic=weightedRelic(available,random).id;}if(['support','main','unique'].includes(item.id)){const list=skillPool(p,item.id);result.skill=list[Math.floor(random()*list.length)].id;}if(item.id==='boss')result.boss=['warden','prism','slime'][Math.floor(random()*3)];return result;
 }
 const lootRandom=(s,salt=0)=>seededRandom(((s.seed??1)^((s.floor+1)*99173)^((s.room+1)*51787)^salt)>>>0);
 export function prepareChest(s){const r=roomOf(s);if((r.type==='treasure'||r.hasChest)&&!(r.hasChest?r.chestUsed:r.used))r.chestReward??=drawLoot(s.player,lootRandom(s));return r.chestReward;}
@@ -38,7 +38,7 @@ export function applyLoot(s,item){
  // A saved offer can become capped while the player explores another room.
  const legacyBlade=item.id==='support'&&item.skill==='aura'&&(p.aura||0)<3;
  if(!eligibleLoot(p,item.id)&&!legacyBlade||item.skill&&!allowedSkill(p,item.skill)||item.skill&&(p[item.skill]||0)>=skills.find(k=>k.id===item.skill).max)reward=drawLoot(p,lootRandom(s,811),true);
- const id=reward.id;if(id==='relic'&&!grantRelic(p,reward.relic)){const available=relics.find(r=>!ownedRelics(p).includes(r.id));if(available){grantRelic(p,available.id);reward={id:'relic',relic:available.id};}else{p.damage+=3;reward={id:'attack3'};}}
+ const id=reward.id;if(id==='relic'&&!grantRelic(p,reward.relic)){const available=relics.find(r=>!['sunFairy','snowFairy','stormFairy'].includes(r.id)&&!ownedRelics(p).includes(r.id));if(available){grantRelic(p,available.id);reward={id:'relic',relic:available.id};}else{p.damage+=3;reward={id:'attack3'};}}
  if(id==='heal')p.hp=Math.min(p.max,p.hp+1);
  if(id==='potion')p.potions++;
  if(id==='speed')p.bonusMove=(p.bonusMove||0)+.02;

@@ -1,7 +1,7 @@
 // Shared data for eligibility, snapshots, combat and exact level previews.
 export const synergySkills=[
- {id:'blastTip',main:'fire',name:'화약촉',icon:'fire',brief:'폭발 중심에 있는 적을 더 강하게 타격합니다.',steps:['중심 35% · 폭발 피해 +15%','중심 35% · 폭발 피해 +25%','중심 50% · 폭발 피해 +25%']},
- {id:'emberMark',main:'fire',requires:2,name:'잔불의 낙인',icon:'fire',brief:'화상 3중첩 적을 다시 맞히면 연소 피해를 줍니다.',steps:['폭발 기준 20% · 대상별 2초','폭발 기준 35% · 대상별 2초','폭발 기준 35% · 대상별 1.4초']},
+ {id:'blastTip',main:'fire',name:'화약촉',icon:'fire',brief:'폭발 중심에 있는 적을 더 강하게 타격합니다.',steps:['중심 35% · 폭발 피해 +10%','중심 35% · 폭발 피해 +20%','중심 50% · 폭발 피해 +20%']},
+ {id:'emberMark',main:'fire',requires:2,name:'잔불의 낙인',icon:'fire',brief:'화상 3중첩 적을 다시 맞히면 연소 피해를 줍니다.',steps:['폭발 기준 15% · 대상별 2초','폭발 기준 30% · 대상별 2초','폭발 기준 30% · 대상별 1.4초']},
  {id:'frostBond',main:'frost',name:'서리 응집',icon:'frost',brief:'서리 중첩을 오래 유지하고 둔화 효과를 강화합니다.',steps:['중첩 유지 3초 → 4초','중첩 4초 · 이동 둔화 +5%p','위 효과 · 해빙 후 1초간 15% 둔화']},
  {id:'shardHone',main:'frost',name:'빙편 연마',icon:'frost',brief:'사망 파편의 위력과 비행 거리를 강화합니다.',steps:['파편 피해 +15%','파편 피해 +20% · 수명 2.3초','일반 파편 +20% · 빙결 사망 파편 +30% · 2.3초']},
  {id:'venomPenetration',main:'poison',name:'침투 독',icon:'poison',brief:'독을 오래 남기고 주탄으로 중첩을 빠르게 쌓습니다.',steps:['독 지속 +0.5초','지속 +0.5초 · 독 피해 +10%','위 효과 · 기존 감염 적 주탄 추가 1중첩 / 1.5초']},

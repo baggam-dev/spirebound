@@ -7,16 +7,8 @@ import {relics,grantRelic,ultimateCooldown} from '../../src/progression/relics.j
 import {lootTable,drawLoot,prepareTrialLoot} from '../../src/progression/loot.js';
 import {seededRandom} from '../../src/game/random.js';
 const setup=()=>{const s=newRun(123);s.player.ultimate=1;s.player.evolutions={ultimate:'turret'};const r=currentRoom(s);r.obstacles=[];r.enemies=[];return s;};
-test('one cooldown relic gives two to three seconds of natural turret overlap',()=>{
- assert.equal(ultimateCooldown(setup().player),20);
- for(const relic of relics.filter(r=>r.stats?.ultimateCooldown)){
-  const s=setup();grantRelic(s.player,relic.id);assert.ok(castUltimate(s));const cd=s.skill;
-  assert.equal(currentRoom(s).turrets[0].time,19);assert.ok(cd>=16&&cd<=17);
-  advanceClock(s,cd,false);tickPassives(s,cd);assert.ok(castUltimate(s));
-  assert.equal(currentRoom(s).turrets.length,2);assert.equal(currentRoom(s).turrets[0].time,19-cd);
-  tickPassives(s,19-cd);assert.equal(currentRoom(s).turrets.length,1);
- }
-});
+test('single cooldown relic no longer creates permanent turret overlap after lifetime nerf',()=>{for(const relic of relics.filter(r=>r.stats?.ultimateCooldown)){const s=setup();grantRelic(s.player,relic.id);assert.ok(castUltimate(s));const cd=s.skill;assert.equal(currentRoom(s).turrets[0].time,14);assert.ok(cd>=16&&cd<=17);advanceClock(s,cd,false);tickPassives(s,cd);assert.ok(castUltimate(s));assert.equal(currentRoom(s).turrets.length,1);assert.equal(currentRoom(s).turrets[0].time,14);}});
+
 test('tower has 308 range from installation and fires a 100 percent snapshotted volley every 0.6 second',()=>{
  const s=setup(),r=currentRoom(s);castUltimate(s);const t=r.turrets[0];s.player.x=100;
  const e={id:0,type:'archer',hp:1000,x:t.x+309,y:t.y};r.enemies=[e];tickPassives(s,.01);assert.equal(s.projectiles.length,0);

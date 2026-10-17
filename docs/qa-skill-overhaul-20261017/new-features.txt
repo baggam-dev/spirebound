@@ -1,0 +1,45 @@
+✔ roll travels continuously, freezes with pause, survives save, ends at140 and does not create post-roll immunity (170.2101ms)
+✔ roll avoids a live projectile and checks walls for every movement segment (82.2156ms)
+✔ roll branches deal once and place timed mines only in their own room (232.9796ms)
+✔ old immunity relic remains a short roll bonus and cooldown has a hard lower bound (40.3786ms)
+✔ free unlocks require both the intended boss and level without consuming normal choices (37.8255ms)
+✔ fairy king stays guaranteed through reroll, saved stale choices and declining the offer (89.4835ms)
+✔ migration refunds capped levels once, preserves learned utilities, and removes duplicate fairy relics (101.8045ms)
+✔ all legacy snapshots and saved repeat rewards remain loadable before and after one migration (98.4792ms)
+✔ blood pact shares a two-heart cap across kills and boss damage, excluding summons, and cannot revive (34.4323ms)
+✔ awakening costs one heart without triggering shields or invulnerability and refuses the last heart (67.401ms)
+✔ king laser has bounded damage, respects walls, and does not recursively emit arrows or elements (144.1029ms)
+✔ bow mastery changes direct damage but not fire explosion and midgame xp is reduced (9.7979ms)
+✖ rain applies six scaled pulses, has no off-region damage and survives midcast save (83.5229ms)
+✔ new fairy skills never appear in randomly offered relic pools (41.7794ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2183.6365
+
+✖ failing tests:
+
+test at tests\unit\skill-overhaul.test.js:26:1
+✖ rain applies six scaled pulses, has no off-region damage and survives midcast save (83.5229ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1021 !== 796
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/skill-overhaul.test.js:26:408)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1021,
+    expected: 796,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

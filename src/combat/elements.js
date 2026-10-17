@@ -8,20 +8,20 @@ const near=(a,b,r)=>Math.hypot(a.x-b.x,a.y-b.y)<=r;
 const grounded=e=>e.phase!=='air'&&e.phase!=='splitJump'&&e.attackPhase!=='leap';
 function damage(e,amount,poison=false){if(e.hp<=0||amount<=0)return 0;const before=e.hp;e.hp-=amount*enemyDamageFactor(e);if(poison&&before>0&&e.hp<=0)e.poisonKilled=true;return before-Math.max(0,e.hp);}
 function stack(e,key,time,dps,cap){const list=e[key]??=[];list.push({time,dps});if(list.length>cap)list.shift();}
-export function fireFieldSpec(p){return p.fire>=3?{r:(35+40/3*p.fire)*(p.evolutions?.fire==='ember'?1.2:1),time:p.evolutions?.fire==='flare'?1:1.5,dps:30*(1+relicStat(p,'fire'))*(p.effectScale??1)}:null;}
+export function fireFieldSpec(p){return p.fire>=3?{r:(35+40/3*p.fire)*(p.evolutions?.fire==='ember'?1.3:1),time:p.evolutions?.fire==='flare'?1:1.5,dps:30*(1+relicStat(p,'fire'))*(p.effectScale??1)}:null;}
 export function markFireKill(e,spec,stacks=e.burnStacks?.filter(s=>s.time>0).length||0){if(e.hp<=0&&spec&&stacks>=3&&!e.fireFieldSpawned)e.pendingFireField??={...spec};}
 export function resolveFireFields(room){for(const e of room.enemies)if(e.hp<=0&&e.pendingFireField&&!e.fireFieldSpawned){e.fireFieldSpawned=true;const zones=room.fireZones??=[];zones.push({x:e.x,y:e.y,...e.pendingFireField});if(zones.length>24)zones.shift();delete e.pendingFireField;}}
 export function elementalImpact(p,target,enemies,room,shot={}){
  bindDefenses(enemies);const effects=[],boost=(1+relicStat(p,'dot'))*(p.effectScale??1);
  if(p.fire){
   const wide=p.evolutions?.fire==='ember',strong=p.evolutions?.fire==='flare';
-  const radius=(40+15*p.fire)*(wide?1.2:1),blast=((19+7*(p.fire-1))*(p.effectScale??1)+p.damage*.4*(1+relicStat(p,'element')))*(1+relicStat(p,'fire'))*(strong?1.25:wide?.85:1)*.9;
+  const radius=(40+15*p.fire)*(wide?1.3:1),blast=((19+7*(p.fire-1))*(p.effectScale??1)+p.damage*.4*(1+relicStat(p,'element')))*(1+relicStat(p,'fire'))*(strong?1.25:wide?.95:1)*.9;
   for(const e of enemies)if(grounded(e)&&near(e,target,radius)){
    const alive=e.hp>0,center=p.blastTip&&near(e,target,radius*(p.blastTip>=3?.5:.35))&&!segmentBlocked(target,e,room?.obstacles||[],1);
-   const dealt=damage(e,blast*(center?(p.blastTip>=2?1.25:1.15):1));if(alive)markFireKill(e,fireFieldSpec(p));
+   const dealt=damage(e,blast*(center?(p.blastTip>=2?1.2:1.1):1));if(alive)markFireKill(e,fireFieldSpec(p));
    if(e.hp>0&&p.fire>=2){stack(e,'burnStacks',2,(6+3*(p.fire-2))*boost,6);if(p.fire>=3)e.burnField=fireFieldSpec(p);
     if(dealt>0&&p.emberMark&&e.burnStacks.length>=3&&!(e.emberCooldown>0)&&!segmentBlocked(target,e,room?.obstacles||[],1)){
-     damage(e,blast*(p.emberMark>=2?.35:.2));e.emberCooldown=p.emberMark>=3?1.4:2;
+     damage(e,blast*(p.emberMark>=2?.3:.15));e.emberCooldown=p.emberMark>=3?1.4:2;
      effects.push({x:e.x,y:e.y,r:17,t:.25,duration:.25,color:'#f2b974',synergyEffect:'ember'});
     }
    }
@@ -30,7 +30,7 @@ export function elementalImpact(p,target,enemies,room,shot={}){
  }
  if(p.poison&&target.hp>0){
   const lasting=p.evolutions?.poison==='ember',potent=p.evolutions?.poison==='flare';
-  const infected=target.poisonStacks?.some(dot=>dot.time>0),duration=(lasting?4.5:potent?2:3)+(p.venomPenetration?.5:0),dps=(p.poison===1?4.8:2+2*p.poison)*boost*(lasting?.8:potent?1.25:1)*(p.venomPenetration>=2?1.1:1);
+  const infected=target.poisonStacks?.some(dot=>dot.time>0),duration=(lasting?4.5:potent?2:3)+(p.venomPenetration?.5:0),dps=(p.poison===1?4.8:2+2*p.poison)*boost*(lasting?.95:potent?1.25:1)*(p.venomPenetration>=2?1.1:1);
   stack(target,'poisonStacks',duration,dps,8);delete target.sporeDot;
   if(p.venomPenetration>=3&&infected&&shot.venomPrimary&&shot.validDirect&&!(target.venomCooldown>0)){stack(target,'poisonStacks',duration,dps,8);target.venomCooldown=1.5;}
   if(p.plagueSpore)target.sporeLevel=p.plagueSpore;

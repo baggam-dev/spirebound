@@ -35,14 +35,13 @@ test('32 relics stack persistently, old single slot migrates and duplicates have
 });
 test('relic attack speed and ultimate damage/cooldown affect actual casts',()=>{
  const s=newRun(5),r=currentRoom(s);s.player.power=5;grantRelic(s.player,'quiver');fireArrow(s,{x:700,y:300});assert.equal(s.attack,.65/1.15);
- grantRelic(s.player,'crown');grantRelic(s.player,'rain');s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};r.enemies=[{id:0,x:500,y:300,hp:500,max:500}];assert.ok(castUltimate(s));assert.equal(r.enemies[0].hp,432.5);assert.equal(s.skill,20);
+ grantRelic(s.player,'crown');grantRelic(s.player,'rain');s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};r.enemies=[{id:0,x:500,y:300,hp:500,max:500}];assert.ok(castUltimate(s));assert.ok(Math.abs(r.enemies[0].hp-242.96)<1e-8);assert.equal(s.skill,20);
 });
 test('legacy guard shield absorbs one hit, respects invulnerability, pause and recharge, independently of armor',()=>{
  const s=newRun(6);s.player.aura=3;s.player.legacyAuraGuard=true;s.player.armor=2;assert.equal(takeDamage(s,20),'blocked');assert.equal(s.auraShield,60);assert.equal(s.shield,undefined);assert.equal(takeDamage(s,20),'ignored');s.invulnerable=0;assert.equal(takeDamage(s,20),'blocked');s.invulnerable=0;assert.equal(takeDamage(s,10),'hurt');advanceClock(s,60,true);assert.equal(s.auraShield,60);advanceClock(s,60,false);assert.equal(takeDamage(s,20),'blocked');assert.equal(s.player.hp,4);assert.equal(parseSave(encodeSave(s)).auraShield,60);
 });
-test('blink travels 175 units, respects walls, cooldown and existing longer invulnerability',()=>{
- const s=newRun(7);s.invulnerable=1;assert.ok(castBlink(s,{x:1,y:0}));assert.equal(s.player.x,655);assert.equal(s.dodge,10);assert.equal(s.invulnerable,1);assert.equal(castBlink(s,{x:1,y:0}),false);s.dodge=0;currentRoom(s).obstacles=[{x:700,y:200,w:20,h:200,type:'rock'}];assert.ok(castBlink(s,{x:1,y:0}));assert.ok(s.player.x<700);
-});
+test('roll travels continuously for140 units and preserves existing longer invulnerability',async()=>{const {tickRoll}=await import('../../src/combat/roll.js');const s=newRun(7);currentRoom(s).obstacles=[];s.invulnerable=1;assert.ok(castBlink(s,{x:1,y:0}));assert.equal(s.player.x,480);tickRoll(s,currentRoom(s),.28,[]);assert.equal(s.player.x,620);assert.equal(s.dodge,4);assert.equal(s.invulnerable,1);assert.equal(castBlink(s,{x:1,y:0}),false);});
+
 test('fire explosion hits full radius instantly and burn pulses every half second across saves',()=>{
  let s=newRun(8),r=currentRoom(s);s.attack=999;s.player.fire=3;r.enemies=[{id:0,type:'archer',x:700,y:300,hp:1000,max:1000,cd:999,balanceVersion:1},{id:1,type:'archer',x:785,y:300,hp:1000,max:1000,cd:999,balanceVersion:1}];const fx=elementalImpact(s.player,r.enemies[0],r.enemies,r);assert.ok(fx[0].instant);assert.ok(r.enemies[1].hp<1000);const hp=r.enemies[0].hp;tickElements(r,.25);assert.equal(r.enemies[0].hp,hp);s=parseSave(encodeSave(s));r=currentRoom(s);tickElements(r,.25);assert.equal(r.enemies[0].hp,hp-4.5);
 });

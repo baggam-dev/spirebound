@@ -1,0 +1,33 @@
+✔ roll travels continuously, freezes with pause, survives save, ends at140 and does not create post-roll immunity (669.1511ms)
+✔ roll avoids a live projectile and checks walls for every movement segment (315.4876ms)
+✔ roll branches deal once and place timed mines only in their own room (647.7581ms)
+✔ old immunity relic remains a short roll bonus and cooldown has a hard lower bound (69.7291ms)
+✔ free unlocks require both the intended boss and level without consuming normal choices (93.1929ms)
+✔ fairy king stays guaranteed through reroll, saved stale choices and declining the offer (223.7981ms)
+✔ migration refunds capped levels once, preserves learned utilities, and removes duplicate fairy relics (154.994ms)
+✔ all legacy snapshots and saved repeat rewards remain loadable before and after one migration (200.3216ms)
+✔ blood pact shares a two-heart cap across kills and boss damage, excluding summons, and cannot revive (77.7053ms)
+✔ awakening costs one heart without triggering shields or invulnerability and refuses the last heart (150.2896ms)
+✔ king laser has bounded damage, respects walls, and does not recursively emit arrows or elements (274.8351ms)
+✔ bow mastery changes direct damage but not fire explosion and midgame xp is reduced (10.8447ms)
+✔ rain applies six scaled pulses, has no off-region damage and survives midcast save (167.5983ms)
+✔ new fairy skills never appear in randomly offered relic pools (88.4381ms)
+✔ precision main guarantees an early direct synergy and only primary arrows advance a saved mark (811.0911ms)
+✔ precision branches retain focus while awakening spends health for cadence and not extra damage (396.4371ms)
+✔ blood pact needs kills while guardian intercepts one live hit without slowing enemies (174.8162ms)
+✔ a wall appearing during preparation blocks damage; an escaping enemy is not hit (513.7613ms)
+✔ dance rechecks its target and never hits a dead target twice (135.1005ms)
+✔ precision blade favors an existing mark without advancing it (142.993ms)
+✔ blade poison cannot create poison gas, explosions or primary marks (82.1137ms)
+✔ saved cooldown prevents a repeated slash after loading and rejects corruption (318.9208ms)
+✔ old level-three aura keeps its guard once; newly learned Vergas does not grant a shield (340.2677ms)
+✔ Vergas remains unique while acquisition is rare and owned upgrades use normal weight (129.8539ms)
+✔ saved ordinary-support Vergas rewards remain claimable even when all ordinary supports are capped (322.8565ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8301.3594

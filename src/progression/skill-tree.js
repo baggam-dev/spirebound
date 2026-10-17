@@ -1,10 +1,11 @@
+import {fairyTrio} from './skill-overhaul.js';
 import {synergyIds,synergyAllowed,shardMultiplier} from './synergies.js';
 import {runRandom} from '../game/random.js';
 export const mainSkills=['fire','frost','poison','chain','precision'];
-export const supportSkills=['split','pierce','haste','power','repeat','aura','homing','ultimate','weakpoint','finisher',...synergyIds];
+export const supportSkills=['split','pierce','haste','power','repeat','aura','homing','ultimate','weakpoint','finisher','rollMastery','sunFairy','snowFairy','stormFairy','fairyKing',...synergyIds];
 export const skillIds=[...mainSkills,...supportSkills];
 export const skillPoints=p=>skillIds.reduce((n,id)=>n+(p[id]||0),0);
-export const allowedSkill=(p,id)=>id==='ultimate'?p.level>=5:synergyAllowed(p,id)&&(!mainSkills.includes(id)||!p.mainSkill||p.mainSkill===id);
+export const allowedSkill=(p,id)=>id==='ultimate'?false:id==='fairyKing'?fairyTrio(p):synergyAllowed(p,id)&&(!mainSkills.includes(id)||!p.mainSkill||p.mainSkill===id);
 export function mainChoices(s,random=()=>runRandom(s),reroll=false){
  if(s.player.mainSkill)return [];
  if(!reroll&&s.mainChoices?.length===3)return s.mainChoices;
@@ -27,10 +28,10 @@ export function steerArrow(b,enemies,obstacles,dt,blocked){
 }
 
 
-export function skillGrade(id){return mainSkills.includes(id)?'main':['homing','ultimate','aura'].includes(id)?'unique':['split','repeat'].includes(id)?'rare':'normal';}
+export function skillGrade(id){return mainSkills.includes(id)?'main':['homing','ultimate','aura','repeat','rollMastery','sunFairy','snowFairy','stormFairy','fairyKing'].includes(id)?'unique':['split'].includes(id)?'rare':'normal';}
 export const gradeLabels={main:'메인',normal:'일반 보조',rare:'레어 보조',unique:'유니크 보조'};
 export function frostShatter(p,e,projectiles){
  const frozen=e.frozen>0||e.frozenDeath,stacks=frozen?3:e.frostStackTime>0?e.frostStacks||0:0;
- if(!p.frost||e.hp>0||!stacks||e.frostShattered||e.passiveKilled)return false;e.frostShattered=true;const count=p.frost>=4&&frozen?12:6,size=[.5,1,1.5][Math.min(3,stacks)-1];
+ if(!p.frost||e.hp>0||!stacks||e.frostShattered||e.passiveKilled)return false;e.frostShattered=true;const count=p.frost>=3&&frozen?12:6,size=[.5,1,1.5][Math.min(3,stacks)-1];
  for(let i=0;i<count;i++){const a=i*Math.PI*2/count;projectiles.push({x:e.x,y:e.y,vx:Math.cos(a)*480,vy:Math.sin(a)*480,life:p.shardHone>=2?2.3:2,enemy:false,frostShard:true,shardSize:size,element:'frost',elemental:true,damageScale:.3+.05*Math.min(4,p.frost),shardBoost:shardMultiplier(p,frozen),pierce:0,hit:Number.isInteger(e.id)?[e.id]:[]});}return true;
 }

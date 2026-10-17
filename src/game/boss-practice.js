@@ -16,8 +16,9 @@ export function createPractice(bossId,main,seed=Math.floor(Math.random()*4294967
  const s=newRun(seed,['commander','demon'].includes(bossId)?{campaign:'expanded'}:undefined),p=s.player,random=seededRandom(seed^0x46a513);delete s.ranking;s.practice={boss:bossId,main,seed};s.floor=boss.floor;s.room=s.floors[s.floor].findIndex(r=>bossId==='gate'?r.gate:r.type==='boss');
  const r=currentRoom(s);p.x=480;p.y=430;p.level=10;for(let i=0;i<3;i++)applySkill(p,main);
  for(let i=0;i<7;i++){const pool=skills.filter(k=>k.tree==='support'&&allowedSkill(p,k.id)&&(p[k.id]||0)<k.max).map(k=>({...k,weight:skillOfferWeight(p,k)}));let roll=random()*pool.reduce((n,k)=>n+k.weight,0),chosen=pool.at(-1);for(const k of pool){roll-=k.weight;if(roll<0){chosen=k;break;}}applySkill(p,chosen.id);}
+ if(boss.floor>=3)p.utility='guardian';if(boss.floor>=5)p.ultimate=1;
  let key;while((key=pendingEvolution(p)))chooseEvolution(p,key,evolutions[key][Math.floor(random()*evolutions[key].length)].id);
- const pool=[...relics],count=3+Math.floor(random()*3);for(let i=0;i<count;i++){const relic=weightedRelic(pool,random);grantRelic(p,relic.id);pool.splice(pool.indexOf(relic),1);}
+ const pool=relics.filter(r=>!["sunFairy","snowFairy","stormFairy"].includes(r.id)),count=3+Math.floor(random()*3);for(let i=0;i<count;i++){const relic=weightedRelic(pool,random);grantRelic(p,relic.id);pool.splice(pool.indexOf(relic),1);}
  const essenceCount=3+Math.floor(random()*3);r.essences=Array.from({length:essenceCount},()=>({id:essences[Math.floor(random()*essences.length)].id,x:p.x,y:p.y}));collectEssences(s,{...r,obstacles:[]});r.essences=[];p.hp=p.max;p.potions=3;p.food=0;s.pendingLevels=0;s.levelQueue=[];s.tutorialComplete=true;r.seen=true;
  if(bossId==='king')challengeKing(s);if(bossId==='commander')challengeCommander(s);if(bossId==='demon')challengeDemon(s);s.entryGrace=1;return s;
 }

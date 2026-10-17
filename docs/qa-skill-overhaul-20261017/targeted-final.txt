@@ -1,0 +1,211 @@
+✔ ultimate requires an explicit choice and casts three local pulses with cooldown (168.3191ms)
+✔ brute locks a safe landing, crosses cover, and leaves a recovery window (7.8736ms)
+✔ short melee attack is telegraphed and can be escaped without dodge (0.8086ms)
+✔ treasure grants one fixed random reward and rejects repeats or occupied rooms (255.6388ms)
+✔ events enforce affordable visible costs and cannot be purchased twice (89.3263ms)
+✔ trial battle, save, clear and reward have exactly-once transitions (165.8303ms)
+✔ skill evolution requires level three, locks once, and resumes pending choice after save (172.6999ms)
+✔ lightning branches trade concentrated damage for additional sustained links (9.761ms)
+✔ arrow branches change spread, penetration and timing without multiplying primary arrows (63.3109ms)
+✖ arrow rain deals three bounded pulses only within its region and expires (105.039ms)
+✔ guardian protection ends with its owner; explosive elite detonates only after warning (2.359ms)
+✔ volley elite warns for a full interval and locks aim before its added shots (3.2654ms)
+✔ return paths offer distinct routes in new maps and never reveal unseen rooms (3444.0926ms)
+✔ new choice and hazard state is validated rather than silently accepting invalid ids (52.6462ms)
+✔ leaving a trial preserves damage and does not grant its reward early (44.653ms)
+✔ elite reward is not repeated after saving its delayed explosion (126.3926ms)
+✔ prism shield covers direct, DoT and ultimate, releases immediately after last summon death and resumes (250.5171ms)
+✔ multiple summons protect until the last dies, ordinary guardian reduction does not multiply (91.4482ms)
+✔ large slime opens with puddles and shorter cadence while preserving minislime summon (6.3408ms)
+✔ escape key is shown alongside relics without consuming a relic slot (11.7757ms)
+✔ fire reduces firing frequency by thirty-eight percent with every attack-speed build (6.5444ms)
+✔ new room combinations preserve population limits and single upper support (53.4454ms)
+✔ boss openings distinguish earned counters and judgment recovery (0.7291ms)
+✔ essence drop thresholds double on descent with trial priority over elite (8.7904ms)
+✔ bosses always drop one essence and rarely a second at their position (1.349ms)
+✔ all five essences persist on the ground and are collected once, including health above ten (313.8274ms)
+✔ essences cannot be collected remotely or through cover (94.2565ms)
+✔ 32 relics stack persistently, old single slot migrates and duplicates have no effect (174.752ms)
+✖ relic attack speed and ultimate damage/cooldown affect actual casts (55.1987ms)
+✔ legacy guard shield absorbs one hit, respects invulnerability, pause and recharge, independently of armor (93.7156ms)
+✔ roll travels continuously for140 units and preserves existing longer invulnerability (55.7047ms)
+✔ fire explosion hits full radius instantly and burn pulses every half second across saves (165.2171ms)
+✔ trial relic has increased weight and a single saved payout (122.6957ms)
+✔ trial rosters vary across seeds and higher floors have clearly larger health pools (6775.1787ms)
+✔ slime encounter drops exactly once after all split stages and final boss offers a relic (107.8948ms)
+✔ new save fields reject duplicate relics, unknown essences and invalid shield clocks (184.285ms)
+✔ boss health migration preserves remaining health ratio and only applies once (372.7986ms)
+✔ shrine chooses on entry, pauses enemies, then retains elite combat and exit lock (253.0006ms)
+✔ shrine has ten blessings and five curses, including double-curse offers that persist on reload (10611.091ms)
+✔ legacy unused shrine is populated once on entry, used shrines never regain rewards (49.2237ms)
+✔ all incantations apply once, affect combat stats, and preserve valid saves (1413.7177ms)
+✔ prism first summons at two seconds, caps three living elites, and all summoned deaths have no rewards (152.7704ms)
+✔ prism summon timer is preserved rather than restarted on resume (173.528ms)
+✔ slime splitting leaves a puddle and airborne children land at separated telegraphed destinations (112.6409ms)
+✔ airborne split progression resumes identically from saved mid-jump state (193.2518ms)
+✔ slime has needle and orb projectile patterns and shrinking close gas (4.4828ms)
+✔ boss health bar uses actual total health through splits and final fragment deaths (50.523ms)
+✔ return variants replace part of existing packs without increasing count or appearing on ascent (9.7856ms)
+✔ new return attackers telegraph and produce distinct attacks with saved state (9.5075ms)
+✔ multiple elites award at most one potion per room even after save and reentry (116.8745ms)
+✔ pixel icons have distinct relic and skill silhouettes and hearts never show unused diamonds (49.5615ms)
+✔ DPS readout measures the last five seconds and resets between runs (1.2918ms)
+✔ invalid incantations, multipliers, summoning clocks and jump destinations are rejected (49.9749ms)
+✔ ascent trial strength does not enable descent-only enemy variants (3.4068ms)
+✔ potion heals one, locks three seconds, persists and does not consume at full health (363.3283ms)
+✔ trial contact, projectile and delayed elite explosion are all one heart (342.8217ms)
+✔ frost levels freeze on 4,3,2,2 hits and scale direct elemental damage (7.5286ms)
+✔ frost shard sizes reflect stack count, level four frozen deaths emit twelve (3.3009ms)
+✔ element relic boosts frost direct bonus and shards, not duration (2.7292ms)
+✔ ultimate is absent from all normal level offers and requires two bosses and level8 (110.9459ms)
+✔ multiple level gains preserve ordinary selection queue without ultimate cards (72.5465ms)
+✔ rain hits three times at fixed cast location and preserves partial pulses on reload (150.2181ms)
+✔ turrets shoot, overlap at most twice and retain remaining lifetime across save (160.5322ms)
+✔ three unique fairies each fire one guided shot per 1.5 seconds (143.8072ms)
+✔ fairy secondary effects are independent and cannot trigger frost death chains (74.5605ms)
+✔ roll cloak grants bounded immunity while orbit and bell retain their attacks (69.0817ms)
+✔ legacy ultimate branch migrates to chosen tower and malformed new states are rejected (212.6494ms)
+✔ bonus skill rewards do not roll the level-up-only ultimate offer (63.048ms)
+✔ single cooldown relic no longer creates permanent turret overlap after lifetime nerf (312.1993ms)
+✔ tower has 308 range from installation and fires a 100 percent snapshotted volley every 0.6 second (103.7587ms)
+✔ chests allocate eight percent to relics and trial offers never duplicate rewards (43590.7488ms)
+✔ frozen death emits six distinct radial shards exactly once, with level-scaled damage (6.2726ms)
+✔ a lethal frost hit applies its stack and can freeze before shattering (6.424ms)
+✔ frozen shard victims chain without exponential damage and grant one kill each (223.156ms)
+✔ shards at all levels add frost stacks and scale direct damage (228.4453ms)
+✔ Vergas deaths preserve frozen state even when the frame expires its timer (101.5557ms)
+✔ shards resume identically across saves and disappear on room entry (176.2055ms)
+✔ Vergas damage grows and cooldown falls each level, and trial charge pressure exceeds ordinary enemies (2.1077ms)
+✔ tiers distinguish main, rare and unique while ordinary supports remain normal (0.8791ms)
+✔ exhausted skill pool provides saved repeatable growth choices with real benefits (818.6361ms)
+✔ normal skill pool and guaranteed ultimate take precedence over fallback rewards (165.5592ms)
+✔ growth rewards respect stat caps (75.6197ms)
+✔ growth snapshots are recorded once per floor and direction and survive reload (263.1121ms)
+✔ boss record excludes dormant rooms and descent, accumulates through reload and completes once (211.1617ms)
+✔ simulation observes growth without retroactively creating missing floor records (153.9051ms)
+✔ restoring excludes capped growth candidates and persists the corrected list (114.7396ms)
+✔ fully stale saved choices rebuild without rerolling ultimate eligibility or consuming a level (67.7601ms)
+✔ seeker is an independent normal 100% arrow; split arrows retain elements (400.6667ms)
+✔ turret snapshots elemental volleys and seekers without duplicating fairies (925.7895ms)
+✔ turret damage is frozen and delayed arrow stays at installation after player moves (147.3566ms)
+✔ build corruption rejected and legacy turret snapshots once (134.389ms)
+✔ rain is 50 per pulse; retirement has no attacks (66.4064ms)
+✔ four slime fragments maintain bounded hazards over a minute (165.5145ms)
+✔ opening enemies take exactly three unmodified arrows and survive saving (275.7544ms)
+✔ first fire arrow kills a healthy floor-one basic enemy including splash (98.6679ms)
+✔ blocked blink preserves cooldown and immunity; open direction still works (72.3528ms)
+✔ every boss offers deterministic unowned relics once including the final boss (434.8064ms)
+✔ relics accumulate without duplicates and cannot be reclaimed after save (219.0568ms)
+✔ skipping relics preserves the equipped item and claims the cache without changing cooldowns (49.0476ms)
+✔ relic benefits use exact distance boundaries, shield limits and cooldowns (71.8783ms)
+✔ boots and stride bonuses are symmetric and diagonal motion is normalized (157.4726ms)
+✔ ember relic strengthens burn with no direct arrow penalty (5.7855ms)
+✔ journal observes only current enemies and retains discovered elite traits (50.8176ms)
+✔ successful hits record source and floor totals; ignored hits are absent and history is bounded (144.1767ms)
+✔ lethal projectile records its actual source before death and does not count invulnerable hits (155.7738ms)
+✔ new save fields reject invalid relics, codex keys and damage history (141.2381ms)
+✔ damage diagnostics include capped burn, field and instant ultimate damage (67.4543ms)
+✔ roll travels continuously, freezes with pause, survives save, ends at140 and does not create post-roll immunity (333.8998ms)
+✔ roll avoids a live projectile and checks walls for every movement segment (164.0296ms)
+✔ roll branches deal once and place timed mines only in their own room (444.8025ms)
+✔ old immunity relic remains a short roll bonus and cooldown has a hard lower bound (80.3346ms)
+✔ free unlocks require both the intended boss and level without consuming normal choices (67.8146ms)
+✔ fairy king stays guaranteed through reroll, saved stale choices and declining the offer (177.0437ms)
+✔ migration refunds capped levels once, preserves learned utilities, and removes duplicate fairy relics (157.1763ms)
+✔ all legacy snapshots and saved repeat rewards remain loadable before and after one migration (156.4931ms)
+✔ blood pact shares a two-heart cap across kills and boss damage, excluding summons, and cannot revive (58.9538ms)
+✔ awakening costs one heart without triggering shields or invulnerability and refuses the last heart (93.0227ms)
+✔ king laser has bounded damage, respects walls, and does not recursively emit arrows or elements (246.1551ms)
+✔ bow mastery changes direct damage but not fire explosion and midgame xp is reduced (5.1454ms)
+✔ rain applies six scaled pulses, has no off-region damage and survives midcast save (133.3591ms)
+✔ new fairy skills never appear in randomly offered relic pools (83.2536ms)
+✔ preview does not mutate run and shows fire attack speed reduction (310.239ms)
+✔ frost third level describes twelve shards and Vergas third level branch (165.3191ms)
+✔ every available skill and growth reward has finite preview rows (125.76ms)
+✔ main offers persist across saves and reject a main outside the three choices (474.1526ms)
+✔ main reroll spends the same single reroll used by later supports (181.7864ms)
+✔ every dedicated support respects its main and prerequisite (2.3282ms)
+✔ ultimate guarantee and a useful synergy survive the same three-card offer (106.2948ms)
+✔ fire powder only boosts the explosion center; ember cannot recursively trigger (7.8173ms)
+✔ frost bond preserves two-hit freeze and immunity while adding a thaw slow (2.1043ms)
+✔ shard bonuses are stored once and keep existing shard count and base scale (102.9764ms)
+✔ poison stacks stay capped and spores do not seed a second generation (7.1329ms)
+✔ charge counts each primary projectile once and consumes on the following primary (5.17ms)
+✔ focused conduction retains a useful first-link bonus and extends reach (3.1974ms)
+✔ new synergy snapshots and pre-renewal snapshots both load (177.0635ms)
+✔ draft uses three readable cards and preserves unique rarity and recipe hints without mutations (119.2515ms)
+✔ precision main guarantees an early direct synergy and only primary arrows advance a saved mark (262.1392ms)
+✔ precision branches retain focus while awakening spends health for cadence and not extra damage (179.9947ms)
+✔ blood pact needs kills while guardian intercepts one live hit without slowing enemies (85.4232ms)
+✔ first main consumes one earned point and permanently excludes other elements (140.711ms)
+✔ legacy mixed elements preserve total investment through explicit main choice and one-time refunds (169.3002ms)
+✔ choosing an unlearned main from an old build spends one refunded point (60.9053ms)
+✔ rare support weights are lower and offers never duplicate (193.2755ms)
+✔ level one frost freezes on the fourth primary impact and cannot permanently lock enemies (7.6772ms)
+✔ frozen attack phases and elite salvos stop and resume without restarting telegraphs (50.4714ms)
+✔ repeat adds one delayed same-direction primary without repeating the split fan (54.4565ms)
+✔ homing has a bounded turn rate, avoids walls and keeps projectile speed (5.1305ms)
+✔ Vergas strikes nearby grounded enemies after preparation and damage support does not automatically unlock the ultimate (72.8151ms)
+✔ main lock, delayed homing shots and frozen states round-trip and reject corruption (105.0516ms)
+✔ freezing stops unlaunched poison warnings but does not stop airborne projectiles (1.0282ms)
+✔ Vergas respects intervening cover and cannot damage airborne enemies (32.143ms)
+✔ fire splash and field have enlarged radius and increased damage (1.1716ms)
+✔ split secondary arrows carry the chosen element with proportional damage (55.5829ms)
+✔ rain landings coincide with six scaled damage pulses and expire at1.8 seconds (164.5056ms)
+✔ crossbow recoil follows an actual shot and remains idle without a target (117.5704ms)
+✔ ultimate poses are read-only, deterministic on pause and survive serialized state (125.8457ms)
+ℹ tests 156
+ℹ suites 0
+ℹ pass 154
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68975.3459
+
+✖ failing tests:
+
+test at tests\unit\adventures.test.js:33:1
+✖ arrow rain deals three bounded pulses only within its region and expires (105.039ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  500 !== 1000
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/adventures.test.js:34:441)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 1000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\feedback18.test.js:36:1
+✖ relic attack speed and ultimate damage/cooldown affect actual casts (55.1987ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 242.95999999999992
+  - 242.96
+         ^
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/feedback18.test.js:38:198)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 242.95999999999992,
+    expected: 242.96,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

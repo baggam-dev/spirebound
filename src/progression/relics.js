@@ -1,3 +1,4 @@
+import {hasFairy} from './skill-overhaul.js';
 import {CROSSBOW} from '../combat/combat-tuning.js';
 import {seededRandom} from '../game/random.js';
 export const relics=[
@@ -91,7 +92,7 @@ export const relics=[
  {
   "id": "comet",
   "name": "혜성의 꼬리",
-  "description": "점멸 거리 +50%",
+  "description": "구르기 거리 +50%",
   "stats": {
    "blinkRange": 0.5
   }
@@ -99,7 +100,7 @@ export const relics=[
  {
   "id": "moon",
   "name": "달빛 나침반",
-  "description": "점멸 재사용 시간 20% 감소",
+  "description": "구르기 재사용 시간 20% 감소",
   "stats": {
    "blinkCooldown": 0.2
   }
@@ -198,7 +199,7 @@ export const relics=[
 {id:'sunFairy',name:'태양요정',description:'유니크 · 1.5초마다 주황 유도탄 · 공격력 40% + 3초간 60% 화상'},
 {id:'snowFairy',name:'눈꽃요정',description:'유니크 · 1.5초마다 하늘 유도탄 · 공격력 50% + 2초 이동 둔화 25%'},
 {id:'stormFairy',name:'번개요정',description:'유니크 · 1.5초마다 노랑 유도탄 · 공격력 80% + 주변 1체에 절반 피해'},
-{id:'afterimage',name:'잔상의 망토',description:'유니크 · 점멸 무적시간 +2초',stats:{blinkInvulnerability:2}},
+{id:'afterimage',name:'잔상의 망토',description:'유니크 · 구르기 무적시간 +0.05초',stats:{blinkInvulnerability:.05}},
 {id:'orbitBlades',name:'궤도 칼날',description:'유니크 · 회전 칼날 2개 · 공격력 50% · 적당 0.6초 간격'},
 {id:'voidBell',name:'공허의 종',description:'유니크 · 12초마다 가까운 적 주변을 끌어모음 · 보스 제외'}
 ].map(r=>({...r,grade:'unique',weight:.4}))
@@ -210,15 +211,15 @@ export function removeRelic(p,id){if(!hasRelic(p,id))return false;p.relics=owned
 export const relicStat=(p,key)=>ownedRelics(p).reduce((n,id)=>n+(relicInfo(id)?.stats?.[key]||0),0);
 export const relicSummary=p=>ownedRelics(p).map(id=>relicInfo(id)?.name).filter(Boolean).join(' · ')||'없음';
 export function grantRelic(p,id){if(!relicInfo(id)||hasRelic(p,id))return false;p.relics=[...ownedRelics(p),id];delete p.relic;if(id==='heart'){p.max++;p.hp=Math.min(p.max,p.hp+1);}return true;}
-export function offerRelics(s,room){if(room.relicOffers)return;const random=seededRandom((s.seed??1)^((s.floor+1)*73471)^(s.room*1877)),pool=relics.filter(r=>!hasRelic(s.player,r.id));room.relicOffers=[];while(pool.length&&room.relicOffers.length<3){const chosen=weightedRelic(pool,random);room.relicOffers.push(chosen.id);pool.splice(pool.indexOf(chosen),1);}room.relicClaimed=false;}
+export function offerRelics(s,room){if(room.relicOffers)return;const random=seededRandom((s.seed??1)^((s.floor+1)*73471)^(s.room*1877)),pool=relics.filter(r=>!['sunFairy','snowFairy','stormFairy'].includes(r.id)&&!hasRelic(s.player,r.id));room.relicOffers=[];while(pool.length&&room.relicOffers.length<3){const chosen=weightedRelic(pool,random);room.relicOffers.push(chosen.id);pool.splice(pool.indexOf(chosen),1);}room.relicClaimed=false;}
 export function claimRelic(s,id){const r=s.floors[s.floor][s.room];if(s.status!=='playing'||!r.used||r.enemies.length||r.relicClaimed||!r.relicOffers||id!=='skip'&&!r.relicOffers.includes(id))return false;if(id!=='skip'&&!grantRelic(s.player,id))return false;r.relicClaimed=true;return true;}
 export function directRelicFactor(p,e){let factor=1+relicStat(p,'direct');if(hasRelic(p,'lens')&&Math.hypot(p.x-e.x,p.y-e.y)>=280)factor*=1.2;if(hasRelic(p,'hunter')&&e.type==='boss')factor*=1.25;if(hasRelic(p,'execution')&&e.hp<=e.max*.3)factor*=1.3;return factor;}
-export function movementSpeed(p){return p.speed*hexFactor(p,'move')*(1+(p.bonusMove||0)+relicStat(p,'move'))*(p.evolutions?.haste==='stride'?1.12:1);}
+export function movementSpeed(p){return p.speed*hexFactor(p,'move')*(1+(p.bonusMove||0)+relicStat(p,'move')+(hasFairy(p,'snowFairy')?.05:0)+(p.fairyKing?.1:0)+(p.focusTime>0?.25:0))*(p.evolutions?.haste==='stride'?1.12:1);}
 export const hexFactor=(p,key)=>p.hexes?.[key]??1;
-export const dodgeCooldown=p=>10*(1-relicStat(p,'blinkCooldown'))*hexFactor(p,'blink');
-export const blinkDistance=p=>175*(1+relicStat(p,'blinkRange'))*hexFactor(p,'reach');
+export const dodgeCooldown=p=>Math.max(2.5,4*(1-relicStat(p,'blinkCooldown'))*hexFactor(p,'blink'));
+export const blinkDistance=p=>140*(1+relicStat(p,'blinkRange'))*hexFactor(p,'reach');
 export const ultimateCooldown=p=>(p.evolutions?.ultimate==='turret'?CROSSBOW.cooldown:25)*Math.max(.2,Math.pow(.9,p.ultimateEssences||0)*(1-relicStat(p,'ultimateCooldown'))*hexFactor(p,'ultimate'));
 
-export const attackInterval=p=>.65/(1+(p.haste||0)*.1+(p.bonusAttack||0)+relicStat(p,'attack'))/hexFactor(p,'attack')*(p.evolutions?.haste==='tempo'?.85:1)*(p.evolutions?.split==='focus'?1.15:1)/(p.fire>0?.67:1)*(p.focusTime>0?.9:1);
+export const attackInterval=p=>.65/(1+(p.haste||0)*.1+(p.bonusAttack||0)+relicStat(p,'attack')+(hasFairy(p,'stormFairy')?.05:0)+(p.fairyKing?.15:0)+(p.focusTime>0?.7:0))/hexFactor(p,'attack')*(p.evolutions?.haste==='tempo'?.85:1)*(p.evolutions?.split==='focus'?1.15:1)/(p.fire>0?.62:1);
 
 export function weightedRelic(pool,random=Math.random){let roll=random()*pool.reduce((n,r)=>n+(r.weight??1),0);for(const r of pool){roll-=r.weight??1;if(roll<0)return r;}return pool.at(-1);}
