@@ -1,3 +1,4 @@
+import {guardHallLoaded,drawGuardHallDoor} from './guard-hall-art.js';
 import {environmentArtLoaded,drawHallDoor,drawEnvironmentProp} from './environment-art.js';
 import {drawEnvironmentFacilities} from './environment-ambience.js';
 import {drawAmbusherSprite} from './ambusher-sprite.js';
@@ -89,8 +90,8 @@ export function drawPixelActor(c,e,time=0,run=null,reduced=false){
 export function drawWorldDetails(c,s,r,reduced=false){
  const t=s.elapsed,group=Math.floor(s.floor/2),accent=s.floor>=8?(s.floor===8?'#73504a':'#665069'):['#6e8066','#827499','#899257','#96806a'][group]||'#728473';c.save();
  // Quiet floor detail, kept underneath entities and every combat telegraph.
- if(s.floor!==0||!environmentArtLoaded())for(let i=0;i<65;i++){const x=40+(i*137+s.floor*43)%865,y=55+(i*79+s.floor*17)%425;box(c,x,y,5+i%7,1,'#a4a79513');if(i%6===0){box(c,x,y,2,6,'#0a12193b');box(c,x+2,y+5,7,2,'#0a12193b');}}
- if(s.floor!==0||!environmentArtLoaded())for(const x of [32,918])for(let y=80;y<470;y+=75){box(c,x,y,10,31,'#151e23');box(c,x-2,y,14,4,accent);box(c,x+2,y+5,3,22,'#ffffff18');box(c,x-2,y+29,14,4,'#263438');}
+ if(!(s.floor===0&&environmentArtLoaded()||s.floor===1&&guardHallLoaded()))for(let i=0;i<65;i++){const x=40+(i*137+s.floor*43)%865,y=55+(i*79+s.floor*17)%425;box(c,x,y,5+i%7,1,'#a4a79513');if(i%6===0){box(c,x,y,2,6,'#0a12193b');box(c,x+2,y+5,7,2,'#0a12193b');}}
+ if(!(s.floor===0&&environmentArtLoaded()||s.floor===1&&guardHallLoaded()))for(const x of [32,918])for(let y=80;y<470;y+=75){box(c,x,y,10,31,'#151e23');box(c,x-2,y,14,4,accent);box(c,x+2,y+5,3,22,'#ffffff18');box(c,x-2,y+29,14,4,'#263438');}
  if(s.floor===0&&environmentArtLoaded())for(const x of [13,947])for(const y of [160,400])drawEnvironmentProp(c,3,x,y,22);
  c.restore();
 }
@@ -164,7 +165,7 @@ export function drawTurretDetail(c,t,time){
  box(c,-9,-4,28,8,'#372e2a');box(c,-9,-3,27,2,'#e0c889');box(c,3,1,14,2,'#8e7553');box(c,-4,-7,5,14,'#ba9861');diamond(c,-2,0,3,'#e5dfa6');box(c,15,-1,8,2,'#e9e8d3');
  for(const side of [-1,1])box(c,-8,side*12-2,4,4,'#e0bf7c');c.restore();
 }
-export function drawDoorFrame(c,x,y,side,locked,floor=1){if(floor===0&&drawHallDoor(c,x,y,side,locked))return;c.save();const w=side?29:80,h=side?70:35;
+export function drawDoorFrame(c,x,y,side,locked,floor=1){if(floor===0&&drawHallDoor(c,x,y,side,locked)||floor===1&&drawGuardHallDoor(c,x,y,side,locked))return;c.save();const w=side?29:80,h=side?70:35;
  if(side){for(const dy of [-6,h]){box(c,x,y+dy,w,6,'#171e24');box(c,x,y+dy,w,2,'#858674');}if(locked){for(let i=0;i<4;i++)box(c,x+4,y+8+i*16,15,3,'#ccb27b');box(c,x+10,y+29,8,12,'#493d34');}}
  else{for(const dx of [-7,w]){box(c,x+dx,y,7,h,'#171e24');box(c,x+dx,y,3,h,'#858674');}if(locked){for(let i=0;i<5;i++)box(c,x+6+i*15,y+3,3,17,'#c2a16e');box(c,x+35,y+5,10,11,'#493d34');box(c,x+39,y+8,2,4,'#dbc086');}}
  c.restore();}

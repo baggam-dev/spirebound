@@ -1,3 +1,4 @@
+import {guardHallLoaded,drawGuardProp} from './guard-hall-art.js';
 import {objectPoint} from '../world/object-positions.js';
 import {doorArrival} from '../world/doors.js';
 import {fountainPoint} from '../world/fountain.js';
@@ -28,8 +29,9 @@ export function drawEnvironmentFloorLife(c,s,r,reduced=false){
 export function drawEnvironmentTorches(c,s,r,reduced=false){
  const t=reduced?0:s.elapsed;c.save();c.beginPath();c.rect(25,44,910,464);c.clip();
  for(const [i,p] of torches.entries()){
-  if(s.floor!==0||!environmentArtLoaded()){c.fillStyle='#111720';c.fillRect(p.x-10,p.y+12,20,5);c.fillStyle=s.floor>=8?'#4c414a':'#756b55';c.fillRect(p.x-6,p.y-3,12,15);c.fillStyle=s.floor>=8?'#9b7172':'#b49d6c';c.fillRect(p.x-5,p.y,10,3);}
   if(s.floor===0&&environmentArtLoaded())drawEnvironmentProp(c,15,p.x,p.y+17,16);
+  else if(s.floor===1&&guardHallLoaded())drawGuardProp(c,11,p.x+3,p.y+1,16);
+  else{c.fillStyle='#111720';c.fillRect(p.x-10,p.y+12,20,5);c.fillStyle=s.floor>=8?'#4c414a':'#756b55';c.fillRect(p.x-6,p.y-3,12,15);c.fillStyle=s.floor>=8?'#9b7172':'#b49d6c';c.fillRect(p.x-5,p.y,10,3);}
   const fire=s.floor>=9?'#c58bb8':s.floor===8?'#e28564':'#ffbf65',pulse=reduced?1:.9+.08*Math.sin(t*8+i*1.7)+.04*Math.sin(t*17+i);
   c.save();c.translate(p.x,p.y-9);c.globalAlpha=.12*pulse;const light=c.createRadialGradient(0,0,2,0,0,44);light.addColorStop(0,fire);light.addColorStop(1,fire+'00');c.fillStyle=light;c.fillRect(-44,-44,88,88);c.globalAlpha=1;
   c.fillStyle=fire;c.fillRect(-3,-6*pulse,6,10*pulse);c.fillStyle='#fff1bd';c.fillRect(-1,-3*pulse,2,6*pulse);
