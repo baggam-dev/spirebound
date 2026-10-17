@@ -1,4 +1,6 @@
 import {characterSizes} from './character-sizes.js';
+import {drawWardenPresentation} from './warden-presentation-art.js';
+import {rememberWardenFacing} from './warden-presentation-state.js';
 import {drawWardenMotion,wardenMotionReady} from './warden-motion.js';
 import {drawWardenWalk,wardenWalkReady} from './warden-walk.js';
 import {drawWardenRecover,wardenRecoverReady,wardenRecoverProgress} from './warden-recover.js';
@@ -17,11 +19,13 @@ const originalReady=typeof Image==='undefined'?Promise.resolve(false):new Promis
  }catch{resolve(false);}};atlas.onerror=()=>resolve(false);atlas.src=new URL('../../assets/images/warden-horns-blood-atlas.png',import.meta.url).href;
 });
 export const wardenSpriteReady=Promise.all([originalReady,wardenMotionReady,wardenWalkReady,wardenRecoverReady]).then(([original])=>original);
-export function drawWardenSprite(c,e,p,attack,red=false){
+export function drawWardenSprite(c,e,p,attack,red=false,options={}){
  if(frames.length!==2||e.type!=='boss'||e.variant&&e.variant!=='warden')return false;
  const face=Number.isFinite(e.patternAim)&&['windup','strike','air'].includes(attack.stage)?(Math.cos(e.patternAim)<0?-1:1):p.face||1;
- const f=frames[['windup','air'].includes(attack.stage)?1:0];c.save();c.translate(0,29);c.scale(1.1,1.1);c.translate(0,-29);c.scale(face,1);c.imageSmoothingEnabled=false;const recovering=attack.stage==='recover'&&drawWardenRecover(c,e),walking=!recovering&&attack.stage==='idle'&&drawWardenWalk(c,p);
+ if(!options.staticPose)rememberWardenFacing(e,face);
+ const f=frames[['windup','air'].includes(attack.stage)?1:0];c.save();c.translate(0,29);c.scale(1.1,1.1);c.translate(0,-29);c.scale(face,1);c.imageSmoothingEnabled=false;
+ const presented=attack.stage==='idle'&&drawWardenPresentation(c,e,options),recovering=!presented&&attack.stage==='recover'&&drawWardenRecover(c,e),walking=!presented&&!recovering&&attack.stage==='idle'&&drawWardenWalk(c,p);
  if(recovering){const progress=wardenRecoverProgress(e);if(progress>.8){c.save();c.globalAlpha*=(progress-.8)/.2;if(!drawWardenMotion(c,{...p,moving:false},{stage:'idle'}))c.drawImage(frames[0].canvas,Math.round(frames[0].x),Math.round(frames[0].y));c.restore();}}
- else if(!walking&&!drawWardenMotion(c,p,attack))c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));
+ else if(!presented&&!walking&&!drawWardenMotion(c,p,attack))c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));
  if(red){c.strokeStyle='#ee8791';c.lineWidth=2;c.beginPath();c.moveTo(-22,20);c.lineTo(-27,13);c.moveTo(22,20);c.lineTo(27,13);c.stroke();}c.restore();return true;
 }
