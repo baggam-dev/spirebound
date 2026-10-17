@@ -1,0 +1,1684 @@
+✔ every browser module dependency resolves inside src, including side-effect imports (1254.7973ms)
+✖ ranking API SQLite and HTTP integration suite (1753.1147ms)
+✖ development API proxy forwards cookies and overrides claimed client IP (64.2145ms)
+✖ server serves game modules and refuses repository files and unsupported methods (12.4168ms)
+✔ ultimate requires an explicit choice and casts three local pulses with cooldown (60.7204ms)
+✔ brute locks a safe landing, crosses cover, and leaves a recovery window (2.631ms)
+✔ short melee attack is telegraphed and can be escaped without dodge (0.4416ms)
+✔ treasure grants one fixed random reward and rejects repeats or occupied rooms (121.0631ms)
+✔ events enforce affordable visible costs and cannot be purchased twice (33.8487ms)
+✔ trial battle, save, clear and reward have exactly-once transitions (76.7371ms)
+✔ skill evolution requires level three, locks once, and resumes pending choice after save (55.0086ms)
+✔ lightning branches trade concentrated damage for additional sustained links (2.1237ms)
+✔ arrow branches change spread, penetration and timing without multiplying primary arrows (22.0243ms)
+✔ arrow rain deals three bounded pulses only within its region and expires (42.8027ms)
+✔ guardian protection ends with its owner; explosive elite detonates only after warning (0.6723ms)
+✔ volley elite warns for a full interval and locks aim before its added shots (0.915ms)
+✔ return paths offer distinct routes in new maps and never reveal unseen rooms (1200.5427ms)
+✔ new choice and hazard state is validated rather than silently accepting invalid ids (24.7137ms)
+✔ leaving a trial preserves damage and does not grant its reward early (24.4677ms)
+✔ elite reward is not repeated after saving its delayed explosion (68.4737ms)
+✔ plain and precision arrows mark actual contact, even on a lethal hit (206.4599ms)
+✔ elemental contacts keep their own visuals without a duplicate plain spark (85.5062ms)
+✔ dense contact effects keep newest sparks and unrelated cues (0.5381ms)
+✔ upper rosters cover six/seven-floor and nine/eight-floor formations with one support cap (18.9748ms)
+✔ deployment respects four entrances, cover, separation and saved positions (2658.8919ms)
+✔ future deployment layouts vary flanks while current ranking generation keeps the old stencil (9.7798ms)
+✔ new runs persist the upper-floor layout generation (68.596ms)
+✔ upper introduction packs stay simple and do not retain elite health (15.7479ms)
+✔ gate announces both guardians, survivor fury, and rewards exactly once across reload (34.6673ms)
+✔ return notice survives reload and enrage creates fresh deployment without altering facilities (84.4034ms)
+✔ lower descent mixes upper pursuers without adding extra enemy counts (20.8363ms)
+✔ ultimate telemetry counts actual damage and excludes overkill (38.7218ms)
+✔ health upgrade preserves damage and death, never stacks, and leaves bosses unchanged (6.4654ms)
+✔ new spawns and frenzy are strengthened once; saves preserve health (82.5892ms)
+✔ charge extends travel with a shorter readable warning and melee extends modestly (0.321ms)
+✔ all descent raw damage resolves to one heart while ascent and shields retain their rules (184.6812ms)
+✔ descent heavy projectiles produce one-heart damage in live simulation (34.4411ms)
+✔ gate guardians use combo/dash and fan/ring patterns with faster recovery (57.7942ms)
+✔ king health increases exactly 30 percent and phase recovery is shorter (26.507ms)
+✔ prism shield covers direct, DoT and ultimate, releases immediately after last summon death and resumes (129.5801ms)
+✔ multiple summons protect until the last dies, ordinary guardian reduction does not multiply (29.1656ms)
+✔ large slime opens with puddles and shorter cadence while preserving minislime summon (1.8931ms)
+✔ escape key is shown alongside relics without consuming a relic slot (3.4564ms)
+✔ warden lift occurs only during the existing leap phase (3.9158ms)
+✔ prism charge and release follow real warning and beam timing (0.9651ms)
+✔ slime pose follows its own hazard, never another enemy warning (0.4061ms)
+✔ king windup changes to follow-through only after the real attack resolves (1.5455ms)
+✔ render pose is read-only and reconstructs identically after save or pause (1.524ms)
+✔ all boss/main combinations generate valid level ten builds with requested budgets (501.0517ms)
+✔ same practice seed recreates build and boss state (44.5314ms)
+✔ practice store writes and completion leave normal save and history untouched (69.0971ms)
+✔ slime practice ends only after final split bodies die (23.2634ms)
+✔ new commanders increase volley density and speed while legacy saves keep old attacks (287.3222ms)
+✔ reflection warns before firing two or four rounds, survives save and bounces once (147.1422ms)
+✔ phase two blinks into a telegraphed volley and casts rain on an relieved 10.4 second clock (46.8473ms)
+✔ new commander travels farther and continues movement during early volley preparation (84.8711ms)
+✔ only new king phase three accelerates judgment and its dash without losing telegraphs (271.5403ms)
+✔ commander slight relief slows special shots five percent and keeps speeds while extending attack recovery (129.364ms)
+✔ knife reach triggers before contact, resolves rapidly and respects cooldown (5.095ms)
+✔ escaping blade reach and walls avoid damage at resolution (0.7984ms)
+✔ simulation replaces immediate contact and save/resume retains blade timing (135.0551ms)
+✔ freezing prevents chaser blade progression (38.7207ms)
+✔ wide slash intersects player circle at radial and angular boundaries (0.576ms)
+✔ windup locks direction and survives save without following escape behind (33.3698ms)
+✔ compact rendering keeps critical feedback while bounding crowded accents (4.8264ms)
+✔ mobile pickup labels stay separated at the lower screen edge without moving inputs (1.345ms)
+✔ fire reduces firing frequency by thirty-three percent with every attack-speed build (2.0168ms)
+✔ new room combinations preserve population limits and single upper support (23.5311ms)
+✔ boss openings distinguish earned counters and judgment recovery (0.2822ms)
+✔ same archer gains rounds, speed and shorter recovery with ascent and escape (3.5741ms)
+✔ split has one full arrow and discounted secondary arrows; haste grows ten percent (61.5076ms)
+✔ third prism pattern emits three rotated volleys and survives saved salvo state (2.7159ms)
+✔ legacy boss HP upgrade preserves wounds and is idempotent without extending maps (37.2469ms)
+✔ prism counts only living guardians owned by this boss (3.0497ms)
+✔ equipment and legacy guard shields have independent readiness and timers (0.583ms)
+✔ commander challenge is exclusive to expanded ninth floor and survives save (127.8381ms)
+✔ volley repeats fixed aim with two then three frost arrows (28.1125ms)
+✔ rain fixes its target, then repeats after twenty six seconds without a simultaneous blink (16.9774ms)
+✔ blink warns at a safe landing before moving and serializes mid-windup (46.5881ms)
+✔ frost slow expires and re-entry clears stale telegraphs (67.9024ms)
+✔ a landed frost arrow slows movement without freezing dodge or corrupting save (51.8488ms)
+✔ commander keeps flanking, telegraphs a fixed sniper shot, and resumes after save (66.2532ms)
+✔ cover-stopped gate dash exposes a saved counter window, unobstructed dash does not (3.2801ms)
+✔ king counter window requires avoiding every strike in the combo (0.5014ms)
+✔ counter window survives reload and allows contact without free collision damage (129.5145ms)
+✔ formation first attacks stagger frontline ranged and support while limiting support count (14.9262ms)
+✔ both core arms intersect player circles at front and angular edges, never behind (2.1096ms)
+✔ saved combat flashes determine strike and recovery without inferring canceled attacks (0.6198ms)
+✔ core arrival starts only on actual phase-three spawn event and never from draw/load (3.7176ms)
+✔ core hits distinguish reused part ids, have a cooldown and preserve actor/room state (1.521ms)
+✔ attacks and specials immediately cancel presentation without extending combat clocks (0.8617ms)
+✔ core keeps its own detached snapshot while other parts use the shared presentation (2.1849ms)
+✔ actual phase spawn and final core removal keep key reward immediate and single (196.4033ms)
+✔ new demon uses separate clocks and wider hand salvos; old runs stay serial (195.102ms)
+✔ foot shield blocks a complete elemental hit once and recharges without stacking (70.4957ms)
+✔ large footprints exceed four while blocking shots and preserving the exit route (60.4413ms)
+✔ eye adds seven curved projectiles and nose trail remains continuous during strong mouth pull (78.7861ms)
+✔ three-second specials lock their target, resume deterministically, deal two then one hearts (241.7335ms)
+✔ electric aura stuns every player action without damage and has a shared retrigger grace (66.4563ms)
+✔ summons are two per interval, capped at eight and award no kills, XP or rankings (69.9358ms)
+✔ phase changes retain pits; reentry cancels pending specials; death clears bolts and summons (108.667ms)
+✔ two minutes of every phase stay bounded and round-trip at each checkpoint (2547.4ms)
+✔ specials telegraph the room edge rather than leaving a safe border band (36.6349ms)
+✔ final boss is hidden, enters with two separate targets and round trips (227.2116ms)
+✔ five fingers produce distinct bounded salvos (48.1991ms)
+✔ footprint pits persist through all phases, block shots, and keep an open route (43.7359ms)
+✔ part extinction advances two phases before only the final core grants a key (117.6992ms)
+✔ live simulation does not grant final rewards at phase boundaries (54.1683ms)
+✔ eye ray hits once, mouth force moves over time, and pull removes poison combo (60.1911ms)
+✔ final shadow attacks do not repeat immediately and keep the core fixed (56.5874ms)
+✔ foot pressure adds a jump and final core fires a readable seven-shot spread (78.7048ms)
+✔ active parts reposition and accelerated projectiles retain a warning interval (35.6889ms)
+✔ a minute of live combat stays bounded and re-entry clears only the old warning (126.8471ms)
+✔ each elemental projectile emits a localized contact effect only on an actual hit (344.1538ms)
+✔ lethal poison contact still splashes; ordinary arrows do not create elemental flashes (54.8145ms)
+✔ piercing and frost-shard visuals respect actual elemental application (1.7412ms)
+✔ dense hit effects keep newest contacts without dropping damage text or other cues (0.6949ms)
+✔ element nock follows only a visible pending auto shot (3.1494ms)
+✔ all arrow counts retain exactly one aimed primary and alternate unmatched sides (213.5776ms)
+✔ fire levels grow splash damage and radius; burn starts at two and floor at three (1.4659ms)
+✔ burn stacks expire individually and overlapping fire zones do not multiply damage (1.457ms)
+✔ poison gains damage and gas radius by level; gas requires two live stacks (1.1455ms)
+✔ poison stack cap is bounded and gas only lasts until second latest stack expires (0.4539ms)
+✔ max poison corpse explosions chain once, and direct kills do not trigger them (0.4869ms)
+✔ fire activates only on first contact; explicitly spent fire procs stay spent (80.4262ms)
+✔ element timers, fields and volley direction resume deterministically and reject malformed stacks (104.7562ms)
+✔ legacy fire investments, evolution and pending offers become poison exactly once (53.6251ms)
+✔ new elite density rises from third to sixth floor across seeded populations (1148.034ms)
+✔ trial uses three durable purple champions with stronger attack profiles (61.9446ms)
+✔ poison arrows infect every pierced target, respect penetration count and do not hit twice (117.8029ms)
+✔ poison piercing continues after saving an arrow whose first impact is spent (84.0784ms)
+✔ actual damage emits a hit reaction without moving or stunning its target (189.4669ms)
+✔ death feedback is emitted once while removal and rewards remain immediate (41.7108ms)
+✔ slime split stays distinct and surviving summons removed by boss cleanup do not fake deaths (57.1571ms)
+✔ continuous damage is throttled, death cancels hit glints, and crowd caps keep other cues (1.0369ms)
+✔ death snapshots have no live enemy references or state mutations (0.3666ms)
+✔ hit feedback records only the lost health interval for normal enemies and the first boss (0.6288ms)
+✔ floors are connected with correct counts and boss placement (229.8468ms)
+✔ pause freezes time and cooldowns (43.7371ms)
+✔ frenzy and save preserve map and facilities (79.0884ms)
+✔ exit needs key and death stops time (24.7761ms)
+✔ explicit expanded draft adds connected ninth and two-room final floors without changing classic (112.2148ms)
+✔ expanded draft saves its topology and permits ascent and descent in the shared ranking (156.5546ms)
+✔ split and repeat volleys do not turn into the independent seeker (854.2817ms)
+✔ fire explosion has stronger base damage and level growth (1.2995ms)
+✔ fire field requires existing three stacks, max fire and a fire killing hit (19.7319ms)
+✔ explosion and simultaneous burn can finish three-stack enemies but field damage cannot chain (19.2653ms)
+✔ burn expirations do not count dead stacks at a later lethal tick (0.4567ms)
+✔ tutorial cannot be bypassed and pays exactly one level; escape never repeats it (882.5262ms)
+✔ raw chest weights total one hundred and invalid rewards redraw only positives (20.5839ms)
+✔ chest roll survives save, one payout only, and skill reward respects main lock (87.1225ms)
+✔ permanent move and attack rewards survive migration and affect actual movement/cadence (47.4825ms)
+✔ small chest bosses award relics but never stairs keys or XP (304.1834ms)
+✔ three elite trap spawns valid distinct enemies with entry grace (86.7535ms)
+✔ trials occur only on floors three and five, preserve active encounters on escape (83.3131ms)
+✔ trial offers are three saved distinct positives, one claim, reject corrupt rewards (89.794ms)
+✔ essence drop thresholds double on descent with trial priority over elite (4.2023ms)
+✔ bosses always drop one essence and rarely a second at their position (0.6782ms)
+✔ all five essences persist on the ground and are collected once, including health above ten (187.5963ms)
+✔ essences cannot be collected remotely or through cover (58.5725ms)
+✔ 32 relics stack persistently, old single slot migrates and duplicates have no effect (98.0428ms)
+✔ relic attack speed and ultimate damage/cooldown affect actual casts (24.1992ms)
+✔ legacy guard shield absorbs one hit, respects invulnerability, pause and recharge, independently of armor (52.0169ms)
+✔ blink travels 175 units, respects walls, cooldown and existing longer invulnerability (51.437ms)
+✔ fire explosion hits full radius instantly and burn pulses every half second across saves (66.6083ms)
+✔ trial relic has increased weight and a single saved payout (45.1187ms)
+✔ trial rosters vary across seeds and higher floors have clearly larger health pools (4920.5413ms)
+✔ slime encounter drops exactly once after all split stages and final boss offers a relic (162.3805ms)
+✔ new save fields reject duplicate relics, unknown essences and invalid shield clocks (258.1746ms)
+✔ boss health migration preserves remaining health ratio and only applies once (630.1636ms)
+✔ shrine chooses on entry, pauses enemies, then retains elite combat and exit lock (122.5661ms)
+✔ shrine has ten blessings and five curses, including double-curse offers that persist on reload (7486.6642ms)
+✔ legacy unused shrine is populated once on entry, used shrines never regain rewards (54.858ms)
+✔ all incantations apply once, affect combat stats, and preserve valid saves (2143.3126ms)
+✔ prism first summons at two seconds, caps three living elites, and all summoned deaths have no rewards (337.8296ms)
+✔ prism summon timer is preserved rather than restarted on resume (221.6385ms)
+✔ slime splitting leaves a puddle and airborne children land at separated telegraphed destinations (154.8534ms)
+✔ airborne split progression resumes identically from saved mid-jump state (164.2056ms)
+✔ slime has needle and orb projectile patterns and shrinking close gas (43.4768ms)
+✔ boss health bar uses actual total health through splits and final fragment deaths (76.0459ms)
+✔ return variants replace part of existing packs without increasing count or appearing on ascent (20.0351ms)
+✔ new return attackers telegraph and produce distinct attacks with saved state (6.4662ms)
+✔ multiple elites award at most one potion per room even after save and reentry (175.1082ms)
+✔ pixel icons have distinct relic and skill silhouettes and hearts never show unused diamonds (60.5965ms)
+✔ DPS readout measures the last five seconds and resets between runs (1.7647ms)
+✔ invalid incantations, multipliers, summoning clocks and jump destinations are rejected (145.0425ms)
+✔ ascent trial strength does not enable descent-only enemy variants (26.6896ms)
+✔ grounded contact and rapid chaser blades share one-heart immunity (512.8304ms)
+✔ airborne bodies cannot contact hit, entry grace protects nearby bodies (22.6082ms)
+✔ ricochet projectile inflicts one heart (13.4018ms)
+✔ ascent gates require a clear room; descent gates allow living bosses and stairs (35.9475ms)
+✔ fountain generation includes empty, bounded solo fights, and full combined fights (4307.7169ms)
+✔ combined chest and fountain each pay once and persist independently (1050.9235ms)
+✔ trial enemies equal floor number with bounded repeats, stagger and persistent count (11342.9003ms)
+✔ essence counts save without applying bonuses twice and show multiplicative cooldown (136.8728ms)
+✔ potion heals one, locks three seconds, persists and does not consume at full health (98.8882ms)
+✔ trial contact, projectile and delayed elite explosion are all one heart (157.3421ms)
+✔ frost levels freeze on 4,3,2,2 hits and scale direct elemental damage (2.2582ms)
+✔ frost shard sizes reflect stack count, level four frozen deaths emit twelve (0.9177ms)
+✔ element relic boosts frost direct bonus and shards, not duration (0.6684ms)
+✔ ultimate is a single saved offer at 5 and 10, random later, preserved on reroll (70.2685ms)
+✔ multiple level gains preserve the level five guarantee in the queue (56.0437ms)
+✔ rain hits three times at fixed cast location and preserves partial pulses on reload (33.0327ms)
+✔ turrets shoot, overlap at most twice and retain remaining lifetime across save (52.1729ms)
+✔ three unique fairies each fire one guided shot per 1.5 seconds (33.8107ms)
+✔ fairy secondary effects are independent and cannot trigger frost death chains (45.5257ms)
+✔ unique weights are lower, blink cloak extends immunity and orbit/bell work (91.6282ms)
+✔ legacy ultimate branch migrates to chosen tower and malformed new states are rejected (84.5348ms)
+✔ bonus skill rewards do not roll the level-up-only ultimate offer (35.5365ms)
+✔ one cooldown relic gives two to three seconds of natural turret overlap (106.6206ms)
+✔ tower has 308 range from installation and fires a 100 percent snapshotted volley every 0.6 second (23.1082ms)
+✔ chests allocate eight percent to relics and trial offers never duplicate rewards (95801.4374ms)
+✔ final seal needs the key, takes three timed waves and survives reload (208.8327ms)
+✔ new season scores require the broken seal; previous saves keep their old exit (179.7462ms)
+✔ malformed seal progress is rejected rather than loading an invalid victory (102.2615ms)
+✔ new escape warns nine waves and increases total summons from fifteen to fifty-four (1058.3064ms)
+✔ pressure remains capped with live enemies and ids never collide (202.6769ms)
+✔ portal avoids players, blocked points, and cancels when player enters warning (169.5319ms)
+✔ pressure continuation never duplicates warned or spawned enemies (393.864ms)
+✔ summoned pressure enemies cannot farm xp, kills or ranked kills (3431.7481ms)
+✔ invalid pressure metadata is rejected and old ascent still starts legacy waves (629.0419ms)
+✔ eight connected floors place three bosses and flowers only on upper ascent floors (10721.8259ms)
+✔ all eight ascent and descent transitions preserve gates, maps and key timing (319.982ms)
+✔ legacy two and four floor saves keep their maps and final key floor (616.518ms)
+✔ prism emits 18 reflected rounds and fixed five beams resume identically (7.5648ms)
+✔ frozen death emits six distinct radial shards exactly once, with level-scaled damage (7.5371ms)
+✔ a lethal frost hit applies its stack and can freeze before shattering (10.5115ms)
+✔ frozen shard victims chain without exponential damage and grant one kill each (546.7869ms)
+✔ shards at all levels add frost stacks and scale direct damage (445.6105ms)
+✔ Vergas deaths preserve frozen state even when the frame expires its timer (182.5359ms)
+✔ shards resume identically across saves and disappear on room entry (238.0668ms)
+✔ Vergas damage grows and cooldown falls each level, and trial charge pressure exceeds ordinary enemies (2.2443ms)
+✔ tiers distinguish main, rare and unique while ordinary supports remain normal (0.7971ms)
+✔ gate knight health upgrade preserves health ratio and cannot stack across reloads (650.371ms)
+✔ gate knight walks ten percent faster and has shorter post-attack cooldown (8.3844ms)
+✔ gate archer moves while preparing then locks origin and aim for final 0.3 seconds (76.2922ms)
+✔ ordinary snipers reposition; gate movement obeys freeze, opening and slow (2.7769ms)
+✔ elite blast emits one burst at the unchanged damage time (10.8277ms)
+✔ fields fade to transparent at the real radius without outlines (5.9605ms)
+✔ exhausted skill pool provides saved repeatable growth choices with real benefits (1472.2928ms)
+✔ normal skill pool and guaranteed ultimate take precedence over fallback rewards (260.8092ms)
+✔ growth rewards respect stat caps (121.9782ms)
+✔ growth snapshots are recorded once per floor and direction and survive reload (349.4163ms)
+✔ boss record excludes dormant rooms and descent, accumulates through reload and completes once (315.3857ms)
+✔ simulation observes growth without retroactively creating missing floor records (166.7548ms)
+✔ restoring excludes capped growth candidates and persists the corrected list (194.7434ms)
+✔ fully stale saved choices rebuild without rerolling ultimate eligibility or consuming a level (75.641ms)
+✔ start at five hearts, containers cap at ten and haste does not grow health (377.5928ms)
+✔ legacy health conversion keeps health ratio and is idempotent (1.2451ms)
+✔ light, heavy and boss slam attacks deal integer hearts (0.9898ms)
+✔ laser and brute jump deal two hearts in ascent and descent, including trials (1221.1882ms)
+✔ heavy exceptions preserve shields and immunity; descent melee stays one heart (58.8342ms)
+✔ death summary excludes shields and old damage, escapes names and limits to three (9.0566ms)
+✔ projectile feedback identifies incoming direction and ignored damage creates no feedback (423.6788ms)
+✔ sixth through ninth floors favor their own packs and ninth has every demon role (520.3174ms)
+✔ infernal attacks telegraph, lock their target, and serialize through save (436.9658ms)
+✔ fast bat self-destructs after a warning while soldier and captain retain dodge windows (6.1545ms)
+✔ previous classic and expanded saves load without being relabeled (596.6057ms)
+✔ live bat explosion resolves through combat without awarding a player kill (151.0728ms)
+✔ floating touch origin, second fingers, cancellation and rotation never leave movement stuck (14.7901ms)
+✔ king first phase fires two five-arrow rows with locked aim and staggered angles (37.3197ms)
+✔ king summons only upper ranged types and never exceeds two living summons (6.2145ms)
+✔ lightning levels increase first target damage and chain power with 80 percent retention (8.7505ms)
+✔ lightning branches provide strong single target and sustained five-target chain (1.5631ms)
+✔ thunder strikes exactly skill-level distinct targets every three seconds without chained effects (1820.8399ms)
+✔ single boss receives one thunder hit and untargetable enemies are excluded (331.8681ms)
+✔ thunder damage matches normal direct arrow with relic and evolution modifiers, excludes lightning bonus (293.321ms)
+✔ thunder timer and random targets continue identically after save and damage telemetry excludes overkill (580.8603ms)
+✔ walking uses actual movement, ignores duplicate draws and stops without moving actors (14.5675ms)
+✔ freeze, static portraits, reduced effects and blocked transitions never walk (4.403ms)
+✔ arrival is explicit, uses update time, and does not replay after reset or load (3.2633ms)
+✔ all three hit forms respect cooldown and threat, freeze, phase and reduced priorities (1.1771ms)
+✔ lethal snapshots preserve the visible phase instead of dead hp forcing phase three (1.3456ms)
+✔ seeker is an independent normal 100% arrow; split arrows retain elements (1581.4004ms)
+✔ turret snapshots elemental volleys and seekers without duplicating fairies (2972.2398ms)
+✔ turret damage is frozen and delayed arrow stays at installation after player moves (160.4317ms)
+✔ build corruption rejected and legacy turret snapshots once (366.441ms)
+✔ rain is 50 per pulse; retirement has no attacks (159.8569ms)
+✔ four slime fragments maintain bounded hazards over a minute (805.4399ms)
+✔ random objects remain accessible, separated and stable through save and return (16569.7262ms)
+✔ legacy rooms retain original object and extra chest anchors (4.8587ms)
+✔ all shifted door pairs are safe, traversable, and persist without repeated transforms (36327.5786ms)
+✔ mismatched door pairs are rejected on saving (55.1684ms)
+✔ all ordinary bestiary types receive bounded view reactions, with no boss overlap or actor writes (58.3375ms)
+✔ seen-room load and room reentry do not replay arrival, while new summons do (2.1692ms)
+✔ melee, charge, ranged, aerial, elite and hazard threats take priority without cancellation (3.5503ms)
+✔ ordinary death snapshots keep style/timing and root anchors, self-destruct stays distinct (5.0931ms)
+✔ hero reaction is visual only, reduced mode quiet, defeat immediate with no result delay (2.9203ms)
+✔ ordinary removals and rewards remain immediate with one detached death effect (742.0966ms)
+✔ boss cycles all six patterns with telegraphs and recovery (67.9909ms)
+✔ slam locks location and can be avoided by normal movement without invulnerability (4.8259ms)
+✔ slam damage occurs once and grants a long recovery window (2.0621ms)
+✔ burst aim is fixed, and saved phases resume with identical projectiles (19.4414ms)
+✔ staggered fan alternates angles and dead enemies cannot fire (1.9426ms)
+✔ compact early floors include all facilities and preserve saved maps and tutorial gates (50165.3811ms)
+✔ trial charger gives a full contact-free stationary recovery after each charge and reload (1694.1636ms)
+✔ sniper and gravity caster move between attacks and hold their position while channeling (99.976ms)
+✔ Velkar both stages have deliberate recovery, blink followup and serializable longer clocks (5306.4162ms)
+✔ named guardians have separate identity and art while display scale never changes combat radius (490.5455ms)
+✔ opening enemies take exactly three unmodified arrows and survive saving (369.6152ms)
+✔ first fire arrow kills a healthy floor-one basic enemy including splash (122.2447ms)
+✔ blocked blink preserves cooldown and immunity; open direction still works (112.3503ms)
+✔ diagonal blink at left doorway never wraps outside and clamps into lower wall (401.1227ms)
+✔ all doorway directions and campaign rooms remain clear after blink (769.9774ms)
+✔ existing stuck save is repaired without changing build, health, cooldowns or seal (4158.2325ms)
+✔ idle and room entry recover invalid player without requiring blink or granting immunity (252.0637ms)
+✔ recovery leaves valid positions and open doorway movement untouched (239.5286ms)
+✔ flower remains fixed, warns, flies and waits until its two-second puddle expires (50.8523ms)
+✔ frenzy flower emits two or three puddles, never refires over its existing zones (3.6728ms)
+✔ overlapping poison pulses once per second, while dead-owner aura disappears (3.158ms)
+✔ slime splits 1 to 2 to 4, unique ids survive reload, last fragment opens seventh floor (1042.9635ms)
+✔ only first two slime generations summon and summons give no XP, seal or drops (272.0493ms)
+✔ poison phases and summons resume deterministically with validated saves (2163.4567ms)
+✔ descending escape increases crowd size and attack pressure while preserving map (5969.4015ms)
+✔ flower targets walls and corners in ascent and descent, with warning and escape time (69.8504ms)
+✔ Prism arrival is explicit first entry only with no draw, revisit or load replay (9.6331ms)
+✔ Prism hits respect threat recovery, cooldown, reduced and static views without actor writes (4.8689ms)
+✔ shielded Prism reaction uses actual reduced health loss, preserving the shield rule (5.7163ms)
+✔ Prism reward and summoned-enemy cleanup remain immediate and do not emit fake deaths (797.0698ms)
+✔ minimap excludes unseen rooms and their bounds, including after reload (3.3322ms)
+✔ old saves gain modest speed increase without losing build or map (734.8889ms)
+✔ offers are unique, exclude capped skills, and combinations activate only with both skills (329.6368ms)
+✔ fire splashes on primary hits and low level has no lingering burn (7.9281ms)
+✔ lightning chains to distinct nearby enemies and thunderstorm increases range (3.4955ms)
+✔ fast rounds bounce once then disappear at the next wall (27.6291ms)
+✔ cover absorbs fast bullets and swept collision detects crossed player (2.7823ms)
+✔ laser aim stays fixed, survives save, and cover stops beam and damage (3.4218ms)
+✔ laser damages only once per burst and can be avoided by walking (1.5292ms)
+✔ ricochet fires a fixed symmetric pair only after warning (1.7503ms)
+✔ online start issues session before run and survives save continuation (1013.5723ms)
+✔ expanded season starts online and only drafts a completed final demon run (432.077ms)
+✔ continued ASCENT-1 and ASCENT-2 saves remain local after their seasons close (741.4388ms)
+✔ offline, legacy and practice results cannot create online drafts (598.1425ms)
+✔ submission intent persists before network failure and reload can retry (190.8573ms)
+✔ double submit makes one request and receipts never resubmit (257.0396ms)
+✔ storage failures preserve an in-memory draft and visibly report persistence failure (214.4249ms)
+✔ name normalization and rendered nickname escaping (222.0028ms)
+✔ timeout aborts request and does not grant online eligibility (213.5247ms)
+✔ score examples, caps, second boundary and invalid metrics (6.7173ms)
+✔ actual entry counts once, map reveal does not count, pause excludes time (494.2489ms)
+✔ death processing counts original slime once and excludes summoned and split children (321.6863ms)
+✔ save continuation preserves enemy identity and deduplicates defeat (809.0906ms)
+✔ replacement descent wave with reused local IDs earns new distinct kills (430.8369ms)
+✔ surviving enemies in preserved descent rooms keep their identity (545.5383ms)
+✔ legacy saves, practice, death and king kill alone cannot yield a score (1064ms)
+✔ score snapshot and completion history persist once (737.3698ms)
+✔ malformed ranking counters, identifiers and snapshots are rejected (609.9385ms)
+✔ new expanded season keeps both former runs loadable without joining the new ranking (2222.1947ms)
+✔ recipe choice explains a newly completed effect without changing the build (419.7694ms)
+✔ incompatible main build does not advertise an unavailable fire recipe (664.1032ms)
+✔ relic previews preserve player and compare live movement and attack stats (446.5774ms)
+✔ inactive effects describe prerequisite and ultimate cooldown uses selected branch (336.6246ms)
+✔ exchange preview removes sacrificed relic including heart loss without changing the build (349.9239ms)
+✔ every boss offers deterministic unowned relics once including the final boss (686.044ms)
+✔ relics accumulate without duplicates and cannot be reclaimed after save (394.1647ms)
+✔ skipping relics preserves the equipped item and claims the cache without changing cooldowns (99.8967ms)
+✔ relic benefits use exact distance boundaries, shield limits and cooldowns (96.2434ms)
+✔ boots and stride bonuses are symmetric and diagonal motion is normalized (231.144ms)
+✔ ember relic strengthens burn with no direct arrow penalty (5.1575ms)
+✔ journal observes only current enemies and retains discovered elite traits (104.7489ms)
+✔ successful hits record source and floor totals; ignored hits are absent and history is bounded (166.6569ms)
+✔ lethal projectile records its actual source before death and does not count invulnerable hits (174.7603ms)
+✔ new save fields reject invalid relics, codex keys and damage history (216.2216ms)
+✔ damage diagnostics include capped burn, field and instant ultimate damage (86.163ms)
+✔ remaining boss transforms preserve identity, clocks and saved actors (10.0755ms)
+✔ entry history and phase-spawn events do not replay on load or slime splitting (1.8426ms)
+✔ hazards, attacks and recovery cancel view reactions without altering any threat (4.5275ms)
+✔ slime split stays immediate and distinct, final and named snapshots have no live references (419.4349ms)
+✔ stairs take priority over unexplored rooms and require all enemies before descending (849.2849ms)
+✔ unvisited rooms require all kills even after first descent visit is saved (588.4263ms)
+✔ guardian alone unlocks visited rooms and re-entry never rolls a new lock (402.3341ms)
+✔ visited room guardian rate is approximately thirty percent and deterministic (11891.6949ms)
+✔ old descending saves without seal metadata retain access and blocked exit cannot be used (469.5577ms)
+✔ live movement cannot cross a sealed exit and can cross after clearance (827.7579ms)
+✔ both approach layers cover every exit branch for visited and unseen campaigns (86816.3459ms)
+✔ forced guardian alone opens passage and persists through save and reentry (345.0906ms)
+✔ legacy saves and random locks outside forced approach keep original seeded results (23231.4233ms)
+✔ empty approach gets a living guardian with a unique id and never respawns it (74.6015ms)
+✔ save rejects approach metadata on wrong location, generation, or seal (247.4607ms)
+✔ all room shapes retain connected entrances and fixed object access (22.1845ms)
+✔ new shapes persist on reload and descent while boss rooms stay unchanged (4285.4943ms)
+✔ ascent floors 1 and 2 fire one fan without shortening their attack cadence (59.2629ms)
+✔ higher ascent floors and returning scatter enemies retain both rows (2.9484ms)
+✔ trade requires a selected owned relic and consumes neither potions nor event on invalid selection (1014.4427ms)
+✔ legacy seal appears as a relic and heals at twenty kills (210.6425ms)
+✔ blood contract grants one block with thirty-five second recharge (450.0652ms)
+✔ fallback lease blocks second writer and releases cleanly (188.3696ms)
+✔ fallback lease notices ownership loss and never removes new owner (1.7517ms)
+✔ swept hit detects crossed targets and arrows hit nearest enemy first (2112.205ms)
+✔ arrow hits target before wall but never enemy behind cover (2297.8518ms)
+✔ lethal hit cannot be reversed by same-frame kill recovery (2079.6907ms)
+✔ paused caller leaves pending projectiles exactly intact; save resumes identical simulation (6687.6137ms)
+✔ room entry clears stale attacks and gives bounded arrival time (1430.4569ms)
+✔ seed generates same maps and run randomness, with independent run identity (3262.9931ms)
+✔ preview does not mutate run and shows fire attack speed reduction (397.9131ms)
+✔ frost fourth level describes twelve shards and Vergas third level branch (223.8137ms)
+✔ every available skill and growth reward has finite preview rows (164.9553ms)
+✔ main offers persist across saves and reject a main outside the three choices (5892.111ms)
+✔ main reroll spends the same single reroll used by later supports (3140.4535ms)
+✔ every dedicated support respects its main and prerequisite (1.9912ms)
+✔ ultimate guarantee and a useful synergy survive the same three-card offer (818.8681ms)
+✔ fire powder only boosts the explosion center; ember cannot recursively trigger (4.0746ms)
+✔ frost bond preserves two-hit freeze and immunity while adding a thaw slow (7.4487ms)
+✔ shard bonuses are stored once and keep existing shard count and base scale (1068.1349ms)
+✔ poison stacks stay capped and spores do not seed a second generation (23.7534ms)
+✔ charge counts each primary projectile once and consumes on the following primary (6.5753ms)
+✔ focused conduction retains a useful first-link bonus and extends reach (10.7816ms)
+✔ new synergy snapshots and pre-renewal snapshots both load (1587.8437ms)
+✔ draft uses three readable cards and preserves unique rarity and recipe hints without mutations (970.0736ms)
+✔ precision main guarantees an early direct synergy and only primary arrows advance a saved mark (5403.2345ms)
+✔ precision level-three branches differ and focus only boosts direct player arrows (2108.9215ms)
+✔ first aid is floor bounded and guardian intercepts one live hit without changing enemy movement (1815.8218ms)
+✔ first main consumes one earned point and permanently excludes other elements (2706.9365ms)
+✔ legacy mixed elements preserve total investment through explicit main choice and one-time refunds (2553.8976ms)
+✔ choosing an unlearned main from an old build spends one refunded point (831.6406ms)
+✔ rare support weights are lower and offers never duplicate (3554.6738ms)
+✔ level one frost freezes on the fourth primary impact and cannot permanently lock enemies (503.8585ms)
+✔ frozen attack phases and elite salvos stop and resume without restarting telegraphs (1769.8213ms)
+✔ repeat adds one delayed same-direction primary without repeating the split fan (1556.4496ms)
+✔ homing has a bounded turn rate, avoids walls and keeps projectile speed (283.0621ms)
+✔ Vergas strikes nearby grounded enemies after preparation and damage support does not automatically unlock the ultimate (3251.3519ms)
+✔ main lock, delayed homing shots and frozen states round-trip and reject corruption (2623.9531ms)
+✔ freezing stops unlaunched poison warnings but does not stop airborne projectiles (91.2827ms)
+✔ Vergas respects intervening cover and cannot damage airborne enemies (1550.7497ms)
+✔ fire splash and field have enlarged radius and increased damage (2.7616ms)
+✔ split secondary arrows carry the chosen element with proportional damage (1289.4691ms)
+✔ player explosion budget never discards hostile fields or damage labels (11.1763ms)
+✔ synergy budget retains newest effects and unrelated warnings (3.8454ms)
+✔ mobile density deduplicates player effects while retaining every hostile warning (28.1319ms)
+✔ contact appearance snapshots the hit level and evolution without retaining mutable player state (6.0068ms)
+✔ legacy projectiles can use current build appearance without adding persistent fields (0.9333ms)
+✔ evolved chain appearance follows real links without creating fake destinations (3.6473ms)
+✔ upper ordinary archers fire two ascent arrows and three return arrows on the telegraphed angles (19.6214ms)
+✔ gate archer and king fan patterns retain their current counts (2.71ms)
+✔ sound settings persist separately from run saves and reject malformed values (11.6475ms)
+✔ cues need a user gesture, obey mute and throttle repeated attacks (3.1791ms)
+✔ a wall appearing during preparation blocks damage; an escaping enemy is not hit (8016.1996ms)
+✔ dance rechecks its target and never hits a dead target twice (1995.35ms)
+✔ precision blade favors an existing mark without advancing it (1221.8612ms)
+✔ blade poison cannot create poison gas, explosions or primary marks (1670.27ms)
+✔ saved cooldown prevents a repeated slash after loading and rejects corruption (2500.1222ms)
+✔ old level-three aura keeps its guard once; newly learned Vergas does not grant a shield (1560.7874ms)
+✔ Vergas remains unique while acquisition is rare and owned upgrades use normal weight (3265.8178ms)
+✔ saved ordinary-support Vergas rewards remain claimable even when all ordinary supports are capped (1785.1485ms)
+✔ versioned save round trips projectiles, phases, food, and metrics (7061.4528ms)
+✔ rejects broken values, impossible current room, unsupported version and corrupt checksum (3369.2428ms)
+✔ backup recovers last good save and terminal tombstone prevents dead-run resurrection (2903.4049ms)
+✔ storage exceptions become explicit failure, not a false save confirmation (954.0861ms)
+✔ quota on the optional backup still saves the current run without losing the old main (5964.2678ms)
+✔ invalid game state is reported separately from browser storage errors (512.9461ms)
+✔ legacy raw saves are accepted and strengthened only once (1045.9728ms)
+✔ storm arrow turns once toward a visible forward enemy, never through cover or backward (283.8959ms)
+✔ new run storm volley changes route and survives a save; older run keeps straight path (9669.1766ms)
+✔ shield blocks once, respects dodge, and cooldown freezes during pause (6472.8259ms)
+✔ seal heals every twenty kills only; potion drops cap at one per room (1382.0896ms)
+✔ reroll consumes one run charge, preserves points and stores exact candidates (2921.5197ms)
+✔ legacy reroll allowance is once only and invalid contexts do not spend it (2176.9046ms)
+✔ two warnings defer another start but never interrupt an attack already telegraphed (5.5732ms)
+✔ charging into cover stops contact damage and creates a saved opening (773.9092ms)
+✔ volley elites stop their normal AI after their added salvo (943.259ms)
+✔ warden slam, prism laser and expired slime aura expose their owner (8.5841ms)
+✔ support-led formations contain a guardian, escorts and staggered initial clocks (13.6723ms)
+✔ crowded charging packs do not starve ranged attacks or reset deferred cooldowns (9987.9117ms)
+✔ layouts preserve central routes, facilities, perimeter and some empty rooms (1265.0471ms)
+✔ movement and dodge cannot tunnel through cover, sliding remains possible (132.0321ms)
+✔ enemies can route around cover to player (330.7253ms)
+✔ spawns are clear and terrain survives frenzy and serialization (35306.4326ms)
+✔ doors describe visited-room edges without revealing neighboring rooms (5.49ms)
+✔ new runs actually contain persisted obstacle arrays (3728.7037ms)
+✔ minimap neighbor lookup shares tutorial entrance restrictions even from another room (89.2469ms)
+✔ secondary touch activates immediately once; keyboard and mouse clicks still work (11.2001ms)
+✔ monster potion rewards convert only at five potions and only on a successful roll (1991.8222ms)
+✔ rain landings coincide with all three damage pulses including immediate first impact (1301.8879ms)
+✔ crossbow recoil follows an actual shot and remains idle without a target (1663.6213ms)
+✔ ultimate poses are read-only, deterministic on pause and survive serialized state (1094.6241ms)
+✔ transfer copies only allowed records and never a session lease (103.4095ms)
+✔ existing HTTPS records are not overwritten or mixed with another run backup (1.6625ms)
+✔ rejects unrelated keys and rolls back partial imports on quota failure (27.5037ms)
+✔ knight strike lands at half a second and reaches the expanded warning edge (23.0257ms)
+✔ king second phase changes pursuit, fan count, available attacks and combo cadence (3131.3432ms)
+✔ gravity activates after half a second with stronger pull and a shorter recast (11.016ms)
+✔ rare ascent visitors are restricted to floors three through six and replace one enemy (589.0773ms)
+✔ slime ordinary salvos scale five/two/zero with phase and persist their timer (177.1757ms)
+✔ upper floors provide rest, elite gate and explicit king challenge (22140.6306ms)
+✔ gate rewards once and king alone begins eight floor descent (348.2952ms)
+✔ king phase thresholds, telegraphs and summons survive long combat and saves (4188.1169ms)
+✔ telegraph deals no early damage and slash can be avoided behind king (126.5206ms)
+✔ every new enemy runs and round trips in ascent and descent (5640.2089ms)
+✔ dash moves over time, damages only swept corridor, and stops before cover (25.8881ms)
+✔ saved dash resumes at identical coordinates and cannot damage twice (3586.1765ms)
+✔ ring locks its preview direction and all projectiles leave the visible safe gap (70.9535ms)
+✔ king avoids empty melee at range and immediate pattern repeats (42.7166ms)
+✔ both judgment orientations use the same rectangle for hit tests and previews (22.4025ms)
+✔ judgment ends with a heavy marked strike and a long kneeling opening (70.9466ms)
+✔ phase changes clear attacks and enemy shots, freeze danger and round trip mid-transition (2465.6671ms)
+✔ summon timer runs during long openings and freeze with a visible one second portal (1714.029ms)
+✔ attack flash expires during recovery and while frozen (1332.9976ms)
+✔ king and guards cap overlapping new warnings at two (512.2823ms)
+✔ knight shield reduces frontal arrows and tower shots but not rear or damage over time (514.925ms)
+✔ new state validation rejects malformed moving dash and summon portal (452.2712ms)
+✔ Velkar arrival is explicit, update-timed and cleared on reload without actor writes (19.5559ms)
+✔ Velkar hit poses respect both phases, cooldown, threat priority and reduced/static views (25.7048ms)
+✔ Velkar transition resumes from combat state and lethal snapshot preserves the last phase (28.6737ms)
+✔ cached navigation preserves original direction across shapes, radii and geometry edits (4433.663ms)
+✔ wall image is reused, invalidated on edits and bounded across room changes (103.1585ms)
+✔ outer and inner wall faces use the same world-aligned block palette (100.4428ms)
+✔ infernal masonry uses one palette for inner and outer walls and refreshes cached floor themes (79.6749ms)
+✔ middle-floor masonry shares each themed palette across inner and outer walls (103.0122ms)
+✔ eligible rooms split evenly between legacy and thin layout families (46.8506ms)
+✔ thin walls reduce footprint and connect every doorway, object and open pocket (2613.1728ms)
+✔ melee enemies can follow the existing steering around new walls (2127.406ms)
+✔ stone wall outlines omit shared joins including partially touching blocks (7.3394ms)
+✔ Warden first-entry arrival is update-timed and does not replay after visit or load (13.5884ms)
+✔ Warden weak and strong hits respect cooldown, static/reduced and every combat pose priority (61.9968ms)
+✔ Warden detached death preserves the displayed direction and leaves other boss durations alone (46.4912ms)
+✔ Warden removal and reward are immediate despite its one-second visual snapshot (1145.4612ms)
+ℹ tests 516
+ℹ suites 0
+ℹ pass 513
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 207589.9141
+
+✖ failing tests:
+
+test at tests\integration\ranking-api.test.js:6:1
+✖ ranking API SQLite and HTTP integration suite (1753.1147ms)
+  AssertionError [ERR_ASSERTION]: test_missing_or_corrupt_source_cannot_replace_good_backup (test_maintenance.MaintenanceTests.test_missing_or_corrupt_source_cannot_replace_good_backup) ... ERROR
+  test_snapshot_retention_restore_and_source_unchanged (test_maintenance.MaintenanceTests.test_snapshot_retention_restore_and_source_unchanged) ... ERROR
+  test_plain_config_preserves_acme_and_api (test_nginx_config.NginxTests.test_plain_config_preserves_acme_and_api) ... ok
+  test_secure_config_keeps_transfer_page_and_certificate_outside_release (test_nginx_config.NginxTests.test_secure_config_keeps_transfer_page_and_certificate_outside_release) ... ok
+  test_backup_contains_records (test_ranking_api.RankingTests.test_backup_contains_records) ... ERROR
+  test_best_per_player_and_time_tiebreak (test_ranking_api.RankingTests.test_best_per_player_and_time_tiebreak) ... ERROR
+  test_closed_season_and_version_rejection (test_ranking_api.RankingTests.test_closed_season_and_version_rejection) ... ERROR
+  test_concurrent_retries_create_one_record (test_ranking_api.RankingTests.test_concurrent_retries_create_one_record) ... ERROR
+  test_cross_player_access_and_missing_server_run (test_ranking_api.RankingTests.test_cross_player_access_and_missing_server_run) ... ERROR
+  test_expanded_run_requires_final_demon_and_shares_one_ranking (test_ranking_api.RankingTests.test_expanded_run_requires_final_demon_and_shares_one_ranking) ... ERROR
+  test_http_csrf_body_auth_and_rate_limit (test_ranking_api.RankingTests.test_http_csrf_body_auth_and_rate_limit) ... ERROR
+  test_invalid_eligibility_events_and_metrics (test_ranking_api.RankingTests.test_invalid_eligibility_events_and_metrics) ... ERROR
+  test_latest_version_board_preserves_old_rows_and_rejects_old_run (test_ranking_api.RankingTests.test_latest_version_board_preserves_old_rows_and_rejects_old_run) ... ERROR
+  test_new_classic_and_expanded_seasons_preserve_both_previous_boards (test_ranking_api.RankingTests.test_new_classic_and_expanded_seasons_preserve_both_previous_boards) ... ERROR
+  test_new_expanded_season_keeps_existing_ascent_two_record_read_only (test_ranking_api.RankingTests.test_new_expanded_season_keeps_existing_ascent_two_record_read_only) ... ERROR
+  test_newest_prior_seasons_are_read_only_and_keep_records (test_ranking_api.RankingTests.test_newest_prior_seasons_are_read_only_and_keep_records) ... ERROR
+  test_nickname_normalization_and_filter (test_ranking_api.RankingTests.test_nickname_normalization_and_filter) ... ERROR
+  test_only_current_ranking_is_visible_and_session_expires (test_ranking_api.RankingTests.test_only_current_ranking_is_visible_and_session_expires) ... ERROR
+  test_precision_build_is_accepted_in_new_season (test_ranking_api.RankingTests.test_precision_build_is_accepted_in_new_season) ... ERROR
+  test_recompute_and_restart_persistence (test_ranking_api.RankingTests.test_recompute_and_restart_persistence) ... ERROR
+  test_run_identity_and_idempotent_submission_even_after_close (test_ranking_api.RankingTests.test_run_identity_and_idempotent_submission_even_after_close) ... ERROR
+  test_score_examples_and_boundary (test_ranking_api.RankingTests.test_score_examples_and_boundary) ... ERROR
+  test_single_ranking_accepts_both_maps (test_ranking_api.RankingTests.test_single_ranking_accepts_both_maps) ... ERROR
+  test_suspicious_record_is_private_and_held (test_ranking_api.RankingTests.test_suspicious_record_is_private_and_held) ... ERROR
+  test_top_100_still_returns_my_rank_outside_cutoff (test_ranking_api.RankingTests.test_top_100_still_returns_my_rank_outside_cutoff) ... ERROR
+  
+  ======================================================================
+  ERROR: test_missing_or_corrupt_source_cannot_replace_good_backup (test_maintenance.MaintenanceTests.test_missing_or_corrupt_source_cannot_replace_good_backup)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_maintenance.py", line 34, in test_missing_or_corrupt_source_cannot_replace_good_backup
+      bad.write_text('not sqlite')
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1047, in write_text
+      with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1013, in open
+      return io.open(self, mode, buffering, encoding, errors, newline)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpu50d9w5t\\bad.sqlite3'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpu50d9w5t'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_maintenance.py", line 29, in test_missing_or_corrupt_source_cannot_replace_good_backup
+      with tempfile.TemporaryDirectory() as temp:
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 950, in __exit__
+      self.cleanup()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 954, in cleanup
+      self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpu50d9w5t'
+  
+  ======================================================================
+  ERROR: test_snapshot_retention_restore_and_source_unchanged (test_maintenance.MaintenanceTests.test_snapshot_retention_restore_and_source_unchanged)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_maintenance.py", line 13, in test_snapshot_retention_restore_and_source_unchanged
+      app = Ranking(database, dict(season='BETA-1'))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpwxyuk57z'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_maintenance.py", line 10, in test_snapshot_retention_restore_and_source_unchanged
+      with tempfile.TemporaryDirectory() as temp:
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 950, in __exit__
+      self.cleanup()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 954, in cleanup
+      self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpwxyuk57z'
+  
+  ======================================================================
+  ERROR: test_backup_contains_records (test_ranking_api.RankingTests.test_backup_contains_records)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_best_per_player_and_time_tiebreak (test_ranking_api.RankingTests.test_best_per_player_and_time_tiebreak)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_closed_season_and_version_rejection (test_ranking_api.RankingTests.test_closed_season_and_version_rejection)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_concurrent_retries_create_one_record (test_ranking_api.RankingTests.test_concurrent_retries_create_one_record)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_cross_player_access_and_missing_server_run (test_ranking_api.RankingTests.test_cross_player_access_and_missing_server_run)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_expanded_run_requires_final_demon_and_shares_one_ranking (test_ranking_api.RankingTests.test_expanded_run_requires_final_demon_and_shares_one_ranking)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_http_csrf_body_auth_and_rate_limit (test_ranking_api.RankingTests.test_http_csrf_body_auth_and_rate_limit)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_invalid_eligibility_events_and_metrics (test_ranking_api.RankingTests.test_invalid_eligibility_events_and_metrics)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_latest_version_board_preserves_old_rows_and_rejects_old_run (test_ranking_api.RankingTests.test_latest_version_board_preserves_old_rows_and_rejects_old_run)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_new_classic_and_expanded_seasons_preserve_both_previous_boards (test_ranking_api.RankingTests.test_new_classic_and_expanded_seasons_preserve_both_previous_boards)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_new_expanded_season_keeps_existing_ascent_two_record_read_only (test_ranking_api.RankingTests.test_new_expanded_season_keeps_existing_ascent_two_record_read_only)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_newest_prior_seasons_are_read_only_and_keep_records (test_ranking_api.RankingTests.test_newest_prior_seasons_are_read_only_and_keep_records)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_nickname_normalization_and_filter (test_ranking_api.RankingTests.test_nickname_normalization_and_filter)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_only_current_ranking_is_visible_and_session_expires (test_ranking_api.RankingTests.test_only_current_ranking_is_visible_and_session_expires)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_precision_build_is_accepted_in_new_season (test_ranking_api.RankingTests.test_precision_build_is_accepted_in_new_season)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_recompute_and_restart_persistence (test_ranking_api.RankingTests.test_recompute_and_restart_persistence)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_run_identity_and_idempotent_submission_even_after_close (test_ranking_api.RankingTests.test_run_identity_and_idempotent_submission_even_after_close)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_score_examples_and_boundary (test_ranking_api.RankingTests.test_score_examples_and_boundary)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_single_ranking_accepts_both_maps (test_ranking_api.RankingTests.test_single_ranking_accepts_both_maps)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_suspicious_record_is_private_and_held (test_ranking_api.RankingTests.test_suspicious_record_is_private_and_held)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ======================================================================
+  ERROR: test_top_100_still_returns_my_rank_outside_cutoff (test_ranking_api.RankingTests.test_top_100_still_returns_my_rank_outside_cutoff)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "C:\baggam-dev\spirebound\api\test_ranking_api.py", line 20, in setUp
+      self.app = Ranking(self.path, self.config, lambda: self.now)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 51, in __init__
+      with self.connect() as db:
+           ^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\contextlib.py", line 137, in __enter__
+      return next(self.gen)
+             ^^^^^^^^^^^^^^
+    File "C:\baggam-dev\spirebound\api\ranking_api.py", line 83, in connect
+      db = sqlite3.connect(self.database, timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  sqlite3.OperationalError: unable to open database file
+  
+  ----------------------------------------------------------------------
+  Ran 25 tests in 0.260s
+  
+  FAILED (errors=23)
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpcg7vse18'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpcg7vse18'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpbldo861t'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpbldo861t'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp2p44kffe'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp2p44kffe'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp4jeey_0x'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp4jeey_0x'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpy673s1by'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpy673s1by'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpoe3g1d4a'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpoe3g1d4a'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp6qz6ornc'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp6qz6ornc'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpmb_rcj_5'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpmb_rcj_5'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp0a91zbl6'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp0a91zbl6'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpohe_zzft'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpohe_zzft'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp7vbcf67e'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp7vbcf67e'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpae_bry3x'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpae_bry3x'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpubry9gjw'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpubry9gjw'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpc5bnlkbr'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpc5bnlkbr'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmphui1mtq5'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmphui1mtq5'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpbg5n_oeh'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpbg5n_oeh'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpb_sz8uct'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpb_sz8uct'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpbxt057pf'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmpbxt057pf'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp1yhkp2jm'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp1yhkp2jm'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmphav7i5hf'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmphav7i5hf'
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 637, in _rmtree_unsafe
+      os.rmdir(path)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp83ltn3h3'
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 666, in _exitfunc
+      f()
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\weakref.py", line 590, in __call__
+      return info.func(*info.args, **(info.kwargs or {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 939, in _cleanup
+      cls._rmtree(name, ignore_errors=ignore_errors)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 934, in _rmtree
+      _shutil.rmtree(name, onexc=onexc)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 781, in rmtree
+      return _rmtree_unsafe(path, onexc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\shutil.py", line 639, in _rmtree_unsafe
+      onexc(os.rmdir, path, err)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 906, in onexc
+      _resetperms(path)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 286, in _resetperms
+      _dont_follow_symlinks(_os.chmod, path, 0o700)
+    File "C:\Users\SDSPRO\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+      func(path, *args)
+  PermissionError: [WinError 5] �׼����� �źεǾ����ϴ�: 'C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\sandbox.{aa55b1dc-b887-4f27-ad6e-a4fe5c44dc26}\\AC\\Temp\\tmp83ltn3h3'
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/integration/ranking-api.test.js:10:9)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\integration\server.test.js:4:1
+✖ development API proxy forwards cookies and overrides claimed client IP (64.2145ms)
+  [TypeError: fetch failed] {
+    [cause]: Error: connect EACCES 127.0.0.1:50486
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1645:16) {
+      errno: -4092,
+      code: 'EACCES',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 50486
+    }
+  }
+
+test at tests\integration\server.test.js:10:1
+✖ server serves game modules and refuses repository files and unsupported methods (12.4168ms)
+  [TypeError: fetch failed] {
+    [cause]: Error: connect EACCES 127.0.0.1:50488
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1645:16) {
+      errno: -4092,
+      code: 'EACCES',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 50488
+    }
+  }

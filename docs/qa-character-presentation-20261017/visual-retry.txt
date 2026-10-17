@@ -1,0 +1,16 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.screenshot: Error: strict mode violation: locator('canvas') resolved to 2 elements:
+    1) <canvas id="game" width="960" height="540" tabindex="0" aria-label="Spirebound 던전 게임 · WASD 또는 방향키 이동"></canvas> aka getByLabel('Spirebound 던전 게임 · WASD')
+    2) <canvas role="img" width="166" height="160" id="mobileMinimap" aria-label="탐색 지도 · 방 연결과 현재 위치"></canvas> aka getByLabel('탐색 지도 · 방 연결과 현재 위치')
+
+Call log:
+  - waiting for locator('canvas')
+
+    at C:\baggam-dev\spirebound\tools\qa\character-presentation-qa.mjs:42:945 {
+  log: [ "  - waiting for locator('canvas')" ]
+}
+
+Node.js v24.14.0
