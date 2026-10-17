@@ -1,3 +1,7 @@
+## 랭킹 방 개수·버전 동시 수정 최종 배포 및 2층 검토 시안
+
+[랭킹 오류 배포·공개 검증 완료 / 2층 시안 검토 대기] release-20261018-013123-46cc98 / https://168.107.21.43/ / runtimec1dd8c8 main누적푸시. 초반방5/6과구지도모두허용+API허용버전0.39동기화로두불일치수정. 실제config계약검사·패키징전버전불일치차단/UTF-8가드추가. 로컬관련12/12·실제설정계약1/1(초기Temp권한실패후허용환경통과),서버27/nginx/인증서/index/health통과. 공개PC1280×800·가로터치844×390 실제새도전버튼2건 online=true/5·6방/10층/hero4frames58px/환경ready/errors0 및정상주인공PNG육안확인. 별도공개8층10층API starts2/TLS147코드및PNG일치/308/랭킹SecureHttpOnly세션·저장이관2종 통과·운영점수제출0. 자료 docs/qa-ranking-opening-20261017/{RELEASE_SUMMARY.md,public-verified/result.json,public-https-final.txt}. 첫unsupported_version/PowerShell인코딩/Temp권한실패·가로터치첫거절(원문미수집·격리재시도와최종2뷰포트성공)로그보존,상세미확인실패는후속재현시응답수집하도록QA보완. DB/계정/기존기록삭제없음·기존버전원본보존/최신버전공개표정책유지. 개발서버전부종료·실행명령세션차단없음. 실제iPhone/Android/저사양장시간 미검증. 다음2층청회군사회랑 일반방/파수꾼보스연병장/창거치대·깨진방패·찢어진깃발 PNG시안완료 docs/design-drafts/environment-20261018/floor2-environment-v1.png,정확prompt/설계같은폴더·내장imagegen1회·원본보존. 시안은runtime미반영/컨펌대기·문충돌/판정/6방수유지. 이번배포완료·이후평상시수정기록로컬커밋/새명시배포전테스트푸시배포공개검증금지.
+
 ## 랭킹 공개 새 도전 검증에서 추가 버전 불일치 발견·수정
 
 [추가 버전 수정 재검증 완료·재배포 준비] 실제api/config.json을사용한JS생성6지도계약1/1통과·API최신0.39=클라이언트RELEASE일치. deploy.ps1은 불일치시패키징전차단, 구문검토통과. 로컬온라인QA도하드코딩0.38대신RELEASE사용. 앞선관련12·주인공4frames검증유효, 첫공개실패unsupported_version 원본보존. 다음버전동기화커밋푸시→공식재배포→공개실제새도전2뷰포트 및2캠페인API/hero확인. 운영현011942·차단없음.
