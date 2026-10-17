@@ -1,0 +1,5 @@
+render checks passed
+viewport 1280
+interaction 1280 treasure
+interaction 1280 fountain
+viewport 844

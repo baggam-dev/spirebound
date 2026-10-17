@@ -1,0 +1,18 @@
+render checks passed
+viewport 1280
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://168.107.21.43/", waiting until "load"
+
+    at C:\baggam-dev\spirebound\tools\qa\environment-release-qa.mjs:31:193 {
+  log: [
+    '  - navigating to "https://168.107.21.43/", waiting until "load"'
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

@@ -1,0 +1,17 @@
+{
+  "base": "https://168.107.21.43",
+  "render": {
+    "atlasReady": true,
+    "scatterRuns": 30,
+    "puddles": 231,
+    "stableFrame": true,
+    "reducedStatic": true,
+    "animation": true,
+    "stateUnchanged": true,
+    "canvasRestored": true,
+    "facilityScenes": 18
+  },
+  "fallback": true,
+  "interactions": 4,
+  "errors": []
+}

@@ -14,7 +14,9 @@
 
 ## 배포
 
-최종 로컬 검사: PC/가로 터치 시설 실사용4건 통과·pageErrors0, local/result.json. 현재 배포 전. 최종 로컬 검사 완료 후 커밋/누적푸시 → 공식 deploy.ps1 → 공개 HTTPS/자산바이트/환경 화면/시설사용을 확인한다. 공개 결과와 실제 릴리스를 여기에 추가한다.
+runtime 6ef3f09/main 누적푸시 후 공식 deploy.ps1로 release-20261017-214239-b3eb8e 배포 완료. 268개 런타임 파일, 서버 Python25개·Nginx·인증서 유효·공개 index 바이트·health 확인. 이전 release-20261017-171745-074b87. deploy.txt 참조.
+
+공개 HTTPS QA: TLS·147개 JS/CSS/HTML 일치·PNG 바이트 일치·HTTP308·랭킹 Secure/HttpOnly 세션·기존 세션 업그레이드·HTTP 저장 이관2종 통과, pageErrors0/운영 점수 제출0. public-https.txt 참조. 공개 환경 QA의 기본30초 load 대기는 네트워크에서 timeout이 발생해 DOMContentLoaded/120초 및 게임 atlas ready 명시 대기로 변경했다. runtime 변경 없음. 각 격리 탭의 timeout/오류 수집 적용을 바로잡고 최종 공개 검사 완료: public/result.json, public-environment-verified.txt. 시설18장면·30지도231웅덩이·PNGready/fallback·상태/RNG불변·정지/reduced·Canvas복원·PC/가로터치 시설실사용4건, errors0. 실제 공개 game-1280.png/game-844.png 육안 확인. 개발 서버는 모두 종료했다. 이번 runtime 추가 수정은 없다.
 
 ## 한계와 다음 구상
 
