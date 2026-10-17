@@ -1,5 +1,5 @@
 import {environmentArtLoaded} from '../rendering/environment-art.js';
-import {drawEnvironmentFloorLife} from '../rendering/environment-ambience.js';
+import {drawEnvironmentFloorLife,drawEnvironmentTorches} from '../rendering/environment-ambience.js';
 import {skillIconMarkup} from '../rendering/skill-icons.js';
 import {utilityAvailable,syncUnlocks} from '../progression/skill-overhaul.js';
 import {drawRollHero} from '../rendering/companion-roll-art.js';
@@ -250,7 +250,7 @@ function draw(){updateHUD(s);ctx.clearRect(0,0,960,540);rect(0,0,960,540,'#11191
  ctx.restore();
  if(typeof r.fountainReady==='boolean'){const point=fountainPoint(r);if(!environmentArtLoaded()){rect(point.x-27,point.y-10,54,27,'#151f21');rect(point.x-23,point.y-7,46,20,'#667c76');rect(point.x-18,point.y-8,36,17,r.fountainReady?'#68b4ac':'#34423e');}text(r.fountainReady?'결전 전 샘물':'메마른 샘',point.x,point.y-(environmentArtLoaded()?62:38),'#b7d5cf');}
  for(let d=0;d<4;d++){const n=neighbor(s,d);if(n>=0&&s.floors[s.floor][n].type==='shrine'&&!s.floors[s.floor][n].used)text('축복·저주 · 입장 시 선택',d===1?860:d===3?100:480,d===0?62:d===2?491:235,'#e4a4db',11);}
- drawObstacles(ctx,r.obstacles,s.floor);drawInfernalAmbience(ctx,r.obstacles,s.floor,s.elapsed,sound.settings.reducedEffects);drawDemonGround(ctx,r,s.elapsed,sound.settings.reducedEffects);drawObjectDetails(ctx,s,r,sound.settings.reducedEffects);drawFinalEscape(ctx,r,s.elapsed);drawInteractionEffects(ctx,s,r);if(s.key)drawReturnSeal(ctx,r);
+ drawObstacles(ctx,r.obstacles,s.floor);drawEnvironmentTorches(ctx,s,r,sound.settings.reducedEffects);drawInfernalAmbience(ctx,r.obstacles,s.floor,s.elapsed,sound.settings.reducedEffects);drawDemonGround(ctx,r,s.elapsed,sound.settings.reducedEffects);drawObjectDetails(ctx,s,r,sound.settings.reducedEffects);drawFinalEscape(ctx,r,s.elapsed);drawInteractionEffects(ctx,s,r);if(s.key)drawReturnSeal(ctx,r);
  if(r.allyZone){drawSoftField(ctx,r.allyZone.x,r.allyZone.y,r.allyZone.r,'#f2dc9b',.4);}
  drawUltimateGround(ctx,r);drawEssences(ctx,r,s.elapsed);drawElites(ctx,r);drawHazards(ctx,r,s.elapsed);drawElements(ctx,r,s.elapsed);drawOpenings(ctx,r);
  drawUpperLinks(ctx,r,s.elapsed);for(const e of r.enemies){drawUpperGround(ctx,e,s.elapsed);drawCommanderGround(ctx,e,s.elapsed);drawInfernalGround(ctx,e,sound.settings.reducedEffects);}

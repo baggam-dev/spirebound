@@ -1,5 +1,5 @@
 import {environmentArtLoaded,drawHallDoor,drawEnvironmentProp} from './environment-art.js';
-import {drawEnvironmentTorches,drawEnvironmentFacilities} from './environment-ambience.js';
+import {drawEnvironmentFacilities} from './environment-ambience.js';
 import {drawAmbusherSprite} from './ambusher-sprite.js';
 import {drawRingcasterSprite} from './ringcaster-sprite.js';
 import {drawStraferSprite} from './strafer-sprite.js';
@@ -91,9 +91,7 @@ export function drawWorldDetails(c,s,r,reduced=false){
  // Quiet floor detail, kept underneath entities and every combat telegraph.
  if(s.floor!==0||!environmentArtLoaded())for(let i=0;i<65;i++){const x=40+(i*137+s.floor*43)%865,y=55+(i*79+s.floor*17)%425;box(c,x,y,5+i%7,1,'#a4a79513');if(i%6===0){box(c,x,y,2,6,'#0a12193b');box(c,x+2,y+5,7,2,'#0a12193b');}}
  if(s.floor!==0||!environmentArtLoaded())for(const x of [32,918])for(let y=80;y<470;y+=75){box(c,x,y,10,31,'#151e23');box(c,x-2,y,14,4,accent);box(c,x+2,y+5,3,22,'#ffffff18');box(c,x-2,y+29,14,4,'#263438');}
- if(s.floor!==0||!environmentArtLoaded())for(const x of [85,875])for(const y of [82,455]){box(c,x-10,y+12,20,5,ink);box(c,x-6,y-3,12,15,s.floor>=8?'#4c414a':'#756b55');box(c,x-5,y,10,3,s.floor>=8?'#9b7172':'#b49d6c');}
  if(s.floor===0&&environmentArtLoaded())for(const x of [13,947])for(const y of [160,400])drawEnvironmentProp(c,3,x,y,22);
- drawEnvironmentTorches(c,s,r,reduced);
  c.restore();
 }
 function chest(c,x,y,used,age=Infinity){box(c,x-19,y-2,38,28,ink);box(c,x-17,y,34,23,used?'#514534':'#825a38');box(c,x-15,y+2,30,7,used?'#71634b':'#bf9354');box(c,x-17,y+10,34,3,ink);for(const dx of [-12,9]){box(c,x+dx,y,3,23,'#c2a363');box(c,x+dx,y+3,2,2,'#eee0aa');}box(c,x-3,y+9,6,8,'#e7c77c');box(c,x-1,y+12,2,3,ink);if(used){const lift=Math.round(12*Math.min(1,age/.25));box(c,x-15,y+1,30,8,'#171c22');box(c,x-17,y-lift,34,7,'#806443');box(c,x-15,y-lift+1,30,2,'#bca16b');for(const dx of [-12,9])box(c,x+dx,y-lift,3,7,'#c2a363');}}

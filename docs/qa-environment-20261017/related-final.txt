@@ -1,0 +1,28 @@
+✔ random objects remain accessible, separated and stable through save and return (19851.0722ms)
+✔ legacy rooms retain original object and extra chest anchors (12.6788ms)
+✔ sound settings persist separately from run saves and reject malformed values (22.9534ms)
+✔ cues need a user gesture, obey mute and throttle repeated attacks (11.2873ms)
+✔ layouts preserve central routes, facilities, perimeter and some empty rooms (125.1458ms)
+✔ movement and dodge cannot tunnel through cover, sliding remains possible (3.5809ms)
+✔ enemies can route around cover to player (35.336ms)
+✔ spawns are clear and terrain survives frenzy and serialization (16109.2035ms)
+✔ doors describe visited-room edges without revealing neighboring rooms (3.3422ms)
+✔ new runs actually contain persisted obstacle arrays (4287.5339ms)
+✔ minimap neighbor lookup shares tutorial entrance restrictions even from another room (377.6373ms)
+✔ cached navigation preserves original direction across shapes, radii and geometry edits (1332.6045ms)
+✔ wall image is reused, invalidated on edits and bounded across room changes (17.8349ms)
+✔ outer and inner wall faces use the same world-aligned block palette (94.0601ms)
+✔ infernal masonry uses one palette for inner and outer walls and refreshes cached floor themes (13.0873ms)
+✔ middle-floor masonry shares each themed palette across inner and outer walls (23.8161ms)
+✔ eligible rooms split evenly between legacy and thin layout families (132.5538ms)
+✔ thin walls reduce footprint and connect every doorway, object and open pocket (1871.0133ms)
+✔ melee enemies can follow the existing steering around new walls (1155.2067ms)
+✔ stone wall outlines omit shared joins including partially touching blocks (4.1977ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30561.7375

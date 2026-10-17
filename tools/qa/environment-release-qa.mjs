@@ -1,0 +1,38 @@
+// Isolated local saves; no score submissions. Optional BASE_URL targets the deployed build.
+import assert from 'node:assert/strict';
+import {mkdir,writeFile,readFile} from 'node:fs/promises';
+import {join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'index.mjs')).href);
+const base=process.env.BASE_URL||'http://localhost:5173',out=process.argv[2]||'docs/qa-environment-20261017/local';
+await mkdir(out,{recursive:true});
+const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[],results={base};
+try{
+ const page=await browser.newPage({viewport:{width:1200,height:800}});page.on('pageerror',e=>errors.push(e.message));
+ await page.route('**/environment-preview',r=>r.fulfill({contentType:'text/html',body:'<canvas width="960" height="540"></canvas>'}));await page.goto(base+'/environment-preview');
+ results.render=await page.evaluate(async()=>{
+  const art=await import('/src/rendering/environment-art.js'),amb=await import('/src/rendering/environment-ambience.js'),{newRun}=await import('/src/game/engine.js'),{drawFloorMood}=await import('/src/rendering/atmosphere.js'),{drawWorldDetails,drawObjectDetails,drawDoorFrame}=await import('/src/rendering/pixel-world.js'),{drawStoneWalls,outerWalls}=await import('/src/rendering/stone-walls.js');
+  if(!await art.environmentArtReady)throw Error('Atlas did not become ready');
+  const c=document.querySelector('canvas').getContext('2d',{willReadFrequently:true});
+  const hash=()=>{let h=0;for(const v of c.getImageData(0,0,960,540).data)h=(Math.imul(h,31)+v)|0;return h;};
+  const s=newRun(31),room=s.floors[0][0],before=JSON.stringify(s);let puddles=0;
+  for(let seed=1;seed<=30;seed++){const run=newRun(seed);for(const r of run.floors[0]){const a=amb.environmentPlan(run,r),b=amb.environmentPlan(run,JSON.parse(JSON.stringify(r)));if(JSON.stringify(a)!==JSON.stringify(b))throw Error('Scatter not repeatable');if(a.puddles.length>3)throw Error('Too many puddles');for(const p of a.puddles){if(p.x-p.rx<26||p.x+p.rx>934||p.y-p.ry<45||p.y+p.ry>500)throw Error('Puddle escaped arena');}puddles+=a.puddles.length;}}
+  const draw=(r=room,reduced=false)=>{c.clearRect(0,0,960,540);drawFloorMood(c,s,r);amb.drawEnvironmentFloorLife(c,s,r,reduced);drawStoneWalls(c,outerWalls,0);drawStoneWalls(c,r.obstacles,0);drawWorldDetails(c,s,r,reduced);amb.drawEnvironmentTorches(c,s,r,reduced);drawObjectDetails(c,s,r,reduced);for(const [x,y,side,locked] of [[440,0,0,true],[440,505,0,false],[0,235,1,false],[931,235,1,true]])drawDoorFrame(c,x,y,side,locked,0);};
+  draw();const stable=hash();draw();if(hash()!==stable)throw Error('Paused frame changed');
+  if(before!==JSON.stringify(s))throw Error('Rendering mutated run/RNG');
+  if(c.globalAlpha!==1||c.getTransform().a!==1||c.getTransform().e!==0)throw Error('Canvas state leaked');
+  s.elapsed=2;draw(room,true);const calm=hash();s.elapsed=8;draw(room,true);if(hash()!==calm)throw Error('Reduced effects animated');draw();const animated=hash();s.elapsed=9;draw();if(hash()===animated)throw Error('Environment does not animate');
+  const gallery=document.createElement('canvas');gallery.width=960;gallery.height=1620;const g=gallery.getContext('2d');let i=0;
+  for(const type of ['normal','treasure','fountain','shrine','event','up','down','exit','boss'])for(const used of [false,true]){const r={...room,type,used,hasChest:type==='normal',chestUsed:used,enemies:[],...(type==='boss'?{used:true,relicOffers:['heart'],relicClaimed:used}:{}),...(type==='down'?{fountainReady:!used}:{})};s.elapsed=4;draw(r);g.drawImage(c.canvas,(i%2)*480,Math.floor(i/2)*180,480,180);g.fillStyle='#eee4c7';g.font='12px monospace';g.fillText(type+' / '+(used?'used':'ready'),(i%2)*480+28,Math.floor(i/2)*180+18);i++;}
+  document.body.replaceChildren(gallery);return {atlasReady:true,scatterRuns:30,puddles,stableFrame:true,reducedStatic:true,animation:true,stateUnchanged:true,canvasRestored:true,facilityScenes:i};
+ });
+ console.log('render checks passed');await page.screenshot({path:join(out,'facilities.png'),fullPage:true});
+ for(const [width,height] of [[1280,800],[844,390]]){console.log('viewport',width);
+  const context=await browser.newContext({viewport:{width,height},isMobile:width<1000,hasTouch:width<1000});const p=await context.newPage();p.on('pageerror',e=>errors.push(e.message));await p.goto(base);
+  await p.evaluate(async()=>{const {newRun}=await import('/src/game/engine.js'),{encodeSave,SAVE_KEY}=await import('/src/persistence/storage.js');const run=newRun(31);run.tutorialComplete=true;localStorage.setItem(SAVE_KEY,encodeSave(run));});await p.reload();await p.locator('#continue').click();await p.waitForTimeout(600);await p.keyboard.press('Escape');await writeFile(join(out,`game-${width}.png`),Buffer.from(await p.locator('#game').evaluate(c=>c.toDataURL('image/png').split(',')[1]),'base64'));await p.screenshot({path:join(out,`screen-${width}.png`)});for(const type of ['treasure','fountain']){console.log('interaction',width,type);const ic=await browser.newContext({viewport:{width,height},isMobile:width<1000,hasTouch:width<1000}),ip=await ic.newPage();ip.on('pageerror',e=>errors.push(e.message));await ip.goto(base);await ip.evaluate(async type=>{const {newRun}=await import('/src/game/engine.js'),{objectPoint}=await import('/src/world/object-positions.js'),{encodeSave,SAVE_KEY}=await import('/src/persistence/storage.js');const run=newRun(31);run.room=run.floors[0].findIndex(r=>r.type===type);const r=run.floors[0][run.room];r.enemies=[];r.hasChest=false;run.player.x=objectPoint(r).x;run.player.y=objectPoint(r).y+35;run.player.hp=2;run.tutorialComplete=true;localStorage.setItem(SAVE_KEY,encodeSave(run));},type);await ip.reload();await ip.locator('#continue').click();await ip.locator('#interact').click();const used=await ip.evaluate(async()=>{const {parseSave,SAVE_KEY}=await import('/src/persistence/storage.js');const run=parseSave(localStorage.getItem(SAVE_KEY));return run.floors[run.floor][run.room].used;});assert.equal(used,true);await ic.close();}
+  await context.close();
+ }
+ console.log('interaction checks passed');const fallback=await browser.newContext(),p=await fallback.newPage();p.on('pageerror',e=>errors.push(e.message));await p.route('**/environment-hall-atlas-v1.png',r=>r.abort());await p.goto(base);results.fallback=await p.evaluate(async()=>{const a=await import('/src/rendering/environment-art.js');await a.environmentArtReady;return !a.environmentArtLoaded();});assert.equal(results.fallback,true);await p.screenshot({path:join(out,'fallback.png')});await fallback.close();
+ const atlas=await page.request.get(base+'/assets/images/environment-hall-atlas-v1.png');assert.equal(atlas.status(),200);assert.ok((await atlas.body()).equals(await readFile('assets/images/environment-hall-atlas-v1.png')));
+ results.interactions=4;results.errors=errors;assert.deepEqual(errors,[]);await writeFile(join(out,'result.json'),JSON.stringify(results,null,2));console.log(JSON.stringify(results));
+}finally{await browser.close();}

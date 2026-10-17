@@ -1,0 +1,17 @@
+{
+  "base": "http://127.0.0.1:5174",
+  "render": {
+    "atlasReady": true,
+    "scatterRuns": 30,
+    "puddles": 231,
+    "stableFrame": true,
+    "reducedStatic": true,
+    "animation": true,
+    "stateUnchanged": true,
+    "canvasRestored": true,
+    "facilityScenes": 18
+  },
+  "fallback": true,
+  "interactions": 4,
+  "errors": []
+}
