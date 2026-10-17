@@ -1,0 +1,30 @@
+{
+  "poseCount": 30,
+  "poseScenes": 60,
+  "ordinaryTypes": 24,
+  "ordinaryScenes": 72,
+  "deathScenes": 101,
+  "actorUnchanged": true,
+  "pauseStable": true,
+  "canvasRestored": true,
+  "noLoadReplay": true,
+  "hero": true,
+  "views": [
+    {
+      "mobile": false,
+      "pauseStable": true,
+      "assetsReady": true
+    },
+    {
+      "mobile": true,
+      "pauseStable": true,
+      "assetsReady": true
+    }
+  ],
+  "fallback": {
+    "shown": 4,
+    "allMissing": true
+  },
+  "pageErrors": [],
+  "productionRecordsSubmitted": 0
+}

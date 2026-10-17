@@ -31,3 +31,6 @@ remaining-boss-death.js는필요한기존승인몸을처치effects별WeakMap can
 
 ## 2026-10-17 범위 확정 후속
 사용자가 일반 몬스터까지 포함한 전체 캐릭터 연출을 선택했다. 위 ‘일반몹 미포함’은 당시범위질문전기록이며 현재상태로해석하지않는다. 최신 docs/character-presentation-20261017.md 참고: 일반24종/도감총32종과플레이어에기존승인외형재사용공통반응연결. 새일반몹전용원화/대사/컷씬은추가하지않음. 실행검증/배포는여전히미실행.
+
+## 2026-10-17 최종 운영 상태
+누적전체516/API·공개30자세60/일반24종72/처치101/4fallback·PNG ready후PC/가로모바일·138자산/HTTPS통과. release-20261017-153632-a5211b 배포완료. 상세 docs/qa-character-presentation-20261017/RELEASE_SUMMARY.md 및최신WORK_STATUS우선. 실제iPhone/Android/장시간난이도미검증. 이후작업은별도배포지시전수정문서로컬커밋만.
