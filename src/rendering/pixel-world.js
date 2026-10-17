@@ -140,7 +140,7 @@ export function drawCrystalBody(c,e,time=0,options={}){const attack=bossPose(e);
  for(const side of [-1,1]){diamond(c,side*22,y+13,5,'#51617b');box(c,side*22-1,y+10,2,5,'#c2d9dd');}c.restore();}
 export function drawOrganicBody(c,e,r,time=0,room={},options={}){const attack=bossPose(e,room);c.save();c.translate(Math.round(e.x),Math.round(e.y));const red=!!e.escapeDepth;
  if(drawSlimeSprite(c,e,time,attack,options)){c.restore();return;}
- if(e.type==='flower'&&drawFlowerSprite(c,e,time,room)){
+ if(e.type==='flower'&&drawFlowerSprite(c,e,time,room,options)){
   // The approved rooted flower uses cached idle/open tops and a fixed root base.
  }else if(e.type==='flower'){
   box(c,-4,-4,8,27,'#374e38');box(c,-1,-3,3,25,'#849458');for(const side of [-1,1]){box(c,side<0?-16:4,12,12,4,'#69834b');box(c,side<0?-12:6,8,8,5,'#405d3c');}

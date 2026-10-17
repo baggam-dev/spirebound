@@ -8,6 +8,8 @@ import {drawWardenDeath} from './warden-presentation-art.js';
 import {drawPrismDeath} from './prism-presentation-art.js';
 import {remainingBossKey} from './remaining-boss-presentation.js';
 import {drawRemainingBossDeath} from './remaining-boss-death.js';
+import {isOrdinary,ordinaryDeathFace} from './ordinary-presentation-state.js';
+import {drawOrdinaryDeath} from './ordinary-death.js';
 // Transient feedback only. Enemy coordinates, AI, collision and rewards are untouched.
 function style(e){
  if(e.type==='demonBat')return e.selfDestruct?'batExplosion':'bat';
@@ -23,13 +25,14 @@ export function enemyHitEffects(before,enemies){return enemies.filter(e=>e.hp>0&
  healthOffset:e.variant==='king'?-83:e.type==='boss'?-52:-36,t:.28,duration:.28
 }));}
 export function enemyDeathEffect(e,returning=false,previousHp){const split=e.variant==='slime'&&!e.summoned&&(e.stage||0)<2;
- const remainingBoss=remainingBossKey(e),demonCore=e.variant==='demon'&&e.part==='core',warden=isWarden(e),prism=e.variant==='prism',duration=split?.38:e.variant==='king'?1.1:e.variant==='commander'||demonCore||warden||prism||remainingBoss?1:.55;
+ const ordinary=isOrdinary(e),remainingBoss=remainingBossKey(e),demonCore=e.variant==='demon'&&e.part==='core',warden=isWarden(e),prism=e.variant==='prism',duration=split?.38:e.variant==='king'?1.1:e.variant==='commander'||demonCore||warden||prism||remainingBoss?1:.55;
  return {enemyFeedback:'death',enemyId:e.id,x:e.x,y:e.y,style:style(e),boss:e.type==='boss',king:e.variant==='king',demonCore,warden,prism,split,returning,
   prismScale:prism&&Number.isFinite(e.scale)?e.scale:1,
-  remainingBoss,bodyType:remainingBoss?e.type:undefined,bodyVariant:remainingBoss?e.variant:undefined,bodyPart:remainingBoss?e.part:undefined,bodyTitle:remainingBoss?e.gateTitle:undefined,bodyStage:remainingBoss?e.stage:undefined,bodyScale:remainingBoss?e.scale:undefined,
+  ordinary,bodyEscapeDepth:ordinary?e.escapeDepth:undefined,
+  remainingBoss,bodyType:remainingBoss||ordinary?e.type:undefined,bodyVariant:remainingBoss?e.variant:undefined,bodyPart:remainingBoss?e.part:undefined,bodyTitle:remainingBoss?e.gateTitle:undefined,bodyStage:remainingBoss?e.stage:undefined,bodyScale:remainingBoss||ordinary?e.scale:undefined,
   kingPhase:e.variant==='king'?mordoDeathPhase(e,previousHp):undefined,
   commander:e.variant==='commander',commanderPhase:e.variant==='commander'?velkarDeathPhase(e,previousHp):undefined,
-  face:e.variant==='commander'?velkarFacing(e):warden?wardenDeathFacing(e):Number.isFinite(e.facing)&&Math.cos(e.facing)<0?-1:1,
+  face:ordinary?ordinaryDeathFace(e):e.variant==='commander'?velkarFacing(e):warden?wardenDeathFacing(e):Number.isFinite(e.facing)&&Math.cos(e.facing)<0?-1:1,
   wardenScale:warden&&Number.isFinite(e.scale)?e.scale:1,
   scale:e.type==='boss'?(e.variant==='slime'?[1.5,1.1,.8][e.stage||0]:1.5):e.type==='minislime'?.55:1,t:duration,duration};
 }
@@ -59,6 +62,8 @@ export function drawEnemyFeedback(c,f,options={}){
  if(f.enemyFeedback==='death'&&f.warden&&drawWardenDeath(c,f,options))return true;
  if(f.enemyFeedback==='death'&&f.prism&&drawPrismDeath(c,f,options))return true;
  if(f.enemyFeedback==='death'&&f.remainingBoss&&drawRemainingBossDeath(c,f,options))return true;
+ // Preserve the existing armor/petal/crystal/slime particles over the body fade.
+ if(f.enemyFeedback==='death'&&f.ordinary&&drawOrdinaryDeath(c,f,options)&&options.reduced)return true;
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(f.x),Math.round(f.y));
  if(f.enemyFeedback==='hit'){
   // A short glint followed by a quiet cooldown prevents DoT from strobing every tick.
