@@ -1,0 +1,11 @@
+C:\baggam-dev\spirebound\tools\deploy\deploy.ps1 : Invalid array passed in, ',' expected. (213): {
+  "season": "SPIREBOUND",
+  "open": true,
+  "versions": ["0.39.0-prebeta"],
+  "origins": ["http://168.107.21.43"],
+  "secureCookie": false,
+  "blockedNames": ["admin", "moderator", "spirebound", "?댁쁺??, "愿由ъ옄", "?쒕컻", "?⑤컻", "蹂묒떊"]
+}
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,deploy.ps1
+ 

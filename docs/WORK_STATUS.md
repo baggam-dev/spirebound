@@ -1,3 +1,7 @@
+[재배포 사전가드 보완] 실제설정계약 허용환경1/1통과(actual-config-contract-final.txt). 새deploy.ps1사전가드가Windows PowerShell5 Get-Content 기본인코딩으로한글config JSON파싱실패→UTF-8 ReadAllText로수정,동일powershell.exe에서JSON/버전일치검사통과. 실패는패키징전이라운영추가변경없음·원본deploy-final.txt보존. 다음가드수정커밋푸시→공식재배포→공개온라인시작/hero/TLS검증. runtime API수정a05e429,실행서버없음.
+
+[계약검사 상태 정정·허용환경 재검증중] 실제설정계약검사 최초실행은샌드박스Temp SQLite파일열기/정리권한실패(actual-config-contract.txt); 직전1/1통과기록은잘못된판독이므로정정. 기능오류로판단하지않고허용환경에서동일계약재실행중. a05e429버전동기화/배포가드 main푸시완료, 결과확정전재배포안함. 다음최종계약성공확인→공식재배포→공개실제버튼/2캠페인/hero. 운영011942유지·데이터변경없음.
+
 [추가 버전 수정 재검증 완료·재배포 준비] 실제api/config.json을사용한JS생성6지도계약1/1통과·API최신0.39=클라이언트RELEASE일치. deploy.ps1은 불일치시패키징전차단, 구문검토통과. 로컬온라인QA도하드코딩0.38대신RELEASE사용. 앞선관련12·주인공4frames검증유효, 첫공개실패unsupported_version 원본보존. 다음버전동기화커밋푸시→공식재배포→공개실제새도전2뷰포트 및2캠페인API/hero확인. 운영현011942·차단없음.
 
 [공개검증 추가실패·원인2 수정중] release-20261018-011942-f4a4d6에서 새지도검증통과후 unsupported_version 확인. src/game/version.js=0.39.0-prebeta/APIconfig=0.38.0-prebeta 불일치 추가발견. 초기계약테스트가버전설정을가짜current값으로만들어누락→실제api/config.json 사용/최신RELEASE일치assert로수정. config0.39동기화·공식배포스크립트버전불일치차단가드추가. DB/기존기록삭제없음·최신버전표정책유지. 첫공개실패로그 docs/qa-ranking-opening-20261017/public-{browser,https}.txt 보존. 다음실제설정계약재검증→커밋푸시재배포→실제버튼/2캠페인start/hero확인. 2층PNG시안제작완료·초안환경20261018에보존예정/runtime미반영.

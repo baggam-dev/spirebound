@@ -16,7 +16,7 @@ try {
     $versionSource = [IO.File]::ReadAllText((Join-Path $projectRoot 'src/game/version.js'))
     if ($versionSource -notmatch "export const RELEASE='([^']+)';") { throw 'Cannot read the client release version.' }
     $clientVersion = $Matches[1]
-    $apiSettings = Get-Content -LiteralPath (Join-Path $projectRoot 'api/config.json') -Raw | ConvertFrom-Json
+    $apiSettings = [IO.File]::ReadAllText((Join-Path $projectRoot 'api/config.json')) | ConvertFrom-Json
     if (!$apiSettings.versions -or $apiSettings.versions[-1] -cne $clientVersion) {
         throw "API latest version does not match client release $clientVersion. Update api/config.json before deploying."
     }
