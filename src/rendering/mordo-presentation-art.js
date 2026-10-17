@@ -1,5 +1,6 @@
 import {mordoPresentationPose} from './mordo-presentation-state.js';
 import {drawKingAura} from './king-aura.js';
+import {cleanDetachedCrop} from './sprite-crop.js';
 const poses=new Map();
 // x,y,width,height,feet-anchor-x,feet-y,standing-body-height. Crouched poses
 // retain the standing scale instead of being stretched back to full height.
@@ -30,6 +31,7 @@ export const mordoPresentationArtReady=typeof Image==='undefined'?Promise.resolv
     c.beginPath();path.forEach(([px,py],i)=>i?c.lineTo(px*scale,py*scale):c.moveTo(px*scale,py*scale));c.closePath();c.clip();
    }
    c.drawImage(image,x,y,w,h,0,0,w*scale,h*scale);
+   cleanDetachedCrop(canvas);
    poses.set(key,{canvas,x:(x-ax)*scale,y:21-(feet-y)*scale});
   }resolve(true);
  }catch{resolve(false);}};image.onerror=()=>resolve(false);image.src=new URL('../../assets/images/'+s.file,import.meta.url).href;
