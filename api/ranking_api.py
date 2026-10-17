@@ -37,6 +37,16 @@ def integer(value, low, high):
     return type(value) is int and low <= value <= high
 
 
+def valid_room_counts(rooms):
+    if not isinstance(rooms, list) or len(rooms) not in (8, 10) or not all(type(n) is int for n in rooms):
+        return False
+    # Current fast opening and previously generated runs share the same season.
+    opening = rooms[:2] == [5, 6] or (integer(rooms[0], 7, 10) and integer(rooms[1], 8, 11))
+    middle = rooms[7] == 8 and all(integer(rooms[i], 7 if i % 2 == 0 else 8,
+                                                       10 if i % 2 == 0 else 11) for i in range(2, 8))
+    return opening and middle and (len(rooms) == 8 or (integer(rooms[8], 8, 11) and rooms[9] == 2))
+
+
 def score(elapsed_ms, kills, visited, total_rooms):
     parts = dict(escape=10000, combat=min(4000, kills * 10),
                  exploration=2000 * visited // total_rooms,
@@ -118,11 +128,7 @@ class Ranking:
         require(integer(body.get('seed'), 0, 4294967295))
         season = body.get('seasonId')
         rules, opened = self.active_season(season)
-        classic_map = isinstance(rooms, list) and len(rooms) == 8 and rooms[7] == 8 and all(
-            integer(n, 7 if i % 2 == 0 else 8, 10 if i % 2 == 0 else 11) for i, n in enumerate(rooms))
-        expanded_map = isinstance(rooms, list) and len(rooms) == 10 and rooms[7] == 8 and rooms[9] == 2 and all(
-            integer(n, 7 if i % 2 == 0 else 8, 10 if i % 2 == 0 else 11) for i, n in enumerate(rooms[:8])) and integer(rooms[8], 8, 11)
-        require(classic_map or expanded_map, 'invalid_map')
+        require(valid_room_counts(rooms), 'invalid_map')
         require(body.get('rulesVersion') == rules, 'unsupported_rules')
         require(body.get('gameVersion') in self.config['versions'], 'unsupported_version')
         require(opened, 'season_closed', 409)

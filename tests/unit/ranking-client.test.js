@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {RankingClient,SUBMISSIONS_KEY,normalizeNickname} from '../../src/ranking/ranking-client.js';
+import {RankingClient,SUBMISSIONS_KEY,normalizeNickname,rankingError} from '../../src/ranking/ranking-client.js';
 import {newRun} from '../../src/game/engine.js';
 import {finishRanking} from '../../src/ranking/ranking.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
@@ -51,3 +51,5 @@ test('name normalization and rendered nickname escaping',()=>{
 test('timeout aborts request and does not grant online eligibility',async()=>{
  const client=new RankingClient(memory(),(_,options)=>new Promise((resolve,reject)=>options.signal.addEventListener('abort',()=>reject(Error('timeout')))),5),s=newRun(1);await assert.rejects(client.start(s),{code:'network'});assert.equal(s.ranking.online,undefined);
 });
+
+ test('map validation rejection has a specific player-facing message',()=>{assert.match(rankingError({code:'invalid_map'}),/지도/);});

@@ -19,6 +19,9 @@ try {
  const redirect=await context.request.get(old+'/src/game/game.js',{maxRedirects:0});assert.equal(redirect.status(),308);assert.equal(redirect.headers().location,base+'/src/game/game.js');
  await page.locator('#rank').click();await page.locator('#rankBoard').waitFor();assert.equal(await page.locator('#rankBoard[role="alert"]').count(),0);
  const session=await page.evaluate(async()=>{const r=await fetch('/api/session',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});return r.status;});assert.equal(session,200);
+ // Session/list health alone does not exercise server validation of newly generated maps.
+ const starts=await page.evaluate(async()=>{const {newRun}=await import('/src/game/engine.js'),{RankingClient}=await import('/src/ranking/ranking-client.js');const result=[];for(const campaign of ['classic','expanded']){const run=newRun(98,{campaign});await new RankingClient(localStorage).start(run);result.push({campaign,rooms:run.floors.slice(0,2).map(r=>r.length),online:run.ranking.online?.runId===run.runId});}return result;});
+ assert.deepEqual(starts,[{campaign:'classic',rooms:[5,6],online:true},{campaign:'expanded',rooms:[5,6],online:true}]);
  const cookies=await context.cookies(base+'/api/');const cookie=cookies.find(c=>c.httpOnly);assert.ok(cookie);assert.equal(cookie.secure,true);
  // Simulate a valid pre-upgrade cookie locally, then verify API refresh preserves identity and secures it.
  await context.clearCookies();await context.addCookies([{...cookie,secure:false}]);
@@ -33,7 +36,7 @@ try {
  assert.equal(await target.evaluate(()=>localStorage.getItem('spirebound.run.v1')),existing?'secure run':'old run');assert.equal(await target.evaluate(()=>localStorage.getItem('spirebound.active-tab')),null);assert.equal(await source.evaluate(()=>localStorage.getItem('spirebound.run.v1')),'old run');
  assert.equal(await target.evaluate(()=>Object.keys(localStorage).some(k=>k.startsWith('spirebound.http-backup.'))),true);await c.close();
  }
- assert.deepEqual(errors,[]);console.log(JSON.stringify({publicTLS:true,assetsMatch:assets.length,imageAtlasMatch:true,httpRedirect:308,rankings:true,secureHttpOnlyCookie:true,existingCookieUpgrade:true,transferNew:true,transferExisting:true,httpOriginalPreserved:true,pageErrors:0,productionRecordsSubmitted:0}));
+ assert.deepEqual(errors,[]);console.log(JSON.stringify({publicTLS:true,onlineStarts:2,assetsMatch:assets.length,imageAtlasMatch:true,httpRedirect:308,rankings:true,secureHttpOnlyCookie:true,existingCookieUpgrade:true,transferNew:true,transferExisting:true,httpOriginalPreserved:true,pageErrors:0,productionRecordsSubmitted:0}));
 } finally {await browser.close();}
 
 

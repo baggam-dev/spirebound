@@ -1,3 +1,7 @@
+## 2026-10-17 수정 대기 — 초반 방 개수 검증
+
+현재 게임은 1층5방·2층6방을 생성하지만 배포 API는 구최소7/8방만 받아 새 온라인 도전을 invalid_map으로 거절하는 코드 불일치가 발견됐다. valid_room_counts는 새[5,6] 또는 구[7~10,8~11] 초반 조합을 허용하며 나머지 층의 제한은 유지한다. DB/시즌/점수 규칙을 바꾸지 않는다. 수정은 로컬 상태이며 테스트·푸시·배포 미실행, 활성 릴리스는 WORK_STATUS를 따른다. 다음 배포에서는 세션/목록 응답 외에 실제 생성된 8층/10층 새 도전 API 시작도 반드시 확인한다(점수는 제출하지 않음). 관련 tests/integration/ranking-map-contract.test.js, api/test_ranking_api.py, tools/qa/public-https-qa.mjs.
+
 # 랭킹 운영·HTTPS 절차
 
 현재 활성화 여부와 마지막 릴리스는 WORK_STATUS.md를 기준으로 한다. 이 문서는 절차와 경로를 설명한다.

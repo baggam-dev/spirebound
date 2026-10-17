@@ -59,6 +59,30 @@ class RankingTests(unittest.TestCase):
         self.assertEqual(score(999, 0, 1, 3)['time'], 6000)
         self.assertEqual(score(1000, 0, 1, 3)['time'], 5998)
 
+    def test_fast_opening_starts_and_scores_both_campaigns(self):
+        for extra in ([], [8, 2]):
+            rooms = [5, 6, 7, 8, 7, 8, 7, 8] + extra
+            run = dict(self.run, runId='fast-opening-' + str(len(rooms)), roomCounts=rooms)
+            started = self.app.start(self.token, run)
+            self.assertEqual(started['runId'], run['runId'])
+            self.assertEqual(self.app.start(self.token, run), started)
+            self.now += 1200000
+            receipt = self.app.submit(self.token, dict(self.body, runId=run['runId'],
+                visited=[f'{f}:0' for f in range(len(rooms))], finalDemonDefeated=bool(extra)))
+            self.assertEqual(receipt['score']['total'], score(1200000, 180, len(rooms), sum(rooms))['total'])
+
+    def test_fast_opening_keeps_invalid_map_rejection(self):
+        valid = [5, 6, 7, 8, 7, 8, 7, 8]
+        invalid = [None, valid[:-1], valid + [8], [5, 8] + valid[2:], [7, 6] + valid[2:]]
+        for index, value in [(0, 4), (1, 5), (2, 6), (7, 9), (0, 5.0), (0, '5'), (7, True)]:
+            rooms = valid.copy()
+            rooms[index] = value
+            invalid.append(rooms)
+        invalid.extend([valid + [7, 2], valid + [8, 3]])
+        for rooms in invalid:
+            self.reject(lambda: self.app.start(self.token, dict(self.run,
+                        runId='invalid-fast-map', roomCounts=rooms)), 'invalid_map')
+
     def test_single_ranking_accepts_both_maps(self):
         expanded = dict(self.run, runId='run-expanded-0001', roomCounts=self.run['roomCounts'] + [8, 2])
         self.assertEqual(self.app.start(self.token, expanded)['seasonId'], 'SPIREBOUND')
