@@ -1,5 +1,10 @@
 복사 가능한 최신 인계 블록:
 ```text
+[첨부 주인공 임시외형 원인 확인 / QA 수정·미검증] 2026-10-17 공개첨부PNG 주인공은 hero.js의 loading/offline fallback. 환경캡처가 environmentArtReady만 기다리고 heroSpriteReady 확인을 누락했음. 76f6981→6ef3f09의 hero.js/hero-sprite.js/hero-reference-atlas.png diff없음, 로컬PNG2079×756 로더기대크기일치. 일시대기와 실제로드실패 구분은 아직확인안함. QA에 주인공4프레임 ready필수검사·실패시캡처중단·viewport별heroStates기록추가. 기존공개PNG는 주인공정상외형 증거로사용금지. QA구문정적검토만·새테스트/브라우저/공개확인/푸시/배포 미실행. runtime불변·운영release-20261017-214239-b3eb8e 유지. 다음새명시배포검증시 hero PNG실제로딩상태/네트워크·PC가로터치정상외형확인및정정PNG필요. 최종문서/QA수정로컬커밋·실행명령차단없음.
+```
+
+복사 가능한 최신 인계 블록:
+```text
 [환경 리뉴얼 배포·공개 검증 완료] 2026-10-17 release-20261017-214239-b3eb8e / https://168.107.21.43/ / runtime6ef3f09 main누적푸시. 1층판석·석벽·오프셋문·기둥/공통시설6종 사용전후/별도횃불불티·샘물물결·결정적웅덩이먼지/랜덤타일균열파손 반영. 내벽뒤횃불은벽이후레이어로수정. 전체530/530·최종관련20/20·서버Python25/nginx/인증서/index/health 통과. 로컬 및 공개 환경QA 18시설/30지도231웅덩이/정지·reduced·run RNG불변·Canvas복원/PNGready·누락fallback/PC1280×800 가로터치844×390 실사용4건·PNG바이트일치 errors0. 공개TLS/147코드스타일자산/PNG/HTTP308/랭킹SecureHttpOnly세션·저장이관2종 통과·운영점수0. 실제공개PNG 육안확인·자료 docs/qa-environment-20261017/RELEASE_SUMMARY.md 및 public/. 초기샌드박스차단/QA준비및네트워크30초timeout 로그보존·검사120초명시대기로보완, runtime추가변경없음. 개발서버5173/5174종료·실행명령세션차단없음. 실제iPhone/Android·저사양장시간·전층수동플레이 미검증. 다음2층파수꾼회랑(옛왕국검문소/규칙판석·무쇠보강·창방패잔해·퇴색깃발·연병장) 구상만작성 docs/design-drafts/environment-20261017/next-floor2.md; 다음은일반방+보스방+잔해3종PNG시안→컨펌후구현. 대사컷씬보류·후속runtime임의반영없음. 이번배포승인소진·평상시수정문서로컬커밋, 새명시배포전테스트푸시배포공개검증금지.
 ```
 
