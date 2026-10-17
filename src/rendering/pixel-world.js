@@ -1,3 +1,5 @@
+import {environmentArtLoaded,drawHallDoor,drawEnvironmentProp} from './environment-art.js';
+import {drawEnvironmentTorches,drawEnvironmentFacilities} from './environment-ambience.js';
 import {drawAmbusherSprite} from './ambusher-sprite.js';
 import {drawRingcasterSprite} from './ringcaster-sprite.js';
 import {drawStraferSprite} from './strafer-sprite.js';
@@ -84,17 +86,20 @@ export function drawPixelActor(c,e,time=0,run=null,reduced=false){
  }
  c.restore();
 }
-export function drawWorldDetails(c,s,r){
+export function drawWorldDetails(c,s,r,reduced=false){
  const t=s.elapsed,group=Math.floor(s.floor/2),accent=s.floor>=8?(s.floor===8?'#73504a':'#665069'):['#6e8066','#827499','#899257','#96806a'][group]||'#728473';c.save();
  // Quiet floor detail, kept underneath entities and every combat telegraph.
- for(let i=0;i<65;i++){const x=40+(i*137+s.floor*43)%865,y=55+(i*79+s.floor*17)%425;box(c,x,y,5+i%7,1,'#a4a79513');if(i%6===0){box(c,x,y,2,6,'#0a12193b');box(c,x+2,y+5,7,2,'#0a12193b');}}
- for(const x of [32,918])for(let y=80;y<470;y+=75){box(c,x,y,10,31,'#151e23');box(c,x-2,y,14,4,accent);box(c,x+2,y+5,3,22,'#ffffff18');box(c,x-2,y+29,14,4,'#263438');}
- for(const x of [85,875])for(const y of [82,455]){const infernal=s.floor>=8,deep=s.floor>=9;box(c,x-10,y+12,20,5,ink);box(c,x-6,y-3,12,15,infernal?'#4c414a':'#756b55');box(c,x-5,y,10,3,infernal?'#9b7172':'#b49d6c');const f=Math.floor(t*9+x)%3;box(c,x-6,y-12-f*2,12,13+f*2,deep?'#91577f':'#d66e3c');box(c,x-3,y-15+f,6,14,deep?'#d28bad':'#ffc56f');box(c,x-1,y-9,3,7,deep?'#f0c6d0':'#fff0b2');box(c,x+4-f*3,y-24-(t*17%12),2,3,deep?'#cb92b0':'#f2b568');}
+ if(s.floor!==0||!environmentArtLoaded())for(let i=0;i<65;i++){const x=40+(i*137+s.floor*43)%865,y=55+(i*79+s.floor*17)%425;box(c,x,y,5+i%7,1,'#a4a79513');if(i%6===0){box(c,x,y,2,6,'#0a12193b');box(c,x+2,y+5,7,2,'#0a12193b');}}
+ if(s.floor!==0||!environmentArtLoaded())for(const x of [32,918])for(let y=80;y<470;y+=75){box(c,x,y,10,31,'#151e23');box(c,x-2,y,14,4,accent);box(c,x+2,y+5,3,22,'#ffffff18');box(c,x-2,y+29,14,4,'#263438');}
+ if(s.floor!==0||!environmentArtLoaded())for(const x of [85,875])for(const y of [82,455]){box(c,x-10,y+12,20,5,ink);box(c,x-6,y-3,12,15,s.floor>=8?'#4c414a':'#756b55');box(c,x-5,y,10,3,s.floor>=8?'#9b7172':'#b49d6c');}
+ if(s.floor===0&&environmentArtLoaded())for(const x of [13,947])for(const y of [160,400])drawEnvironmentProp(c,3,x,y,22);
+ drawEnvironmentTorches(c,s,r,reduced);
  c.restore();
 }
 function chest(c,x,y,used,age=Infinity){box(c,x-19,y-2,38,28,ink);box(c,x-17,y,34,23,used?'#514534':'#825a38');box(c,x-15,y+2,30,7,used?'#71634b':'#bf9354');box(c,x-17,y+10,34,3,ink);for(const dx of [-12,9]){box(c,x+dx,y,3,23,'#c2a363');box(c,x+dx,y+3,2,2,'#eee0aa');}box(c,x-3,y+9,6,8,'#e7c77c');box(c,x-1,y+12,2,3,ink);if(used){const lift=Math.round(12*Math.min(1,age/.25));box(c,x-15,y+1,30,8,'#171c22');box(c,x-17,y-lift,34,7,'#806443');box(c,x-15,y-lift+1,30,2,'#bca16b');for(const dx of [-12,9])box(c,x+dx,y-lift,3,7,'#c2a363');}}
-export function drawObjectDetails(c,s,r){c.save();const t=s.elapsed;
+export function drawObjectDetails(c,s,r,reduced=false){c.save();const t=s.elapsed;
  for(const o of r.obstacles||[]){if(o.type==='wall')continue;const {x,y,w,h}=o;box(c,x+3,y+h-3,w-6,2,'#141c2580');if(o.type==='rock'){box(c,x+9,y+9,Math.max(3,w-23),2,'#cad1af77');line(c,[[x+w*.6,y+8],[x+w*.5,y+h*.4],[x+w*.65,y+h*.6]],'#283b37',2);box(c,x+3,y+h-11,9,5,'#4a624a');}if(o.type==='bookshelf'){for(let row=0;row<2;row++)for(let j=0;j<Math.floor((w-12)/10);j++)box(c,x+9+j*10,y+11+row*23,4,2,'#d7bd7e');}if(o.type==='table'){box(c,x+w/2+2,y+14,8,1,'#6a6557');box(c,x+10,y+8,5,9,'#d8c39a');box(c,x+11,y+5,3,4,'#ffcf7b');}}
+ if(drawEnvironmentFacilities(c,s,r,reduced)){c.restore();return;}
  if(r.hasChest){const q=objectPoint(r,true);chest(c,q.x,q.y-20,r.chestUsed,interactionAge(s,r,'chest'));}
  const q=objectPoint(r);c.translate(q.x-480,q.y-115);
  if(r.type==='treasure')chest(c,480,95,r.used,interactionAge(s,r,'chest'));
@@ -161,7 +166,7 @@ export function drawTurretDetail(c,t,time){
  box(c,-9,-4,28,8,'#372e2a');box(c,-9,-3,27,2,'#e0c889');box(c,3,1,14,2,'#8e7553');box(c,-4,-7,5,14,'#ba9861');diamond(c,-2,0,3,'#e5dfa6');box(c,15,-1,8,2,'#e9e8d3');
  for(const side of [-1,1])box(c,-8,side*12-2,4,4,'#e0bf7c');c.restore();
 }
-export function drawDoorFrame(c,x,y,side,locked){c.save();const w=side?29:80,h=side?70:35;
+export function drawDoorFrame(c,x,y,side,locked,floor=1){if(floor===0&&drawHallDoor(c,x,y,side,locked))return;c.save();const w=side?29:80,h=side?70:35;
  if(side){for(const dy of [-6,h]){box(c,x,y+dy,w,6,'#171e24');box(c,x,y+dy,w,2,'#858674');}if(locked){for(let i=0;i<4;i++)box(c,x+4,y+8+i*16,15,3,'#ccb27b');box(c,x+10,y+29,8,12,'#493d34');}}
  else{for(const dx of [-7,w]){box(c,x+dx,y,7,h,'#171e24');box(c,x+dx,y,3,h,'#858674');}if(locked){for(let i=0;i<5;i++)box(c,x+6+i*15,y+3,3,17,'#c2a16e');box(c,x+35,y+5,10,11,'#493d34');box(c,x+39,y+8,2,4,'#dbc086');}}
  c.restore();}
