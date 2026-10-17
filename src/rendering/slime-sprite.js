@@ -1,4 +1,5 @@
 import {locomotion,drawGlidingFrame} from './locomotion.js';
+import {applyRemainingBossPose} from './remaining-boss-presentation.js';
 const frames=[];
 export const slimeSpriteState=()=>({ready:frames.length===4});
 export const slimeSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
@@ -13,6 +14,6 @@ export const slimeSpriteReady=typeof Image==='undefined'?Promise.resolve(false):
 export function drawSlimeSprite(c,e,time,attack,{reduced=false,staticPose=false,actor=e}={}){
  if(frames.length!==4||e.variant!=='slime'&&e.type!=='minislime')return false;
  const f=frames[e.type==='minislime'?3:Math.max(0,Math.min(2,e.stage||0))],pulse=e.frozen>0||staticPose?0:Math.sin(time*Math.PI*2/1.8+(e.id||0)*1.71);
- c.save();const size=(e.type==='minislime'?1:1.3)*(e.scale??1);c.scale(size,size);c.translate(0,21);c.scale(1+pulse*.025+(attack.charge||0)*.035,1-pulse*.04-(attack.charge||0)*.06);c.imageSmoothingEnabled=false;const g=locomotion(actor,time,{reduced,staticPose,blocked:e.phase==='splitJump'||attack.charge>0,stride:e.type==='minislime'?16:32});drawGlidingFrame(c,f,g,{feet:0,mode:'ooze'});
+ c.save();const size=(e.type==='minislime'?1:1.3)*(e.scale??1);c.scale(size,size);c.translate(0,21);applyRemainingBossPose(c,e,{reduced,staticPose,actor},0);c.scale(1+pulse*.025+(attack.charge||0)*.035,1-pulse*.04-(attack.charge||0)*.06);c.imageSmoothingEnabled=false;const g=locomotion(actor,time,{reduced,staticPose,blocked:e.phase==='splitJump'||attack.charge>0,stride:e.type==='minislime'?16:32});drawGlidingFrame(c,f,g,{feet:0,mode:'ooze'});
  if(e.escapeDepth){c.strokeStyle='#df8995';c.lineWidth=1.5;c.beginPath();c.moveTo(-12,-9);c.lineTo(-17,-13);c.moveTo(12,-9);c.lineTo(17,-13);c.stroke();}c.restore();return true;
 }

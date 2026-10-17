@@ -34,9 +34,9 @@ test('attacks and specials immediately cancel presentation without extending com
  }
  const r=room(),e=r.enemies[0];e.frozen=1;notifyDemonHits(r,hit(.04));assert.equal(demonPresentationPose(e,r),null);
 });
-test('only core death gets a one-second detached snapshot and all other timings stay intact',()=>{
+test('core keeps its own detached snapshot while other parts use the shared presentation',()=>{
  for(const part of ['hand','foot','eye','nose','mouth','core']){
-  const e=actor(part);e.hp=0;const saved=JSON.stringify(e),f=enemyDeathEffect(e);assert.equal(f.demonCore,part==='core');assert.equal(f.duration,part==='core'?1:.55);assert.equal(JSON.stringify(e),saved);
+  const e=actor(part);e.hp=0;const saved=JSON.stringify(e),f=enemyDeathEffect(e);assert.equal(f.demonCore,part==='core');assert.equal(f.duration,1);assert.equal(JSON.stringify(e),saved);
   assert.equal(Object.values(f).includes(e),false);
  }
  assert.equal(enemyDeathEffect({variant:'king',kingStage:3}).duration,1.1);assert.equal(enemyDeathEffect({variant:'commander',commander:{phase:2}}).duration,1);

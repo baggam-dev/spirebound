@@ -1,4 +1,5 @@
 import {locomotion,drawWalkingFrame,drawGlidingFrame} from './locomotion.js';
+import {applyRemainingBossPose} from './remaining-boss-presentation.js';
 // Display-only frames. Combat owners, attack timing and collision stay in combat/demon.js.
 const frames=new Map(),motion=new WeakMap();
 const specs={hand:{width:110,height:84},foot:{width:100,height:84},eye:{width:120,height:76},nose:{width:110,height:72},mouth:{width:120,height:76},core:{width:230,height:155}};
@@ -37,6 +38,7 @@ export function drawDemonSprite(c,e,time=0,{attack=null,staticPose=false,wall=fa
  const frame=part==='core'&&staticPose?entry.full:entry.poses[active&&entry.poses.length>1?1:0],feet=part==='core'?36:24;
  const bob=staticPose||e.frozen>0?0:Math.round(Math.sin(time*4)*1.5);
  c.save();c.translate(Math.round(e.x),Math.round(e.y));c.scale(face,1);c.imageSmoothingEnabled=false;
+ applyRemainingBossPose(c,e,{reduced,staticPose},feet);
   const f={canvas:frame,x:-Math.round(frame.width/2),y:feet-frame.height+bob};
  const g=locomotion(e,time,{staticPose,reduced,blocked:part==='core'||active,stride:part==='foot'?34:26});
  if(part==='hand'||part==='mouth'||part==='nose')drawWalkingFrame(c,f,g,{feet,hip:feet-18,weight:.65});

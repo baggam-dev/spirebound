@@ -1,4 +1,5 @@
 import {locomotion,drawWalkingFrame,drawGlidingFrame} from './locomotion.js';
+import {applyRemainingBossPose} from './remaining-boss-presentation.js';
 
 // Native imagegen originals; only crop/downsample here. Feet anchors are independent
 // of weapon/horn extents. No actor, combat clock, save or RNG writes.
@@ -60,6 +61,7 @@ export function drawFeedbackSprite(c,e,time=0,{reduced=false,staticPose=false,at
  const g=locomotion(e,time,{reduced,staticPose,blocked,stride:key==='brute'?30:24}),foot=key.startsWith('commander')?29:key==='brute'?24:21;
  c.save();if(!local)c.translate(Math.round(e.x),Math.round(e.y));
  c.fillStyle='#0005';c.fillRect(-18,foot-2,36,5);c.translate(0,(attack?.bodyY||0)-(attack?.lift||0));c.scale(face,1);c.imageSmoothingEnabled=false;
+ applyRemainingBossPose(c,e,{reduced,staticPose},foot);
  if(['gravityMage','royalGuard'].includes(key))drawGlidingFrame(c,f,g,{feet:foot});else drawWalkingFrame(c,f,g,{feet:foot,hip:foot-15,weight:key==='brute'?.6:1});
  if(e.escapeDepth){c.strokeStyle='#ed9aab';c.lineWidth=1.5;c.beginPath();c.moveTo(-16,foot-2);c.lineTo(-21,foot-7);c.moveTo(16,foot-2);c.lineTo(21,foot-7);c.stroke();}
  c.restore();return true;
