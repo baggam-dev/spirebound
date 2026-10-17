@@ -25,8 +25,8 @@ export function updatePrism(e,p,obstacles,dt,bullets){
  if(e.prismPhase==='recover'&&e.prismTime<=0){e.prismPhase=null;e.cd=.4;}
  return 0;
 }
-export function drawPrism(ctx,e,obstacles,enemies=[],time=0){
- ctx.save();if(prismShielded(e,enemies)){ctx.strokeStyle='#d1a5ff';ctx.fillStyle='#ad76ed35';ctx.lineWidth=3;drawSoftField(ctx,e.x,e.y,58*(e.scale??1),'#d1a5ff',.45);ctx.lineWidth=1;ctx.font='12px Galmuri, monospace';ctx.textAlign='center';ctx.fillStyle='#e5caff';ctx.fillText('수호 보호막 · 받는 피해 ⅓',e.x,e.y+70);for(const n of enemies.filter(n=>n.hp>0&&n.summoned&&n.summoner===e.id)){ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(n.x,n.y);ctx.stroke();}}drawCrystalBody(ctx,e,time);
+export function drawPrism(ctx,e,obstacles,enemies=[],time=0,options={}){
+ ctx.save();if(prismShielded(e,enemies)){ctx.strokeStyle='#d1a5ff';ctx.fillStyle='#ad76ed35';ctx.lineWidth=3;drawSoftField(ctx,e.x,e.y,58*(e.scale??1),'#d1a5ff',.45);ctx.lineWidth=1;ctx.font='12px Galmuri, monospace';ctx.textAlign='center';ctx.fillStyle='#e5caff';ctx.fillText('수호 보호막 · 받는 피해 ⅓',e.x,e.y+70);for(const n of enemies.filter(n=>n.hp>0&&n.summoned&&n.summoner===e.id)){ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(n.x,n.y);ctx.stroke();}}drawCrystalBody(ctx,e,time,options);
  if(['warning','beam'].includes(e.prismPhase)){
   ctx.strokeStyle=e.prismAttack==='laser'?'#f3a3d1':'#7ae6df';ctx.lineWidth=e.prismPhase==='beam'?26:1;if(e.prismPhase==='warning')ctx.globalAlpha=e.prismTime<.25?.75:.5;ctx.setLineDash(e.prismPhase==='warning'?[7,6]:[]);
   const angles=e.prismAttack==='laser'?[-.65,-.325,0,.325,.65]:Array.from({length:18},(_,i)=>i*Math.PI/4);

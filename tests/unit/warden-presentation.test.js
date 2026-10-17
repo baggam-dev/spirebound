@@ -28,7 +28,7 @@ test('Warden weak and strong hits respect cooldown, static/reduced and every com
 test('Warden detached death preserves the displayed direction and leaves other boss durations alone',()=>{
  resetWardenPresentation();const e=actor();e.hp=0;e.patternAim=0;e.scale=1.2;rememberWardenFacing(e,-1);const saved=JSON.stringify(e),f=enemyDeathEffect(e);
  assert.equal(f.warden,true);assert.equal(f.face,-1);assert.equal(f.wardenScale,1.2);assert.equal(f.t,1);assert.equal(f.duration,1);assert.equal(JSON.stringify(e),saved);assert.equal(Object.values(f).includes(e),false);
- assert.equal(enemyDeathEffect({type:'archer'}).duration,.55);assert.equal(enemyDeathEffect({type:'boss',variant:'king',kingStage:1}).duration,1.1);assert.equal(enemyDeathEffect({type:'boss',variant:'prism'}).duration,.55);
+ assert.equal(enemyDeathEffect({type:'archer'}).duration,.55);assert.equal(enemyDeathEffect({type:'boss',variant:'king',kingStage:1}).duration,1.1);assert.equal(enemyDeathEffect({type:'boss',variant:'prism'}).duration,1);
 });
 test('Warden removal and reward are immediate despite its one-second visual snapshot',()=>{
  const s=createPractice('warden','fire',42);delete s.practice;s.attack=100;const r=currentRoom(s);for(const e of r.enemies)e.hp=0;

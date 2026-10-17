@@ -129,8 +129,8 @@ export function drawArmorDetail(c,time=0,royal=false){
  for(let i=0;i<3;i++)box(c,-8,-5+i*6,16,1,'#c4aec14d');box(c,-12,10,24,3,'#181c29');diamond(c,0,11,3,royal?'#edc785':'#b4a1d3');
  if(royal){box(c,-14,-39,28,2,'#f7db93');diamond(c,0,-37,3,'#f5c9ed');for(let i=0;i<3;i++)box(c,-16+i*13,22+Math.round(Math.sin(time*3+i)*2),5,3,'#bd875e');}
 }
-export function drawCrystalBody(c,e,time=0){const attack=bossPose(e);c.save();c.translate(Math.round(e.x),Math.round(e.y));c.scale(e.scale??1,e.scale??1);
- if(drawPrismSprite(c,e,time)){c.restore();return;}
+export function drawCrystalBody(c,e,time=0,options={}){const attack=bossPose(e);c.save();c.translate(Math.round(e.x),Math.round(e.y));c.scale(e.scale??1,e.scale??1);
+ if(drawPrismSprite(c,e,time,options)){c.restore();return;}
  box(c,-29,17,58,7,'#0005');box(c,-27,-18,54,37,ink);box(c,-25,-16,50,32,e.escapeDepth?'#7b3b61':'#423c60');
  for(const side of [-1,1]){box(c,side<0?-27:17,-16,10,29,'#817196');box(c,side<0?-26:18,-16,8,3,'#c9b5ce');for(let i=0;i<3;i++)box(c,side<0?-24:20,-9+i*8,3,3,'#c9a4ef');}
  const y=-12+Math.round(Math.sin(time*2.4)*2)-Math.round(attack.charge*9)+attack.bodyY;diamond(c,0,y,23,ink);diamond(c,0,y,20,e.escapeDepth?'#e087ac':'#71b8c3');

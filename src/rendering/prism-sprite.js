@@ -1,4 +1,5 @@
 import {characterSizes} from './character-sizes.js';
+import {drawPrismPresentation} from './prism-presentation-art.js';
 const frames=[];
 export const prismSpriteState=()=>({ready:frames.length===2});
 export const prismSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
@@ -10,10 +11,11 @@ export const prismSpriteReady=typeof Image==='undefined'?Promise.resolve(false):
   }resolve(true);
  }catch{frames.length=0;resolve(false);}};atlas.onerror=()=>resolve(false);atlas.src=new URL('../../assets/images/prism-reference-atlas.png',import.meta.url).href;
 });
-export function drawPrismSprite(c,e,time){
+export function drawPrismSprite(c,e,time,{reduced=false,staticPose=false,actor=e}={}){
  if(frames.length!==2)return false;
  const charged=['warning','beam','salvo'].includes(e.prismPhase),f=frames[charged?1:0];
- const bob=e.frozen>0?0:Math.sin(time*2.4+(e.id||0)*.7)*2;
- c.save();c.translate(0,bob);c.imageSmoothingEnabled=false;c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));
+ const bob=reduced||staticPose||e.frozen>0?0:Math.sin(time*2.4+(e.id||0)*.7)*2;
+ c.save();c.translate(0,bob);c.imageSmoothingEnabled=false;
+ if(!drawPrismPresentation(c,actor,{reduced,staticPose}))c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));
  if(e.escapeDepth){c.strokeStyle='#e394b7';c.lineWidth=2;c.beginPath();c.moveTo(-24,-15);c.lineTo(-30,-20);c.moveTo(24,-15);c.lineTo(30,-20);c.stroke();}c.restore();return true;
 }
