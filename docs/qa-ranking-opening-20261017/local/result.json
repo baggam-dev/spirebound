@@ -1,0 +1,36 @@
+{
+  "base": "http://127.0.0.1:5174",
+  "onlineButtonStarts": 0,
+  "results": [
+    {
+      "width": 1280,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      },
+      "online": false,
+      "rooms": [
+        5,
+        6
+      ],
+      "floors": 10
+    },
+    {
+      "width": 844,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      },
+      "online": false,
+      "rooms": [
+        5,
+        6
+      ],
+      "floors": 10
+    }
+  ],
+  "errors": [],
+  "productionScoresSubmitted": 0
+}

@@ -1,0 +1,20 @@
+✔ ranking API SQLite and HTTP integration suite (7219.4068ms)
+✔ actual generated classic and expanded maps satisfy Python online-start validation (1765.9319ms)
+✔ online start issues session before run and survives save continuation (166.5869ms)
+✔ expanded season starts online and only drafts a completed final demon run (62.7755ms)
+✔ continued ASCENT-1 and ASCENT-2 saves remain local after their seasons close (85.0067ms)
+✔ offline, legacy and practice results cannot create online drafts (110.7852ms)
+✔ submission intent persists before network failure and reload can retry (28.8254ms)
+✔ double submit makes one request and receipts never resubmit (26.2492ms)
+✔ storage failures preserve an in-memory draft and visibly report persistence failure (30.3397ms)
+✔ name normalization and rendered nickname escaping (58.3135ms)
+✔ timeout aborts request and does not grant online eligibility (51.329ms)
+✔ map validation rejection has a specific player-facing message (1.3137ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8170.757

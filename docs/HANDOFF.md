@@ -1,5 +1,10 @@
 복사 가능한 최신 인계 블록:
 ```text
+[랭킹 수정 배포 전 검증 완료] 랭킹/API/실제JS생성계약 회귀12/12통과(8층10층×3seed 생성6지도 API허용·재요청동일, Python API/HTTP/SQLite포함). PC1280×800·가로터치844×390 heroSpriteReady=true/4frames/58px 및환경ready 통과 errors0·정상승인주인공PNG육안확인. 상세 docs/qa-ranking-opening-20261017/local-tests.txt 및 local/result.json. runtime추가수정없음·2d143fb/a5091ea누적. 다음검증기록커밋·누적푸시·공식배포→공개HTTPS새도전2캠페인 및PC/가로터치실제시작버튼/hero확인. localhost5174세션42332유지·운영214239유지·차단없음. 2층구상검토는next-floor2.md 최신절, 시안/런타임미착수.
+```
+
+복사 가능한 최신 인계 블록:
+```text
 [랭킹 새 도전 오류 수정 완료 / 미검증·미배포] 2026-10-17 이전배포부터 랭킹연결실패 제보: 게임generateFloor의초반5/6방과 API Ranking.start의구7~10/8~11방 제한불일치로 invalid_map 거절경로확인. 클라이언트invalid_map문구없어일반실패표시. API valid_room_counts로 신5/6 및 구초반지도 모두허용·나머지층/타입/최종보스방 제한유지, invalid_map지도오류문구추가. Python 신지도시작/재요청/점수정규화·잘못된지도 거절2회귀, 실제JS newRun 2캠페인×3seed를PythonAPI에전달하는계약회귀1, 메시지회귀1 추가. 공개HTTPS QA에2캠페인새도전시작필수확인 추가(예전공개검사는session/목록만확인해누락). JS node --check·Python ast구문·git diff --check통과. 회귀/단위/통합/브라우저/공개검증은실행안함·운영응답원문미수집. DB/계정/기록변경없음·푸시/배포없음·운영release-20261017-214239-b3eb8e/runtime6ef3f09 유지. 선행주인공ready QA수정2d143fb와로컬누적. 다음새명시배포시 계약/API/랭킹관련검증·공개실제새도전2종·주인공PNGready및정상외형 함께확인후누적푸시배포. 실행명령/세션/차단없음.
 ```
 
