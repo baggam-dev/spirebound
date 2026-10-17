@@ -1,4 +1,5 @@
 import {drawFeedbackSprite} from './feedback-sprites.js';
+import {drawVelkarPresentation} from './velkar-presentation-art.js';
 import {drawCommanderPhase2Sprite} from './commander-phase2-sprite.js';
 import {drawFrostAura} from './frost-aura.js';
 import {drawCommanderPhase1Sprite} from './commander-phase1-sprite.js';
@@ -33,6 +34,7 @@ export function drawCommanderGround(c,e,time=0){
 export function drawCommander(c,e,time=0,reduced=false,staticPose=false){
  if(e.variant!=='commander')return;
  if(e.commander?.phase===2||e.hp/e.max<=.5)drawFrostAura(c,e,time,{reduced,staticPose});
+ if(drawVelkarPresentation(c,e,time,{reduced,staticPose}))return;
  if(drawFeedbackSprite(c,e,time,{reduced,staticPose}))return;
  if(drawCommanderPhase1Sprite(c,e,time,{reduced,staticPose})||drawCommanderPhase2Sprite(c,e,time,{reduced,staticPose}))return;
  const state=e.commander||{},second=state.phase===2,facing=Math.cos(state.volley?.aim??state.snipe?.aim??0)<0?-1:1;

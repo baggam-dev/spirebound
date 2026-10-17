@@ -1,0 +1,9 @@
+# Velkar phase-compatible continuation v1
+
+Built-in imagegen, transparent_background=true. Reference: velkar-pose-package-v1.png.
+Original preserved: C:/Users/SDSPRO/.codex/generated_images/01a13828-0d36-7292-9c64-ff00ee502b14/exec-17c32cb9-447c-4f54-a5a7-6a140808ded0.png
+Output copied without source editing as velkar-phase-poses-v1.png and assets/images/velkar-presentation-phases-v1.png (1024x1536, alpha).
+
+Exact prompt:
+
+Create a supplementary production sprite sheet matching the attached approved Velkar demon archer commander EXACTLY: compact 4 to 4.5 heads tall, gray face, dark swept horns, battered charcoal plate armor with muted bronze trim, torn blue-gray cape, pale blue quiver, same crystal-inlaid longbow. TRUE TRANSPARENT background, no aura, no glow cloud, no floor, no labels. 1024x1536 portrait sheet, EXACTLY 2 columns x 3 equal rows with generous transparent gutters, all body, bow, cape and horns inside own cell. Consistent scale and view, slightly top-down 3/4 front facing viewer-right. Reading order: row1 left PHASE1 heavy hit braced recoil with smaller horns (same as top row reference), row1 right PHASE2 light shoulder hit with larger horns (same as bottom row reference); row2 left PHASE2 heavy hit braced torso recoil, row2 right PHASE2 calm recovery standing bow lowered; row3 left PHASE1 defeat one knee head bowed smaller horns; row3 right PHASE1 final rest collapsed forward bow horizontal at feet smaller horns. Same body scale even when kneeling (do not enlarge kneeling poses). Five digits in hands where visible, readable bow grip, intact bowstring. No extra attacks, no blood, no particles. Keep approved armor palette and silhouette. Crisp outlined game sprite painting designed for downsample to 76px body. The reference's six poses remain unchanged; this sheet supplies missing phase-compatible variants only.

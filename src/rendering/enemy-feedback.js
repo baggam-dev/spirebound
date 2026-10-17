@@ -1,5 +1,7 @@
 import {drawMordoDeath} from './mordo-presentation-art.js';
 import {mordoDeathPhase} from './mordo-presentation-state.js';
+import {drawVelkarDeath} from './velkar-presentation-art.js';
+import {velkarDeathPhase,velkarFacing} from './velkar-presentation-state.js';
 // Transient feedback only. Enemy coordinates, AI, collision and rewards are untouched.
 function style(e){
  if(e.type==='demonBat')return e.selfDestruct?'batExplosion':'bat';
@@ -16,8 +18,10 @@ export function enemyHitEffects(before,enemies){return enemies.filter(e=>e.hp>0&
 }));}
 export function enemyDeathEffect(e,returning=false,previousHp){const split=e.variant==='slime'&&!e.summoned&&(e.stage||0)<2;
  return {enemyFeedback:'death',enemyId:e.id,x:e.x,y:e.y,style:style(e),boss:e.type==='boss',king:e.variant==='king',split,returning,
-  kingPhase:e.variant==='king'?mordoDeathPhase(e,previousHp):undefined,face:Number.isFinite(e.facing)&&Math.cos(e.facing)<0?-1:1,
-  scale:e.type==='boss'?(e.variant==='slime'?[1.5,1.1,.8][e.stage||0]:1.5):e.type==='minislime'?.55:1,t:split?.38:e.variant==='king'?1.1:.55,duration:split?.38:e.variant==='king'?1.1:.55};
+  kingPhase:e.variant==='king'?mordoDeathPhase(e,previousHp):undefined,
+  commander:e.variant==='commander',commanderPhase:e.variant==='commander'?velkarDeathPhase(e,previousHp):undefined,
+  face:e.variant==='commander'?velkarFacing(e):Number.isFinite(e.facing)&&Math.cos(e.facing)<0?-1:1,
+  scale:e.type==='boss'?(e.variant==='slime'?[1.5,1.1,.8][e.stage||0]:1.5):e.type==='minislime'?.55:1,t:split?.38:e.variant==='king'?1.1:e.variant==='commander'?1:.55,duration:split?.38:e.variant==='king'?1.1:e.variant==='commander'?1:.55};
 }
 export function mergeEnemyFeedback(current,incoming){
  const deaths=new Set(incoming.filter(f=>f.enemyFeedback==='death').map(f=>f.enemyId));
@@ -40,6 +44,7 @@ function crystal(c,x,y,r,color){line(c,[[x-r,y],[x,y-r*1.7],[x+r,y],[x,y+r],[x-r
 export function drawEnemyFeedback(c,f,options={}){
  if(!f.enemyFeedback)return false;if(f.t<=0)return true;const age=1-Math.min(1,f.t/f.duration);
  if(f.enemyFeedback==='death'&&f.king&&drawMordoDeath(c,f,options))return true;
+ if(f.enemyFeedback==='death'&&f.commander&&drawVelkarDeath(c,f,options))return true;
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(f.x),Math.round(f.y));
  if(f.enemyFeedback==='hit'){
   // A short glint followed by a quiet cooldown prevents DoT from strobing every tick.
