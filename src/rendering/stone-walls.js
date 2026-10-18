@@ -1,3 +1,4 @@
+import {paintArchiveWalls,archiveVersion} from './archive-art.js';
 import {paintGuardHallWalls,guardHallVersion} from './guard-hall-art.js';
 import {paintHallWalls,environmentArtVersion} from './environment-art.js';
 export function stoneWallEdges(walls){
@@ -41,6 +42,7 @@ export function paintStoneWalls(ctx,obstacles,floor=0){
  ctx.fillStyle=mortar;for(const o of walls)ctx.fillRect(o.x,o.y,o.w,o.h);
  if(theme===0&&paintHallWalls(ctx,walls,stoneWallEdges(walls))){ctx.restore();return;}
  if(theme===1&&paintGuardHallWalls(ctx,walls,stoneWallEdges(walls))){ctx.restore();return;}
+ if(theme===2&&paintArchiveWalls(ctx,walls,stoneWallEdges(walls))){ctx.restore();return;}
  // The same deterministic, world-aligned masonry covers both outer and inner walls.
  const cells=new Set();for(const o of walls)for(let y=Math.floor(o.y/40)*40;y<o.y+o.h;y+=40)for(let x=Math.floor(o.x/48)*48;x<o.x+o.w;x+=48){
   const key=y*960+x;if(cells.has(key))continue;cells.add(key);const h=cellHash(x,y);
@@ -72,7 +74,7 @@ export function paintStoneWalls(ctx,obstacles,floor=0){
 }
 export function drawStoneWalls(ctx,obstacles,floor=0){
  if(!obstacles.some(o=>o.type==='wall'))return;
- const key=floor+':'+(floor===0?environmentArtVersion():floor===1?guardHallVersion():0)+':'+stamp(obstacles);let entry=surfaces.get(obstacles);
+ const key=floor+':'+(floor===0?environmentArtVersion():floor===1?guardHallVersion():floor===2?archiveVersion():0)+':'+stamp(obstacles);let entry=surfaces.get(obstacles);
  if(!entry||entry.key!==key){
   const canvas=typeof OffscreenCanvas!=='undefined'?new OffscreenCanvas(960,540):typeof document!=='undefined'?document.createElement('canvas'):null;
   if(!canvas){paintStoneWalls(ctx,obstacles,floor);return;}
