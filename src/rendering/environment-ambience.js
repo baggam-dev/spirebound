@@ -1,3 +1,4 @@
+import {drawPrismHallLamp} from './prism-hall-art.js';
 import {archiveLoaded,drawArchiveProp} from './archive-art.js';
 import {guardHallLoaded,drawGuardProp} from './guard-hall-art.js';
 import {objectPoint} from '../world/object-positions.js';
@@ -30,6 +31,7 @@ export function drawEnvironmentFloorLife(c,s,r,reduced=false){
 export function drawEnvironmentTorches(c,s,r,reduced=false){
  const candle=s.floor===2&&archiveLoaded(),t=reduced?0:s.elapsed;c.save();c.beginPath();c.rect(25,44,910,464);c.clip();
  for(const [i,p] of torches.entries()){
+  if(s.floor===3&&drawPrismHallLamp(c,p.x,p.y,t,reduced))continue;
   if(s.floor===0&&environmentArtLoaded())drawEnvironmentProp(c,15,p.x,p.y+17,16);
   else if(s.floor===1&&guardHallLoaded())drawGuardProp(c,11,p.x+3,p.y+1,16);
   else if(candle)drawArchiveProp(c,10,p.x,p.y+17,12);
