@@ -1,4 +1,27 @@
-## 最新：7~10층 승인 구현·배포 전 검증 완료
+## 최종 — 10층 환경 배포·공개 검증 완료
+
+**release-20261018-200643-7c1a59 / runtime a73aea0 / https://168.107.21.43/**. 2026-10-18 사용자 승인 범위 구현·누적 푸시·공식배포·공개확인을 마쳤다. 아래 대기/진행 중 문구는 이력이다.
+
+- 2~10층 누적 배경/문/기둥/기존 장애물 외형과 별도 움직이는 효과를 반영했다. 5~6층 공통 침식생태계, 7~8층 공통 왕국석조·황동/천, 9~10층 공통 현무암·무쇠에 두 번째 층의 침식·파손을 더한다. 1층 기존 승인 배경과 공통시설은 유지한다. 보스/문지기 원화·AI·맵/문·충돌/시설저장좌표·전투RNG는 변경하지 않았다.
+- 최종 전체회귀 **532/532**, 배포 **279파일**, 서버 **27테스트**/Nginx/인증서/index SHA256/health 통과. 이전 릴리스013123 보존, DB/계정/기존 기록 삭제·교체 없음.
+- 로컬과 공개 모두 **73개 생성방 렌더** 및 run/RNG불변, 6atlas 준비/바이트일치·6누락fallback, 정지·효과줄이기/층교체캐시·Canvas복원 통과. **PC1280×800·가로터치844×390 실제 이어하기18장면, 문지기/모르도/군단장/대악마/본체 전투10장면** 통과. 주인공ready/4frames/58px, pageErrors0. 공개 PNG를 직접 육안 확인했다.
+- 공개 HTTPS **152 코드·스타일 자산 및 대상 PNG 바이트일치**, TLS/HTTP308, 8·10층캠페인 APIstart2, 실제새도전버튼PC·가로터치2 online=true/10층/초반5·6방, 랭킹SecureHttpOnly쿠키·기존쿠키갱신, HTTP기록이관신규·기존보존 통과. 운영 점수 제출0.
+- 첫 샌드박스 localhost/Temp권한실패는 tests-first.txt에 보존, 허용환경532통과. 새 런타임 오류나 미해결 검증 실패는 없다. 개발서버와 QA세션은 모두 종료했다.
+- 실제 iPhone/Android·저사양 장시간·사람10층완주/난이도 체감은 검증하지 않았다. 자동 가로터치 에뮬레이션과 구분한다. 이번 배포 승인 작업은 완료했으며 이후 테스트/푸시/배포/공개확인은 새 명시 배포 지시가 필요하다.
+
+증거: [전체회귀](tests-final.txt), [공식배포](deploy.txt), [공개환경](public-floors/result.json), [공개보스](public-bosses/result.json), [공개온라인시작](public-opening/result.json), [HTTPS](public-https.txt). 실제 PNG 예시: [7층 가로터치](public-floors/floor-7-844.png), [10층 본체 가로터치](public-bosses/demon-core-844.png).
+
+생산은 내장 imagegen이며 왕국/마족PNG 각1회, 생성원본과버전사본을보존했다. [왕국 정확프롬프트](../design-drafts/environment-20261018/prompt-royal-hall-production-v1.md), [마족 정확프롬프트](../design-drafts/environment-20261018/prompt-infernal-hall-production-v1.md), [생산/설계 상세](../design-drafts/environment-20261018/design-floors7-10-v1.md). 이전 승인 자산은 불필요하게 재생성하지 않았다.
+
+## 공개 검증 체크포인트
+
+공개HTTPS 검증통과: TLS/152코드스타일자산byte·전체대상PNGbyte일치/HTTP308/8·10층온라인runs시작2종/랭킹SecureHttpOnly쿠키·기존쿠키업그레이드/HTTP기록이관신규·기존보존/pageErrors0/운영점수0(public-https.txt). 실제새도전버튼PC1280·가로터치844도 online=true/10층/초반5·6방/주인공4frames58px/errors0통과(public-opening). 전체층환경/보스공개확인은진행중이다.
+
+## 최신: 운영 배포 완료·공개 검증 중
+
+`release-20261018-200643-7c1a59` / runtime `a73aea0` / https://168.107.21.43/. 누적 main푸시·279런타임파일·서버27테스트/nginx/인증서/공개index SHA256/health통과. 이전 `release-20261018-013123-46cc98` 보존. 로컬 최종회귀532/73방상태RNG·6atlas/6fallback·18이어하기/10보스장면 통과. 현재 공개 HTTPS/온라인새도전·누적환경·보스검증 진행 중이다. 공개 점수 제출은 하지 않는다.
+
+## 7~10층 승인 구현·배포 전 검증 완료
 
 사용자 다음진행으로 통합시안 승인. 왕국/마족12모듈PNG각1회·원본/정확prompt보존,upper-hall공유렌더/두층단위재질·별도천먼지·기존불티연결. 최종전체532/532(tests-final.txt),누적2~10층6atlas/6fallback·18PC가로터치이어하기/정지reduced·캐시·Canvas복원·상태RNG불변(local-final/result.json),문지기·모르도·군단장·대악마·본체PC가로터치10전투장면(bosses-local/result.json)통과. 주인공ready4frames58px,errors0. 실제PNG육안확인. 다음누적푸시/공식배포/공개검증이며 아직운영미반영. 아래대기기록은과거이력.
 

@@ -1,3 +1,11 @@
+## 2026-10-18 — 10층 환경 배포·공개 검증 완료
+
+[10층 환경 배포·공개 검증 완료] 2026-10-18 release-20261018-200643-7c1a59 / https://168.107.21.43/ / runtimea73aea0 main누적푸시. 2~10층배경·오브젝트누적/5~6침식생태계·7~8몰락왕국·9~10마족영역공통재질과두번째층침식파손/별도천잎먼지수지반짝임·기존불티연결·기존보스원화AI맵문충돌시설저장RNG유지. 생산왕국/마족12모듈PNG각1회·원본/버전/정확프롬프트보존,이전승인PNG불필요재생성없음. 279파일·서버27/nginx/인증서/index/health통과·이전013123보존. 최종전체532/532·로컬및공개2~10층73방상태RNG불변/6atlasready및byte/6누락fallback·정지reduced·층캐시/Canvas복원·PC1280가로터치844이어하기18/문지기모르도군단장대악마본체10전투장면통과 errors0·주인공ready4frames58px. 공개152코드스타일+PNGbyte/TLS/HTTP308/8·10캠페인APIstart2·실제새도전PC터치2 online=true/5·6방10층·랭킹SecureHttpOnly쿠키업그레이드/HTTP이관2종통과·운영점수0. 실제공개PNG육안확인·자료 docs/qa-environment-20261018/RELEASE_SUMMARY.md 및 public-{floors,bosses,opening}/result.json·public-https.txt. 초기샌드박스EACCES실패원본보존후허용환경532통과,검증실패미해결없음. 로컬서버/모든명령QA세션종료·차단없음. 실제iPhoneAndroid/저사양장시간·사람10층완주난이도미검증,기존캐릭터전용컷씬보류. 현재최종문서·검증증거커밋푸시·runtime추가변경없음. 이번10층배포승인완료,이후평상시수정기록로컬커밋·새명시배포전테스트푸시배포공개확인금지.
+
+[10층 환경 운영 배포 완료 / 공개 검증 중] release-20261018-200643-7c1a59/runtimea73aea0/main푸시완료·https://168.107.21.43/. 279파일·서버27/nginx/인증서/index/health통과·이전013123보존. 로컬전체532/73방·6atlas·6fallback·18이어하기/10보스PC가로터치·주인공ready/errors0통과. 다음공개HTTPS코드PNG일치/8·10온라인새도전·실제PC터치시작/2~10환경18·보스10확인→최종기록커밋푸시. 로컬서버종료·차단없음.
+
+[10층 환경 누적푸시 완료 / 공식 배포 중] runtime a73aea0 및2~10누적 main푸시완료(원격a73aea0). 전체532·환경18PC가로터치/보스10·6PNGbyte/fallback/정지캐시상태불변통과·실제PNG확인. 공식deploy.ps1실행·로그 docs/qa-environment-20261018/deploy.txt. 다음새릴리스확인→공개HTTPS자산·8/10층온라인실제시작/2~10환경·보스확인→최종기록커밋푸시. 개발서버전부종료·현재운영013123(배포결과전)·차단없음.
+
 ## 2026-10-18 — 7~10층 구현·누적 환경 배포 전 최종 검증
 
 [배포 전 최종 검증 완료] 2026-10-18 전체532/532·누적2~10층6atlasready/byte/6fallback·PC가로터치이어하기18장면·보스문지기/모르도/군단장/대악마/본체10장면통과·주인공ready4frames58px/errors0. 실제PNG육안확인·기존맵AI충돌시설저장RNG유지. upper-hall왕국/마족12모듈각1회·원본/정확프롬프트보존. 자료 docs/qa-environment-20261018/{tests-final.txt,local-final/result.json,bosses-local/result.json}. 현재소스PNG/설계QA증거/4기록,다음로컬커밋누적푸시→공식배포→공개HTTPS/2캠페인실제시작/2~10환경/보스화면. 서버6916:5174종료·실행검증세션모두완료·배포승인유효·운영013123/runtimec1dd8c8/원격62ac973유지·차단없음.
