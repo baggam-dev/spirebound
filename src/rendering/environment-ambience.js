@@ -1,3 +1,4 @@
+import {isUpperHallFloor,upperHallLoaded,drawUpperHallProp} from './upper-hall-art.js';
 import {isInfestedFloor,infestedHallLoaded,drawInfestedHallProp} from './infested-hall-art.js';
 import {drawPrismHallLamp} from './prism-hall-art.js';
 import {archiveLoaded,drawArchiveProp} from './archive-art.js';
@@ -37,6 +38,7 @@ export function drawEnvironmentTorches(c,s,r,reduced=false){
   else if(s.floor===1&&guardHallLoaded())drawGuardProp(c,11,p.x+3,p.y+1,16);
   else if(candle)drawArchiveProp(c,10,p.x,p.y+17,12);
   else if(isInfestedFloor(s.floor)&&infestedHallLoaded())drawInfestedHallProp(c,10,p.x,p.y+17,16);
+  else if(isUpperHallFloor(s.floor)&&upperHallLoaded(s.floor))drawUpperHallProp(c,s.floor,10,p.x,p.y+17,16);
   else{c.fillStyle='#111720';c.fillRect(p.x-10,p.y+12,20,5);c.fillStyle=s.floor>=8?'#4c414a':'#756b55';c.fillRect(p.x-6,p.y-3,12,15);c.fillStyle=s.floor>=8?'#9b7172':'#b49d6c';c.fillRect(p.x-5,p.y,10,3);}
   const fire=s.floor>=9?'#c58bb8':s.floor===8?'#e28564':'#ffbf65',pulse=reduced?1:.9+.08*Math.sin(t*8+i*1.7)+.04*Math.sin(t*17+i);
   c.save();c.translate(p.x,p.y-9);c.globalAlpha=.12*pulse;const light=c.createRadialGradient(0,0,2,0,0,candle?30:44);light.addColorStop(0,fire);light.addColorStop(1,fire+'00');c.fillStyle=light;c.fillRect(-44,-44,88,88);c.globalAlpha=1;

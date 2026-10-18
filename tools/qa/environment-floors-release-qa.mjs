@@ -9,7 +9,9 @@ const modules=[
  {path:'guard-hall-art',load:'loadGuardHallArt',ready:'guardHallLoaded',details:'drawGuardHallDetails',floors:[1],png:'guard-hall-atlas-v1.png'},
  {path:'archive-art',load:'loadArchiveArt',ready:'archiveLoaded',details:'drawArchiveDetails',floors:[2],png:'archive-atlas-v1.png'},
  {path:'prism-hall-art',load:'loadPrismHallArt',ready:'prismHallLoaded',details:'drawPrismHallDetails',floors:[3],png:'prism-hall-atlas-v1.png'},
- {path:'infested-hall-art',load:'loadInfestedHallArt',ready:'infestedHallLoaded',details:'drawInfestedHallDetails',floors:[4,5],png:'infested-hall-atlas-v1.png'}
+ {path:'infested-hall-art',load:'loadInfestedHallArt',ready:'infestedHallLoaded',details:'drawInfestedHallDetails',floors:[4,5],png:'infested-hall-atlas-v1.png'},
+ {path:'upper-hall-art',load:'loadRoyalHallArt',ready:'royalHallLoaded',details:'drawRoyalHallDetails',floors:[6,7],png:'royal-hall-atlas-v1.png'},
+ {path:'upper-hall-art',load:'loadInfernalHallArt',ready:'infernalHallLoaded',details:'drawInfernalHallDetails',floors:[8,9],png:'infernal-hall-atlas-v1.png'}
 ];
 await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[],result={base};
@@ -33,7 +35,7 @@ try{
    s.elapsed=4;draw(r,false);const h=hash();draw(r,false);if(hash()!==h)throw Error('Paused frame differs '+floor);g.drawImage(c.canvas,0,row*540);
    s.elapsed=6;draw(r,true);const calm=hash();s.elapsed=12;draw(r,true);if(hash()!==calm)throw Error('Reduced effects animate '+floor);
    s.elapsed=7;draw(r,false);const active=hash();s.elapsed=9;draw(r,false);if(hash()===active)throw Error('No ambience animation '+floor);
-   const other=floor===4?5:floor===5?4:floor;s.floor=other;draw(r,false);s.floor=floor;s.elapsed=4;draw(r,false);if(hash()!==h)throw Error('Floor cache contaminated '+floor);
+   const other=floor>=4?(floor%2?floor-1:floor+1):floor;s.floor=other;draw(r,false);s.floor=floor;s.elapsed=4;draw(r,false);if(hash()!==h)throw Error('Floor cache contaminated '+floor);
    if(c.globalAlpha!==1||c.getTransform().a!==1||c.getTransform().e!==0)throw Error('Canvas state leaked '+floor);
    const boss={...r,type:'boss',hasChest:false,obstacles:[]};draw(boss,false);g.drawImage(c.canvas,960,row*540);row++;
    scenes.push({floor:floor+1,rooms,paused:true,reducedStatic:true,animation:true,cacheRestored:true,stateUnchanged:true,canvasRestored:true});
