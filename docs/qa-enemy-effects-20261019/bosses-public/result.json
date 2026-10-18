@@ -1,0 +1,136 @@
+{
+  "base": "https://168.107.21.43",
+  "results": [
+    {
+      "scene": "gate",
+      "width": 1280,
+      "floor": 7,
+      "pending": false,
+      "enemies": 2,
+      "phase": null,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "king",
+      "width": 1280,
+      "floor": 8,
+      "pending": false,
+      "enemies": 1,
+      "phase": null,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "commander",
+      "width": 1280,
+      "floor": 9,
+      "pending": false,
+      "enemies": 1,
+      "phase": null,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "demon",
+      "width": 1280,
+      "floor": 10,
+      "pending": false,
+      "enemies": 2,
+      "phase": 1,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "demon-core",
+      "width": 1280,
+      "floor": 10,
+      "pending": false,
+      "enemies": 9,
+      "phase": 3,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "gate",
+      "width": 844,
+      "floor": 7,
+      "pending": false,
+      "enemies": 2,
+      "phase": null,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "king",
+      "width": 844,
+      "floor": 8,
+      "pending": false,
+      "enemies": 1,
+      "phase": null,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "commander",
+      "width": 844,
+      "floor": 9,
+      "pending": false,
+      "enemies": 1,
+      "phase": null,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "demon",
+      "width": 844,
+      "floor": 10,
+      "pending": false,
+      "enemies": 2,
+      "phase": 1,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "demon-core",
+      "width": 844,
+      "floor": 10,
+      "pending": false,
+      "enemies": 9,
+      "phase": 3,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    }
+  ],
+  "errors": []
+}
