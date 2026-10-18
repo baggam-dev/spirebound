@@ -1,5 +1,6 @@
 import {drawSoftField} from '../rendering/ground-visuals.js';
 import {drawCrystalBody} from '../rendering/pixel-world.js';
+import {drawPrismRays} from '../rendering/boss-attack-vfx.js';
 import {PRISM_SUMMON} from './combat-tuning.js';
 import {prismShielded} from './enemy-defense.js';
 import {promoteElite} from './elites.js';
@@ -27,11 +28,15 @@ export function updatePrism(e,p,obstacles,dt,bullets){
 }
 export function drawPrism(ctx,e,obstacles,enemies=[],time=0,options={}){
  ctx.save();if(prismShielded(e,enemies)){ctx.strokeStyle='#d1a5ff';ctx.fillStyle='#ad76ed35';ctx.lineWidth=3;drawSoftField(ctx,e.x,e.y,58*(e.scale??1),'#d1a5ff',.45);ctx.lineWidth=1;ctx.font='12px Galmuri, monospace';ctx.textAlign='center';ctx.fillStyle='#e5caff';ctx.fillText('수호 보호막 · 받는 피해 ⅓',e.x,e.y+70);for(const n of enemies.filter(n=>n.hp>0&&n.summoned&&n.summoner===e.id)){ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(n.x,n.y);ctx.stroke();}}drawCrystalBody(ctx,e,time,options);
- if(['warning','beam'].includes(e.prismPhase)){
-  ctx.strokeStyle=e.prismAttack==='laser'?'#f3a3d1':'#7ae6df';ctx.lineWidth=e.prismPhase==='beam'?26:1;if(e.prismPhase==='warning')ctx.globalAlpha=e.prismTime<.25?.75:.5;ctx.setLineDash(e.prismPhase==='warning'?[7,6]:[]);
-  const angles=e.prismAttack==='laser'?[-.65,-.325,0,.325,.65]:Array.from({length:18},(_,i)=>i*Math.PI/4);
-  for(const offset of angles){const a=e.aim+offset,end=e.prismAttack==='laser'?beamEnd({...e,aim:a},obstacles):{x:e.x+Math.cos(a)*120,y:e.y+Math.sin(a)*120};ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(end.x,end.y);ctx.stroke();}
- }
+ const laser=e.prismAttack==='laser',bounce=e.prismAttack==='bounce',salvo=e.prismPhase==='salvo';
+ const visible=['warning','beam','salvo'].includes(e.prismPhase)&&Number.isFinite(e.aim);
+ const angles=!visible?[]:laser?[-.65,-.325,0,.325,.65].map(a=>e.aim+a):Array.from({length:bounce?18:12},(_,i)=>{
+  const a=e.aim+i*Math.PI*2/(bounce?18:12)+(salvo?(e.prismShot??0)*(e.prismAttack==='cage'?.27:.14):0);
+  // Bounce bullets have unequal x/y speeds; preview the velocity direction itself.
+  return bounce?Math.atan2(Math.sin(a)*240,Math.cos(a)*280):a;
+ });
+ const rays=angles.map(aim=>{const end=beamEnd({...e,aim},obstacles);if(laser)return end;const length=Math.hypot(end.x-e.x,end.y-e.y),scale=Math.min(1,120/(length||1));return {x:e.x+(end.x-e.x)*scale,y:e.y+(end.y-e.y)*scale};});
+ drawPrismRays(ctx,options.actor||e,rays,time,{phase:e.prismPhase,laser,reduced:options.reduced,progress:1-(e.prismTime??1.3)/(salvo?.3:1.3)});
  ctx.font='11px Galmuri, monospace';ctx.textAlign='center';ctx.fillStyle='#ead9b5';ctx.fillText(e.prismPhase==='recover'?'빈틈!':e.prismAttack==='laser'?'오중 광선':['shards','cage'].includes(e.prismAttack)?(e.prismAttack==='cage'?'수렴 결정 감옥':'회전 결정 연사'):'반사 결정탄',e.x,e.y-70);ctx.restore();
 }
 

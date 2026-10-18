@@ -1,4 +1,5 @@
 import {drawEnemyBeam} from './enemy-attack-vfx.js';
+import {drawFrostRain} from './boss-attack-vfx.js';
 import {drawFeedbackSprite} from './feedback-sprites.js';
 import {drawVelkarPresentation} from './velkar-presentation-art.js';
 import {drawCommanderPhase2Sprite} from './commander-phase2-sprite.js';
@@ -13,11 +14,9 @@ export function drawCommanderGround(c,e,time=0,reduced=false){
  c.save();
  if(state?.rain){
   const a=state.rain,progress=1-a.time/q.rainWindup;
-  drawSoftField(c,a.x,a.y,a.radius,'#9cdcf2',.55+progress*.28);
-  c.strokeStyle='#c9f2ff99';c.lineWidth=1;
-  for(let i=0;i<7;i++){const x=a.x-75+i*25,y=a.y-45+(i%3)*30;c.beginPath();c.moveTo(x-4,y-16-progress*12);c.lineTo(x+4,y-2-progress*12);c.stroke();}
+  drawFrostRain(c,a,{progress,reduced});
  }
- if(state?.rainFlash)drawSoftField(c,state.rainFlash.x,state.rainFlash.y,state.rainFlash.radius,'#d5f6ff',state.rainFlash.time/.4*.65);
+ if(state?.rainFlash)drawFrostRain(c,state.rainFlash,{flash:true,reduced});
  if(state?.blink){drawSoftField(c,state.blink.x,state.blink.y,40,'#9bdaf1',.6);c.fillStyle='#ddf4ffbb';c.fillRect(state.blink.x-2,state.blink.y-10,4,20);c.fillRect(state.blink.x-10,state.blink.y-2,20,4);}
  if(state?.volley?.fired===0){
   const a=state.volley;c.strokeStyle='#a9d9ed88';c.lineWidth=1;

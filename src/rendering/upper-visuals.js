@@ -1,4 +1,5 @@
 import {drawEnemyField,drawEnemySector} from './enemy-attack-vfx.js';
+import {drawJudgmentStripe} from './boss-attack-vfx.js';
 import {drawMordoPresentation} from './mordo-presentation-art.js';
 import {drawFeedbackSprite} from './feedback-sprites.js';
 import {drawKingAura} from './king-aura.js';
@@ -25,7 +26,7 @@ function attackShape(c,e,a,flash=false,reduced=false){c.save();const strong=a.ki
  if(a.kind==='dash'){capsule(c,a);if(!flash&&!a.moving)label(c,e.gateTitle?'돌진 · 장애물로 유도':'돌진',a.tx,a.ty-42);}
  else if(a.kind==='slash'){drawEnemySector(c,a.x,a.y,slashReach(e),a.aim,1.15,{warning:!flash,fade:flash?Math.min(1,(a.time??.25)/.25):1,reduced,accent:strong?'#f3ae8a':'#c3a0e4'});if(!flash&&e.variant==='king'&&kingPhase(e)>=2)label(c,'연속 베기 '+(a.step+1)+'/'+(kingPhase(e)===3?3:2),a.x,a.y-58);}
  else if(a.kind==='mark'||a.kind==='blink'){circle(c,a.tx,a.ty,a.kind==='blink'?35:65);if(strong){c.setLineDash([]);label(c,'!! 2♥',a.tx,a.ty-78,'#ffc091');}else if(a.kind==='blink')label(c,'출현',a.tx,a.ty-45);}
- else if(a.kind==='judgment'){const z=judgmentStripe(a);c.fillRect(z.x,z.y,z.w,z.h);c.strokeRect(z.x,z.y,z.w,z.h);c.strokeRect(z.x+4,z.y+4,z.w-8,z.h-8);if(!flash){label(c,'!! 2♥ · '+(a.step+1)+'/4',z.x+z.w/2,z.y+z.h/2,'#ffc091');if(a.step<3){const next=judgmentStripe(a,a.step+1);c.globalAlpha=.28;c.strokeRect(next.x,next.y,next.w,next.h);label(c,'다음',next.x+next.w/2,next.y+next.h/2);}}}
+ else if(a.kind==='judgment'){const z=judgmentStripe(a);drawJudgmentStripe(c,z,{flash,remaining:a.time,progress:1-Math.min(1,a.time/.65),reduced});if(!flash){label(c,'!! 2♥ · '+(a.step+1)+'/4',z.x+z.w/2,z.y+z.h/2,'#ffc091');if(a.step<3){const next=judgmentStripe(a,a.step+1);c.globalAlpha=.28;drawJudgmentStripe(c,next,{reduced});label(c,'다음',next.x+next.w/2,next.y+next.h/2);}}}
  else if(a.kind==='fan'){for(const offset of fanOffsets(e,a)){c.beginPath();c.moveTo(a.x,a.y);c.lineTo(a.x+Math.cos(a.aim+offset)*850,a.y+Math.sin(a.aim+offset)*850);c.stroke();}}
  else if(a.kind==='ring'){c.beginPath();c.arc(a.x,a.y,90,a.aim+Math.PI/10,a.aim+TAU-Math.PI/10);c.stroke();for(const offset of ringOffsets){const theta=a.aim+offset;c.beginPath();c.moveTo(a.x+Math.cos(theta)*78,a.y+Math.sin(theta)*78);c.lineTo(a.x+Math.cos(theta)*108,a.y+Math.sin(theta)*108);c.stroke();}c.strokeStyle='#9edac9';c.setLineDash([]);c.beginPath();c.arc(a.x,a.y,93,a.aim-Math.PI/20,a.aim+Math.PI/20);c.stroke();label(c,'틈',a.x+Math.cos(a.aim)*125,a.y+Math.sin(a.aim)*125,'#9edac9');}
  c.restore();}

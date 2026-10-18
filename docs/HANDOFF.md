@@ -1,3 +1,16 @@
+## 최신 복사 가능한 인계 — 보스 효과 3종 로컬 구현 후
+```text
+C:\baggam-dev\spirebound main. 먼저 git status --short, WORK_STATUS→TODO→WORK_LOG최근→HANDOFF. 기존 변경 보존·최신상단 우선.
+사용자 계속해서 진행으로 보스효과3종 시안 승인→로컬구현: src/rendering/boss-attack-vfx.js 및 src/combat/prism.js/렌더 upper-visuals.js/commander-visuals.js. 프리즘5광선26px실제벽끝/.16비피해잔광·18반사탄속벡터/12회전다음회차 예고; 모르도48/68폭stripe clip·4단계다음/2하트유지·.18flash; 벨카르실제원clip·.4rainFlash내낙하파편소멸. 업데이트AI피해시간저장RNG 정적diff상 유지. 새PNG생성없음. 상세 docs/design-drafts/boss-effects-20261019/design-v1.md. 다음 공개QA 자산목록154 준비.
+이번 정적구문JS5/diff검토만 통과. 실행테스트/브라우저QA/서버/푸시/배포/공개확인 미실행·미승인. 이전533/서버27은 이전배포 결과. 운영release-20261019-020655-b28eae/runtime830269e/원격fea5280 유지. 실행중세션/차단없음. 다음 새 명시 배포 지시 때 3종 실제방향회전/벽폭/심판가로세로·다음예고/얼음비원·정지reduced/로드잔광·귀환actor/Canvas저장RNG·PC가로터치 대비/fallback를 누적검증후 푸시배포공개확인.
+평소 수정문서로컬커밋까지만·로컬커밋상시승인. 진행/좋아는배포아님. 원본시안/정확prompt보존·오라는별도이펙트·불필요재생성금지·한국어기본5줄이내.
+```
+[보스 효과 3종 로컬 구현 완료 / 실행 미검증·미배포] 2026-10-19 사용자 계속해서 진행으로 승인된 프리즘/모르도심판/벨카르얼음비 패키지 연결. boss-attack-vfx.js Canvas헬퍼·WeakMap(.16광선잔광) 및 prism/upper/commander 렌더만수정. 프리즘실제5/18/12방향·반사탄x280/y240벡터·다음회전발사각/26px·벽끝/120예고, 심판실제48/68stripe clip·4단계2하트다음예고/.18충격잔상, 얼음비실제원clip/.4낙하파편소멸·reduced필수예고유지. 전투updateAI피해시간저장RNG불변은정적diff상확인/실행미검증. 새PNG재생성없음·원본/승인시안보존. JS5구문 node --check 및 git diff --check 통과(정적검토). 테스트/브라우저QA/서버/원격푸시/배포/공개확인미실행. 이전533/27은이번변경검증아님. 상세 docs/design-drafts/boss-effects-20261019/design-v1.md. 공개QA모듈154목록준비만. 현재소스4/QA목록/설계4기록로컬커밋·세션/차단없음. 운영release-20261019-020655-b28eae/runtime830269e,원격fea5280 유지. 다음새명시배포때3종방향회전벽/가로세로심판/원clip·정지reduced·로드잔광·귀환actor/Canvas저장RNG·PC터치대비/fallback누적검증후푸시배포.
+
+[보스 효과 3종 연결 완료 · 정적 검토 중] boss-attack-vfx.js 추가/프리즘 drawPrism·모르도judgment·군단장rain콜사이트연결. 프리즘26px오중광선벽끝/.16비피해잔광·실제18반사탄x280/y240벡터·12회전다음발사각·벽끝120예고, 심판실제stripe clip·현재/다음/4단계2하트보존·.18flash내충격/소멸, 얼음비실제radius clip/.4flash내낙하/낮은파편/잔입자·reduced필수예고보존. actor/AI/피해시간저장RNG변경없음(렌더WeakMap만). 현재4소스+공개QA목록(다음배포154)·4기록;다음구문/diff정적검토→상세설계기록로컬커밋. 실행검증/QA서버/푸시배포공개확인없음·차단없음·운영020655유지.
+
+[진행 중 · 승인 보스 효과 3종 구현] 2026-10-19 사용자 계속해서 진행으로 직전3종시안 승인. 시작 git status clean/main fea5280·원격동기화 확인. 프리즘 공격별 실제예고(18반사/12회전/5광선)·26px벽끝/잔광, 모르도 judgmentStripe48/68폭4단계·2하트다음예고, 벨카르 실제rain반경/.4flash에 청백얼음비연결 예정. 전투AI피해시간저장RNG불변·새PNG재생성없음. 현재4기록·다음전용Canvas헬퍼/3콜사이트연결→정적검토기록로컬커밋. 마지막성공은이전배포533/서버27(이번변경검증아님),실행명령/서버없음·차단없음. 테스트QA푸시배포공개확인 이번미승인/안함. 운영release-20261019-020655-b28eae/runtime830269e 유지.
+
 ## 최신 복사 가능한 인계 — 2026-10-19
 ```text
 Spirebound C:\baggam-dev\spirebound main. git status --short부터 확인 후 WORK_STATUS→TODO→WORK_LOG최근→HANDOFF. 최신 상단 우선.
