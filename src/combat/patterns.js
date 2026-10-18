@@ -1,5 +1,5 @@
+import {drawEnemyField,drawEnemyLanding,drawEnemyMuzzle} from '../rendering/enemy-attack-vfx.js';
 import {wardenLabelOffset} from '../rendering/warden-sprite.js';
-import {drawSoftField} from '../rendering/ground-visuals.js';
 import {openGuard} from './tactics.js';
 import {enemyName} from '../world/expedition.js';
 import {ENEMY_COOLDOWN_FACTOR,attackProfile} from './balance.js';
@@ -41,11 +41,13 @@ export function updatePattern(e,p,obstacles,dt,bullets,enraged=false){
  if(e.attackPhase==='recover'&&e.attackTime<=0){e.attackPhase=null;e.cd=e.type==='boss'?.24:.5*ENEMY_COOLDOWN_FACTOR;}
  return 0;
 }
-export function drawPattern(ctx,e){
+export function drawPattern(ctx,e,time=0,reduced=false){
  if(!e.attackPhase||!e.pattern)return;
  ctx.save();ctx.lineWidth=1;ctx.globalAlpha=e.attackTime<.25?.75:.5;
- if(e.pattern==='slam'&&['warning','leap'].includes(e.attackPhase)){ctx.fillStyle='#eead6422';ctx.strokeStyle='#f1b76c';drawSoftField(ctx,e.targetX,e.targetY,85,'#f1b76c',.6);ctx.beginPath();ctx.moveTo(e.targetX-10,e.targetY);ctx.lineTo(e.targetX+10,e.targetY);ctx.moveTo(e.targetX,e.targetY-10);ctx.lineTo(e.targetX,e.targetY+10);ctx.stroke();}
+ if(e.pattern==='slam')drawEnemyLanding(ctx,e,time,{air:e.attackPhase==='leap',recover:e.attackPhase==='recover',radius:85,reduced});
+ if(e.pattern==='slam'&&['warning','leap'].includes(e.attackPhase)){drawEnemyField(ctx,e.targetX,e.targetY,85,{time,reduced,progress:1-Math.min(1,e.attackTime)});}
  else if(e.attackPhase==='warning'){ctx.strokeStyle=e.type==='boss'?'#f1b76c':'#dcaa84';ctx.setLineDash([6,5]);const count=e.pattern==='spiral'?4:e.pattern==='ring'?12:1;for(let i=0;i<count;i++){const a=e.patternAim+i*Math.PI*2/count;ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(e.x+Math.cos(a)*100,e.y+Math.sin(a)*100);ctx.stroke();}}
+ if(e.pattern!=='slam'&&['warning','firing'].includes(e.attackPhase))drawEnemyMuzzle(ctx,e.x+Math.cos(e.patternAim)*20,e.y+Math.sin(e.patternAim)*20,e.patternAim,{active:e.attackPhase==='firing',progress:1-Math.min(1,e.attackTime/.7),reduced});
  if(e.type==='boss'){ctx.setLineDash([]);ctx.font='11px Galmuri, monospace';ctx.textAlign='center';ctx.fillStyle=e.attackPhase==='recover'?'#a8d5b1':'#efd7a4';ctx.fillText(e.attackPhase==='recover'?'빈틈!':({ring:'원형 탄막',slam:'내려찍기',fan:'교차 부채꼴',spiral:'회전 탄막',cross:'회전 십자포화',pincer:'협공 탄막'})[e.pattern],e.x,e.y-(!e.variant||e.variant==='warden'?wardenLabelOffset():57));}
  ctx.restore();
 }

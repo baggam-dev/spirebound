@@ -40,10 +40,11 @@ export function drawHostileProjectile(c,b,time=0,reduced=false){
  if(!b.enemy)return false;const ice=b.demonIce||b.frostArrow,orb=b.poisonShot==='orb',venom=!!b.poisonShot,dark=b.dark||b.demonShot;
  const color=ice?'#91daef':venom?'#c29bd4':b.ricochet?'#8ed5ca':dark?'#cb9bdc':'#ed9988',light=ice?'#f0fcff':venom?'#f1d0f6':'#fff0d4';
  c.save();
- if(!reduced){for(let i=0;i<3;i++)box(c,-8-i*4,(i%2?1:-1)*(1+(Math.floor(time*15)+i)%2),3,2,color+(i?'55':'99'));}
+ // Fading tail is cosmetic; the damaging core keeps full contrast until removal.
+ if(!reduced){c.save();c.globalAlpha*=Math.min(1,Math.max(0,b.life??1)*5);for(let i=0;i<3;i++)box(c,-7-i*4,(i%2?1:-1)*(1+(Math.floor(time*10)+i)%2),3-i,1,color+(i?'55':'99'));c.restore();}
  if(orb){box(c,-5,-5,10,10,'#30223c');box(c,-4,-4,8,8,color);box(c,-2,-3,3,3,light);if(!reduced){box(c,-7,0,2,2,color);box(c,4,4,2,2,color);}}
  else if(ice){line(c,[[-6,0],[0,-4],[6,0],[0,4],[-6,0]],'#1e3346',3);line(c,[[-5,0],[5,0]],light,2);line(c,[[0,-3],[4,0],[0,3]],color,2);}
  else if(b.ricochet){line(c,[[-5,-3],[4,-3],[6,0],[4,3],[-5,3],[-5,-3]],'#1b3436',3);box(c,-3,-2,7,4,color);box(c,2,-1,3,2,light);}
- else{line(c,[[-5,-3],[5,0],[-5,3]],'#30252e',3);line(c,[[-4,-2],[4,0],[-4,2]],color,2);box(c,1,-1,3,2,light);}
+ else{line(c,[[-5,-3],[5,0],[-5,3]],'#30252e',3);c.fillStyle=color;c.beginPath();c.moveTo(-4,-2);c.lineTo(4,0);c.lineTo(-4,2);c.closePath();c.fill();box(c,-5,-1,7,2,color);box(c,1,-1,3,2,light);}
  c.restore();return true;
 }

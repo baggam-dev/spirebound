@@ -77,10 +77,10 @@ export function updateHazards(room,dt,p,hurt){
  const touching=room.hazards.filter(h=>h.phase==='active'&&Math.hypot(p.x-h.x,p.y-h.y)<h.r+10&&(h.kind!=='aura'||!segmentBlocked(h,p,room.obstacles)));
  if(touching.length&&room.poisonPulse<=0){hurt(Math.max(...touching.map(h=>h.damage)));room.poisonPulse=1;}
 }
-export function drawHazards(ctx,room,time=0){
+export function drawHazards(ctx,room,time=0,reduced=false){
  ctx.save();
  for(const h of room.hazards||[]){
-  drawGroundField(ctx,h,h.phase==='active'?'hostile':'warning',time);
+  drawGroundField(ctx,h,h.phase==='active'?'hostile':'warning',time,reduced);
   if(h.phase==='flight'){const t=1-h.time/h.flight,x=h.fromX+(h.x-h.fromX)*t,y=h.fromY+(h.y-h.fromY)*t-Math.sin(t*Math.PI)*85;ctx.setLineDash([]);ctx.fillStyle='#e5bdff';ctx.beginPath();ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();}
  }ctx.restore();
 }

@@ -1,3 +1,4 @@
+import {drawEnemyBeam,drawEnemyBeamEnding} from '../rendering/enemy-attack-vfx.js';
 import {hasGruntSprite} from '../rendering/grunt-sprite.js';
 import {drawSoftField} from '../rendering/ground-visuals.js';
 import {ENEMY_COOLDOWN_FACTOR,attackProfile} from './balance.js';
@@ -49,17 +50,17 @@ export function advanceRicochet(b,dt,obstacles,p){
  }
  return false;
 }
-export function drawRanged(ctx,e,obstacles){
+export function drawRanged(ctx,e,obstacles,time=0,reduced=false,enraged=false){
  if(e.type!=='laser'&&e.type!=='ricochet')return;
- const color=e.escapeDepth?'#ff9198':e.type==='laser'?'#f2a0cb':'#74e1dd';
+ const returning=e.escapeDepth||enraged,color=returning?'#ff9198':e.type==='laser'?'#f2a0cb':'#74e1dd';
  if(!hasGruntSprite(e.type)){
- ctx.fillStyle=e.escapeDepth?'#9e424f':'#353e50';ctx.fillRect(e.x-18,e.y-22,36,35);ctx.fillStyle=color;
+ ctx.fillStyle=returning?'#9e424f':'#353e50';ctx.fillRect(e.x-18,e.y-22,36,35);ctx.fillStyle=color;
  if(e.type==='laser'){ctx.fillRect(e.x-6,e.y-32,12,23);ctx.fillStyle='#f9e6f3';ctx.fillRect(e.x-3,e.y-27,6,10);}
  else{ctx.strokeStyle=color;ctx.lineWidth=4;drawSoftField(ctx,e.x,e.y-7,19,color,.5);ctx.fillRect(e.x-5,e.y-12,10,10);}
  ctx.fillStyle='#101824';ctx.fillRect(e.x-18,e.y+8,36,5);ctx.fillStyle='#b8bac077';ctx.fillRect(e.x-17,e.y-21,34,2);ctx.fillRect(e.x-14,e.y-15,3,19);ctx.fillRect(e.x+11,e.y-15,3,19);ctx.fillStyle=color;ctx.fillRect(e.x-11,e.y+2,4,3);ctx.fillRect(e.x+7,e.y+2,4,3);
  }
  if(hasGruntSprite(e.type)&&e.phase==='aim'){const face=Math.cos(e.aim??0)<0?-1:1;drawSoftField(ctx,e.x+face*(e.type==='laser'?27:32),e.y-(e.type==='laser'?46:16),3+Math.max(0,1-e.phaseTime/(e.type==='laser'?1.2:.8))*4,color,.5);}
+ if(Number.isFinite(e.aim))drawEnemyBeamEnding(ctx,e,beamEnd(e,obstacles),time,reduced);
  if(!e.phase)return;
- const end=beamEnd(e,obstacles);ctx.save();ctx.strokeStyle=color;ctx.lineWidth=e.phase==='beam'?30:1;if(e.phase!=='beam')ctx.globalAlpha=e.phaseTime<.25?.75:.5;ctx.setLineDash(e.phase==='aim'?[8,6]:[]);ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(end.x,end.y);ctx.stroke();
- if(e.phase==='beam'){ctx.strokeStyle='#fff0f8';ctx.lineWidth=2;ctx.stroke();}ctx.restore();
+ drawEnemyBeam(ctx,e,beamEnd(e,obstacles),{active:e.phase==='beam',width:30,color,progress:1-e.phaseTime/(e.type==='laser'?1.2:.8),reduced});
 }

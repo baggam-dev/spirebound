@@ -1,5 +1,5 @@
+import {drawEnemyField,drawEnemyLanding} from '../rendering/enemy-attack-vfx.js';
 import {drawGruntSprite} from '../rendering/grunt-sprite.js';
-import {drawSoftField} from '../rendering/ground-visuals.js';
 import {ENEMY_COOLDOWN_FACTOR,MELEE_REACH,attackProfile} from './balance.js';
 import {safeSpawn,steering,moveBody,segmentBlocked} from '../world/terrain.js';
 // All phase clocks live on the enemy so save/resume preserves attacks exactly.
@@ -34,6 +34,13 @@ export function drawEnemyDetails(ctx,e,run=null){
   if(!raster){
   ctx.save();ctx.translate(0,-lift);box(-21,-13,42,33,'#73785c');box(-15,-30,30,24,'#a4a586');box(-24,-9,9,21,'#c3b794');box(15,-9,9,21,'#c3b794');box(-9,-21,5,5,'#e4ae70');box(5,-21,5,5,'#e4ae70');box(24,-7,5,31,'#886b44');box(18,-16,20,14,'#b5aa8d');box(-13,-29,26,3,'#d0c6a4');box(-3,-25,4,12,'#606a54');box(-18,-8,36,4,'#4a5547');box(-17,6,34,3,'#464c42');box(-4,5,8,6,'#c8ae72');box(-19,18,13,6,'#39423c');box(6,18,13,6,'#39423c');box(20,-15,16,3,'#e4d6b0');for(const dx of [-22,17]){box(dx,-7,4,4,'#eee0b3');box(dx,2,4,3,'#8d866a');}if(e.escapeDepth||run?.key){box(-19,-28,10,3,'#ad544e');box(8,-28,9,3,'#ad544e');box(-11,-21,7,5,'#e7906e');box(4,-21,7,5,'#e7906e');box(-18,9,7,2,'#c36a55');box(10,9,7,2,'#c36a55');box(22,-14,10,2,'#d98a63');}ctx.restore();
   }
-  if(e.phase==='windup'||e.phase==='air'||e.phase==='swing'){const jumping=e.phase!=='swing';ctx.fillStyle='#de9c5328';ctx.strokeStyle='#f1b66e';ctx.lineWidth=2;drawSoftField(ctx,jumping?e.landX:e.x,jumping?e.landY:e.y,jumping?62:MELEE_REACH,'#f1b66e',.5);}
+
  }
+}
+
+// World-space warnings are drawn before actors, outside their hit-reaction transforms.
+export function drawBruteGround(c,e,time=0,reduced=false){
+ if(e.type!=='brute')return;
+ if(['windup','air','swing'].includes(e.phase)){const jump=e.phase!=='swing';drawEnemyField(c,jump?e.landX:e.x,jump?e.landY:e.y,jump?62:MELEE_REACH,{time,reduced,progress:1-Math.min(1,e.phaseTime)});}
+ drawEnemyLanding(c,e,time,{air:e.phase==='air',recover:e.phase==='recover',radius:62,reduced});
 }

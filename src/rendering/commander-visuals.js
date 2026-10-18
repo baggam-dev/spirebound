@@ -1,3 +1,4 @@
+import {drawEnemyBeam} from './enemy-attack-vfx.js';
 import {drawFeedbackSprite} from './feedback-sprites.js';
 import {drawVelkarPresentation} from './velkar-presentation-art.js';
 import {drawCommanderPhase2Sprite} from './commander-phase2-sprite.js';
@@ -6,7 +7,7 @@ import {drawCommanderPhase1Sprite} from './commander-phase1-sprite.js';
 import {commanderProfile,commanderOffsets} from '../combat/boss-pressure.js';
 import {drawSoftField} from './ground-visuals.js';
 
-export function drawCommanderGround(c,e,time=0){
+export function drawCommanderGround(c,e,time=0,reduced=false){
  if(e.variant!=='commander')return;
  const state=e.commander,q=commanderProfile(e);
  c.save();
@@ -20,13 +21,13 @@ export function drawCommanderGround(c,e,time=0){
  if(state?.blink){drawSoftField(c,state.blink.x,state.blink.y,40,'#9bdaf1',.6);c.fillStyle='#ddf4ffbb';c.fillRect(state.blink.x-2,state.blink.y-10,4,20);c.fillRect(state.blink.x-10,state.blink.y-2,20,4);}
  if(state?.volley?.fired===0){
   const a=state.volley;c.strokeStyle='#a9d9ed88';c.lineWidth=1;
-  for(const offset of commanderOffsets(a.count)){const angle=a.aim+offset;c.beginPath();c.moveTo(e.x,e.y);c.lineTo(e.x+Math.cos(angle)*220,e.y+Math.sin(angle)*220);c.stroke();}
+  for(const offset of commanderOffsets(a.count)){const angle=a.aim+offset;drawEnemyBeam(c,e,{x:e.x+Math.cos(angle)*220,y:e.y+Math.sin(angle)*220},{color:'#a9d9ed',reduced});}
  }
  if(state?.ricochet){const a=state.ricochet;c.strokeStyle='#74e1dd';c.setLineDash([5,4]);for(const offset of commanderOffsets(a.count)){const angle=a.aim+offset;c.beginPath();c.moveTo(e.x,e.y);c.lineTo(e.x+Math.cos(angle)*260,e.y+Math.sin(angle)*260);c.stroke();}c.setLineDash([]);c.fillStyle='#a8ece0';c.font='12px Galmuri, monospace';c.textAlign='center';c.fillText('반사탄 · 벽 뒤도 주의',e.x,e.y-60);}
  if(state?.snipe){
   const a=state.snipe,progress=1-a.time/q.snipeWindup;
   c.strokeStyle=`rgba(195,230,246,${.22+progress*.32})`;c.lineWidth=1;
-  c.beginPath();c.moveTo(e.x,e.y);c.lineTo(e.x+Math.cos(a.aim)*920,e.y+Math.sin(a.aim)*920);c.stroke();
+  drawEnemyBeam(c,e,{x:e.x+Math.cos(a.aim)*920,y:e.y+Math.sin(a.aim)*920},{color:'#c3e6f6',progress,reduced});
   drawSoftField(c,e.x,e.y,26,'#9bdaf1',.18+progress*.2);
  }
  c.restore();
