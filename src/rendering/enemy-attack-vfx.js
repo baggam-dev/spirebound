@@ -42,9 +42,10 @@ export function drawEnemyMuzzle(c,x,y,aim,{active=false,progress=0,reduced=false
 // Renderer-only phase history. First observation/load does not replay a landing/beam ending.
 const landings=new WeakMap(),beams=new WeakMap(),grounds=new WeakMap();let groundRoom;
 export function drawEnemyLanding(c,e,time,{air,recover,radius,reduced=false}={}){
- let h=landings.get(e);if(!h||time<h.time){landings.set(e,{air,time,impact:-Infinity});return;}
- if(time!==h.time){if(h.air&&recover)h.impact=time;h.air=air;h.time=time;}
- drawEnemyImpact(c,e.x,e.y,radius,(time-h.impact)/.24,{reduced});
+ let h=landings.get(e);if(!h||time<h.time){landings.set(e,{air,time,impact:-Infinity,x:e.x,y:e.y,radius});return;}
+ if(time!==h.time){if(h.air&&recover){h.impact=time;h.x=e.x;h.y=e.y;h.radius=radius;}h.air=air;h.time=time;}
+ // Recovery movement must not drag the cosmetic landing debris across the floor.
+ drawEnemyImpact(c,h.x,h.y,h.radius,(time-h.impact)/.24,{reduced});
 }
 export function drawEnemyBeamEnding(c,e,end,time,reduced=false){
  const active=e.phase==='beam';let h=beams.get(e);if(!h||time<h.time){beams.set(e,{time,active,end:{...end},from:{x:e.x,y:e.y},fade:-Infinity});return;}
