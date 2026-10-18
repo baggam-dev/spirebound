@@ -1,5 +1,14 @@
 복사 가능한 최신 인계 블록:
 ```text
+[2~6층 누적 검증 완료 / 7~10층 디자인 확인 대기·배포 미완료] 2026-10-18 사용자10층까지구현배포승인유효·재확인불필요. 전체회귀허용환경532/532·초기샌드박스EACCES원본보존. 로컬환경QA2~6층4atlasready/byte/4fallback·실제44방상태RNG불변·10일반보스장면/정지reduced/5↔6캐시·Canvas복원/PC1280가로터치844실제이어하기10장면·주인공ready4frames58px/pageErrors0통과. 실제PNG직접확인,실제iPhoneAndroid아님·운영점수0. 증거 docs/qa-environment-20261018/{RELEASE_SUMMARY.md,tests-first.txt,tests-permitted.txt,local-first/result.json}. 7~10층통합시안 floors7-10-environment-v1.png·정확프롬프트/설계준비·원본보존·내장imagegen1회. 기존AGENTS선시안컨펌규칙따라async단일디자인확인답변대기·승인전7~10runtime/배포자산미반영. 현재시안3파일/QA/증거/4기록 로컬커밋,QA70870·회귀83595완료/서버78838종료·실행명령없음. 기술차단없음·디자인답변만필요. 다음확인후7~10공통2묶음생산PNG·연결→최종누적회귀/2~10QA→커밋푸시공식배포공개검증까지이어서진행(새배포승인묻지말것). 운영release-20261018-013123-46cc98/runtimec1dd8c8/원격62ac973유지·배포아직안함.
+```
+
+[배포 전 누적 검증·상층 시안 확인 대기] 전체회귀 허용환경532/532통과 tests-permitted.txt,초기샌드박스localhost EACCES 실패원본 tests-first.txt 보존. 7~10층통합PNG 내장imagegen1회완료·원본/정확prompt/설계보존, 사용자단일디자인확인async대기·승인전상층runtime미반영. 누적2~6층환경QA tools/qa/environment-floors-release-qa.mjs신규·Edge실행중세션70870,서버78838 localhost5174. 현재시안3파일/QA/증거/4기록,다음QA결과·실제PNG검토→디자인답변따라7~10제작연결→최종검증푸시배포. 운영release-20261018-013123-46cc98/runtimec1dd8c8/원격62ac973유지·배포명시승인유효.
+
+[진행 중 · 10층까지 환경 마무리·배포 승인] 2026-10-18 사용자 10층까지한번에하고배포 명시. 누적2~6층검증과7~10층2묶음시안준비·단일PNG컨펌후구현/통합검증푸시배포공개확인범위. 기존디자인선시안규칙유지·7~8몰락왕국/9~10마족영역상세는승인전runtime미반영. 실제7층문지기/8층모르도/9층군단장/10층상단벽대악마2방확인. 현재프롬프트·4기록,다음시안1회+전체회귀·누적환경QA준비. 운영013123/runtimec1dd8c8/원격62ac973유지·시작트리깨끗함·차단없음.
+
+복사 가능한 최신 인계 블록:
+```text
 [5~6층 공통 환경 구현 완료 / 미검증·미배포] 2026-10-18 승인패키지기반 올리브판석3종·구리석벽문기둥/뿌리화분·재배대·잔해를두층공유. 6층은벽/기존장애물clip안뿌리수지밀도강화·보스중앙새장애물없음. 별도잎1px/중성1px포자4·6개/수지반짝임·정지reduced연동,공통구리횃불몸체+기존별도불꽃불티. 내장imagegen12모듈생산PNG1회·원본/버전/정확프롬프트보존: assets/images/infested-hall-atlas-v1.png 및 docs/design-drafts/environment-20261018/{infested-hall-atlas-v1.png,prompt-floors5-6-production-v1.md,design-floors5-6-v1.md}. infested-hall-art.js신규·두층공통지연로딩/12준비후교체·실패기존외형/실제경계crop·alpha64미만캐시제거·원본불변/벽epoch·두층합계바닥3방캐시. 5층7~10/6층8~11방·꽃/슬라임분열AI·충돌문시설저장RNG불변. JS9구문·PowerShell파싱·git diff --check통과(정적검토)·실제PNG육안확인. 단위통합테스트/브라우저QA/서버/원격푸시/배포/공개확인 미실행. 선행2층1a7c51e·3층7b64d4c·4층e6dc23c와누적미검증미배포,운영release-20261018-013123-46cc98/runtimec1dd8c8/원격62ac973유지(공개재조회안함). 현재소스PNG·목록·설계4기록로컬커밋·명령세션차단없음. 다음새명시배포시누적2~6층공통ready/fallback/crop·경계색/5↔6벽캐시/문충돌시설/꽃슬라임분열·독장판탄환대비/효과정지reduced·횃불정렬/Canvas복원·actorRNG불변/PC가로터치·주인공ready·성능회귀검증. 다음디자인7~8층몰락왕국공통시안·미착수.
 ```
 
