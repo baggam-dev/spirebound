@@ -1,0 +1,1 @@
+{"material":{"width":44,"rgb":[104,112,104,255]},"grid3pxGroups":41300,"wallParts":6,"outside":0,"missingCore":0,"unchangedRun":true,"old040Save":true,"segmentCalls":5000,"collisionMs":25.399999976158142}

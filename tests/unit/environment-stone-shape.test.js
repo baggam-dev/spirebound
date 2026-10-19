@@ -15,6 +15,8 @@ test('broken stone corners are deterministic, bounded and do not modify saved ge
   assert.ok(area<w*h);assert.ok(area>=w*h-324);assert.ok(blocked(o.x+w/2,o.y+h/2,0,[o]));
  }
 });
+test('upper room wall blocks at y40 also have visible broken corners',()=>{assert.ok(stoneFragments({type:'wall',x:25,y:40,w:155,h:180}).length>1);});
+
 test('point, segment and demon ray collision agree with the visible stone pieces',()=>{
  const o={type:'wall',x:260,y:180,w:80,h:60},parts=stoneFragments(o);
  for(let y=o.y+.5;y<o.y+o.h;y+=2)for(let x=o.x+.5;x<o.x+o.w;x+=2){

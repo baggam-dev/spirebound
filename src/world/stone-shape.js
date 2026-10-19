@@ -6,7 +6,7 @@ export function stoneFragments(o){
  const old=cache.get(o);if(old&&old.type===o.type&&old.x===o.x&&old.y===o.y&&old.w===o.w&&old.h===o.h&&old.hole===!!o.demonHole&&old.bolt===!!o.demonBolt)return old.parts;
  let parts=[o];
  // Outer boundary strips, tiny connector strips and non-stone furniture remain solid.
- if(o.type==='wall'&&!o.demonHole&&!o.demonBolt&&o.x>=25&&o.y>=44&&o.x+o.w<=935&&o.y+o.h<=508&&o.w>=32&&o.h>=26){
+ if(o.type==='wall'&&!o.demonHole&&!o.demonBolt&&o.x>=25&&o.y>=35&&o.x+o.w<=935&&o.y+o.h<=508&&o.w>=32&&o.h>=26){
   const n=hash(o),limit=Math.min(9,Math.floor(Math.min(o.w,o.h)/4/3)*3);
   const corners=Array.from({length:4},(_,i)=>((n>>>(i*5))%3===0?0:Math.min(limit,6+3*((n>>>(i*5+2))%2))));
   if(!corners.some(Boolean))corners[n%4]=limit;

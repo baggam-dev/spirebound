@@ -1,0 +1,22 @@
+{
+  "base": "http://127.0.0.1:5174",
+  "material": {
+    "width": 44,
+    "rgb": [
+      64,
+      72,
+      64,
+      255
+    ]
+  },
+  "grid3pxGroups": 41300,
+  "wallParts": 6,
+  "outside": 0,
+  "missingCore": 0,
+  "unchangedRun": true,
+  "old040Save": true,
+  "segmentCalls": 5000,
+  "collisionMs": 21.900000035762787,
+  "errors": [],
+  "productionRecordsSubmitted": 0
+}

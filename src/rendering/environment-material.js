@@ -4,12 +4,15 @@ function surface(w,h){
  const c=typeof OffscreenCanvas!=='undefined'?new OffscreenCanvas(w,h):typeof document!=='undefined'?document.createElement('canvas'):null;
  if(c){c.width=w;c.height=h;}return c;
 }
-function palette(c){
+function palette(c,prop){
  const g=c.getContext('2d'),pixels=g.getImageData(0,0,c.width,c.height),d=pixels.data;
+ let total=0,count=0;for(let i=0;i<d.length;i+=4)if(d[i+3]>=64){total+=d[i]*.2126+d[i+1]*.7152+d[i+2]*.0722;count++;}
+ // Bright greenhouse/archive tiles must not compete with the actors. Already-dark themes stay dark.
+ const brightness=prop ? .78 : Math.min(.78,68/(total/Math.max(1,count)||1));
  for(let i=0;i<d.length;i+=4){
   if(d[i+3]<64){d[i+3]=0;continue;}
   const grey=d[i]*.2126+d[i+1]*.7152+d[i+2]*.0722;
-  for(let k=0;k<3;k++)d[i+k]=Math.round((grey+(d[i+k]-grey)*.65)*.78/8)*8;
+  for(let k=0;k<3;k++)d[i+k]=Math.round((grey+(d[i+k]-grey)*.65)*brightness/8)*8;
   d[i+3]=Math.round(d[i+3]/85)*85;
  }
  g.putImageData(pixels,0,0);
@@ -17,7 +20,7 @@ function palette(c){
 export function environmentMaterial(source,prop=false){
  // Keep aspect ratios, including narrow flags and tall gates. Original PNGs stay intact.
  const scale=Math.min(1,(prop?32:44)/Math.max(source.width,source.height)),c=surface(Math.max(1,Math.round(source.width*scale)),Math.max(1,Math.round(source.height*scale)));
- if(!c)return source;const g=c.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(source,0,0,c.width,c.height);palette(c);return c;
+ if(!c)return source;const g=c.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(source,0,0,c.width,c.height);palette(c,prop);return c;
 }
 export function environmentSurface(source){
  // Run once when a static floor/wall cache is built, not per frame. World-aligned 3px grid.
