@@ -1,3 +1,19 @@
+## 최신 복사 가능한 인계 — 2026-10-19 비전투6종 로컬 구현 후
+```text
+Spirebound C:\baggam-dev\spirebound main. 시작git status --short→WORK_STATUS→TODO→WORK_LOG최근→HANDOFF. 기존변경보존/최신상단우선.
+운영release-20261019-131144-f5e588/runtime23ae822/원격6c0bffc 그대로. 사용자ㄱㄱㄱ로 비전투6패널 승인→로컬구현완료·미검증미배포. src/rendering/interaction-visuals.js에 축복/저주·blood/supply/trial·정수5색/성장/계단6종표현연결, src/game/game.js 성공콜백3곳에emit추가. 신전good/bad성공후, 계약blood/trial성공후, supply실제유물교환성공후만emit·취소실패불변. 기존.9초/최대4/방WeakMap·reduced·상자샘물문효과유지. 실제보상확률전투층이동저장RNG 정적diff상불변. 새PNG생성없음·시안원본정확prompt보존.
+JS2구문node --check·git diff --check 정적통과. 이번테스트/브라우저QA/서버/푸시/배포/공개확인없음. 이전533/서버27은이번변경검증아님. 실행세션/차단없음. 상세 docs/design-drafts/noncombat-effects-20261019/design-v1.md. 다음새명시배포때6종성공1회/실패취소·정수5색·성장·계단+1상승/-1하강·방이동로드/정지reduced/Canvas/보상저장RNG·PC가로터치대비·시설3종회귀를묶어검증후푸시배포.
+평상시 수정문서로컬커밋만·로컬커밋상시승인. 진행/좋아는배포아님. 새명시배포전테스트QA푸시배포공개확인금지. 디자인은패키지승인후반영·원본보존/불필요재생성금지·오라별도이펙트·한국어기본5줄이내.
+```
+[비전투 연출 6종 로컬 구현 완료 / 실행 미검증·미배포 — 2026-10-19]
+- 사용자 ㄱㄱㄱ로 승인된 축복/저주/계약·정수/성장/계단을 기존interaction-visuals에 연결. game.js 신전useShrine 성공 및 계약blood/trial·유물교환supply 성공에만 emit3곳추가. 취소실패/지나가기에는 없음. 축복낮은열린금문양/저주꺾인보라봉인·blood만붉은비용/supply중립교환/trial도전표식·정수5색곡선/흡수광·성장상승괄호/LV·계단+1위/-1아래 모양연결.
+- 기존.9초/최대4/run WeakMap·방 구분/elapsed·상자샘물문효과 유지·reduced입자감소/Canvas save restore. 전투/보상/선택확률/시련생성·층이동·저장/RNG는 정적diff상 변경없음. 실행불변은 미검증. 새PNG재생성/원화교체없음, 승인원본·정확prompt 보존.
+- JS2 node --check·git diff --check 통과(정적검토). 단위/통합/브라우저QA·개발서버·푸시·배포·공개확인 실행없음. 이전533/서버27은이전배포결과이며이번변경검증아님. 현재2소스/설계4기록 로컬커밋, 실행명령/서버세션·차단없음. 운영release131144/runtime23ae822/원격6c0bffc 유지.
+- 상세 docs/design-drafts/noncombat-effects-20261019/design-v1.md. 다음새명시배포때6종성공정확히1회/실패취소·정수5색·성장/계단2방향·방이동로드/정지reduced·Canvas/보상저장RNG/PC가로터치몸가림대비·이전시설3종회귀 누적검증후푸시배포. 새지시전테스트QA푸시배포공개확인금지.
+[비전투 연출 6종 연결 완료 / 정적 검토 중 — 2026-10-19]
+interaction-visuals.js에 낮은축복열린문양/저주꺾인봉인, blood붉은비용·supply중립양방교환·trial보라시련표식, 정수5색곡선2px/완료흡수광, 성장상승괄호/LV, 계단+1위/-1아래꺾쇠를 연결. game.js useShrine/chooseEvent/supplyPanel 성공후에만 emit 추가, 취소실패경로불변. 기존수명.9초/최대4/WeakMap·이전상자샘물문효과·보상확률성장층이동저장RNG 유지. reduced연동·새PNG생성없음. JS2 node --check·git diff --check 통과(정적), 실행검증없음. 현재2소스/4기록·다음콜사이트diff/상세설계정리→로컬커밋. 테스트QA서버푸시배포공개확인안함·운영131144/원격6c0bffc유지·세션차단없음.
+[진행 중 · 승인 비전투 연출 6종 구현 — 2026-10-19]
+사용자 ㄱㄱㄱ로 직전6패널 시안 승인. 시작git status clean/main e6bc8ab 보존. 축복/저주·blood/supply/trial 계약 성공emit, 정수5색흡수·성장·상승/하강연출을 기존interaction-visuals 수명.9초/최대4에 연결한다. 보상선택확률/시련전투/층이동/맵저장RNG 유지·새PNG생성없음. 현재4기록, 다음렌더헬퍼/성공콜백연결→구문diff정적검토/상세기록로컬커밋. 이번테스트/QA/서버/푸시/배포/공개확인 없음·운영release131144/runtime23ae822/원격6c0bffc 유지·실행세션/차단없음.
 ## 최신 복사 가능한 인계 — 2026-10-19 비전투 시안 검토 대기
 ```text
 C:\baggam-dev\spirebound main. 시작git status --short→WORK_STATUS→TODO→WORK_LOG최근→HANDOFF. 최신상단 우선·기존변경보존.

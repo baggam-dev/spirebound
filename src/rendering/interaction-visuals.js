@@ -41,6 +41,70 @@ function doorRelease(c,room,d,p,reduced){
  }
  c.restore();
 }
+function fleck(c,x,y,color){c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),2,2);}
+function shrineEffect(c,x,y,p,good,reduced){
+ c.save();c.setLineDash([]);c.lineWidth=1;
+ const yy=y+12-p*5;
+ c.strokeStyle=good?'#e4c88f':'#ac7ca8';
+ for(const side of [-1,1]){
+  c.beginPath();
+  if(good){c.moveTo(x+side*6,yy+2);c.lineTo(x+side*16,yy-2);c.lineTo(x+side*20,yy-7);}
+  else{c.moveTo(x+side*(20-p*7),yy-9);c.lineTo(x+side*13,yy-4);c.lineTo(x+side*18,yy);c.lineTo(x+side*8,yy+4);}
+  c.stroke();
+ }
+ for(let i=0;i<(reduced?1:3);i++){
+  const dx=reduced?0:(i-1)*10;
+  fleck(c,x+dx*(1-p*.4),yy-5-p*8-(i%2)*3,good?'#f1dfb4':'#c28fac');
+ }
+ c.restore();
+}
+function pactEffect(c,x,y,p,choice,reduced){
+ if(!['blood','supply','trial'].includes(choice))return;
+ c.save();c.setLineDash([]);c.lineWidth=1;
+ if(choice==='trial'){
+  // A short angular challenge mark, never an attack area or an awarded item.
+  c.strokeStyle='#ae8ac4';const yy=y-8-p*10;
+  c.beginPath();c.moveTo(x-13,yy+7);c.lineTo(x-6,yy-5);c.lineTo(x,yy);c.lineTo(x+6,yy-5);c.lineTo(x+13,yy+7);c.stroke();
+  if(!reduced)for(const side of [-1,1])fleck(c,x+side*(17+p*6),yy+3,'#b79ac9');
+ }else{
+  const n=reduced?2:4;
+  for(let i=0;i<n;i++){
+   const q=Math.max(0,Math.min(1,p*1.4-i*.07)),yy=y-8+(i-n/2)*4;
+   fleck(c,x-10-q*14,yy+q*9,choice==='blood'?'#cf8995':'#b9aa8d');
+   fleck(c,x+24-q*16,yy-Math.sin(q*Math.PI)*6,choice==='blood'?'#ead2a1':'#c9c3a0');
+  }
+  // Exchange uses opposed notches; only blood uses the red falling cost.
+  if(choice==='supply'){c.strokeStyle='#d1c7a4';c.beginPath();c.moveTo(x-17,y+4);c.lineTo(x-21,y);c.lineTo(x-17,y-4);c.moveTo(x+17,y+4);c.lineTo(x+21,y);c.lineTo(x+17,y-4);c.stroke();}
+ }
+ c.restore();
+}
+function essenceEffect(c,s,e,p,reduced){
+ const x=e.x??480,y=e.y??112,target=s.player,color=e.color||'#d4a1ff';
+ for(let i=0;i<(reduced?2:5);i++){
+  const q=Math.max(0,Math.min(1,p*2-i*.09));if(q>=1)continue;
+  const bend=Math.sin(q*Math.PI)*12,xx=x+(target.x-x)*q,yy=y+(target.y-12-y)*q-bend;
+  fleck(c,xx,yy,color);
+  if(!reduced&&q>0){const t=Math.max(0,q-.035);c.fillStyle=color;c.fillRect(Math.round(x+(target.x-x)*t),Math.round(y+(target.y-12-y)*t-Math.sin(t*Math.PI)*12),1,1);}
+ }
+ if(p>.54&&p<.84){const xx=Math.round(target.x),yy=Math.round(target.y-12);c.fillStyle=color;c.fillRect(xx-2,yy,5,1);if(!reduced)c.fillRect(xx,yy-2,1,5);}
+}
+function growthEffect(c,s,e,p,reduced){
+ const x=Math.round(s.player.x),y=Math.round(s.player.y),rise=p*14;
+ c.save();c.setLineDash([]);c.lineWidth=1;c.strokeStyle='#e7ce94';
+ for(const side of [-1,1]){const xx=x+side*24;c.beginPath();c.moveTo(xx+side*3,y+5-rise);c.lineTo(xx,y-rise);c.lineTo(xx,y-18-rise);c.lineTo(xx-side*3,y-23-rise);c.stroke();}
+ for(let i=0;i<(reduced?1:3);i++){const dx=reduced?0:(i-1)*7;fleck(c,x+dx,y-33-rise-(i%2)*3,'#f3dfb0');}
+ c.fillStyle='#eed891';c.textAlign='center';c.font='11px Galmuri, monospace';c.fillText('성장 완료 · LV '+e.level,x,y-54-Math.round(p*8));c.restore();
+}
+function stairsEffect(c,x,y,p,direction,reduced){
+ const up=direction>0,sign=up?-1:1;
+ c.save();c.setLineDash([]);c.lineWidth=1;c.strokeStyle=up?'#b0d2e3':'#9eabc9';
+ for(const side of [-1,1])for(let i=0;i<(reduced?1:3);i++){
+  const xx=x+side*25,yy=y+14-i*10+sign*p*18;
+  c.beginPath();c.moveTo(xx-4,yy);c.lineTo(xx,yy+sign*4);c.lineTo(xx+4,yy);c.stroke();
+  if(!reduced)fleck(c,xx,yy-sign*8,up?'#b0d2e3':'#9eabc9');
+ }
+ c.restore();
+}
 export function drawInteractionEffects(c,s,r,reduced=false){
  c.save();
  for(const e of effects.get(s)||[]){
@@ -48,17 +112,13 @@ export function drawInteractionEffects(c,s,r,reduced=false){
   const p=age/.9,x=e.x??480,y=e.y??112;c.globalAlpha=(1-p)*.8;
   const color=e.kind==='fountain'?'#a9e9d4':e.kind==='stairs'?'#c9d4e3':e.trap?'#dc8e8e':'#eed08a';c.fillStyle=color;
   if(e.kind==='essence'){
-   // The reward is already applied; only a few pixels travel to the player.
-   c.fillStyle=e.color||'#d4a1ff';const target=s.player;
-   for(let i=0;i<5;i++){const q=Math.max(0,Math.min(1,p*2-i*.09)),bend=Math.sin(q*Math.PI)*12;
-    const xx=Math.round(x+(target.x-x)*q),yy=Math.round(y+(target.y-12-y)*q-bend);
-    c.fillRect(xx-2,yy-2,4,4);
-   }
+   essenceEffect(c,s,e,p,reduced);
   }else if(e.kind==='level'){
-   const px=Math.round(s.player.x),py=Math.round(s.player.y);
-   c.fillStyle='#eed891';
-   for(const side of [-1,1])for(let i=0;i<4;i++){const yy=Math.round(py+10-i*10-p*20);c.fillRect(px+side*(22+i%2*4),yy,3,6);}
-   c.textAlign='center';c.font='11px Galmuri, monospace';c.fillText('성장 완료 · LV '+e.level,px,py-47-Math.round(p*10));
+   growthEffect(c,s,e,p,reduced);
+  }else if(e.kind==='shrine'){
+   shrineEffect(c,x,y,p,!!e.good,reduced);
+  }else if(e.kind==='pact'){
+   pactEffect(c,x,y,p,e.choice,reduced);
   }else if(e.kind==='roomClear'){
    c.fillStyle='#b7d8ba';c.textAlign='center';c.font='12px Galmuri, monospace';
    c.fillText(e.unlocked?'전투 종료 · 출구 개방':'전투 종료',480,165-Math.round(p*8));
@@ -69,8 +129,7 @@ export function drawInteractionEffects(c,s,r,reduced=false){
     doorRelease(c,e.room,d,p,reduced);
    }
   }else if(e.kind==='stairs'){
-   // Small travelling chevrons around the arrival point; no screen-covering fade.
-   for(const dx of [-25,25])for(let i=0;i<3;i++){const yy=Math.round(y+18-i*11-p*18*(e.direction||1));c.fillRect(x+dx-4,yy,3,3);c.fillRect(x+dx-1,yy-3*(e.direction||1),3,3);c.fillRect(x+dx+2,yy,3,3);}
+   stairsEffect(c,x,y,p,e.direction||1,reduced);
   }else if(e.kind==='chest'){
    chestEffect(c,x,y,p,!!e.trap,reduced);
   }else if(e.kind==='fountain'){
