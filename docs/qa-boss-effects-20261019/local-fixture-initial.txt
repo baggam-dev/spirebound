@@ -1,0 +1,15 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Error: 저장 데이터 형식이 올바르지 않습니다.
+    at check (http://127.0.0.1:5174/src/persistence/storage.js:28:47)
+    at validateRun (http://127.0.0.1:5174/src/persistence/storage.js:81:153)
+    at encodeSave (http://127.0.0.1:5174/src/persistence/storage.js:121:31)
+    at eval (eval at evaluate (:311:30), <anonymous>:1:583)
+    at async <anonymous>:337:30
+    at C:\baggam-dev\spirebound\tools\qa\boss-effects-release-qa.mjs:37:10 {
+  log: []
+}
+
+Node.js v24.14.0

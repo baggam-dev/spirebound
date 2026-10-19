@@ -1,0 +1,55 @@
+{
+  "base": "http://127.0.0.1:5174",
+  "reports": [
+    {
+      "mobile": false,
+      "beamGeometry": true,
+      "counts": [
+        5,
+        18,
+        12
+      ],
+      "rotations": true,
+      "wallEndpoints": true,
+      "judgmentAxesAndSteps": 8,
+      "frostClip": true,
+      "canvasRestored": true,
+      "actorUnchanged": true,
+      "pauseStable": true,
+      "reduced": true,
+      "noLoadOrRewindReplay": true,
+      "gamePrism": true,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "mobile": true,
+      "beamGeometry": true,
+      "counts": [
+        5,
+        18,
+        12
+      ],
+      "rotations": true,
+      "wallEndpoints": true,
+      "judgmentAxesAndSteps": 8,
+      "frostClip": true,
+      "canvasRestored": true,
+      "actorUnchanged": true,
+      "pauseStable": true,
+      "reduced": true,
+      "noLoadOrRewindReplay": true,
+      "gamePrism": true,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    }
+  ],
+  "errors": [],
+  "productionRecordsSubmitted": 0
+}
