@@ -1,0 +1,5 @@
+boss 1280 king
+boss 1280 commander
+boss 844 king
+boss 844 commander
+{"results":[{"scene":"king","width":1280,"floor":8,"pending":false,"enemies":1,"phase":null,"hero":{"ready":true,"frames":4,"bodyHeight":58}},{"scene":"commander","width":1280,"floor":9,"pending":false,"enemies":1,"phase":null,"hero":{"ready":true,"frames":4,"bodyHeight":58}},{"scene":"king","width":844,"floor":8,"pending":false,"enemies":1,"phase":null,"hero":{"ready":true,"frames":4,"bodyHeight":58}},{"scene":"commander","width":844,"floor":9,"pending":false,"enemies":1,"phase":null,"hero":{"ready":true,"frames":4,"bodyHeight":58}}],"errors":[]}

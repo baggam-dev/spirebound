@@ -7,7 +7,7 @@ const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'in
 const base=process.env.BASE_URL||'http://127.0.0.1:5174',out=process.argv[2]||'docs/qa-environment-20261018/bosses';await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[],results=[];
 try{
- for(const [width,height] of [[1280,800],[844,390]])for(const scene of ['gate','king','commander','demon','demon-core']){
+ for(const [width,height] of [[1280,800],[844,390]])for(const scene of (process.env.QA_BOSS_SCENES?.split(',')||['gate','king','commander','demon','demon-core'])){
   console.log('boss',width,scene);const context=await browser.newContext({viewport:{width,height},isMobile:width<1000,hasTouch:width<1000}),p=await context.newPage();p.setDefaultTimeout(120000);p.on('pageerror',e=>errors.push(e.message));await p.goto(base,{waitUntil:'domcontentloaded',timeout:120000});
   await p.evaluate(async scene=>{
    const {newRun}=await import('/src/game/engine.js'),{objectPoint}=await import('/src/world/object-positions.js'),{encodeSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=newRun(31,{campaign:'expanded'});s.floor=scene==='gate'?6:scene==='king'?7:scene==='commander'?8:9;s.room=s.floors[s.floor].findIndex(r=>scene==='gate'?r.gate:r.type==='boss');const r=s.floors[s.floor][s.room],q=objectPoint(r);s.tutorialComplete=true;s.invulnerable=999;s.attack=999;s.player.x=q.x;s.player.y=q.y+35;
