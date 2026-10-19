@@ -1,3 +1,9 @@
+[시설 효과 배포 전 검증 완료] 전체533/533·전용Canvas .9초/최대4·정지/reduced·함정붉은경고·4방향오프셋통로비움/잠금·로드재생없음·runCanvas불변 통과. 실제PC1280/가로터치844 상자샘물함정6건 heal2→3/샘물2→5/정예3생성/used 저장·주인공ready4frames58px/errors0 통과·효과판및샘물PNG육안확인. 자료 docs/qa-interactions-20261019/{tests.txt,local/result.json}. 수정소스2/QA/설계4기록→로컬커밋푸시공식배포/공개확인예정. 서버87090:5174종료예정·검증모두완료/차단없음·운영095303유지. 원본승인PNG재생성없음·실기기장시간미검증.
+
+[시설 효과 연결 완료 · 배포 검증 중] interaction-visuals.js에 상자금빛짧은부채/함정붉은각진경고·샘물낮은청록물결/3줄기·문4방향실제doorCenter 문설주파편 연결. 열린80/70통로첫프레임부터중앙비움·기존8조각범용/정수성장계단유지. game.js reduced설정전달·효과수/불투명도절제. 기존emit성공시점/.9초/최대4·보상소모/문판정/저장RNG변경없음. JS2구문/diff정적통과·현재2소스/4기록·다음전체회귀/전용Canvas/PC가로터치실사용QA→로컬커밋푸시공식배포공개확인. 운영095303유지·서버세션없음·차단없음.
+
+[진행 중 · 시설 효과 3종 승인 구현·배포] 2026-10-19 사용자 진행 및 배포 명시승인. 시작git status clean/main aa56089. 상자보상/샘물회복/문봉인해제 승인시안3종을 기존interaction-visuals 성공event/.9초/최대4/doorCenter에 연결·reduced설정전달, 보상/사용소모/문통과/맵저장RNG 유지. 새원화생성없음. 구현→범위검증·전체회귀·PC가로터치→커밋푸시공식배포공개확인까지승인. 현재4기록·다음모듈/게임콜사이트수정·명령서버없음·차단없음. 운영release-20261019-095303-c80fc6/runtime4dbb2f8 유지.
+
 ## 최신 복사 가능한 인계 — 2026-10-19 보스 효과 배포 후
 ```text
 Spirebound C:\baggam-dev\spirebound main. git status --short 후 WORK_STATUS→TODO→WORK_LOG최근→HANDOFF. 최신상단 우선·기존변경보존.
