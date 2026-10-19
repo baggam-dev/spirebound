@@ -1,3 +1,16 @@
+## 최신 복사 가능한 인계 — 보상 연출 시안 후
+```text
+Spirebound C:\baggam-dev\spirebound main. status→WORK_STATUS→TODO→WORK_LOG최근→HANDOFF/기존변경보존/상단우선.
+운영 release-20261019-160149-81acfc/runtime990bc2d, XP·비전투6종 배포완료. 원격d0b2dd0. 새로컬작업은 보상손맛비교시안만: docs/design-drafts/reward-burst-20261019/reward-burst-v1.png 및design-v1.md/prompt-v1.md.
+일반/정예/보스 분출낙하흡수패키지 내장imagegen1회·원본보존/직접PNG확인. 기존파편3종재사용·XP총량/자석/벽/저장유지, 그림개수는개념도이고실제합계는명세우선. 정예는추가XP없음. 폭발정예사후공격경고우선. 소리가안문서만/미제작.
+새runtime반영/테스트QA서버푸시배포공개검증없음·세션차단없음. 다음시안사용자확인→승인범위로컬구현. 새명시배포전테스트푸시배포금지. 로컬커밋상시승인·한국어5줄이내·실제PNG절대경로표시. 유물화면은다음순서/대사컷씬보류.
+```
+
+[시안 완료 · 보스/정예 보상 분출 검토 대기 — 2026-10-19]
+사용자 좋아ㄱㄱ의 다음1단계로 실제XP·elite·boss45/sound 검토 후 내장imagegen1회 승인파편 참조PNG 생성/직접육안확인. docs/design-drafts/reward-burst-20261019/{reward-burst-v1.png,design-v1.md,prompt-v1.md}; 원본exec-aa1b247d-e423-4400-a3c6-d5dd48d9facf.png 보존. 일반짧게/정예작은부채/보스풍성한방사낙하·착지장식없음/흡수짧은잔향 제안. XP총량/기존원화/자석반경/벽/저장정책유지. 보스45분해4×9+2×3+3×1 가안, 그림개수는명세와달라계산근거아님·3/6/10라벨실측아님. 수신마름모는위치표시/주인공교체아님. 폭발정예사후1초위험경고우선·음향가안문서만/미제작미청취. runtime/배포자산미반영·테스트QA서버푸시배포공개검증없음, 이전540/서버27은새시안검증아님. 문서diff검토/시안문서로컬커밋. 운영release160149/runtime990bc2d/원격d0b2dd0 유지. 실행세션차단없음. 다음사용자외형검토후승인범위구현·새명시배포때검증배포. 후속유물화면/대사컷씬임의착수안함.
+
+[진행 중 · 보스/정예 보상 손맛 시안 — 2026-10-19] 사용자 좋아ㄱㄱ로 제안1단계 진행. 시작status clean/main d0b2dd0. XP/elite/boss45 및 sound 실제코드 검토·승인파편기존PNG 재사용한 일반/정예/보스 낙하·흡수 비교PNG 준비. 경험치총량/자석반경/벽/저장정책 유지, 보스45의표현용분해와분산거리/시간은미승인가안. 이번시안문서만/runtime반영없음·테스트QA서버푸시배포공개검증안함. 운영release160149/runtime990bc2d 유지. 현재4기록·다음내장imagegen1회/원본정확prompt보존→직접PNG검토·로컬커밋. 유물화면은후속순서이며이번임의구현안함·실행세션차단없음。
+
 ## 최신 복사 가능한 인계 — XP·비전투 누적 배포 완료
 ```text
 Spirebound C:\baggam-dev\spirebound main. status→WORK_STATUS→TODO→WORK_LOG최근→HANDOFF, 기존변경보존/상단최신우선.
