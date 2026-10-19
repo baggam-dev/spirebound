@@ -1,0 +1,1 @@
+{"publicTLS":true,"onlineStarts":2,"assetsMatch":162,"imageAtlasMatch":true,"httpRedirect":308,"rankings":true,"secureHttpOnlyCookie":true,"existingCookieUpgrade":true,"transferNew":true,"transferExisting":true,"httpOriginalPreserved":true,"pageErrors":0,"productionRecordsSubmitted":0}

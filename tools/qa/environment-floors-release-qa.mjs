@@ -13,6 +13,8 @@ const modules=[
  {path:'upper-hall-art',load:'loadRoyalHallArt',ready:'royalHallLoaded',details:'drawRoyalHallDetails',floors:[6,7],png:'royal-hall-atlas-v1.png'},
  {path:'upper-hall-art',load:'loadInfernalHallArt',ready:'infernalHallLoaded',details:'drawInfernalHallDetails',floors:[8,9],png:'infernal-hall-atlas-v1.png'}
 ];
+const gameFloors=process.env.QA_ENV_FLOORS?process.env.QA_ENV_FLOORS.split(',').map(n=>Number(n)-1):modules.flatMap(m=>m.floors);
+assert.ok(gameFloors.length&&gameFloors.every(n=>Number.isInteger(n)&&modules.some(m=>m.floors.includes(n))),'QA_ENV_FLOORS must list floors 2..10');
 await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[],result={base};
 try{
@@ -49,7 +51,7 @@ try{
  result.fallback=[];
  for(const m of modules){const cx=await browser.newContext(),p=await cx.newPage();p.on('pageerror',e=>errors.push(e.message));await p.route('**/'+m.png,r=>r.abort());await p.route('**/environment-preview',r=>r.fulfill({contentType:'text/html',body:'<canvas width="960" height="540"></canvas>'}));await p.goto(base+'/environment-preview');const ok=await p.evaluate(async m=>{const a=await import('/src/rendering/'+m.path+'.js');if(await a[m.load]()||a[m.ready]())return false;const {newRun}=await import('/src/game/engine.js'),{drawFloorMood}=await import('/src/rendering/atmosphere.js'),{drawObstacles}=await import('/src/world/terrain.js');const s=newRun(19,{campaign:'expanded'});s.floor=m.floors[0];const r=s.floors[s.floor][1],before=JSON.stringify(s),c=document.querySelector('canvas').getContext('2d');drawFloorMood(c,s,r);drawObstacles(c,r.obstacles,s.floor);return before===JSON.stringify(s)&&c.globalAlpha===1;},m);assert.equal(ok,true);result.fallback.push(m.path);await cx.close();}
  result.game=[];
- for(const [width,height] of [[1280,800],[844,390]])for(const floor of modules.flatMap(m=>m.floors)){
+ for(const [width,height] of [[1280,800],[844,390]])for(const floor of gameFloors){
   console.log('game',width,'floor',floor+1);const cx=await browser.newContext({viewport:{width,height},isMobile:width<1000,hasTouch:width<1000}),p=await cx.newPage();p.setDefaultTimeout(120000);p.on('pageerror',e=>errors.push(e.message));await p.goto(base,{waitUntil:'domcontentloaded',timeout:120000});
   await p.evaluate(async floor=>{const {newRun}=await import('/src/game/engine.js'),{encodeSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=newRun(31,{campaign:'expanded'});s.floor=floor;s.room=s.floors[floor].findIndex(r=>r.type==='normal');if(s.room<0)s.room=0;s.tutorialComplete=true;s.player.x=480;s.player.y=300;s.invulnerable=100;localStorage.setItem(SAVE_KEY,encodeSave(s));},floor);
   await p.reload({waitUntil:'domcontentloaded',timeout:120000});await p.locator('#continue').click();const m=modules.find(m=>m.floors.includes(floor));const hero=await p.evaluate(async m=>{const h=await import('/src/rendering/hero-sprite.js');if(!await h.heroSpriteReady)throw Error('Hero not ready');const a=await import('/src/rendering/'+m.path+'.js');if(!await a[m.load]()||!a[m.ready]())throw Error('Environment not ready');await document.fonts.ready;return h.heroSpriteState();},m);assert.equal(hero.ready,true);await p.waitForTimeout(200);await p.keyboard.press('Escape');await writeFile(join(out,`floor-${floor+1}-${width}.png`),Buffer.from(await p.locator('#game').evaluate(c=>c.toDataURL('image/png').split(',')[1]),'base64'));result.game.push({floor:floor+1,width,hero});await cx.close();

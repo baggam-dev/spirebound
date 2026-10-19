@@ -1,0 +1,29 @@
+{
+  "width": 1280,
+  "hero": {
+    "ready": true,
+    "frames": 4,
+    "bodyHeight": 58
+  },
+  "online": true,
+  "rooms": [
+    5,
+    6
+  ],
+  "floors": 10,
+  "apiResponses": [
+    {
+      "endpoint": "/api/session",
+      "status": 200,
+      "error": null,
+      "elapsedMs": 653
+    },
+    {
+      "endpoint": "/api/runs",
+      "status": 200,
+      "error": null,
+      "elapsedMs": 237
+    }
+  ],
+  "apiFailures": []
+}
