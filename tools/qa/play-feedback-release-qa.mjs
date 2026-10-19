@@ -7,8 +7,12 @@ const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'in
 const base=process.env.BASE_URL||'http://127.0.0.1:5173',out=process.argv[2]||'docs/qa-feedback-20261020/local';
 await mkdir(out,{recursive:true});const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[],result={base,views:[]};
 try{
+ if(process.env.QA_ONLY_REFERENCE_FALLBACK){
+  const p=await browser.newPage();p.setDefaultNavigationTimeout(120000);p.on('pageerror',e=>errors.push(e.message));await p.route('**/environment-stone-reference-v1.png',r=>r.abort());await p.goto(base,{waitUntil:'domcontentloaded'});
+  const fallback=await p.evaluate(async()=>{const m=await import('/src/rendering/environment-material.js'),a=await import('/src/rendering/environment-art.js');return !(await m.environmentReferenceReady)&&await a.environmentArtReady&&a.environmentArtLoaded();});assert.ok(fallback);assert.deepEqual(errors,[]);await writeFile(join(out,'result.json'),JSON.stringify({base,referenceFallback:fallback,errors},null,2));console.log(JSON.stringify({base,referenceFallback:fallback,errors}));
+ }else{
  for(const [width,height] of [[1280,800],[844,390],[932,430],[740,360]]){
-  const mobile=width<1000,cx=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile}),p=await cx.newPage();p.on('pageerror',e=>errors.push(e.message));
+  const mobile=width<1000,cx=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile}),p=await cx.newPage();p.setDefaultTimeout(120000);p.setDefaultNavigationTimeout(120000);p.on('pageerror',e=>errors.push(e.message));
   await p.clock.install();await p.goto(base,{waitUntil:'domcontentloaded'});
   await p.evaluate(async()=>{
    const {newRun,currentRoom}=await import('/src/game/engine.js'),{encodeSave,SAVE_KEY}=await import('/src/persistence/storage.js'),{relics}=await import('/src/progression/relics.js');
@@ -49,6 +53,8 @@ try{
   const sample=document.createElement('canvas');sample.width=sample.height=40;const sc=sample.getContext('2d');drawSpellDetails(sc,{enemies:[{hp:10,x:20,y:68,slow:1,slowFactor:.7,frostStacks:0}]},0);if(!sc.getImageData(0,0,40,40).data.some((v,i)=>i%4===3&&v))throw Error('slow marker expired with frost stacks');
   return {themes:5,slowOutlastsStacks:true,png:gallery.toDataURL('image/png').split(',')[1]};
  });await writeFile(join(out,'readability.png'),Buffer.from(result.readability.png,'base64'));delete result.readability.png;await p.close();
- const fallback=await browser.newPage();fallback.on('pageerror',e=>errors.push(e.message));await fallback.route('**/environment-stone-reference-v1.png',r=>r.abort());await fallback.goto(base);result.referenceFallback=await fallback.evaluate(async()=>{const m=await import('/src/rendering/environment-material.js'),a=await import('/src/rendering/environment-art.js');return !(await m.environmentReferenceReady)&&await a.environmentArtReady&&a.environmentArtLoaded();});assert.ok(result.referenceFallback);await fallback.close();
+ await writeFile(join(out,'checkpoint.json'),JSON.stringify(result,null,2));
+ const fallback=await browser.newPage();fallback.setDefaultNavigationTimeout(120000);fallback.on('pageerror',e=>errors.push(e.message));await fallback.route('**/environment-stone-reference-v1.png',r=>r.abort());await fallback.goto(base,{waitUntil:'domcontentloaded'});result.referenceFallback=await fallback.evaluate(async()=>{const m=await import('/src/rendering/environment-material.js'),a=await import('/src/rendering/environment-art.js');return !(await m.environmentReferenceReady)&&await a.environmentArtReady&&a.environmentArtLoaded();});assert.ok(result.referenceFallback);await fallback.close();
  result.errors=errors;assert.deepEqual(errors,[]);await writeFile(join(out,'result.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));
+ }
 }finally{await browser.close();}

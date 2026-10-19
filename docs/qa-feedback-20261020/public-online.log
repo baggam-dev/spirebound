@@ -1,0 +1,15 @@
+viewport 1280
+file:///C:/baggam-dev/spirebound/tools/qa/ranking-opening-release-qa.mjs:22
+   if(await page.locator('#rankStartRetry').count()){const message=await page.locator('#overlay').innerText();await writeFile(join(out,`failure-${width}.json`),JSON.stringify({width,message,apiResponses,apiFailures},null,2));throw Error('Online start rejected: '+message+' '+JSON.stringify({apiResponses,apiFailures}));}
+                                                                                                                                                                                                                                       ^
+
+Error: Online start rejected: 랭킹 연결 실패
+
+기록을 처리하지 못했습니다. 잠시 후 다시 시도하세요.
+
+로컬로 시작해도 플레이와 개인 기록은 저장되지만, 이번 도전은 온라인 순위에 등록되지 않습니다.
+
+다시 연결로컬로 시작돌아가기 {"apiResponses":[],"apiFailures":[{"endpoint":"/api/session","failure":"net::ERR_ABORTED","elapsedMs":6007}]}
+    at file:///C:/baggam-dev/spirebound/tools/qa/ranking-opening-release-qa.mjs:22:232
+
+Node.js v24.14.0
