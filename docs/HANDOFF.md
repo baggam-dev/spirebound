@@ -1,3 +1,17 @@
+## 최신 복사 가능한 인계 — 유물 전체 패키지 시안 후
+```text
+Spirebound C:\baggam-dev\spirebound main. status→WORK_STATUS→TODO→WORK_LOG최근→HANDOFF/기존변경보존/상단우선.
+운영release-20261019-160149-81acfc/runtime990bc2d/원격d0b2dd0. 미배포fdc21d8보상분출보존.
+현재 유물UI+전체37아이콘+좌상단소형HUD/+N+일반4/레어1 패키지PNG완료/검토대기. docs/design-drafts/relic-package-20261019/{relic-icons-v1.png,relic-hud-new-five-v1.png,design-v1.md,icon-manifest-v1.md,prompt-icons-v1.md,prompt-hud-v1.md}. 내장imagegen2회/원본保全/직접확인.
+새일반 선봉의숫돌/가시버클/의식의매듭/은빛호루라기·레어 불사조의성유골. 효과수치제안/새rare파랑·기존unique6보라유지. 총37·요정3제외일반제안34. 작은HUD기능이미있음/새PNG와배치로교체·runtime투명atlas승인후파생. 이전relic-ui-20261019는신규패키지범위로확장.
+runtime/테스트QA서버푸시배포공개확인없음·세션차단없음. 다음사용자확인→승인범위구현. 로컬커밋상시승인/새명시배포전테스트푸시배포금지/한국어5줄기본/실제PNG절대경로. 대사컷씬보류.
+```
+
+[패키지 시안 완료 · 유물37아이콘/소형HUD/신규5 검토 대기 — 2026-10-19]
+내장imagegen2회/직접PNG확인·원본보존. docs/design-drafts/relic-package-20261019/{relic-icons-v1.png,relic-hud-new-five-v1.png,design-v1.md,icon-manifest-v1.md,prompt-icons-v1.md,prompt-hud-v1.md}. 기존32+신규5 전체도트/좌상단소형줄·PC/가로모바일/+N/상세. 일반4가안: 선봉의숫돌(만피직격+20%), 가시버클(피격반경80평타100%반격/CD2), 의식의매듭(액티브쿨-15%), 은빛호루라기(요정/요정왕+20%). 레어1가안: 불사조의성유골(원정1회죽음방지/2하트·1.5초무적/소모저장·재획득초기화금지). 새rare파랑/기존unique6보라유지·총37/요정3제외제안34·가중치1/.6/.4제안은퍼센트아님. 이전유물UI범위확장·새투명atlas는승인후파생/현재PNG는시안판. runtime/테스트QA서버푸시배포공개확인없음. 기존540/서버27은이번검증아님. 문서diff정적검토·로컬커밋. 미배포fdc21d8보존·운영160149/runtime990bc2d/원격d0b2dd0유지·세션차단없음. 다음패키지검토→승인범위구현/새명시배포때누적검증. 대사컷씬보류. 기록도구JS구문실패1회는실행전차단/파일미변경후수정.
+
+[진행 중 · 유물전체아이콘/HUD+신규5종 패키지 — 2026-10-19] 사용자 전체아이콘·좌상단소형줄(슬더스풍)·일반4/레어1추가명시. 시작status clean/main74ff860·미배포분출fdc21d8보존. 현재유물32(일반26/유니크6;요정3일반제안제외) 및좌상단기존SVG/tooltip 확인. 신규5포함37개도트아이콘통일·작은HUD줄/상세·유물UI한패키지PNG검토자료 준비. 레어grade추가가안/기존unique유지. 효과후보first-hit/피격반격/액티브쿨/요정강화/원정1회부활, 값미확정. 시안설계만/runtime미반영/테스트QA서버푸시배포공개확인없음·운영160149/runtime990bc2d/원격d0b2dd0 유지. 현재4기록·다음37아이콘판+HUD/새5효과PNG→원본정확prompt보존/직접검토/로컬커밋. 세션차단없음。
+
 ## 최신 복사 가능한 인계 — 유물 UI 시안 후
 ```text
 Spirebound C:\baggam-dev\spirebound main. status→WORK_STATUS→TODO→WORK_LOG최근→HANDOFF/기존변경보존/상단우선.
