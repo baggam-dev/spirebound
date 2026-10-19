@@ -8,6 +8,7 @@ right.append(map);hud.append(left,right);
 const slots=[['.vitals',left],['#collectionHUD',left],['.build-status',left],['#statReadout',right]].map(([selector,target])=>{
  const node=document.querySelector(selector),marker=document.createComment('desktop HUD position');node.before(marker);return {node,marker,target};
 });
+hud.append(document.getElementById('relicStrip'));
 function arrange(){for(const {node,marker,target} of slots){if(coarse.matches)target.append(node);else marker.after(node);}}
 coarse.addEventListener('change',arrange);arrange();
 export function renderHUDMinimap(draw,ctx,...args){

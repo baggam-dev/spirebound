@@ -1,3 +1,23 @@
+## 최신 복사 가능한 인계 — 유물37 패키지 로컬 구현 후
+```text
+Spirebound C:\baggam-dev\spirebound main. status→WORK_STATUS→TODO→WORK_LOG최근→HANDOFF/기존변경보존/상단최신우선.
+운영release-20261019-160149-81acfc/runtime990bc2d/원격d0b2dd0. 미배포누적 fdc21d8보상분출+승인유물37패키지(전체아이콘·좌상단소형2줄/+N상세·두루마리선택/획득배너·一般4/레어1).
+유물패키지상세 docs/design-drafts/relic-package-20261019/implementation-v1.md. PNG assets/images/relic-icons-atlas-v1.png는승인37그림참조내장imagegen1회파생/원본prompt보존·실제ready/crop/축소아직미검증. 신규효과: 숫돌만피직격/가시피격반격/매듭액티브쿨/호루라기요정/성유골원정1회부활. rootphoenixSpent소비저장·제거재획득리셋금지·부활sameframe저장, player/무기유물상한37. 새rare파랑.6/기존unique보라.4유지.
+JS22구문/배포PS파서/diff정적통과. 新단위8/기존회귀·브라우저QA도구/공개160항목PNG목록준비만. 테스트/QA/청취/서버/푸시/배포/공개확인없음, 이전540/서버27은이번검증아님·세션차단없음.
+새명시배포때누적단위통합/37PNG alpha/crop/ready/fallback·PC가로터치/HUD+N/열쇠/0~3카드/모달·조건/교환·성공배너/로드정지·5효과HP壁冷却·요정Dot빔1회·성유골치명消費저장/再획득/무기37snapshot·버전정책을검증후푸시공식배포公開確認. 로컬커밋상시승인/진행은배포아님/한국어5줄기본/PNG絶対경로. 대사컷씬보류.
+```
+
+[로컬 구현 완료 · 유물37 패키지 실행 미검증·미배포 — 2026-10-19]
+- 승인 전체37도트 아이콘 참조 runtime PNG assets/images/relic-icons-atlas-v1.png 내장imagegen파생1회/원본exec-9afefb76/정확prompt/시안보존. RGBA1356×1160 헤더정적확인. 공용37매핑/알파행·셀crop/64타일·기존glyph fallback, 카드/HUD/가방/교환/보유/획득배너 재사용. 실제37ready/crop/작은크기가독성은 미검증.
+- 일반4(만피화살직격20%/실제피격반경80평타100%반격CD2/액티브쿨15%감소/요정·요정왕피해20%)·레어1(성유골원정1회죽음방지/2하트/1.5초무적) 연결. 새rare.6/기존unique.4유지. 부활은 실제피해로그후 죽음판정전/같은frame소비저장·제거재획득으로초기화안함. 저장선택rootflag/CD·player/무기유물상한실제37·기존저장/ID보존.
+- 좌상단 PC가변2~12열·터치4열/최대2줄·정확+N·열쇠보존·hover/focus/클릭탭일시정지상세, 두루마리0~3카드/조건미리보기/선택단일지급/지나가기소모·실제수집반경/유틸쿨표시. 실제성공(유물함/상자/시련/신전/교환)만1.4초비차단배너/정지숨김·방변경로드재생없음. 선택/교환기능과기존재화구조유지.
+- JS22 node--check·PS배포파서·diff정적통과. 신규단위8·기존전체유물/기존glyph/서버목록회귀갱신·tools/qa/relic-package-qa.mjs 및공개160항목PNG 준비만. 테스트실행/브라우저QA/음향/서버/푸시/배포/공개확인없음·이전540/서버27은이번검증아님. 정적수정: 반격쿨hook/무기32상한/가변HUD폭·0/2카드·구도움말4초, HUD patch불일치1회미변경후수정.
+- docs/design-drafts/relic-package-20261019/implementation-v1.md 상세. 현재전체소스/PNG/테스트설계4기록 로컬커밋. 미배포보상분출fdc21d8와누적·운영release160149/runtime990bc2d/원격d0b2dd0유지. 실행세션차단없음. 다음새명시배포때누적전체·실제UI/아이콘/저장/5효과·소모재획득/무기snapshot/공개검증 수행. 대사컷씬보류.
+
+[구현 연결/정적 체크포인트 — 2026-10-19] runtime37PNG RGBA1356×1160 승인참조파생1회(원본exec-9afefb76保全)/공용alpha crop모듈·새5효과/rare.6·부활소비저장/반격2초·화살첫타/요정·유틸15%·좌상단가변2줄/+N·두루마리선택/상세·성공배너까지연결. 개발PNG허용/배포목록/공개160자산목록 준비만. JS19 node--check/diff정적통과·PNG헤더정적확인, 회귀8작성만. 실행테스트QA청취서버푸시배포공개확인없음. 정적검토중반격쿨감소패턴누락/무기snapshot유물32상한발견수정; HUD편집patch문자불일치실패1회미변경후정확구간교체. 현재새소스3/CSS/PNG+기존소스·테스트설계4기록·다음最終静的diff/부활동일프레임저장/폭넓은유물fallback검토→구현기록로컬커밋. 운영160149유지·세션차단없음。
+
+[진행 중 · 승인 유물37 패키지 구현 — 2026-10-19] 사용자 아좋아진행으로 전체37아이콘/좌상단HUD·선택창·신규일반4/레어1 승인. 시작status clean/main3190aba·미배포분출fdc21d8보존. 승인아이콘참조 runtime투명atlas파생/공용아이콘모듈·신규효과/저장검증·소형줄/+N상세·두루마리선택/획득배너 연결. 테스트QA서버푸시배포공개검증없이 수정기록로컬커밋만. 현재4기록·다음PNG파생→효과/저장/UI/미실행회귀→구문diff정적검토·중간기록. 운영160149/runtime990bc2d/원격d0b2dd0 유지·세션차단없음。
+
 ## 최신 복사 가능한 인계 — 유물 전체 패키지 시안 후
 ```text
 Spirebound C:\baggam-dev\spirebound main. status→WORK_STATUS→TODO→WORK_LOG최근→HANDOFF/기존변경보존/상단우선.

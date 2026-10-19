@@ -2,6 +2,11 @@ import {hasFairy} from './skill-overhaul.js';
 import {CROSSBOW} from '../combat/combat-tuning.js';
 import {seededRandom} from '../game/random.js';
 export const relics=[
+ {id:'openingWhetstone',name:'선봉의 숫돌',description:'체력이 가득 찬 적에게 화살 직격 피해 +20%',stats:{}},
+ {id:'thornBuckle',name:'가시 버클',description:'실제 피격 시 반경 80 반격 · 평타 100% · 재사용 2초',stats:{}},
+ {id:'ritualKnot',name:'의식의 매듭',description:'액티브 재사용 시간 15% 감소 · 궁극기·구르기 제외',stats:{utilityCooldown:.15}},
+ {id:'fairyWhistle',name:'은빛 호루라기',description:'보유 요정·요정왕 피해 +20%',stats:{fairyDamage:.2}},
+ {id:'phoenixReliquary',name:'불사조의 성유골',description:'원정당 1회 죽음 방지 · 2하트 회복 · 1.5초 무적',grade:'rare',weight:.6,stats:{}},
  {id:'windSeal',name:'바람의 인장',description:'20처치마다 1하트 회복',stats:{}},
  {
   "id": "lens",
@@ -213,7 +218,10 @@ export const relicSummary=p=>ownedRelics(p).map(id=>relicInfo(id)?.name).filter(
 export function grantRelic(p,id){if(!relicInfo(id)||hasRelic(p,id))return false;p.relics=[...ownedRelics(p),id];delete p.relic;if(id==='heart'){p.max++;p.hp=Math.min(p.max,p.hp+1);}return true;}
 export function offerRelics(s,room){if(room.relicOffers)return;const random=seededRandom((s.seed??1)^((s.floor+1)*73471)^(s.room*1877)),pool=relics.filter(r=>!['sunFairy','snowFairy','stormFairy'].includes(r.id)&&!hasRelic(s.player,r.id));room.relicOffers=[];while(pool.length&&room.relicOffers.length<3){const chosen=weightedRelic(pool,random);room.relicOffers.push(chosen.id);pool.splice(pool.indexOf(chosen),1);}room.relicClaimed=false;}
 export function claimRelic(s,id){const r=s.floors[s.floor][s.room];if(s.status!=='playing'||!r.used||r.enemies.length||r.relicClaimed||!r.relicOffers||id!=='skip'&&!r.relicOffers.includes(id))return false;if(id!=='skip'&&!grantRelic(s.player,id))return false;r.relicClaimed=true;return true;}
-export function directRelicFactor(p,e){let factor=1+relicStat(p,'direct');if(hasRelic(p,'lens')&&Math.hypot(p.x-e.x,p.y-e.y)>=280)factor*=1.2;if(hasRelic(p,'hunter')&&e.type==='boss')factor*=1.25;if(hasRelic(p,'execution')&&e.hp<=e.max*.3)factor*=1.3;return factor;}
+export function directRelicFactor(p,e,arrow=false){let factor=1+relicStat(p,'direct');if(hasRelic(p,'lens')&&Math.hypot(p.x-e.x,p.y-e.y)>=280)factor*=1.2;if(hasRelic(p,'hunter')&&e.type==='boss')factor*=1.25;if(hasRelic(p,'execution')&&e.hp<=e.max*.3)factor*=1.3;if(arrow&&hasRelic(p,'openingWhetstone')&&e.hp>=e.max)factor*=1.2;return factor;}
+export const utilityCooldown=(p,id=p.utility)=>({focus:25,firstAid:30,guardian:25}[id]??25)*(1-relicStat(p,'utilityCooldown'));
+export const relicGrade=id=>relicInfo(id)?.grade||'normal';
+export const relicGradeName=id=>({normal:'일반',rare:'레어',unique:'유니크'})[relicGrade(id)];
 export function movementSpeed(p){return p.speed*hexFactor(p,'move')*(1+(p.bonusMove||0)+relicStat(p,'move')+(hasFairy(p,'snowFairy')?.05:0)+(p.fairyKing?.1:0)+(p.focusTime>0?.25:0))*(p.evolutions?.haste==='stride'?1.12:1);}
 export const hexFactor=(p,key)=>p.hexes?.[key]??1;
 export const dodgeCooldown=p=>Math.max(2.5,4*(1-relicStat(p,'blinkCooldown'))*hexFactor(p,'blink'));

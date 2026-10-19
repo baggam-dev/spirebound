@@ -1,4 +1,5 @@
 import {utilityAvailable} from '../progression/skill-overhaul.js';
+import {utilityCooldown} from '../progression/relics.js';
 export const utilitySkills=[
  {id:'focus',name:'마혈 각성',description:'1하트 소모 · 7초 공속 +70% / 이속 +25% · 재사용 25초'},
  {id:'firstAid',name:'혈월의 계약',description:'8초간 5처치 또는 보스 최대체력 10% 피해마다 1하트 회복 · 회당 최대 2하트 · 재사용 30초'},
@@ -13,6 +14,7 @@ export function castUtility(s){
  }else if(id==='focus'){s.player.hp--;s.player.focusTime=7;s.utilityCooldown=25;}
  else if(id==='guardian'){s.guardianTime=10;s.guardianCharges=1;s.utilityCooldown=25;}
  else return false;
+ s.utilityCooldown=utilityCooldown(s.player,id);
  return id;
 }
 export function tickBloodContract(s,room,dt,effects){

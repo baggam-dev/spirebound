@@ -1,0 +1,20 @@
+// Prepared for the next explicit deployment. Never submits scores.
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'index.mjs')).href);
+const base=process.env.BASE_URL||'http://127.0.0.1:5174',out=process.argv[2];await mkdir(out,{recursive:true});const browser=await chromium.launch({channel:'msedge',headless:true}),results=[],errors=[];
+try{
+ for(const [width,height] of [[1280,800],[844,390]]){
+  const ctx=await browser.newContext({viewport:{width,height},isMobile:width<1000,hasTouch:width<1000}),p=await ctx.newPage();p.setDefaultTimeout(120000);p.on('pageerror',e=>errors.push(e.message));await p.goto(base,{waitUntil:'domcontentloaded'});
+  await p.evaluate(async()=>{const {newRun}=await import('/src/game/engine.js'),{encodeSave,SAVE_KEY}=await import('/src/persistence/storage.js'),{objectPoint}=await import('/src/world/object-positions.js');const s=newRun(31);s.floor=1;s.room=s.floors[1].findIndex(r=>r.type==='boss');const r=s.floors[1][s.room];r.enemies=[];r.used=true;r.hasChest=false;r.relicOffers=['magnet','ritualKnot','phoenixReliquary'];r.relicClaimed=false;s.player.x=objectPoint(r).x;s.player.y=objectPoint(r).y+35;s.player.mainSkill='fire';s.player.fire=1;s.tutorialComplete=true;s.attack=999;s.pendingLevels=0;s.levelQueue=[];localStorage.setItem(SAVE_KEY,encodeSave(s));});
+  await p.reload({waitUntil:'domcontentloaded'});await p.locator('#continue').click();const art=await p.evaluate(async()=>{const a=await import('/src/rendering/relic-icons.js'),h=await import('/src/rendering/hero-sprite.js');if(!await a.relicIconsReady||!await h.heroSpriteReady)throw Error('art not ready');return a.relicIconsState();});assert.equal(art.frames,37);await p.locator('#interact').click();await p.locator('#relic2').waitFor();assert.equal(await p.locator('.relic-card').count(),3);
+  const sizing=await p.locator('.relic-card').evaluateAll(nodes=>nodes.map(n=>{const r=n.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};}));for(const r of sizing){assert.ok(r.x>=0&&r.x+r.w<=width+1);assert.ok(r.w>100);}await p.screenshot({path:join(out,'selection-'+width+'.png')});
+  await p.locator('#relic2').click();await p.waitForTimeout(80);await p.locator('[data-relic-icon="phoenixReliquary"]').first().waitFor();await p.screenshot({path:join(out,'acquired-'+width+'.png')});
+  const saved=await p.evaluate(async()=>{const {parseSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=parseSave(localStorage.getItem(SAVE_KEY));return {owned:s.player.relics,claimed:s.floors[s.floor][s.room].relicClaimed};});assert.ok(saved.owned.includes('phoenixReliquary'));assert.equal(saved.claimed,true);
+  await p.locator('#relicStrip [data-relic-detail="phoenixReliquary"]').click();await p.locator('#closeRelics').waitFor();assert.ok(await p.getByText('부활 준비 · 원정당 1회',{exact:true}).isVisible());await p.locator('#closeRelics').click();await p.reload({waitUntil:'domcontentloaded'});assert.equal(await p.locator('#relicBanner').isVisible(),false);results.push({width,art,sizing,saved,details:true,noLoadBanner:true,touchEmulated:width<1000});await ctx.close();
+ }
+ // Image failure keeps every glyph/label available; the real PNG path was exercised above.
+ const ctx=await browser.newContext(),p=await ctx.newPage();await p.route('**/relic-icons-atlas-v1.png',r=>r.abort());await p.goto(base);const fallback=await p.evaluate(async()=>{const a=await import('/src/rendering/relic-icons.js');return {ready:await a.relicIconsReady,state:a.relicIconsState(),markup:a.relicIconMarkup('phoenixReliquary')};});assert.equal(fallback.ready,false);assert.equal(fallback.state.frames,0);assert.ok(fallback.markup.includes('<svg'));await ctx.close();assert.deepEqual(errors,[]);await writeFile(join(out,'result.json'),JSON.stringify({base,results,fallback,errors,productionRecordsSubmitted:0},null,2));console.log(JSON.stringify({results,fallback,errors}));
+}finally{await browser.close();}

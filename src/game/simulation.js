@@ -1,3 +1,4 @@
+import {reactToRelicHit} from '../combat/relic-effects.js';
 import {tickRoll,tickRollMines,rollImmune} from '../combat/roll.js';
 import {syncUnlocks} from '../progression/skill-overhaul.js';
 import {tickSpectralBlade,resetSpectralBlade} from '../combat/spectral-blade.js';
@@ -72,9 +73,9 @@ export function stepRun(s,dt,input={x:0,y:0}){
  if(currentRoom(s).shrineState==='choice'&&!currentRoom(s).used)return {events:['incantation'],effects};
  trackRankingRoom(s);const p=s.player,metrics=ensureMetrics(s);observeGrowth(s);tickBossRecord(s,currentRoom(s),dt);s.projectiles??=[];advanceClock(s,dt,false);metrics.floorTimes[s.floor]=(metrics.floorTimes[s.floor]||0)+dt;
  events.push(...tickFinalEscape(s,currentRoom(s),dt));
- s.entryGrace=Math.max(0,(s.entryGrace||0)-dt);let r=currentRoom(s);
+ s.thornCooldown=Math.max(0,(s.thornCooldown||0)-dt);s.entryGrace=Math.max(0,(s.entryGrace||0)-dt);let r=currentRoom(s);
  let hitOrigin=null;
- const hurt=(raw,source='알 수 없는 공격',kind=null,origin=hitOrigin)=>{if(s.entryGrace>0||p.hp<=0||s.invulnerable>0||rollImmune(s)||raw<=0)return;if(absorbGuardian(s)){s.invulnerable=.65;effects.push({x:p.x,y:p.y-35,t:.8,color:'#b8d9f1',text:'수호!'});metrics.shields++;return;}const before=p.hp,result=takeDamage(s,r.trialState==='active'?Math.min(raw,9):raw,kind);if(before>p.hp)effects.push({x:p.x,y:p.y-35,t:1,color:'#ff7188',text:'-'+(before-p.hp)+' ♥',hitSource:source,hitAngle:origin?Math.atan2(origin.y-p.y,origin.x-p.x):null});metrics.damageTaken+=before-p.hp;recordHit(s,source,before-p.hp,result==='blocked');if(result==='blocked'){metrics.shields++;events.push('shield');}};
+ const hurt=(raw,source='알 수 없는 공격',kind=null,origin=hitOrigin)=>{if(s.entryGrace>0||p.hp<=0||s.invulnerable>0||rollImmune(s)||raw<=0)return;if(absorbGuardian(s)){s.invulnerable=.65;effects.push({x:p.x,y:p.y-35,t:.8,color:'#b8d9f1',text:'수호!'});metrics.shields++;return;}const before=p.hp,result=takeDamage(s,r.trialState==='active'?Math.min(raw,9):raw,kind);if(before>p.hp)effects.push({x:p.x,y:p.y-35,t:1,color:'#ff7188',text:'-'+(before-p.hp)+' ♥',hitSource:source,hitAngle:origin?Math.atan2(origin.y-p.y,origin.x-p.x):null});metrics.damageTaken+=before-p.hp;recordHit(s,source,before-p.hp,result==='blocked');if(result==='blocked'){metrics.shields++;events.push('shield');}if(before>p.hp&&reactToRelicHit(s,r,effects))events.push('phoenixRevived');};
  if(Math.hypot(input.x,input.y)>.01)p.lastMove={x:input.x,y:input.y};
  const rolling=tickRoll(s,r,dt,effects);if(!rolling){const n=Math.max(1,Math.hypot(input.x,input.y)),frostSlow=p.frostSlow>0?.72:1;moveBody(p,input.x/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),input.y/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),r.obstacles);}p.frostSlow=Math.max(0,(p.frostSlow||0)-dt);
 
