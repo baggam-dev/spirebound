@@ -29,7 +29,8 @@ try{
   if(mobile)await p.locator('#mobileMenu').click();else await p.locator('#pause').click();await p.locator('#resume').waitFor();
   const saved=()=>p.evaluate(()=>JSON.parse(JSON.parse(localStorage.getItem('spirebound.run.v1')).payload));const before=await saved();await p.clock.runFor(1500);const after=await saved();assert.equal(after.elapsed,before.elapsed,'menu must stop game');assert.equal(after.player.evolutions.rollMastery,'slash');
   const overlay=await p.locator('#overlay').boundingBox();if(mobile){assert.ok(overlay.y<=1&&overlay.height>=height-1);await p.screenshot({path:join(out,`menu-${width}.png`)});}
-  await p.locator('#resume').click();await p.clock.runFor(300);result.views.push({width,height,layout,paused:true,slashSaved:true});await cx.close();
+  let menuTools=false;if(mobile){await p.locator('#mobileMenuBag').click();await p.locator('#closeBag').waitFor();menuTools=true;await p.keyboard.press('Escape');}
+  else await p.locator('#resume').click();await p.clock.runFor(300);result.views.push({width,height,layout,paused:true,slashSaved:true,menuTools});await cx.close();
  }
  const p=await browser.newPage();p.on('pageerror',e=>errors.push(e.message));await p.route('**/feedback-probe',r=>r.fulfill({contentType:'text/html',body:'<canvas width="960" height="540"></canvas>'}));await p.goto(base+'/feedback-probe');
  result.effects=await p.evaluate(async()=>{

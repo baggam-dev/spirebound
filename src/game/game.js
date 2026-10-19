@@ -292,7 +292,12 @@ window.addEventListener('blur',backgroundPause);document.addEventListener('visib
 window.addEventListener('pagehide',()=>{save();lease.release();});
 window.addEventListener('pageshow',e=>{if(e.persisted){stop('pause');title();}});
 document.addEventListener('spirebound:orientation',e=>{if(!e.detail.blocked)return;input.reset();if(!paused)pause('가로로 돌려주세요. 전투와 기록 시간이 멈췄습니다.');});
-document.addEventListener('spirebound:menu',e=>{if(!s||s.status!=='playing')return;e.preventDefault();if(mode==='play')pause();});
+document.addEventListener('spirebound:menu',e=>{
+ if(!s||s.status!=='playing')return;e.preventDefault();if(mode==='play')pause();
+ if(mode!=='pause'||$('mobileMenuBag'))return;
+ const extra=document.createElement('div');extra.className='mobile-menu-tools';extra.innerHTML='<button id="mobileMenuBag">가방</button>'+(document.fullscreenEnabled?'<button id="mobileMenuFullscreen">전체 화면 전환</button>':'')+(!$('route').hidden?'<button id="mobileMenuRoute">귀환 경로 전환</button>':'');
+ $('overlay').querySelector('.panel')?.append(extra);button('mobileMenuBag',bag);button('mobileMenuFullscreen',()=>$('fullscreen').click());button('mobileMenuRoute',()=>$('route').click());
+});
 window.addEventListener('resize',()=>{if(!paused)pause(mobilePortrait()?'가로로 돌려주세요. 전투와 기록 시간이 멈췄습니다.':'화면 크기가 변경되어 멈췄습니다.');});
 setInterval(()=>lease.heartbeat(),3000);
 window.addEventListener('error',()=>{if(s&&s.status==='playing'){stop('error');save();panel('<h2>문제가 발생했습니다</h2><p>진행을 멈췄습니다. 진단 기록을 받은 뒤 새로고침해 이어갈 수 있습니다.</p><button id="export">진단 기록 받기</button>');button('export',exportReport);}});

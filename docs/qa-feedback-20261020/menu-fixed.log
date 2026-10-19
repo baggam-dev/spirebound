@@ -1,0 +1,16 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+  - waiting for getByText('가방', { exact: true }).first() to be visible
+
+    at C:\baggam-dev\spirebound\tools\qa\play-feedback-release-qa.mjs:32:121 {
+  log: [
+    "  - waiting for getByText('가방', { exact: true }).first() to be visible"
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0
