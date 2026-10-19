@@ -1,0 +1,443 @@
+{
+  "base": "http://127.0.0.1:5174",
+  "probe": {
+    "crops": [
+      {
+        "id": "windSeal",
+        "pixels": 2391,
+        "edge": 0
+      },
+      {
+        "id": "lens",
+        "pixels": 939,
+        "edge": 0
+      },
+      {
+        "id": "boots",
+        "pixels": 1839,
+        "edge": 0
+      },
+      {
+        "id": "iron",
+        "pixels": 1352,
+        "edge": 0
+      },
+      {
+        "id": "ember",
+        "pixels": 1513,
+        "edge": 0
+      },
+      {
+        "id": "rain",
+        "pixels": 1263,
+        "edge": 0
+      },
+      {
+        "id": "fang",
+        "pixels": 1415,
+        "edge": 0
+      },
+      {
+        "id": "ruby",
+        "pixels": 2096,
+        "edge": 0
+      },
+      {
+        "id": "quiver",
+        "pixels": 1238,
+        "edge": 0
+      },
+      {
+        "id": "feather",
+        "pixels": 1264,
+        "edge": 0
+      },
+      {
+        "id": "hourglass",
+        "pixels": 1652,
+        "edge": 0
+      },
+      {
+        "id": "crown",
+        "pixels": 1392,
+        "edge": 0
+      },
+      {
+        "id": "comet",
+        "pixels": 797,
+        "edge": 0
+      },
+      {
+        "id": "moon",
+        "pixels": 2050,
+        "edge": 0
+      },
+      {
+        "id": "heart",
+        "pixels": 1728,
+        "edge": 0
+      },
+      {
+        "id": "chalice",
+        "pixels": 1594,
+        "edge": 0
+      },
+      {
+        "id": "bastion",
+        "pixels": 1896,
+        "edge": 0
+      },
+      {
+        "id": "blade",
+        "pixels": 1768,
+        "edge": 0
+      },
+      {
+        "id": "orbit",
+        "pixels": 1482,
+        "edge": 0
+      },
+      {
+        "id": "coal",
+        "pixels": 2042,
+        "edge": 0
+      },
+      {
+        "id": "sun",
+        "pixels": 1659,
+        "edge": 0
+      },
+      {
+        "id": "prism",
+        "pixels": 1586,
+        "edge": 0
+      },
+      {
+        "id": "hunter",
+        "pixels": 1790,
+        "edge": 0
+      },
+      {
+        "id": "execution",
+        "pixels": 871,
+        "edge": 0
+      },
+      {
+        "id": "magnet",
+        "pixels": 1691,
+        "edge": 0
+      },
+      {
+        "id": "halo",
+        "pixels": 1028,
+        "edge": 0
+      },
+      {
+        "id": "openingWhetstone",
+        "pixels": 1697,
+        "edge": 0
+      },
+      {
+        "id": "thornBuckle",
+        "pixels": 1636,
+        "edge": 0
+      },
+      {
+        "id": "ritualKnot",
+        "pixels": 1806,
+        "edge": 0
+      },
+      {
+        "id": "fairyWhistle",
+        "pixels": 1445,
+        "edge": 0
+      },
+      {
+        "id": "phoenixReliquary",
+        "pixels": 1825,
+        "edge": 0
+      },
+      {
+        "id": "sunFairy",
+        "pixels": 1297,
+        "edge": 0
+      },
+      {
+        "id": "snowFairy",
+        "pixels": 1368,
+        "edge": 0
+      },
+      {
+        "id": "stormFairy",
+        "pixels": 1260,
+        "edge": 0
+      },
+      {
+        "id": "afterimage",
+        "pixels": 1664,
+        "edge": 0
+      },
+      {
+        "id": "orbitBlades",
+        "pixels": 1576,
+        "edge": 0
+      },
+      {
+        "id": "voidBell",
+        "pixels": 1317,
+        "edge": 0
+      }
+    ],
+    "bursts": [
+      {
+        "kind": "normal",
+        "total": 12,
+        "pieces": 2,
+        "random": 31,
+        "pause": true,
+        "immutable": true
+      },
+      {
+        "kind": "elite",
+        "total": 12,
+        "pieces": 4,
+        "random": 31,
+        "pause": true,
+        "immutable": true
+      },
+      {
+        "kind": "boss",
+        "total": 45,
+        "pieces": 9,
+        "random": 31,
+        "pause": true,
+        "immutable": true
+      }
+    ],
+    "uniqueImages": 37
+  },
+  "results": [
+    {
+      "width": 1280,
+      "spent": true,
+      "hp": 2,
+      "max": 6,
+      "damage": 1,
+      "count": 37,
+      "slots": 24,
+      "overflow": "+14",
+      "positions": [
+        {
+          "x": 178.328125,
+          "y": 144,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 209.328125,
+          "y": 144,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 240.328125,
+          "y": 144,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 271.328125,
+          "y": 144,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 302.328125,
+          "y": 144,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 333.328125,
+          "y": 144,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 364.328125,
+          "y": 144,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 395.328125,
+          "y": 144,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 426.328125,
+          "y": 144,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 457.328125,
+          "y": 144,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 488.328125,
+          "y": 144,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 519.328125,
+          "y": 144,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 178.328125,
+          "y": 175,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 209.328125,
+          "y": 175,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 240.328125,
+          "y": 175,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 271.328125,
+          "y": 175,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 302.328125,
+          "y": 175,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 333.328125,
+          "y": 175,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 364.328125,
+          "y": 175,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 395.328125,
+          "y": 175,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 426.328125,
+          "y": 175,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 457.328125,
+          "y": 175,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 488.328125,
+          "y": 175,
+          "w": 28,
+          "h": 28
+        },
+        {
+          "x": 519.328125,
+          "y": 175,
+          "w": 28,
+          "h": 28
+        }
+      ],
+      "reloadSpent": true,
+      "touchEmulated": false
+    },
+    {
+      "width": 844,
+      "spent": true,
+      "hp": 2,
+      "max": 6,
+      "damage": 1,
+      "count": 37,
+      "slots": 8,
+      "overflow": "+30",
+      "positions": [
+        {
+          "x": 132.890625,
+          "y": 51,
+          "w": 32,
+          "h": 30
+        },
+        {
+          "x": 166.890625,
+          "y": 51,
+          "w": 32,
+          "h": 30
+        },
+        {
+          "x": 200.890625,
+          "y": 51,
+          "w": 32,
+          "h": 30
+        },
+        {
+          "x": 234.890625,
+          "y": 51,
+          "w": 32,
+          "h": 30
+        },
+        {
+          "x": 132.890625,
+          "y": 83,
+          "w": 32,
+          "h": 30
+        },
+        {
+          "x": 166.890625,
+          "y": 83,
+          "w": 32,
+          "h": 30
+        },
+        {
+          "x": 200.890625,
+          "y": 83,
+          "w": 32,
+          "h": 30
+        },
+        {
+          "x": 234.890625,
+          "y": 83,
+          "w": 32,
+          "h": 30
+        }
+      ],
+      "reloadSpent": true,
+      "touchEmulated": true
+    }
+  ],
+  "errors": [],
+  "productionRecordsSubmitted": 0
+}

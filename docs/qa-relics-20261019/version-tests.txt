@@ -1,0 +1,19 @@
+✔ actual generated classic and expanded maps satisfy Python online-start validation (791.8133ms)
+✔ score examples, caps, second boundary and invalid metrics (2.2011ms)
+✔ actual entry counts once, map reveal does not count, pause excludes time (43.8526ms)
+✔ death processing counts original slime once and excludes summoned and split children (28.4849ms)
+✔ save continuation preserves enemy identity and deduplicates defeat (34.7804ms)
+✔ replacement descent wave with reused local IDs earns new distinct kills (29.1661ms)
+✔ surviving enemies in preserved descent rooms keep their identity (23.333ms)
+✔ legacy saves, practice, death and king kill alone cannot yield a score (78.5451ms)
+✔ score snapshot and completion history persist once (28.4007ms)
+✔ malformed ranking counters, identifiers and snapshots are rejected (75.7013ms)
+✔ new expanded season keeps both former runs loadable without joining the new ranking (173.9092ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1245.6007
