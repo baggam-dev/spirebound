@@ -1,4 +1,4 @@
-const SIZE={1:3,3:6,9:10},COLOR={1:'#c4edff',3:'#79d7fb',9:'#b7a1ed'};
+const SIZE={1:4,3:6,9:10},COLOR={1:'#e1f9ff',3:'#94e7ff',9:'#d2b8ff'};
 const frames=[];let loaded=false;
 export const xpShardsReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
  const im=new Image();im.onload=()=>{try{
@@ -29,6 +29,8 @@ export function drawXpDrops(c,s,r,reduced=false){
    c.globalAlpha=1;
   }
   shard(c,d.tier,x,y);
+  // Crisp highlight works with both the PNG and fallback, without altering the atlas.
+  c.fillStyle=d.tier===9?'#f2e1ff':'#edfcff';c.fillRect(Math.round(x),Math.round(y-1),d.tier===1?1:2,1);
   if(d.value>d.tier){c.fillStyle=COLOR[d.tier];c.fillRect(Math.round(x+SIZE[d.tier]/2+1),Math.round(y),1,2);if(Math.hypot(s.player.x-d.x,s.player.y-d.y)<110){c.font='9px Galmuri, monospace';c.textAlign='center';c.fillText('×'+(d.value/d.tier),x,y-9);}}
  }
  c.restore();

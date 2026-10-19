@@ -1,0 +1,35 @@
+✔ fairy orbit is deterministic, bounded, paused with elapsed time and survives reload (149.6191ms)
+✔ fairy projectile and king beam use the same visible pose, with a wall-safe fallback (58.3387ms)
+✔ potion heals one, locks three seconds, persists and does not consume at full health (100.5966ms)
+✔ trial contact, projectile and delayed elite explosion are all one heart (137.5265ms)
+✔ frost levels freeze on 4,3,2,2 hits and scale direct elemental damage (2.9805ms)
+✔ frost shard sizes reflect stack count, level four frozen deaths emit twelve (0.9815ms)
+✔ element relic boosts frost direct bonus and shards, not duration (0.8215ms)
+✔ ultimate is absent from all normal level offers and requires two bosses and level8 (46.7055ms)
+✔ multiple level gains preserve ordinary selection queue without ultimate cards (39.1198ms)
+✔ rain hits three times at fixed cast location and preserves partial pulses on reload (44.244ms)
+✔ turrets shoot, overlap at most twice and retain remaining lifetime across save (56.5353ms)
+✔ three unique fairies each fire one guided shot per 1.5 seconds (49.5023ms)
+✔ fairy secondary effects are independent and cannot trigger frost death chains (45.5902ms)
+✔ roll cloak grants bounded immunity while orbit and bell retain their attacks (37.1579ms)
+✔ legacy ultimate branch migrates to chosen tower and malformed new states are rejected (47.6656ms)
+✔ bonus skill rewards do not roll the level-up-only ultimate offer (25.578ms)
+✔ every boss offers deterministic unowned relics once including the final boss (137.4364ms)
+✔ relics accumulate without duplicates and cannot be reclaimed after save (87.5521ms)
+✔ skipping relics preserves the equipped item and claims the cache without changing cooldowns (25.6202ms)
+✔ relic benefits use exact distance boundaries, shield limits and cooldowns (38.154ms)
+✔ boots and stride bonuses are symmetric and diagonal motion is normalized (55.4923ms)
+✔ ember relic strengthens burn with no direct arrow penalty (2.224ms)
+✔ journal observes only current enemies and retains discovered elite traits (25.7393ms)
+✔ successful hits record source and floor totals; ignored hits are absent and history is bounded (52.2536ms)
+✔ lethal projectile records its actual source before death and does not count invulnerable hits (70.0205ms)
+✔ new save fields reject invalid relics, codex keys and damage history (39.0491ms)
+✔ damage diagnostics include capped burn, field and instant ultimate damage (32.5337ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1491.9675

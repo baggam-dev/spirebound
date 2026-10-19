@@ -1,4 +1,4 @@
-import {environmentMaterial,environmentSurface} from './environment-material.js';
+import {environmentMaterial,environmentSurface,environmentReferenceReady} from './environment-material.js';
 // Floor 2 presentation only. Approved originals and saved room geometry stay untouched.
 let frames=[],epoch=0,pending;
 const floors=new Map();
@@ -7,14 +7,14 @@ export const guardHallVersion=()=>epoch;
 export function loadGuardHallArt(){
  if(pending)return pending;
  pending=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const image=new Image();image.onload=()=>{try{
+ const image=new Image();image.onload=async()=>{try{await environmentReferenceReady;
   const next=[],sw=image.naturalWidth/4,sh=image.naturalHeight/3;
   for(let i=0;i<12;i++){
    const scan=document.createElement('canvas');scan.width=Math.ceil(sw);scan.height=Math.ceil(sh);const c=scan.getContext('2d');c.drawImage(image,i%4*sw,Math.floor(i/4)*sh,sw,sh,0,0,sw,sh);
    const data=c.getImageData(0,0,scan.width,scan.height).data;let left=scan.width,top=scan.height,right=-1,bottom=-1;
    for(let y=0;y<scan.height;y++)for(let x=0;x<scan.width;x++)if(data[(y*scan.width+x)*4+3]>48){left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);}
    if(right<=left||bottom<=top){resolve(false);return;}
-   const width=right-left+1,height=bottom-top+1,target=i<4?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<4?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(environmentMaterial(canvas,i>=4));
+   const width=right-left+1,height=bottom-top+1,target=i<4?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<4?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(environmentMaterial(canvas,i>=4,i===3));
   }
   frames=next;epoch++;floors.clear();resolve(true);
  }catch{resolve(false);}};image.onerror=()=>resolve(false);image.src=new URL('../../assets/images/guard-hall-atlas-v1.png',import.meta.url).href;
@@ -37,7 +37,7 @@ export function drawGuardHallFloor(c,s,r){
 export function paintGuardHallWalls(c,walls,edges){
  if(!guardHallLoaded()){loadGuardHallArt();return false;}c.save();c.imageSmoothingEnabled=false;const covered=new Set();
  for(const o of walls)for(let y=Math.floor(o.y/40)*40;y<o.y+o.h;y+=40)for(let x=Math.floor(o.x/80)*80;x<o.x+o.w;x+=80){const key=x+':'+y;if(covered.has(key))continue;covered.add(key);c.drawImage(frames[3],x,y,80,40);}
- for(const e of edges){const horizontal=e.side==='top'||e.side==='bottom',light=e.side==='top'||e.side==='left';c.fillStyle=light?'#9aa8b37c':'#111a27b0';if(horizontal)c.fillRect(e.start,e.axis-(light?0:3),e.end-e.start,3);else c.fillRect(e.axis-(light?0:3),e.start,3,e.end-e.start);}
+ for(const e of edges){const horizontal=e.side==='top'||e.side==='bottom',light=e.side==='top'||e.side==='left';c.fillStyle=light?'#7c879138':'#252d3948';if(horizontal)c.fillRect(e.start,e.axis-(light?0:3),e.end-e.start,3);else c.fillRect(e.axis-(light?0:3),e.start,3,e.end-e.start);}
  c.restore();return true;
 }
 export function drawGuardHallDoor(c,x,y,side,locked){

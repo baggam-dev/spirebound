@@ -1,3 +1,5 @@
+최신: 2026-10-20 사용자 통합 시안 구현·배포 승인. 구현 완료 및 로컬 검증 통과. implementation-v1.md와 최신 WORK_STATUS가 아래 초안보다 우선한다.
+
 # 플레이 후기 통합 시안 v1 — 2026-10-20 KST
 
 `environment-mobile-v1.png`는 내장 imagegen으로 기존 승인 환경v2를 참고한 디자인 제안이다. 실제 런타임/실기기 스크린샷이 아니며 아직 구현 승인 전이다. 원본 exec-073d0c1b-5313-434e-afdb-5d0afdf364cb.png를 유지하고 프로젝트에 그대로 복사했다. 정확 프롬프트는 prompt-v1.md.

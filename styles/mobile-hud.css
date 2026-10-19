@@ -30,3 +30,41 @@
  #interact{right:calc(12px + env(safe-area-inset-right));bottom:calc(176px + env(safe-area-inset-bottom));max-width:154px;min-height:36px;padding:5px;font-size:11px}
  .arena:has(#overlay:not(:empty)) #mobileLeftRail,.arena:has(#overlay:not(:empty)) #mobileRightRail{visibility:hidden}
 }
+/* 2026-10-20 approved height-first landscape layout. */
+@media(pointer:coarse) and (orientation:landscape){
+ body{--field-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));--field-width:min(calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right)),calc(var(--field-height)*16/9));--hud-rail:max(44px,calc((100vw - var(--field-width) - env(safe-area-inset-left) - env(safe-area-inset-right))/2))}
+ main{inset:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+ .arena{width:var(--field-width);margin:0;padding:0}
+ body>header{inset:env(safe-area-inset-top) calc(4px + env(safe-area-inset-right)) auto auto;width:calc(var(--hud-rail) - 8px);height:42px!important;padding:0;gap:2px;justify-content:center;background:none;z-index:31}
+ body>header>a,body>header .edition,body>header>#fullscreen{display:none!important}
+ body>header #pause,body>header #mobileMenu{display:flex;align-items:center;justify-content:center;min-width:0;min-height:38px;width:50%;height:38px;padding:0;font-size:21px}
+ body>header #pause{font-size:0}body>header #pause::before{content:'Ⅱ';font-size:22px}
+ body>header.mobile-open{inset:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);width:auto;height:auto!important;align-content:center;align-items:center;flex-direction:column;background:#10191df7;gap:8px}
+ body>header.mobile-open>button:not([hidden]){display:block;width:min(320px,85vw)!important;min-height:44px}
+ body>header.mobile-open>#fullscreen:not([hidden]){display:block!important}
+ #mobileLeftRail,#mobileRightRail{width:calc(var(--hud-rail) - 8px);gap:4px}
+ #mobileLeftRail{left:calc(4px + env(safe-area-inset-left));top:calc(4px + env(safe-area-inset-top));bottom:calc(78px + env(safe-area-inset-bottom));grid-template-rows:auto minmax(0,1fr) minmax(0,1fr)}
+ #mobileRightRail{right:calc(4px + env(safe-area-inset-right));top:calc(46px + env(safe-area-inset-top));bottom:calc(170px + env(safe-area-inset-bottom));grid-template-rows:auto minmax(0,1fr)}
+ #mobileMinimap{width:100%;height:auto;max-height:110px;aspect-ratio:166/160}
+ #mobileRightRail #statReadout.hud-stats{font-size:9px;line-height:1.2;overflow-wrap:anywhere}
+ #mobileLeftRail #collectionHUD{display:block;padding:0!important;background:none!important;max-width:none}
+ #collectionToggle{display:none}
+ #mobileLeftRail #relicStrip{display:grid;grid-template-columns:repeat(var(--relic-columns,2),minmax(0,1fr));gap:2px;max-height:none;overflow:visible}
+ #mobileLeftRail #relicStrip .hud-item{width:100%;height:26px;padding:2px;box-sizing:border-box}
+ #mobileLeftRail #relicStrip .pixel-icon{width:20px;height:20px}
+ #mobileLeftRail #collectionHUD:not(.expanded) #relicStrip>:nth-child(n+5){display:inline-flex}
+ #mobileLeftRail #collectionHUD .essence-item .pixel-icon{width:14px;height:14px}
+ #mobileLeftRail #skillStrip{grid-template-columns:repeat(2,minmax(0,1fr))}#mobileLeftRail .skill-item .pixel-icon{width:20px;height:20px}
+ #xpTrack{bottom:0;height:4px;overflow:visible}#xpLabel{position:absolute;top:auto;bottom:4px;height:10px;line-height:10px;font-size:8px}
+ #potion .action-value{font-size:18px;font-weight:bold;line-height:22px;min-width:22px;text-align:center;top:0;right:0;border:1px solid #bcc8b1;border-radius:4px}
+ #overlay:not(:empty),#overlay:has(.main-cards){inset:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);z-index:40}
+ body:has(#overlay:not(:empty))>header{visibility:hidden}
+}
+@media(pointer:coarse) and (orientation:landscape){
+ #potion:disabled{opacity:1}#potion:disabled .action-icon,#potion:disabled .action-label{opacity:.45}#potion:disabled .action-value{color:#fff;background:#111e26}
+}
+@media(pointer:coarse) and (orientation:landscape) and (max-width:780px){
+ body>header:not(.mobile-open){flex-wrap:wrap;height:82px!important;gap:2px}
+ body>header:not(.mobile-open) #pause,body>header:not(.mobile-open) #mobileMenu{width:100%;min-height:38px}
+ #mobileRightRail{top:calc(86px + env(safe-area-inset-top))}
+}

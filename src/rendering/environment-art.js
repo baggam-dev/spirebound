@@ -1,18 +1,18 @@
-import {environmentMaterial,environmentSurface} from './environment-material.js';
+import {environmentMaterial,environmentSurface,environmentReferenceReady} from './environment-material.js';
 // Approved environment atlas. Originals stay untouched; only draw-time crops are cached.
 let frames=[],epoch=0;
 const floorLayers=new Map();
 export const environmentArtLoaded=()=>frames.length===16;
 export const environmentArtVersion=()=>epoch;
 export const environmentArtReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const image=new Image();image.onload=()=>{try{
+ const image=new Image();image.onload=async()=>{try{await environmentReferenceReady;
   const next=[],sw=image.naturalWidth/4,sh=image.naturalHeight/4;
   for(let i=0;i<16;i++){
    const scan=document.createElement('canvas');scan.width=Math.ceil(sw);scan.height=Math.ceil(sh);const c=scan.getContext('2d');c.drawImage(image,i%4*sw,Math.floor(i/4)*sh,sw,sh,0,0,sw,sh);
    const d=c.getImageData(0,0,scan.width,scan.height).data;let left=scan.width,top=scan.height,right=-1,bottom=-1;
    for(let y=0;y<scan.height;y++)for(let x=0;x<scan.width;x++)if(d[(y*scan.width+x)*4+3]>48){left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);}
    if(right<=left||bottom<=top){resolve(false);return;}
-   const width=right-left+1,height=bottom-top+1,target=i<3?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<3?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(environmentMaterial(canvas,i>=3));
+   const width=right-left+1,height=bottom-top+1,target=i<3?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<3?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(environmentMaterial(canvas,i>=3,i===2));
   }
   frames=next;epoch++;floorLayers.clear();resolve(true);
  }catch{resolve(false);}};image.onerror=()=>resolve(false);image.src=new URL('../../assets/images/environment-hall-atlas-v1.png',import.meta.url).href;
@@ -53,7 +53,7 @@ export function drawHallFloor(c,s,r){
 export function paintHallWalls(c,walls,edges){
  if(!environmentArtLoaded())return false;c.save();c.imageSmoothingEnabled=false;
  const covered=new Set();for(const o of walls)for(let y=Math.floor(o.y/40)*40;y<o.y+o.h;y+=40)for(let x=Math.floor(o.x/80)*80;x<o.x+o.w;x+=80){const key=x+':'+y;if(covered.has(key))continue;covered.add(key);c.drawImage(frames[2],x,y,80,40);}
- for(const e of edges){const horizontal=e.side==='top'||e.side==='bottom',light=e.side==='top'||e.side==='left';c.fillStyle=light?'#a39d7c99':'#111a18bb';if(horizontal)c.fillRect(e.start,e.axis-(e.side==='bottom'?3:0),e.end-e.start,3);else c.fillRect(e.axis-(e.side==='right'?3:0),e.start,3,e.end-e.start);c.fillStyle=light?'#d0c5a533':'#263b2b88';if(horizontal)c.fillRect(e.start+2,e.axis+(light?3:-5),Math.max(0,e.end-e.start-4),1);}
+ for(const e of edges){const horizontal=e.side==='top'||e.side==='bottom',light=e.side==='top'||e.side==='left';c.fillStyle=light?'#827d6738':'#29322d48';if(horizontal)c.fillRect(e.start,e.axis-(e.side==='bottom'?3:0),e.end-e.start,3);else c.fillRect(e.axis-(e.side==='right'?3:0),e.start,3,e.end-e.start);c.fillStyle=light?'#b3aa8c18':'#263b2b88';if(horizontal)c.fillRect(e.start+2,e.axis+(light?3:-5),Math.max(0,e.end-e.start-4),1);}
  c.restore();return true;
 }
 export function drawHallDoor(c,x,y,side,locked){

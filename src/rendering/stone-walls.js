@@ -49,6 +49,16 @@ function paintBrokenFaces(ctx,obstacles,floor){
  }
  ctx.restore();
 }
+function paintCornerRubble(ctx,obstacles,floor){
+ ctx.save();ctx.fillStyle=stone[Math.max(0,Math.min(9,floor|0))][0];
+ for(const o of obstacles){const parts=stoneFragments(o);if(parts.length<2)continue;
+  for(const [x,y] of [[o.x+3,o.y+3],[o.x+o.w-5,o.y+3],[o.x+3,o.y+o.h-5],[o.x+o.w-5,o.y+o.h-5]]){
+   if(parts.some(p=>x>=p.x-1&&x<=p.x+p.w+1&&y>=p.y-1&&y<=p.y+p.h+1))continue;
+   ctx.fillRect(x,y,3,2);ctx.fillRect(x+1,y-1,1,1);
+  }
+ }
+ ctx.restore();
+}
 export function paintStoneWalls(ctx,obstacles,floor=0){
  const walls=obstacles.filter(o=>o.type==='wall').flatMap(stoneFragments);if(!walls.length)return;
  const theme=Math.max(0,Math.min(9,floor|0)),basalt=theme>=8,deep=theme>=9;
@@ -100,5 +110,5 @@ export function drawStoneWalls(ctx,obstacles,floor=0){
   paintStoneWalls(layer,obstacles,floor);paintBrokenFaces(layer,obstacles,floor);const walls=obstacles.filter(o=>o.type==='wall'),x=Math.max(0,Math.floor(Math.min(...walls.map(o=>o.x)))),y=Math.max(0,Math.floor(Math.min(...walls.map(o=>o.y)))),w=Math.min(960,Math.ceil(Math.max(...walls.map(o=>o.x+o.w))))-x,h=Math.min(540,Math.ceil(Math.max(...walls.map(o=>o.y+o.h))))-y;entry={key,canvas:environmentSurface(canvas),x,y,w,h};surfaces.delete(obstacles);surfaces.set(obstacles,entry);
   while(surfaces.size>4)surfaces.delete(surfaces.keys().next().value);
  }else{surfaces.delete(obstacles);surfaces.set(obstacles,entry);}
- const {canvas,x,y,w,h}=entry;if(w>0&&h>0){ctx.save();ctx.beginPath();for(const o of obstacles.filter(o=>o.type==='wall'))for(const p of stoneFragments(o))ctx.rect(p.x,p.y,p.w,p.h);ctx.clip();ctx.imageSmoothingEnabled=false;ctx.drawImage(canvas,x,y,w,h,x,y,w,h);ctx.restore();}
+ const {canvas,x,y,w,h}=entry;if(w>0&&h>0){paintCornerRubble(ctx,obstacles.filter(o=>o.type==='wall'),floor);ctx.save();ctx.beginPath();for(const o of obstacles.filter(o=>o.type==='wall'))for(const p of stoneFragments(o))ctx.rect(p.x,p.y,p.w,p.h);ctx.clip();ctx.imageSmoothingEnabled=false;ctx.drawImage(canvas,x,y,w,h,x,y,w,h);ctx.restore();}
 }

@@ -1,4 +1,4 @@
-import {environmentMaterial,environmentSurface} from './environment-material.js';
+import {environmentMaterial,environmentSurface,environmentReferenceReady} from './environment-material.js';
 // Approved floor-pair presentation. Images/caches never enter run, save or game RNG.
 const regular=()=>Array.from({length:12},(_,i)=>[i%4/4,Math.floor(i/4)/3,1/4,1/3]);
 const royal={file:'royal-hall-atlas-v1.png',frames:[],epoch:0,floors:new Map(),regions:regular()};
@@ -19,14 +19,14 @@ export const upperHallVersion=floor=>pack(floor)?.epoch||0;
 function load(p){
  if(p.pending)return p.pending;
  p.pending=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
-  const image=new Image();image.onload=()=>{try{
+  const image=new Image();image.onload=async()=>{try{await environmentReferenceReady;
    const next=[];
    for(let i=0;i<12;i++){
     const [rx,ry,rw,rh]=p.regions[i],sw=rw*image.naturalWidth,sh=rh*image.naturalHeight,scan=document.createElement('canvas');scan.width=Math.ceil(sw);scan.height=Math.ceil(sh);const c=scan.getContext('2d');c.drawImage(image,rx*image.naturalWidth,ry*image.naturalHeight,sw,sh,0,0,sw,sh);
     const pixels=c.getImageData(0,0,scan.width,scan.height),data=pixels.data;let left=scan.width,top=scan.height,right=-1,bottom=-1;
     for(let y=0;y<scan.height;y++)for(let x=0;x<scan.width;x++){const alpha=(y*scan.width+x)*4+3;if(data[alpha]<64){data[alpha]=0;continue;}left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);}
     if(right<=left||bottom<=top){resolve(false);return;}c.putImageData(pixels,0,0);
-    const width=right-left+1,height=bottom-top+1,target=i<4?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<4?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(environmentMaterial(canvas,i>=4));
+    const width=right-left+1,height=bottom-top+1,target=i<4?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<4?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(environmentMaterial(canvas,i>=4,i===3));
    }
    p.frames=next;p.epoch++;p.floors.clear();resolve(true);
   }catch{resolve(false);}};image.onerror=()=>resolve(false);image.src=new URL('../../assets/images/'+p.file,import.meta.url).href;
@@ -51,7 +51,7 @@ export function paintUpperHallWalls(c,walls,edges,floor){
  const p=pack(floor);if(!p)return false;if(p.frames.length!==12){load(p);return false;}c.save();c.imageSmoothingEnabled=false;const covered=new Set();
  for(const o of walls)for(let y=Math.floor(o.y/40)*40;y<o.y+o.h;y+=40)for(let x=Math.floor(o.x/80)*80;x<o.x+o.w;x+=80){const key=x+':'+y;if(covered.has(key))continue;covered.add(key);c.drawImage(p.frames[3],x,y,80,40);}
  if(floor===9)for(const o of walls){c.save();c.beginPath();c.rect(o.x,o.y,o.w,o.h);c.clip();for(let n=42;n<Math.max(o.w,o.h);n+=128){const vertical=o.h>o.w;drawUpperHallProp(c,floor,11,vertical?o.x+o.w/2:o.x+n,vertical?o.y+n:o.y+o.h,vertical?Math.min(o.w,22):40);}c.restore();}
- for(const e of edges){const horizontal=e.side==='top'||e.side==='bottom',light=e.side==='top'||e.side==='left';c.fillStyle=light?'#9e9a9b6c':'#14151fb0';if(horizontal)c.fillRect(e.start,e.axis-(light?0:3),e.end-e.start,3);else c.fillRect(e.axis-(light?0:3),e.start,3,e.end-e.start);}
+ for(const e of edges){const horizontal=e.side==='top'||e.side==='bottom',light=e.side==='top'||e.side==='left';c.fillStyle=light?'#7d797c38':'#29293648';if(horizontal)c.fillRect(e.start,e.axis-(light?0:3),e.end-e.start,3);else c.fillRect(e.axis-(light?0:3),e.start,3,e.end-e.start);}
  c.restore();return true;
 }
 export function drawUpperHallDoor(c,x,y,side,locked,floor){

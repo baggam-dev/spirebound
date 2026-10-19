@@ -1,0 +1,9 @@
+render checks passed
+viewport 1280
+interaction 1280 treasure
+interaction 1280 fountain
+viewport 844
+interaction 844 treasure
+interaction 844 fountain
+interaction checks passed
+{"base":"http://127.0.0.1:5173","render":{"atlasReady":true,"scatterRuns":30,"puddles":231,"stableFrame":true,"reducedStatic":true,"animation":true,"stateUnchanged":true,"canvasRestored":true,"facilityScenes":18},"heroStates":[{"ready":true,"frames":4,"bodyHeight":58},{"ready":true,"frames":4,"bodyHeight":58}],"fallback":true,"interactions":4,"errors":[]}

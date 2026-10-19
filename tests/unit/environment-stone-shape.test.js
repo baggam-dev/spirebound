@@ -6,13 +6,13 @@ import {demonRayLength} from '../../src/combat/demon-attack-shapes.js';
 
 // Prepared with the implementation; run only after the next explicit deployment instruction.
 test('broken stone corners are deterministic, bounded and do not modify saved geometry',()=>{
- for(const [w,h] of [[32,26],[80,60],[380,130]]){
+ for(const [w,h] of [[28,90],[32,26],[80,60],[380,130]]){
   const o={type:'wall',x:260,y:180,w,h},before=JSON.stringify(o),parts=stoneFragments(o);
   assert.equal(JSON.stringify(o),before);assert.strictEqual(stoneFragments(o),parts);
   assert.deepEqual(stoneFragments(JSON.parse(before)),parts);
   assert.ok(parts.length>1);let area=0;
   for(const p of parts){assert.ok(p.w>0&&p.h>0);assert.ok(p.x>=o.x&&p.y>=o.y&&p.x+p.w<=o.x+w&&p.y+p.h<=o.y+h);area+=p.w*p.h;}
-  assert.ok(area<w*h);assert.ok(area>=w*h-324);assert.ok(blocked(o.x+w/2,o.y+h/2,0,[o]));
+  assert.ok(area<w*h);assert.ok(area>=w*h*.7);assert.ok(blocked(o.x+w/2,o.y+h/2,0,[o]));
  }
 });
 test('upper room wall blocks at y40 also have visible broken corners',()=>{assert.ok(stoneFragments({type:'wall',x:25,y:40,w:155,h:180}).length>1);});

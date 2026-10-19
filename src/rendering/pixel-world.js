@@ -129,6 +129,9 @@ export function drawImpact(c,f){
  else if(Number.isFinite(f.r)){for(let i=0;i<8;i++){const a=i*Math.PI/4,rad=f.r*progress;box(c,f.x+Math.cos(a)*rad-2,f.y+Math.sin(a)*rad-2,3,3,f.color||'#f7d7a5');}}
  c.restore();}
 export function drawSpellDetails(c,r,time){c.save();
+ for(const e of r.enemies)if(e.hp>0&&e.slow>0&&(e.slowFactor??1)<1&&!(e.frozen>0)){
+  const x=Math.round(e.x),y=Math.round(e.y-48);c.fillStyle='#15232be6';c.fillRect(x-7,y-7,14,14);c.strokeStyle='#c4f3ff';c.lineWidth=2;c.beginPath();c.moveTo(x-4,y);c.lineTo(x+4,y);c.moveTo(x,y-5);c.lineTo(x,y+5);c.moveTo(x-3,y-3);c.lineTo(x+3,y+3);c.moveTo(x-3,y+3);c.lineTo(x+3,y-3);c.stroke();
+ }
  for(const e of r.enemies){if(e.frozen>0){for(const side of [-1,1]){line(c,[[e.x+side*16,e.y+12],[e.x+side*12,e.y-20],[e.x+side*5,e.y-12]],'#d1f5ff',2);}}if(e.poisonStacks?.length){for(let i=0;i<3;i++){const y=e.y+10-(time*15+i*11)%28;box(c,e.x-13+i*12,y,3,3,'#9ce17899');}}}
  c.restore();}
 export function drawArmorDetail(c,time=0,royal=false){

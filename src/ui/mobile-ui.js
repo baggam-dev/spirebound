@@ -5,9 +5,9 @@ const rotate=document.createElement('div');rotate.id='landscapeNotice';rotate.se
 function syncOrientation(){const blocked=mobilePortrait();rotate.hidden=!blocked;document.body.classList.toggle('mobile-portrait',blocked);document.dispatchEvent(new CustomEvent('spirebound:orientation',{detail:{blocked}}));}
 coarse.addEventListener('change',syncOrientation);portrait.addEventListener('change',syncOrientation);window.addEventListener('resize',syncOrientation);syncOrientation();
 const menu=document.createElement('button');
-menu.id='mobileMenu';menu.textContent='메뉴';menu.setAttribute('aria-expanded','false');header.append(menu);
+menu.id='mobileMenu';menu.textContent='☰';menu.title='메뉴';menu.setAttribute('aria-expanded','false');header.append(menu);
 menu.setAttribute('aria-label','메뉴 열기');
-menu.addEventListener('click',()=>{const open=header.classList.toggle('mobile-open');menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');});
+menu.addEventListener('click',()=>{if(!document.dispatchEvent(new CustomEvent('spirebound:menu',{cancelable:true})))return;const open=header.classList.toggle('mobile-open');menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');});
 header.addEventListener('click',e=>{if(e.target.closest('button')&&e.target!==menu){header.classList.remove('mobile-open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','메뉴 열기');}});
 header.addEventListener('keydown',e=>{if(e.key!=='Escape'||!header.classList.contains('mobile-open'))return;e.preventDefault();e.stopPropagation();header.classList.remove('mobile-open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','메뉴 열기');menu.focus();});
 const fullscreen=document.createElement('button');fullscreen.id='fullscreen';fullscreen.textContent='전체 화면';fullscreen.hidden=!document.fullscreenEnabled;header.insertBefore(fullscreen,menu);
