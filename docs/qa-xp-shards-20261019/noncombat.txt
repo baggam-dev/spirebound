@@ -1,0 +1,11 @@
+good
+bad
+blood
+interact 수상한 제단 · 위험과 보상 · E
+supply
+interact 수상한 제단 · 위험과 보상 · E
+trial
+interact 수상한 제단 · 위험과 보상 · E
+cancel
+interact 수상한 제단 · 위험과 보상 · E
+[{"scene":"good","relevant":[{"kind":"shrine","x":720,"y":210,"good":true}],"saved":{"used":true,"hp":5,"incantation":"might"}},{"scene":"bad","relevant":[{"kind":"shrine","x":720,"y":210,"good":false}],"saved":{"used":true,"hp":5,"incantation":"frailty"}},{"scene":"blood","relevant":[{"kind":"pact","x":240,"y":400,"choice":"blood"}],"saved":{"used":true,"hp":3,"event":"blood"}},{"scene":"supply","relevant":[{"kind":"pact","x":240,"y":400,"choice":"supply"}],"saved":{"used":true,"hp":5,"event":"supply"}},{"scene":"trial","relevant":[{"kind":"pact","x":240,"y":400,"choice":"trial"}],"saved":{"used":true,"hp":5,"event":"trial","trial":"active"}},{"scene":"cancel","relevant":[],"saved":{"used":false,"hp":5}}]

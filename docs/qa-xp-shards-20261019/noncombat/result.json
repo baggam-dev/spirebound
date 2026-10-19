@@ -1,0 +1,96 @@
+{
+  "base": "http://127.0.0.1:5174",
+  "results": [
+    {
+      "scene": "good",
+      "relevant": [
+        {
+          "kind": "shrine",
+          "x": 720,
+          "y": 210,
+          "good": true
+        }
+      ],
+      "saved": {
+        "used": true,
+        "hp": 5,
+        "incantation": "might"
+      }
+    },
+    {
+      "scene": "bad",
+      "relevant": [
+        {
+          "kind": "shrine",
+          "x": 720,
+          "y": 210,
+          "good": false
+        }
+      ],
+      "saved": {
+        "used": true,
+        "hp": 5,
+        "incantation": "frailty"
+      }
+    },
+    {
+      "scene": "blood",
+      "relevant": [
+        {
+          "kind": "pact",
+          "x": 240,
+          "y": 400,
+          "choice": "blood"
+        }
+      ],
+      "saved": {
+        "used": true,
+        "hp": 3,
+        "event": "blood"
+      }
+    },
+    {
+      "scene": "supply",
+      "relevant": [
+        {
+          "kind": "pact",
+          "x": 240,
+          "y": 400,
+          "choice": "supply"
+        }
+      ],
+      "saved": {
+        "used": true,
+        "hp": 5,
+        "event": "supply"
+      }
+    },
+    {
+      "scene": "trial",
+      "relevant": [
+        {
+          "kind": "pact",
+          "x": 240,
+          "y": 400,
+          "choice": "trial"
+        }
+      ],
+      "saved": {
+        "used": true,
+        "hp": 5,
+        "event": "trial",
+        "trial": "active"
+      }
+    },
+    {
+      "scene": "cancel",
+      "relevant": [],
+      "saved": {
+        "used": false,
+        "hp": 5
+      }
+    }
+  ],
+  "errors": [],
+  "observerOnlyInstrumentation": true
+}

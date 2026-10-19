@@ -1,3 +1,9 @@
+[배포 전 검증 완료 — 2026-10-19] 전체540/540·PNG3종3/6/10px+fallback·XP실제PC/가로터치수집저장·시설6건·비전투실제성공5건/취소1건 통과. 개발PNG허용누락수정/서버통합2/2. 신규QA fixture 초기mainSkill·시설거리누락으로대기한실행은중단후fixture보정, 제품실패로판단하지않음; 최종noncombat/result.json 성공emit각1/취소0·blood5→3/시련active 확인. 현재server.js/관련테스트/QA증거/4기록·다음커밋푸시→공식배포→순차공개검증. 운영131144유지·개발서버5174/session9331만가동·차단없음。
+
+[로컬 검증 체크포인트 — 2026-10-19] 전체 node --test 540/540 통과. XP ready3frames/실제폭3·6·10/fallback/정지·Canvas복원·상태불변/비전투9분기 렌더 통과; 실제PC1280/가로터치에뮬844 처치13XP바닥→13수집→저장재로드 통과. 기존상자샘물함정 PC/터치6건 통과. 첫XP브라우저QA atlasready 실패원인은 개발server.js PNG허용누락→추가, 서버통합2/2 재검증. 현재server.js/서버테스트/신규QA/결과/4기록 수정·다음비전투실제콜백→커밋푸시공식배포. 개발서버5174/session9331 가동, 운영131144 유지·차단없음。
+
+[진행 중 · 비전투6종+XP파편 누적 배포 검증 — 2026-10-19] 사용자 ㄱㄱ 배포까지 명시승인. 시작git status clean/main16a3fc8, 미배포c7ee626·시안문서누적보존. 전체회귀/추가단위→XP3종ready/crop/fallback·총량/자석벽/저장방재진입/보스중복/튜토리얼·PC가로터치/비전투6종·누적시설회귀→커밋푸시공식배포→공개자산/API온라인실제확인. 운영131144/runtime23ae822유지·현재4기록/다음검증실행·세션차단없음.
+
 ## 최신 복사 가능한 인계 — 경험치 파편 로컬 구현 후
 ```text
 Spirebound C:\baggam-dev\spirebound main. git status --short→WORK_STATUS→TODO→WORK_LOG최근→HANDOFF. 기존변경보존/최신상단우선.
