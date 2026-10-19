@@ -18,8 +18,16 @@ function shard(c,tier,x,y){
 export function drawXpDrops(c,s,r,reduced=false){
  if(!r.xpDrops?.length)return;c.save();c.imageSmoothingEnabled=false;
  for(const d of r.xpDrops){
-  const age=Math.max(0,s.elapsed-d.born),q=Math.min(1,age/.18),x=d.fromX+(d.x-d.fromX)*q,y=d.fromY+(d.y-d.fromY)*q-(reduced?0:Math.sin(q*Math.PI)*7);
-  if(d.attract&&!reduced){const angle=Math.atan2(s.player.y-d.y,s.player.x-d.x);c.fillStyle=COLOR[d.tier];c.globalAlpha=.3;c.fillRect(Math.round(x-Math.cos(angle)*5),Math.round(y-Math.sin(angle)*5),1,1);c.globalAlpha=1;}
+  const age=Math.max(0,s.elapsed-d.born),boss=d.burst==='boss',elite=d.burst==='elite',delay=boss&&!reduced?(d.burstOrder%3)*.025:0;
+  const q=d.attract?1:Math.min(1,Math.max(0,age-delay)/(reduced ? .18 : boss ? .34 : elite ? .24 : .18));
+  const x=d.fromX+(d.x-d.fromX)*q,y=d.fromY+(d.y-d.fromY)*q-(reduced?0:Math.sin(q*Math.PI)*(boss?14:elite?10:7));
+  if(!reduced){
+   c.fillStyle=COLOR[d.tier];
+   if(d.attract){const angle=Math.atan2(s.player.y-d.y,s.player.x-d.x);for(let i=1;i<=3;i++){c.globalAlpha=.32/i;c.fillRect(Math.round(x-Math.cos(angle)*i*3),Math.round(y-Math.sin(angle)*i*3),1,1);}}
+   else if((boss||elite)&&q>0&&q<1){c.globalAlpha=.28;c.fillRect(Math.round(x-(d.x-d.fromX)*.1),Math.round(y+3),1,1);}
+   if((boss||elite)&&d.burstOrder===0&&age<.14&&!d.attract){c.globalAlpha=.55*(1-age/.14);c.fillStyle='#e2ddf4';c.fillRect(Math.round(d.fromX-2),Math.round(d.fromY),5,1);c.fillRect(Math.round(d.fromX),Math.round(d.fromY-2),1,5);}
+   c.globalAlpha=1;
+  }
   shard(c,d.tier,x,y);
   if(d.value>d.tier){c.fillStyle=COLOR[d.tier];c.fillRect(Math.round(x+SIZE[d.tier]/2+1),Math.round(y),1,2);if(Math.hypot(s.player.x-d.x,s.player.y-d.y)<110){c.font='9px Galmuri, monospace';c.textAlign='center';c.fillText('×'+(d.value/d.tier),x,y-9);}}
  }

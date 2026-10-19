@@ -32,3 +32,12 @@ test('cues need a user gesture, obey mute and throttle repeated attacks',()=>{
  sound.update({muted:false,volume:0});assert.equal(sound.play('reward'),false);
  sound.update({volume:.5});assert.equal(sound.play('reward'),true);
 });
+
+test('reward family cannot stack, pickup and danger cues stay independent',()=>{
+ FakeAudio.instances.length=0;const sound=createSoundSystem(memory(),FakeAudio);sound.unlock();const audio=FakeAudio.instances[0];
+ assert.equal(sound.play('xpBoss'),true);assert.equal(audio.started.length,3);
+ assert.equal(sound.play('reward'),false);assert.equal(sound.play('xpElite'),false);assert.equal(sound.play('growth'),false);
+ assert.equal(sound.play('warning'),true);assert.equal(sound.play('pickup'),true);assert.equal(sound.play('pickup'),false);
+ audio.currentTime+=.21;assert.equal(sound.play('growth'),true);assert.equal(sound.play('growth'),false);
+ audio.currentTime+=1;sound.update({muted:true});assert.equal(sound.play('xpBoss'),false);sound.update({muted:false,volume:0});assert.equal(sound.play('xpElite'),false);
+});
