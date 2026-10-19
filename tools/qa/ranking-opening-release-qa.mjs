@@ -11,12 +11,15 @@ try{
  for(const [width,height] of (process.env.QA_TOUCH_ONLY?[[844,390]]:[[1280,800],[844,390]])){
   const context=await browser.newContext({viewport:{width,height},isMobile:width<1000,hasTouch:width<1000}),page=await context.newPage();
   page.setDefaultTimeout(120000);page.setDefaultNavigationTimeout(120000);page.on('pageerror',e=>errors.push(e.message));
-  const apiResponses=[];page.on('response',async r=>{if(/\/api\/(session|runs)$/.test(r.url())){const body=await r.json().catch(()=>({}));apiResponses.push({endpoint:new URL(r.url()).pathname,status:r.status(),error:body.error||null});}});
+  const apiResponses=[],apiFailures=[],requestTimes=new WeakMap(),isStart=url=>/\/api\/(session|runs)$/.test(url);
+  page.on('request',r=>{if(isStart(r.url()))requestTimes.set(r,Date.now());});
+  page.on('requestfailed',r=>{if(isStart(r.url()))apiFailures.push({endpoint:new URL(r.url()).pathname,failure:r.failure()?.errorText||'unknown',elapsedMs:Date.now()-(requestTimes.get(r)||Date.now())});});
+  page.on('response',async r=>{if(isStart(r.url())){const elapsedMs=Date.now()-(requestTimes.get(r.request())||Date.now()),body=await r.json().catch(()=>({}));apiResponses.push({endpoint:new URL(r.url()).pathname,status:r.status(),error:body.error||null,elapsedMs});}});
   console.log('viewport',width);await page.goto(base,{waitUntil:'domcontentloaded'});
   if(online){
    await page.locator('#start').click();
    await page.waitForFunction(()=>document.querySelector('#runHUD')?.hidden===false||!!document.querySelector('#rankStartRetry'));
-   if(await page.locator('#rankStartRetry').count()){const message=await page.locator('#overlay').innerText();await writeFile(join(out,`failure-${width}.json`),JSON.stringify({width,message,apiResponses},null,2));throw Error('Online start rejected: '+message+' '+JSON.stringify(apiResponses));}
+   if(await page.locator('#rankStartRetry').count()){const message=await page.locator('#overlay').innerText();await writeFile(join(out,`failure-${width}.json`),JSON.stringify({width,message,apiResponses,apiFailures},null,2));throw Error('Online start rejected: '+message+' '+JSON.stringify({apiResponses,apiFailures}));}
   }else{
    await page.evaluate(async()=>{const {newRun}=await import('/src/game/engine.js'),{encodeSave,SAVE_KEY}=await import('/src/persistence/storage.js');const s=newRun(31,{campaign:'expanded'});s.tutorialComplete=true;localStorage.setItem(SAVE_KEY,encodeSave(s));});
    await page.reload({waitUntil:'domcontentloaded'});await page.locator('#continue').click();
@@ -33,7 +36,7 @@ try{
   assert.equal(state.hero.frames,4);assert.deepEqual(state.rooms,[5,6]);assert.equal(state.floors,10);if(online)assert.equal(state.online,true);
   await page.keyboard.press('Escape');await page.waitForTimeout(100);
   await writeFile(join(out,`hero-${width}.png`),Buffer.from(await page.locator('#game').evaluate(c=>c.toDataURL('image/png').split(',')[1]),'base64'));
-  await page.screenshot({path:join(out,`screen-${width}.png`)});results.push({width,...state});await writeFile(join(out,`result-${width}.json`),JSON.stringify({width,...state},null,2));await context.close();
+  await page.screenshot({path:join(out,`screen-${width}.png`)});results.push({width,...state,apiResponses,apiFailures});await writeFile(join(out,`result-${width}.json`),JSON.stringify({width,...state,apiResponses,apiFailures},null,2));await context.close();
  }
  assert.deepEqual(errors,[]);const result={base,onlineButtonStarts:online?results.length:0,results,errors,productionScoresSubmitted:0};await writeFile(join(out,'result.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));
 }finally{await browser.close();}

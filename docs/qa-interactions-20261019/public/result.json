@@ -1,0 +1,102 @@
+{
+  "base": "https://168.107.21.43",
+  "render": {
+    "noLoadReplay": true,
+    "pauseStable": true,
+    "canvasRestored": true,
+    "stateUnchanged": true,
+    "lifetime": 0.9,
+    "cap": 4,
+    "reduced": true,
+    "trapWarning": true,
+    "offsetDoors": 4,
+    "passagesEmpty": true,
+    "lockedNoRelease": true
+  },
+  "results": [
+    {
+      "scene": "chest",
+      "width": 1280,
+      "used": true,
+      "hp": 3,
+      "max": 5,
+      "loot": "heal",
+      "enemies": 0,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "fountain",
+      "width": 1280,
+      "used": true,
+      "hp": 5,
+      "max": 5,
+      "enemies": 0,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "trap",
+      "width": 1280,
+      "used": true,
+      "hp": 2,
+      "max": 5,
+      "loot": "elites",
+      "enemies": 3,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "chest",
+      "width": 844,
+      "used": true,
+      "hp": 3,
+      "max": 5,
+      "loot": "heal",
+      "enemies": 0,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "fountain",
+      "width": 844,
+      "used": true,
+      "hp": 5,
+      "max": 5,
+      "enemies": 0,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "trap",
+      "width": 844,
+      "used": true,
+      "hp": 2,
+      "max": 5,
+      "loot": "elites",
+      "enemies": 3,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    }
+  ],
+  "errors": [],
+  "productionRecordsSubmitted": 0
+}
