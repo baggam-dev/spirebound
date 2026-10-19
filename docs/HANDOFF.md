@@ -1,3 +1,16 @@
+## 최신 복사 가능한 인계 — 유물 UI 시안 후
+```text
+Spirebound C:\baggam-dev\spirebound main. status→WORK_STATUS→TODO→WORK_LOG최근→HANDOFF/기존변경보존/상단우선.
+운영release-20261019-160149-81acfc/runtime990bc2d/원격d0b2dd0. 미배포fdc21d8(보상分出/음향·정적확인만) 보존.
+현재 유물UI PNG시안완료/검토대기: docs/design-drafts/relic-ui-20261019/relic-ui-v1.png·design-v1.md·prompt-v1.md. 내장imagegen1회/원본보존/직접PNG확인. PC3카드/가로모바일/보유요약/실제미리보기/성공획득비차단배너. 기존최대3/즉시1회선택/지나가기消耗 유지·새유물등급가격재추첨장착確認단계없음. 모바일그림footer생략→구현은지나가기보존. 아이콘placeholder·새아이콘세트확정아님.
+시안문서만로컬커밋/runtime반영·테스트QA서버푸시배포공개확인없음. 세션차단없음. 다음사용자확인후승인범위구현. 새명시배포때보상분출+유물UI누적검증배포. 로컬커밋상시승인/한국어5줄이내/실제PNG절대경로. 대사컷씬보류.
+```
+
+[시안 완료 · 유물 획득/선택 화면 검토 대기 — 2026-10-19]
+실제relicPanel/offer/claim/preview·획득반경코드검토 후 내장imagegen1회 승인스킬두루마리톤참조PNG 생성/직접육안확인. docs/design-drafts/relic-ui-20261019/{relic-ui-v1.png,design-v1.md,prompt-v1.md}, 원본exec-b1c01d2e-667f-40ca-a12d-42312959d345.png 보존. PC3카드/가로모바일3열/보유개수아이콘요약·실제효과조건비교·비차단획득배너 제안. 최대3/1회즉시획득·지나가기유물함소모/중복금지·실제유니크만표시 유지. 모바일그림은지나가기footer생략했지만구현시보존·그림아이콘/숫자예시/배너촛불은배치분위기이며새runtime아이콘세트요구아님. 정확제약설계기록. 시안문서만/runtime자산미반영/테스트QA서버푸시배포공개확인없음. 문서diff정적검토·로컬커밋, 미배포보상분출fdc21d8보존·운영160149/runtime990bc2d/원격d0b2dd0유지. 세션차단없음. 다음사용자검토→승인범위구현; 새명시배포때보상분출+유물UI누적검증. 대사컷씬보류.
+
+[진행 중 · 유물 획득/선택 화면 시안 — 2026-10-19] 사용자 이어서진행으로 다음순서착수. 시작status clean/main fdc21d8·미배포보상분출보존. 실제relicPanel/preview/offer/claim/grade확인: 최대3개·누적·카드즉시1선택/지나가기는영구소모·거래취소별도·유니크6중요정3은현재일반유물제안제외. 기존스킬두루마리톤참조·선택화면/작은획득확인/가로모바일패키지PNG 준비. 신규유물·등급·가격·재추첨·확인단계추가없음. 시안문서만/runtime/테스트QA서버푸시배포공개확인없음. 운영160149/runtime990bc2d/원격d0b2dd0 유지. 현재4기록·다음내장imagegen1회→원본prompt보존/직접PNG검토·로컬커밋. 세션차단없음。
+
 ## 최신 복사 가능한 인계 — 보상 분출 로컬 연결 후
 ```text
 Spirebound C:\baggam-dev\spirebound main. status→WORK_STATUS→TODO→WORK_LOG최근→HANDOFF/기존변경보존/상단우선.
