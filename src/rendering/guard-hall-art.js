@@ -1,3 +1,4 @@
+import {environmentMaterial,environmentSurface} from './environment-material.js';
 // Floor 2 presentation only. Approved originals and saved room geometry stay untouched.
 let frames=[],epoch=0,pending;
 const floors=new Map();
@@ -13,7 +14,7 @@ export function loadGuardHallArt(){
    const data=c.getImageData(0,0,scan.width,scan.height).data;let left=scan.width,top=scan.height,right=-1,bottom=-1;
    for(let y=0;y<scan.height;y++)for(let x=0;x<scan.width;x++)if(data[(y*scan.width+x)*4+3]>48){left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);}
    if(right<=left||bottom<=top){resolve(false);return;}
-   const width=right-left+1,height=bottom-top+1,target=i<4?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<4?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=true;cc.imageSmoothingQuality='high';cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(canvas);
+   const width=right-left+1,height=bottom-top+1,target=i<4?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<4?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(environmentMaterial(canvas,i>=4));
   }
   frames=next;epoch++;floors.clear();resolve(true);
  }catch{resolve(false);}};image.onerror=()=>resolve(false);image.src=new URL('../../assets/images/guard-hall-atlas-v1.png',import.meta.url).href;
@@ -29,7 +30,7 @@ export function drawGuardHallFloor(c,s,r){
   for(let row=0;row<6;row++)for(let col=0;col<7;col++){const x=col*160-(row%2?80:0),y=row*96,h=(seed+Math.imul(row+3,7919)+Math.imul(col+7,17389))>>>0;cc.save();cc.translate(x+80,y+48);cc.rotate((h>>>5)%2*Math.PI);cc.drawImage(frames[h%3],-80,-48,160,96);cc.restore();}
   // Worn drill-hall inlay is decorative: no danger circle or raised obstacle.
   if(r.type==='boss'){cc.strokeStyle='#a6a38b35';cc.lineWidth=1;cc.strokeRect(245.5,132.5,469,290);cc.strokeStyle='#17212c70';cc.strokeRect(249.5,136.5,461,282);for(const x of [245,700])for(const y of [132,408]){cc.fillStyle='#81775840';cc.fillRect(x,y,15,2);cc.fillRect(x,y,2,15);cc.fillStyle='#b9ae8350';cc.fillRect(x+4,y+4,2,2);}}
-  const shade=cc.createRadialGradient(480,270,100,480,270,540);shade.addColorStop(0,'#24303d24');shade.addColorStop(1,'#10182470');cc.fillStyle=shade;cc.fillRect(0,0,960,540);layer={key,canvas};floors.set(r,layer);while(floors.size>3)floors.delete(floors.keys().next().value);
+  const shade=cc.createRadialGradient(480,270,100,480,270,540);shade.addColorStop(0,'#24303d24');shade.addColorStop(1,'#10182470');cc.fillStyle=shade;cc.fillRect(0,0,960,540);layer={key,canvas:environmentSurface(canvas)};floors.set(r,layer);while(floors.size>3)floors.delete(floors.keys().next().value);
  }
  c.save();c.beginPath();c.rect(26,45,908,455);c.clip();c.imageSmoothingEnabled=false;c.drawImage(layer.canvas,0,0);c.restore();return true;
 }

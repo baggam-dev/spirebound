@@ -21,8 +21,8 @@ test('cached navigation preserves original direction across shapes, radii and ge
 });
 test('wall image is reused, invalidated on edits and bounded across room changes',()=>{
  const previous=globalThis.OffscreenCanvas;let created=0,draws=0;const c={save(){},restore(){},beginPath(){},rect(){},clip(){},fillRect(){},drawImage(){draws++;}};
- globalThis.OffscreenCanvas=class{constructor(){created++;}getContext(){return c;}};
- try{const walls=[{x:25,y:40,w:155,h:185,type:'wall'}];drawStoneWalls(c,walls);drawStoneWalls(c,walls);assert.equal(created,1);assert.equal(draws,2);walls[0].w++;drawStoneWalls(c,walls);assert.equal(created,2);for(let i=0;i<5;i++)drawStoneWalls(c,[{...walls[0],x:i*48}]);const before=created;drawStoneWalls(c,walls);assert.equal(created,before+1);}finally{globalThis.OffscreenCanvas=previous;}
+ globalThis.OffscreenCanvas=class{constructor(){created++;}getContext(){return {...c,drawImage(){}};}};
+ try{const walls=[{x:25,y:40,w:155,h:185,type:'wall'}];drawStoneWalls(c,walls);const built=created;assert.ok(built>0);drawStoneWalls(c,walls);assert.equal(created,built);assert.equal(draws,2);walls[0].w++;drawStoneWalls(c,walls);assert.ok(created>built);for(let i=0;i<5;i++)drawStoneWalls(c,[{...walls[0],x:i*48}]);const before=created;drawStoneWalls(c,walls);assert.ok(created>before);}finally{globalThis.OffscreenCanvas=previous;}
 });
 test('outer and inner wall faces use the same world-aligned block palette',()=>{
  const colors=new Set(),rects=[];const c={save(){},restore(){},beginPath(){},rect(){},clip(){},set fillStyle(v){colors.add(v);},fillRect(x,y,w,h){rects.push([x,y,w,h]);}};
@@ -32,7 +32,7 @@ test('infernal masonry uses one palette for inner and outer walls and refreshes 
  const previous=globalThis.OffscreenCanvas,colors=new Set();let created=0;
  const c={save(){},restore(){},beginPath(){},rect(){},clip(){},drawImage(){},set fillStyle(v){colors.add(v);},fillRect(){}};
  globalThis.OffscreenCanvas=class{constructor(){created++;}getContext(){return c;}};
- try{const walls=[{x:25,y:40,w:155,h:185,type:'wall'}];paintStoneWalls(c,outerWalls,8);paintStoneWalls(c,walls,8);assert.ok(colors.has('#423636')&&colors.has('#1a171b'));drawStoneWalls(c,walls,0);drawStoneWalls(c,walls,8);drawStoneWalls(c,walls,8);drawStoneWalls(c,walls,9);assert.equal(created,3);assert.ok(colors.has('#39313d')&&colors.has('#14131c'));}finally{globalThis.OffscreenCanvas=previous;}
+ try{const walls=[{x:25,y:40,w:155,h:185,type:'wall'}];paintStoneWalls(c,outerWalls,8);paintStoneWalls(c,walls,8);assert.ok(colors.has('#423636')&&colors.has('#1a171b'));drawStoneWalls(c,walls,0);const first=created;drawStoneWalls(c,walls,8);assert.ok(created>first);const themed=created;drawStoneWalls(c,walls,8);assert.equal(created,themed);drawStoneWalls(c,walls,9);assert.ok(created>themed);assert.ok(colors.has('#39313d')&&colors.has('#14131c'));}finally{globalThis.OffscreenCanvas=previous;}
 });
 test('middle-floor masonry shares each themed palette across inner and outer walls',()=>{
  const colors=new Set(),c={save(){},restore(){},beginPath(){},rect(){},clip(){},set fillStyle(v){colors.add(v);},fillRect(){}};

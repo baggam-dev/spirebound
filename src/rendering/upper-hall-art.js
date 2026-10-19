@@ -1,3 +1,4 @@
+import {environmentMaterial,environmentSurface} from './environment-material.js';
 // Approved floor-pair presentation. Images/caches never enter run, save or game RNG.
 const regular=()=>Array.from({length:12},(_,i)=>[i%4/4,Math.floor(i/4)/3,1/4,1/3]);
 const royal={file:'royal-hall-atlas-v1.png',frames:[],epoch:0,floors:new Map(),regions:regular()};
@@ -25,7 +26,7 @@ function load(p){
     const pixels=c.getImageData(0,0,scan.width,scan.height),data=pixels.data;let left=scan.width,top=scan.height,right=-1,bottom=-1;
     for(let y=0;y<scan.height;y++)for(let x=0;x<scan.width;x++){const alpha=(y*scan.width+x)*4+3;if(data[alpha]<64){data[alpha]=0;continue;}left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);}
     if(right<=left||bottom<=top){resolve(false);return;}c.putImageData(pixels,0,0);
-    const width=right-left+1,height=bottom-top+1,target=i<4?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<4?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=true;cc.imageSmoothingQuality='high';cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(canvas);
+    const width=right-left+1,height=bottom-top+1,target=i<4?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<4?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(environmentMaterial(canvas,i>=4));
    }
    p.frames=next;p.epoch++;p.floors.clear();resolve(true);
   }catch{resolve(false);}};image.onerror=()=>resolve(false);image.src=new URL('../../assets/images/'+p.file,import.meta.url).href;
@@ -42,7 +43,7 @@ export function drawUpperHallFloor(c,s,r){
  if(!layer||layer.key!==key){const canvas=document.createElement('canvas');canvas.width=960;canvas.height=540;const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.fillStyle=p===royal?'#333641':'#2a292e';cc.fillRect(0,0,960,540);
   for(let row=0;row<6;row++)for(let col=0;col<8;col++){const x=col*144-(row%2?72:0),y=row*96,h=(seed+Math.imul(row+5,7919)+Math.imul(col+11,17389))>>>0;cc.save();cc.translate(x+72,y+48);cc.rotate((h>>>5)%2*Math.PI);cc.drawImage(p.frames[h%3],-72,-48,144,96);cc.restore();}
   if(s.floor===6){cc.strokeStyle='#b4a5831c';cc.lineWidth=1;cc.beginPath();cc.ellipse(480,270,130,80,0,0,Math.PI*2);cc.stroke();}
-  const shade=cc.createRadialGradient(480,270,100,480,270,540);shade.addColorStop(0,'#17162420');shade.addColorStop(1,'#12121d70');cc.fillStyle=shade;cc.fillRect(0,0,960,540);layer={key,canvas};p.floors.set(r,layer);while(p.floors.size>3)p.floors.delete(p.floors.keys().next().value);
+  const shade=cc.createRadialGradient(480,270,100,480,270,540);shade.addColorStop(0,'#17162420');shade.addColorStop(1,'#12121d70');cc.fillStyle=shade;cc.fillRect(0,0,960,540);layer={key,canvas:environmentSurface(canvas)};p.floors.set(r,layer);while(p.floors.size>3)p.floors.delete(p.floors.keys().next().value);
  }
  c.save();c.beginPath();c.rect(26,45,908,455);c.clip();c.imageSmoothingEnabled=false;c.drawImage(layer.canvas,0,0);c.restore();return true;
 }

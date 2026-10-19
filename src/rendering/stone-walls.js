@@ -1,3 +1,5 @@
+import {stoneFragments} from '../world/stone-shape.js';
+import {environmentSurface} from './environment-material.js';
 import {isUpperHallFloor,paintUpperHallWalls,upperHallVersion} from './upper-hall-art.js';
 import {isInfestedFloor,paintInfestedHallWalls,infestedHallVersion} from './infested-hall-art.js';
 import {paintPrismHallWalls,prismHallVersion} from './prism-hall-art.js';
@@ -27,7 +29,7 @@ export function stoneWallEdges(walls){
 // Four 960x540 surfaces at most (~8 MiB RGBA); geometry changes invalidate entries.
 const surfaces=new Map();
 export const outerWalls=[{x:0,y:0,w:960,h:44,type:'wall'},{x:0,y:508,w:960,h:32,type:'wall'},{x:0,y:35,w:25,h:475,type:'wall'},{x:935,y:35,w:25,h:475,type:'wall'}];
-function stamp(obstacles){return obstacles.filter(o=>o.type==='wall').map(o=>[o.x,o.y,o.w,o.h].join(',')).join(';');}
+function stamp(obstacles){return obstacles.filter(o=>o.type==='wall').map(o=>[o.x,o.y,o.w,o.h,!!o.demonHole,!!o.demonBolt].join(',')).join(';');}
 function cellHash(x,y){let n=Math.imul(x/48+31,73856093)^Math.imul(y/40+17,19349663);n=Math.imul(n^(n>>>13),1274126177);return (n^(n>>>16))>>>0;}
 // Muted stone families follow the floor backdrops; outer and inner walls share one surface.
 const stone=[
@@ -37,8 +39,18 @@ const stone=[
  ['#3a434e','#151a24'],['#4b3d43','#1d171c'],
  ['#423636','#1a171b'],['#39313d','#14131c']
 ];
+function paintBrokenFaces(ctx,obstacles,floor){
+ const parts=obstacles.filter(o=>o.type==='wall').flatMap(stoneFragments);ctx.save();ctx.beginPath();for(const p of parts)ctx.rect(p.x,p.y,p.w,p.h);ctx.clip();
+ // Short steps are newly exposed fracture faces; long, intact caps keep their original art.
+ for(const e of stoneWallEdges(parts)){
+  if(e.end-e.start>12)continue;const horizontal=e.side==='top'||e.side==='bottom',light=e.side==='top'||e.side==='left';
+  ctx.fillStyle=light?stone[Math.max(0,Math.min(9,floor|0))][0]:'#111819';
+  if(horizontal)ctx.fillRect(e.start,e.axis-(light?0:3),e.end-e.start,3);else ctx.fillRect(e.axis-(light?0:3),e.start,3,e.end-e.start);
+ }
+ ctx.restore();
+}
 export function paintStoneWalls(ctx,obstacles,floor=0){
- const walls=obstacles.filter(o=>o.type==='wall');if(!walls.length)return;
+ const walls=obstacles.filter(o=>o.type==='wall').flatMap(stoneFragments);if(!walls.length)return;
  const theme=Math.max(0,Math.min(9,floor|0)),basalt=theme>=8,deep=theme>=9;
  const [face,mortar]=stone[theme];
  ctx.save();ctx.beginPath();for(const o of walls)ctx.rect(o.x,o.y,o.w,o.h);ctx.clip();
@@ -85,8 +97,8 @@ export function drawStoneWalls(ctx,obstacles,floor=0){
   const canvas=typeof OffscreenCanvas!=='undefined'?new OffscreenCanvas(960,540):typeof document!=='undefined'?document.createElement('canvas'):null;
   if(!canvas){paintStoneWalls(ctx,obstacles,floor);return;}
   canvas.width=960;canvas.height=540;const layer=canvas.getContext('2d');if(!layer){paintStoneWalls(ctx,obstacles,floor);return;}
-  paintStoneWalls(layer,obstacles,floor);const walls=obstacles.filter(o=>o.type==='wall'),x=Math.max(0,Math.floor(Math.min(...walls.map(o=>o.x)))),y=Math.max(0,Math.floor(Math.min(...walls.map(o=>o.y)))),w=Math.min(960,Math.ceil(Math.max(...walls.map(o=>o.x+o.w))))-x,h=Math.min(540,Math.ceil(Math.max(...walls.map(o=>o.y+o.h))))-y;entry={key,canvas,x,y,w,h};surfaces.delete(obstacles);surfaces.set(obstacles,entry);
+  paintStoneWalls(layer,obstacles,floor);paintBrokenFaces(layer,obstacles,floor);const walls=obstacles.filter(o=>o.type==='wall'),x=Math.max(0,Math.floor(Math.min(...walls.map(o=>o.x)))),y=Math.max(0,Math.floor(Math.min(...walls.map(o=>o.y)))),w=Math.min(960,Math.ceil(Math.max(...walls.map(o=>o.x+o.w))))-x,h=Math.min(540,Math.ceil(Math.max(...walls.map(o=>o.y+o.h))))-y;entry={key,canvas:environmentSurface(canvas),x,y,w,h};surfaces.delete(obstacles);surfaces.set(obstacles,entry);
   while(surfaces.size>4)surfaces.delete(surfaces.keys().next().value);
  }else{surfaces.delete(obstacles);surfaces.set(obstacles,entry);}
- const {canvas,x,y,w,h}=entry;if(w>0&&h>0)ctx.drawImage(canvas,x,y,w,h,x,y,w,h);
+ const {canvas,x,y,w,h}=entry;if(w>0&&h>0){ctx.save();ctx.beginPath();for(const o of obstacles.filter(o=>o.type==='wall'))for(const p of stoneFragments(o))ctx.rect(p.x,p.y,p.w,p.h);ctx.clip();ctx.imageSmoothingEnabled=false;ctx.drawImage(canvas,x,y,w,h,x,y,w,h);ctx.restore();}
 }

@@ -1,3 +1,4 @@
+import {environmentMaterial,environmentSurface} from './environment-material.js';
 // Approved shared floors 5-6 conservatory materials. All caches live outside run/save/game RNG state.
 let frames=[],epoch=0,pending;
 const floors=new Map();
@@ -23,7 +24,7 @@ export function loadInfestedHallArt(){
     for(let y=0;y<scan.height;y++)for(let x=0;x<scan.width;x++){const alpha=(y*scan.width+x)*4+3;if(data[alpha]<64){data[alpha]=0;continue;}left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);}
     c.putImageData(pixels,0,0);
     if(right<=left||bottom<=top){resolve(false);return;}
-    const width=right-left+1,height=bottom-top+1,target=i<4?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<4?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=true;cc.imageSmoothingQuality='high';cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(canvas);
+    const width=right-left+1,height=bottom-top+1,target=i<4?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<4?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(environmentMaterial(canvas,i>=4));
    }
    frames=next;epoch++;floors.clear();resolve(true);
   }catch{resolve(false);}};image.onerror=()=>resolve(false);image.src=new URL('../../assets/images/infested-hall-atlas-v1.png',import.meta.url).href;
@@ -37,7 +38,7 @@ export function drawInfestedHallFloor(c,s,r){
  if(!infestedHallLoaded()){loadInfestedHallArt();return false;}const seed=roomSeed(s,r),key=[seed,s.floor,r.type,epoch].join(':');let layer=floors.get(r);
  if(!layer||layer.key!==key){const canvas=document.createElement('canvas');canvas.width=960;canvas.height=540;const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.fillStyle='#3b3e32';cc.fillRect(0,0,960,540);
   for(let row=0;row<6;row++)for(let col=0;col<8;col++){const x=col*144-(row%2?72:0),y=row*96,h=(seed+Math.imul(row+5,7919)+Math.imul(col+11,17389))>>>0;cc.save();cc.translate(x+72,y+48);cc.rotate((h>>>5)%2*Math.PI);cc.drawImage(frames[h%3],-72,-48,144,96);cc.restore();}
-  const shade=cc.createRadialGradient(480,270,100,480,270,540);shade.addColorStop(0,'#343b2d24');shade.addColorStop(1,'#191e1670');cc.fillStyle=shade;cc.fillRect(0,0,960,540);layer={key,canvas};floors.set(r,layer);while(floors.size>3)floors.delete(floors.keys().next().value);
+  const shade=cc.createRadialGradient(480,270,100,480,270,540);shade.addColorStop(0,'#343b2d24');shade.addColorStop(1,'#191e1670');cc.fillStyle=shade;cc.fillRect(0,0,960,540);layer={key,canvas:environmentSurface(canvas)};floors.set(r,layer);while(floors.size>3)floors.delete(floors.keys().next().value);
  }
  c.save();c.beginPath();c.rect(26,45,908,455);c.clip();c.imageSmoothingEnabled=false;c.drawImage(layer.canvas,0,0);c.restore();return true;
 }
