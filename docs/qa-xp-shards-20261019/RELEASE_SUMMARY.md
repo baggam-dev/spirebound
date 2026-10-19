@@ -14,6 +14,12 @@
 
 ## 배포
 
-비전투 실제 성공 콜백 검사 및 공식 배포/공개 검증 결과는 완료 직후 여기에 기록한다. 현재 운영 릴리스를 완료로 오인하지 않도록 배포 결과를 구분한다.
+아래 검증을 마치고 배포 및 공개 확인을 완료했다.
 
 - noncombat/result.json: 실제 UI 축복/저주·blood/supply/trial 성공마다 emit 1회, 교환취소+지나가기 0회. blood5→3, 시련active, 저장used 확인. 관찰용 emit 로그만 QA route에 삽입했고 runtime 소스에는 삽입하지 않았다. 초기 fixture의 mainSkill/시설거리/상자 우선순위 대기를 중단하고 fixture를 바로잡아 최종 성공했다.
+
+공식 release-20261019-160149-81acfc / runtime990bc2d 활성. 284파일, 서버27/27, nginx/인증서/index/health 통과. 이전release-20261019-131144-f5e588 보존. public-opening/result.json: 실제온라인시작PC/터치2건·session/runs200·226~1771ms·요청실패0·errors0·순위제출0. public-xp/result.json: 공개3frames/폭3·6·10/fallback·정지/상태복원·PC/터치13XP수집/재로드 통과. 실제 iPhone 및 저사양 장시간 플레이/흡수음 청취 검증은 하지 않았다.
+
+public-noncombat/result.json: 공개 실제축복/저주·계약3종 성공마다 emit1, 취소0, HP/used/trial 저장 모두통과/errors0.
+
+public-https.txt: 공개156코드/스타일 및PNG바이트일치, TLS/HTTP308, 랭킹, secure/HttpOnly쿠키, 기존세션승격, HTTP기록이전2종·원본보존 통과. pageErrors0/productionRecordsSubmitted0. 모든 실행세션을 종료했다.

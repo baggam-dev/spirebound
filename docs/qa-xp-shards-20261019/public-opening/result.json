@@ -1,0 +1,66 @@
+{
+  "base": "https://168.107.21.43",
+  "onlineButtonStarts": 2,
+  "results": [
+    {
+      "width": 1280,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      },
+      "online": true,
+      "rooms": [
+        5,
+        6
+      ],
+      "floors": 10,
+      "apiResponses": [
+        {
+          "endpoint": "/api/session",
+          "status": 200,
+          "error": null,
+          "elapsedMs": 1235
+        },
+        {
+          "endpoint": "/api/runs",
+          "status": 200,
+          "error": null,
+          "elapsedMs": 226
+        }
+      ],
+      "apiFailures": []
+    },
+    {
+      "width": 844,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      },
+      "online": true,
+      "rooms": [
+        5,
+        6
+      ],
+      "floors": 10,
+      "apiResponses": [
+        {
+          "endpoint": "/api/session",
+          "status": 200,
+          "error": null,
+          "elapsedMs": 1771
+        },
+        {
+          "endpoint": "/api/runs",
+          "status": 200,
+          "error": null,
+          "elapsedMs": 698
+        }
+      ],
+      "apiFailures": []
+    }
+  ],
+  "errors": [],
+  "productionScoresSubmitted": 0
+}
