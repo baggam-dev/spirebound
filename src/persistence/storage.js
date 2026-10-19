@@ -10,6 +10,7 @@ import {weaponLevels} from '../combat/weapon-projectiles.js';
 import {growthRewards} from '../progression/growth.js';
 import {incantationInfo} from '../world/shrine.js';
 import {essenceInfo} from '../progression/essences.js';
+import {XP_TIERS,XP_TIER_LIMIT} from '../progression/xp-drops.js';
 import {skillIds,mainSkills} from '../progression/skill-tree.js';
 import {relicInfo} from '../progression/relics.js';
 import {enemyGuide} from '../world/expedition.js';
@@ -49,6 +50,13 @@ export function validateRun(s){
   check(Array.isArray(rooms)&&rooms.length>=(expanded&&floorIndex===9?2:floorIndex<2?floorIndex===0?5:6:7)&&rooms.length<=(expanded&&floorIndex===9?2:s.generationVersion>=35&&floorIndex<2?floorIndex===0?5:6:11));const coords=new Set();
   for(const r of rooms){check(Number.isInteger(r.x)&&Number.isInteger(r.y)&&Math.abs(r.x)<12&&Math.abs(r.y)<12&&roomTypes.has(r.type));check(!coords.has(`${r.x},${r.y}`));coords.add(`${r.x},${r.y}`);check(typeof r.seen==='boolean'&&typeof r.used==='boolean');
    check(Array.isArray(r.enemies)&&r.enemies.length<=128);const ids=new Set();
+   if(r.xpDrops!==undefined){
+    check(Array.isArray(r.xpDrops)&&r.xpDrops.length<=XP_TIER_LIMIT*XP_TIERS.length);
+    check(Number.isSafeInteger(r.xpNextId)&&number(r.xpNextId,0,1e9)&&Number.isSafeInteger(r.xpDroppedTotal)&&number(r.xpDroppedTotal,0,1e9)&&Number.isSafeInteger(r.xpCollectedTotal)&&number(r.xpCollectedTotal,0,r.xpDroppedTotal));
+    const dropIds=new Set(),counts={};let remaining=0;
+    for(const d of r.xpDrops){check(d&&Number.isSafeInteger(d.id)&&number(d.id,0,r.xpNextId-1)&&!dropIds.has(d.id));dropIds.add(d.id);check(XP_TIERS.includes(d.tier)&&Number.isSafeInteger(d.value)&&number(d.value,d.tier,1e9)&&d.value%d.tier===0);counts[d.tier]=(counts[d.tier]||0)+1;check(counts[d.tier]<=XP_TIER_LIMIT);check(number(d.x,0,960)&&number(d.y,0,540)&&number(d.fromX,0,960)&&number(d.fromY,0,540)&&number(d.born,0,s.elapsed)&&typeof d.attract==='boolean');remaining+=d.value;}
+    check(remaining===r.xpDroppedTotal-r.xpCollectedTotal);
+   }else check(r.xpNextId===undefined&&r.xpDroppedTotal===undefined&&r.xpCollectedTotal===undefined);
    for(const e of r.enemies){validateSynergyEnemy(e,check,number);if(e.bladeDot!==undefined)check(e.bladeDot&&number(e.bladeDot.time,0,1)&&number(e.bladeDot.dps,0,4)&&['fire','poison'].includes(e.bladeDot.kind));check(enemyTypes.has(e.type)&&Number.isInteger(e.id)&&!ids.has(e.id));ids.add(e.id);check(number(e.x,-50,1010)&&number(e.y,-50,590)&&number(e.max,1,100000)&&number(e.hp,-100000,e.max));if(['demonBat','spikeNest','demonSoldier','demonArcher','demonCaptain'].includes(e.type)){if(e.attackPhase!=null)check(['warning','dash','recover'].includes(e.attackPhase)&&number(e.attackTime,0,1));if(e.aim!==undefined)check(number(e.aim,-Math.PI,Math.PI));if(e.targetX!==undefined)check(e.type==='spikeNest'&&number(e.targetX,0,960)&&number(e.targetY,0,540));if(e.hit!==undefined)check(typeof e.hit==='boolean');if(e.selfDestruct!==undefined)check(e.type==='demonBat'&&e.selfDestruct===true);}}
    if(r.shrineState!==undefined){check(r.type==='shrine'&&['sealed','active','choice','done'].includes(r.shrineState));if(r.shrineState==='done')check(r.used);if(r.shrineState==='choice')check(!r.used&&r.incantations?.length===2);}
    if(r.incantations!==undefined)check(Array.isArray(r.incantations)&&r.incantations.length===2&&new Set(r.incantations).size===2&&r.incantations.every(id=>incantationInfo(id)));if(r.incantationChoice!==undefined)check(r.incantations?.includes(r.incantationChoice)&&r.used);if(r.incantationRelic!==undefined)check(!!relicInfo(r.incantationRelic));

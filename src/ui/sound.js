@@ -7,6 +7,7 @@ const CUES={
  hurt:{gap:.35,notes:[[0,190,.16,'sawtooth',.025]]},
  boss:{gap:1.5,notes:[[0,130,.22,'triangle',.028],[.13,100,.27,'triangle',.025]]},
  reward:{gap:.35,notes:[[0,440,.11,'sine',.021],[.1,660,.16,'sine',.02]]},
+ pickup:{gap:.09,notes:[[0,780,.045,'sine',.009],[.018,1040,.045,'sine',.006]]},
  warning:{gap:.3,notes:[[0,330,.12,'sine',.035],[.12,440,.12,'sine',.035]]}
 };
 export function readSoundSettings(storage){

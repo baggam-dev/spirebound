@@ -29,6 +29,7 @@ import {steerArrow,frostShatter} from '../progression/skill-tree.js';
 import {prepareChest,prepareTrialLoot} from '../progression/loot.js';
 import {tickElements,resolveFireFields} from '../combat/elements.js';
 import {dropEssences,collectEssences,essenceInfo} from '../progression/essences.js';
+import {dropXp,collectXp} from '../progression/xp-drops.js';
 import {movementSpeed,relicStat,offerRelics,attackInterval} from '../progression/relics.js';
 import {observeRoom,recordDefeat,recordHit,enemyName} from '../world/expedition.js';
 import {updateElites,eliteDeath,tickBlasts} from '../combat/elites.js';
@@ -85,6 +86,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  if(r.shrineState==='choice'&&!r.used)return {events:[...events,'incantation'],effects};
  r.gateBanner=Math.max(0,(r.gateBanner||0)-dt);observeRoom(s,r);bindDefenses(r.enemies);if(r.enemies.some(e=>e.type==='boss'))bossHealth(r);
  for(const item of collectEssences(s,r))effects.push({x:p.x,y:p.y-45,t:1.2,color:essenceInfo(item.id).color,text:essenceInfo(item.id).label,essencePickup:true,fromX:item.x,fromY:item.y});
+ const collectedXp=collectXp(s,r,dt);if(collectedXp)effects.push({xpPickup:true,x:p.x,y:p.y-12,t:.16,xp:collectedXp});
  const enemyHealthBefore=new Map(r.enemies.map(e=>[e,e.hp]));
  tickRollMines(s,r,dt,effects);tickRain(s,dt);tickPassives(s,dt);effects.push(...tickThunder(s,dt));
  const elementBefore=r.enemies.reduce((n,e)=>n+Math.max(0,e.hp),0);effects.push(...tickElements(r,dt,p.poison||0));metrics.damageDealt+=elementBefore-r.enemies.reduce((n,e)=>n+Math.max(0,e.hp),0);
@@ -156,14 +158,14 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(eliteDeath(e,r)&&!r.elitePotionDropped){r.elitePotionDropped=true;r.potionDropped=true;if(monsterPotionReward(s,r,e,()=>runRandom(s))==='potion')events.push('eliteReward');}
   s.kills++;
   if(e.type!=='boss'&&killRecovery(s,r,false,()=>runRandom(s),e))events.push('potion');
-  if(!s.key&&e.type!=='boss'){p.xp+=e.xpReward??12;}
+  if(!s.key&&e.type!=='boss')dropXp(s,r,e,e.xpReward??12);
  }
  if(r.gate&&!s.key&&defeated.length&&r.enemies.length===1){r.enemies[0].cd=Math.min(r.enemies[0].cd,.4);r.enemies[0].gateFury=true;}
  if(r.gate&&!r.used&&defeated.length&&!r.enemies.length){r.used=true;r.gateBanner=3;offerRelics(s,r);events.push('gateReward');}
  if(defeated.some(e=>e.type==='boss'&&!e.summoned)&&!r.enemies.some(e=>e.type==='boss')){const boss=defeated.find(e=>e.type==='boss');dropEssences(s,r,boss);if(boss.chestBoss){r.used=true;offerRelics(s,r);}}
  if(r.type==='boss'&&defeated.some(e=>e.type==='boss'&&!e.chestBoss)&&!r.enemies.some(e=>e.type==='boss')&&!r.used){
   r.enemies=r.enemies.filter(e=>!e.summoned);r.hazards=[];r.blasts=[];s.projectiles=[];if(r.demon?.pressureVersion===1){clearDemonSpecials(r);p.actionStun=0;p.electricGrace=0;}
-  completeBossRecord(s);if(!s.key)p.xp+=45;events.push(bossDefeated(s));
+  completeBossRecord(s);if(!s.key)dropXp(s,r,defeated.find(e=>e.type==='boss'&&!e.chestBoss),45);events.push(bossDefeated(s));
  }
  while(p.xp>=xpRequired(p.level)){p.xp-=xpRequired(p.level);p.level++;s.pendingLevels++;(s.levelQueue??=[]).push(p.level);}
 

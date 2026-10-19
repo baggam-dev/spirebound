@@ -181,8 +181,8 @@ export const relics=[
  },
  {
   "id": "magnet",
-  "name": "정수 자석",
-  "description": "정수 획득 반경 +70",
+  "name": "수집 자석",
+  "description": "경험치·정수 획득 반경 +70",
   "stats": {
    "pickup": 70
   }
