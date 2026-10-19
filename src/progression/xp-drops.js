@@ -2,6 +2,7 @@ import {relicStat} from './relics.js';
 import {blocked,safeSpawn,segmentBlocked} from '../world/terrain.js';
 export const XP_TIERS=[9,3,1];
 export const XP_TIER_LIMIT=64;
+export const xpAttractionRadius=p=>55+relicStat(p,'pickup');
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 function initialize(r){if(!r.xpDrops){r.xpDrops=[];r.xpNextId=0;r.xpDroppedTotal=0;r.xpCollectedTotal=0;}}
 function position(origin,id,obstacles,kind,order,count,player){
@@ -36,7 +37,7 @@ export function dropXp(s,r,origin,amount,kind=origin?.elite?'elite':'normal'){
 // Attraction is physical and saved; collection removes the object before awarding its value.
 export function collectXp(s,r,dt){
  if(!(dt>0)||!r.xpDrops?.length)return 0;
- const p=s.player,radius=30+relicStat(p,'pickup');let total=0;
+ const p=s.player,radius=xpAttractionRadius(p);let total=0;
  r.xpDrops=r.xpDrops.filter(d=>{
   if(s.elapsed-d.born<.18)return true;
   const distance=Math.hypot(p.x-d.x,p.y-d.y);

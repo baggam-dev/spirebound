@@ -1,10 +1,11 @@
 import {grantRelic,removeRelic,relicInfo,relicStat,movementSpeed,ultimateCooldown,dodgeCooldown,blinkDistance,utilityCooldown} from '../progression/relics.js';
 import {previewStats} from './skill-preview.js';
 import {shieldCooldown} from '../combat/survival.js';
+import {xpAttractionRadius} from '../progression/xp-drops.js';
 
 function values(p){const a=previewStats(p);return {
  '첫 적중 피해¹':a.hit,'초당 사격':a.rate,'이동속도':movementSpeed(p),'최대 체력':p.max,
- '현재 체력':p.hp,'획득 반경':30+relicStat(p,'pickup'),'액티브 재사용(초)':p.utility?utilityCooldown(p):null,'궁극기 재사용(초)':p.ultimate?ultimateCooldown(p):null,
+ '현재 체력':p.hp,'XP 흡인 반경':xpAttractionRadius(p),'정수 획득 반경':30+relicStat(p,'pickup'),'액티브 재사용(초)':p.utility?utilityCooldown(p):null,'궁극기 재사용(초)':p.ultimate?ultimateCooldown(p):null,
  '구르기 재사용(초)':dodgeCooldown(p),'구르기 거리':blinkDistance(p),
  '장비 보호막 충전(초)':p.armor?shieldCooldown(p):null,
  '베르가스 참격 피해':a.aura,'요격 사거리':a.auraRadius,'베르가스 재사용(초)':a.auraCooldown,

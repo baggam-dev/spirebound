@@ -2,6 +2,8 @@ import {recoverPlayerPosition} from '../world/player-position.js';
 import {moveBody,segmentBlocked} from '../world/terrain.js';
 import {dodgeCooldown,blinkDistance,relicStat,hexFactor} from '../progression/relics.js';
 import {enemyDamageFactor} from './enemy-defense.js';
+import {evolutions} from '../progression/evolutions.js';
+export function rollAction(p){const branch=evolutions.rollMastery.find(e=>e.id===p.evolutions?.rollMastery);return {name:branch?.name||'구르기',icon:branch?'rollMastery:'+branch.id:'roll',description:branch?.description||'짧은 무적 회피'};}
 export const basicShotPower=p=>p.damage*(1+.12*(p.power||0)+relicStat(p,'damage'))*hexFactor(p,'damage')*(p.fairyKing?1.15:1);
 const airborne=e=>['air','splitJump'].includes(e.phase)||e.attackPhase==='leap';
 function deal(s,e,damage,origin){const hp=Math.max(0,e.hp);e.hp-=damage*enemyDamageFactor(e,origin);if(s.metrics)s.metrics.damageDealt+=hp-Math.max(0,e.hp);}

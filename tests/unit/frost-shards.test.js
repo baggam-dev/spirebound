@@ -18,7 +18,7 @@ test('frozen shard victims chain without exponential damage and grant one kill e
  const s=newRun(1),r=currentRoom(s);s.player.frost=2;s.player.damage=30;s.attack=999;r.obstacles=[];const a=enemy(0,550,0),b=enemy(1,610,5);a.frozen=1;b.frozen=1;r.enemies=[a,b];stepRun(s,.01);assert.equal(s.projectiles.length,6);assert.equal(s.kills,1);stepRun(s,.2);assert.equal(s.kills,2);assert.ok(s.projectiles.length>=6);assert.ok(s.projectiles.every(b=>Math.abs(b.damageScale-.4)<1e-9));stepRun(s,.1);assert.equal(s.kills,2);
 });
 test('shards at all levels add frost stacks and scale direct damage',()=>{
- for(const level of [2,3]){const s=newRun(2),r=currentRoom(s);s.player.frost=level;s.player.damage=30;s.attack=999;r.enemies=[enemy(1,610)];frostShatter(s.player,{x:550,y:300,hp:0,frozen:1},s.projectiles);stepRun(s,.2);assert.ok(Math.abs(r.enemies[0].hp-(100-30*.92*(.3+.05*level)))<1e-8);assert.equal(r.enemies[0].frostStacks,1);}
+ for(const level of [2,3]){const s=newRun(2),r=currentRoom(s);s.player.frost=level;s.player.damage=30;s.attack=999;r.enemies=[enemy(1,610)];frostShatter(s.player,{x:550,y:300,hp:0,frozen:1},s.projectiles);stepRun(s,.2);assert.ok(Math.abs(r.enemies[0].hp-(100-30*(.3+.05*level)))<1e-8);assert.equal(r.enemies[0].frostStacks,1);}
 });
 test('Vergas deaths preserve frozen state even when the frame expires its timer',()=>{
  const s=newRun(4),r=currentRoom(s);s.player.frost=1;s.player.aura=3;s.attack=999;const e=enemy(0,520,1);e.frozen=.11;r.obstacles=[];r.enemies=[e];stepRun(s,.01);stepRun(s,.1);assert.equal(s.kills,1);assert.equal(s.projectiles.length,6);

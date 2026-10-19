@@ -11,6 +11,12 @@ import {applyFrost} from '../../src/combat/frost.js';
 import {chargePrimary,lightningImpact} from '../../src/combat/lightning.js';
 import {draftMarkup} from '../../src/ui/skill-draft.js';
 const foe=(id,x=0,y=0)=>({id,type:'archer',x,y,hp:1000,max:1000,cd:999,balanceVersion:1});
+test('frost modest slow buff preserves deep duration, boss half-strength and sixty-percent cap',()=>{
+ for(const boss of [false,true])for(const [branch,extra,duration] of [[undefined,0,2],['deep',.2,1.5],['lasting',-.05,4]]){
+  const e={...foe(0),type:boss?'boss':'archer'},p={frost:1,evolutions:{frost:branch}};
+  for(const amount of [.2,.3,.4]){applyFrost(p,e);assert.ok(Math.abs(e.slowFactor-(1-Math.min(.6,amount+extra)*(boss?.5:1)))<1e-9);assert.equal(e.slow,duration);}
+ }
+});
 function run(){const s=newRun(94);s.player.level=2;s.pendingLevels=1;s.levelQueue=[2];return s;}
 
 test('main offers persist across saves and reject a main outside the three choices',()=>{

@@ -52,7 +52,7 @@ test('fairy whistle multiplies projectiles and king beam once without granting c
 test('HUD caps visible slots with accurate overflow, keeps key and spent state, preview preserves source',()=>{
  const {s,r,p}=setup();for(const id of relics.map(r=>r.id))grantRelic(p,id);const html=relicMarkup(p,true,8,true);assert.equal((html.match(/data-relic-detail=/g)||[]).length,8);assert.ok(html.includes('+31'));assert.ok(html.includes('탈출 열쇠'));assert.ok(relicMarkup({...p,relics:['phoenixReliquary']},false,8,true).includes('소모됨'));
  r.relicOffers=['magnet','ritualKnot','phoenixReliquary'];const before=JSON.stringify(p);const ui=relicSelectionMarkup(s,r);assert.ok(ui.includes('relic0'));assert.ok(ui.includes('skipRelic'));assert.ok(ui.includes('레어'));assert.equal(JSON.stringify(p),before);
- const q=setup();assert.ok(relicPreview(q.p,'magnet').rows.some(row=>row.label==='획득 반경'&&row.before===30&&row.after===100));
+ const q=setup(),rows=relicPreview(q.p,'magnet').rows;assert.ok(rows.some(row=>row.label==='XP 흡인 반경'&&row.before===55&&row.after===125));assert.ok(rows.some(row=>row.label==='정수 획득 반경'&&row.before===30&&row.after===100));
 });
 
 test('new save flags validate and banner is transient, paused, room-bound and never replayed',()=>{
