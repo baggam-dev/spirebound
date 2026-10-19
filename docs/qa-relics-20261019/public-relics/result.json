@@ -1,0 +1,166 @@
+{
+  "base": "https://168.107.21.43",
+  "results": [
+    {
+      "width": 1280,
+      "art": {
+        "ready": true,
+        "frames": 37,
+        "ids": [
+          "windSeal",
+          "lens",
+          "boots",
+          "iron",
+          "ember",
+          "rain",
+          "fang",
+          "ruby",
+          "quiver",
+          "feather",
+          "hourglass",
+          "crown",
+          "comet",
+          "moon",
+          "heart",
+          "chalice",
+          "bastion",
+          "blade",
+          "orbit",
+          "coal",
+          "sun",
+          "prism",
+          "hunter",
+          "execution",
+          "magnet",
+          "halo",
+          "openingWhetstone",
+          "thornBuckle",
+          "ritualKnot",
+          "fairyWhistle",
+          "phoenixReliquary",
+          "sunFairy",
+          "snowFairy",
+          "stormFairy",
+          "afterimage",
+          "orbitBlades",
+          "voidBell"
+        ]
+      },
+      "sizing": [
+        {
+          "x": 203.796875,
+          "y": 268.53125,
+          "w": 274.796875,
+          "h": 316
+        },
+        {
+          "x": 502.59375,
+          "y": 268.53125,
+          "w": 274.796875,
+          "h": 316
+        },
+        {
+          "x": 801.390625,
+          "y": 268.53125,
+          "w": 274.796875,
+          "h": 316
+        }
+      ],
+      "saved": {
+        "owned": [
+          "phoenixReliquary"
+        ],
+        "claimed": true
+      },
+      "details": true,
+      "noLoadBanner": true,
+      "touchEmulated": false
+    },
+    {
+      "width": 844,
+      "art": {
+        "ready": true,
+        "frames": 37,
+        "ids": [
+          "windSeal",
+          "lens",
+          "boots",
+          "iron",
+          "ember",
+          "rain",
+          "fang",
+          "ruby",
+          "quiver",
+          "feather",
+          "hourglass",
+          "crown",
+          "comet",
+          "moon",
+          "heart",
+          "chalice",
+          "bastion",
+          "blade",
+          "orbit",
+          "coal",
+          "sun",
+          "prism",
+          "hunter",
+          "execution",
+          "magnet",
+          "halo",
+          "openingWhetstone",
+          "thornBuckle",
+          "ritualKnot",
+          "fairyWhistle",
+          "phoenixReliquary",
+          "sunFairy",
+          "snowFairy",
+          "stormFairy",
+          "afterimage",
+          "orbitBlades",
+          "voidBell"
+        ]
+      },
+      "sizing": [
+        {
+          "x": 36.234375,
+          "y": 126.5,
+          "w": 245.171875,
+          "h": 187
+        },
+        {
+          "x": 299.40625,
+          "y": 126.5,
+          "w": 245.171875,
+          "h": 187
+        },
+        {
+          "x": 562.578125,
+          "y": 126.5,
+          "w": 245.171875,
+          "h": 187
+        }
+      ],
+      "saved": {
+        "owned": [
+          "phoenixReliquary"
+        ],
+        "claimed": true
+      },
+      "details": true,
+      "noLoadBanner": true,
+      "touchEmulated": true
+    }
+  ],
+  "fallback": {
+    "ready": false,
+    "state": {
+      "ready": false,
+      "frames": 0,
+      "ids": []
+    },
+    "markup": "<span class=\"pixel-icon relic-art\" data-relic-icon=\"phoenixReliquary\" aria-hidden=\"true\"><svg class=\"pixel-icon\" viewBox=\"0 0 16 16\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\"><rect x=\"3\" y=\"3\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"4\" y=\"3\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"5\" y=\"3\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"10\" y=\"3\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"11\" y=\"3\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"12\" y=\"3\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"2\" y=\"4\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"3\" y=\"4\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"4\" y=\"4\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"5\" y=\"4\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"6\" y=\"4\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"9\" y=\"4\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"10\" y=\"4\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"11\" y=\"4\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"12\" y=\"4\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"13\" y=\"4\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"2\" y=\"5\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"3\" y=\"5\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"4\" y=\"5\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"5\" y=\"5\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"6\" y=\"5\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"7\" y=\"5\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"8\" y=\"5\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"9\" y=\"5\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"10\" y=\"5\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"11\" y=\"5\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"12\" y=\"5\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"13\" y=\"5\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"2\" y=\"6\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"3\" y=\"6\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"4\" y=\"6\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"5\" y=\"6\" width=\"1\" height=\"1\" fill=\"#ffe0e9\"/><rect x=\"6\" y=\"6\" width=\"1\" height=\"1\" fill=\"#ffe0e9\"/><rect x=\"7\" y=\"6\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"8\" y=\"6\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"9\" y=\"6\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"10\" y=\"6\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"11\" y=\"6\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"12\" y=\"6\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"13\" y=\"6\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"3\" y=\"7\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"4\" y=\"7\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"5\" y=\"7\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"6\" y=\"7\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"7\" y=\"7\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"8\" y=\"7\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"9\" y=\"7\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"10\" y=\"7\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"11\" y=\"7\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"12\" y=\"7\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"4\" y=\"8\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"5\" y=\"8\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"6\" y=\"8\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"7\" y=\"8\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"8\" y=\"8\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"9\" y=\"8\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"10\" y=\"8\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"11\" y=\"8\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"5\" y=\"9\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"6\" y=\"9\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"7\" y=\"9\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"8\" y=\"9\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"9\" y=\"9\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"10\" y=\"9\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"6\" y=\"10\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"7\" y=\"10\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"8\" y=\"10\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"9\" y=\"10\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"7\" y=\"11\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/><rect x=\"8\" y=\"11\" width=\"1\" height=\"1\" fill=\"#ff6d91\"/></svg></span>"
+  },
+  "errors": [],
+  "productionRecordsSubmitted": 0
+}
