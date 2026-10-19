@@ -1,3 +1,18 @@
+## 최신 복사 가능한 인계 — 2026-10-19 비전투 시안 검토 대기
+```text
+C:\baggam-dev\spirebound main. 시작git status --short→WORK_STATUS→TODO→WORK_LOG최근→HANDOFF. 최신상단 우선·기존변경보존.
+운영release-20261019-131144-f5e588/runtime23ae822/원격6c0bffc. 상자/샘물/문효과배포완료·533/서버27/PC가로터치실사용6·온라인2·공개154자산확인. 이전범위 완료, 이번 새테스트푸시배포 권한없음.
+현재 docs/design-drafts/noncombat-effects-20261019/noncombat-effects-v1.png 6패널 시안 검토대기(위 축복/저주/계약, 아래 정수/성장/계단). 내장imagegen1회/원본정확prompt보존·새캐릭터/시설원화변경없음. design-v1.md 실제콜사이트와제약 확인. runtime/배포자산미반영, 이번테스트QA서버푸시배포공개확인없음·diff정적검토만. 실행세션/차단없음.
+승인후 신전 useShrine success good/bad 및 계약 chooseEvent blood/supply/trial 성공·supplyPanel교환 성공에시각emit제안(현재없음). 기존 essence5색/level선택완료/stairs 이벤트는 .9초/최대4/WeakMap 재사용. blood만붉은비용·supply교환/trial시련구분. 방향+1상승/-1하강 확인. 실제보상선택확률RNG저장유지·축복/성장실루엣구분·저주연기높이절제. 시안승인후한패키지구현로컬커밋, 새명시배포전테스트QA푸시배포공개확인금지.
+로컬커밋상시승인·진행/좋아는배포아님. 원본보존/불필요재생성금지·실제PNG직접표시/최종절대경로이미지·한국어기본5줄이내.
+```
+[남은 비전투 연출 6패널 시안 완료 / 검토 대기 — 2026-10-19]
+- 사용자 ㄱㄱ에 따라 실제 신전good/bad·계약blood/supply/trial·정수5색/성장/층이동 콜사이트를 검토. 축복/저주/계약, 정수흡수/성장/계단6패널 PNG를 내장imagegen1회 생성·직접육안확인. docs/design-drafts/noncombat-effects-20261019/{noncombat-effects-v1.png,design-v1.md,prompt-v1.md}. 원본/정확prompt 보존·재생성 없음.
+- 신전/계약은 성공 콜백에 아직 시각emit 없음→승인후추가제안. 정수/level/stairs는 기존emit/.9초/최대4 재사용. 계약붉은비용은blood만, supply중립교환/trial시련표식으로구분. 정수5색유지·축복낮은문양/성장상승괄호 구분·과한저주연기절제. 실제 direction+1상승/-1하강 확인. 캐릭터/시설/맵·보상성장저장RNG 변경 제안 없음.
+- 시안/문서만 준비·runtime/배포자산 미반영. git diff --check 정적통과. 테스트/QA·개발서버·푸시·배포·공개확인 실행 없음. 로컬커밋으로 보존. 운영release-20261019-131144-f5e588/runtime23ae822/원격6c0bffc 유지. 명령/서버세션·차단 없음.
+- 다음: 시안 패키지 컨펌 후 승인 범위 구현·문서·로컬커밋. 새 명시 배포 전 테스트/QA·푸시·배포·공개확인 금지. 사용자 플레이테스트와 별개이며 이번ㄱㄱ는 배포 지시가 아님.
+[진행 중 · 남은 비전투 연출 시안] 2026-10-19 사용자 ㄱㄱ로 직전 신전/계약·정수레벨업·계단 제안 진행. 시작git status clean/main6c0bffc. 실제신전 useShrine good/curse 및 계약 blood/supply/trial 성공콜백은 emit없음, 기존 essence/level/stairs 이벤트는있음 확인. 성공후별도시각emit만연결하는6패널 시안준비·기존보상저주계약/정수5색/레벨선택/층이동판정유지. 현재설계/4기록·다음내장imagegen1회→실제PNG확인/정확prompt·원본보존/로컬커밋. 승인전runtime미반영·이번테스트QA서버푸시배포공개확인없음. 운영release131144/runtime23ae822/원격6c0bffc 유지·세션차단없음.
+
 ## 최신 복사 가능한 인계 — 2026-10-19 시설 효과 배포 후
 ```text
 Spirebound C:\baggam-dev\spirebound main. 먼저 git status --short, WORK_STATUS→TODO→WORK_LOG최근→HANDOFF. 기존 변경 보존·최신 상단 우선.
