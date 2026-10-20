@@ -1,3 +1,11 @@
+## 최신 복사 가능한 인계 — 0.43 피드백 묶음 배포 완료
+```text
+C:\baggam-dev\spirebound/main. 사용자5항목+파수꾼등장/톤/보스방·통합PNG승인·명시배포까지완료. 운영 release-20261020-145818-671bcd/runtimee494023/0.43/https://168.107.21.43/. 구현9f2395b,초기공개20초로딩실패→새환경43,431ms자산정상준비확인→90초보완e494023재배포. 308파일/서버27·nginx/health/TLS성공. 전체577+보완집중31+timeout보완15통과(마지막전체578아님). 공개실제온라인UI2(session/runs200/점수0),public-ready-final3해상도각10층ready·실제입장웅크림기상/자동대사/지도카드/titlePNGready,public-loading-finalPC모바일요청gate·시간동결/절차맵미노출/상행·실패복구,public-https-final182목록/전체PNG바이트·TLS308/랭킹보안쿠키/HTTP기록이관2종통과·오류0. 별도API시작2는UI2와구분. DB/저장·SPIREBOUND/ranking-v13/지도35/점수식원본보존/최신표0.43시작기준. 상세 docs/qa-play-feedback-20261020/RELEASE_SUMMARY.md/실제PNG·정확프롬프트링크. 이전실패로그/원본보존. 다음우선검토=기존149MB이미지초기요청구조의층별지연로딩/용량최적화(미구현);그뒤기존입장/하강/최종생환연출계획.BGM보류/실iPhone저사양장시간미검증. 모든서버/명령종료. 마지막기록/증거·QA2도구보완커밋푸시/clean상태는git확인,제품추가변경/재배포없음. 이번배포승인종료,새명시배포전수정문서로컬커밋만/한국어5줄/실제PNG절대경로·원본보존。
+```
+## 최신 인계 — 공개 첫 로딩 제한 보완 재배포 중
+```text
+이전로컬검증/승인유효. 0.43 최초배포144409/runtime9f2395b는공개UI에서20초로딩timeout발생. asset-diagnostic.json 실제공개0층43431ms준비정상/실패요청0이라90초로보완했고집중15통과/e494023커밋푸시. 현재공식deploy session45361 release145818-671bcd/308파일재배포중(로그먼저확인). 아직전환확정아님. 다음공개온라인실제UI2→play-feedback-latest-qa3해상도→floor-loading-qa→public-https순차검증(동시대량콜드로드피함)·실패수정후필요검증/재배포. 최초HTTPS182목록/PNG/TLS/쿠키이관만통과,실제UI실패를숨기지않음. 149MB기존이미지요청구조/43초실측은향후층별지연최적화TODO,이번은준비대기와복구확보. 로컬서버/기타명령종료,배포승인재확인불필요/BGM보류。최종기록4문서/RELEASE_SUMMARY커밋푸시/clean미완료.
+```
 ## 최신 인계 — 0.43 로컬 검증 완료/배포 준비
 ```text
 C:\baggam-dev\spirebound/main. 최신사용자5항목+2층파수꾼등장/색감/보스방구체안 및PNG package-v1 승인·배포명시. 구현/테스트완료(미니맵/로딩/자동대사/파수꾼1초준비기상·새근접돌진·톤/보스방장식/스킬창희귀도+누적title contain). docs/design-drafts/play-feedback-20261020/implementation-package-v1.md 상세. client/API0.43/기존DB원본저장·SPIREBOUND/ranking-v13/지도35/점수식보존,최신표0.43시작정책. 전체577+보완집중31통과(최종전체578아님),Edge3해상도10층ready·실제방입장/색감카드/지도/머리위대사·titlePNGready/로딩PC모바일지연·시간정지·절차맵미노출·상행·실패복구통과. 초기권한/fixture/QA실패로그보존. 신규PNG原본/시안/prompt3보존·별도aura추가없음. 다음커밋푸시→공식deploy.ps1→공개실제온라인UI2/동일QA/HTTPS파일PNG·TLS쿠키이관→최종기록커밋푸시clean. 배포/명령상태는git/로그먼저확인. 현재운영112002/runtime74a66e5/0.42. 로컬서버82849QA종료후닫기·BGM보류·실iPhone저사양미검증. 배포승인재확인불필요.
