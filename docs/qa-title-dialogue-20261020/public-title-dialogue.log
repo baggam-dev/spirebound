@@ -1,0 +1,14 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator('#quit')
+
+    at C:\baggam-dev\spirebound\tools\qa\title-dialogue-release-qa.mjs:42:156 {
+  log: [ "  - waiting for locator('#quit')" ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

@@ -39,7 +39,7 @@ try{
    const frozen=await p.evaluate(()=>document.querySelector('#timer').textContent);await p.waitForTimeout(1100);assert.equal(await p.locator('#timer').textContent(),frozen);
    await p.screenshot({path:join(out,`king-dialogue-${w}.png`)});await p.keyboard.press('Escape');await p.locator('#dialogueNext').waitFor({state:'detached'});assert.ok(before.includes('bossDialogueSeen'));
    await p.keyboard.press('Escape');await p.locator('#resume').waitFor();await p.locator('#quit').click();
-   await p.locator('#continue').click();assert.equal(await p.locator('#dialogueNext').count(),0);await p.keyboard.press('Escape');await p.locator('#quit').click();
+   await p.locator('#continue').click();await p.waitForFunction(()=>document.querySelector('#overlay').innerHTML==='');assert.equal(await p.locator('#dialogueNext').count(),0);await p.keyboard.press('Escape');await p.locator('#quit').click();
    for(const kind of w===1280?['warden','prism','slime','gate','commander']:w===844?['gate','demon']:[]){
     const setup=await fixture(p,kind);await p.reload({waitUntil:'domcontentloaded'});await p.locator('#continue').click();
     await p.waitForFunction(()=>document.querySelector('#overlay').innerHTML==='');if(setup.direction!==null){const key=['w','d','s','a'][setup.direction];await p.locator('#game').focus();await p.keyboard.down(key);await p.locator('#dialogueNext').waitFor();await p.keyboard.up(key);}

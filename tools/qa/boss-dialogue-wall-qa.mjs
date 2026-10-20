@@ -11,7 +11,12 @@ try{for(const width of [1280,844])for(const kind of ['core','prism-death']){
   if(kind==='core'){challengeDemon(s);r.enemies.forEach(e=>e.hp=0);advanceDemonPhase(r,s.projectiles);r.enemies.forEach(e=>e.hp=0);}else r.enemies.forEach(e=>e.hp=0);
   localStorage.setItem(SAVE_KEY,encodeSave(s));
  },kind);
- await p.reload({waitUntil:'domcontentloaded'});await p.locator('#continue').click();
+ await p.reload({waitUntil:'domcontentloaded'});
+ await p.evaluate(async kind=>{
+  const ready=kind==='core'?[await import('/src/rendering/demon-core-sprite.js').then(m=>m.demonCoreSpriteReady),await import('/src/rendering/demon-presentation-art.js').then(m=>m.demonPresentationArtReady)]:[await import('/src/rendering/prism-sprite.js').then(m=>m.prismSpriteReady)];
+  if(!ready.every(Boolean))throw Error('Approved boss PNG unavailable');
+ },kind);
+ await p.locator('#continue').click();
  if(kind==='core'){await p.waitForFunction(()=>window.qaSpeech.some(s=>s.includes('이 탑에서'))).catch(async error=>{await p.screenshot({path:join(out,'failure.png')});await writeFile(join(out,'failure.json'),JSON.stringify({overlay:await p.locator('#overlay').innerText(),errors,speech:await p.evaluate(()=>window.qaSpeech)},null,2));throw error;});}
  else{await p.locator('#dialogueNext').waitFor();assert.match(await p.locator('.dialogue-live').textContent(),/왕실 봉인/);}
  await p.screenshot({path:join(out,`${kind}-${width}.png`)});results.push({kind,width,drawn:await p.evaluate(()=>window.qaSpeech)});
