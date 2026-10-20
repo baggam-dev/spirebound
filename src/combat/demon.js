@@ -5,7 +5,7 @@ import {frostAttackRate} from './frost.js';
 import {runRandom} from '../game/random.js';
 import {DEMON_SWEEP,isDemonSweep,demonSweepSector,demonSweepIntersects} from './demon-sweep.js';
 import {CORE_MOTION} from './demon-core-motion.js';
-import {DEMON_EYE,DEMON_TONGUE,demonEyeOffsets} from './demon-attack-shapes.js';
+import {DEMON_EYE,DEMON_TONGUE,demonEyeOffsets,demonForceProfile} from './demon-attack-shapes.js';
 
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
@@ -98,7 +98,7 @@ function resolve(s,r,p,bullets,hurt){
   const count=enhanced?Math.max(6,Math.ceil(Math.hypot(a.tx-a.x,a.ty-a.y)/30)+1):6;for(let i=0;i<count;i++){const t=i/(count-1),x=a.x+(a.tx-a.x)*t,y=a.y+(a.ty-a.y)*t;if(!blocked(x,y,24,r.obstacles))d.trails.push({x,y,radius:34,time:4});}
   if(d.phase===2){owner.x=a.tx;owner.y=a.ty;safeSpawn(owner,r.obstacles,32);}d.trails=d.trails.slice(enhanced?-32:-12);
  }
- if(a.kind==='mouthPull'||a.kind==='mouthPush'){if(!enhanced)d.trails=[];d.force={kind:a.kind,x:owner.x,y:owner.y,time:enhanced?1.2:.8};}
+ if(a.kind==='mouthPull'||a.kind==='mouthPush'){if(!enhanced)d.trails=[];d.force={kind:a.kind,x:owner.x,y:owner.y,time:enhanced?demonForceProfile(d).duration:.8};}
  if(a.kind==='mouthTongue'&&dist(owner,p)<DEMON_TONGUE.radius&&Math.abs(Math.atan2(Math.sin(Math.atan2(p.y-owner.y,p.x-owner.x)-a.aim),Math.cos(Math.atan2(p.y-owner.y,p.x-owner.x)-a.aim)))<DEMON_TONGUE.halfAngle&&!segmentBlocked(owner,p,r.obstacles))hurt(DEMON_TONGUE.damage,'대악마 혀 공격');
  if(owner.part==='core'&&!isDemonSweep(a.kind))d.coreFlash={kind:a.kind,x:a.x,y:a.y,tx:a.tx,ty:a.ty,aim:a.aim,time:CORE_MOTION.duration};
  d.attack=null;d.attackClock=d.phase===3?1.2:d.phase===2?1.45:1.35;d.recovery=owner.part==='core'?CORE_MOTION.duration:d.force?.time||.4;
@@ -130,7 +130,7 @@ function updatePressureDemon(s,r,p,dt,bullets,hurt){
  d.recovery=Math.max(0,d.recovery-dt);updateCoreFlashes(r,dt);d.footPressureClock=Math.max(0,d.footPressureClock-dt);
  for(const t of d.trails)t.time=Math.max(0,t.time-dt);d.trails=d.trails.filter(t=>t.time>0);trailHit(d,p,hurt);
  if(d.phase===2&&!living(r,'nose'))d.trails=[];
- if(d.force){const f=d.force;if((d.phase===2&&!living(r,'mouth'))||f.time<=0)d.force=null;else{const a=Math.atan2(f.y-p.y,f.x-p.x),sign=f.kind==='mouthPull'?1:-1;if(!(p.actionStun>0)&&dist(f,p)<360&&!segmentBlocked(f,p,r.obstacles))moveBody(p,Math.cos(a)*225*sign*dt,Math.sin(a)*225*sign*dt,r.obstacles,14);f.time=Math.max(0,f.time-dt);}}
+ if(d.force){const f=d.force;if((d.phase===2&&!living(r,'mouth'))||f.time<=0)d.force=null;else{const profile=demonForceProfile(d),activeTime=d.phase===2?Math.min(dt,f.time,profile.duration):dt,a=Math.atan2(f.y-p.y,f.x-p.x),sign=f.kind==='mouthPull'?1:-1;if(!(p.actionStun>0)&&dist(f,p)<profile.radius&&!segmentBlocked(f,p,r.obstacles))moveBody(p,Math.cos(a)*profile.speed*sign*activeTime,Math.sin(a)*profile.speed*sign*activeTime,r.obstacles,14);f.time=Math.max(0,(d.phase===2?Math.min(f.time,profile.duration):f.time)-dt);if(d.phase===2&&!f.time)d.force=null;}}
  for(const e of r.enemies.filter(e=>e.variant==='demon'&&e.hp>0)){
   if(e.part==='foot'){e.demonShieldClock=Math.max(0,(e.demonShieldClock??5)-dt);if(!e.demonShieldClock){e.demonShield=true;e.demonShieldClock=5;}}
   if(e.frozen>0)continue;
@@ -146,13 +146,13 @@ function updatePressureDemon(s,r,p,dt,bullets,hurt){
   d.partClocks[e.part]=Math.max(0,(d.partClocks[e.part]??.4)-dt*frostAttackRate(e));
  }
  d.attacks=d.attacks.filter(a=>living(r,a.owner));
- for(const a of [...d.attacks]){const e=living(r,a.owner);if(e.frozen>0)continue;a.time=Math.max(0,a.time-dt*frostAttackRate(e));if(!a.time){d.attack=a;resolve(s,r,p,bullets,hurt);d.attacks=d.attacks.filter(n=>n!==a);d.partClocks[a.owner]=a.owner==='hand'?.65:a.owner==='foot'?.6:a.owner==='eye'?.7:a.owner==='nose'?.9:a.owner==='mouth'?.65:.35;if(a.owner!=='core')d.recovery=0;}}
+ for(const a of [...d.attacks]){const e=living(r,a.owner);if(e.frozen>0)continue;a.time=Math.max(0,a.time-dt*frostAttackRate(e));if(!a.time){d.attack=a;resolve(s,r,p,bullets,hurt);d.attacks=d.attacks.filter(n=>n!==a);d.partClocks[a.owner]=a.owner==='hand'?.65:a.owner==='foot'?.6:a.owner==='eye'?.7:a.owner==='nose'?.9:a.owner==='mouth'?demonForceProfile(d).cooldown:.35;if(a.owner!=='core')d.recovery=0;}}
  d.attack=null;
  if(!d.recovery)for(const e of r.enemies.filter(e=>e.variant==='demon'&&e.hp>0)){
   if(e.frozen>0||d.attacks.some(a=>a.owner===e.part)||d.attacks.length>=2||d.partClocks[e.part]>0)continue;
   // Use the established pattern selection, but let each part select its own turn.
   const a=chooseAttack(s,r,p,e);
-  if(a){if(e.part==='foot'&&a.kind==='footJump')d.footPressureClock=4.5;if(e.part==='mouth')a.kind='mouthPull';a.owner=e.part;a.x=e.x;a.y=e.y;a.aim=isDemonSweep(a.kind)?Math.PI/2:Math.atan2(p.y-e.y,p.x-e.x);a.time=isDemonSweep(a.kind)?DEMON_SWEEP.windup:a.kind==='footJump'?.75:a.kind==='eyeRay'?.65:.42;if(e.part==='core')a.windup=a.time;if(a.kind==='noseTrail'){a.tx=clamp(p.x+(p.x>e.x?110:-110),135,825);a.ty=clamp(p.y,110,430);}d.attacks.push(a);d.attack=null;}
+  if(a){if(e.part==='foot'&&a.kind==='footJump')d.footPressureClock=4.5;if(e.part==='mouth')a.kind='mouthPull';a.owner=e.part;a.x=e.x;a.y=e.y;a.aim=isDemonSweep(a.kind)?Math.PI/2:Math.atan2(p.y-e.y,p.x-e.x);a.time=isDemonSweep(a.kind)?DEMON_SWEEP.windup:a.kind==='footJump'?.75:a.kind==='eyeRay'?.65:e.part==='mouth'?demonForceProfile(d).windup:.42;if(e.part==='core')a.windup=a.time;if(a.kind==='noseTrail'){a.tx=clamp(p.x+(p.x>e.x?110:-110),135,825);a.ty=clamp(p.y,110,430);}d.attacks.push(a);d.attack=null;}
  }
  updateDemonSpecials(s,r,p,dt,bullets,hurt,routeOpen);
 }

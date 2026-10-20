@@ -2,6 +2,11 @@ import {stoneFragments} from '../world/stone-shape.js';
 // Existing damage values, shared with the separate attack visuals.
 export const DEMON_EYE=Object.freeze({halfWidth:15,damage:9});
 export const DEMON_TONGUE=Object.freeze({radius:155,halfAngle:.7,damage:9});
+// The second phase needs a gap to escape the mouth while eye/nose attacks continue.
+// Keep clocks within the existing save bounds and leave the final core unchanged.
+export const DEMON_MOUTH_PHASE_TWO=Object.freeze({radius:210,speed:110,duration:.7,windup:.85,cooldown:3});
+const pressureForce=Object.freeze({radius:360,speed:225,duration:1.2,windup:.42,cooldown:.65});
+export const demonForceProfile=d=>d.pressureVersion===1&&d.phase===2?DEMON_MOUTH_PHASE_TWO:pressureForce;
 const normal=Object.freeze([-.22,0,.22]),enhanced=Object.freeze([-.36,-.18,0,.18,.36]);
 export const demonEyeOffsets=pressure=>pressure?enhanced:normal;
 // First intersection of a ray with an obstacle rectangle, using segmentBlocked's padding convention.

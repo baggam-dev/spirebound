@@ -7,7 +7,7 @@ import {DEMON_SWEEP,isDemonSweep} from '../combat/demon-sweep.js';
 import {drawDemonSweep} from './demon-sweep.js';
 import {drawDemonCoreImpact} from './demon-core-impact.js';
 import {drawDemonCoreAttackEffects,drawDemonTongueWarning} from './demon-core-attack-effects.js';
-import {demonEyeOffsets,demonRayLength} from '../combat/demon-attack-shapes.js';
+import {demonEyeOffsets,demonRayLength,demonForceProfile} from '../combat/demon-attack-shapes.js';
 
 const color={hand:'#b75c96',foot:'#9a698d',eye:'#d7a4e5',nose:'#9a608f',mouth:'#bd6c9e',core:'#9b4e82'};
 function box(c,x,y,w,h,fill){c.fillStyle=fill;c.fillRect(Math.round(x),Math.round(y),w,h);}
@@ -38,7 +38,7 @@ export function drawDemonGround(c,r,time=0,reduced=false){
    for(const offset of offsets){const angle=a.aim+offset,length=a.kind==='eyeRay'?demonRayLength(a,angle,r.obstacles,1200,2):850;c.beginPath();c.moveTo(a.x,a.y);c.lineTo(a.x+Math.cos(angle)*length,a.y+Math.sin(angle)*length);c.stroke();}
   }
   if(['hand','eyeOrb','coreBurst'].includes(a.kind))drawSoftField(c,a.x,a.y,a.kind==='coreBurst'?82:44,shade,.42);
-  if(['mouthPull','mouthPush'].includes(a.kind))drawSoftField(c,a.x,a.y,d.pressureVersion===1?360:245,shade,.22);
+  if(['mouthPull','mouthPush'].includes(a.kind))drawSoftField(c,a.x,a.y,d.pressureVersion===1?demonForceProfile(d).radius:245,shade,.22);
   c.fillStyle='#f4d9f2';c.font='11px Galmuri, monospace';c.textAlign='center';
   const finger=['엄지 부채','검지 저격','중지 관통','약지 곡사','새끼 산탄'];
   c.fillText(a.kind==='hand'?finger[a.finger]:({footJump:'발 착지',footDash:'발 돌진',eyeRay:'눈 광선',eyeOrb:'눈 탄환',noseTrail:'독길',mouthPull:'흡입',mouthPush:'밀어내기',mouthTongue:'혀 공격',coreBurst:'심연 탄막',coreSweepLeft:'왼팔 휘두르기 · 범위 밖으로',coreSweepRight:'오른팔 휘두르기 · 범위 밖으로'})[a.kind],a.x,a.y-65);
