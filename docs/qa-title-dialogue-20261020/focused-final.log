@@ -1,0 +1,19 @@
+✔ development API proxy forwards cookies and overrides claimed client IP (77.929ms)
+✔ server serves game modules and refuses repository files and unsupported methods (99.9962ms)
+✔ introductions occur once, speech controls do not advance actor or run clocks (2.4784ms)
+✔ a loaded seen encounter suppresses old introductions and phases, but future phases still speak (0.9656ms)
+✔ slime splitting never repeats its introduction or final collective death line (0.6479ms)
+✔ gate dialogue is sequential and respects both guardian death orders (0.8181ms)
+✔ practice, return encounters and summoned bosses do not create story interruptions (0.4713ms)
+✔ a skill kill between simulation ticks still produces its single death line (0.3579ms)
+✔ only the emerging demon core gets a safe first reading, including immediate hazards (0.4002ms)
+✔ nonblocking phase lines hide during hazards and expire without changing combat state (0.4182ms)
+✔ optional bounded event history round trips; corrupt dialogue IDs cannot poison a save (97.6869ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 749.6319

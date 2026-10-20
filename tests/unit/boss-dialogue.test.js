@@ -50,6 +50,12 @@ test('a skill kill between simulation ticks still produces its single death line
  const before=d.capture();r.enemies=[];d.after(before,result(e.id));assert.deepEqual(d.lines,BOSS_LINES.prism.death);assert.equal(d.blocking,true);
 });
 
+test('only the emerging demon core gets a safe first reading, including immediate hazards',()=>{
+ const hand={...enemy('demon'),part:'hand'},run=fixture([hand]),r=run.floors[0][0],d=createBossDialogue(run);d.observe();assert.deepEqual(d.lines,[]);
+ r.enemies=[{...enemy('demon',2),part:'core'}];r.demon={special:{kind:'hellFlame'}};r.hazards=[{phase:'warning'}];d.observe();
+ assert.equal(d.blocking,true);assert.deepEqual(d.lines,BOSS_LINES.demon.intro);d.tick(7);assert.equal(d.blocking,true);d.skip();d.observe();assert.equal(d.blocking,false);
+});
+
 test('nonblocking phase lines hide during hazards and expire without changing combat state',()=>{
  const e=enemy('king'),run=fixture([e]),r=run.floors[0][0],d=createBossDialogue(run);d.observe();d.skip();const before=d.capture();e.hp=60;d.after(before,result());
  r.hazards=[{phase:'warning'}];const saved=JSON.stringify(run.floors);let plaques=0;

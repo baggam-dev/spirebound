@@ -1,0 +1,16 @@
+✔ introductions occur once, speech controls do not advance actor or run clocks (3.5064ms)
+✔ a loaded seen encounter suppresses old introductions and phases, but future phases still speak (0.8407ms)
+✔ slime splitting never repeats its introduction or final collective death line (0.4877ms)
+✔ gate dialogue is sequential and respects both guardian death orders (0.6045ms)
+✔ practice, return encounters and summoned bosses do not create story interruptions (0.7087ms)
+✔ a skill kill between simulation ticks still produces its single death line (0.2426ms)
+✔ nonblocking phase lines hide during hazards and expire without changing combat state (0.4893ms)
+✔ optional bounded event history round trips; corrupt dialogue IDs cannot poison a save (94.5194ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4376.0571

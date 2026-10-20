@@ -1,0 +1,16 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator('#interact:not([hidden])') to be visible
+
+    at C:\baggam-dev\spirebound\tools\qa\title-dialogue-release-qa.mjs:37:84 {
+  log: [
+    "  - waiting for locator('#interact:not([hidden])') to be visible"
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

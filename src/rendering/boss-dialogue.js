@@ -45,7 +45,9 @@ export function createBossDialogue(run,{loaded=false}={}){
  function observe(){
   const r=roomOf(run);if(r!==currentRoom){queue=[];currentRoom=r;}
   if(!eligible(run,r))return;
-  for(const e of r.enemies||[]){const k=kind(e);if(k&&e.hp>0)add(r,e,'intro',{blocking:k!=='demon'});}
+  // The core immediately creates hazards on emergence; its first line needs the
+  // same safe reading state as other introductions. Subsequent phase lines stay optional.
+  for(const e of r.enemies||[]){const k=kind(e);if(k&&e.hp>0)add(r,e,'intro',{blocking:true});}
  }
  return {
   observe,
