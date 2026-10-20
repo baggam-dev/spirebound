@@ -1,3 +1,7 @@
+## 최신 인계 — 모바일 HUD v2 투명도 수정 시안 완료
+```text
+C:\baggam-dev\spirebound/main. 운영175020-8afe12/runtimeee2d31a/0.43유지. 사용자미니맵/정보창더투명요청으로v1부분편집한docs/design-drafts/mobile-hud-20261020/mobile-hud-v2.png가최신제안(아직컨펌대기). 내장imagegen사용/정확promptprompts-v2.md/생성원본보존,PNG직접확인상벽/바닥이더잘비침·텍스트현재위치읽힘. v1/투명pause-menu-icons-v1.png/배치·액션4개방향유지. 최종구현불투명도목표패널10~15%,일반방25~30%,현재방약50%,테두리20~25%,텍스트90~100%;생성PNG의정확측정alpha아님. 설계docs/mobile-hud-feedback-20261020.md의v2가v1수치보다우선. 다음v2시안확인→승인안만runtime·문서·로컬커밋. 기존주인공/스킬/층문구/해금/터치범위유지. runtime/배포자산미반영/테스트·푸시·배포·공개검증미실행. BGM보류/실행명령서버차단없음. 시안/문서로컬커밋후git확인,새배포권한없음/한국어기본5줄·실제PNG절대경로.
+```
 ## 최신 인계 — 모바일 HUD 통합 시안/버튼쌍 준비 완료·컨펌 대기
 ```text
 C:\baggam-dev\spirebound/main. 운영175020-8afe12/runtimeee2d31a/0.43유지,이전모바일검토fdbe62a로컬미푸시. 사용자진행으로통합PNG+pause/menu아이콘을imagegen내장도구로준비/직접확인했다. docs/design-drafts/mobile-hud-20261020/mobile-hud-v1.png(1844×853),pause-menu-icons-v1.png(1838×856/alpha모서리0),prompts-v1.md(정확프롬프트/방법/참조)보존. 기존실제844PNG참조,지도한변2/3/방반투명·지도하단같은우측끝능력치패널·상단벽체겹친PNG가로버튼2개·액션4개반투명방향. 액션4개/방5개는배치예시,생성문구/일부주인공픽셀차이는실제반영하지않는다. 실제구현시기존캐릭터/층문구/스킬/해금유지·수치치수/alpha는docs/mobile-hud-feedback-20261020.md기준·액션72px/상단44px터치유지. runtime/배포자산미수정,테스트·브라우저QA·푸시·배포·공개검증미실행. 다음통합시안사용자컨펌→승인안구현/문서/로컬커밋,진행은배포지시아님. BGM보류/기존입장·격파·하강·생환연출은후순위. 실행명령/서버/차단없음. 시안/문서 로컬커밋후git확인,원본/버전보존·한국어기본5줄·PNG절대경로제시. 
