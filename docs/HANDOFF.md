@@ -1,3 +1,7 @@
+## 최신 인계 — 실제 출현 목록 준비 보완 재배포
+```text
+승인된 첫접속 최적화 배포 진행. 최신 WORK_STATUS 상단/qa-lazy-assets-20261020 참고. 전체582+보완집중25 통과. local-roster-final 전체10층·상층cold8/10·귀환0·도감, roster 상자프리즘/희귀royalGuard, loading-roster-final 시간정지/상행/실패복구 모두 통과/오류0. 현재 운영172149/runtime18bf637/0.43, 실제 목록 floorAssetOptions/actorPlan·모듈집합cache·동적 적 준비게이트 보완은 다음 커밋푸시/공식배포 대상. 서버41951 종료 후 공개UI→동일audit→roster→로딩→HTTPS186/PNG/TLS 확인, 최종4문서/요약 기록푸시clean. 원본·전투/저장/랭킹불변/BGM보류/실iPhone미검증.
+```
 ## 최신 인계 — 로딩 진척/도감 표시 보완 재배포 준비
 ```text
 C:\baggam-dev\spirebound/main. 사용자 첫접속최적화 구현·배포 승인유효. 현재운영155247/runtimed986ff7/0.43,최적화실제UI2통과/원본요청량title79개136.32MB→4개5.49MB,1층누적44.30MB. 공개audit10층cold이어하기가90초제한실패했으나직접진단96,219ms자산준비정상/요청실패0. asset-wait.js 추가:파일load/error완료진척중대기/60초무진척·총5분제한/워처정리,game의고정race대체. 도감선택은준비중문자/aria-busy후PNG표시. 집중22통과(기존전체582+추가3단위포함집중22,마지막전체585실행아님),local-final PC/모바일0층·각10층ready·재요청0·8/10층cold직접이어하기·실제선택대악마요청gate/준비상태통과/오류0. 원본실패로그보존. 다음보완커밋푸시→공식재배포→공개실제UI/동일audit·로딩·HTTPS186목록/PNG/TLS쿠키검증→최종4문서/요약커밋푸시clean. 로컬서버96992는최종QA완료후닫기/나머지명령완료. 원본/스타일/전투/저장/랭킹·0.43보존/BGM보류/실iPhone미검증。새확인요청없이승인범위진행.

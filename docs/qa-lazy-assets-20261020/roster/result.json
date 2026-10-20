@@ -1,0 +1,15 @@
+{
+  "base": "http://127.0.0.1:5173",
+  "checks": [
+    {
+      "kind": "chest",
+      "ready": true
+    },
+    {
+      "kind": "rare",
+      "ready": true
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

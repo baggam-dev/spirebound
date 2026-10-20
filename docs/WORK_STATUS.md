@@ -1,3 +1,12 @@
+[실제 목록 보완 로컬 검증 완료 · 재배포 준비 — 2026-10-20 KST]
+- local-roster-final: PC1280/가로844 첫층44,296,448B·메인4PNG5,491,784B, 각10층ready/재요청0, 8층80,135,200B/10층115,295,444B cold 이어하기, 귀환1층65,415,240B 및 귀환3종ready, 도감선택 준비→PNG/뒤로복귀 통과/오류0. loading-roster-final PC/모바일 시간동결·절차맵미노출·상행·실패복구 통과. roster 상자/희귀 통과, 집중25/25 및 기존전체582/582 유효.
+- 다음 서버41951 종료→보완 커밋/main푸시→공식 배포→공개 순차 확인. 현재172149/runtime18bf637, 이번 보완은 아직 미배포. 첫층 PNG 직접 확인/원본불변, BGM 보류/실iPhone 미검증.
+[실제 적 목록 기반 준비 보완 · 최종 로컬 확인 중 — 2026-10-20 KST]
+- 운영172149/runtime18bf637/0.43은 유지 중이며 아래 보완은 아직 미배포. 실제 층의 희귀 상층 적·귀환 적·상자 보스·최종 탈출 증원을 floorAssetOptions/actorPlan으로 준비한다. 준비 cache는 층뿐 아니라 모듈/feedback 집합을 확인하고, 시뮬레이션 전후 신규 적 발생도 입장 게이트로 보호한다. 전투/난수/PNG/저장 형식 변경 없음.
+- 집중25/25, 실제 상자 프리즘 요청 보류→로딩→준비 및 3층 희귀 royalGuard 준비 브라우저 검사 통과/오류0. 전체582 통과 기록과 구분. local-roster-final(30614), loading-roster-final(32009) 실행 중; 서버41951. 다음 로그 결과→서버 종료→보완 커밋푸시/공식 배포→공개 UI/전체 audit/희귀상자/로딩/HTTPS 확인→최종 기록. 기존 배포 승인 유효/BGM 보류.
+[귀환 저장 경로 보완/최종 검증 중 — 2026-10-20 KST]
+- 재배포172149/runtime18bf637/0.43활성/공식312파일·서버27·nginx/health/TLS성공. 이후저장경로점검에서fresh귀환저장의낮은층에도귀환전용ambusher/ringcaster/strafer+feedback-demons가필요함을확인. floorAssetPlan/prepareFloorAssets/floorAssetsLoaded에returning옵션과분리cachekey추가,game resume/로딩task에s.key연결. 첫탐험팩/요청량은변경없음. 신규회귀포함집중23/23통과.
+- local-return-final은PC/모바일·각10층/재요청0·8/10층cold이어하기·1층귀환저장/3종실제ready·도감지연준비상태를검증중. 로컬서버41951. 다음이결과→귀환보완커밋푸시/공식재배포→공개UI2/동일audit/로딩/HTTPS186목록PNG/TLS→최종기록푸시clean. 이전공개최종층90초실패/96초정상준비진단은보존,진척기반60초무진척·총5분보완이미18bf에반영. 기존이번배포승인유효/원본전투저장랭킹·0.43보존/BGM보류。
 [공개 최종층 cold 이어하기 보완 중 — 2026-10-20 KST]
 - 최초d986배포의 공개실제UI2는통과. public lazy audit는0층/8층까지통과뒤10층cold이어하기에서90초제한으로실패. cold-final-floor-diagnostic.json:실제자산준비96,219ms/readytrue/실패요청0,로컬같은준비3,283ms. 누락/오류이미지가아닌정상전송진행의총시간제한문제확인/원본실패보존.
 - asset-wait.js로파일load/error완료진척이있으면대기유지,60초무진척또는총5분시복구하도록보완. nativeImage전역/PNG원본불변. game.js의고정90초race대체. 자산요청/진척watcher/대사/파수꾼집중22/22통과(전체585재실행아님:기존582전체+보완집중22).

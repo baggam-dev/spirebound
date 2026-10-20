@@ -1,0 +1,33 @@
+✔ imported images do not request a source until their pack is activated (14.5771ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.8553ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (178.4827ms)
+✔ selected portraits do not require every monster or any dungeon hall (0.9389ms)
+✔ fresh return saves prepare descent-only enemies without making first ascent download them (0.4795ms)
+✔ rare upper-floor expeditions and chest bosses are loaded from the actual roster (0.5154ms)
+✔ floor discovery covers later rooms while a combat check can inspect only its current room (1.6075ms)
+✔ file progress extends a slow load beyond an old fixed deadline and clears its watcher (1.8581ms)
+✔ a stalled transfer fails and releases the watcher (1.0119ms)
+✔ continuous progress is still bounded and source errors surface immediately (0.5065ms)
+✔ introductions are automatic and never advance actor or run clocks themselves (3.6468ms)
+✔ warden introduction waits for awakening, including a save loaded mid-arrival (0.3235ms)
+✔ a loaded seen encounter suppresses old introductions and phases, but future phases still speak (0.7258ms)
+✔ slime splitting never repeats its introduction or final collective death line (0.4082ms)
+✔ gate dialogue is sequential and respects both guardian death orders (0.5244ms)
+✔ practice, return encounters and summoned bosses do not create story interruptions (0.3616ms)
+✔ a skill kill between simulation ticks still produces its single death line (0.2453ms)
+✔ emerging demon core speaks automatically despite immediate hazards (0.2557ms)
+✔ nonblocking phase lines remain visible during hazards and expire without changing combat state (1.0454ms)
+✔ optional bounded event history round trips; corrupt dialogue IDs cannot poison a save (106.5319ms)
+✔ first warden arrival permits movement but blocks every combat simulation path for one second (112.4138ms)
+✔ reentry and return do not replay awakening (51.2292ms)
+✔ warden cleave locks facing, respects walls and gives recovery (0.5931ms)
+✔ warden charge hits once, stops at walls and cannot immediately repeat (0.655ms)
+✔ only floor2 warden gets shorter jump warning and faster movement (0.2882ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1293.5289

@@ -1,0 +1,31 @@
+✔ imported images do not request a source until their pack is activated (11.2747ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.8895ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (512.8089ms)
+✔ selected portraits do not require every monster or any dungeon hall (2.029ms)
+✔ fresh return saves prepare descent-only enemies without making first ascent download them (0.7976ms)
+✔ file progress extends a slow load beyond an old fixed deadline and clears its watcher (4.0118ms)
+✔ a stalled transfer fails and releases the watcher (1.9761ms)
+✔ continuous progress is still bounded and source errors surface immediately (0.9497ms)
+✔ introductions are automatic and never advance actor or run clocks themselves (4.9027ms)
+✔ warden introduction waits for awakening, including a save loaded mid-arrival (0.7753ms)
+✔ a loaded seen encounter suppresses old introductions and phases, but future phases still speak (1.4625ms)
+✔ slime splitting never repeats its introduction or final collective death line (0.8555ms)
+✔ gate dialogue is sequential and respects both guardian death orders (0.9765ms)
+✔ practice, return encounters and summoned bosses do not create story interruptions (0.5583ms)
+✔ a skill kill between simulation ticks still produces its single death line (0.3875ms)
+✔ emerging demon core speaks automatically despite immediate hazards (0.4467ms)
+✔ nonblocking phase lines remain visible during hazards and expire without changing combat state (1.3008ms)
+✔ optional bounded event history round trips; corrupt dialogue IDs cannot poison a save (258.4297ms)
+✔ first warden arrival permits movement but blocks every combat simulation path for one second (295.0765ms)
+✔ reentry and return do not replay awakening (118.4728ms)
+✔ warden cleave locks facing, respects walls and gives recovery (1.4616ms)
+✔ warden charge hits once, stops at walls and cannot immediately repeat (1.444ms)
+✔ only floor2 warden gets shorter jump warning and faster movement (0.7272ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2154.1837
