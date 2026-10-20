@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {velkarPresentationPose,velkarFacing} from './velkar-presentation-state.js';
 import {drawFrostAura} from './frost-aura.js';
 import {cleanDetachedCrop} from './sprite-crop.js';
@@ -18,7 +19,7 @@ const sheets=[
 ];
 export const velkarPresentationArtState=()=>({ready:poses.size===12,keys:[...poses.keys()].sort()});
 export const velkarPresentationArtReady=typeof Image==='undefined'?Promise.resolve(false):Promise.all(sheets.map(s=>new Promise(resolve=>{
- const image=new Image();image.onload=()=>{try{
+ const image=new DeferredImage();image.onload=()=>{try{
   if(image.naturalWidth!==s.width||image.naturalHeight!==s.height){resolve(false);return;}
   for(const [key,x,y,w,h,ax,feet,standing] of s.frames){
    const scale=75.6/standing,canvas=document.createElement('canvas');canvas.width=Math.ceil(w*scale);canvas.height=Math.ceil(h*scale);

@@ -1,9 +1,10 @@
+import {DeferredImage} from './asset-requests.js';
 import {locomotion,drawWalkingFrame} from './locomotion.js';
 import {characterSizes} from './character-sizes.js';
 const frames=[],motion=new WeakMap();
 export const mordoPhase1SpriteState=()=>({ready:frames.length===2});
 export const mordoPhase1SpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1774||atlas.naturalHeight!==887){resolve(false);return;}
   for(const f of [{x:0,y:120,w:925,h:767,anchorX:575,feet:868,bodyTop:145},{x:950,y:0,w:824,h:887,anchorX:1450,feet:868,bodyTop:205}]){
    const scale=characterSizes.warden/(f.feet-f.bodyTop),canvas=document.createElement('canvas');canvas.width=Math.ceil(f.w*scale);canvas.height=Math.ceil(f.h*scale);const c=canvas.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(atlas,f.x,f.y,f.w,f.h,0,0,f.w*scale,f.h*scale);frames.push({canvas,x:(f.x-f.anchorX)*scale,y:29-(f.feet-f.y)*scale});

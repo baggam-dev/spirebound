@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {characterSizes} from './character-sizes.js';
 import {drawWardenPresentation,drawWardenPose} from './warden-presentation-art.js';
 import {rememberWardenFacing} from './warden-presentation-state.js';
@@ -13,7 +14,7 @@ export const wardenSpriteState=()=>({ready:frames.length===2,frames:frames.lengt
 export const wardenHealthOffset=()=>frames.length?bodyHeight-29+12:52;
 export const wardenLabelOffset=()=>frames.length?bodyHeight-29+20:57;
 const originalReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1774||atlas.naturalHeight!==887){resolve(false);return;}
   frames.push(...sourceFrames.map(f=>{const canvas=document.createElement('canvas');canvas.width=Math.ceil(f.w*scale);canvas.height=Math.ceil(f.h*scale);const c=canvas.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(atlas,f.x,f.y,f.w,f.h,0,0,f.w*scale,f.h*scale);return {canvas,x:(f.x-f.anchorX)*scale,y:29-(f.feet-f.y)*scale};}));resolve(true);
  }catch{resolve(false);}};atlas.onerror=()=>resolve(false);atlas.src=new URL('../../assets/images/warden-horns-blood-atlas.png',import.meta.url).href;

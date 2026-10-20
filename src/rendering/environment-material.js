@@ -1,8 +1,9 @@
+import {DeferredImage} from './asset-requests.js';
 // Approved environment v2: material-only caches; never applied to actors, HUD or telegraphs.
 export const ENVIRONMENT_PIXEL=2;
 let reference=null;
 export const environmentReferenceReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const im=new Image();im.onload=()=>{reference=im;resolve(true);};im.onerror=()=>resolve(false);im.src=new URL('../../assets/images/environment-stone-reference-v1.png',import.meta.url).href;
+ const im=new DeferredImage();im.onload=()=>{reference=im;resolve(true);};im.onerror=()=>resolve(false);im.src=new URL('../../assets/images/environment-stone-reference-v1.png',import.meta.url).href;
 });
 function surface(w,h){
  const c=typeof OffscreenCanvas!=='undefined'?new OffscreenCanvas(w,h):typeof document!=='undefined'?document.createElement('canvas'):null;

@@ -1,8 +1,9 @@
+import {DeferredImage} from './asset-requests.js';
 // Approved v2 package. Cached crops share one scale; drawing never changes actors.
 const frames=[],motion=new WeakMap(),scale=.135;
 export const demonBatSpriteState=()=>({ready:frames.length===4});
 export const demonBatSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1254||atlas.naturalHeight!==1254){resolve(false);return;}
   // Unequal pose bounds: the raised wings extend above the nominal sheet cell.
   for(const f of [

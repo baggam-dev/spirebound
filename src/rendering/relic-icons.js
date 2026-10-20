@@ -1,8 +1,9 @@
+import {DeferredImage} from './asset-requests.js';
 import {iconSVG} from './pixel-icons.js';
 export const relicIconIds=['windSeal','lens','boots','iron','ember','rain','fang','ruby','quiver','feather','hourglass','crown','comet','moon','heart','chalice','bastion','blade','orbit','coal','sun','prism','hunter','execution','magnet','halo','openingWhetstone','thornBuckle','ritualKnot','fairyWhistle','phoenixReliquary','sunFairy','snowFairy','stormFairy','afterimage','orbitBlades','voidBell'];
 const ready=new Set(),style=typeof document==='undefined'?null:document.createElement('style');if(style)document.head.append(style);
 export const relicIconsReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const im=new Image();im.onload=()=>{try{
+ const im=new DeferredImage();im.onload=()=>{try{
   const c=document.createElement('canvas');c.width=im.width;c.height=im.height;const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(im,0,0);const data=ctx.getImageData(0,0,c.width,c.height).data;
   // Generated sheets can have uneven vertical padding; split at the nearest empty scanline.
   const occupancy=Array.from({length:c.height},(_,y)=>{let n=0;for(let x=0;x<c.width;x++)if(data[(y*c.width+x)*4+3]>64)n++;return n;});

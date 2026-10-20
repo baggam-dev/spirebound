@@ -1,0 +1,27 @@
+✔ imported images do not request a source until their pack is activated (4.4317ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.5961ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (168.7094ms)
+✔ selected portraits do not require every monster or any dungeon hall (0.9578ms)
+✔ introductions are automatic and never advance actor or run clocks themselves (3.9363ms)
+✔ warden introduction waits for awakening, including a save loaded mid-arrival (0.4349ms)
+✔ a loaded seen encounter suppresses old introductions and phases, but future phases still speak (0.7446ms)
+✔ slime splitting never repeats its introduction or final collective death line (0.4245ms)
+✔ gate dialogue is sequential and respects both guardian death orders (0.5324ms)
+✔ practice, return encounters and summoned bosses do not create story interruptions (0.3059ms)
+✔ a skill kill between simulation ticks still produces its single death line (0.2434ms)
+✔ emerging demon core speaks automatically despite immediate hazards (0.2649ms)
+✔ nonblocking phase lines remain visible during hazards and expire without changing combat state (0.7984ms)
+✔ optional bounded event history round trips; corrupt dialogue IDs cannot poison a save (99.1595ms)
+✔ first warden arrival permits movement but blocks every combat simulation path for one second (104.5799ms)
+✔ reentry and return do not replay awakening (41.2307ms)
+✔ warden cleave locks facing, respects walls and gives recovery (0.8151ms)
+✔ warden charge hits once, stops at walls and cannot immediately repeat (0.7132ms)
+✔ only floor2 warden gets shorter jump warning and faster movement (0.3812ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 944.1053

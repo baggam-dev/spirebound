@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {locomotion,drawWalkingFrame,drawGlidingFrame} from './locomotion.js';
 import {applyRemainingBossPose} from './remaining-boss-presentation.js';
 // Display-only frames. Combat owners, attack timing and collision stay in combat/demon.js.
@@ -15,7 +16,7 @@ function bake(atlas,x,y,w,h,maxWidth,maxHeight){
  const c=canvas.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(probe,left,top,bw,bh,0,0,canvas.width,canvas.height);return canvas;
 }
 function load(part){return new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   const {width,height}=specs[part],w=atlas.naturalWidth,h=atlas.naturalHeight;
   if(part==='core'){
    if(w!==1254||h!==1254)throw Error('Unexpected core atlas');

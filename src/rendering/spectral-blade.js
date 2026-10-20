@@ -1,8 +1,9 @@
+import {DeferredImage} from './asset-requests.js';
 import {bladeProfile,bladeColor,spectralBladeState} from '../combat/spectral-blade.js';
 
 let image=null;
 export const spectralBladeReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const source=new Image();source.onload=()=>{try{if(source.naturalWidth!==1024||source.naturalHeight!==1536){resolve(false);return;}const frame=document.createElement('canvas');frame.width=8;frame.height=32;const c=frame.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(source,328,45,368,1445,0,0,8,32);image=frame;resolve(true);}catch{resolve(false);}};source.onerror=()=>resolve(false);
+ const source=new DeferredImage();source.onload=()=>{try{if(source.naturalWidth!==1024||source.naturalHeight!==1536){resolve(false);return;}const frame=document.createElement('canvas');frame.width=8;frame.height=32;const c=frame.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(source,328,45,368,1445,0,0,8,32);image=frame;resolve(true);}catch{resolve(false);}};source.onerror=()=>resolve(false);
  source.src=new URL('../../assets/images/vergas-blade-v1.png',import.meta.url).href;
 });
 export function drawSpectralBlade(c,s,reduced=false){

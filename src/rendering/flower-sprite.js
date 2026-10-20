@@ -1,9 +1,10 @@
+import {DeferredImage} from './asset-requests.js';
 import {characterSizes} from './character-sizes.js';
 import {ordinaryPose} from './ordinary-presentation-state.js';
 const frames=[];
 export const flowerSpriteState=()=>({ready:frames.length===2});
 export const flowerSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1774||atlas.naturalHeight!==887){resolve(false);return;}
   const scale=characterSizes.grunt/615;
   const crop=(x,y,w,h,anchorX)=>{const canvas=document.createElement('canvas');canvas.width=Math.ceil(w*scale);canvas.height=Math.ceil(h*scale);const c=canvas.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(atlas,x,y,w,h,0,0,w*scale,h*scale);return {canvas,x:(x-anchorX)*scale,y:21-(810-y)*scale};};

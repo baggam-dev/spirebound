@@ -1,33 +1,34 @@
-import {drawFeedbackSprite,feedbackSpritesReady,feedbackSpriteState} from './feedback-sprites.js';
-import {drawAmbusherSprite,ambusherSpriteReady,ambusherSpriteState} from './ambusher-sprite.js';
-import {drawRingcasterSprite,ringcasterSpriteReady,ringcasterSpriteState} from './ringcaster-sprite.js';
-import {drawStraferSprite,straferSpriteReady,straferSpriteState} from './strafer-sprite.js';
-import {demonCaptainSpriteReady,demonCaptainSpriteState} from './demon-captain-sprite.js';
-import {demonArcherSpriteReady,demonArcherSpriteState} from './demon-archer-sprite.js';
-import {demonSoldierSpriteReady,demonSoldierSpriteState} from './demon-soldier-sprite.js';
-import {spikeNestSpriteReady,spikeNestSpriteState} from './spike-nest-sprite.js';
-import {demonBatSpriteReady,demonBatSpriteState} from './demon-bat-sprite.js';
-import {demonCoreSpriteReady,demonCoreSpriteState} from './demon-core-sprite.js';
-import {demonSpriteReady,demonSpriteState} from './demon-sprite.js';
-import {commanderPhase2SpriteReady,commanderPhase2SpriteState} from './commander-phase2-sprite.js';
-import {commanderPhase1SpriteReady,commanderPhase1SpriteState} from './commander-phase1-sprite.js';
-import {mordoPhase3SpriteReady,mordoPhase3SpriteState} from './mordo-phase3-sprite.js';
-import {mordoPhase2SpriteReady,mordoPhase2SpriteState} from './mordo-phase2-sprite.js';
-import {mordoPhase1SpriteReady,mordoPhase1SpriteState} from './mordo-phase1-sprite.js';
-import {riftHunterSpriteReady,riftHunterSpriteState} from './rift-hunter-sprite.js';
-import {shadowAuraReady,shadowAuraState} from './shadow-aura.js';
-import {pulseTurretSpriteReady,pulseTurretSpriteState} from './pulse-turret-sprite.js';
-import {royalGuardSpriteReady,royalGuardSpriteState} from './royal-guard-sprite.js';
-import {starBearerSpriteReady,starBearerSpriteState} from './star-bearer-sprite.js';
-import {starKnightSpriteReady,starKnightSpriteState} from './star-knight-sprite.js';
-import {wardenSpriteReady,wardenSpriteState} from './warden-sprite.js';
-import {flowerSpriteReady,flowerSpriteState} from './flower-sprite.js';
-import {prismSpriteReady,prismSpriteState} from './prism-sprite.js';
-import {slimeSpriteReady,slimeSpriteState} from './slime-sprite.js';
-import {astralSniperSpriteReady,astralSniperSpriteState} from './astral-sniper-sprite.js';
-import {gravityMageSpriteReady,gravityMageSpriteState} from './gravity-mage-sprite.js';
+import {preparePortraitAssets} from './floor-assets.js';
+import {drawFeedbackSprite,feedbackSpriteState} from './feedback-sprites.js';
+import {drawAmbusherSprite,ambusherSpriteState} from './ambusher-sprite.js';
+import {drawRingcasterSprite,ringcasterSpriteState} from './ringcaster-sprite.js';
+import {drawStraferSprite,straferSpriteState} from './strafer-sprite.js';
+import {demonCaptainSpriteState} from './demon-captain-sprite.js';
+import {demonArcherSpriteState} from './demon-archer-sprite.js';
+import {demonSoldierSpriteState} from './demon-soldier-sprite.js';
+import {spikeNestSpriteState} from './spike-nest-sprite.js';
+import {demonBatSpriteState} from './demon-bat-sprite.js';
+import {demonCoreSpriteState} from './demon-core-sprite.js';
+import {demonSpriteState} from './demon-sprite.js';
+import {commanderPhase2SpriteState} from './commander-phase2-sprite.js';
+import {commanderPhase1SpriteState} from './commander-phase1-sprite.js';
+import {mordoPhase3SpriteState} from './mordo-phase3-sprite.js';
+import {mordoPhase2SpriteState} from './mordo-phase2-sprite.js';
+import {mordoPhase1SpriteState} from './mordo-phase1-sprite.js';
+import {riftHunterSpriteState} from './rift-hunter-sprite.js';
+import {shadowAuraState} from './shadow-aura.js';
+import {pulseTurretSpriteState} from './pulse-turret-sprite.js';
+import {royalGuardSpriteState} from './royal-guard-sprite.js';
+import {starBearerSpriteState} from './star-bearer-sprite.js';
+import {starKnightSpriteState} from './star-knight-sprite.js';
+import {wardenSpriteState} from './warden-sprite.js';
+import {flowerSpriteState} from './flower-sprite.js';
+import {prismSpriteState} from './prism-sprite.js';
+import {slimeSpriteState} from './slime-sprite.js';
+import {astralSniperSpriteState} from './astral-sniper-sprite.js';
+import {gravityMageSpriteState} from './gravity-mage-sprite.js';
 import {drawPixelActor} from './pixel-world.js';
-import {gruntSpriteReady,gruntSpriteState} from './grunt-sprite.js';
+import {gruntSpriteState} from './grunt-sprite.js';
 import {drawUpper} from './upper-visuals.js';
 import {upperTypes} from '../combat/upper-floors.js';
 import {drawCommander} from './commander-visuals.js';
@@ -39,10 +40,10 @@ import {drawPoisonEnemy} from '../combat/poison.js';
 import {drawPrism} from '../combat/prism.js';
 import {enemyGuide} from '../world/expedition.js';
 
-const cache=new Map(),pendingRoots=new WeakSet();
+const cache=new Map(),requested=new WeakSet(),observers=new WeakMap();
 // Render once, using the same bodies as combat. Never mutate the expedition.
 function portrait(key,part){
- const id=key+':'+part+':'+feedbackSpriteState().ready+':'+(key==='ambusher'?ambusherSpriteState().ready:key==='ringcaster'?ringcasterSpriteState().ready:key==='strafer'?straferSpriteState().ready:key==='demonCaptain'?demonCaptainSpriteState().ready:key==='demonArcher'?demonArcherSpriteState().ready:key==='demonSoldier'?demonSoldierSpriteState().ready:key==='spikeNest'?spikeNestSpriteState().ready:key==='demonBat'?demonBatSpriteState().ready:key==='demon'?demonSpriteState().parts.join(',')+':'+demonCoreSpriteState().ready+':'+shadowAuraState().ready:key==='commander'?commanderPhase1SpriteState().ready+':'+commanderPhase2SpriteState().ready+':'+shadowAuraState().ready:key==='king'?mordoPhase1SpriteState().ready+':'+mordoPhase2SpriteState().ready+':'+mordoPhase3SpriteState().ready+':'+shadowAuraState().ready:key==='riftHunter'?riftHunterSpriteState().ready+':'+shadowAuraState().ready:key==='pulseTurret'?pulseTurretSpriteState().ready:key==='royalGuard'?royalGuardSpriteState().ready:key==='starBearer'?starBearerSpriteState().ready:key==='starKnight'?starKnightSpriteState().ready:key==='gravityMage'?gravityMageSpriteState().ready:key==='astralSniper'?astralSniperSpriteState().ready:['slime','minislime'].includes(key)?slimeSpriteState().ready:key==='prism'?prismSpriteState().ready:key==='flower'?flowerSpriteState().ready:key==='warden'?wardenSpriteState().ready:gruntSpriteState().types.includes(key));if(cache.has(id))return cache.get(id);
+ const id=key+':'+part+':'+feedbackSpriteState().keys.join(',')+':'+(key==='ambusher'?ambusherSpriteState().ready:key==='ringcaster'?ringcasterSpriteState().ready:key==='strafer'?straferSpriteState().ready:key==='demonCaptain'?demonCaptainSpriteState().ready:key==='demonArcher'?demonArcherSpriteState().ready:key==='demonSoldier'?demonSoldierSpriteState().ready:key==='spikeNest'?spikeNestSpriteState().ready:key==='demonBat'?demonBatSpriteState().ready:key==='demon'?demonSpriteState().parts.join(',')+':'+demonCoreSpriteState().ready+':'+shadowAuraState().ready:key==='commander'?commanderPhase1SpriteState().ready+':'+commanderPhase2SpriteState().ready+':'+shadowAuraState().ready:key==='king'?mordoPhase1SpriteState().ready+':'+mordoPhase2SpriteState().ready+':'+mordoPhase3SpriteState().ready+':'+shadowAuraState().ready:key==='riftHunter'?riftHunterSpriteState().ready+':'+shadowAuraState().ready:key==='pulseTurret'?pulseTurretSpriteState().ready:key==='royalGuard'?royalGuardSpriteState().ready:key==='starBearer'?starBearerSpriteState().ready:key==='starKnight'?starKnightSpriteState().ready:key==='gravityMage'?gravityMageSpriteState().ready:key==='astralSniper'?astralSniperSpriteState().ready:['slime','minislime'].includes(key)?slimeSpriteState().ready:key==='prism'?prismSpriteState().ready:key==='flower'?flowerSpriteState().ready:key==='warden'?wardenSpriteState().ready:gruntSpriteState().types.includes(key));if(cache.has(id))return cache.get(id);
  const source=document.createElement('canvas');source.width=384;source.height=384;
  const c=source.getContext('2d'),boss=['warden','prism','slime','king','commander','demon'].includes(key);
  const e={x:192,y:250,type:boss?'boss':key,hp:100,max:100,id:0,tier:0,part:part||'core'};
@@ -66,13 +67,22 @@ function portrait(key,part){
  if(left<=right){const w=right-left+1,h=bottom-top+1,scale=Math.min(144/w,144/h,2),ctx=result.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.drawImage(source,left,top,w,h,Math.round((160-w*scale)/2),Math.round((160-h*scale)/2),Math.round(w*scale),Math.round(h*scale));}
  cache.set(id,result);return result;
 }
+function paintPortrait(canvas){
+ const key=canvas.dataset.enemy,part=canvas.dataset.part;
+ if(!Object.hasOwn(enemyGuide,key)||part&&!['hand','foot','eye','nose','mouth','core'].includes(part))return;
+ const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(portrait(key,part),0,0,canvas.width,canvas.height);
+}
+function requestPortrait(canvas){
+ if(requested.has(canvas))return;requested.add(canvas);
+ preparePortraitAssets(canvas.dataset.enemy).then(()=>{if(canvas.isConnected)paintPortrait(canvas);}).catch(()=>{requested.delete(canvas);});
+}
 export function renderJournalPortraits(root){
- if(!pendingRoots.has(root)){pendingRoots.add(root);Promise.all([feedbackSpritesReady,ambusherSpriteReady,ringcasterSpriteReady,straferSpriteReady,demonCaptainSpriteReady,demonArcherSpriteReady,demonSoldierSpriteReady,spikeNestSpriteReady,demonBatSpriteReady,demonCoreSpriteReady,demonSpriteReady,gruntSpriteReady,wardenSpriteReady,flowerSpriteReady,prismSpriteReady,slimeSpriteReady,commanderPhase1SpriteReady,commanderPhase2SpriteReady,mordoPhase1SpriteReady,mordoPhase2SpriteReady,mordoPhase3SpriteReady,riftHunterSpriteReady,shadowAuraReady,pulseTurretSpriteReady,royalGuardSpriteReady,starBearerSpriteReady,starKnightSpriteReady,astralSniperSpriteReady,gravityMageSpriteReady]).then(()=>{if(root.isConnected)renderJournalPortraits(root);});}
+ let observer=observers.get(root);
+ if(!observer&&typeof IntersectionObserver!=='undefined'){
+  observer=new IntersectionObserver(entries=>{if(!root.isConnected){observer.disconnect();return;}for(const entry of entries)if(entry.isIntersecting){requestPortrait(entry.target);observer.unobserve(entry.target);}},{rootMargin:'60px'});observers.set(root,observer);
+ }
  for(const canvas of root.querySelectorAll('canvas[data-enemy]')){
-  const key=canvas.dataset.enemy,part=canvas.dataset.part;
-  if(!Object.hasOwn(enemyGuide,key)||part&&!['hand','foot','eye','nose','mouth','core'].includes(part))continue;
-  const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(portrait(key,part),0,0,canvas.width,canvas.height);
+  paintPortrait(canvas);
+  if(canvas.closest('.bestiary-stage')||!observer)requestPortrait(canvas);else observer.observe(canvas);
  }
 }
-
-

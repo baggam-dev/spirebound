@@ -1,9 +1,10 @@
+import {DeferredImage} from './asset-requests.js';
 import {locomotion,drawGlidingFrame} from './locomotion.js';
 import {applyRemainingBossPose} from './remaining-boss-presentation.js';
 const frames=[];
 export const slimeSpriteState=()=>({ready:frames.length===4});
 export const slimeSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1774||atlas.naturalHeight!==887){resolve(false);return;}
   for(const [index,width] of [76,56,40,22].entries()){
    const f=index===3?{x:1340,y:500,w:434,h:360,anchorX:1550,feet:842}:{x:10,y:10,w:1330,h:850,anchorX:680,feet:842};

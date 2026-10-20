@@ -1,10 +1,11 @@
+import {DeferredImage} from './asset-requests.js';
 import {locomotion,drawWalkingFrame} from './locomotion.js';
 import {characterSizes} from './character-sizes.js';
 import {drawSoftField} from './ground-visuals.js';
 const frames=[],motion=new WeakMap();
 export const commanderPhase2SpriteState=()=>({ready:frames.length===2});
 export const commanderPhase2SpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1774||atlas.naturalHeight!==887){resolve(false);return;}
   for(const f of [{x:80,y:100,w:770,h:775,anchorX:550,feet:870,bodyTop:155},{x:890,y:0,w:884,h:887,anchorX:1230,feet:870,bodyTop:170}]){
    const scale=characterSizes.warden/(f.feet-f.bodyTop),canvas=document.createElement('canvas');canvas.width=Math.ceil(f.w*scale);canvas.height=Math.ceil(f.h*scale);const c=canvas.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(atlas,f.x,f.y,f.w,f.h,0,0,f.w*scale,f.h*scale);frames.push({canvas,x:(f.x-f.anchorX)*scale,y:29-(f.feet-f.y)*scale});

@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {characterSizes} from './character-sizes.js';
 const sources=[
  {x:69,y:36,w:534,h:596,anchorX:275,feet:625},
@@ -14,10 +15,10 @@ const legs=[
  {x:69,y:705,w:625,h:459,waistX:355,feet:1157},
  {x:767,y:705,w:473,h:468,waistX:958,feet:1167}
 ];
-const loadAtlas=file=>new Promise(resolve=>{const img=new Image();img.onload=()=>resolve(img.naturalWidth===1254&&img.naturalHeight===1254?img:null);img.onerror=()=>resolve(null);img.src=new URL('../../assets/images/'+file,import.meta.url).href;});
+const loadAtlas=file=>new Promise(resolve=>{const img=new DeferredImage();img.onload=()=>resolve(img.naturalWidth===1254&&img.naturalHeight===1254?img:null);img.onerror=()=>resolve(null);img.src=new URL('../../assets/images/'+file,import.meta.url).href;});
 export const chaserWalkState=()=>({ready:frames.length===4||layered.length===4,frames:layered.length||frames.length,layered:layered.length===4});
 const originalReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1254||atlas.naturalHeight!==1254){resolve(false);return;}
   frames.push(...sources.map(f=>{const scale=characterSizes.grunt/(f.feet-f.y),canvas=document.createElement('canvas');canvas.width=Math.ceil(f.w*scale);canvas.height=Math.ceil(f.h*scale);const c=canvas.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(atlas,f.x,f.y,f.w,f.h,0,0,f.w*scale,f.h*scale);return {canvas,x:(f.x-f.anchorX)*scale,y:21-(f.feet-f.y)*scale};}));resolve(true);
  }catch{resolve(false);}};atlas.onerror=()=>resolve(false);atlas.src=new URL('../../assets/images/chaser-walk-atlas.png',import.meta.url).href;

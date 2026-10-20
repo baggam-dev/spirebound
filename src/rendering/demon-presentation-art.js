@@ -1,8 +1,9 @@
+import {DeferredImage} from './asset-requests.js';
 import {cleanDetachedCrop} from './sprite-crop.js';
 const poses=new Map(),keys=['arrival','awaken','light','heavy','death','rest'];
 export const demonPresentationArtState=()=>({ready:poses.size===6,keys:[...poses.keys()]});
 export const demonPresentationArtReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const image=new Image();image.onload=()=>{try{
+ const image=new DeferredImage();image.onload=()=>{try{
   if(image.naturalWidth!==1536||image.naturalHeight!==1024){resolve(false);return;}
   keys.forEach((key,i)=>{
    const canvas=document.createElement('canvas');canvas.width=180;canvas.height=180;

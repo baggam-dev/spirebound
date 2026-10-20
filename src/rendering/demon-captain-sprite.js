@@ -1,8 +1,9 @@
+import {DeferredImage} from './asset-requests.js';
 import {characterSizes} from './character-sizes.js';
 const frames=[],motion=new WeakMap(),scale=characterSizes.grunt/470;
 export const demonCaptainSpriteState=()=>({ready:frames.length===6});
 export const demonCaptainSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1536||atlas.naturalHeight!==1024){resolve(false);return;}
   for(const f of [
    {x:55,y:10,w:440,h:490,ax:240,feet:490},

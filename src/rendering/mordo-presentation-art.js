@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {mordoPresentationPose} from './mordo-presentation-state.js';
 import {drawKingAura} from './king-aura.js';
 import {cleanDetachedCrop} from './sprite-crop.js';
@@ -19,7 +20,7 @@ const sheets=[
 ];
 export const mordoPresentationArtState=()=>({ready:poses.size===14,keys:[...poses.keys()].sort()});
 export const mordoPresentationArtReady=typeof Image==='undefined'?Promise.resolve(false):Promise.all(sheets.map(s=>new Promise(resolve=>{
- const image=new Image();image.onload=()=>{try{
+ const image=new DeferredImage();image.onload=()=>{try{
   if(image.naturalWidth!==s.width||image.naturalHeight!==s.height){resolve(false);return;}
   for(const [key,x,y,w,h,ax,feet,standing] of s.frames){
    const scale=92.4/standing,canvas=document.createElement('canvas');canvas.width=Math.ceil(w*scale);canvas.height=Math.ceil(h*scale);

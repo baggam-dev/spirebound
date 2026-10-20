@@ -1,0 +1,5 @@
+{
+  "error": "page.goto: Timeout 120000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://168.107.21.43/\", waiting until \"networkidle\"\u001b[22m\n",
+  "overlay": "살아서 내려와라.\n\n계속 탐험 1층 · 00:00\n새로운 원정\n기록실\n설정\n명예의 전당\n전투 훈련\n\n이동하며 자동 공격 · 진행 상황은 이 브라우저에 저장됩니다.",
+  "errors": []
+}

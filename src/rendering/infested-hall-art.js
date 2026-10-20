@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {environmentMaterial,environmentSurface,environmentReferenceReady} from './environment-material.js';
 // Approved shared floors 5-6 conservatory materials. All caches live outside run/save/game RNG state.
 let frames=[],epoch=0,pending;
@@ -15,7 +16,7 @@ export const isInfestedFloor=floor=>floor===4||floor===5;
 export function loadInfestedHallArt(){
  if(pending)return pending;
  pending=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
-  const image=new Image();image.onload=async()=>{try{await environmentReferenceReady;
+  const image=new DeferredImage();image.onload=async()=>{try{await environmentReferenceReady;
    const next=[];
    for(let i=0;i<12;i++){
     const [rx,ry,rw,rh]=regions[i],sw=rw*image.naturalWidth,sh=rh*image.naturalHeight;

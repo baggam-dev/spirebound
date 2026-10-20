@@ -1,9 +1,10 @@
+import {DeferredImage} from './asset-requests.js';
 import {locomotion,drawWalkingFrame} from './locomotion.js';
 import {characterSizes} from './character-sizes.js';
 const frames=[],motion=new WeakMap();
 export const astralSniperSpriteState=()=>({ready:frames.length===2});
 export const astralSniperSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1774||atlas.naturalHeight!==887){resolve(false);return;}
   for(const f of [{x:0,y:140,w:720,h:735,anchorX:470,feet:858},{x:720,y:165,w:1054,h:710,anchorX:1100,feet:860}]){
    const scale=characterSizes.grunt/(f.feet-f.y),canvas=document.createElement('canvas');canvas.width=Math.ceil(f.w*scale);canvas.height=Math.ceil(f.h*scale);const c=canvas.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(atlas,f.x,f.y,f.w,f.h,0,0,f.w*scale,f.h*scale);frames.push({canvas,x:(f.x-f.anchorX)*scale,y:21-(f.feet-f.y)*scale});

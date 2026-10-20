@@ -1,7 +1,8 @@
+import {DeferredImage} from './asset-requests.js';
 const frames=[],colors=new Map();
 export const shadowAuraState=()=>({ready:frames.length===4});
 export const shadowAuraReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1261||atlas.naturalHeight!==1247){resolve(false);return;}
   const xs=[0,630,1261],ys=[0,623,1247];
   for(let row=0;row<2;row++)for(let col=0;col<2;col++){

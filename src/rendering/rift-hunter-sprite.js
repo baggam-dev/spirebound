@@ -1,9 +1,10 @@
+import {DeferredImage} from './asset-requests.js';
 import {locomotion,drawWalkingFrame} from './locomotion.js';
 import {characterSizes} from './character-sizes.js';
 const frames=[],motion=new WeakMap();
 export const riftHunterSpriteState=()=>({ready:frames.length===2});
 export const riftHunterSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1774||atlas.naturalHeight!==887){resolve(false);return;}
   for(const f of [{x:80,y:175,w:850,h:680,anchorX:495,feet:840,bodyTop:190},{x:940,y:60,w:834,h:795,anchorX:1300,feet:840,bodyTop:210}]){
    const scale=characterSizes.grunt/(f.feet-f.bodyTop),canvas=document.createElement('canvas');canvas.width=Math.ceil(f.w*scale);canvas.height=Math.ceil(f.h*scale);const c=canvas.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(atlas,f.x,f.y,f.w,f.h,0,0,f.w*scale,f.h*scale);frames.push({canvas,x:(f.x-f.anchorX)*scale,y:21-(f.feet-f.y)*scale});

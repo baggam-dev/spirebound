@@ -1,8 +1,9 @@
+import {DeferredImage} from './asset-requests.js';
 import {drawHeroSprite} from './hero-sprite.js';
 // Generated originals stay untouched; equal-cell crops are cached at runtime.
 const frames=[];
 export const companionArtReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const source=new Image();source.onload=()=>{try{for(let i=0;i<8;i++){
+ const source=new DeferredImage();source.onload=()=>{try{for(let i=0;i<8;i++){
   const sw=source.naturalWidth/4,sh=source.naturalHeight/2,scan=document.createElement('canvas');scan.width=Math.ceil(sw);scan.height=Math.ceil(sh);const c=scan.getContext('2d');c.drawImage(source,(i%4)*sw,Math.floor(i/4)*sh,sw,sh,0,0,sw,sh);
   const pixels=c.getImageData(0,0,scan.width,scan.height).data;let l=scan.width,t=scan.height,r=0,b=0;for(let y=0;y<scan.height;y++)for(let x=0;x<scan.width;x++)if(pixels[(y*scan.width+x)*4+3]>64){l=Math.min(l,x);t=Math.min(t,y);r=Math.max(r,x);b=Math.max(b,y);}
   if(r<=l||b<=t){resolve(false);return;}const height=i<4?48:i===7?21:16,width=(r-l+1)/(b-t+1)*height,out=document.createElement('canvas');out.width=Math.ceil(width);out.height=height;const oc=out.getContext('2d');oc.imageSmoothingEnabled=true;oc.drawImage(scan,l,t,r-l+1,b-t+1,0,0,width,height);frames.push(out);

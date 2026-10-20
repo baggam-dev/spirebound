@@ -1,0 +1,24 @@
+{
+  "base": "http://127.0.0.1:5173",
+  "checks": [
+    {
+      "width": 1280,
+      "coldLoading": true,
+      "clockFrozen": true,
+      "noFallback": true,
+      "stairs": true
+    },
+    {
+      "width": 844,
+      "coldLoading": true,
+      "clockFrozen": true,
+      "noFallback": true,
+      "stairs": true
+    },
+    {
+      "assetFailureRecovery": true
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

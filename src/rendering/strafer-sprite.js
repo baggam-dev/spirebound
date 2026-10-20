@@ -1,9 +1,10 @@
+import {DeferredImage} from './asset-requests.js';
 import {drawFeedbackSprite} from './feedback-sprites.js';
 import {characterSizes} from './character-sizes.js';
 const frames=[],motion=new WeakMap(),scale=characterSizes.grunt/460;
 export const straferSpriteState=()=>({ready:frames.length===6});
 export const straferSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1536||atlas.naturalHeight!==1024){resolve(false);return;}
   for(const f of [
    {x:55,y:10,w:400,h:485,ax:235,feet:485},

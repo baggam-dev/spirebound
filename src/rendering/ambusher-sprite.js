@@ -1,9 +1,10 @@
+import {DeferredImage} from './asset-requests.js';
 import {drawFeedbackSprite} from './feedback-sprites.js';
 import {characterSizes} from './character-sizes.js';
 const frames=[],motion=new WeakMap(),scale=characterSizes.grunt/420;
 export const ambusherSpriteState=()=>({ready:frames.length===6});
 export const ambusherSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1536||atlas.naturalHeight!==1024){resolve(false);return;}
   for(const f of [
    {x:65,y:45,w:350,h:440,ax:245,feet:475},

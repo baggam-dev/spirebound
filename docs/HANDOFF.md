@@ -1,3 +1,7 @@
+## 최신 인계 — 층별 요청 지연 로컬 검증/배포 준비
+```text
+C:\baggam-dev\spirebound/main. 사용자 ‘진행 및 배포’로 첫접속 최적화 승인. 렌더59모듈newImage→native DeferredImage등록기(전역Image/PNG/가공코드불변),asset-manifest/packs활성화로title4→현재층팩→도감가시카드/선택상세만요청. feedback그룹별Ready·부분cachekey. docs/asset-loading-20261020.md 상세. 전체582/집중19/EdgePC가로각10층ready·재요청0/상층8층직접이어하기/도감대악마발/로딩gate·시간동결·상행·失敗복구통과. 기준선public14581879PNG136,321,378B→localtitle4PNG5,491,784B/첫층누적30PNG44,296,448B(원본요청량96%/68%감소,속도보장아님). 초기baseline networkidle실패로그보존/DOM기준측정통과. 다음커밋푸시→공식배포→공개실제온라인UI2/같은요청량·10층/도감·로딩/HTTPS185목록PNG·TLS쿠키이관→최종기록커밋푸시clean. 0.43/기존랭킹DB保存·전투/원본/스타일불변,BGM보류/실iPhone미검증. 로컬서버58622닫기·나머지테스트QA완료(로그우선). 현재운영145818/runtimee494023,아직이번변경미배포/추가승인불필요.
+```
 ## 최신 복사 가능한 인계 — 0.43 피드백 묶음 배포 완료
 ```text
 C:\baggam-dev\spirebound/main. 사용자5항목+파수꾼등장/톤/보스방·통합PNG승인·명시배포까지완료. 운영 release-20261020-145818-671bcd/runtimee494023/0.43/https://168.107.21.43/. 구현9f2395b,초기공개20초로딩실패→새환경43,431ms자산정상준비확인→90초보완e494023재배포. 308파일/서버27·nginx/health/TLS성공. 전체577+보완집중31+timeout보완15통과(마지막전체578아님). 공개실제온라인UI2(session/runs200/점수0),public-ready-final3해상도각10층ready·실제입장웅크림기상/자동대사/지도카드/titlePNGready,public-loading-finalPC모바일요청gate·시간동결/절차맵미노출/상행·실패복구,public-https-final182목록/전체PNG바이트·TLS308/랭킹보안쿠키/HTTP기록이관2종통과·오류0. 별도API시작2는UI2와구분. DB/저장·SPIREBOUND/ranking-v13/지도35/점수식원본보존/최신표0.43시작기준. 상세 docs/qa-play-feedback-20261020/RELEASE_SUMMARY.md/실제PNG·정확프롬프트링크. 이전실패로그/원본보존. 다음우선검토=기존149MB이미지초기요청구조의층별지연로딩/용량최적화(미구현);그뒤기존입장/하강/최종생환연출계획.BGM보류/실iPhone저사양장시간미검증. 모든서버/명령종료. 마지막기록/증거·QA2도구보완커밋푸시/clean상태는git확인,제품추가변경/재배포없음. 이번배포승인종료,새명시배포전수정문서로컬커밋만/한국어5줄/실제PNG절대경로·원본보존。

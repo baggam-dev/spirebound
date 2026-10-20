@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {drawFeedbackSprite} from './feedback-sprites.js';
 import {drawChaserWalk} from './chaser-walk.js';
 import {drawChaserSlash} from './chaser-slash.js';
@@ -22,7 +23,7 @@ const cached=new Map();
 export const hasGruntSprite=type=>cached.has(type);
 export const gruntSpriteState=()=>({ready:cached.size===Object.keys(specs).length,types:[...cached.keys()],frames:[...cached.values()].reduce((n,f)=>n+f.length,0),bodyHeight:characterSizes.grunt,bruteHeight:characterSizes.brute});
 export const gruntSpriteReady=typeof Image==='undefined'?Promise.resolve(false):Promise.all(Object.entries(specs).map(([type,s])=>new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==(s.width||1774)||atlas.naturalHeight!==887){resolve(false);return;}
   const frames=s.frames.map(f=>{const canvas=document.createElement('canvas');canvas.width=Math.ceil(f.w*s.scale);canvas.height=Math.ceil(f.h*s.scale);const c=canvas.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(atlas,f.x,f.y,f.w,f.h,0,0,f.w*s.scale,f.h*s.scale);return {canvas,x:(f.x-f.anchorX)*s.scale,y:(s.feetOffset??21)-(f.feet-f.y)*s.scale};});
   cached.set(type,frames);resolve(true);

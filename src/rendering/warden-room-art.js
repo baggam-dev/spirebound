@@ -1,7 +1,8 @@
+import {DeferredImage} from './asset-requests.js';
 import {environmentMaterial,environmentReferenceReady} from './environment-material.js';
 const frames=[];
 export const wardenRoomArtReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const im=new Image();im.onload=async()=>{try{
+ const im=new DeferredImage();im.onload=async()=>{try{
   await environmentReferenceReady;
   for(let i=0;i<4;i++){
    const c=document.createElement('canvas');c.width=c.height=96;const g=c.getContext('2d');g.imageSmoothingEnabled=false;

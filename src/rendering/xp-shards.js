@@ -1,7 +1,8 @@
+import {DeferredImage} from './asset-requests.js';
 const SIZE={1:4,3:6,9:10},COLOR={1:'#e1f9ff',3:'#94e7ff',9:'#d2b8ff'};
 const frames=[];let loaded=false;
 export const xpShardsReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const im=new Image();im.onload=()=>{try{
+ const im=new DeferredImage();im.onload=()=>{try{
   const canvas=document.createElement('canvas');canvas.width=im.width;canvas.height=im.height;const c=canvas.getContext('2d',{willReadFrequently:true});c.drawImage(im,0,0);const data=c.getImageData(0,0,im.width,im.height).data;
   for(let i=0;i<3;i++){const left=Math.round(i*im.width/3),right=Math.round((i+1)*im.width/3);let x0=right,y0=im.height,x1=left,y1=0;
    for(let y=0;y<im.height;y++)for(let x=left;x<right;x++)if(data[(y*im.width+x)*4+3]>32){x0=Math.min(x0,x);x1=Math.max(x1,x);y0=Math.min(y0,y);y1=Math.max(y1,y);}

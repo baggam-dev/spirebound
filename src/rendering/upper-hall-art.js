@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {environmentMaterial,environmentSurface,environmentReferenceReady} from './environment-material.js';
 // Approved floor-pair presentation. Images/caches never enter run, save or game RNG.
 const regular=()=>Array.from({length:12},(_,i)=>[i%4/4,Math.floor(i/4)/3,1/4,1/3]);
@@ -19,7 +20,7 @@ export const upperHallVersion=floor=>pack(floor)?.epoch||0;
 function load(p){
  if(p.pending)return p.pending;
  p.pending=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
-  const image=new Image();image.onload=async()=>{try{await environmentReferenceReady;
+  const image=new DeferredImage();image.onload=async()=>{try{await environmentReferenceReady;
    const next=[];
    for(let i=0;i<12;i++){
     const [rx,ry,rw,rh]=p.regions[i],sw=rw*image.naturalWidth,sh=rh*image.naturalHeight,scan=document.createElement('canvas');scan.width=Math.ceil(sw);scan.height=Math.ceil(sh);const c=scan.getContext('2d');c.drawImage(image,rx*image.naturalWidth,ry*image.naturalHeight,sw,sh,0,0,sw,sh);

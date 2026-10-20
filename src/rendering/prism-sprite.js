@@ -1,9 +1,10 @@
+import {DeferredImage} from './asset-requests.js';
 import {characterSizes} from './character-sizes.js';
 import {drawPrismPresentation} from './prism-presentation-art.js';
 const frames=[];
 export const prismSpriteState=()=>({ready:frames.length===2});
 export const prismSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1774||atlas.naturalHeight!==887){resolve(false);return;}
   const scale=characterSizes.warden/675;
   for(const f of [{x:75,y:0,w:775,h:887,anchorX:475},{x:880,y:0,w:870,h:887,anchorX:1320}]){

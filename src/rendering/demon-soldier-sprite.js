@@ -1,8 +1,9 @@
+import {DeferredImage} from './asset-requests.js';
 import {characterSizes} from './character-sizes.js';
 const frames=[],motion=new WeakMap(),scale=characterSizes.grunt/460;
 export const demonSoldierSpriteState=()=>({ready:frames.length===6});
 export const demonSoldierSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1536||atlas.naturalHeight!==1024){resolve(false);return;}
   for(const f of [
    {x:85,y:15,w:390,h:485,ax:275,feet:485},

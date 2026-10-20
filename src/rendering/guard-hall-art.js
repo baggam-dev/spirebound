@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {drawWardenRoom} from './warden-room-art.js';
 import {environmentMaterial,environmentSurface,environmentReferenceReady} from './environment-material.js';
 // Floor 2 presentation only. Approved originals and saved room geometry stay untouched.
@@ -8,7 +9,7 @@ export const guardHallVersion=()=>epoch;
 export function loadGuardHallArt(){
  if(pending)return pending;
  pending=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const image=new Image();image.onload=async()=>{try{await environmentReferenceReady;
+ const image=new DeferredImage();image.onload=async()=>{try{await environmentReferenceReady;
   const next=[],sw=image.naturalWidth/4,sh=image.naturalHeight/3;
   for(let i=0;i<12;i++){
    const scan=document.createElement('canvas');scan.width=Math.ceil(sw);scan.height=Math.ceil(sh);const c=scan.getContext('2d');c.drawImage(image,i%4*sw,Math.floor(i/4)*sh,sw,sh,0,0,sw,sh);

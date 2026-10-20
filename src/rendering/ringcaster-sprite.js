@@ -1,9 +1,10 @@
+import {DeferredImage} from './asset-requests.js';
 import {drawFeedbackSprite} from './feedback-sprites.js';
 import {characterSizes} from './character-sizes.js';
 const frames=[],scale=characterSizes.grunt/550;
 export const ringcasterSpriteState=()=>({ready:frames.length===4});
 export const ringcasterSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1254||atlas.naturalHeight!==1254){resolve(false);return;}
   for(const f of [
    {x:225,y:0,w:265,h:615,ax:350,feet:610},

@@ -1,7 +1,8 @@
+import {DeferredImage} from './asset-requests.js';
 const frames=[],scale=.095;
 export const spikeNestSpriteState=()=>({ready:frames.length===4});
 export const spikeNestSpriteReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const atlas=new Image();atlas.onload=()=>{try{
+ const atlas=new DeferredImage();atlas.onload=()=>{try{
   if(atlas.naturalWidth!==1254||atlas.naturalHeight!==1254){resolve(false);return;}
   for(const f of [
    {x:45,y:35,w:540,h:540,ax:320,feet:570},

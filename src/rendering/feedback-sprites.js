@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {locomotion,drawWalkingFrame,drawGlidingFrame} from './locomotion.js';
 import {applyRemainingBossPose} from './remaining-boss-presentation.js';
 
@@ -33,8 +34,8 @@ export function feedbackSpriteKey(e){
  return e.type;
 }
 export const feedbackSpriteState=()=>({ready:frames.size===20,keys:[...frames.keys()].sort()});
-export const feedbackSpritesReady=typeof Image==='undefined'?Promise.resolve(false):Promise.all(Object.entries(sheets).map(([name,s])=>new Promise(resolve=>{
- const image=new Image();image.onload=()=>{try{
+const sheetReady=Object.fromEntries(Object.entries(sheets).map(([name,s])=>[name,typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
+ const image=new DeferredImage();image.onload=()=>{try{
   if(image.naturalWidth!==s.width||image.naturalHeight!==s.height){resolve(false);return;}
   for(const [row,key] of s.keys.entries()){
    const pair=[];
@@ -49,7 +50,9 @@ export const feedbackSpritesReady=typeof Image==='undefined'?Promise.resolve(fal
    }frames.set(key,pair);
   }resolve(true);
  }catch{resolve(false);}};image.onerror=()=>resolve(false);image.src=new URL(`../../assets/images/feedback-${name}-v1.png`,import.meta.url).href;
-}))).then(ok=>ok.every(Boolean));
+})]));
+export const feedbackSpritesReady=Promise.all(Object.values(sheetReady)).then(ok=>ok.every(Boolean));
+export const feedbackSpritesReadyFor=groups=>Promise.all(groups.map(name=>sheetReady[name])).then(ok=>ok.every(Boolean));
 export function drawFeedbackSprite(c,e,time=0,{reduced=false,staticPose=false,attack=null,local=false,face:forcedFace}={}){
  const key=feedbackSpriteKey(e),pair=frames.get(key);if(!pair)return false;
  const state=e.commander||{},active=!!(attack&&['windup','strike','channel','air'].includes(attack.stage)||state.volley||state.snipe||state.ricochet||state.rain||e.gravity||e.phase==='swing'||e.phase==='windup'||e.phase==='air'||['warning','dash','firing','strike','windup'].includes(e.attackPhase));

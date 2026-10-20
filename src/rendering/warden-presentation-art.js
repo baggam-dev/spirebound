@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {wardenPresentationPose} from './warden-presentation-state.js';
 import {cleanDetachedCrop} from './sprite-crop.js';
 import {characterSizes} from './character-sizes.js';
@@ -11,7 +12,7 @@ const frames=[
 ];
 export const wardenPresentationArtState=()=>({ready:poses.size===6,keys:[...poses.keys()]});
 export const wardenPresentationArtReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const image=new Image();image.onload=()=>{try{
+ const image=new DeferredImage();image.onload=()=>{try{
   if(image.naturalWidth!==1536||image.naturalHeight!==1024){resolve(false);return;}
   for(const [key,x,y,w,h,ax,feet,standing] of frames){
    const scale=characterSizes.warden/standing,canvas=document.createElement('canvas');canvas.width=Math.ceil(w*scale);canvas.height=Math.ceil(h*scale);

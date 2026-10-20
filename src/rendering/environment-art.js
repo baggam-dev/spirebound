@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {environmentMaterial,environmentSurface,environmentReferenceReady} from './environment-material.js';
 // Approved environment atlas. Originals stay untouched; only draw-time crops are cached.
 let frames=[],epoch=0;
@@ -5,7 +6,7 @@ const floorLayers=new Map();
 export const environmentArtLoaded=()=>frames.length===16;
 export const environmentArtVersion=()=>epoch;
 export const environmentArtReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
- const image=new Image();image.onload=async()=>{try{await environmentReferenceReady;
+ const image=new DeferredImage();image.onload=async()=>{try{await environmentReferenceReady;
   const next=[],sw=image.naturalWidth/4,sh=image.naturalHeight/4;
   for(let i=0;i<16;i++){
    const scan=document.createElement('canvas');scan.width=Math.ceil(sw);scan.height=Math.ceil(sh);const c=scan.getContext('2d');c.drawImage(image,i%4*sw,Math.floor(i/4)*sh,sw,sh,0,0,sw,sh);

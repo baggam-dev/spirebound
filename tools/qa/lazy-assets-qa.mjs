@@ -1,0 +1,34 @@
+import assert from 'node:assert/strict';import {mkdir,writeFile,stat} from 'node:fs/promises';import {join} from 'node:path';import {pathToFileURL} from 'node:url';
+import {newRun} from '../../src/game/engine.js';import {encodeSave,SAVE_KEY} from '../../src/persistence/storage.js';
+const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'index.mjs')).href),base=process.env.BASE_URL||'http://127.0.0.1:5173',out=process.argv[2],baseline=process.argv.includes('--baseline');await mkdir(out,{recursive:true});
+const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[],results=[];let activePage,activeRequests=[];
+const titleFiles=['title-background-v1.png','title-logo-v1.png','title-hero-idle-v1.png','title-branch-v1.png'];
+async function bytes(files){let n=0;for(const file of files)n+=(await stat('assets/images/'+file)).size;return n;}
+async function open(width,floor=0){
+ const c=await browser.newContext({viewport:{width,height:width===1280?800:390},isMobile:width<1000,hasTouch:width<1000}),p=await c.newPage();activePage=p;p.setDefaultTimeout(120000);p.on('pageerror',e=>errors.push(e.message));const requests=[];activeRequests=requests;
+ p.on('request',r=>{const u=new URL(r.url());if(u.pathname.startsWith('/assets/images/')&&u.pathname.endsWith('.png'))requests.push(u.pathname.split('/').at(-1));});
+ const s=newRun(31,{campaign:'expanded'});s.floor=floor;s.room=0;s.player.mainSkill='frost';s.player.frost=1;s.tutorialComplete=true;await c.addInitScript(({key,value})=>localStorage.setItem(key,value),{key:SAVE_KEY,value:encodeSave(s)});
+ const started=Date.now();await p.goto(base,{waitUntil:'domcontentloaded',timeout:120000});await p.locator('#continue').waitFor();await p.evaluate(()=>document.fonts.ready);
+ await p.evaluate(async files=>{await Promise.all(files.map(async file=>{const i=new Image();i.src='/assets/images/'+file;await i.decode();}));await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));},titleFiles);
+ const title=[...new Set(requests)],titleMs=Date.now()-started;await p.screenshot({path:join(out,`title-${width}-f${floor}.png`)});
+ if(!baseline)assert.deepEqual([...title].sort(),[...titleFiles].sort(),'title must request only its four PNGs');
+ const enter=Date.now();await p.locator('#continue').click();await p.waitForFunction(()=>!document.querySelector('#overlay').children.length);await p.waitForLoadState('networkidle');
+ const total=[...new Set(requests)],entryMs=Date.now()-enter;
+ if(!baseline){const extra=await p.evaluate(async floor=>{const m=await import('/src/rendering/asset-packs.js');return m.assetPlanFiles(m.floorAssetPlan(floor));},floor);assert.equal(total.some(f=>!titleFiles.includes(f)&&!extra.includes(f)),false,'no unrelated floor images');}
+ const result={width,floor,titleMs,entryMs,titleFiles:title,titleBytes:await bytes(title),enteredFiles:total,enteredBytes:await bytes(total),ready:await p.evaluate(async f=>(await import('/src/rendering/floor-assets.js')).floorAssetsLoaded(f),floor)};assert.equal(result.ready,true);
+ await p.screenshot({path:join(out,`floor-${width}-f${floor}.png`)});return {c,p,requests,result};
+}
+try{
+ for(const width of baseline?[844]:[1280,844]){
+  const {c,p,requests,result}=await open(width);results.push(result);
+  if(!baseline){assert.ok(result.enteredBytes<60_000_000);const floors=await p.evaluate(async()=>{const m=await import('/src/rendering/floor-assets.js'),a=[];for(let f=0;f<10;f++){await m.prepareFloorAssets(f);a.push(m.floorAssetsLoaded(f));}return a;});assert.deepEqual(floors,Array(10).fill(true));
+   const before=requests.length;await p.evaluate(async()=>{const m=await import('/src/rendering/floor-assets.js');await m.prepareFloorAssets(0);await m.prepareFloorAssets(7);});await p.waitForTimeout(150);assert.equal(requests.length,before);result.allFloorsReady=true;result.repeatRequests=0;
+  }await c.close();
+ }
+ if(!baseline){const {c,result}=await open(844,7);result.savedUpperFloor=true;results.push(result);await c.close();
+  // A clean gallery loads the visible cards and selected body, without loading room art.
+  const c2=await browser.newContext({viewport:{width:844,height:390},isMobile:true,hasTouch:true}),p=await c2.newPage();activePage=p;p.setDefaultTimeout(120000);p.on('pageerror',e=>errors.push(e.message));const images=[];p.on('request',r=>{if(/\/assets\/images\/.*\.png$/.test(r.url()))images.push(new URL(r.url()).pathname.split('/').at(-1));});await p.goto(base,{waitUntil:'networkidle'});await p.locator('#titleRecords').click();await p.locator('#titleBestiary').click();await p.evaluate(async()=>{await (await import('/src/rendering/floor-assets.js')).preparePortraitAssets('chaser');});await p.waitForTimeout(200);
+  assert.equal(images.some(f=>/demon-core|mordo-phase|environment-hall/.test(f)),false);await p.locator('[data-monster="demon"]').click();await p.evaluate(async()=>{await (await import('/src/rendering/floor-assets.js')).preparePortraitAssets('demon');});await p.locator('[data-demon-part="foot"]').click();await p.waitForTimeout(150);await p.screenshot({path:join(out,'bestiary-demon-foot.png')});await p.locator('#closeBestiary').click();await p.locator('#titleBack').waitFor();results.push({galleryOnDemand:true,selectedDemonReady:true});await c2.close();
+ }
+ assert.deepEqual(errors,[]);await writeFile(join(out,'result.json'),JSON.stringify({base,baseline,results,errors,scoreSubmissions:0},null,2));console.log(JSON.stringify({baseline,results:results.map(({width,floor,titleBytes,enteredBytes,titleMs,entryMs,galleryOnDemand})=>({width,floor,titleBytes,enteredBytes,titleMs,entryMs,galleryOnDemand})),errors}));
+}catch(e){if(activePage&&!activePage.isClosed()){await activePage.screenshot({path:join(out,'failure.png')});await writeFile(join(out,'failure.json'),JSON.stringify({error:e.message,overlay:await activePage.locator('#overlay').innerText(),requestedFiles:[...new Set(activeRequests)],requestedBytes:await bytes([...new Set(activeRequests)]),errors},null,2));}throw e;}finally{await browser.close();}

@@ -1,3 +1,4 @@
+import {DeferredImage} from './asset-requests.js';
 import {isDemonSweep} from '../combat/demon-sweep.js';
 import {CORE_MOTION,demonCorePose} from '../combat/demon-core-motion.js';
 import {demonPresentationPose} from './demon-presentation-state.js';
@@ -7,7 +8,7 @@ const images=new Map();
 const sizes={body:[1536,1024],arm:[1254,1254],wall:[1774,887],foot:[1254,1254]};
 export const demonCoreSpriteState=()=>({ready:images.size===4});
 export const demonCoreSpriteReady=typeof Image==='undefined'?Promise.resolve(false):Promise.all(Object.entries(sizes).map(([name,[w,h]])=>new Promise(resolve=>{
- const image=new Image();image.onload=()=>{if(image.naturalWidth!==w||image.naturalHeight!==h){resolve(false);return;}images.set(name,image);resolve(true);};image.onerror=()=>resolve(false);image.src=new URL(`../../assets/images/demon-core-${name}-atlas.png`,import.meta.url).href;
+ const image=new DeferredImage();image.onload=()=>{if(image.naturalWidth!==w||image.naturalHeight!==h){resolve(false);return;}images.set(name,image);resolve(true);};image.onerror=()=>resolve(false);image.src=new URL(`../../assets/images/demon-core-${name}-atlas.png`,import.meta.url).href;
 }))).then(results=>results.every(Boolean));
 // Explicit rectangles preserve shoulder anchors; generated poses are not equal cells.
 const arms=[
