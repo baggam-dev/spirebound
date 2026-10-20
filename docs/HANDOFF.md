@@ -1,3 +1,7 @@
+## 최신 인계 — 승인 모바일 HUD v2 구현 완료 / 미검증·미푸시·미배포
+```text
+C:\baggam-dev\spirebound/main. 사용자ㅇㅋ좋다로v2승인후runtime구현/배포권한없음. 운영175020-8afe12/runtimeee2d31a/0.43유지. 모바일지도2/3·정보5항목아래공통우측끝(138px패널/350px이하2열),지도정보배경12.2%/테두리22%/일반방27.8%/현재방50.2%,모바일제목생략/기호경로색유지. src/ui/mobile-hud.js,mobile-ui.js,src/world/terrain.js,styles/mobile-hud.css변경. 승인pause-menu-icons-v1.png원본을assets/images/mobile-menu-icons-v1.png(750,472B)로복사/CSSatlas44px가로/모바일플레이첫갱신때요청·로드실패기존기호fallback/메뉴child클릭closest기준. 액션4개72px·해금유지/배경30%·테두리55%·아이콘85%·비활성점선감쇠/숫자선명. 배포allowlist/QA2도구새PNG허용·원본비교목록수정만/미실행. 코드diff정적검토만/단위통합브라우저QA·서버·푸시·배포·공개검증없음. 다음새명시배포때WORK_STATUS상단검증목록(PC/844/740/짧은320·safearea/정보겹침/PNGcrop·fallback·메뉴hit/해금·disabled·카운트·쿨다운/초기4PNG/플레이추가0.75MB/HTTPS)수행후푸시배포공개확인. 승인PNG는docs/design-drafts/mobile-hud-20261020/mobile-hud-v2.png/원본v1·버튼·정확프롬프트유지,구현스크린샷아님. 전투저장주인공스킬0.43불변/BGM보류/서버명령차단없음. 구현/문서로컬커밋후git확인,최신상단우선/한국어기본5줄·PNG절대경로·새배포전테스트금지.
+```
 ## 최신 인계 — 모바일 HUD v2 투명도 수정 시안 완료
 ```text
 C:\baggam-dev\spirebound/main. 운영175020-8afe12/runtimeee2d31a/0.43유지. 사용자미니맵/정보창더투명요청으로v1부분편집한docs/design-drafts/mobile-hud-20261020/mobile-hud-v2.png가최신제안(아직컨펌대기). 내장imagegen사용/정확promptprompts-v2.md/생성원본보존,PNG직접확인상벽/바닥이더잘비침·텍스트현재위치읽힘. v1/투명pause-menu-icons-v1.png/배치·액션4개방향유지. 최종구현불투명도목표패널10~15%,일반방25~30%,현재방약50%,테두리20~25%,텍스트90~100%;생성PNG의정확측정alpha아님. 설계docs/mobile-hud-feedback-20261020.md의v2가v1수치보다우선. 다음v2시안확인→승인안만runtime·문서·로컬커밋. 기존주인공/스킬/층문구/해금/터치범위유지. runtime/배포자산미반영/테스트·푸시·배포·공개검증미실행. BGM보류/실행명령서버차단없음. 시안/문서로컬커밋후git확인,새배포권한없음/한국어기본5줄·실제PNG절대경로.

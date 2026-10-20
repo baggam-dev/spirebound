@@ -15,7 +15,7 @@ async function open(width,floor=0,returning=false){
  if(!baseline)assert.deepEqual([...title].sort(),[...titleFiles].sort(),'title must request only its four PNGs');
  const enter=Date.now();await p.locator('#continue').click();await p.waitForFunction(()=>!document.querySelector('#overlay').children.length);await p.waitForLoadState('networkidle');
  const total=[...new Set(requests)],entryMs=Date.now()-enter;
- if(!baseline){const extra=await p.evaluate(async data=>{const m=await import('/src/rendering/asset-packs.js');return m.assetPlanFiles(m.floorAssetPlan(data.floor,data.options));},{floor,options:expectedOptions});assert.equal(total.some(f=>!titleFiles.includes(f)&&!extra.includes(f)),false,'no unrelated floor images');}
+ if(!baseline){const extra=await p.evaluate(async data=>{const m=await import('/src/rendering/asset-packs.js');return [...m.assetPlanFiles(m.floorAssetPlan(data.floor,data.options)),'mobile-menu-icons-v1.png'];},{floor,options:expectedOptions});assert.equal(total.some(f=>!titleFiles.includes(f)&&!extra.includes(f)),false,'no unrelated floor images');}
  const result={width,floor,returning,titleMs,entryMs,titleFiles:title,titleBytes:await bytes(title),enteredFiles:total,enteredBytes:await bytes(total),ready:await p.evaluate(async data=>(await import('/src/rendering/floor-assets.js')).floorAssetsLoaded(data.floor,data.options),{floor,options:expectedOptions})};assert.equal(result.ready,true);
  await p.screenshot({path:join(out,`floor-${width}-f${floor}${returning?'-return':''}.png`)});return {c,p,requests,result};
 }

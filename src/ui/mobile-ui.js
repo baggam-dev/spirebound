@@ -8,7 +8,7 @@ const menu=document.createElement('button');
 menu.id='mobileMenu';menu.textContent='☰';menu.title='메뉴';menu.setAttribute('aria-expanded','false');header.append(menu);
 menu.setAttribute('aria-label','메뉴 열기');
 menu.addEventListener('click',()=>{if(!document.dispatchEvent(new CustomEvent('spirebound:menu',{cancelable:true})))return;const open=header.classList.toggle('mobile-open');menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');});
-header.addEventListener('click',e=>{if(e.target.closest('button')&&e.target!==menu){header.classList.remove('mobile-open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','메뉴 열기');}});
+header.addEventListener('click',e=>{const button=e.target.closest('button');if(button&&button!==menu){header.classList.remove('mobile-open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','메뉴 열기');}});
 header.addEventListener('keydown',e=>{if(e.key!=='Escape'||!header.classList.contains('mobile-open'))return;e.preventDefault();e.stopPropagation();header.classList.remove('mobile-open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','메뉴 열기');menu.focus();});
 const fullscreen=document.createElement('button');fullscreen.id='fullscreen';fullscreen.textContent='전체 화면';fullscreen.hidden=!document.fullscreenEnabled;header.insertBefore(fullscreen,menu);
 fullscreen.addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else{await document.documentElement.requestFullscreen();if(coarse.matches&&screen.orientation?.lock){try{await screen.orientation.lock('landscape');}catch{/* Unsupported locks use the portrait play gate. */}}}}catch{fullscreen.textContent='전체 화면 불가';}});

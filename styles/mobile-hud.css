@@ -77,3 +77,32 @@
  body:has(#overlay:not(:empty)) #mobileMinimap{visibility:hidden}
 }
 @media(pointer:coarse) and (orientation:landscape) and (max-width:800px){#mobileMinimap{top:calc(86px + env(safe-area-inset-top));width:min(24vw,calc((100dvh - 140px)*.56))}}
+
+/* 2026-10-20 approved HUD v2: lighter panels with a common right edge. */
+.mobile-menu-art{display:none}
+@media(pointer:coarse) and (orientation:landscape){
+ body{--mobile-map-size:min(16vw,133.333333px,calc((100dvh - 100px)*.373333333))}
+ body>header:not(.mobile-open){inset:calc(4px + env(safe-area-inset-top)) calc(6px + env(safe-area-inset-right)) auto auto;width:94px;height:44px!important;display:flex;flex-wrap:nowrap;gap:6px}
+ body>header:not(.mobile-open) #pause,body>header:not(.mobile-open) #mobileMenu{width:44px;min-width:44px;height:44px;min-height:44px;flex:0 0 44px}
+ body>header.has-mobile-menu-art:not(.mobile-open) #pause,body>header.has-mobile-menu-art:not(.mobile-open) #mobileMenu{position:relative;font-size:0;border:0;background:transparent;box-shadow:none}
+ body>header.has-mobile-menu-art:not(.mobile-open) #pause::before{content:none}
+ body>header.has-mobile-menu-art:not(.mobile-open) .mobile-menu-art{display:block;position:absolute;inset:0;width:44px;height:44px;background-image:var(--mobile-menu-atlas);background-repeat:no-repeat;background-size:137.54px 64.06px;image-rendering:pixelated;pointer-events:none}
+ .mobile-menu-art.pause{background-position:-15.57px -10.85px}
+ .mobile-menu-art.mobileMenu{background-position:-77.98px -10.85px}
+ #mobileRightRail{right:calc(6px + env(safe-area-inset-right));top:calc(50px + env(safe-area-inset-top));bottom:auto;width:138px;display:flex;flex-direction:column;align-items:flex-end;gap:4px;z-index:10}
+ #mobileRightRail #mobileMinimap{position:static;display:block;width:var(--mobile-map-size);height:auto;max-width:none;max-height:none;flex:none;aspect-ratio:166/160;object-fit:contain}
+ #mobileRightRail #statReadout.hud-stats{position:static;box-sizing:border-box;width:138px;min-height:0;max-width:none;display:grid;gap:1px;padding:2px 6px;font-size:9px;line-height:1.1;text-align:right;justify-items:end;color:#e3e9db;background:#08120f1f;border:1px solid #91a18a38;text-shadow:1px 1px #061013;overflow:visible;overflow-wrap:normal;pointer-events:none}
+ #mobileRightRail #statReadout>*{white-space:nowrap}
+ .actions button:is(#potion,#utility,#skill,#dodge){background:#1523224d;border-color:#94a28a8c;box-shadow:none}
+ .actions button:is(#potion,#utility,#skill,#dodge):disabled{opacity:1;cursor:default;border-color:#71807866;border-style:dashed}
+ .actions button .action-icon{opacity:.85}
+ .actions button:disabled .action-icon,.actions button:disabled .action-label{opacity:.45}
+ .actions button:disabled .action-icon{filter:grayscale(.7)}
+ .actions button .action-value{opacity:1;color:#fff;background:#0d191be6}
+}
+@media(pointer:coarse) and (orientation:landscape) and (max-width:800px){
+ body{--mobile-map-size:min(16vw,calc((100dvh - 140px)*.373333333))}
+}
+@media(pointer:coarse) and (orientation:landscape) and (max-height:350px){
+ #mobileRightRail #statReadout.hud-stats{grid-template-columns:repeat(2,max-content);justify-content:end;gap:2px 6px;font-size:8px}
+}
