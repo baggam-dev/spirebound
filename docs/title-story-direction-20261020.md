@@ -1,3 +1,5 @@
+[2026-10-20 최신] 사용자 ‘진행’으로 머리위대사 화면안 승인·구현 완료/미검증·미배포. 실제구현과제약은 docs/design-drafts/narrative-20261020/overhead-dialogue-implementation-v1.md. 아래 승인전/시안만 기록은 당시이력이며 최신WORK_STATUS가우선한다.
+
 [2026-10-20 후속] 사용자 ‘진행하자’로 위에서 제안한 머리 위 대사/단서 방향을 이어 진행. 새 말풍선 배치·톤의 최초 통합 화면모형은 docs/design-drafts/narrative-20261020/overhead-dialogue-v1.png 및 overhead-dialogue-design-v1.md에 준비한다. 이것은 실제 실행 캡처가 아닌 PNG 모형이며, 이번은 시안·문서만/runtime 미반영. 이전 ‘이번 검토만·새 PNG 없음’은 아래 당시 이력이다.
 
 # 최신 추가 검토 — 머리 위 대사와 단계별 스토리 단서 (2026-10-20)

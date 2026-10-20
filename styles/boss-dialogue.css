@@ -1,0 +1,10 @@
+/* The canvas speech plaque is the visual focus; only controls intercept pointers. */
+#overlay:has(.boss-dialogue-panel){background:transparent;backdrop-filter:none;pointer-events:none}
+body:has(#overlay .boss-dialogue-panel)>header{visibility:visible}
+.arena:has(#overlay .boss-dialogue-panel) #mobileLeftRail,.arena:has(#overlay .boss-dialogue-panel) #mobileRightRail{visibility:visible}
+#overlay .panel.boss-dialogue-panel{position:absolute;inset:auto 14px 18px auto;width:auto;max-width:calc(100% - 28px);max-height:100%;padding:6px;border:0;background:#0b0e13d9;box-shadow:none;pointer-events:auto}
+.dialogue-controls{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+#overlay .dialogue-controls button{margin:0;min-height:44px;min-width:74px;padding:8px 12px;font-size:12px;touch-action:manipulation;background:#171b22;color:#e7e0cf;border:1px solid #8a8a82;box-shadow:none}
+#overlay .dialogue-controls button:focus-visible{outline:2px solid #ede3c8;outline-offset:2px}
+.dialogue-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media(pointer:coarse){#overlay .panel.boss-dialogue-panel{bottom:12px;right:12px}.dialogue-controls{gap:6px}#overlay .dialogue-controls button{font-size:11px;padding:8px 10px}}

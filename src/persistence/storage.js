@@ -1,3 +1,4 @@
+import {validBossDialogueSeen} from '../ui/boss-dialogue-data.js';
 import {validateOverhaul,legacyEvolution} from './overhaul-save.js';
 import {recoverPlayerPosition} from '../world/player-position.js';
 import {refreshRoomLayout} from '../world/room-layout.js';
@@ -38,6 +39,7 @@ export function validateRun(s){
  if(s.combatVersion!==undefined)check(s.combatVersion===17);if(s.tutorialComplete!==undefined)check(typeof s.tutorialComplete==='boolean');
  const expanded=s.campaign==='expanded';check(s.campaign===undefined||expanded);
  check(s&&s.version===1&&s.status==='playing');check(s.healthVersion===undefined||s.healthVersion===1);if(s.generationVersion!==undefined)check([12,13,16,17,19,20,23,25,26,27,28,29,30,31,32,33,34,35].includes(s.generationVersion));if(expanded)check([26,27,28,29,30,31,32,33,34,35].includes(s.generationVersion));if(s.skillSystemVersion!==undefined)check([13,14].includes(s.skillSystemVersion));if(s.volleySide!==undefined)check(s.volleySide===1||s.volleySide===-1);if(s.rerolls!==undefined)check(Number.isInteger(s.rerolls)&&s.rerolls>=0&&s.rerolls<=1);if(s.roomLayoutVersion!==undefined)check(s.roomLayoutVersion===1);if(s.doorLayoutVersion!==undefined)check(s.doorLayoutVersion===1);finiteTree(s);
+ check(validBossDialogueSeen(s.bossDialogueSeen));
  if(s.skillDraftVersion!==undefined)check(s.skillDraftVersion===1);
  if(s.mainChoices!==undefined)check(Array.isArray(s.mainChoices)&&s.mainChoices.length===3&&new Set(s.mainChoices).size===3&&s.mainChoices.every(id=>mainSkills.includes(id))&&!s.player.mainSkill);
  if(s.spectralBladeVersion!==undefined)check(s.spectralBladeVersion===1);

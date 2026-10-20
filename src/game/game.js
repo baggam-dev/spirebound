@@ -1,3 +1,4 @@
+import {createBossDialogue} from '../rendering/boss-dialogue.js';
 import {createTitleScene,titleSceneMarkup} from '../ui/title-scene.js';
 import {utilityCooldown} from '../progression/relics.js';
 import {rollAction} from '../combat/roll.js';
@@ -122,6 +123,7 @@ document.addEventListener('pointerdown',()=>sound.unlock(),{once:true});document
 const updateHUD=createHUD();
 let launching=false;
 let renderTitleScene=null;
+let bossDialogue=null;
 let practiceDraft=null;
 let s=null,paused=true,mode='title',fx=[],bullets=[],last=performance.now(),accumulator=0,saveTick=0,toastTime=0,saveFailed=false,saveError='';
 const room=()=>currentRoom(s),distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
@@ -137,7 +139,7 @@ function panel(html){renderTitleScene=null;$('overlay').innerHTML=`<div class="p
 const modalFocusables='button:not([disabled]):not([hidden]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 $('overlay').addEventListener('keydown',event=>{
  if(event.key==='Escape'){
-  const back=['closeBestiary','settingsBack','closeInfo','rankBack','closeJournal','closeBag','leaveRoute','practiceBack','choosePractice','endPractice','titleBack','cancelNewRun'].map($).find(item=>item?.getClientRects().length);
+  const back=['dialogueSkip','closeBestiary','settingsBack','closeInfo','rankBack','closeJournal','closeBag','leaveRoute','practiceBack','choosePractice','endPractice','titleBack','cancelNewRun'].map($).find(item=>item?.getClientRects().length);
   if(back){event.preventDefault();event.stopPropagation();back.click();return;}
  }
  if(event.key!=='Tab')return;const dialog=$('overlay').firstElementChild;if(!dialog)return;
@@ -147,7 +149,7 @@ $('overlay').addEventListener('keydown',event=>{
 });
 function button(id,fn){$(id)?.addEventListener('click',fn);}
 function stop(nextMode){paused=true;mode=nextMode;input.setEnabled(false);accumulator=0;}
-function resetTransient(){relicBanner.clear();resetWardenPresentation(s?.floors?.flat()||[]);resetPrismPresentation(s?.floors?.flat()||[]);resetRemainingBossPresentation(s?.floors?.flat()||[]);resetOrdinaryPresentation(s?.floors?.flat()||[]);clearMordoPresentation();clearVelkarPresentation();clearDemonPresentation();fx=[];bullets=s?.projectiles||[];saveTick=0;accumulator=0;last=performance.now();}
+function resetTransient({loaded=false}={}){bossDialogue=s?createBossDialogue(s,{loaded}):null;relicBanner.clear();resetWardenPresentation(s?.floors?.flat()||[]);resetPrismPresentation(s?.floors?.flat()||[]);resetRemainingBossPresentation(s?.floors?.flat()||[]);resetOrdinaryPresentation(s?.floors?.flat()||[]);clearMordoPresentation();clearVelkarPresentation();clearDemonPresentation();fx=[];bullets=s?.projectiles||[];saveTick=0;accumulator=0;last=performance.now();}
 function title(){
  stop('title');lease.release();s=null;resetTransient();$('route').hidden=true;$('skill').hidden=true;$('utility').hidden=true;$('interact').hidden=true;
  $('floor').textContent='잊힌 탑의 입구';$('phase').textContent='THE FORSAKEN SPIRE';$('health').textContent='♥♥♥♥♥';$('level').textContent='LV 1';$('timer').textContent='00:00';$('objective').textContent='탑에 들어가 탈출 열쇠를 찾으세요.';
@@ -166,6 +168,16 @@ function titleRecords(){
  stop('title-records');
  panel('<small>ARCHIVES</small><h2>기록실</h2><p>지나온 원정과 탑에서 마주칠 존재들을 살펴보세요.</p><div class="title-hub"><button id="records">도전 기록</button><button id="titleBestiary">몬스터 도감</button><button id="guide">조작 안내</button><button id="dataRecovery">기록 백업·가져오기</button></div><button id="titleBack">입구로</button>');
  button('records',()=>showInfo('history'));button('titleBestiary',bestiaryPanel);button('guide',()=>showInfo('help'));button('dataRecovery',()=>location.assign('upgrade.html'));button('titleBack',title);
+}
+function openBossDialogue(){
+ if(!bossDialogue?.blocking||!s||s.status!=='playing')return;
+ stop('dialogue');
+ panel('<div class="dialogue-live" role="status">'+escapeHtml(bossDialogue.lines.join(' '))+'</div><div class="dialogue-controls"><button id="dialogueNext">다음</button><button id="dialogueSkip">대사 건너뛰기 · ESC</button></div>');
+ $('overlay').firstElementChild.classList.add('boss-dialogue-panel');
+ $('dialogueNext').focus();
+ const finish=skip=>{if(mode!=='dialogue')return;if(skip)bossDialogue.skip();else bossDialogue.next();if(bossDialogue.blocking)openBossDialogue();else resume();};
+ button('dialogueNext',()=>finish(false));button('dialogueSkip',()=>finish(true));
+ if(bossDialogue.flushDirty())save();
 }
 function start(seed,campaign='expanded'){if(launching)return;beginRun(newRun(Number.isInteger(seed)&&seed>=0&&seed<=4294967295?seed:undefined,{campaign}),true);}
 async function beginRun(candidate,online){
@@ -187,10 +199,10 @@ async function beginRun(candidate,online){
 async function continueRun(){if(launching)return;launching=true;try{
  if(!await lease.acquire()){toast('다른 탭에서 도전 중입니다. 그 탭을 종료한 뒤 다시 시도하세요.');return;}
  const loaded=store.read();if(!loaded.run){lease.release();title();toast(loaded.error||'이어갈 도전이 없습니다.');return;}
- s=loaded.run;enterShrine(s);ensureMetrics(s);resetTransient();resume();if(loaded.recovered)toast('마지막 정상 백업에서 복구했습니다.');save();}finally{launching=false;}
+ s=loaded.run;enterShrine(s);ensureMetrics(s);resetTransient({loaded:true});resume();if(loaded.recovered)toast('마지막 정상 백업에서 복구했습니다.');save();}finally{launching=false;}
 }
 function escapeNotice(){stop('return');save();const ending=s.campaign==='expanded'?'대악마를 쓰러뜨리고 마지막 열쇠를 되찾았습니다.':'왕은 쓰러졌지만, 탑의 저주는 풀리지 않았습니다.';panel('<div class="escape-reveal">'+returnStoryMarkup(s.floors.length>=8)+'<small>THE WAY HOME</small><h2>1층 탈출 열쇠 획득</h2><p>'+ending+'<br>탑의 몬스터들이 광폭화했습니다.<br><strong>이제 아래층으로 내려가 1층 입구에서 탈출하세요.</strong><br>'+(s.generationVersion>=33?'탈출구 직전 두 방은 모든 접근 경로에서 열쇠수호자가 문을 잠급니다. 다른 미방문 방은 전멸해야 열리고, 방문 방은 30% 확률로 수호자가 나타납니다.':'하강 시 미방문 방은 전멸해야 출구가 열립니다. 방문한 방도 30% 확률로 열쇠수호자가 문을 잠급니다.')+' 내려가는 계단은 방의 적을 전멸해야 열립니다.</p><button class="primary" id="beginReturn">1층으로 귀환 시작 ↓</button></div>');button('beginReturn',()=>{s.returnNoticePending=false;save();resume();});}
-function resume(){if(!s||s.status!=='playing'||!s.practice&&!lease.active)return;if(s.returnNoticePending){escapeNotice();return;}if(shrineLocked(room())){shrine();return;}if(!s.player.mainSkill&&(s.pendingLevels||mainSkills.some(id=>s.player[id]>0))){mainPanel();return;}if(!s.practice&&utilityAvailable(s)&&!s.player.utility){utilityPanel();return;}syncUnlocks(s);if(pendingEvolution(s.player)){evolutionPanel();return;}if(mobilePortrait()){mode='play';pause('가로로 돌려주세요. 가로 화면에서 계속 탐험을 눌러 재개하세요.');return;}if(s.pendingHeal){s.player.hp=Math.min(s.player.max,s.player.hp+1);s.pendingHeal=false;}mode='play';paused=false;$('overlay').innerHTML='';canvas.focus();input.setEnabled(true);accumulator=0;last=performance.now();if(s.pendingLevels)levelUp();}
+function resume(){if(!s||s.status!=='playing'||!s.practice&&!lease.active)return;if(s.returnNoticePending){escapeNotice();return;}if(shrineLocked(room())){shrine();return;}if(!s.player.mainSkill&&(s.pendingLevels||mainSkills.some(id=>s.player[id]>0))){mainPanel();return;}if(!s.practice&&utilityAvailable(s)&&!s.player.utility){utilityPanel();return;}syncUnlocks(s);if(pendingEvolution(s.player)){evolutionPanel();return;}if(mobilePortrait()){mode='play';pause('가로로 돌려주세요. 가로 화면에서 계속 탐험을 눌러 재개하세요.');return;}if(s.pendingHeal){s.player.hp=Math.min(s.player.max,s.player.hp+1);s.pendingHeal=false;}bossDialogue?.observe();if(bossDialogue?.blocking){openBossDialogue();return;}mode='play';paused=false;$('overlay').innerHTML='';canvas.focus();input.setEnabled(true);accumulator=0;last=performance.now();if(s.pendingLevels)levelUp();}
 function pause(reason=''){if(!s||s.status!=='playing'||['title','result','level'].includes(mode))return;stop('pause');const ok=save();if(s.practice){practicePause();return;}panel(`<small>TAKE A BREATH</small><h2>잠시 쉬어가기</h2><p>${reason||'게임과 기록 시간이 멈췄습니다.'}<br>${ok?'진행 상황이 저장되었습니다.':escapeHtml(saveError||'저장하지 못했습니다.')+' 진단 기록을 내려받아 보관할 수 있습니다.'}</p><button class="primary" id="resume">계속 탐험</button><button id="quit">저장 후 입구로</button><button id="guide">조작 안내</button><button id="pauseSettings">소리·화면 설정</button><button id="journal">원정 기록 · 도감</button><button id="export">진단 기록 받기</button>`);button('resume',resume);button('quit',()=>{if(save())title();});button('guide',()=>showInfo('help'));button('pauseSettings',settingsPanel);button('export',exportReport);button('journal',journalPanel);}
 function settingsPanel(){
  if(mode==='play')pause();if(!['title','pause','result'].includes(mode)){toast('설정은 입구나 일시정지에서 열 수 있습니다.');return;}
@@ -255,13 +267,13 @@ function shrine(){if(!prepareIncantations(s))return;stop('shrine');save();const 
 function interact(){if(paused)return;interaction()?.[1]();save();}
 function changeFloor(f){const direction=f-s.floor;if(travel(s,direction)){enterRoom(s);emitInteraction(s,'stairs',room(),{x:s.player.x,y:s.player.y,direction});clearWardenActors();clearPrismActors();clearRemainingBossActors();clearOrdinaryActors();enterWardenPresentation(room(),{practice:!!s.practice,returning:!!s.key});enterPrismPresentation(room(),{practice:!!s.practice,returning:!!s.key});enterRemainingBossPresentation(room(),{practice:!!s.practice,returning:!!s.key});fx=[];clearMordoPresentation();clearVelkarPresentation();clearDemonPresentation();bullets=s.projectiles;save();}}
 function heavyWarningKey(){const a=room().enemies.find(e=>e.variant==='king')?.darkAttack;return a&&(a.kind==='judgment'||a.finisher)?a.kind+':'+a.step:'';}
-function update(dt){if(!s||paused)return;if(mobilePortrait()){pause('가로로 돌려주세요. 전투와 기록 시간이 멈췄습니다.');return;}const beforeRoom=room();const beforeWarning=heavyWarningKey();const result=stepRun(s,dt,input.movement());bullets=s.projectiles;for(const effect of result.effects)if(effect.essencePickup)emitInteraction(s,'essence',room(),{x:effect.fromX,y:effect.fromY,color:effect.color});if(heavyWarningKey()&&heavyWarningKey()!==beforeWarning)sound.play('warning');if(result.effects.some(f=>f.xpPickup))sound.play('pickup');if(result.events.includes('shot'))sound.play('shot');if(result.effects.some(f=>f.enemyFeedback==='hit'||f.arrowImpact||f.hitElement))sound.play('hit');if(result.effects.some(f=>f.hitSource))sound.play('hurt');if(result.events.some(e=>['demonPhase','finalWave'].includes(e)))sound.play('boss');if(result.events.includes('xpBoss'))sound.play('xpBoss');else if(result.events.includes('xpElite'))sound.play('xpElite');else if(result.events.some(e=>['roomClear','key','gateReward','trialReward','finalReady'].includes(e)))sound.play('reward');if(result.events.includes('room')){clearWardenActors();clearPrismActors();clearRemainingBossActors();clearOrdinaryActors();enterWardenPresentation(room(),{practice:!!s.practice,returning:!!s.key});enterPrismPresentation(room(),{practice:!!s.practice,returning:!!s.key});enterRemainingBossPresentation(room(),{practice:!!s.practice,returning:!!s.key});fx=[];clearMordoPresentation();clearVelkarPresentation();clearDemonPresentation();}tickMordoPresentation(room().enemies,dt,result.effects);tickVelkarPresentation(room().enemies,dt,result.effects);tickDemonPresentation(room(),dt,result.effects,result.events);tickWardenPresentation(room().enemies,dt,result.effects);tickPrismPresentation(room().enemies,dt,result.effects);tickRemainingBossPresentation(room(),dt,result.effects,result.events);tickOrdinaryPresentation(room(),dt,result.effects);tickHeroPresentation(s.player,dt,result.effects);fx=mergeEnemyFeedback(fx,result.effects);fx=limitPlayerBlasts(limitSynergyEffects(limitArrowImpacts(limitElementHits(fx.filter(f=>(f.t-=dt)>0)))));
+function update(dt){if(!s||paused)return;if(mobilePortrait()){pause('가로로 돌려주세요. 전투와 기록 시간이 멈췄습니다.');return;}bossDialogue?.observe();if(bossDialogue?.blocking){openBossDialogue();return;}const dialogueBefore=bossDialogue?.capture();const beforeRoom=room();const beforeWarning=heavyWarningKey();const result=stepRun(s,dt,input.movement());if(dialogueBefore)bossDialogue.after(dialogueBefore,result);bossDialogue?.tick(dt);bullets=s.projectiles;for(const effect of result.effects)if(effect.essencePickup)emitInteraction(s,'essence',room(),{x:effect.fromX,y:effect.fromY,color:effect.color});if(heavyWarningKey()&&heavyWarningKey()!==beforeWarning)sound.play('warning');if(result.effects.some(f=>f.xpPickup))sound.play('pickup');if(result.events.includes('shot'))sound.play('shot');if(result.effects.some(f=>f.enemyFeedback==='hit'||f.arrowImpact||f.hitElement))sound.play('hit');if(result.effects.some(f=>f.hitSource))sound.play('hurt');if(result.events.some(e=>['demonPhase','finalWave'].includes(e)))sound.play('boss');if(result.events.includes('xpBoss'))sound.play('xpBoss');else if(result.events.includes('xpElite'))sound.play('xpElite');else if(result.events.some(e=>['roomClear','key','gateReward','trialReward','finalReady'].includes(e)))sound.play('reward');if(result.events.includes('room')){clearWardenActors();clearPrismActors();clearRemainingBossActors();clearOrdinaryActors();enterWardenPresentation(room(),{practice:!!s.practice,returning:!!s.key});enterPrismPresentation(room(),{practice:!!s.practice,returning:!!s.key});enterRemainingBossPresentation(room(),{practice:!!s.practice,returning:!!s.key});fx=[];clearMordoPresentation();clearVelkarPresentation();clearDemonPresentation();}tickMordoPresentation(room().enemies,dt,result.effects);tickVelkarPresentation(room().enemies,dt,result.effects);tickDemonPresentation(room(),dt,result.effects,result.events);tickWardenPresentation(room().enemies,dt,result.effects);tickPrismPresentation(room().enemies,dt,result.effects);tickRemainingBossPresentation(room(),dt,result.effects,result.events);tickOrdinaryPresentation(room(),dt,result.effects);tickHeroPresentation(s.player,dt,result.effects);fx=mergeEnemyFeedback(fx,result.effects);fx=limitPlayerBlasts(limitSynergyEffects(limitArrowImpacts(limitElementHits(fx.filter(f=>(f.t-=dt)>0)))));
  if(s.practice){s.player.xp=0;s.pendingLevels=0;s.levelQueue=[];if(practiceCleared(s)&&!result.events.includes('dead')){finish(true);return;}}
  if(result.events.includes('dead')){finish(false);return;}
  const messages={demonPhase:room().demon?.phase===2?'대악마가 눈·코·입으로 갈라집니다.':'상단 벽이 무너지고 대악마 본체가 나타납니다.',returnUnlock:'봉인 해제 · 다시 이동할 수 있습니다.',gateReward:'정예 관문 돌파 · 계단에서 유물을 선택하세요.',eliteReward:'정예 처치 · 물약 1개 획득',trialReward:'시련 완료 · 제단에서 보상을 선택하세요.',shield:'보호막이 공격을 막았습니다.',potion:'회복 물약 획득',key:'열쇠 획득! 1층 출구로 귀환하세요.',finalWave:'악마 잔영이 출구를 습격합니다!',finalReady:'마지막 봉인 파괴 · 지금 탈출하세요!',stairs:'중간 보스 격파! 위층 계단이 열렸습니다.'};for(const event of result.events)if(messages[event])toast(messages[event]);
  if(result.events.includes('roomClear')){const r=room();emitInteraction(s,'roomClear',r,{unlocked:beforeRoom===r&&!s.key&&!roomLocked(s,r),doors:[0,1,2,3].map(d=>neighbor(s,d)>=0)});toast('방 클리어 · 물약 획득 '+(r.battlePotions||0)+'개 · 정수 획득 '+(r.collectedEssences||0)+'개 · 바닥 정수 '+(r.essences?.length||0)+'개 · 미수집 경험치 '+(r.xpDrops||[]).reduce((n,d)=>n+d.value,0)+'XP'+(r.relicOffers&&!r.relicClaimed?' · 유물 선택 가능':''));}
  if(result.events.includes('key')){escapeNotice();return;}
- if(result.events.includes('incantation'))shrine();else if(result.events.includes('level'))levelUp();saveTick+=dt;if(saveTick>=2||result.events.some(e=>['room','stairs','key','demonPhase','phoenixRevived'].includes(e))){saveTick=0;save();}
+ if(result.events.includes('incantation'))shrine();else if(result.events.includes('level'))levelUp();else if(bossDialogue?.blocking){openBossDialogue();return;}if(bossDialogue?.flushDirty())save();saveTick+=dt;if(saveTick>=2||result.events.some(e=>['room','stairs','key','demonPhase','phoenixRevived'].includes(e))){saveTick=0;save();}
 }
 
 function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),w,h);}
@@ -290,6 +302,7 @@ function draw(){relicBanner.update(s,s?room():null,paused,sound.settings.reduced
 }
 
 function dispatch(action){
+ if(mode==='dialogue')return;
  if(mode==='rank-start'||['main','level','evolution'].includes(mode))return;
  if(action==='pause'){if(['pause','bag','shrine','relic-details'].includes(mode))resume();else pause();return;}
  if(action==='help'){showInfo('help');return;}
@@ -317,7 +330,7 @@ window.addEventListener('error',()=>{if(s&&s.status==='playing'){stop('error');s
 function frame(now){const elapsed=(now-last)/1000;last=now;
  if(toastTime>0){toastTime-=Math.min(elapsed,.25);if(toastTime<=0)$('notice').textContent='';}
  if(!paused){if(elapsed>1){pause('화면 응답이 지연되어 자동으로 멈췄습니다.');}else{accumulator+=elapsed;while(accumulator>=1/60&&!paused){update(1/60);accumulator=Math.max(0,accumulator-1/60);}}}
- draw();renderTitleScene?.(now);requestAnimationFrame(frame);
+ draw();if(s?.status==='playing'&&['play','dialogue'].includes(mode))bossDialogue?.draw(ctx,{compact:touchControls.matches});renderTitleScene?.(now);requestAnimationFrame(frame);
 }
 title();requestAnimationFrame(frame);
 

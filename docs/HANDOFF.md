@@ -1,3 +1,20 @@
+## 최신 복사 가능한 인계 — 보스 머리 위 대사 구현
+```text
+C:\baggam-dev\spirebound/main. 사용자마지막‘진행’으로overhead-dialogue-v1.png승인→런타임구현. src/ui/boss-dialogue-data.js·src/rendering/boss-dialogue.js·game.js·storage/index·styles/boss-dialogue.css. 파수꾼침묵/프리즘시스템/군체모방/칼드베라힌트·모르도/벨카르/대악마본체대사, 처음/전멸읽기정지+다음·ESC(전투/기록함께정지), 전환/관문첫처치는위험없는틈3.2초/대기6초. 머리앵커·HUD회피/모바일레일유지·입력소비, 군체최종전멸·관문사망순서/동시/틱사이스킬즉사대응. bossDialogueSeen선택ID배열<=128/검증, 큐/actor미저장·로드기방문소개/이전phase생략. seen은큐등록기준이라남은대사가로드때생략가능. AI/RNG/공격·보상/클리어·랭킹·PNG변경없음. tests/unit/boss-dialogue.test.js8개작성만/미실행, 실제모바일/재생/저장미검증. 상세 docs/design-drafts/narrative-20261020/overhead-dialogue-implementation-v1.md. 다음명시배포때타이틀e73fdf7포함전체/8회귀/브라우저·저장랭킹누적검증→푸시배포. 지금은로컬커밋만·서버/테스트/푸시/배포/공개없음, 운영010901/runtime17f607f/0.42원격4d17d4f유지. 전체6장면입장/격파/탈출컷씬미구현·BGM보류. 실행명령서버차단없음.
+```
+[구현 완료 · 승인 머리 위 보스 대사 / 미검증·미배포 — 2026-10-20 KST]
+- 사용자 ‘진행’으로 말풍선스타일 승인. src/ui/boss-dialogue-data.js/rendering/boss-dialogue.js·game.js·boss-dialogue.css/index/storage에 파수꾼침묵/프리즘시스템/군체모방/칼드베라힌트·모르도/벨카르/본체 대사 연결. 첫등장·전멸뒤 읽기정지+다음/ESC, 전환/관문첫처치는위험없을때비차단3.2초(대기6초상한). 기존AI/공격/보상/승리/랭킹·PNG불변.
+- 군체최종전멸·관문사망순서/동시·틱사이스킬즉사 대응, actor참조/큐는미저장·bossDialogueSeen128개이내형식검증/구저장선택필드. 로드기방문보스소개/과거페이즈생략·큐등록기준seen이라미독대사도로드때생략가능. 머리앵커/HUD·미니맵/플레이어회피후대체배치·모바일HUD/입력차단. 전체6장면서사/새벽엔딩컷씬완료아님.
+- 상세 docs/design-drafts/narrative-20261020/overhead-dialogue-implementation-v1.md. tests/unit/boss-dialogue.test.js 회귀8개 작성만, 소스/diff검토만. 테스트/구문실행/서버/QA/푸시/배포/공개확인 미실행, 실제재생·모바일·저장왕복미검증. 다음명시배포때미배포타이틀e73fdf7와누적검증. 운영010901/runtime17f607f/0.42·원격4d17d4f유지·BGM보류.
+- 현재변경 runtime/새대사2모듈/CSS/index/storage·회귀8개·상세·4기록, 다음관련파일로컬커밋/clean확인. 실행명령/서버/차단없음. 이전시안승인대기기록은이력이다.
+[체크포인트 · 보스 대사 연결/저장·회귀항목 작성 — 2026-10-20 KST]
+- game.js에 읽기정지/다음·ESC스킵/입력차단·기존resume연결, rendering/boss-dialogue.js에등장/위험시숨김전환/처치·군체최종전멸/관문사망순서/머리앵커·HUD회피, ui/boss-dialogue-data.js에대사와128개이내ID검증, storage선택필드연결. CSS는투명오버레이+작은조작부/모바일HUD유지. PNG/캐릭터·AI·보상변경없음.
+- tests/unit/boss-dialogue.test.js에중복/로드/분열/사망순서/훈련귀환제외/위험숨김/저장 회귀사례 작성만. 실행안함·기존테스트성공을이번검증으로쓰지않음. 현재runtime/새CSS·회귀파일/4기록 수정. 다음소스정적검토/문서/로컬커밋. 테스트서버푸시배포공개없음·운영010901/0.42유지·실행명령서버차단없음.
+
+[진행 중 · 승인 머리 위 보스 대사 구현 — 2026-10-20 KST]
+- 사용자 ‘진행’으로 overhead-dialogue-v1.png 스타일 승인. 기존 외형/HUD·전투를 유지해 등장/전환/처치 대사·분열/사망순서·안전앵커/단일사건·스킵·중단복귀 구현 중. 시안 재생성/개별재승인 없음.
+- 시작634f21d clean. 테스트/서버/푸시/배포/공개확인없음·운영010901/runtime17f607f/0.42유지·타이틀e73fdf7미검증미배포·BGM보류. 다음 코드/저장대조→런타임·문서→소스검토·로컬커밋. 실행명령서버차단없음.
+
 ## 최신 복사 가능한 인계 — 머리 위 대사 화면안
 ```text
 C:\baggam-dev\spirebound/main. 사용자 대사방향진행승인→최초시각안 overhead-dialogue-v1.png 생성완료/검토대기. docs/design-drafts/narrative-20261020/ 아래 PNG/overhead-dialogue-design-v1.md/overhead-dialogue-prompt-v1.md·생성원본보존. 6패널 파수꾼침묵/프리즘시스템/군체모방/칼드명령/베라힌트/상단벽대악마앵커. 작은차콜판·회백2줄·꼬리·동시한명·큰보스옆이동. 내장imagegen성공1회(첫6참조요청은최대5제한으로생성전거부후5참조성공)·재생성/오프라인편집없음. 기존저장화면참고한모형이며실제캡처/검증아님·생성글자/임의HUD/보스크기는runtime정본아님. 내용방향재승인반복하지말고말풍선시각안만한번확인후구현·기존스프라이트/HUD/전투유지. 이번문서시안만/runtime테스트서버푸시배포없음·타이틀e73fdf7미검증미배포·운영010901/runtime17f607f/0.42원격4d17d4f유지·BGM보류/실행명령서버차단없음. 새명시배포에타이틀포함누적검증.
