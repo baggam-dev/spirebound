@@ -25,6 +25,7 @@ async function open(kind,width=844,height=390){
 async function startLocal(p,retry=false){await p.locator('#start').click();await p.locator('#rankStartLocal').waitFor();assert.equal(await p.locator('.entrance-scene').count(),0);if(retry){await p.locator('#rankStartRetry').click();await p.locator('#rankStartLocal').waitFor();await p.locator('#rankStartCancel').click();await p.locator('#start').click();await p.locator('#rankStartLocal').waitFor();}await p.locator('#rankStartLocal').click();}
 try{
  for(const [kind,width,height] of [['auto',1280,720],['auto',844,390],['space',844,390],['held',844,390],['asset-fail',844,390],['blur',844,390],['portrait',844,390],['lease',844,390],['save-fail',844,390],['reduced',844,390],['practice',844,390]]){
+  if(process.argv.includes('--visual-only')&&!['auto','reduced'].includes(kind))continue;
   const {c,p,requests,release}=await open(kind,width,height);console.log('case '+kind+' '+width);
   if(kind==='practice'){await p.locator('#bossPractice').click();await p.locator('#practiceBoss').selectOption('warden');await p.locator('#rollPractice').click();await p.locator('#launchPractice').click();await game(p);assert.equal(await p.evaluate(()=>window.__entranceCount),0);assert.equal(requests.some(f=>f.startsWith('entrance-')),false);results.push({kind,width,noReplay:true});await c.close();continue;}
   await startLocal(p,kind==='auto'&&width===1280);

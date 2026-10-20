@@ -1,0 +1,24 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "auto",
+      "width": 1280,
+      "duration": 3549,
+      "noReplayOnReload": true
+    },
+    {
+      "kind": "auto",
+      "width": 844,
+      "duration": 3585,
+      "noReplayOnReload": true
+    },
+    {
+      "kind": "reduced",
+      "width": 844,
+      "reducedMutedSkip": true
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}
