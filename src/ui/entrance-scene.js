@@ -14,6 +14,15 @@ export function prepareEntranceArt(){
 }
 export const entranceMarkup=()=>'<div class="entrance-scene"><canvas class="entrance-canvas" aria-hidden="true"></canvas><p id="entranceSubtitle" role="status" hidden>돌아갈 길은 닫혔다.</p><button id="entranceSkip" type="button">건너뛰기 <span aria-hidden="true">▸</span></button></div>';
 const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n)),ease=n=>{n=clamp(n);return n*n*(3-2*n);};
+function exteriorLife(c,t,phase,reduced){
+ const clock=reduced?0:t,anchors=phase===0?[[1003,458],[1178,458]]:[[547,454],[1042,454]];
+ for(const [i,[x,y]] of anchors.entries()){
+  const pulse=1+Math.sin(clock*9+i*2)*.09,glow=c.createRadialGradient(x,y,1,x,y,55*pulse);glow.addColorStop(0,'#ffb15525');glow.addColorStop(1,'#ed802000');c.fillStyle=glow;c.fillRect(x-60,y-60,120,120);
+  for(let k=0;k<4;k++){const height=(9+Math.sin(clock*11+k*3+i)*3)*pulse;c.fillStyle=k%2?'#ffcf79':'#cf7534';c.fillRect(x-6+k*3,y-height,3,height);}
+  if(!reduced)for(let k=0;k<3;k++){const life=(clock*.5+k*.31+i*.17)%1;c.save();c.globalAlpha=(1-life)*.5;c.fillStyle='#e9b878';c.fillRect(x+life*12+Math.sin(clock+k)*3,y-12-life*40,2,2);c.restore();}
+ }
+ if(!reduced){c.save();c.globalAlpha=.035;c.fillStyle='#b1b0be';for(let i=0;i<3;i++){c.beginPath();c.ellipse((i*610+clock*16)%1900-150,690+i*42,300,18,0,0,Math.PI*2);c.fill();}c.restore();}
+}
 export function createEntranceRenderer(host,art,{reduced=false}={}){
  const canvas=host.querySelector('.entrance-canvas'),c=canvas.getContext('2d'),subtitle=host.querySelector('#entranceSubtitle'),box=host.getBoundingClientRect();canvas.width=Math.max(1,Math.min(1600,Math.round(box.width)));canvas.height=Math.max(1,Math.min(900,Math.round(box.height)));
  const W=1600,H=900;
@@ -23,8 +32,8 @@ export function createEntranceRenderer(host,art,{reduced=false}={}){
   c.setTransform(1,0,0,1,0,0);c.fillStyle='#08090e';c.fillRect(0,0,canvas.width,canvas.height);const scale=Math.min(canvas.width/W,canvas.height/H);c.setTransform(scale,0,0,scale,(canvas.width-W*scale)/2,(canvas.height-H*scale)/2);c.imageSmoothingEnabled=false;
   const phase=time<1?0:time<2.4?1:2;host.dataset.entrancePhase=String(phase);subtitle.hidden=time<1.4;
   c.save();
-  if(phase===0){const z=reduced?1:1+.012*ease(time);c.translate(W*.65,H*.7);c.scale(z,z);c.translate(-W*.65,-H*.7);c.drawImage(art.background,0,0,W,H);hero(887,892,295,time);}
-  else if(phase===1){c.drawImage(art.plates,0,0,art.plates.naturalWidth,art.plates.naturalHeight/2,0,0,W,H);const q=ease((time-1)/1.4),bob=reduced?0:Math.sin(q*Math.PI*4)*4;hero(W*.5,H*(.97-.23*q)+bob,H*(.31-.12*q),time,1-ease((q-.8)/.2));}
+  if(phase===0){const z=reduced?1:1+.012*ease(time);c.translate(W*.65,H*.7);c.scale(z,z);c.translate(-W*.65,-H*.7);c.drawImage(art.background,0,0,W,H);exteriorLife(c,time,0,reduced);hero(887,892,295,time);}
+  else if(phase===1){c.drawImage(art.plates,0,0,art.plates.naturalWidth,art.plates.naturalHeight/2,0,0,W,H);exteriorLife(c,time,1,reduced);const q=ease((time-1)/1.4),bob=reduced?0:Math.sin(q*Math.PI*4)*4;hero(W*.5,H*(.97-.23*q)+bob,H*(.31-.12*q),time,1-ease((q-.8)/.2));}
   else{
    c.drawImage(art.plates,0,art.plates.naturalHeight/2,art.plates.naturalWidth,art.plates.naturalHeight/2,0,0,W,H);
    const q=reduced?(time<3?0:1):ease((time-2.4)/.76),slide=(1-q)*W*.026,x=W*.395,y=H*.017,w=W*.208,h=H*.785;
