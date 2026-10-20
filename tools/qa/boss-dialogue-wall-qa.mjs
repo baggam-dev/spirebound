@@ -6,6 +6,10 @@ try{for(const width of [1280,844])for(const kind of ['core','prism-death']){
  await p.addInitScript(()=>{window.qaSpeech=[];const original=CanvasRenderingContext2D.prototype.fillText;CanvasRenderingContext2D.prototype.fillText=function(text,...args){if(/이 탑에서|나갈 수|왕실 봉인|유지…/.test(text)&&!window.qaSpeech.includes(text))window.qaSpeech.push(text);return original.call(this,text,...args);};});
  await p.goto(base,{waitUntil:'domcontentloaded',timeout:120000});await p.locator('#start').waitFor();
  await p.evaluate(async kind=>{
+  const {environmentArtReady}=await import('/src/rendering/environment-art.js'),{heroSpriteReady}=await import('/src/rendering/hero-sprite.js');
+  if(!await environmentArtReady||!await heroSpriteReady)throw Error('Approved environment or hero PNG unavailable');
+  if(kind==='core'&&!await import('/src/rendering/upper-hall-art.js').then(m=>m.loadInfernalHallArt()))throw Error('Approved infernal background unavailable');
+  if(kind!=='core'&&!await import('/src/rendering/prism-hall-art.js').then(m=>m.loadPrismHallArt()))throw Error('Approved prism background unavailable');
   const {newRun}=await import('/src/game/engine.js'),{encodeSave,SAVE_KEY}=await import('/src/persistence/storage.js'),{challengeDemon,advanceDemonPhase}=await import('/src/combat/demon.js');
   const s=newRun(31,{campaign:'expanded'});s.tutorialComplete=true;s.player.mainSkill='frost';s.player.frost=1;s.floor=kind==='core'?9:3;s.room=s.floors[s.floor].findIndex(r=>r.type==='boss');s.player.x=480;s.player.y=350;const r=s.floors[s.floor][s.room];r.seen=true;
   if(kind==='core'){challengeDemon(s);r.enemies.forEach(e=>e.hp=0);advanceDemonPhase(r,s.projectiles);r.enemies.forEach(e=>e.hp=0);}else r.enemies.forEach(e=>e.hp=0);

@@ -1,0 +1,38 @@
+{
+  "base": "https://168.107.21.43",
+  "results": [
+    {
+      "kind": "core",
+      "width": 1280,
+      "drawn": [
+        "이 탑에서…",
+        "나갈 수 있을 것 같으냐."
+      ]
+    },
+    {
+      "kind": "prism-death",
+      "width": 1280,
+      "drawn": [
+        "왕실 봉인…",
+        "유지… 명령…"
+      ]
+    },
+    {
+      "kind": "core",
+      "width": 844,
+      "drawn": [
+        "이 탑에서…",
+        "나갈 수 있을 것 같으냐."
+      ]
+    },
+    {
+      "kind": "prism-death",
+      "width": 844,
+      "drawn": [
+        "왕실 봉인…",
+        "유지… 명령…"
+      ]
+    }
+  ],
+  "errors": []
+}
