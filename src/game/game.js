@@ -1,3 +1,4 @@
+import {waitForAssets} from '../rendering/asset-wait.js';
 import {wardenShake,drawWardenAwakening} from '../rendering/warden-awakening.js';
 import {wardenArriving} from '../combat/warden-arrival.js';
 import {floorAssetsLoaded,prepareFloorAssets} from '../rendering/floor-assets.js';
@@ -159,9 +160,8 @@ async function loadCurrentFloor(){
  const task={run:s,floor:s.floor};floorLoading=task;stop('floor-loading');
  panel('<small>SPIREBOUND</small><h2>'+(s.floor+1)+'층 · '+escapeHtml(floorNames[s.floor]||'탑의 길')+'</h2><p role="status">탑의 길을 여는 중…</p><button id="loadingBack">입구로</button>');
  $('overlay').firstElementChild.classList.add('floor-loading-panel');button('loadingBack',()=>{save();title();});
- let timeout;
  try{
-  await Promise.race([prepareFloorAssets(task.floor),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error('Asset timeout')),90000);})]);
+  await waitForAssets(prepareFloorAssets(task.floor));
   if(s!==task.run||s.floor!==task.floor||mode!=='floor-loading')return;
   // Warm room-specific terrain caches while the opaque loading screen is still present.
   mode='floor-warmup';draw();mode='floor-loading';
@@ -172,7 +172,7 @@ async function loadCurrentFloor(){
   if(s!==task.run||s.floor!==task.floor||mode!=='floor-loading')return;
   save();panel('<h2>그림을 불러오지 못했습니다</h2><p>진행은 보존했습니다. 연결을 확인한 뒤 다시 불러오세요.</p><button id="loadingReload">다시 불러오기</button><button id="loadingBack">입구로</button>');
   $('overlay').firstElementChild.classList.add('floor-loading-panel');button('loadingReload',()=>location.reload());button('loadingBack',title);
- }finally{clearTimeout(timeout);if(floorLoading===task)floorLoading=null;}
+ }finally{if(floorLoading===task)floorLoading=null;}
 }
 function resetTransient({loaded=false}={}){bossDialogue=s?createBossDialogue(s,{loaded}):null;relicBanner.clear();resetWardenPresentation(s?.floors?.flat()||[]);resetPrismPresentation(s?.floors?.flat()||[]);resetRemainingBossPresentation(s?.floors?.flat()||[]);resetOrdinaryPresentation(s?.floors?.flat()||[]);clearMordoPresentation();clearVelkarPresentation();clearDemonPresentation();fx=[];bullets=s?.projectiles||[];saveTick=0;accumulator=0;last=performance.now();}
 function title(){

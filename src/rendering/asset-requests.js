@@ -1,9 +1,10 @@
 // Register native images without starting network work until a pack is requested.
 // Each original onload handler still owns its crop/validation and Ready promise.
-const enabled=new Set(),waiting=new Map();
+const enabled=new Set(),waiting=new Map();let settled=0;
 const fileOf=url=>String(url).split(/[?#]/)[0].split('/').at(-1);
 export function DeferredImage(){
  const image=new Image();let source='';
+ image.addEventListener?.('load',()=>{settled++;},{once:true});image.addEventListener?.('error',()=>{settled++;},{once:true});
  Object.defineProperty(image,'src',{
   configurable:true,get:()=>source,
   set(url){
@@ -21,3 +22,4 @@ export function activateAssetFiles(files){
  }
 }
 export const assetRequestState=()=>({enabled:[...enabled].sort(),waiting:[...waiting.keys()].sort()});
+export const assetProgress=()=>settled;

@@ -1,3 +1,7 @@
+## 최신 인계 — 로딩 진척/도감 표시 보완 재배포 준비
+```text
+C:\baggam-dev\spirebound/main. 사용자 첫접속최적화 구현·배포 승인유효. 현재운영155247/runtimed986ff7/0.43,최적화실제UI2통과/원본요청량title79개136.32MB→4개5.49MB,1층누적44.30MB. 공개audit10층cold이어하기가90초제한실패했으나직접진단96,219ms자산준비정상/요청실패0. asset-wait.js 추가:파일load/error완료진척중대기/60초무진척·총5분제한/워처정리,game의고정race대체. 도감선택은준비중문자/aria-busy후PNG표시. 집중22통과(기존전체582+추가3단위포함집중22,마지막전체585실행아님),local-final PC/모바일0층·각10층ready·재요청0·8/10층cold직접이어하기·실제선택대악마요청gate/준비상태통과/오류0. 원본실패로그보존. 다음보완커밋푸시→공식재배포→공개실제UI/동일audit·로딩·HTTPS186목록/PNG/TLS쿠키검증→최종4문서/요약커밋푸시clean. 로컬서버96992는최종QA완료후닫기/나머지명령완료. 원본/스타일/전투/저장/랭킹·0.43보존/BGM보류/실iPhone미검증。새확인요청없이승인범위진행.
+```
 ## 최신 인계 — 층별 요청 지연 로컬 검증/배포 준비
 ```text
 C:\baggam-dev\spirebound/main. 사용자 ‘진행 및 배포’로 첫접속 최적화 승인. 렌더59모듈newImage→native DeferredImage등록기(전역Image/PNG/가공코드불변),asset-manifest/packs활성화로title4→현재층팩→도감가시카드/선택상세만요청. feedback그룹별Ready·부분cachekey. docs/asset-loading-20261020.md 상세. 전체582/집중19/EdgePC가로각10층ready·재요청0/상층8층직접이어하기/도감대악마발/로딩gate·시간동결·상행·失敗복구통과. 기준선public14581879PNG136,321,378B→localtitle4PNG5,491,784B/첫층누적30PNG44,296,448B(원본요청량96%/68%감소,속도보장아님). 초기baseline networkidle실패로그보존/DOM기준측정통과. 다음커밋푸시→공식배포→공개실제온라인UI2/같은요청량·10층/도감·로딩/HTTPS185목록PNG·TLS쿠키이관→최종기록커밋푸시clean. 0.43/기존랭킹DB保存·전투/원본/스타일불변,BGM보류/실iPhone미검증. 로컬서버58622닫기·나머지테스트QA완료(로그우선). 현재운영145818/runtimee494023,아직이번변경미배포/추가승인불필요.

@@ -40,7 +40,7 @@ import {drawPoisonEnemy} from '../combat/poison.js';
 import {drawPrism} from '../combat/prism.js';
 import {enemyGuide} from '../world/expedition.js';
 
-const cache=new Map(),requested=new WeakSet(),observers=new WeakMap();
+const cache=new Map(),requested=new WeakSet(),completed=new WeakSet(),observers=new WeakMap();
 // Render once, using the same bodies as combat. Never mutate the expedition.
 function portrait(key,part){
  const id=key+':'+part+':'+feedbackSpriteState().keys.join(',')+':'+(key==='ambusher'?ambusherSpriteState().ready:key==='ringcaster'?ringcasterSpriteState().ready:key==='strafer'?straferSpriteState().ready:key==='demonCaptain'?demonCaptainSpriteState().ready:key==='demonArcher'?demonArcherSpriteState().ready:key==='demonSoldier'?demonSoldierSpriteState().ready:key==='spikeNest'?spikeNestSpriteState().ready:key==='demonBat'?demonBatSpriteState().ready:key==='demon'?demonSpriteState().parts.join(',')+':'+demonCoreSpriteState().ready+':'+shadowAuraState().ready:key==='commander'?commanderPhase1SpriteState().ready+':'+commanderPhase2SpriteState().ready+':'+shadowAuraState().ready:key==='king'?mordoPhase1SpriteState().ready+':'+mordoPhase2SpriteState().ready+':'+mordoPhase3SpriteState().ready+':'+shadowAuraState().ready:key==='riftHunter'?riftHunterSpriteState().ready+':'+shadowAuraState().ready:key==='pulseTurret'?pulseTurretSpriteState().ready:key==='royalGuard'?royalGuardSpriteState().ready:key==='starBearer'?starBearerSpriteState().ready:key==='starKnight'?starKnightSpriteState().ready:key==='gravityMage'?gravityMageSpriteState().ready:key==='astralSniper'?astralSniperSpriteState().ready:['slime','minislime'].includes(key)?slimeSpriteState().ready:key==='prism'?prismSpriteState().ready:key==='flower'?flowerSpriteState().ready:key==='warden'?wardenSpriteState().ready:gruntSpriteState().types.includes(key));if(cache.has(id))return cache.get(id);
@@ -74,7 +74,11 @@ function paintPortrait(canvas){
 }
 function requestPortrait(canvas){
  if(requested.has(canvas))return;requested.add(canvas);
- preparePortraitAssets(canvas.dataset.enemy).then(()=>{if(canvas.isConnected)paintPortrait(canvas);}).catch(()=>{requested.delete(canvas);});
+ canvas.setAttribute('aria-busy','true');
+ preparePortraitAssets(canvas.dataset.enemy).then(()=>{completed.add(canvas);canvas.setAttribute('aria-busy','false');canvas.dataset.portraitState='ready';if(canvas.isConnected)paintPortrait(canvas);}).catch(()=>{requested.delete(canvas);canvas.setAttribute('aria-busy','false');if(canvas.isConnected){paintPortraitStatus(canvas,'그림을 불러오지 못했습니다');canvas.dataset.portraitState='error';}});
+}
+function paintPortraitStatus(canvas,message='그림 준비 중…'){
+ canvas.dataset.portraitState='loading';const c=canvas.getContext('2d');c.clearRect(0,0,canvas.width,canvas.height);c.fillStyle='#a9aca3';c.font=`${Math.max(10,Math.round(canvas.width/18))}px Galmuri, monospace`;c.textAlign='center';c.fillText(message,canvas.width/2,canvas.height/2,canvas.width-12);
 }
 export function renderJournalPortraits(root){
  let observer=observers.get(root);
@@ -82,7 +86,7 @@ export function renderJournalPortraits(root){
   observer=new IntersectionObserver(entries=>{if(!root.isConnected){observer.disconnect();return;}for(const entry of entries)if(entry.isIntersecting){requestPortrait(entry.target);observer.unobserve(entry.target);}},{rootMargin:'60px'});observers.set(root,observer);
  }
  for(const canvas of root.querySelectorAll('canvas[data-enemy]')){
-  paintPortrait(canvas);
+  if(completed.has(canvas))paintPortrait(canvas);else paintPortraitStatus(canvas);
   if(canvas.closest('.bestiary-stage')||!observer)requestPortrait(canvas);else observer.observe(canvas);
  }
 }

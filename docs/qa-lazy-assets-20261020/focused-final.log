@@ -1,0 +1,30 @@
+✔ imported images do not request a source until their pack is activated (4.6728ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.8774ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (259.9682ms)
+✔ selected portraits do not require every monster or any dungeon hall (0.9948ms)
+✔ file progress extends a slow load beyond an old fixed deadline and clears its watcher (2.1044ms)
+✔ a stalled transfer fails and releases the watcher (1.189ms)
+✔ continuous progress is still bounded and source errors surface immediately (0.6204ms)
+✔ introductions are automatic and never advance actor or run clocks themselves (4.3507ms)
+✔ warden introduction waits for awakening, including a save loaded mid-arrival (0.5126ms)
+✔ a loaded seen encounter suppresses old introductions and phases, but future phases still speak (1.3999ms)
+✔ slime splitting never repeats its introduction or final collective death line (1.1977ms)
+✔ gate dialogue is sequential and respects both guardian death orders (0.8468ms)
+✔ practice, return encounters and summoned bosses do not create story interruptions (0.5187ms)
+✔ a skill kill between simulation ticks still produces its single death line (0.347ms)
+✔ emerging demon core speaks automatically despite immediate hazards (0.4769ms)
+✔ nonblocking phase lines remain visible during hazards and expire without changing combat state (2.4531ms)
+✔ optional bounded event history round trips; corrupt dialogue IDs cannot poison a save (112.9902ms)
+✔ first warden arrival permits movement but blocks every combat simulation path for one second (128.9884ms)
+✔ reentry and return do not replay awakening (58.8502ms)
+✔ warden cleave locks facing, respects walls and gives recovery (0.9297ms)
+✔ warden charge hits once, stops at walls and cannot immediately repeat (1.306ms)
+✔ only floor2 warden gets shorter jump warning and faster movement (0.5821ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1408.8542

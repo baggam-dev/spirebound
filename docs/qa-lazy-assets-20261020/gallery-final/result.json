@@ -1,0 +1,12 @@
+{
+  "base": "http://127.0.0.1:5173",
+  "baseline": false,
+  "results": [
+    {
+      "galleryOnDemand": true,
+      "selectedDemonReady": true
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

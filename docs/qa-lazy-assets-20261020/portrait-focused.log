@@ -1,0 +1,12 @@
+✔ imported images do not request a source until their pack is activated (2.7869ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.3889ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (139.5855ms)
+✔ selected portraits do not require every monster or any dungeon hall (0.6586ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 420.3113
