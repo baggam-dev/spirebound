@@ -10,6 +10,8 @@ class FakeAudio{
  createGain(){return {gain:{setValueAtTime(){},linearRampToValueAtTime(){},exponentialRampToValueAtTime(){}},connect(){},disconnect(){}};}
 }
 
+test('entrance gate cues respect mute, user unlock and individual cue throttles',()=>{FakeAudio.instances.length=0;const sound=createSoundSystem(memory(),FakeAudio);assert.equal(sound.play('gateOpen'),false);sound.unlock();const audio=FakeAudio.instances[0];assert.equal(sound.play('gateOpen'),true);assert.equal(sound.play('gateOpen'),false);assert.equal(sound.play('gateStep'),true);assert.equal(sound.play('gateStep'),false);audio.currentTime+=.5;assert.equal(sound.play('gateStep'),true);assert.equal(sound.play('gateClose'),true);sound.update({muted:true});audio.currentTime+=2;assert.equal(sound.play('gateClose'),false);});
+
 test('sound settings persist separately from run saves and reject malformed values',()=>{
  const storage=memory(),sound=createSoundSystem(storage,FakeAudio);
  assert.deepEqual(sound.settings,{muted:false,volume:.5,reducedEffects:false});

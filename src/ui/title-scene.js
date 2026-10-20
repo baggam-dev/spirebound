@@ -2,6 +2,7 @@
 const root='assets/images/';
 function asset(name){const img=new Image();img.src=root+name;return img;}
 const art={background:asset('title-background-v1.png'),hero:asset('title-hero-idle-v1.png'),branch:asset('title-branch-v1.png')};
+export const titleArt=art;
 const ready=img=>img.complete&&img.naturalWidth>0;
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
 

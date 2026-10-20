@@ -1,0 +1,18 @@
+✔ development API proxy forwards cookies and overrides claimed client IP (103.8424ms)
+✔ server serves game modules and refuses repository files and unsupported methods (159.3569ms)
+✔ entrance token is presentation-only, once per new run and never alters save fields (1.9375ms)
+✔ skip while queued consumes the token; delayed art completion cannot restart it (0.2928ms)
+✔ continue, practice, stale run identity and finished runs cannot start an entrance (0.2921ms)
+✔ only an active independent clock advances; repeated keys and invalid deltas do not skip time (0.275ms)
+✔ floating touch origin, second fingers, cancellation and rotation never leave movement stuck (3.4591ms)
+✔ sound settings persist separately from run saves and reject malformed values (3.3285ms)
+✔ cues need a user gesture, obey mute and throttle repeated attacks (1.1176ms)
+✔ reward family cannot stack, pickup and danger cues stay independent (0.6329ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 826.023

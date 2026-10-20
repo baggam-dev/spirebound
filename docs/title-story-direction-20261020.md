@@ -1,3 +1,13 @@
+# 최신 구현 상태 — 입장3컷 승인/로컬 구현검증 완료 (2026-10-21)
+사용자 진행및배포로 아래3컷/3.6초/한줄자막/스킵승인. 아직운영211711/runtime817de43/0.43이며공식배포준비중,현재아래미승인/미구현표기는과거이력이다. BGM보류/격파열쇠하강·생환은미구현후속.
+
+- src/ui/entrance-state.js 메모리token(동일run중복예약·늦은art·practice/로드제외)/3.6초독립clock. 새저장필드없음.
+- src/ui/entrance-scene.js 기존titleArt배경/hero공유,신규entrance-plates-v1.png(2배경)/entrance-doors-v1.png(2투명문짝)를새원정예약후만요청(합4,785,345B). 최초타이틀4PNG유지. alpha경계crop/내부문arch clip·문짝이동/빛·먼지·후면hero3frame이동/한줄DOM자막1.4초이후/효과완화. docs/design-drafts/entrance-20261021/production-prompts-v1.md에정확prompt·원본/파생경로,파일변환/재생성없이복사보존.
+- game.js 첫저장성공→예약/그림준비와기존층로딩병렬→층warmup후entrance-loading(스킵/입구복귀가능)→entrance. 그림실패/15초준비상한이면연출생략,늦은콜백run/modeguard. 화면/세로/lease우선pause,스킵Esc/Spacecapture·repeat방지·입력reset. 단일기존RAF에서전투elapsed/cooldown정지상태로연출만진행,이어하기/연습/중도reload에는재생안함.
+- gateOpen/gateStep/gateClose 짧은합성효과음(기존mute/volume/gesture/throttle설정),별도BGM없음. 저장실패는pause안내/연출미예약. HTML/CSS/서버/배포허용목록/PNG원본비교QA갱신.
+- 전체593/593·Edge입장11경우/local-reload 및기존HUD5/층로딩회귀통과. 실제3컷직접확인,실iPhone/기기음질미검증. 다음공식배포/공개검증결과는 docs/qa-entrance-20261021/RELEASE_SUMMARY.md 완료시기록.
+
+---
 # 최신 우선: 새 원정 입장 연출 3.6초 검토 패키지 — 2026-10-20
 
 상태: 사용자 진행하자로 입장만 구체화한 시안·설계. 아래 과거 전체6장면의 장문 자막/다음 버튼안보다 **입장 범위에서는 이 상단안이 우선**한다. 아직 시안 컨펌 전/runtime 미반영. 기존 메인/HUD는 운영211711-8c8926/runtime817de43/0.43 배포완료이며 아래 미배포 표기는 당시 이력이다. BGM보류. 기본보스머리위대사는이미자동표시/이동가능하므로 다시 넘기기·스킵대화로 바꾸지 않는다.

@@ -2,6 +2,9 @@
 export const SETTINGS_KEY='spirebound.settings.v1';
 export const DEFAULT_SETTINGS=Object.freeze({muted:false,volume:.5,reducedEffects:false});
 const CUES={
+ gateOpen:{gap:1,notes:[[0,82,.3,'triangle',.018],[.14,67,.38,'triangle',.015]]},
+ gateStep:{gap:.3,notes:[[0,110,.07,'triangle',.017],[.025,55,.09,'sine',.012]]},
+ gateClose:{gap:1,notes:[[0,54,.28,'triangle',.055],[.025,89,.13,'sawtooth',.02],[.12,40,.34,'sine',.025]]},
  shot:{gap:.17,notes:[[0,360,.055,'triangle',.011],[.025,240,.055,'triangle',.008]]},
  hit:{gap:.14,notes:[[0,510,.07,'triangle',.018]]},
  hurt:{gap:.35,notes:[[0,190,.16,'sawtooth',.025]]},
