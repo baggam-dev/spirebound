@@ -1,0 +1,11 @@
+Packaged 313 runtime files: C:\Users\SDSPRO\AppData\Local\Temp\spirebound-release-20261020-211711-8c8926\site.tar.gz
+Certificate will not expire
+...........................
+----------------------------------------------------------------------
+Ran 27 tests in 2.206s
+
+OK
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+Release release-20261020-211711-8c8926 active. Previous release: /usr/share/nginx/spirebound-releases/release-20261020-175020-8afe12
+{"ok": true}Verified deployment: https://168.107.21.43/ (release-20261020-211711-8c8926)

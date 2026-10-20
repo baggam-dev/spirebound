@@ -33,3 +33,6 @@
 
 ## 배포 검증 보완 — 2026-10-20
 사용자 배포 지시 후 집중22/22(서버통합2포함) 및 실제Edge local-release 5장면 검증 통과. 개발서버새PNG 404는 server.js허용목록/기존통합테스트보완으로해결. 높이320정보창-액션겹침은2열패널의행gap0/padding0으로해결. 상호작용버튼이정보창을가릴수있어모바일만액션왼쪽하단(right176/bottom12+safearea)으로옮기고겹침검사추가. 게임역할/범위·해금은그대로. 검증fixture누락/오류기록대기/브라우저alpha0.3표기차이는QA도구수정이며제품실패와구분. 최초로그모두보존. 공개결과는 qa-mobile-hud-v2-20261020/RELEASE_SUMMARY.md 완료시기록.
+
+## 배포/공개 확인 완료
+release-20261020-211711-8c8926/runtime817de43/0.43 활성. 관련22/22·공개실제UI온라인2·동일HUD5장면·HTTPS186목록/새PNG원본포함·TLS랭킹쿠키/기록이관통과. 직접확인PNG qa-mobile-hud-v2-20261020/public-hud/ready-844.png. 실iPhone/하드웨어safearea/장시간미검증. 최종상세는같은폴더RELEASE_SUMMARY.md. 모든명령/서버종료,마지막문서증거커밋푸시만/runtime재배포불필요. 다음새명시배포전테스트·푸시·배포권한없음/BGM보류.
