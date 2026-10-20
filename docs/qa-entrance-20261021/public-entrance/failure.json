@@ -1,0 +1,25 @@
+{
+  "error": "locator.waitFor: Timeout 120000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.entrance-loading') to be visible\u001b[22m\n",
+  "url": "https://168.107.21.43/",
+  "overlay": "",
+  "errors": [],
+  "results": [
+    {
+      "kind": "auto",
+      "width": 1280,
+      "duration": 3571,
+      "noReplayOnReload": true
+    },
+    {
+      "kind": "auto",
+      "width": 844,
+      "duration": 3370,
+      "noReplayOnReload": true
+    },
+    {
+      "kind": "space",
+      "width": 844,
+      "inputConsumed": true
+    }
+  ]
+}

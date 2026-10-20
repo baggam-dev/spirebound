@@ -1,0 +1,114 @@
+{
+  "map": {
+    "x": 593.8125,
+    "y": 50,
+    "right": 661,
+    "bottom": 114.75,
+    "width": 67.1875,
+    "height": 64.75
+  },
+  "stats": {
+    "x": 523,
+    "y": 118.75,
+    "right": 661,
+    "bottom": 147.140625,
+    "width": 138,
+    "height": 28.390625
+  },
+  "mapParent": "mobileRightRail",
+  "statsStyle": {
+    "background": "rgba(8, 18, 15, 0.12)",
+    "textAlign": "right",
+    "fontSize": "8px",
+    "opacity": "1",
+    "borderStyle": "solid"
+  },
+  "mapAlpha": 31,
+  "headerArt": true,
+  "buttons": {
+    "pause": {
+      "x": 567,
+      "y": 4,
+      "right": 611,
+      "bottom": 48,
+      "width": 44,
+      "height": 44,
+      "background": "rgba(0, 0, 0, 0)",
+      "textAlign": "center",
+      "fontSize": "0px",
+      "opacity": "1",
+      "borderStyle": "none",
+      "hidden": false
+    },
+    "mobileMenu": {
+      "x": 617,
+      "y": 4,
+      "right": 661,
+      "bottom": 48,
+      "width": 44,
+      "height": 44,
+      "background": "rgba(0, 0, 0, 0)",
+      "textAlign": "center",
+      "fontSize": "0px",
+      "opacity": "1",
+      "borderStyle": "none",
+      "hidden": false
+    },
+    "potion": {
+      "x": 501,
+      "y": 154,
+      "right": 573,
+      "bottom": 226,
+      "width": 72,
+      "height": 72,
+      "background": "rgba(21, 35, 34, 0.3)",
+      "textAlign": "center",
+      "fontSize": "10px",
+      "opacity": "1",
+      "borderStyle": "solid",
+      "hidden": false
+    },
+    "utility": {
+      "x": 583,
+      "y": 154,
+      "right": 655,
+      "bottom": 226,
+      "width": 72,
+      "height": 72,
+      "background": "rgba(21, 35, 34, 0.3)",
+      "textAlign": "center",
+      "fontSize": "10px",
+      "opacity": "1",
+      "borderStyle": "solid",
+      "hidden": false
+    },
+    "skill": {
+      "x": 501,
+      "y": 236,
+      "right": 573,
+      "bottom": 308,
+      "width": 72,
+      "height": 72,
+      "background": "rgba(21, 35, 34, 0.3)",
+      "textAlign": "center",
+      "fontSize": "10px",
+      "opacity": "1",
+      "borderStyle": "solid",
+      "hidden": false
+    },
+    "dodge": {
+      "x": 583,
+      "y": 236,
+      "right": 655,
+      "bottom": 308,
+      "width": 72,
+      "height": 72,
+      "background": "rgba(21, 35, 34, 0.3)",
+      "textAlign": "center",
+      "fontSize": "10px",
+      "opacity": "1",
+      "borderStyle": "solid",
+      "hidden": false
+    }
+  }
+}

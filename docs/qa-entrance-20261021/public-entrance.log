@@ -1,0 +1,18 @@
+case auto 1280
+case auto 844
+case space 844
+case held 844
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 120000ms exceeded.
+Call log:
+  - waiting for locator('.entrance-loading') to be visible
+
+    at C:\baggam-dev\spirebound\tools\qa\entrance-release-qa.mjs:33:58 {
+  log: [ "  - waiting for locator('.entrance-loading') to be visible" ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

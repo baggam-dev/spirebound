@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';import {mkdir,writeFile} from 'node:fs/promises';import {join} from 'node:path';import {pathToFileURL} from 'node:url';
 const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'index.mjs')).href),base=process.env.BASE_URL||'http://127.0.0.1:5173',out=process.argv[2];await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[],checks=[];
-try{for(const [width,height] of [[1280,800],[844,390]]){
+try{for(const [width,height] of (process.argv.includes('--failure-only')?[]:[[1280,800],[844,390]])){
  const context=await browser.newContext({viewport:{width,height},isMobile:width<1000,hasTouch:width<1000}),p=await context.newPage();p.setDefaultTimeout(360000);p.on('pageerror',e=>errors.push(e.message));
  let releaseImages,releaseHall;const imageGate=new Promise(r=>releaseImages=r),hallGate=new Promise(r=>releaseHall=r);await p.route('**/assets/images/*.png',async route=>{await (route.request().url().endsWith('/guard-hall-atlas-v1.png')?hallGate:imageGate);await route.continue().catch(()=>{});});await p.goto(base,{waitUntil:'domcontentloaded'});await p.locator('#start').waitFor();
  await p.evaluate(async()=>{const {newRun}=await import('/src/game/engine.js'),{RunStore}=await import('/src/persistence/storage.js'),{objectPoint}=await import('/src/world/object-positions.js');const s=newRun(31,{campaign:'expanded'});s.player.mainSkill='frost';s.player.frost=1;s.tutorialComplete=true;s.room=s.floors[0].findIndex(r=>r.type==='up');const r=s.floors[0][s.room];r.enemies=[];r.used=true;r.seen=true;Object.assign(s.player,objectPoint(r));new RunStore(localStorage).write(s);});
@@ -12,7 +12,7 @@ try{for(const [width,height] of [[1280,800],[844,390]]){
  checks.push({width,coldLoading:true,clockFrozen:true,noFallback:true,stairs:true});await context.close();
  }
  // A missing asset must provide recovery rather than silently reveal procedural fallback.
- const c=await browser.newContext({viewport:{width:844,height:390},isMobile:true,hasTouch:true}),p=await c.newPage();await p.route('**/environment-hall-atlas-v1.png',route=>route.abort());await p.goto(base,{waitUntil:'domcontentloaded'});await p.locator('#start').waitFor();
+ const c=await browser.newContext({viewport:{width:844,height:390},isMobile:true,hasTouch:true}),p=await c.newPage();p.setDefaultTimeout(360000);await p.route('**/environment-hall-atlas-v1.png',route=>route.abort());await p.goto(base,{waitUntil:'domcontentloaded'});await p.locator('#start').waitFor();
  await p.evaluate(async()=>{const {newRun}=await import('/src/game/engine.js'),{RunStore}=await import('/src/persistence/storage.js');const s=newRun(31,{campaign:'expanded'});s.player.mainSkill='frost';s.player.frost=1;new RunStore(localStorage).write(s);});await p.reload({waitUntil:'domcontentloaded'});await p.locator('#continue').click();await p.locator('#loadingReload').waitFor();await p.screenshot({path:join(out,'load-failure-844.png')});await p.locator('#loadingBack').click();await p.locator('#continue').waitFor();checks.push({assetFailureRecovery:true});await c.close();
  assert.deepEqual(errors,[]);await writeFile(join(out,'result.json'),JSON.stringify({base,checks,errors,scoreSubmissions:0},null,2));console.log(JSON.stringify({checks,errors}));
 }finally{await browser.close();}

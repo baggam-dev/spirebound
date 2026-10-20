@@ -17,20 +17,25 @@ async function open(kind,width=844,height=390){
  if(kind==='save-fail')await c.addInitScript(()=>{const set=Storage.prototype.setItem;Storage.prototype.setItem=function(key,value){if(key.startsWith('spirebound.run.v1'))throw new DOMException('QA quota','QuotaExceededError');return set.call(this,key,value);};});
  if(kind==='reduced')await c.addInitScript(()=>localStorage.setItem('spirebound.settings.v1',JSON.stringify({muted:true,volume:0,reducedEffects:true})));
  let release;const gate=new Promise(r=>release=r);
- if(kind==='held'||kind==='asset-fail')await p.route('**/assets/images/entrance-*.png',async r=>{if(kind==='held'){await gate;await r.continue().catch(()=>{});}else await r.abort();});
+ if(kind==='held'||kind==='timeout'||kind==='asset-fail')await p.route('**/assets/images/entrance-*.png',async r=>{if(kind==='held'||kind==='timeout'){await gate;await r.continue().catch(()=>{});}else await r.abort();});
  await p.goto(base,{waitUntil:'domcontentloaded'});await p.locator('#start').waitFor();await p.evaluate(async files=>{await Promise.all(files.map(async f=>{const i=new Image();i.src='/assets/images/'+f;await i.decode();}));},files);assert.deepEqual([...new Set(requests)].sort(),[...files].sort());
  await p.evaluate(()=>{window.__entranceCount=0;const seen=new WeakSet();new MutationObserver(()=>{const el=document.querySelector('.entrance-scene');if(el&&!seen.has(el)){seen.add(el);window.__entranceCount++;}}).observe(document.getElementById('overlay'),{subtree:true,childList:true});});
  return {c,p,requests,release};
 }
 async function startLocal(p,retry=false){await p.locator('#start').click();await p.locator('#rankStartLocal').waitFor();assert.equal(await p.locator('.entrance-scene').count(),0);if(retry){await p.locator('#rankStartRetry').click();await p.locator('#rankStartLocal').waitFor();await p.locator('#rankStartCancel').click();await p.locator('#start').click();await p.locator('#rankStartLocal').waitFor();}await p.locator('#rankStartLocal').click();}
 try{
- for(const [kind,width,height] of [['auto',1280,720],['auto',844,390],['space',844,390],['held',844,390],['asset-fail',844,390],['blur',844,390],['portrait',844,390],['lease',844,390],['save-fail',844,390],['reduced',844,390],['practice',844,390]]){
+ for(const [kind,width,height] of [['auto',1280,720],['auto',844,390],['space',844,390],['held',844,390],['timeout',844,390],['asset-fail',844,390],['blur',844,390],['portrait',844,390],['lease',844,390],['save-fail',844,390],['reduced',844,390],['practice',844,390]]){
   if(process.argv.includes('--visual-only')&&!['auto','reduced'].includes(kind))continue;
+  if(process.argv.includes('--recovery-only')&&['auto','space'].includes(kind))continue;
   const {c,p,requests,release}=await open(kind,width,height);console.log('case '+kind+' '+width);
   if(kind==='practice'){await p.locator('#bossPractice').click();await p.locator('#practiceBoss').selectOption('warden');await p.locator('#rollPractice').click();await p.locator('#launchPractice').click();await game(p);assert.equal(await p.evaluate(()=>window.__entranceCount),0);assert.equal(requests.some(f=>f.startsWith('entrance-')),false);results.push({kind,width,noReplay:true});await c.close();continue;}
+  // Isolate queued-skip from the independent 15s art timeout: warm only the
+  // normal first-floor pack, while the entrance images remain unrequested.
+  if(kind==='held')await p.evaluate(async()=>{await (await import('/src/rendering/floor-assets.js')).prepareFloorAssets(0);});
   await startLocal(p,kind==='auto'&&width===1280);
   if(kind==='save-fail'){await p.locator('#resume').waitFor();assert.match(await p.locator('#overlay').innerText(),/저장/);assert.equal(await p.evaluate(()=>window.__entranceCount),0);assert.equal(requests.some(f=>f.startsWith('entrance-')),false);await p.screenshot({path:join(out,'save-fail.png')});results.push({kind,width,noReplay:true});await c.close();continue;}
   if(kind==='held'){await p.locator('.entrance-loading').waitFor();const s=await snapshot(p);assert.equal(s.elapsed,0);await p.locator('#entranceSkip').click();await game(p);release();await p.waitForLoadState('networkidle');assert.equal(await p.evaluate(()=>window.__entranceCount),0);results.push({kind,width,skipQueued:true,lateArtIgnored:true});await c.close();continue;}
+  if(kind==='timeout'){await game(p);assert.equal(await p.evaluate(()=>window.__entranceCount),0);release();await p.waitForLoadState('networkidle');assert.equal(await p.evaluate(()=>window.__entranceCount),0);results.push({kind,width,artTimeoutFallback:true,lateArtIgnored:true});await c.close();continue;}
   if(kind==='asset-fail'){await game(p);assert.equal(await p.evaluate(()=>window.__entranceCount),0);results.push({kind,width,failureFallback:true});await c.close();continue;}
   await scene(p);const entered=Date.now(),before=await snapshot(p);assert.equal(before.elapsed,0);assert.equal(before.storedEntrance,false);assert.equal(before.online,false);
   if(kind==='auto'){
