@@ -24,7 +24,8 @@ export function createTitleScene(host){
   const ratio=Math.min(1,1600/width,1000/height),w=Math.round(width*ratio),h=Math.round(height*ratio);
   if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
   ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#08090e';ctx.fillRect(0,0,w,h);
-  const scale=Math.max(w/1600,h/900),ox=(w-1600*scale)/2,oy=(h-900*scale)/2;
+  // Fit the full approved composition, including the hero's feet, on every aspect ratio.
+  const scale=Math.min(w/1600,h/900),ox=(w-1600*scale)/2,oy=(h-900*scale)/2;
   ctx.setTransform(scale,0,0,scale,ox,oy);ctx.imageSmoothingEnabled=false;
   if(ready(art.background))ctx.drawImage(art.background,0,0,1600,900);
   const t=still?0:elapsed;
