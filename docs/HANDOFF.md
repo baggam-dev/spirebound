@@ -1,3 +1,7 @@
+## 최신 복사 가능한 인계 — 첫 접속 이미지 요청 최적화 완료
+```text
+C:\baggam-dev\spirebound/main. 사용자 ‘진행 및 배포’ 완료. 운영 release-20261020-175020-8afe12/runtimeee2d31a/0.43/https://168.107.21.43/. 공식312파일·서버27·nginx/health/index/TLS 통과/이전172149·DB보존. native DeferredImage등록기/manifest/packs로메인4PNG→현재층/실제적목록→가시도감/선택초상순요청. 원본PNG·가공/crop·전투·난수·저장·랭킹 규칙불변. 실제귀환3종/최종탈출증원·초반희귀상층적·상자보스도준비,모듈/feedback집합cache와매프레임전후새적gate. 전체582+보완집중25 통과(마지막전체588재실행아님). 공개실제UI온라인2·PC1280/가로844각10층ready/중복요청0·8/10cold이어하기·귀환1층·도감요청gate/준비PNG·상자프리즘/희귀royalGuard·로딩시간정지/절차맵미노출/상행/실패복구·HTTPS186목록/PNG바이트/TLS308/랭킹쿠키/HTTP기록이관 모두통과/오류0·점수0(API직접시작2는UI2와별개). 메인79PNG136.32MB→4PNG5.49MB(96%)/첫층누적44.30MB(기준선대비68%);요청원본합지표/속도보장아님. 최초public최종층96초정상준비가90초제한실패→실제완료진척중대기/60초무진척·총5분제한보완뒤공개통과/실패로그보존. 상세 docs/asset-loading-20261020.md 및 docs/qa-lazy-assets-20261020/RELEASE_SUMMARY.md. 원본압축/파생본미구현·1층팩약39MB/후반원본큰제약유지. 모든서버·명령종료/차단없음. 마지막추가는문서/증거로runtime재배포불필요,최종기록커밋푸시/clean은git확인. 다음기존계획=입장→격파·열쇠/하강→최종탈출후생환연출,이번미구현/BGM보류/실iPhone저사양장시간미검증. 이번배포종료,새명시배포전수정문서로컬커밋만. 새디자인은시안승인필요·캐릭터패키지한번검토·오라는별도효과·한국어기본5줄/실제PNG절대경로·원본보존.
+```
 ## 최신 인계 — 실제 출현 목록 준비 보완 재배포
 ```text
 승인된 첫접속 최적화 배포 진행. 최신 WORK_STATUS 상단/qa-lazy-assets-20261020 참고. 전체582+보완집중25 통과. local-roster-final 전체10층·상층cold8/10·귀환0·도감, roster 상자프리즘/희귀royalGuard, loading-roster-final 시간정지/상행/실패복구 모두 통과/오류0. 현재 운영172149/runtime18bf637/0.43, 실제 목록 floorAssetOptions/actorPlan·모듈집합cache·동적 적 준비게이트 보완은 다음 커밋푸시/공식배포 대상. 서버41951 종료 후 공개UI→동일audit→roster→로딩→HTTPS186/PNG/TLS 확인, 최종4문서/요약 기록푸시clean. 원본·전투/저장/랭킹불변/BGM보류/실iPhone미검증.
