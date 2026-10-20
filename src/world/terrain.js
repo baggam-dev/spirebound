@@ -78,7 +78,7 @@ export function drawObstacles(ctx,obstacles=[],floor=0){
 }
 export function drawMinimap(ctx,rooms,current,path=[],doorsForRoom=r=>roomDoors(rooms,r)){
  const visible=rooms.filter(r=>r.seen);if(!visible.length)return;
- ctx.fillStyle='#08120f99';ctx.fillRect(772,12,166,160);ctx.strokeStyle='#91a18a66';ctx.lineWidth=1;ctx.strokeRect(772.5,12.5,166,160);
+ ctx.fillStyle='#08120f80';ctx.fillRect(772,12,166,160);ctx.strokeStyle='#91a18a66';ctx.lineWidth=1;ctx.strokeRect(772.5,12.5,166,160);
  ctx.textAlign='center';ctx.font='10px Galmuri, monospace';ctx.fillStyle='#c1cdb9';ctx.fillText(rooms.some(r=>r.returnRisk)?'귀환 · 빨강 위험 / 초록 우회':'탐색 지도 · 문 위치',855,28);
  const minX=Math.min(...visible.map(r=>r.x)),minY=Math.min(...visible.map(r=>r.y)),width=Math.max(...visible.map(r=>r.x))-minX+1,height=Math.max(...visible.map(r=>r.y))-minY+1,step=Math.min(28,142/width,125/height),size=step*.68;
  const ox=855-width*step/2,oy=38+(125-height*step)/2;

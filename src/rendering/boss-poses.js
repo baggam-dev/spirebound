@@ -22,9 +22,10 @@ export function bossPose(e,room={}){
   if(e.slimeShotClock>0&&e.slimeShotClock<.25)return {...p,stage:'windup',charge:1-e.slimeShotClock/.25};
   if(hazards.some(h=>h.kind==='aura'&&h.phase==='active'))return {...p,stage:'channel',charge:.5};
  }
- if(e.type==='boss'&&!e.variant){
-  if(e.attackPhase==='warning'){const charge=clamp(1-e.attackTime/(e.pattern==='slam'?1.1:.65));return {...p,stage:'windup',charge,bodyY:Math.round(charge*3),weapon:-.5-charge*.9};}
+ if(e.type==='boss'&&(!e.variant||e.variant==='warden')){
+  if(e.attackPhase==='warning'){const charge=clamp(1-e.attackTime/(e.warningDuration||(e.pattern==='slam'?1.1:.65)));return {...p,stage:'windup',charge,bodyY:Math.round(charge*3),weapon:-.5-charge*.9};}
   if(e.attackPhase==='leap')return {...p,stage:'air',lift:Math.sin(Math.PI*clamp(1-e.attackTime/.5))*42,weapon:-1.5};
+  if(e.attackPhase==='dash')return {...p,stage:'strike',release:1,weapon:.25};
   if(e.attackPhase==='firing')return {...p,stage:'strike',release:1,weapon:.45};
   if(e.attackPhase==='recover')return {...p,stage:'recover',bodyY:4,weapon:.7};
  }

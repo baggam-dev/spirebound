@@ -5,7 +5,7 @@ const coarse=window.matchMedia('(pointer:coarse)'),hud=document.getElementById('
 const left=document.createElement('div');left.id='mobileLeftRail';
 const right=document.createElement('div');right.id='mobileRightRail';
 const map=document.createElement('canvas');map.id='mobileMinimap';map.width=166;map.height=160;map.setAttribute('role','img');map.setAttribute('aria-label','탐색 지도 · 방 연결과 현재 위치');
-right.append(map);hud.append(left,right);
+hud.append(left,right,map);
 const slots=[['.vitals',left],['#collectionHUD',left],['.build-status',left],['#statReadout',right]].map(([selector,target])=>{
  const node=document.querySelector(selector),marker=document.createComment('desktop HUD position');node.before(marker);return {node,marker,target};
 });
@@ -13,7 +13,6 @@ const relics=document.getElementById('relicStrip'),relicMarker=document.createCo
 function arrange(){for(const {node,marker,target} of slots){if(coarse.matches)target.append(node);else marker.after(node);}if(coarse.matches)document.getElementById('collectionHUD').prepend(relics);else relicMarker.after(relics);}
 coarse.addEventListener('change',arrange);arrange();
 export function renderHUDMinimap(draw,ctx,...args){
- if(!coarse.matches){draw(ctx,...args);return;}
  const c=map.getContext('2d');c.clearRect(0,0,166,160);c.save();c.translate(-772,-12);draw(c,...args);c.restore();
 }
 export function updateMobileActions(s){

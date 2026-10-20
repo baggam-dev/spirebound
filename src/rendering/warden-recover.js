@@ -13,6 +13,10 @@ export const wardenRecoverReady=typeof Image==='undefined'?Promise.resolve(false
  }catch{resolve(false);}};atlas.onerror=()=>resolve(false);atlas.src=new URL('../../assets/images/warden-recover-atlas.png',import.meta.url).href;
 });
 export function wardenRecoverProgress(e){return Math.max(0,Math.min(1,1-(e.attackTime||0)/.6));}
+export function drawWardenRising(c,remaining){
+ if(frames.length!==3)return false;
+ const f=frames[Math.min(2,Math.floor(Math.max(0,1-remaining/.4)*3))];c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));return true;
+}
 export function drawWardenRecover(c,e){
  if(frames.length!==3||e.pattern!=='slam'||e.attackPhase!=='recover')return false;
  const progress=wardenRecoverProgress(e),f=frames[Math.min(2,Math.floor(progress*3))];

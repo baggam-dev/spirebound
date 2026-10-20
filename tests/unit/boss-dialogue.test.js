@@ -9,10 +9,17 @@ const enemy=(variant,id=1)=>({id,type:variant==='kald'?'starKnight':variant==='v
 function fixture(enemies,extra={}){const room={type:'boss',seen:false,enemies,hazards:[],...extra};return {floors:[[room]],floor:0,room:0,player:{x:480,y:420},projectiles:[],key:false};}
 const result=(...ids)=>({events:[],effects:ids.map(enemyId=>({enemyFeedback:'death',enemyId}))});
 
-test('introductions occur once, speech controls do not advance actor or run clocks',()=>{
+test('introductions are automatic and never advance actor or run clocks themselves',()=>{
  const run=fixture([enemy('warden')]),saved=JSON.stringify(run.floors),d=createBossDialogue(run);run.elapsed=7;d.observe();
- assert.equal(d.blocking,true);assert.deepEqual(d.lines,['.......']);d.tick(10);assert.equal(d.blocking,true);assert.equal(run.elapsed,7);assert.equal(JSON.stringify(run.floors),saved);
+ assert.equal(d.blocking,false);assert.deepEqual(d.lines,['.......']);d.tick(1);assert.equal(d.blocking,false);assert.equal(run.elapsed,7);assert.equal(JSON.stringify(run.floors),saved);
  d.skip();d.observe();assert.equal(d.blocking,false);assert.deepEqual(d.lines,[]);assert.equal(run.bossDialogueSeen.length,1);
+});
+
+test('warden introduction waits for awakening, including a save loaded mid-arrival',()=>{
+ const run=fixture([enemy('warden')]),r=run.floors[0][0];r.seen=true;r.wardenArrival=.4;
+ const d=createBossDialogue(run,{loaded:true});d.observe();assert.deepEqual(d.lines,[]);
+ r.wardenArrival=0;d.observe();assert.deepEqual(d.lines,BOSS_LINES.warden.intro);assert.equal(d.blocking,false);
+ d.tick(3.6);d.observe();assert.deepEqual(d.lines,[]);
 });
 
 test('a loaded seen encounter suppresses old introductions and phases, but future phases still speak',()=>{
@@ -25,7 +32,7 @@ test('a loaded seen encounter suppresses old introductions and phases, but futur
 test('slime splitting never repeats its introduction or final collective death line',()=>{
  const run=fixture([enemy('slime')]),r=run.floors[0][0],d=createBossDialogue(run);d.observe();d.next();const before=d.capture();
  r.enemies=[{...enemy('slime',2),stage:1},{...enemy('slime',3),stage:1}];d.after(before,result(1));assert.deepEqual(d.lines,[]);
- const last=d.capture();r.enemies=[];d.after(last,result(2,3));assert.deepEqual(d.lines,BOSS_LINES.slime.death);assert.equal(d.blocking,true);d.next();d.after(last,result(2,3));assert.deepEqual(d.lines,[]);
+ const last=d.capture();r.enemies=[];d.after(last,result(2,3));assert.deepEqual(d.lines,BOSS_LINES.slime.death);assert.equal(d.blocking,false);d.next();d.after(last,result(2,3));assert.deepEqual(d.lines,[]);
 });
 
 test('gate dialogue is sequential and respects both guardian death orders',()=>{
@@ -35,7 +42,7 @@ test('gate dialogue is sequential and respects both guardian death orders',()=>{
   const before=d.capture(),dead=r.enemies.find(e=>e.gateTitle===first);r.enemies=r.enemies.filter(e=>e!==dead);d.after(before,result(dead.id));
   assert.deepEqual(d.lines,BOSS_LINES[first].death);assert.equal(d.blocking,false);d.skip();
   const remaining=d.capture(),last=r.enemies[0];r.enemies=[];d.after(remaining,result(last.id));
-  assert.deepEqual(d.lines,first==='kald'?BOSS_LINES.vera.last:[]);assert.equal(d.blocking,first==='kald');
+  assert.deepEqual(d.lines,first==='kald'?BOSS_LINES.vera.last:[]);assert.equal(d.blocking,false);
  }
 });
 
@@ -47,20 +54,20 @@ test('practice, return encounters and summoned bosses do not create story interr
 
 test('a skill kill between simulation ticks still produces its single death line',()=>{
  const e=enemy('prism'),run=fixture([e]),r=run.floors[0][0],d=createBossDialogue(run);d.observe();d.skip();e.hp=0;
- const before=d.capture();r.enemies=[];d.after(before,result(e.id));assert.deepEqual(d.lines,BOSS_LINES.prism.death);assert.equal(d.blocking,true);
+ const before=d.capture();r.enemies=[];d.after(before,result(e.id));assert.deepEqual(d.lines,BOSS_LINES.prism.death);assert.equal(d.blocking,false);
 });
 
-test('only the emerging demon core gets a safe first reading, including immediate hazards',()=>{
+test('emerging demon core speaks automatically despite immediate hazards',()=>{
  const hand={...enemy('demon'),part:'hand'},run=fixture([hand]),r=run.floors[0][0],d=createBossDialogue(run);d.observe();assert.deepEqual(d.lines,[]);
  r.enemies=[{...enemy('demon',2),part:'core'}];r.demon={special:{kind:'hellFlame'}};r.hazards=[{phase:'warning'}];d.observe();
- assert.equal(d.blocking,true);assert.deepEqual(d.lines,BOSS_LINES.demon.intro);d.tick(7);assert.equal(d.blocking,true);d.skip();d.observe();assert.equal(d.blocking,false);
+ assert.equal(d.blocking,false);assert.deepEqual(d.lines,BOSS_LINES.demon.intro);d.tick(7);assert.equal(d.blocking,false);assert.deepEqual(d.lines,[]);d.skip();d.observe();assert.equal(d.blocking,false);
 });
 
-test('nonblocking phase lines hide during hazards and expire without changing combat state',()=>{
+test('nonblocking phase lines remain visible during hazards and expire without changing combat state',()=>{
  const e=enemy('king'),run=fixture([e]),r=run.floors[0][0],d=createBossDialogue(run);d.observe();d.skip();const before=d.capture();e.hp=60;d.after(before,result());
  r.hazards=[{phase:'warning'}];const saved=JSON.stringify(run.floors);let plaques=0;
  const ctx={save(){},restore(){},measureText(s){return {width:s.length*14};},fillRect(){plaques++;},strokeRect(){},fillText(){},beginPath(){},moveTo(){},lineTo(){},closePath(){},fill(){},stroke(){}};
- d.draw(ctx);assert.equal(plaques,0);d.tick(6);assert.deepEqual(d.lines,[]);assert.equal(JSON.stringify(run.floors),saved);
+ d.draw(ctx);assert.ok(plaques>0);d.tick(6);assert.deepEqual(d.lines,[]);assert.equal(JSON.stringify(run.floors),saved);
 });
 
 test('optional bounded event history round trips; corrupt dialogue IDs cannot poison a save',()=>{

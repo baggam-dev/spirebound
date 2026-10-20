@@ -50,7 +50,7 @@ export function validateRun(s){
  if(expanded){const ninth=s.floors[8],final=s.floors[9];check(ninth.filter(r=>r.type==='boss').length===1&&ninth.some(r=>r.type==='boss'&&typeof r.commanderPending==='boolean'));check(final.length===2&&final[0].type==='down'&&final[0].x===0&&final[0].y===0&&typeof final[0].fountainReady==='boolean'&&final[1].type==='boss'&&final[1].x===1&&final[1].y===0&&typeof final[1].demonPending==='boolean');if(final[1].demonPending===false)check(!!final[1].demon);}
  for(const [floorIndex,rooms] of s.floors.entries()){
   check(Array.isArray(rooms)&&rooms.length>=(expanded&&floorIndex===9?2:floorIndex<2?floorIndex===0?5:6:7)&&rooms.length<=(expanded&&floorIndex===9?2:s.generationVersion>=35&&floorIndex<2?floorIndex===0?5:6:11));const coords=new Set();
-  for(const r of rooms){check(Number.isInteger(r.x)&&Number.isInteger(r.y)&&Math.abs(r.x)<12&&Math.abs(r.y)<12&&roomTypes.has(r.type));check(!coords.has(`${r.x},${r.y}`));coords.add(`${r.x},${r.y}`);check(typeof r.seen==='boolean'&&typeof r.used==='boolean');
+  for(const r of rooms){check(Number.isInteger(r.x)&&Number.isInteger(r.y)&&Math.abs(r.x)<12&&Math.abs(r.y)<12&&roomTypes.has(r.type));check(!coords.has(`${r.x},${r.y}`));coords.add(`${r.x},${r.y}`);check(typeof r.seen==='boolean'&&typeof r.used==='boolean');if(r.wardenArrival!==undefined)check(floorIndex===1&&r.type==='boss'&&number(r.wardenArrival,0,1));if(r.wardenRise!==undefined)check(floorIndex===1&&r.type==='boss'&&number(r.wardenRise,0,.4));
    check(Array.isArray(r.enemies)&&r.enemies.length<=128);const ids=new Set();
    if(r.xpDrops!==undefined){
     check(Array.isArray(r.xpDrops)&&r.xpDrops.length<=XP_TIER_LIMIT*XP_TIERS.length);

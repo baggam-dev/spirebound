@@ -1,5 +1,6 @@
 /* Approved side-rail layout. Desktop retains its existing HUD. */
 #mobileLeftRail,#mobileRightRail{display:none}
+#mobileMinimap{position:absolute;right:12px;top:12px;display:block;width:28%;max-width:266px;height:auto;aspect-ratio:166/160;image-rendering:pixelated;pointer-events:none}
 @media(pointer:coarse) and (orientation:landscape){
  body{--hud-rail:clamp(88px,13.3vw,112px);--stick-size:72px}
  #runHUD{z-index:9}
@@ -68,3 +69,11 @@
  body>header:not(.mobile-open) #pause,body>header:not(.mobile-open) #mobileMenu{width:100%;min-height:38px}
  #mobileRightRail{top:calc(86px + env(safe-area-inset-top))}
 }
+
+/* Approved enlarged map can overlap the arena; preserve solid room symbols. */
+@media(pointer:coarse) and (orientation:landscape){
+ #mobileMinimap{position:fixed;right:calc(var(--hud-rail) + 5px + env(safe-area-inset-right));top:calc(46px + env(safe-area-inset-top));width:min(24vw,200px,calc((100dvh - 100px)*.56));height:auto;max-height:none;aspect-ratio:166/160;z-index:10}
+ #mobileRightRail{grid-template-rows:minmax(0,1fr)}
+ body:has(#overlay:not(:empty)) #mobileMinimap{visibility:hidden}
+}
+@media(pointer:coarse) and (orientation:landscape) and (max-width:800px){#mobileMinimap{top:calc(86px + env(safe-area-inset-top));width:min(24vw,calc((100dvh - 140px)*.56))}}

@@ -1,3 +1,4 @@
+import {beginWardenArrival,tickWardenArrival} from '../combat/warden-arrival.js';
 import {reactToRelicHit} from '../combat/relic-effects.js';
 import {tickRoll,tickRollMines,rollImmune} from '../combat/roll.js';
 import {syncUnlocks} from '../progression/skill-overhaul.js';
@@ -56,7 +57,7 @@ export function collisionTime(a,b,c,radius){
 export function enemyRadius(e){return e.variant==='slime'||e.type==='minislime'?slimeRadius(e):(e.type==='boss'?32:e.type==='brute'||e.type==='demonCaptain'?24:e.type==='demonBat'?14:19)*(e.scale??1);}
 export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||e.attackPhase==='leap';}
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
-export function enterRoom(s){resetSpectralBlade(s);delete s.roll;s.bloodBossHealth={};
+export function enterRoom(s){beginWardenArrival(s,currentRoom(s),!currentRoom(s).seen);resetSpectralBlade(s);delete s.roll;s.bloodBossHealth={};
  recoverPlayerPosition(s.player,currentRoom(s).obstacles);trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.rollMines=[];r.fairyBeam=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
  s.player.actionStun=0;s.player.electricGrace=0;resetDemonAttack(r);
  // Do not preserve an off-screen attack aimed at the previous visit's position.
@@ -84,6 +85,8 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(next>=0&&aligned&&!roomLocked(s,r)){s.room=next;r=currentRoom(s);Object.assign(p,doorArrival(r,(d+2)%4));enterRoom(s);events.push('room');}
   else{p.x=Math.max(31,Math.min(929,p.x));p.y=Math.max(49,Math.min(491,p.y));}
  }
+ // Also catches the tick that crosses the doorway into a sleeping warden's room.
+ if(tickWardenArrival(r,dt))return {events,effects};
  if(r.shrineState==='choice'&&!r.used)return {events:[...events,'incantation'],effects};
  r.gateBanner=Math.max(0,(r.gateBanner||0)-dt);observeRoom(s,r);bindDefenses(r.enemies);if(r.enemies.some(e=>e.type==='boss'))bossHealth(r);
  for(const item of collectEssences(s,r))effects.push({x:p.x,y:p.y-45,t:1.2,color:essenceInfo(item.id).color,text:essenceInfo(item.id).label,essencePickup:true,fromX:item.x,fromY:item.y});
@@ -112,7 +115,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(e.variant==='king'||upperTypes.includes(e.type)){updateUpper(e,p,r,dt,s.projectiles,raw=>hurt(raw,enemyName(e)+' 암흑 공격'));continue;}
   if(e.variant==='slime'||e.type==='flower'){updatePoisonEnemy(e,p,r,dt,s.projectiles);continue;}
   if(e.variant==='prism'){hurt(updatePrism(e,p,r.obstacles,dt,s.projectiles),'프리즘 광선','laser');continue;}
-  if(['boss','archer','scatter'].includes(e.type)){hurt(updatePattern(e,p,r.obstacles,dt,s.projectiles,s.key),enemyName(e)+' 내려찍기');continue;}
+  if(['boss','archer','scatter'].includes(e.type)){hurt(updatePattern(e,p,r.obstacles,dt,s.projectiles,s.key),enemyName(e)+(e.pattern==='charge'?' 돌진':e.pattern==='cleave'?' 전방 베기':' 내려찍기'));continue;}
   if(e.type==='laser'||e.type==='ricochet'){hurt(updateRanged(e,p,r.obstacles,dt,s.projectiles,s.key),enemyName(e)+' 광선',e.type==='laser'?'laser':null);continue;}
   if(returnEnemyTypes.includes(e.type)){hurt(updateReturnEnemy(e,p,r.obstacles,dt,s.projectiles),enemyName(e)+' 돌진');continue;}
   if(e.type==='brute'){const jumping=e.phase==='air';hurt(updateBrute(e,p,r.obstacles,dt,s.key),jumping?'도약 거인 점프 착지':'도약 거인 근접 공격',jumping?'bruteJump':null);continue;}
@@ -124,7 +127,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
   else if(!chargerRecovering(e)&&distance(e,p)<23&&!segmentBlocked(e,p,r.obstacles,0))hurt(e.type==='charger'&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration?18:9,enemyName(e)+' 접촉');
  }
  hitOrigin=null;
- for(const e of r.enemies)if(e.type!=='chaser'&&!chargerRecovering(e)&&e.hp>0&&!enemyAirborne(e)&&!(e.spawnGrace>0)&&!(e.counterReason&&e.opening>0)&&!r.enemies.some(n=>n.kingTransition>0)&&!e.darkAttack?.moving&&distance(e,p)<enemyRadius(e)+14&&!segmentBlocked(e,p,r.obstacles,0))hurt(9,enemyName(e)+' 접촉',null,e);
+ for(const e of r.enemies)if(e.type!=='chaser'&&!(['charge','cleave'].includes(e.pattern)&&['dash','recover','warning'].includes(e.attackPhase))&&!chargerRecovering(e)&&e.hp>0&&!enemyAirborne(e)&&!(e.spawnGrace>0)&&!(e.counterReason&&e.opening>0)&&!r.enemies.some(n=>n.kingTransition>0)&&!e.darkAttack?.moving&&distance(e,p)<enemyRadius(e)+14&&!segmentBlocked(e,p,r.obstacles,0))hurt(9,enemyName(e)+' 접촉',null,e);
  // A lethal hit ends the simulation before drops or life-steal can heal the player.
  if(p.hp<=0){events.push('dead');return {events,effects};}
  for(const b of s.projectiles){

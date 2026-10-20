@@ -1,3 +1,4 @@
+import {drawWardenRoom} from './warden-room-art.js';
 import {environmentMaterial,environmentSurface,environmentReferenceReady} from './environment-material.js';
 // Floor 2 presentation only. Approved originals and saved room geometry stay untouched.
 let frames=[],epoch=0,pending;
@@ -59,5 +60,5 @@ export function drawGuardHallDetails(c,s,r,reduced=false){
  for(const x of [13,947])for(const feet of [160,400])drawGuardProp(c,4,x,feet,22);
  if(r.type==='boss')for(const x of [225,735])drawGuardProp(c,10,x,35,20);
  if(!reduced){c.beginPath();c.rect(26,45,908,455);c.clip();for(let i=0;i<8;i++){const phase=(t*.12+i*.127+seed%113/113)%1;c.globalAlpha=Math.sin(phase*Math.PI)*.1;c.fillStyle='#c4c5b5';c.fillRect(65+(seed+i*137)%830,90+i%2*340-phase*14,1,1);}}
- c.restore();
+ c.restore();drawWardenRoom(c,s,r);
 }

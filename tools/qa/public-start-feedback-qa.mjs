@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';import {mkdir,writeFile} from 'node:fs/promises';import {join} from 'node:path';import {pathToFileURL} from 'node:url';
+const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'index.mjs')).href),base=process.env.BASE_URL||'https://168.107.21.43',out=process.argv[2];await mkdir(out,{recursive:true});
+const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[],results=[];let scores=0;
+try{for(const [width,height] of [[1280,800],[844,390]]){
+ const c=await browser.newContext({viewport:{width,height},isMobile:width<1000,hasTouch:width<1000}),p=await c.newPage();p.setDefaultTimeout(60000);p.on('pageerror',e=>errors.push(e.message));p.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/api/records'))scores++;});
+ const responses=[];p.on('response',r=>{if(/\/api\/(session|runs)$/.test(r.url()))responses.push({url:new URL(r.url()).pathname,status:r.status()});});await p.goto(base,{waitUntil:'domcontentloaded'});await p.locator('#start').click();
+ await p.waitForFunction(()=>!document.querySelector('#overlay').children.length);const data=await p.evaluate(async()=>{const {RunStore}=await import('/src/persistence/storage.js'),{RELEASE}=await import('/src/game/version.js'),m=await import('/src/rendering/floor-assets.js');const s=new RunStore(localStorage).read().run;return {version:RELEASE,online:!!s.ranking.online,floors:s.floors.length,first:s.floors.slice(0,2).map(r=>r.length),ready:m.floorAssetsLoaded(0)};});
+ assert.equal(data.version,'0.43.0-prebeta');assert.equal(data.online,true);assert.equal(data.ready,true);assert.deepEqual(data.first,[5,6]);assert.ok(responses.some(r=>r.url==='/api/runs'&&r.status===200));await p.screenshot({path:join(out,`online-${width}.png`)});results.push({width,...data,responses});await c.close();
+ }assert.deepEqual(errors,[]);assert.equal(scores,0);await writeFile(join(out,'result.json'),JSON.stringify({base,results,errors,scoreSubmissions:scores},null,2));console.log(JSON.stringify({onlineStarts:results.length,errors,scoreSubmissions:scores}));
+}finally{await browser.close();}

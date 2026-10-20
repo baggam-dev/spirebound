@@ -8,3 +8,11 @@ body:has(#overlay .boss-dialogue-panel)>header{visibility:visible}
 #overlay .dialogue-controls button:focus-visible{outline:2px solid #ede3c8;outline-offset:2px}
 .dialogue-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 @media(pointer:coarse){#overlay .panel.boss-dialogue-panel{bottom:12px;right:12px}.dialogue-controls{gap:6px}#overlay .dialogue-controls button{font-size:11px;padding:8px 10px}}
+/* Asset preparation is opaque so fallback terrain never flashes underneath it. */
+#overlay:has(.floor-loading-panel){position:fixed;inset:0;background:#08090e;backdrop-filter:none;z-index:50}
+.floor-loading-panel{background:#08090e;color:#c7c0b0;border-color:#534f47}
+body:has(.floor-loading-panel) #runHUD,body:has(.floor-loading-panel) .touch{visibility:hidden}
+
+#overlay .floor-loading-panel{position:relative;isolation:isolate;min-width:min(540px,90vw);padding:42px 22px;overflow:hidden}
+.floor-loading-panel::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(#08090e88,#08090ef2),url('../assets/images/title-background-v1.png') center/cover;opacity:.4}
+.floor-loading-panel p{color:#bcb29e}

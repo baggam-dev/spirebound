@@ -1,3 +1,4 @@
+import {enhancedWarden,WARDEN_ATTACKS,startWardenMelee,updateWardenMelee} from './warden-attacks.js';
 import {drawEnemyField,drawEnemyLanding,drawEnemyMuzzle} from '../rendering/enemy-attack-vfx.js';
 import {wardenLabelOffset} from '../rendering/warden-sprite.js';
 import {openGuard} from './tactics.js';
@@ -9,15 +10,21 @@ export function emitShot(e,angle,speed,bullets){speed*=attackProfile(e).speed;bu
 function recover(e,seconds){e.attackPhase='recover';e.attackTime=seconds*(e.type==='boss'?.4:ENEMY_COOLDOWN_FACTOR*attackProfile(e).recovery);}
 export function updatePattern(e,p,obstacles,dt,bullets,enraged=false){
  if(e.hp<=0)return 0;
+ const warden=enhancedWarden(e);
+ if(warden){
+  e.wardenSlashCd=Math.max(0,(e.wardenSlashCd||0)-dt);e.wardenChargeCd=Math.max(0,(e.wardenChargeCd||0)-dt);
+  const melee=updateWardenMelee(e,p,obstacles,dt);if(melee!==null)return melee;
+ }
  if(!e.attackPhase){
   e.cd=(e.cd??2)-dt;
-  if(e.cd>0){const speed=(e.type==='boss'?40:25)*(e.slow>0?e.slowFactor:1),a=steering(e,p,obstacles,e.type==='boss'?32:18);if(e.type==='boss'||Math.hypot(p.x-e.x,p.y-e.y)>270||segmentBlocked(e,p,obstacles,3))moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,obstacles,e.type==='boss'?32:18);return 0;}
+  if(e.cd>0){const speed=(warden?WARDEN_ATTACKS.speed:e.type==='boss'?40:25)*(e.slow>0?e.slowFactor:1),a=steering(e,p,obstacles,e.type==='boss'?32:18);if(e.type==='boss'||Math.hypot(p.x-e.x,p.y-e.y)>270||segmentBlocked(e,p,obstacles,3))moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,obstacles,e.type==='boss'?32:18);return 0;}
+  if(warden&&startWardenMelee(e,p))return 0;
   e.pattern=e.type==='boss'?bossPatterns[(e.patternIndex??0)%bossPatterns.length]:e.type==='archer'?'burst':'stagger';e.patternIndex=(e.patternIndex??0)+1;
-  e.attackPhase='warning';e.attackTime=e.pattern==='slam'?1.1:e.type==='boss'?.65:.7;e.patternAim=Math.atan2(p.y-e.y,p.x-e.x);
+  e.attackPhase='warning';e.attackTime=e.pattern==='slam'?(warden?WARDEN_ATTACKS.slamWarning:1.1):e.type==='boss'?.65:.7;e.warningDuration=e.attackTime;e.patternAim=Math.atan2(p.y-e.y,p.x-e.x);
   if(e.pattern==='slam'){const d=Math.hypot(p.x-e.x,p.y-e.y)||1,n=Math.min(d,220),landing={x:e.x+(p.x-e.x)*n/d,y:e.y+(p.y-e.y)*n/d};landing.x=Math.max(75,Math.min(885,landing.x));landing.y=Math.max(85,Math.min(455,landing.y));safeSpawn(landing,obstacles,32);e.targetX=landing.x;e.targetY=landing.y;}
   return 0;
  }
- if(e.type==='boss'&&e.attackPhase==='recover'){const a=steering(e,p,obstacles,32);moveBody(e,Math.cos(a)*40*dt,Math.sin(a)*40*dt,obstacles,32);}
+ if(e.type==='boss'&&e.attackPhase==='recover'&&!['cleave','charge'].includes(e.pattern)){const a=steering(e,p,obstacles,32),speed=warden?WARDEN_ATTACKS.speed:40;moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,obstacles,32);}
  e.attackTime-=dt;
  if(e.attackPhase==='warning'&&e.attackTime<=0){
   if(e.pattern==='slam'){e.attackPhase='leap';e.attackTime=.5;e.fromX=e.x;e.fromY=e.y;return 0;}
@@ -43,6 +50,17 @@ export function updatePattern(e,p,obstacles,dt,bullets,enraged=false){
 }
 export function drawPattern(ctx,e,time=0,reduced=false){
  if(!e.attackPhase||!e.pattern)return;
+ if(enhancedWarden(e)&&['cleave','charge'].includes(e.pattern)){
+  ctx.save();ctx.translate(e.x,e.y);ctx.rotate(e.patternAim);ctx.lineWidth=2;ctx.strokeStyle='#e9b883';ctx.fillStyle='#b96d3933';
+  if(e.pattern==='cleave'&&['warning','firing'].includes(e.attackPhase)){
+   ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,WARDEN_ATTACKS.slashRadius,-WARDEN_ATTACKS.halfAngle,WARDEN_ATTACKS.halfAngle);ctx.closePath();ctx.fill();ctx.stroke();
+   if(e.attackPhase==='firing'){ctx.strokeStyle='#f0d2a5';ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,0,60,-WARDEN_ATTACKS.halfAngle,WARDEN_ATTACKS.halfAngle);ctx.stroke();}
+  }else if(e.pattern==='charge'&&['warning','dash'].includes(e.attackPhase)){
+   ctx.setLineDash([7,5]);ctx.strokeRect(0,-32,WARDEN_ATTACKS.chargeSpeed*WARDEN_ATTACKS.chargeDuration,64);
+   ctx.beginPath();ctx.moveTo(110,-9);ctx.lineTo(125,0);ctx.lineTo(110,9);ctx.stroke();
+  }
+  ctx.restore();ctx.save();ctx.font='11px Galmuri, monospace';ctx.textAlign='center';ctx.fillStyle='#e4c39c';ctx.fillText(e.attackPhase==='recover'?'빈틈!':e.pattern==='cleave'?'전방 베기':'돌진',e.x,e.y-wardenLabelOffset());ctx.restore();return;
+ }
  ctx.save();ctx.lineWidth=1;ctx.globalAlpha=e.attackTime<.25?.75:.5;
  if(e.pattern==='slam')drawEnemyLanding(ctx,e,time,{air:e.attackPhase==='leap',recover:e.attackPhase==='recover',radius:85,reduced});
  if(e.pattern==='slam'&&['warning','leap'].includes(e.attackPhase)){drawEnemyField(ctx,e.targetX,e.targetY,85,{time,reduced,progress:1-Math.min(1,e.attackTime)});}

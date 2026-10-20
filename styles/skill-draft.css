@@ -12,3 +12,15 @@ body:has(.skill-draft-panel)>header{display:none!important}.skill-draft .draft-h
 @media(orientation:landscape) and (max-height:550px){.skill-draft .draft-header h2{line-height:1.15;margin:1px 0 3px}.skill-draft .draft-header small{font-size:8px}.skill-draft .draft-card .draft-brief{min-height:33px}}
 
 .skill-draft .draft-header{position:static!important;inset:auto!important;z-index:auto!important;width:auto!important;transform:none!important}
+
+/* Approved quieter parchment; rarity lives at the edge rather than in a bright fill. */
+.skill-draft .draft-card{background:linear-gradient(#82796c 0 7px,#a49a87 8px 14px,#b9ae99 17px,#b0a48f 95%,#817463 97%);border-color:#776e61;color:#242322}
+.skill-draft .draft-card:hover{border-color:#c0b399}
+.skill-draft .draft-card .skill-art{filter:saturate(.82)}
+.skill-draft .draft-card.skill-rare{border-color:#638da7;box-shadow:0 3px 0 #30434e,0 8px 12px #0006,inset 0 0 0 1px #a4c3d14d}
+.skill-draft .draft-card.skill-rare .draft-grade{background:#354e60;color:#d8e6ec}
+.skill-draft .draft-card.skill-unique{border-color:#9e83b0;box-shadow:0 3px 0 #4e3e5c,0 8px 12px #0006,inset 0 0 0 1px #c7b28780;animation:unique-edge 3.2s ease-in-out infinite}
+.skill-draft .draft-card.skill-unique .draft-grade{background:#51415b;color:#eee0ef}
+@keyframes unique-edge{50%{border-color:#bd9bc8;box-shadow:0 3px 0 #4e3e5c,0 8px 12px #0006,inset 0 0 0 1px #d5bb8c99,0 0 9px #aa83bf38}}
+.calm-effects .skill-draft .draft-card.skill-unique{animation:none}
+@media(prefers-reduced-motion:reduce){.skill-draft .draft-card.skill-unique{animation:none}}

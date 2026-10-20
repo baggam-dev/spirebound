@@ -32,26 +32,24 @@ export function createBossDialogue(run,{loaded=false}={}){
  function remember(key){if(seen.has(key)||seen.size>=128)return false;seen.add(key);run.bossDialogueSeen=[...seen];dirty=true;return true;}
  // Loading a seen encounter never replays its introduction or old phase lines.
  if(loaded)for(const floor of run.floors)for(const r of floor)if(r.seen&&eligible(run,r))for(const e of r.enemies||[]){
-  const k=kind(e);if(!k||e.hp<=0)continue;remember(id(r,k,'intro'));
+  const k=kind(e);if(!k||e.hp<=0)continue;if(!(r.wardenArrival>0))remember(id(r,k,'intro'));
   for(let n=2;n<=phase(e);n++)remember(id(r,k,'phase'+n));
  }
- function add(r,e,event,{blocking=false,lines=null}={}){
+ function add(r,e,event,{lines=null}={}){
   const k=kind(e);if(!k||!remember(id(r,k,event)))return;
   const words=lines||BOSS_LINES[k][event];if(!words)return;
-  if(blocking)queue=queue.filter(q=>q.blocking);
-  queue.push({room:r,actor:event==='death'?null:e,point:anchor(e),lines:words,blocking,age:0,shown:0});
+  queue.push({room:r,actor:event==='death'?null:e,point:anchor(e),lines:words,age:0});
   if(queue.length>6)queue.splice(0,queue.length-6);
  }
  function observe(){
   const r=roomOf(run);if(r!==currentRoom){queue=[];currentRoom=r;}
   if(!eligible(run,r))return;
-  // The core immediately creates hazards on emergence; its first line needs the
-  // same safe reading state as other introductions. Subsequent phase lines stay optional.
-  for(const e of r.enemies||[]){const k=kind(e);if(k&&e.hp>0)add(r,e,'intro',{blocking:true});}
+  // Awakening has its own short combat gate; ordinary speech never stops input.
+  for(const e of r.enemies||[]){const k=kind(e);if(k&&e.hp>0&&!(r.wardenArrival>0))add(r,e,'intro');}
  }
  return {
   observe,
-  get blocking(){return !!queue[0]?.blocking;},
+  get blocking(){return false;},
   get lines(){return queue[0]?.lines||[];},
   flushDirty(){const changed=dirty;dirty=false;return changed;},
   next(){queue.shift();},
@@ -71,33 +69,28 @@ export function createBossDialogue(run,{loaded=false}={}){
     let lines=BOSS_LINES[k].death;
     if(k==='kald'&&!alive.some(e=>kind(e)==='vera'))lines=null;
     if(k==='vera')lines=alive.some(e=>kind(e)==='kald')?BOSS_LINES.vera.death:BOSS_LINES.vera.last;
-    if(lines)add(r,old,'death',{blocking:alive.length===0,lines});
+    if(lines)add(r,old,'death',{lines});
    }
   },
   tick(dt){
-   const q=queue[0];if(!q||q.blocking)return;q.age+=dt;
-   if(safeToSpeak(run))q.shown+=dt;
-   if(q.age>=6||q.shown>=3.2)queue.shift();
+   const q=queue[0];if(!q)return;q.age+=dt;
+   if(q.age>=3.6)queue.shift();
   },
   draw(ctx,{compact=false}={}){
-   const q=queue[0];if(!q||q.room!==roomOf(run)||!q.blocking&&!safeToSpeak(run))return;
+   const q=queue[0];if(!q||q.room!==roomOf(run))return;
    if(q.actor&&q.actor.hp>0)q.point=anchor(q.actor);
    drawBubble(ctx,q,run.player,compact);
   }
  };
 }
 
-function safeToSpeak(run){
- const r=roomOf(run);
- return !(run.projectiles?.length||r.hazards?.length||r.blasts?.length||r.demon?.attack||r.demon?.attacks?.length||r.demon?.special||r.enemies.some(e=>e.hp>0&&(e.attackPhase||e.darkAttack||e.darkFlash?.time>0||e.prismPhase||e.eliteWarning>0||e.phase==='warning'||e.phase==='beam'||e.phase==='air'||e.phase==='splitJump')));
-}
 function drawBubble(ctx,q,player,compact){
  const size=compact?16:14,pad=10,lineHeight=size+5,head=q.point;
  ctx.save();ctx.font=`${size}px Galmuri, monospace`;ctx.textAlign='center';ctx.textBaseline='middle';
  const w=Math.min(330,Math.ceil(Math.max(...q.lines.map(s=>ctx.measureText(s).width)))+pad*2),h=q.lines.length*lineHeight+pad*2;
  const candidates=[{x:head.x-w/2,y:head.y-h-12},{x:head.x-w-25,y:Math.max(100,head.y-h/2)},{x:head.x+25,y:Math.max(100,head.y-h/2)}];
- const fits=b=>b.x>=14&&b.x+w<=946&&b.y>=96&&b.y+h<=480&&!(b.x+w>736&&b.y<184)&&!(player.x>b.x-22&&player.x<b.x+w+22&&player.y>b.y-15&&player.y<b.y+h+60);
- const b=candidates.find(fits)||{x:clamp(head.x-w/2,16,Math.max(16,730-w)),y:clamp(head.y-h-12,100,460-h)};
+ const fits=b=>b.x>=14&&b.x+w<=946&&b.y>=96&&b.y+h<=480&&!(b.x+w>650&&b.y<260)&&!(player.x>b.x-22&&player.x<b.x+w+22&&player.y>b.y-15&&player.y<b.y+h+60);
+ const b=candidates.find(fits)||{x:clamp(head.x-w/2,16,Math.max(16,645-w)),y:clamp(head.y-h-12,100,460-h)};
  const tip={x:clamp(head.x,16,944),y:clamp(head.y,96,480)},from={x:clamp(tip.x,b.x+8,b.x+w-8),y:tip.y>=b.y+h?b.y+h:tip.y<=b.y?b.y:clamp(tip.y,b.y+6,b.y+h-6)};
  ctx.fillStyle='#101217f5';ctx.strokeStyle='#a4a29a';ctx.lineWidth=1;
  // Short tail, clipped to the safe band; never connect through the top boss HUD.

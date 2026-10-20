@@ -1,0 +1,39 @@
+✔ development API proxy forwards cookies and overrides claimed client IP (419.7398ms)
+✔ server serves game modules and refuses repository files and unsupported methods (1411.3707ms)
+✔ introductions are automatic and never advance actor or run clocks themselves (11.4959ms)
+✔ warden introduction waits for awakening, including a save loaded mid-arrival (1.147ms)
+✔ a loaded seen encounter suppresses old introductions and phases, but future phases still speak (4.688ms)
+✔ slime splitting never repeats its introduction or final collective death line (1.34ms)
+✔ gate dialogue is sequential and respects both guardian death orders (3.7533ms)
+✔ practice, return encounters and summoned bosses do not create story interruptions (1.358ms)
+✔ a skill kill between simulation ticks still produces its single death line (2.1333ms)
+✔ emerging demon core speaks automatically despite immediate hazards (1.2035ms)
+✔ nonblocking phase lines remain visible during hazards and expire without changing combat state (3.2297ms)
+✔ optional bounded event history round trips; corrupt dialogue IDs cannot poison a save (662.529ms)
+✔ warden lift occurs only during the existing leap phase (17.9464ms)
+✔ prism charge and release follow real warning and beam timing (2.006ms)
+✔ slime pose follows its own hazard, never another enemy warning (0.4085ms)
+✔ king windup changes to follow-through only after the real attack resolves (3.3779ms)
+✔ render pose is read-only and reconstructs identically after save or pause (2.5498ms)
+✔ boss cycles all six patterns with telegraphs and recovery (55.6903ms)
+✔ slam locks location and can be avoided by normal movement without invulnerability (5.9167ms)
+✔ slam damage occurs once and grants a long recovery window (3.5119ms)
+✔ burst aim is fixed, and saved phases resume with identical projectiles (1.7336ms)
+✔ staggered fan alternates angles and dead enemies cannot fire (1.3895ms)
+✔ first warden arrival permits movement but blocks every combat simulation path for one second (771.3497ms)
+✔ reentry and return do not replay awakening (242.2957ms)
+✔ warden cleave locks facing, respects walls and gives recovery (4.5462ms)
+✔ warden charge hits once, stops at walls and cannot immediately repeat (3.2795ms)
+✔ only floor2 warden gets shorter jump warning and faster movement (6.8557ms)
+✔ Warden first-entry arrival is update-timed and does not replay after visit or load (4.9844ms)
+✔ Warden weak and strong hits respect cooldown, static/reduced and every combat pose priority (2.507ms)
+✔ Warden detached death preserves the displayed direction and leaves other boss durations alone (2.806ms)
+✔ Warden removal and reward are immediate despite its one-second visual snapshot (519.6963ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4890.4945

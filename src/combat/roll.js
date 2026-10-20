@@ -1,3 +1,4 @@
+import {wardenArriving} from './warden-arrival.js';
 import {recoverPlayerPosition} from '../world/player-position.js';
 import {moveBody,segmentBlocked} from '../world/terrain.js';
 import {dodgeCooldown,blinkDistance,relicStat,hexFactor} from '../progression/relics.js';
@@ -9,6 +10,7 @@ const airborne=e=>['air','splitJump'].includes(e.phase)||e.attackPhase==='leap';
 function deal(s,e,damage,origin){const hp=Math.max(0,e.hp);e.hp-=damage*enemyDamageFactor(e,origin);if(s.metrics)s.metrics.damageDealt+=hp-Math.max(0,e.hp);}
 export function rollProfile(p){const kind=p.evolutions?.rollMastery;return {kind,distance:blinkDistance(p)*(kind==='mines'?1.2:1),duration:kind==='swift'?.224:.28,invulnerability:Math.min(.35,.25+Math.min(.05,relicStat(p,'blinkInvulnerability'))),cooldown:Math.max(2.5,dodgeCooldown(p)-(kind==='swift'?.5:0))};}
 export function castRoll(s,direction={x:0,y:0}){
+ if(wardenArriving(s))return false;
  const p=s.player;if(s.status!=='playing'||p.actionStun>0||s.dodge>0||s.roll)return false;
  const r=s.floors[s.floor][s.room];recoverPlayerPosition(p,r.obstacles);const d=Math.hypot(direction.x,direction.y)>0?direction:p.lastMove||{x:1,y:0},len=Math.hypot(d.x,d.y)||1,dx=d.x/len,dy=d.y/len;
  const probe={x:p.x,y:p.y};moveBody(probe,dx*8,dy*8,r.obstacles,14,{minX:50,maxX:910,minY:65,maxY:475});if(Math.hypot(probe.x-p.x,probe.y-p.y)<1)return false;

@@ -31,5 +31,5 @@ export function drawWardenDeath(c,f,{reduced=false}={}){
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.globalAlpha*=alpha;c.translate(Math.round(f.x),Math.round(f.y));
  c.scale(f.wardenScale??1,f.wardenScale??1);
  c.translate(0,29);c.scale(1.1,1.1);c.translate(0,-29);c.scale(f.face<0?-1:1,1);c.imageSmoothingEnabled=false;
- drawWardenPose(c,reduced||age>.42?'rest':'death');c.restore();return true;
+ c.filter='saturate(.88)';drawWardenPose(c,reduced||age>.42?'rest':'death');c.restore();return true;
 }

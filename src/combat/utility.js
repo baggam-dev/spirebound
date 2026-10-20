@@ -1,3 +1,4 @@
+import {wardenArriving} from './warden-arrival.js';
 import {utilityAvailable} from '../progression/skill-overhaul.js';
 import {utilityCooldown} from '../progression/relics.js';
 export const utilitySkills=[
@@ -6,7 +7,7 @@ export const utilitySkills=[
  {id:'guardian',name:'성역의 구체',description:'10초 동안 구체 쉴드가 피격 1회 방어 · 재사용 25초'}
 ];
 export function chooseUtility(s,id){if(s.status!=='playing'||s.player.actionStun>0||!utilityAvailable(s)||s.player.utility||!utilitySkills.some(k=>k.id===id))return false;s.player.utility=id;s.utilityCooldown=0;return true;}
-export function canCastUtility(s){return s.status==='playing'&&!(s.player.actionStun>0)&&!!s.player.utility&&!(s.utilityCooldown>0)&&(s.player.utility!=='focus'||s.player.hp>1);}
+export function canCastUtility(s){return !wardenArriving(s)&&s.status==='playing'&&!(s.player.actionStun>0)&&!!s.player.utility&&!(s.utilityCooldown>0)&&(s.player.utility!=='focus'||s.player.hp>1);}
 export function castUtility(s){
  const id=s.player.utility;if(!canCastUtility(s))return false;
  if(id==='firstAid'){

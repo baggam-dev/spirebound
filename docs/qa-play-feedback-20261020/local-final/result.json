@@ -1,0 +1,73 @@
+{
+  "base": "http://127.0.0.1:5173",
+  "results": [
+    {
+      "width": 1280,
+      "height": 589,
+      "map": {
+        "x": 648.109375,
+        "y": 146,
+        "width": 266,
+        "height": 256.375
+      },
+      "floors": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "map": {
+        "x": 601.28125,
+        "y": 46,
+        "width": 162.390625,
+        "height": 156.515625
+      },
+      "floors": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "width": 740,
+      "height": 360,
+      "map": {
+        "x": 561.8125,
+        "y": 86,
+        "width": 123.1875,
+        "height": 118.734375
+      },
+      "floors": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}
