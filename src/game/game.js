@@ -161,7 +161,7 @@ async function loadCurrentFloor(){
  $('overlay').firstElementChild.classList.add('floor-loading-panel');button('loadingBack',()=>{save();title();});
  let timeout;
  try{
-  await Promise.race([prepareFloorAssets(task.floor),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error('Asset timeout')),20000);})]);
+  await Promise.race([prepareFloorAssets(task.floor),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error('Asset timeout')),90000);})]);
   if(s!==task.run||s.floor!==task.floor||mode!=='floor-loading')return;
   // Warm room-specific terrain caches while the opaque loading screen is still present.
   mode='floor-warmup';draw();mode='floor-loading';

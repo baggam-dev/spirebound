@@ -1,0 +1,23 @@
+✔ introductions are automatic and never advance actor or run clocks themselves (2.6071ms)
+✔ warden introduction waits for awakening, including a save loaded mid-arrival (0.3107ms)
+✔ a loaded seen encounter suppresses old introductions and phases, but future phases still speak (0.7039ms)
+✔ slime splitting never repeats its introduction or final collective death line (0.3989ms)
+✔ gate dialogue is sequential and respects both guardian death orders (0.5246ms)
+✔ practice, return encounters and summoned bosses do not create story interruptions (0.3052ms)
+✔ a skill kill between simulation ticks still produces its single death line (0.2259ms)
+✔ emerging demon core speaks automatically despite immediate hazards (0.2685ms)
+✔ nonblocking phase lines remain visible during hazards and expire without changing combat state (0.8202ms)
+✔ optional bounded event history round trips; corrupt dialogue IDs cannot poison a save (96.8081ms)
+✔ first warden arrival permits movement but blocks every combat simulation path for one second (113.569ms)
+✔ reentry and return do not replay awakening (40.092ms)
+✔ warden cleave locks facing, respects walls and gives recovery (0.597ms)
+✔ warden charge hits once, stops at walls and cannot immediately repeat (0.5441ms)
+✔ only floor2 warden gets shorter jump warning and faster movement (0.2763ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 842.7156

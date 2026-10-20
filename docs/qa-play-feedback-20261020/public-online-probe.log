@@ -1,0 +1,11 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 60000ms exceeded.
+    at C:\baggam-dev\spirebound\tools\qa\public-start-feedback-qa.mjs:7:10 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

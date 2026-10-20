@@ -7,7 +7,7 @@ const base=process.env.BASE_URL||'http://127.0.0.1:5173',out=process.argv[2];awa
 const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[],results=[];
 try{
  for(const [width,height,mobile] of [[1280,589,false],[844,390,true],[740,360,true]]){
-  const context=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile}),p=await context.newPage();p.setDefaultTimeout(60000);p.on('pageerror',e=>errors.push(e.message));
+  const context=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile}),p=await context.newPage();p.setDefaultTimeout(120000);p.on('pageerror',e=>errors.push(e.message));
   await p.goto(base,{waitUntil:'domcontentloaded'});await p.locator('#start').waitFor();
   await p.evaluate(async()=>{await Promise.all(['title-background-v1.png','title-logo-v1.png','title-hero-idle-v1.png','title-branch-v1.png'].map(async name=>{const im=new Image();im.src='/assets/images/'+name;await im.decode();}));await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));});await p.waitForTimeout(80);await p.screenshot({path:join(out,`title-${width}.png`)});
   const floors=await p.evaluate(async()=>{const m=await import('/src/rendering/floor-assets.js');const a=[];for(let floor=0;floor<10;floor++){await m.prepareFloorAssets(floor);a.push(m.floorAssetsLoaded(floor));}return a;});assert.deepEqual(floors,Array(10).fill(true));

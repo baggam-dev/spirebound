@@ -1,3 +1,11 @@
+[공개 검증 실패 원인 확인/보완 · 최초 이미지 준비 제한 — 2026-10-20 KST]
+- release144409/runtime9f2395b/0.43 배포 및HTTPS182목록/모든PNG바이트·TLS308/보안쿠키/기록이관·별도API시작2건 통과. 실제UI/이어하기QA는loading오류화면으로대기실패. asset-diagnostic.json에서새브라우저환경0자산정상준비43431ms/실패요청0 확인:준비자산실패아닌20초timeout이원인. 예전149MB전체자산요청구조가첫접속부하로남아있으며이번에그로드전체를바꾸었다고주장하지않음.
+- game.js 로딩timeout90초로보완/검증도구120초대기. 실제준비완료조건/오류복구/전투시간정지유지,가짜1초대기없음. 다음집중회귀→보완커밋푸시/공식재배포→동일공개UI/시각/로딩·HTTPS재확인. 초기공개실패·원인진단증거보존. 배포승인유효·재확인불필요/BGM보류.
+[배포 완료 · 공개 확인 중 — 2026-10-20 KST]
+- 운영 release-20261020-144409-dbc0de/runtime9f2395b/0.43.0-prebeta 활성. 공식308파일/서버27/27·nginx/health/index/TLS성공. 이전112002릴리스와DB/저장·시즌/지도35원본보존. docs/qa-play-feedback-20261020/deploy.log.
+- 공개온라인실제UI2(session31893)/public-https(session36826)/3해상도피드백·10층ready(session65515) 실행중,아직공개검증완료아님. 다음결과→공개로딩지연실패복구→최종PNG직접확인→최종4문서/RELEASE_SUMMARY커밋푸시clean. 로컬서버/테스트/공식배포명령종료. BGM보류·실iPhone/저사양장시간미검증.
+[공식 배포 진행 · 0.43/main9f2395b — 2026-10-20 KST]
+- main푸시 b8f7dc1→9f2395b 완료·gitclean확인,누적contain 포함. 공식deploy.ps1 실행중(session21552)/docs/qa-play-feedback-20261020/deploy.log. 활성전환확정은아직이전112002/runtime74a66e5,완료라고쓰지않음. 로컬서버82849종료·기타로컬QA/테스트완료. 마지막성공전체577/집중31/Edge3해상도10층ready·로딩지연실패복구. 다음배포결과→공개온라인UI2/플레이피드백QA·로딩QA/HTTPS파일PNG/TLS랭킹쿠키이관. client/API0.43/원본보존정책·BGM보류/승인유효.
 [로컬 검증 완료 · 0.43 배포 준비 — 2026-10-20 KST]
 - 통합PNG 승인안/8개피드백+기존title contain 구현완료. 상세 docs/design-drafts/play-feedback-20261020/implementation-package-v1.md. client/API0.43동기화·DB/기존저장/시즌/지도35/점수식유지,최신표는0.43시작기준/과거원본보존.
 - 허용환경전체577/577(179초),중도저장대사추가회귀+신규PNG서버포함집중31/31. Edge PC1280×589/가로844×390·740×360에서10층모든자산ready/도어실제입장·웅크림기상자동대사/지도/3희귀도 통과·오류0. titlePNGready후전체발구도직접확인,PC지도비율보완. loading-final:PC/모바일실제요청gate로초기대기/기록시간동결/절차맵미노출/상행·실패재로드/입구복구통과·오류0. 실iPhone/저사양장시간미검증. 초기권한/fixture/QA지연실패원본유지,최종전체578실행주장금지.
