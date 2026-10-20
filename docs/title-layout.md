@@ -1,3 +1,5 @@
+[2026-10-20 최신] 통합안 승인·다크톤 보완 구현 완료/미검증·미배포. 현재 구현은 docs/design-drafts/title-20261020/implementation-v1.md 및 runtime-prompts-v1.md 참조. 아래는 승인 전/이전 배포 이력이며 현재 상태보다 우선하지 않는다.
+
 # Title screen reference layout
 
 - Reuse the existing tower artwork as a full-screen desktop background; hide the redundant page header on the title screen.

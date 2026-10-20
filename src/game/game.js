@@ -1,3 +1,4 @@
+import {createTitleScene,titleSceneMarkup} from '../ui/title-scene.js';
 import {utilityCooldown} from '../progression/relics.js';
 import {rollAction} from '../combat/roll.js';
 import {relicIconMarkup} from '../rendering/relic-icons.js';
@@ -120,6 +121,7 @@ document.documentElement.classList.toggle('calm-effects',sound.settings.reducedE
 document.addEventListener('pointerdown',()=>sound.unlock(),{once:true});document.addEventListener('keydown',()=>sound.unlock(),{once:true});
 const updateHUD=createHUD();
 let launching=false;
+let renderTitleScene=null;
 let practiceDraft=null;
 let s=null,paused=true,mode='title',fx=[],bullets=[],last=performance.now(),accumulator=0,saveTick=0,toastTime=0,saveFailed=false,saveError='';
 const room=()=>currentRoom(s),distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
@@ -131,11 +133,11 @@ const input=createInput($('stick'),dispatch);
 const lease=new SessionLease(storage,()=>{paused=true;input.setEnabled(false);panel('<h2>다른 탭에서 진행 중</h2><p>이 탭은 저장 덮어쓰기를 막기 위해 멈췄습니다.</p><button id="goTitle">입구로</button>');button('goTitle',title);});
 function toast(message){$('notice').textContent=message;toastTime=4;}
 function save(){if(!s||s.status!=='playing')return false;if(s.practice){$('saveStatus').textContent='보스 테스트 · 일반 저장 유지';return true;}lease.heartbeat();if(!lease.active){saveFailed=true;saveError='다른 탭이 진행 중이어서 이 탭은 저장할 수 없습니다.';toast(saveError);return false;}const result=store.write(s);saveFailed=!result.ok;saveError=result.error||'';$('saveStatus').textContent=result.ok?'진행 저장됨':'저장 실패';if(!result.ok)toast(result.error);return result.ok;}
-function panel(html){$('overlay').innerHTML=`<div class="panel" role="dialog" aria-modal="true" tabindex="-1">${html}</div>`;$('overlay').firstElementChild.focus();}
+function panel(html){renderTitleScene=null;$('overlay').innerHTML=`<div class="panel" role="dialog" aria-modal="true" tabindex="-1">${html}</div>`;$('overlay').firstElementChild.focus();}
 const modalFocusables='button:not([disabled]):not([hidden]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 $('overlay').addEventListener('keydown',event=>{
  if(event.key==='Escape'){
-  const back=['closeBestiary','settingsBack','closeInfo','rankBack','closeJournal','closeBag','leaveRoute','practiceBack','choosePractice','endPractice'].map($).find(item=>item?.getClientRects().length);
+  const back=['closeBestiary','settingsBack','closeInfo','rankBack','closeJournal','closeBag','leaveRoute','practiceBack','choosePractice','endPractice','titleBack','cancelNewRun'].map($).find(item=>item?.getClientRects().length);
   if(back){event.preventDefault();event.stopPropagation();back.click();return;}
  }
  if(event.key!=='Tab')return;const dialog=$('overlay').firstElementChild;if(!dialog)return;
@@ -150,9 +152,20 @@ function title(){
  stop('title');lease.release();s=null;resetTransient();$('route').hidden=true;$('skill').hidden=true;$('utility').hidden=true;$('interact').hidden=true;
  $('floor').textContent='잊힌 탑의 입구';$('phase').textContent='THE FORSAKEN SPIRE';$('health').textContent='♥♥♥♥♥';$('level').textContent='LV 1';$('timer').textContent='00:00';$('objective').textContent='탑에 들어가 탈출 열쇠를 찾으세요.';
  const loaded=store.read(),exists=!!loaded.run;
- panel(`<img class="title-art" src="assets/images/title-art.png" alt="SPIREBOUND · 거대한 탑 입구 앞의 모험가"><h2 class="title-accessible">SPIREBOUND</h2><div class="title-content"><p class="title-lore">탑에 들어간 이들은 돌아오지 않았다.<br>탑의 꼭대기에는 탈출의 열쇠가 숨겨져 있다.<br>왕을 쓰러뜨려도 여정은 끝나지 않는다.<br><strong>살아서 내려와라.</strong></p><div class="title-actions"><p class="title-hint">이동하며 자동 공격 · 진행 상황은 이 브라우저에 저장됩니다.</p>${exists?`<p>저장된 도전: ${loaded.run.floor+1}/${loaded.run.floors.length}층 · ${timeString(loaded.run.elapsed)}${loaded.recovered?' · 백업 복구 가능':''}</p><button class="primary" id="continue">이어하기</button>`:''}${loaded.error?`<p role="alert">${escapeHtml(loaded.error)} 원본을 보관하려면 아래에서 백업을 받으세요.</p><button id="dataRecovery">기록 백업·가져오기</button>`:''}<button ${exists?'':'class="primary"'} id="start">${exists?'새 도전 · 현재 저장 교체':'새 도전 →'}</button></div><div class="title-secondary"><button id="rank">RANK</button><button id="guide">조작 안내</button><button id="records">도전 기록</button><button id="titleBestiary">몬스터 도감</button><button id="bossPractice">보스 테스트</button><button id="titleSettings">소리·화면 설정</button></div></div>`);
- button('start',()=>start());
- button('rank',()=>rankUI.board(title));button('bossPractice',practiceMenu);button('continue',continueRun);button('guide',()=>showInfo('help'));button('records',()=>showInfo('history'));button('dataRecovery',()=>location.assign('upgrade.html'));button('titleSettings',settingsPanel);button('titleBestiary',bestiaryPanel);
+ panel(`${titleSceneMarkup()}<div class="title-menu"><div class="title-logo"><img src="assets/images/title-logo-v1.png" alt="SPIREBOUND" width="2160" height="728"></div><p class="title-motto">살아서 내려와라.</p><nav class="title-main" aria-label="주 메뉴">${exists?`<button class="title-selected" id="continue">계속 탐험 <span>${loaded.run.floor+1}층 · ${timeString(loaded.run.elapsed)}${loaded.recovered?' · 백업 복구 가능':''}</span></button>`:''}<button class="${exists?'':'title-selected'}" id="start">새로운 원정</button><button id="titleRecords">기록실</button><button id="titleSettings">설정</button></nav>${loaded.error?`<div class="title-recovery"><p role="alert">${escapeHtml(loaded.error)}</p><button id="dataRecovery">기록 백업·가져오기</button></div>`:''}<div class="title-links"><button id="rank">명예의 전당</button><button id="bossPractice">전투 훈련</button></div><p class="title-footnote">이동하며 자동 공격 · 진행 상황은 이 브라우저에 저장됩니다.</p></div>`);
+ $('overlay').firstElementChild.classList.add('title-screen');
+ renderTitleScene=createTitleScene($('overlay'));
+ button('start',()=>{
+  if(!exists){start();return;}
+  panel('<h2>새로운 원정</h2><p>새 원정을 시작하면 현재 진행 저장이 교체됩니다.<br>완료한 도전 기록은 유지됩니다.</p><button id="cancelNewRun">돌아가기</button><button id="confirmNewRun">현재 저장을 교체하고 시작</button>');
+  button('cancelNewRun',title);button('confirmNewRun',()=>start());
+ });
+ button('rank',()=>rankUI.board(title));button('bossPractice',practiceMenu);button('continue',continueRun);button('titleRecords',titleRecords);button('dataRecovery',()=>location.assign('upgrade.html'));button('titleSettings',settingsPanel);
+}
+function titleRecords(){
+ stop('title-records');
+ panel('<small>ARCHIVES</small><h2>기록실</h2><p>지나온 원정과 탑에서 마주칠 존재들을 살펴보세요.</p><div class="title-hub"><button id="records">도전 기록</button><button id="titleBestiary">몬스터 도감</button><button id="guide">조작 안내</button><button id="dataRecovery">기록 백업·가져오기</button></div><button id="titleBack">입구로</button>');
+ button('records',()=>showInfo('history'));button('titleBestiary',bestiaryPanel);button('guide',()=>showInfo('help'));button('dataRecovery',()=>location.assign('upgrade.html'));button('titleBack',title);
 }
 function start(seed,campaign='expanded'){if(launching)return;beginRun(newRun(Number.isInteger(seed)&&seed>=0&&seed<=4294967295?seed:undefined,{campaign}),true);}
 async function beginRun(candidate,online){
@@ -188,7 +201,7 @@ function settingsPanel(){
  $('calmEffects').addEventListener('change',()=>{const next=sound.update({reducedEffects:$('calmEffects').checked});document.documentElement.classList.toggle('calm-effects',next.reducedEffects);});
  button('settingsBack',()=>from==='title'?title():from==='result'?resultPanel():pause());
 }
-function showInfo(kind){if(mode==='rank-start')return;const during=!!s&&s.status==='playing';if(mode==='level')return;stop('info');if(during)save();panel(kind==='history'?historyMarkup(storage):helpMarkup());button('closeInfo',()=>during?pause():title());if(kind==='history')button('dataBackup',()=>location.assign('upgrade.html'));}
+function showInfo(kind){if(mode==='rank-start')return;const from=mode,during=!!s&&s.status==='playing';if(mode==='level')return;stop('info');if(during)save();panel(kind==='history'?historyMarkup(storage):helpMarkup());button('closeInfo',()=>during?pause():from==='title-records'?titleRecords():title());if(kind==='history')button('dataBackup',()=>location.assign('upgrade.html'));}
 function exportReport(){downloadJSON('spirebound-report.json',diagnostic(s,saveFailed?'저장 오류 있음':''));}
 function bag(){if(!s||s.status!=='playing'||mode==='level')return;stop('bag');save();const p=s.player;
  panel(`<small>ROYAL SCOUT / INVENTORY</small><h2>여행자의 가방</h2><div class="guide"><p>무기 · ${p.weapon?'강화 장궁':'정찰병의 활'} / 공격력 ${p.damage}<br>유물 · ${ownedRelics(p).map(id=>relicIconMarkup(id)+' '+relicInfo(id).name+' — '+relicInfo(id).description).join('<br>')||'없음'}<br>방어구 · ${p.armor?'보호막 재충전 '+shieldCooldown(p)+'초':'보호막 없음'}<br>바람의 인장 · ${ownedRelics(p).includes('windSeal')?'20회 처치당 1하트 ('+(p.leechKills||0)+'/20)':'없음'}</p><p>메인 · ${skills.find(k=>k.id===p.mainSkill)?.name||'미선택'}<br>익힌 기술 · ${skills.filter(k=>p[k.id]>0).map(k=>k.name+' '+p[k.id]).join(' / ')||'없음'}<br>선택 분기 · ${evolutionSummary(p)}<br>활성 조합 · ${combinations(p).map(c=>c.name).join(' / ')||'없음'}<br>궁극기 · ${ultimateUnlocked(p)?'해금됨':'8레벨+둘째 보스 처치 후 무료 해금'}</p><p>물약 ${p.potions}개 · 음식 ${p.food}개<br>${s.pendingHeal?'음식 회복이 예약되었습니다. 재개할 때 1하트 회복합니다.':'음식은 안전한 방에서 사용합니다.'}</p></div><button id="eat" ${room().enemies.length||!p.food||s.pendingHeal||p.hp>=p.max?'disabled':''}>음식 먹기 · 1하트</button><button id="journal">원정 기록 · 도감</button><button class="primary" id="closeBag">탐험 재개</button>`);
@@ -304,7 +317,7 @@ window.addEventListener('error',()=>{if(s&&s.status==='playing'){stop('error');s
 function frame(now){const elapsed=(now-last)/1000;last=now;
  if(toastTime>0){toastTime-=Math.min(elapsed,.25);if(toastTime<=0)$('notice').textContent='';}
  if(!paused){if(elapsed>1){pause('화면 응답이 지연되어 자동으로 멈췄습니다.');}else{accumulator+=elapsed;while(accumulator>=1/60&&!paused){update(1/60);accumulator=Math.max(0,accumulator-1/60);}}}
- draw();requestAnimationFrame(frame);
+ draw();renderTitleScene?.(now);requestAnimationFrame(frame);
 }
 title();requestAnimationFrame(frame);
 
@@ -318,7 +331,7 @@ button('route',routePanel);
 function relicPanel(){const r=room();stop('relic');save();panel(relicSelectionMarkup(s,r));$('overlay').firstElementChild.classList.add('relic-panel');let consumed=false;r.relicOffers.forEach((id,i)=>button('relic'+i,()=>{if(consumed)return;if(claimRelic(s,id)){consumed=true;relicBanner.show(s,r,id);sound.play('reward');save();resume();}}));button('skipRelic',()=>{if(consumed)return;if(claimRelic(s,'skip')){consumed=true;save();resume();}});}
 function relicDetails(){if(!s||s.status!=='playing'||paused)return;stop('relic-details');save();panel('<small>RELIC COLLECTION</small><h2>보유 유물 '+ownedRelics(s.player).length+'</h2>'+ownedRelicMarkup(s)+(s.key?'<p>1층 탈출 열쇠 · 1층 입구로 돌아가세요.</p>':'')+'<button id="closeRelics">탐험 재개</button>');button('closeRelics',resume);}
 function bestiaryPanel(){
- const back=mode==='title'?title:mode==='result'?resultPanel:pause;
+ const back=mode==='title-records'?titleRecords:mode==='title'?title:mode==='result'?resultPanel:pause;
  stop('bestiary');panel(bestiaryMarkup());const dialog=$('overlay').firstElementChild;dialog.classList.add('bestiary-panel');mountBestiary(dialog,back);
 }
 function journalPanel(){if(!s||mode==='level')return;stop('journal');if(s.status==='playing')save();panel(journalMarkup(s));renderJournalPortraits($('overlay'));button('closeJournal',()=>s.status==='playing'?pause():resultPanel());}

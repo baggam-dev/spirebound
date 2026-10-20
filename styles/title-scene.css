@@ -1,0 +1,44 @@
+/* Approved title composition: calm left menu, darker tower scene, independent layers. */
+body:has(.title-screen)>header,body:has(.title-screen) .rotate{display:none!important}
+#overlay:has(.title-screen){position:fixed!important;inset:0!important;display:block;width:100%;height:100%;z-index:50;overflow:auto;overscroll-behavior:contain;background:#08090e;backdrop-filter:none}
+#overlay .panel.title-screen{position:relative;isolation:isolate;display:flex;align-items:center;width:100%;max-width:none;min-height:100svh;min-height:100dvh;height:auto;max-height:none;margin:0;padding:24px max(22px,env(safe-area-inset-right)) 24px max(6vw,env(safe-area-inset-left));border:0;box-shadow:none;background:#08090e;overflow:hidden;text-align:left}
+.title-scene{position:absolute;inset:0;z-index:-2;pointer-events:none;overflow:hidden;background:#08090e url('../assets/images/title-background-v1.png') center/cover no-repeat}
+.title-scene-canvas{position:absolute;width:100%;height:100%;inset:0;display:block}
+.title-screen::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,#05060be0 0%,#05060b85 32%,#05060b12 60%,#05060b0a),linear-gradient(0deg,#03040b55,transparent 50%)}
+.title-menu{position:relative;width:min(42vw,620px);min-width:310px;color:#dfddd7;text-shadow:0 2px 3px #000;}
+.title-logo{position:relative;overflow:hidden;width:100%;aspect-ratio:5.8}
+.title-logo img{position:absolute;width:100%;height:auto;left:0;top:-43%;filter:grayscale(1);image-rendering:pixelated}
+#overlay .title-motto{margin:12px 0 24px;text-align:center;font-size:clamp(12px,1.3vw,19px);letter-spacing:.3em;color:#c6c3bd;line-height:1.5!important}
+.title-main{display:grid;gap:4px;padding:20px 0 20px 12%;border-top:1px solid #bfb6a544;border-bottom:1px solid #bfb6a533;}
+#overlay .title-menu button{display:block;position:relative;width:100%;min-height:48px;min-width:0;margin:0;padding:8px 12px 8px 26px;border:1px solid transparent;box-shadow:none;background:transparent;text-align:left;font-size:clamp(16px,1.65vw,25px);font-weight:400;letter-spacing:.1em;color:#c4c2be;text-shadow:0 2px 3px #000;touch-action:manipulation}
+#overlay .title-menu button:hover,#overlay .title-menu button:focus-visible{background:#bab3a412;color:#fff1d0;border-color:#d4c19b55;outline:1px solid #d4c19b88;outline-offset:1px}
+#overlay .title-menu .title-selected{color:#f2dfb5;text-shadow:0 0 12px #dbb86c66,0 2px 2px #000}
+.title-selected::before{content:'♦';position:absolute;left:4px;color:#f0d49d}
+#overlay .title-main button span{display:block;font-size:10px;letter-spacing:0;color:#bbb7ad;line-height:1.6}
+.title-links{padding:12px 0 0 12%;}
+#overlay .title-links button{font-size:clamp(12px,1.05vw,16px);min-height:44px;color:#a7a39f}
+#overlay .title-footnote{margin:18px 0 0;font-size:9px;line-height:1.5!important;letter-spacing:0;color:#85838b;word-break:keep-all}
+.title-recovery{max-height:145px;overflow:auto;background:#0a0a12cf;padding:8px;border:1px solid #b79d7555}
+#overlay .title-recovery p{font-size:11px;margin:0;color:#ddc6ab;line-height:1.6!important}
+#overlay .title-recovery button{font-size:12px;letter-spacing:0}
+.title-hub{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:16px 0}.title-hub button{min-height:48px}
+@media(orientation:landscape) and (max-height:560px){
+ #overlay .panel.title-screen{padding-top:12px;padding-bottom:12px;padding-left:max(5vw,env(safe-area-inset-left))}
+ .title-menu{width:min(43vw,440px);min-width:275px}
+ #overlay .title-motto{margin:5px 0 9px;font-size:11px}
+ .title-main{padding:6px 0 6px 8%;gap:0}
+ #overlay .title-main button{min-height:44px;font-size:15px;padding-top:5px;padding-bottom:5px}
+ #overlay .title-main button span{font-size:9px;display:inline;margin-left:8px}
+ .title-links{display:flex;padding:3px 0 0 8%;gap:6px}
+ #overlay .title-links button{font-size:10px;letter-spacing:0;padding-left:8px;min-height:44px}
+ #overlay .title-footnote{margin:5px 0 0;font-size:8px}
+ .title-recovery{max-height:90px}
+}
+@media(orientation:portrait){
+ #overlay .panel.title-screen{align-items:flex-end;padding:32svh 20px max(24px,env(safe-area-inset-bottom));}
+ .title-menu{width:min(100%,460px);min-width:0;margin:0 auto}
+ .title-screen::after{background:linear-gradient(0deg,#05060bf5 2%,#05060bbd 60%,#05060b22)}
+ #overlay .title-motto{margin:10px 0 18px}.title-main{padding-block:12px}
+ #overlay .title-menu button{font-size:17px;min-height:48px}
+ #overlay .title-links button{font-size:13px}
+}

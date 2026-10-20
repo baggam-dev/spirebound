@@ -1,3 +1,5 @@
+[2026-10-20 최신] 통합안 승인·다크톤 보완 구현 완료/미검증·미배포. 현재 구현은 docs/design-drafts/title-20261020/implementation-v1.md 및 runtime-prompts-v1.md 참조. 아래는 승인 전/이전 배포 이력이며 현재 상태보다 우선하지 않는다.
+
 # 메인 화면 통합 시안 v1 — 2026-10-20
 
 상태: **통합 PNG 생성·직접 검토 완료 / 사용자 디자인 확인 대기**. `main-menu-v1.png`가 실제 시안이며 상단 메인 화면/하단4개 동작 보드로 구성된다. 내장 imagegen1회로 생성한 원본 `C:/Users/SDSPRO/.codex/generated_images/01a13828-0d36-7292-9c64-ff00ee502b14/exec-3b46c88c-9f55-475f-b673-50de94cacf8a.png`를 유지하고 그대로 프로젝트에 복사했다. 추가 재생성/오프라인 이미지 편집 없음.
