@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {newRun} from '../../src/game/engine.js';
+import {encodeSave,SAVE_KEY} from '../../src/persistence/storage.js';
+const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'index.mjs')).href);
+const base=process.env.BASE_URL||'http://127.0.0.1:5173',out=process.argv[2];await mkdir(out,{recursive:true});
+const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[],results=[];let activePage;
+const titleFiles=['title-background-v1.png','title-logo-v1.png','title-hero-idle-v1.png','title-branch-v1.png'];
+function fixture(unlocked){const s=newRun(31,{campaign:'expanded'});s.tutorialComplete=true;s.player.mainSkill='frost';s.player.frost=1;s.player.hp=4;s.player.max=5;s.player.potions=3;for(const rooms of s.floors)for(const r of rooms){r.enemies=[];r.seen=true;r.used=true;}if(unlocked){s.player.level=12;s.player.utility='guardian';s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};}return s;}
+try{
+ for(const [width,height,mobile,fallback,unlocked] of [[1280,589,false,false,true],[844,390,true,false,true],[740,360,true,false,true],[667,320,true,false,true],[844,390,true,true,false]]){
+  const c=await browser.newContext({viewport:{width,height},isMobile:mobile,hasTouch:mobile}),p=await c.newPage();activePage=p;p.setDefaultTimeout(180000);p.on('pageerror',e=>errors.push(e.message));const png=[];p.on('request',r=>{if(/\/assets\/images\/.*\.png$/.test(r.url()))png.push(new URL(r.url()).pathname.split('/').at(-1));});
+  if(fallback)await p.route('**/assets/images/mobile-menu-icons-v1.png',r=>r.abort());
+  await c.addInitScript(({key,value})=>localStorage.setItem(key,value),{key:SAVE_KEY,value:encodeSave(fixture(unlocked))});
+  await p.goto(base,{waitUntil:'domcontentloaded'});await p.locator('#continue').waitFor();await p.evaluate(async files=>{await Promise.all(files.map(async file=>{const i=new Image();i.src='/assets/images/'+file;await i.decode();}));},titleFiles);
+  assert.deepEqual([...new Set(png)].sort(),[...titleFiles].sort(),'only four title PNGs before entry');
+  await p.locator('#continue').click();await p.waitForFunction(()=>!document.querySelector('#overlay').children.length);if(mobile&&!fallback)await p.locator('header.has-mobile-menu-art').waitFor();await p.waitForLoadState('networkidle');
+  const layout=await p.evaluate(()=>{const rect=id=>{const r=document.getElementById(id).getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height};},style=id=>{const s=getComputedStyle(document.getElementById(id));return {background:s.backgroundColor,textAlign:s.textAlign,fontSize:s.fontSize,opacity:s.opacity,borderStyle:s.borderStyle};};return {map:rect('mobileMinimap'),stats:rect('statReadout'),mapParent:document.getElementById('mobileMinimap').parentElement.id,statsStyle:style('statReadout'),mapAlpha:document.getElementById('mobileMinimap').getContext('2d').getImageData(3,3,1,1).data[3],headerArt:document.querySelector('header').classList.contains('has-mobile-menu-art'),buttons:Object.fromEntries(['pause','mobileMenu','potion','utility','skill','dodge'].map(id=>[id,{...rect(id),...style(id),hidden:document.getElementById(id).hidden}]))};});
+  await writeFile(join(out,'layout-'+width+'.json'),JSON.stringify(layout,null,2));await p.screenshot({path:join(out,'ready-'+width+(fallback?'-fallback':'')+'.png')});
+  if(mobile){const expected=Math.min(width*.24,...(width<=800?[(height-140)*.56]:[200,(height-100)*.56]))*2/3;assert.ok(Math.abs(layout.map.width-expected)<1);assert.equal(layout.mapParent,'mobileRightRail');assert.ok(Math.abs(layout.map.right-layout.stats.right)<1);assert.ok(layout.stats.y>=layout.map.bottom+3);assert.ok(layout.stats.bottom<layout.buttons.potion.y,'stats must clear action buttons');assert.equal(layout.statsStyle.textAlign,'right');assert.equal(layout.mapAlpha,31);assert.equal(layout.headerArt,!fallback);for(const id of ['pause','mobileMenu']){assert.ok(layout.buttons[id].width>=44);assert.ok(layout.buttons[id].height>=44);}for(const id of ['potion','dodge',...(unlocked?['skill','utility']:[])]){assert.equal(layout.buttons[id].width,72);assert.equal(layout.buttons[id].height,72);assert.match(layout.buttons[id].background,/0\.3[0-9]*\)/);}assert.equal(layout.buttons.skill.hidden,!unlocked);assert.equal(layout.buttons.utility.hidden,!unlocked);
+   await p.locator('#potion').tap();await p.waitForFunction(()=>document.querySelector('#potion .action-value')?.textContent.includes('초'));await p.waitForTimeout(3200);assert.equal(await p.locator('#potion .action-value').textContent(),'2');assert.equal(await p.locator('#potion').isDisabled(),true);assert.equal(await p.locator('#potion').evaluate(e=>getComputedStyle(e).opacity),'1');
+   if(unlocked){for(const id of ['utility','skill','dodge']){await p.locator('#'+id).tap();await p.waitForFunction(id=>document.querySelector('#'+id+' .action-value')?.textContent.includes('초'),id);}await p.screenshot({path:join(out,`cooldowns-${width}.png`)});}
+  }else{assert.equal(layout.mapParent,'runHUD');assert.equal(layout.mapAlpha,128);assert.equal(layout.headerArt,false);}
+  if(mobile&&await p.locator('#interact').isVisible()){
+   const overlaps=await p.evaluate(()=>{const a=document.getElementById('interact').getBoundingClientRect();return ['statReadout','potion','utility','skill','dodge'].some(id=>{const b=document.getElementById(id).getBoundingClientRect();return a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;});});assert.equal(overlaps,false,'interaction must not obscure stats or actions');
+  }
+  // Real menu/pause click paths, then ensure the same HUD returns.
+  await p.locator('#pause').click();await p.locator('#resume').waitFor();const clock=await p.locator('#timer').textContent();await p.waitForTimeout(1100);assert.equal(await p.locator('#timer').textContent(),clock);await p.locator('#resume').click();await p.waitForFunction(()=>!document.querySelector('#overlay').children.length);
+  if(mobile){await p.locator('#mobileMenu').tap();await p.locator('#mobileMenuBag').waitFor();await p.locator('#resume').click();await p.waitForFunction(()=>!document.querySelector('#overlay').children.length);}
+  await p.screenshot({path:join(out,`hud-${width}${fallback?'-fallback':''}.png`)});results.push({width,height,mobile,fallback,unlocked,layout,actionAndMenuChecks:true,titlePNGCount:4});await c.close();
+ }
+ assert.deepEqual(errors,[]);await writeFile(join(out,'result.json'),JSON.stringify({base,results,errors,scoreSubmissions:0},null,2));console.log(JSON.stringify({scenes:results.length,errors,scoreSubmissions:0}));
+}catch(e){if(activePage&&!activePage.isClosed()){await activePage.screenshot({path:join(out,'failure.png')});await writeFile(join(out,'failure.json'),JSON.stringify({error:e.message,url:activePage.url(),overlay:await activePage.evaluate(()=>document.querySelector('#overlay')?.innerText||''),errors},null,2));}throw e;}finally{await browser.close();}

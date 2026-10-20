@@ -1,0 +1,30 @@
+✔ development API proxy forwards cookies and overrides claimed client IP (132.064ms)
+✔ server serves game modules and refuses repository files and unsupported methods (168.4307ms)
+✔ imported images do not request a source until their pack is activated (3.455ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.6407ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (48.2478ms)
+✔ selected portraits do not require every monster or any dungeon hall (0.8493ms)
+✔ fresh return saves prepare descent-only enemies without making first ascent download them (0.4501ms)
+✔ rare upper-floor expeditions and chest bosses are loaded from the actual roster (0.5536ms)
+✔ floor discovery covers later rooms while a combat check can inspect only its current room (1.1072ms)
+✔ file progress extends a slow load beyond an old fixed deadline and clears its watcher (2.334ms)
+✔ a stalled transfer fails and releases the watcher (1.0589ms)
+✔ continuous progress is still bounded and source errors surface immediately (0.6421ms)
+✔ floating touch origin, second fingers, cancellation and rotation never leave movement stuck (4.3652ms)
+✔ layouts preserve central routes, facilities, perimeter and some empty rooms (19.0933ms)
+✔ movement and dodge cannot tunnel through cover, sliding remains possible (1.787ms)
+✔ enemies can route around cover to player (5.9092ms)
+✔ spawns are clear and terrain survives frenzy and serialization (1931.6672ms)
+✔ doors describe visited-room edges without revealing neighboring rooms (0.5111ms)
+✔ new runs actually contain persisted obstacle arrays (323.4107ms)
+✔ minimap neighbor lookup shares tutorial entrance restrictions even from another room (17.1099ms)
+✔ secondary touch activates immediately once; keyboard and mouse clicks still work (1.8582ms)
+✔ monster potion rewards convert only at five potions and only on a successful roll (78.5111ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3038.648

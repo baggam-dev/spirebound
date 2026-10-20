@@ -1,3 +1,7 @@
+## 최신 인계 — 모바일 HUD v2 로컬 검증 완료/배포 준비
+```text
+사용자배포및다음건설명으로배포승인유효. C:\baggam-dev\spirebound/main,기존HUDf0dd963에serverPNG허용목록·짧은320정보패널겹침·상호작용액션왼쪽하단배치보완. 집중22/22+local-release PC/844/740/667/PNG실패잠금5장면실제Edge통과/오류0점수0,원본/실패로그보존. WORK_STATUS최상단참조. 서버97233종료후보완/증거커밋main푸시→공식배포→공개온라인UI2/동일HUD5/HTTPS186PNG/TLS확인→최종기록main푸시clean. 현재운영175020/runtimeee2d31a/0.43유지/아직신규보완미배포. BGM보류/실iPhone미검증. 다음설명은새원정입장3~4초→격파열쇠하강→실제탈출뒤생환,이번임의추가구현안함.
+```
 ## 최신 인계 — 승인 모바일 HUD v2 구현 완료 / 미검증·미푸시·미배포
 ```text
 C:\baggam-dev\spirebound/main. 사용자ㅇㅋ좋다로v2승인후runtime구현/배포권한없음. 운영175020-8afe12/runtimeee2d31a/0.43유지. 모바일지도2/3·정보5항목아래공통우측끝(138px패널/350px이하2열),지도정보배경12.2%/테두리22%/일반방27.8%/현재방50.2%,모바일제목생략/기호경로색유지. src/ui/mobile-hud.js,mobile-ui.js,src/world/terrain.js,styles/mobile-hud.css변경. 승인pause-menu-icons-v1.png원본을assets/images/mobile-menu-icons-v1.png(750,472B)로복사/CSSatlas44px가로/모바일플레이첫갱신때요청·로드실패기존기호fallback/메뉴child클릭closest기준. 액션4개72px·해금유지/배경30%·테두리55%·아이콘85%·비활성점선감쇠/숫자선명. 배포allowlist/QA2도구새PNG허용·원본비교목록수정만/미실행. 코드diff정적검토만/단위통합브라우저QA·서버·푸시·배포·공개검증없음. 다음새명시배포때WORK_STATUS상단검증목록(PC/844/740/짧은320·safearea/정보겹침/PNGcrop·fallback·메뉴hit/해금·disabled·카운트·쿨다운/초기4PNG/플레이추가0.75MB/HTTPS)수행후푸시배포공개확인. 승인PNG는docs/design-drafts/mobile-hud-20261020/mobile-hud-v2.png/원본v1·버튼·정확프롬프트유지,구현스크린샷아님. 전투저장주인공스킬0.43불변/BGM보류/서버명령차단없음. 구현/문서로컬커밋후git확인,최신상단우선/한국어기본5줄·PNG절대경로·새배포전테스트금지.

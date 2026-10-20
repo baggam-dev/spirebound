@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /0\.30/. Input:
+
+'rgba(21, 35, 34, 0.3)'
+
+    at file:///C:/baggam-dev/spirebound/tools/qa/mobile-hud-v2-qa.mjs:21:815 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'rgba(21, 35, 34, 0.3)',
+  expected: /0\.30/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

@@ -1,0 +1,622 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "width": 1280,
+      "height": 589,
+      "mobile": false,
+      "fallback": false,
+      "unlocked": true,
+      "layout": {
+        "map": {
+          "x": 753.890625,
+          "y": 146,
+          "right": 914.109375,
+          "bottom": 300.421875,
+          "width": 160.21875,
+          "height": 154.421875
+        },
+        "stats": {
+          "x": 815.734375,
+          "y": 268.546875,
+          "right": 913,
+          "bottom": 377.546875,
+          "width": 97.265625,
+          "height": 109
+        },
+        "mapParent": "runHUD",
+        "statsStyle": {
+          "background": "rgba(0, 0, 0, 0)",
+          "textAlign": "right",
+          "fontSize": "12px",
+          "opacity": "1",
+          "borderStyle": "none solid none none"
+        },
+        "mapAlpha": 128,
+        "headerArt": false,
+        "buttons": {
+          "pause": {
+            "x": 1103.9375,
+            "y": 2.5,
+            "right": 1241.609375,
+            "bottom": 52.5,
+            "width": 137.671875,
+            "height": 50,
+            "background": "rgb(32, 43, 40)",
+            "textAlign": "center",
+            "fontSize": "16px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "mobileMenu": {
+            "x": 0,
+            "y": 0,
+            "right": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0,
+            "background": "rgb(32, 43, 40)",
+            "textAlign": "center",
+            "fontSize": "16px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "potion": {
+            "x": 375.890625,
+            "y": 400.859375,
+            "right": 450.890625,
+            "bottom": 440.859375,
+            "width": 75,
+            "height": 40,
+            "background": "rgba(23, 34, 30, 0.86)",
+            "textAlign": "center",
+            "fontSize": "11px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "utility": {
+            "x": 539.140625,
+            "y": 400.859375,
+            "right": 639.8125,
+            "bottom": 440.859375,
+            "width": 100.671875,
+            "height": 40,
+            "background": "rgba(23, 34, 30, 0.86)",
+            "textAlign": "center",
+            "fontSize": "11px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "skill": {
+            "x": 458.890625,
+            "y": 396.859375,
+            "right": 531.140625,
+            "bottom": 440.859375,
+            "width": 72.25,
+            "height": 44,
+            "background": "rgba(23, 34, 30, 0.86)",
+            "textAlign": "center",
+            "fontSize": "11px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "dodge": {
+            "x": 647.8125,
+            "y": 400.859375,
+            "right": 750.3125,
+            "bottom": 440.859375,
+            "width": 102.5,
+            "height": 40,
+            "background": "rgba(23, 34, 30, 0.86)",
+            "textAlign": "center",
+            "fontSize": "11px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          }
+        }
+      },
+      "actionAndMenuChecks": true,
+      "titlePNGCount": 4
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "mobile": true,
+      "fallback": false,
+      "unlocked": true,
+      "layout": {
+        "map": {
+          "x": 729.734375,
+          "y": 50,
+          "right": 838,
+          "bottom": 154.34375,
+          "width": 108.265625,
+          "height": 104.34375
+        },
+        "stats": {
+          "x": 700,
+          "y": 158.34375,
+          "right": 838,
+          "bottom": 217.796875,
+          "width": 138,
+          "height": 59.453125
+        },
+        "mapParent": "mobileRightRail",
+        "statsStyle": {
+          "background": "rgba(8, 18, 15, 0.12)",
+          "textAlign": "right",
+          "fontSize": "9px",
+          "opacity": "1",
+          "borderStyle": "solid"
+        },
+        "mapAlpha": 31,
+        "headerArt": true,
+        "buttons": {
+          "pause": {
+            "x": 744,
+            "y": 4,
+            "right": 788,
+            "bottom": 48,
+            "width": 44,
+            "height": 44,
+            "background": "rgb(32, 43, 40)",
+            "textAlign": "center",
+            "fontSize": "0px",
+            "opacity": "1",
+            "borderStyle": "none",
+            "hidden": false
+          },
+          "mobileMenu": {
+            "x": 794,
+            "y": 4,
+            "right": 838,
+            "bottom": 48,
+            "width": 44,
+            "height": 44,
+            "background": "rgb(32, 43, 40)",
+            "textAlign": "center",
+            "fontSize": "0px",
+            "opacity": "1",
+            "borderStyle": "none",
+            "hidden": false
+          },
+          "potion": {
+            "x": 678,
+            "y": 224,
+            "right": 750,
+            "bottom": 296,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "utility": {
+            "x": 760,
+            "y": 224,
+            "right": 832,
+            "bottom": 296,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "skill": {
+            "x": 678,
+            "y": 306,
+            "right": 750,
+            "bottom": 378,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "dodge": {
+            "x": 760,
+            "y": 306,
+            "right": 832,
+            "bottom": 378,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          }
+        }
+      },
+      "actionAndMenuChecks": true,
+      "titlePNGCount": 4
+    },
+    {
+      "width": 740,
+      "height": 360,
+      "mobile": true,
+      "fallback": false,
+      "unlocked": true,
+      "layout": {
+        "map": {
+          "x": 651.875,
+          "y": 50,
+          "right": 734,
+          "bottom": 129.15625,
+          "width": 82.125,
+          "height": 79.15625
+        },
+        "stats": {
+          "x": 596,
+          "y": 133.15625,
+          "right": 734,
+          "bottom": 192.609375,
+          "width": 138,
+          "height": 59.453125
+        },
+        "mapParent": "mobileRightRail",
+        "statsStyle": {
+          "background": "rgba(8, 18, 15, 0.12)",
+          "textAlign": "right",
+          "fontSize": "9px",
+          "opacity": "1",
+          "borderStyle": "solid"
+        },
+        "mapAlpha": 31,
+        "headerArt": true,
+        "buttons": {
+          "pause": {
+            "x": 640,
+            "y": 4,
+            "right": 684,
+            "bottom": 48,
+            "width": 44,
+            "height": 44,
+            "background": "rgb(32, 43, 40)",
+            "textAlign": "center",
+            "fontSize": "0px",
+            "opacity": "1",
+            "borderStyle": "none",
+            "hidden": false
+          },
+          "mobileMenu": {
+            "x": 690,
+            "y": 4,
+            "right": 734,
+            "bottom": 48,
+            "width": 44,
+            "height": 44,
+            "background": "rgb(32, 43, 40)",
+            "textAlign": "center",
+            "fontSize": "0px",
+            "opacity": "1",
+            "borderStyle": "none",
+            "hidden": false
+          },
+          "potion": {
+            "x": 574,
+            "y": 194,
+            "right": 646,
+            "bottom": 266,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "utility": {
+            "x": 656,
+            "y": 194,
+            "right": 728,
+            "bottom": 266,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "skill": {
+            "x": 574,
+            "y": 276,
+            "right": 646,
+            "bottom": 348,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "dodge": {
+            "x": 656,
+            "y": 276,
+            "right": 728,
+            "bottom": 348,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          }
+        }
+      },
+      "actionAndMenuChecks": true,
+      "titlePNGCount": 4
+    },
+    {
+      "width": 667,
+      "height": 320,
+      "mobile": true,
+      "fallback": false,
+      "unlocked": true,
+      "layout": {
+        "map": {
+          "x": 593.8125,
+          "y": 50,
+          "right": 661,
+          "bottom": 114.75,
+          "width": 67.1875,
+          "height": 64.75
+        },
+        "stats": {
+          "x": 523,
+          "y": 118.75,
+          "right": 661,
+          "bottom": 147.140625,
+          "width": 138,
+          "height": 28.390625
+        },
+        "mapParent": "mobileRightRail",
+        "statsStyle": {
+          "background": "rgba(8, 18, 15, 0.12)",
+          "textAlign": "right",
+          "fontSize": "8px",
+          "opacity": "1",
+          "borderStyle": "solid"
+        },
+        "mapAlpha": 31,
+        "headerArt": true,
+        "buttons": {
+          "pause": {
+            "x": 567,
+            "y": 4,
+            "right": 611,
+            "bottom": 48,
+            "width": 44,
+            "height": 44,
+            "background": "rgb(32, 43, 40)",
+            "textAlign": "center",
+            "fontSize": "0px",
+            "opacity": "1",
+            "borderStyle": "none",
+            "hidden": false
+          },
+          "mobileMenu": {
+            "x": 617,
+            "y": 4,
+            "right": 661,
+            "bottom": 48,
+            "width": 44,
+            "height": 44,
+            "background": "rgb(32, 43, 40)",
+            "textAlign": "center",
+            "fontSize": "0px",
+            "opacity": "1",
+            "borderStyle": "none",
+            "hidden": false
+          },
+          "potion": {
+            "x": 501,
+            "y": 154,
+            "right": 573,
+            "bottom": 226,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "utility": {
+            "x": 583,
+            "y": 154,
+            "right": 655,
+            "bottom": 226,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "skill": {
+            "x": 501,
+            "y": 236,
+            "right": 573,
+            "bottom": 308,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "dodge": {
+            "x": 583,
+            "y": 236,
+            "right": 655,
+            "bottom": 308,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          }
+        }
+      },
+      "actionAndMenuChecks": true,
+      "titlePNGCount": 4
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "mobile": true,
+      "fallback": true,
+      "unlocked": false,
+      "layout": {
+        "map": {
+          "x": 729.734375,
+          "y": 50,
+          "right": 838,
+          "bottom": 154.34375,
+          "width": 108.265625,
+          "height": 104.34375
+        },
+        "stats": {
+          "x": 700,
+          "y": 158.34375,
+          "right": 838,
+          "bottom": 217.796875,
+          "width": 138,
+          "height": 59.453125
+        },
+        "mapParent": "mobileRightRail",
+        "statsStyle": {
+          "background": "rgba(8, 18, 15, 0.12)",
+          "textAlign": "right",
+          "fontSize": "9px",
+          "opacity": "1",
+          "borderStyle": "solid"
+        },
+        "mapAlpha": 31,
+        "headerArt": false,
+        "buttons": {
+          "pause": {
+            "x": 744,
+            "y": 4,
+            "right": 788,
+            "bottom": 48,
+            "width": 44,
+            "height": 44,
+            "background": "rgb(32, 43, 40)",
+            "textAlign": "center",
+            "fontSize": "0px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "mobileMenu": {
+            "x": 794,
+            "y": 4,
+            "right": 838,
+            "bottom": 48,
+            "width": 44,
+            "height": 44,
+            "background": "rgb(32, 43, 40)",
+            "textAlign": "center",
+            "fontSize": "21px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "potion": {
+            "x": 678,
+            "y": 224,
+            "right": 750,
+            "bottom": 296,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          },
+          "utility": {
+            "x": 0,
+            "y": 0,
+            "right": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "dashed",
+            "hidden": true
+          },
+          "skill": {
+            "x": 0,
+            "y": 0,
+            "right": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": true
+          },
+          "dodge": {
+            "x": 760,
+            "y": 306,
+            "right": 832,
+            "bottom": 378,
+            "width": 72,
+            "height": 72,
+            "background": "rgba(21, 35, 34, 0.3)",
+            "textAlign": "center",
+            "fontSize": "10px",
+            "opacity": "1",
+            "borderStyle": "solid",
+            "hidden": false
+          }
+        }
+      },
+      "actionAndMenuChecks": true,
+      "titlePNGCount": 4
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

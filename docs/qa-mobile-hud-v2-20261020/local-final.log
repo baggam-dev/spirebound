@@ -1,0 +1,11 @@
+file:///C:/baggam-dev/spirebound/tools/qa/mobile-hud-v2-qa.mjs:11
+function fixture(unlocked){const s=newRun(31,{campaign:'expanded'});s.tutorialComplete=true;s.player.mainSkill='frost';s.player.frost=1;s.player.hp=4;s.player.max=5;s.player.potions=3;for(const rooms of s.floors)for(const r of rooms){r.enemies=[];r.seen=true;r.used=true;}if(unlocked){s.player.level=12;s.player.utility='guardian';s.player.ultimate=1;s.player.evolutions.ultimate='burst';}return s;}
+                                                                                                                                                                                                                                                                                                                                                                                           ^
+
+TypeError: Cannot set properties of undefined (setting 'ultimate')
+    at fixture (file:///C:/baggam-dev/spirebound/tools/qa/mobile-hud-v2-qa.mjs:11:380)
+    at file:///C:/baggam-dev/spirebound/tools/qa/mobile-hud-v2-qa.mjs:16:103
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:472:9)
+
+Node.js v24.14.0

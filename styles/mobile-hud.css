@@ -99,10 +99,11 @@
  .actions button:disabled .action-icon,.actions button:disabled .action-label{opacity:.45}
  .actions button:disabled .action-icon{filter:grayscale(.7)}
  .actions button .action-value{opacity:1;color:#fff;background:#0d191be6}
+ #interact{right:calc(176px + env(safe-area-inset-right));bottom:calc(12px + env(safe-area-inset-bottom))}
 }
 @media(pointer:coarse) and (orientation:landscape) and (max-width:800px){
  body{--mobile-map-size:min(16vw,calc((100dvh - 140px)*.373333333))}
 }
 @media(pointer:coarse) and (orientation:landscape) and (max-height:350px){
- #mobileRightRail #statReadout.hud-stats{grid-template-columns:repeat(2,max-content);justify-content:end;gap:2px 6px;font-size:8px}
+ #mobileRightRail #statReadout.hud-stats{grid-template-columns:repeat(2,max-content);justify-content:end;gap:0 6px;padding:0 6px;font-size:8px}
 }

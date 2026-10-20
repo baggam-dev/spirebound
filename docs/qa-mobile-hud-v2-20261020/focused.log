@@ -1,0 +1,28 @@
+✔ imported images do not request a source until their pack is activated (2.297ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.5149ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (147.8786ms)
+✔ selected portraits do not require every monster or any dungeon hall (0.5965ms)
+✔ fresh return saves prepare descent-only enemies without making first ascent download them (0.3027ms)
+✔ rare upper-floor expeditions and chest bosses are loaded from the actual roster (0.2946ms)
+✔ floor discovery covers later rooms while a combat check can inspect only its current room (1.0456ms)
+✔ file progress extends a slow load beyond an old fixed deadline and clears its watcher (1.4518ms)
+✔ a stalled transfer fails and releases the watcher (0.6568ms)
+✔ continuous progress is still bounded and source errors surface immediately (0.3878ms)
+✔ floating touch origin, second fingers, cancellation and rotation never leave movement stuck (4.0724ms)
+✔ layouts preserve central routes, facilities, perimeter and some empty rooms (17.3644ms)
+✔ movement and dodge cannot tunnel through cover, sliding remains possible (1.1265ms)
+✔ enemies can route around cover to player (5.6718ms)
+✔ spawns are clear and terrain survives frenzy and serialization (1815.9924ms)
+✔ doors describe visited-room edges without revealing neighboring rooms (0.5829ms)
+✔ new runs actually contain persisted obstacle arrays (275.8947ms)
+✔ minimap neighbor lookup shares tutorial entrance restrictions even from another room (18.1021ms)
+✔ secondary touch activates immediately once; keyboard and mouse clicks still work (1.1402ms)
+✔ monster potion rewards convert only at five potions and only on a successful roll (51.3435ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2640.6991

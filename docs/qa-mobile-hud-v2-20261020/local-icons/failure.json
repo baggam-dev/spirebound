@@ -1,0 +1,6 @@
+{
+  "error": "The input did not match the regular expression /0\\.30/. Input:\n\n'rgba(21, 35, 34, 0.3)'\n",
+  "url": "http://localhost:5173/",
+  "overlay": "",
+  "errors": []
+}
