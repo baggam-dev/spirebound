@@ -1,3 +1,4 @@
+import {drawEnemyMeleeSprite} from './enemy-melee-art.js';
 import {DeferredImage} from './asset-requests.js';
 import {drawFeedbackSprite} from './feedback-sprites.js';
 import {drawChaserWalk} from './chaser-walk.js';
@@ -39,6 +40,7 @@ export function gruntPose(e,p,run){
  return {index:brute||aiming||charging||melee||ranged&&!(e.type==='laser'&&e.phase==='aim')?1:0,face:Number.isFinite(aim)?(Math.cos(aim)<0?-1:1):p.face||1,bob:p.moving?Math.abs(p.step||0)*.35:0};
 }
 export function drawGruntSprite(c,e,p,run){
+ if(drawEnemyMeleeSprite(c,e,p.face))return true;
  if(e.type==='brute'&&drawFeedbackSprite(c,e,run?.elapsed||0,{local:true,face:p.face,attack:{stage:['windup','air','swing'].includes(e.phase)?'windup':'idle'}}))return true;
  const frames=cached.get(e.type);if(!frames)return false;const pose=gruntPose(e,p,run),f=frames[pose.index];
  c.save();c.scale(pose.face,1);c.imageSmoothingEnabled=false;const slashing=e.type==='chaser'&&drawChaserSlash(c,e),walking=!slashing&&pose.index===0&&(e.type==='chaser'?drawChaserWalk(c,p):e.type==='archer'?drawArcherWalk(c,p):e.type==='charger'?drawChargerWalk(c,p):e.type==='scatter'?drawScatterWalk(c,p):e.type==='ricochet'?drawRicochetWalk(c,p):e.type==='laser'&&e.phase!=='aim'?drawLaserWalk(c,p):e.type==='brute'&&!e.phase?drawBruteWalk(c,p):false);if(!slashing&&!walking)c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y-pose.bob));

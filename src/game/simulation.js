@@ -1,3 +1,4 @@
+import {updateEnemyMelee,weaponContactReplaced} from '../combat/enemy-melee.js';
 import {beginWardenArrival,tickWardenArrival} from '../combat/warden-arrival.js';
 import {startApproachedBoss} from '../world/boss-approach.js';
 import {reactToRelicHit} from '../combat/relic-effects.js';
@@ -62,7 +63,7 @@ export function enterRoom(s){beginWardenArrival(s,currentRoom(s),!currentRoom(s)
  recoverPlayerPosition(s.player,currentRoom(s).obstacles);trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.rollMines=[];r.fairyBeam=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
  s.player.actionStun=0;s.player.electricGrace=0;resetDemonAttack(r);
  // Do not preserve an off-screen attack aimed at the previous visit's position.
- for(const e of r.enemies){resetCommanderAttack(e);if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}if(e.type==='chaser'){e.chaserWindup=0;e.chaserStrike=0;e.chaserCooldown=0;delete e.chaserAim;}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
+ for(const e of r.enemies){if(e.meleeAttack||e.meleeCooldown!==undefined){delete e.meleeAttack;e.meleeCooldown=Math.max(.5,e.meleeCooldown||0);}delete e.chargeHit;resetCommanderAttack(e);if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}if(e.type==='chaser'){e.chaserWindup=0;e.chaserStrike=0;e.chaserCooldown=0;delete e.chaserAim;}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
 }
 export function fireArrow(s,target){
  const p=s.player,side=s.volleySide??1;s.volleySide=-side;emitWeaponVolley(s.projectiles,p,p,target,side);
@@ -114,6 +115,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(e.opening>0){e.opening=Math.max(0,e.opening-dt);continue;}if(!coordinateAttack(e,r))continue;
   e.spawnGrace=Math.max(0,(e.spawnGrace||0)-dt);if(s.entryGrace>0||e.spawnGrace>0)continue;
   if(e.variant==='demon')continue;
+  const melee=updateEnemyMelee(e,p,r.obstacles,dt*frostAttackRate(e));if(melee.handled){hurt(melee.damage,enemyName(e)+' 근접 타격',null,e);continue;}
   if(e.variant==='commander'){updateCommander(e,p,r,dt,s.projectiles,(raw,source)=>hurt(raw,source));continue;}
   if(infernalTypes.includes(e.type)){updateInfernal(e,p,r,dt,s.projectiles,(raw,source)=>hurt(raw,source));continue;}
   if(e.variant==='king'||upperTypes.includes(e.type)){updateUpper(e,p,r,dt,s.projectiles,raw=>hurt(raw,enemyName(e)+' 암흑 공격'));continue;}
@@ -124,14 +126,14 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(returnEnemyTypes.includes(e.type)){hurt(updateReturnEnemy(e,p,r.obstacles,dt,s.projectiles),enemyName(e)+' 돌진');continue;}
   if(e.type==='brute'){const jumping=e.phase==='air';hurt(updateBrute(e,p,r.obstacles,dt,s.key),jumping?'도약 거인 점프 착지':'도약 거인 근접 공격',jumping?'bruteJump':null);continue;}
   e.cd-=dt;const profile=attackProfile(e);let a=steering(e,p,r.obstacles,18),speed=e.type==='chaser'&&!s.key&&!r.tutorial?65:52;
-  if(e.type==='charger'){const charge=chargeProfile(e);if(e.cd<charge.duration+charge.warning&&e.chargeAngle===undefined)e.chargeAngle=Math.atan2(p.y-e.y,p.x-e.x);if(e.cd<charge.duration){a=e.chargeAngle??a;speed=charge.speed;}else speed=e.cd<charge.duration+charge.warning||chargerRecovering(e)?0:35;}
+  if(e.type==='charger'){const charge=chargeProfile(e);if(e.cd<charge.duration+charge.warning&&e.chargeAngle===undefined){e.chargeAngle=Math.atan2(p.y-e.y,p.x-e.x);e.chargeHit=false;}if(e.cd<charge.duration){a=e.chargeAngle??a;speed=charge.speed;}else speed=e.cd<charge.duration+charge.warning||chargerRecovering(e)?0:35;}
   speed*=(e.trialChampion?1.15:1)*(1+(e.tier||0)*.035+(e.escapeDepth||0)*.07)*(e.slow>0?e.slowFactor:1);const beforeMove={x:e.x,y:e.y};moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,r.obstacles,18);if(e.type==='charger'&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration&&segmentBlocked(beforeMove,{x:beforeMove.x+Math.cos(a)*speed*dt,y:beforeMove.y+Math.sin(a)*speed*dt},r.obstacles,18)){openGuard(e,1.1);delete e.chargeAngle;e.cd=Math.max(1.5,chargeProfile(e).duration+chargeProfile(e).warning+chargeProfile(e).recovery);continue;}e.x=Math.max(40,Math.min(920,e.x));e.y=Math.max(60,Math.min(480,e.y));
   if(e.cd<=0){e.cd=Math.max(2.3*ENEMY_COOLDOWN_FACTOR*profile.recovery,e.type==='charger'?chargeProfile(e).duration+chargeProfile(e).warning+chargeProfile(e).recovery:0);delete e.chargeAngle;}
   if(e.type==='chaser')hurt(updateChaserAttack(e,p,r.obstacles,dt),enemyName(e)+' 단검 베기',null,e);
-  else if(!chargerRecovering(e)&&distance(e,p)<23&&!segmentBlocked(e,p,r.obstacles,0))hurt(e.type==='charger'&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration?18:9,enemyName(e)+' 접촉');
+  else if(e.type==='charger'&&!e.chargeHit&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration&&distance(e,p)<32&&!segmentBlocked(e,p,r.obstacles,0)){hurt(18,enemyName(e)+' 돌진 충돌',null,e);e.chargeHit=true;}
  }
  hitOrigin=null;
- for(const e of r.enemies)if(e.type!=='chaser'&&!(['charge','cleave'].includes(e.pattern)&&['dash','recover','warning'].includes(e.attackPhase))&&!chargerRecovering(e)&&e.hp>0&&!enemyAirborne(e)&&!(e.spawnGrace>0)&&!(e.counterReason&&e.opening>0)&&!r.enemies.some(n=>n.kingTransition>0)&&!e.darkAttack?.moving&&distance(e,p)<enemyRadius(e)+14&&!segmentBlocked(e,p,r.obstacles,0))hurt(9,enemyName(e)+' 접촉',null,e);
+ for(const e of r.enemies)if(!weaponContactReplaced(e)&&!(['charge','cleave'].includes(e.pattern)&&['dash','recover','warning'].includes(e.attackPhase))&&!chargerRecovering(e)&&e.hp>0&&!enemyAirborne(e)&&!(e.spawnGrace>0)&&!(e.counterReason&&e.opening>0)&&!r.enemies.some(n=>n.kingTransition>0)&&!e.darkAttack?.moving&&distance(e,p)<enemyRadius(e)+14&&!segmentBlocked(e,p,r.obstacles,0))hurt(9,enemyName(e)+' 접촉',null,e);
  // A lethal hit ends the simulation before drops or life-steal can heal the player.
  if(p.hp<=0){events.push('dead');return {events,effects};}
  for(const b of s.projectiles){

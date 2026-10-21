@@ -2,7 +2,7 @@ import {attackProfile} from './balance.js';
 import {segmentBlocked} from '../world/terrain.js';
 import {CHASER_SLASH,chaserSlashIntersects} from './chaser-slash-area.js';
 export const CHASER_REACH=CHASER_SLASH.radius;
-export const CHASER_WINDUP=.08;
+export const CHASER_WINDUP=.1;
 // Short blade reach replaces contact damage; resolve against the current target.
 export function updateChaserAttack(e,p,obstacles,dt){
  e.chaserStrike=Math.max(0,(e.chaserStrike||0)-dt);

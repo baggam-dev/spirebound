@@ -1,3 +1,4 @@
+import {meleeIntersects} from './enemy-melee.js';
 import {drawEnemyField,drawEnemyLanding} from '../rendering/enemy-attack-vfx.js';
 import {drawGruntSprite} from '../rendering/grunt-sprite.js';
 import {ENEMY_COOLDOWN_FACTOR,MELEE_REACH,attackProfile} from './balance.js';
@@ -11,11 +12,11 @@ export function updateBrute(e,p,obstacles,dt,enraged=false){
   if(e.phaseTime>0)return 0;
   if(e.phase==='windup'){e.phase='air';e.phaseTime=.55;e.launchX=e.x;e.launchY=e.y;return 0;}
   if(e.phase==='air'){e.x=e.landX;e.y=e.landY;e.phase='recover';e.phaseTime=1.1;e.jumpCooldown=6*ENEMY_COOLDOWN_FACTOR*attackProfile(e).recovery;return Math.hypot(p.x-e.x,p.y-e.y)<62&&!segmentBlocked(e,p,obstacles,0)?20:0;}
-  if(e.phase==='swing'){e.phase='recover';e.phaseTime=.8*ENEMY_COOLDOWN_FACTOR*attackProfile(e).recovery;return Math.hypot(p.x-e.x,p.y-e.y)<MELEE_REACH&&!segmentBlocked(e,p,obstacles,0)?16:0;}
+  if(e.phase==='swing'){e.phase='recover';e.phaseTime=.8*ENEMY_COOLDOWN_FACTOR*attackProfile(e).recovery;return meleeIntersects(e,p,e.meleeAim??Math.atan2(p.y-e.y,p.x-e.x),MELEE_REACH,1.05)&&!segmentBlocked(e,p,obstacles,0)?16:0;}
   e.phase=null;return 0;
  }
  const distance=Math.hypot(p.x-e.x,p.y-e.y);
- if(distance<57&&!segmentBlocked(e,p,obstacles,0)){e.phase='swing';e.phaseTime=.6;return 0;}
+ if(distance<57&&!segmentBlocked(e,p,obstacles,0)){e.phase='swing';e.phaseTime=.3;e.meleeAim=Math.atan2(p.y-e.y,p.x-e.x);return 0;}
  if(e.jumpCooldown<=0&&distance>90){const length=Math.min(distance,240),target={x:e.x+(p.x-e.x)*length/distance,y:e.y+(p.y-e.y)*length/distance};target.x=Math.max(60,Math.min(900,target.x));target.y=Math.max(80,Math.min(460,target.y));safeSpawn(target,obstacles,22);e.landX=target.x;e.landY=target.y;e.phase='windup';e.phaseTime=1;return 0;}
  const a=steering(e,p,obstacles,22),speed=(enraged?41.6:40)*(e.slow>0?e.slowFactor:1);moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,obstacles,22);return 0;
 }

@@ -1,3 +1,6 @@
+[최신 · 사용자 확정 및 진행/구현 반영 — 2026-10-21]
+시안은 확정되었고, 승인파생 enemy-melee-poses-v1.png/기존별도오라+nativeCanvas/우회사격·근접로직 연결. production-prompt-v1.md 및 docs/monster-combat-implementation-20261021.md 참조. 미검증·미푸시·미배포/아래 과거확인대기보다 우선.
+
 # 몬스터 전투·위상 이펙트 통합 시안 v1
 
 2026-10-21 사용자 ‘진행’으로 검토 다음 단계인 통합 PNG 준비. 내장 imagegen1회, 기존거인/돌진병/칼드/오라 참조. 정확 prompt-v1.md/생성원본/무변환 PNG 보존. runtime/배포자산 반영 전 디자인 검토용.

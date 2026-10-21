@@ -1,8 +1,9 @@
+import {seekEnemyShot,enemyShotLane} from './enemy-sightline.js';
 import {drawEnemyBeam,drawEnemyBeamEnding} from '../rendering/enemy-attack-vfx.js';
 import {hasGruntSprite} from '../rendering/grunt-sprite.js';
 import {drawSoftField} from '../rendering/ground-visuals.js';
 import {ENEMY_COOLDOWN_FACTOR,attackProfile} from './balance.js';
-import {segmentBlocked,steering,moveBody} from '../world/terrain.js';
+import {segmentBlocked} from '../world/terrain.js';
 
 export function beamEnd(e,obstacles=[]){
  const direction={x:Math.cos(e.aim),y:Math.sin(e.aim)};
@@ -19,6 +20,7 @@ export function lineDistance(p,a,b){const dx=b.x-a.x,dy=b.y-a.y,t=Math.max(0,Mat
 
 // Telegraphs and active beams are part of the saved enemy state.
 export function updateRanged(e,p,obstacles,dt,bullets,enraged=false){
+ if(e.phase==='aim'&&!enemyShotLane(e,e.aim,p,obstacles)){e.phase=null;e.cd=.2;return 0;}
  if(e.phase){
   e.phaseTime-=dt;
   if(e.phaseTime<=0){
@@ -30,9 +32,10 @@ export function updateRanged(e,p,obstacles,dt,bullets,enraged=false){
   if(e.phase==='beam'&&!e.beamHit&&lineDistance(p,e,beamEnd(e,obstacles))<29&&!segmentBlocked(e,p,obstacles,4)){e.beamHit=true;return 18;}
   return 0;
  }
- e.cd=(e.cd??2)-dt;
+ e.cd=Math.max(0,(e.cd??2)-dt);
+ if(!seekEnemyShot(e,p,obstacles,dt,{speed:30*(e.slow>0?e.slowFactor:1),range:e.type==='laser'?650:480,preferred:290}))return 0;
  if(e.cd<=0){e.phase='aim';e.phaseTime=e.type==='laser'?1.2:.8;e.aim=Math.atan2(p.y-e.y,p.x-e.x);e.beamHit=false;return 0;}
- if(Math.hypot(p.x-e.x,p.y-e.y)>290||segmentBlocked(e,p,obstacles,4)){const a=steering(e,p,obstacles),speed=30*(e.slow>0?e.slowFactor:1);moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,obstacles,18);}
+
  return 0;
 }
 

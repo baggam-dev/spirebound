@@ -1,5 +1,6 @@
 // Source filenames for explicit on-demand packs. Original PNGs are unchanged.
 export const assetFiles={
+ "enemy-melee-art":["enemy-melee-poses-v1.png"],
  "ambusher-sprite": [
   "ambusher-reference-atlas.png"
  ],

@@ -43,14 +43,15 @@ function cornerGraph(obstacles,radius){
  graph={nodes,visible};data.radii.set(radius,graph);if(data.radii.size>8)data.radii.delete(data.radii.keys().next().value);return graph;
 }
 // Small visibility graph: deterministic routing around obstacle corners.
-export function steering(body,target,obstacles=[],radius=18){
+export function navigationRoute(body,target,obstacles=[],radius=18){
  if(blocked(target.x,target.y,radius,obstacles)){target={x:target.x,y:target.y};safeSpawn(target,obstacles,radius+1);}
- if(!segmentBlocked(body,target,obstacles,radius))return Math.atan2(target.y-body.y,target.x-body.x);
+ if(!segmentBlocked(body,target,obstacles,radius))return {angle:Math.atan2(target.y-body.y,target.x-body.x),distance:Math.hypot(target.x-body.x,target.y-body.y)};
  const graph=cornerGraph(obstacles,radius),nodes=[body,target,...graph.nodes];
  const dist=nodes.map(()=>Infinity),prev=[],visited=new Set();dist[0]=0;
  while(visited.size<nodes.length){let at=-1;for(let i=0;i<nodes.length;i++)if(!visited.has(i)&&(at<0||dist[i]<dist[at]))at=i;if(at<0||!Number.isFinite(dist[at])||at===1)break;visited.add(at);for(let j=0;j<nodes.length;j++)if(!visited.has(j)&&(at>=2&&j>=2?graph.visible[at-2][j-2]:!segmentBlocked(nodes[at],nodes[j],obstacles,radius))){const d=dist[at]+Math.hypot(nodes[j].x-nodes[at].x,nodes[j].y-nodes[at].y);if(d<dist[j]){dist[j]=d;prev[j]=at;}}}
- let next=1;if(prev[next]===undefined)return Math.atan2(target.y-body.y,target.x-body.x);while(prev[next]!==0)next=prev[next];return Math.atan2(nodes[next].y-body.y,nodes[next].x-body.x);
+ let next=1;if(prev[next]===undefined)return {angle:Math.atan2(target.y-body.y,target.x-body.x),distance:Infinity};while(prev[next]!==0)next=prev[next];return {angle:Math.atan2(nodes[next].y-body.y,nodes[next].x-body.x),distance:dist[1]};
 }
+export function steering(body,target,obstacles=[],radius=18){return navigationRoute(body,target,obstacles,radius).angle;}
 function paintBasicObstacle(ctx,o){
  const {x,y,w,h}=o;ctx.fillStyle='#0007';ctx.fillRect(x-3,y+7,w+6,h);ctx.fillStyle='#17201e';ctx.fillRect(x-2,y-2,w+4,h+4);
  if(o.type==='rock'){ctx.fillStyle='#647169';ctx.fillRect(x+8,y,w-16,h);ctx.fillRect(x,y+10,w,h-20);ctx.fillStyle='#8c9480';ctx.fillRect(x+12,y+5,w-30,7);ctx.fillStyle='#414e49';ctx.fillRect(x+20,y+22,5,h-27);}

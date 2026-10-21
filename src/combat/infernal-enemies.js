@@ -1,3 +1,4 @@
+import {seekEnemyShot,enemyShotLane} from './enemy-sightline.js';
 import {drawFeedbackSprite} from '../rendering/feedback-sprites.js';
 import {drawDemonCaptainSprite,drawDemonCaptainEffects} from '../rendering/demon-captain-sprite.js';
 import {drawDemonArcherSprite,drawDemonArcherWarning} from '../rendering/demon-archer-sprite.js';
@@ -16,6 +17,7 @@ function walk(e,p,obstacles,dt,speed){const a=steering(e,p,obstacles,radius(e)),
 function shoot(e,a,bullets){bullets.push({x:e.x,y:e.y,vx:Math.cos(a)*270,vy:Math.sin(a)*270,enemy:true,source:'악마 사수 화살',damage:e.escapeDepth>=4?12:10,life:4,hit:[]});}
 export function updateInfernal(e,p,room,dt,bullets,hurt){
  const obstacles=room.obstacles,kind=e.type;
+ if(kind==='demonArcher'&&e.attackPhase==='warning'&&!enemyShotLane(e,e.aim,p,obstacles)){e.attackPhase=null;e.attackTime=0;e.cd=.2;}
  if(e.attackPhase){
   e.attackTime=Math.max(0,e.attackTime-dt);
   if(kind==='demonBat'&&e.attackPhase==='dash'){
@@ -38,7 +40,7 @@ export function updateInfernal(e,p,room,dt,bullets,hurt){
    if(kind==='demonCaptain'){e.attackPhase='dash';e.attackTime=.42;e.hit=false;return;}
    if(kind==='spikeNest'){if(Math.hypot(p.x-e.targetX,p.y-e.targetY)<34)hurt(9,'심연 가시핵 솟구침');}
    if(kind==='demonSoldier'&&distance(e,p)<72&&Math.abs(Math.atan2(Math.sin(aim(e,p)-e.aim),Math.cos(aim(e,p)-e.aim)))<1.05&&!segmentBlocked(e,p,obstacles))hurt(9,'악마 병사 베기');
-   if(kind==='demonArcher')for(const offset of [-.14,.14])shoot(e,e.aim+offset,bullets);
+   if(kind==='demonArcher'&&enemyShotLane(e,e.aim,p,obstacles))for(const offset of [-.14,.14])shoot(e,e.aim+offset,bullets);
    e.attackPhase='recover';e.attackTime=kind==='spikeNest'?.55:.65;return;
   }
   e.attackPhase=null;e.cd=kind==='spikeNest'?2.5:kind==='demonArcher'?2.1:kind==='demonCaptain'?2.3:1.6;
@@ -48,10 +50,10 @@ export function updateInfernal(e,p,room,dt,bullets,hurt){
  const gap=distance(e,p);
  if(kind==='demonBat')walk(e,p,obstacles,dt,145);
  if(kind==='demonSoldier'||kind==='demonCaptain')walk(e,p,obstacles,dt,kind==='demonCaptain'?82:68);
- if(kind==='demonArcher'&&(gap>260||segmentBlocked(e,p,obstacles,3)))walk(e,p,obstacles,dt,42);
+ if(kind==='demonArcher'&&!seekEnemyShot(e,p,obstacles,dt,{radius:19,speed:42*(e.slow>0?e.slowFactor:1),preferred:260})){e.cd=Math.max(0,e.cd);return;}
  if(e.cd>0||kind==='demonBat'&&gap>85||kind==='demonSoldier'&&gap>85||kind==='demonCaptain'&&gap>260)return;
  if(kind==='spikeNest'){const point={x:clamp(p.x,65,895),y:clamp(p.y,75,465)};safeSpawn(point,obstacles,34);e.targetX=point.x;e.targetY=point.y;}
- e.aim=aim(e,p);e.attackPhase='warning';e.attackTime=kind==='spikeNest'?.9:kind==='demonBat'?.5:kind==='demonCaptain'?.75:.65;
+ e.aim=aim(e,p);e.attackPhase='warning';e.attackTime=kind==='spikeNest'?.9:kind==='demonBat'?.5:kind==='demonCaptain'?.75:kind==='demonSoldier'?.2:.65;
 }
 export function drawInfernalGround(c,e,reduced=false){drawDemonCaptainEffects(c,e,reduced);drawDemonArcherWarning(c,e);drawDemonSoldierAttack(c,e,reduced);drawSpikeNestAttack(c,e,reduced);if(e.type==='demonBat'&&e.attackPhase==='warning'){c.save();c.strokeStyle='#edaa9c';c.lineWidth=1;c.setLineDash([5,5]);c.beginPath();c.moveTo(e.x,e.y);c.lineTo(e.x+Math.cos(e.aim)*130,e.y+Math.sin(e.aim)*130);c.stroke();c.setLineDash([]);c.globalAlpha=.25+.4*(1-e.attackTime/.5);c.beginPath();c.arc(e.x,e.y,14,0,Math.PI*2);c.stroke();c.restore();}}
 export function drawInfernal(c,e,time=0,reduced=false,staticPose=false){if(!infernalTypes.includes(e.type))return;if(drawFeedbackSprite(c,e,time,{reduced,staticPose}))return;if(drawDemonCaptainSprite(c,e,time,reduced,staticPose)||drawDemonArcherSprite(c,e,time,reduced,staticPose)||drawDemonSoldierSprite(c,e,time,reduced,staticPose)||drawSpikeNestSprite(c,e,staticPose)||drawDemonBatSprite(c,e,time,reduced,staticPose))return;c.save();c.translate(e.x,e.y);const red=!!e.escapeDepth;c.fillStyle='#0008';c.fillRect(-18,18,36,5);

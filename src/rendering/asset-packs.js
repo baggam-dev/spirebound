@@ -1,7 +1,7 @@
 import {assetFiles} from './asset-manifest.js';
 import {activateAssetFiles} from './asset-requests.js';
 const common=['hero-sprite','grunt-sprite','companion-roll-art','skill-icons','relic-icons','xp-shards','spectral-blade'];
-const early=['chaser-walk','chaser-slash','archer-walk','charger-walk','scatter-walk','ricochet-walk','laser-walk','brute-walk'];
+const early=['enemy-melee-art','chaser-walk','chaser-slash','archer-walk','charger-walk','scatter-walk','ricochet-walk','laser-walk','brute-walk'];
 const warden=['warden-sprite','warden-motion','warden-walk','warden-recover','warden-presentation-art'];
 const upper=['astral-sniper-sprite','gravity-mage-sprite','star-knight-sprite','star-bearer-sprite','royal-guard-sprite','pulse-turret-sprite','rift-hunter-sprite','shadow-aura'];
 const infernal=['demon-captain-sprite','demon-archer-sprite','demon-soldier-sprite','demon-bat-sprite','spike-nest-sprite','ambusher-sprite','ringcaster-sprite','strafer-sprite'];
@@ -30,7 +30,7 @@ export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
  if(floor===7){modules.push('mordo-phase1-sprite','mordo-phase2-sprite','mordo-phase3-sprite','mordo-presentation-art');feedback.push('bosses');}
  if(floor>=8){modules.push('commander-phase1-sprite','commander-phase2-sprite','velkar-presentation-art',...infernal);feedback.push('demons','bosses');}
  if(floor===9)modules.push('demon-sprite','demon-core-sprite','demon-presentation-art');
- if(returning){modules.push('ambusher-sprite','ringcaster-sprite','strafer-sprite');feedback.push('demons');}
+ if(returning){modules.push('shadow-aura','ambusher-sprite','ringcaster-sprite','strafer-sprite');feedback.push('demons');}
  // The final escape can create these actors after entry. Rare expeditions and
  // chest bosses are taken from the real floor/room roster rather than floor number.
  if(returning&&floor===0)modules.push('demon-bat-sprite','demon-soldier-sprite','demon-archer-sprite','demon-captain-sprite');

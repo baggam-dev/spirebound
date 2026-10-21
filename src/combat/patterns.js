@@ -1,3 +1,4 @@
+import {seekEnemyShot,enemyShotLane} from './enemy-sightline.js';
 import {enhancedWarden,WARDEN_ATTACKS,startWardenMelee,updateWardenMelee} from './warden-attacks.js';
 import {drawEnemyField,drawEnemyLanding,drawEnemyMuzzle} from '../rendering/enemy-attack-vfx.js';
 import {wardenLabelOffset} from '../rendering/warden-sprite.js';
@@ -17,6 +18,7 @@ export function updatePattern(e,p,obstacles,dt,bullets,enraged=false){
  }
  if(!e.attackPhase){
   e.cd=(e.cd??2)-dt;
+  if(e.type!=='boss'){const clear=seekEnemyShot(e,p,obstacles,dt,{speed:25*(e.slow>0?e.slowFactor:1)});e.cd=Math.max(0,e.cd);if(!clear)return 0;}
   if(e.cd>0){const speed=(warden?WARDEN_ATTACKS.speed:e.type==='boss'?40:25)*(e.slow>0?e.slowFactor:1),a=steering(e,p,obstacles,e.type==='boss'?32:18);if(e.type==='boss'||Math.hypot(p.x-e.x,p.y-e.y)>270||segmentBlocked(e,p,obstacles,3))moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,obstacles,e.type==='boss'?32:18);return 0;}
   if(warden&&startWardenMelee(e,p))return 0;
   e.pattern=e.type==='boss'?bossPatterns[(e.patternIndex??0)%bossPatterns.length]:e.type==='archer'?'burst':'stagger';e.patternIndex=(e.patternIndex??0)+1;
@@ -25,6 +27,7 @@ export function updatePattern(e,p,obstacles,dt,bullets,enraged=false){
   return 0;
  }
  if(e.type==='boss'&&e.attackPhase==='recover'&&!['cleave','charge'].includes(e.pattern)){const a=steering(e,p,obstacles,32),speed=warden?WARDEN_ATTACKS.speed:40;moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,obstacles,32);}
+ if(e.type!=='boss'&&['warning','firing'].includes(e.attackPhase)&&!enemyShotLane(e,e.patternAim,p,obstacles)){e.attackPhase=null;e.cd=.2;return 0;}
  e.attackTime-=dt;
  if(e.attackPhase==='warning'&&e.attackTime<=0){
   if(e.pattern==='slam'){e.attackPhase='leap';e.attackTime=.5;e.fromX=e.x;e.fromY=e.y;return 0;}

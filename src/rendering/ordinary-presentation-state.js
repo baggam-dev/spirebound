@@ -6,7 +6,7 @@ export function resetOrdinaryPresentation(rooms=[]){
 }
 export const clearOrdinaryActors=()=>{actors=new WeakMap();heroes=new WeakMap();};
 export function ordinaryThreat(e,room){
- return !!(e.hp<=0||e.frozen>0||e.opening>0||e.kneel>0||e.attackPhase||e.darkAttack||e.darkFlash?.time>0||e.chaserWindup>0||e.chaserStrike>0||Number.isFinite(e.chargeAngle)||e.gravity||e.guardPortal||e.eliteWarning>0||['windup','swing','recover','aim','beam','air','warning','dash','firing','strike','splitJump','leap'].includes(e.phase)||(room?.hazards||[]).some(h=>h.owner===e.id&&h.phase!=='expired'));
+ return !!(e.hp<=0||e.frozen>0||e.opening>0||e.kneel>0||e.meleeAttack||e.attackPhase||e.darkAttack||e.darkFlash?.time>0||e.chaserWindup>0||e.chaserStrike>0||Number.isFinite(e.chargeAngle)||e.gravity||e.guardPortal||e.eliteWarning>0||['windup','swing','recover','aim','beam','air','warning','dash','firing','strike','splitJump','leap'].includes(e.phase)||(room?.hazards||[]).some(h=>h.owner===e.id&&h.phase!=='expired'));
 }
 export function notifyOrdinaryHits(room,effects=[]){
  for(const e of room?.enemies||[]){

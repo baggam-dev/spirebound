@@ -1,0 +1,15 @@
+# 승인 근접 동작 파생 PNG 정확 프롬프트
+
+사용자 확정 및 진행 이후 내장 imagegen으로 제작. 승인 통합시안 및 기존 거인/돌진병 참조, 2행3열/투명배경, 오라·타격궤적은 별도 효과로 유지.
+
+```text
+Use case: identity-preserve. Create a production transparent sprite sheet derived from the APPROVED SPIREBOUND monster-combat-effects-v1 concept board. Reference1 is the approved integrated board (motion direction), reference2 is the existing characters identity: use ONLY bottom row bearded heavy armored brute, reference3 is the masked axe charger identity. Preserve current armor/clothes/body and limb proportions, 4~5-head compact game characters; do not redesign, recolor, add monster types, or bake in status auras.
+Exactly TWO equal-height rows and THREE equal-width columns in a clean regular grid. All cells have large transparent margins; no cell dividers, no text/numbers, no shadows, no scenery, no ground, NO attack arcs/particles/aura. Transparent background with genuine alpha. Each row faces RIGHT in 3/4 overhead game camera. Weapons and feet remain fully inside their own cells. Same body scale across all three poses in each row, heads at near same top height, soles at same baseline about 88% of each row. Three evenly spaced cell-center anchors.
+ROW1: existing dark-haired bearded steel-armored brute with wrapped bare fists and brown belt. Cell1 short grounded windup pulling right fist back, left fist guards. Cell2 powerful forward downward punch, torso leans slightly right, punch points toward right with wrapped fist, no hammer or axe. Cell3 distinct relaxed recovery with striking fist down and knees slightly bent. No jumping. Preserve smaller fist-to-head proportions in reference2 bottom row.
+ROW2: exact existing masked axe charger, rounded steel helmet, dark cloth face mask, frayed grey tunic, dark leather vest, round wooden shield with iron central boss on LEFT arm and ONE single-blade axe held firmly in RIGHT hand (same hands across ALL cells). Cell1 retract axe for short near slash, shield kept visible. Cell2 forward horizontal axe cut to the RIGHT, right arm extends naturally and retains real grip; shield left arm still visible or partially occluded naturally, no extra axe or hands. Cell3 axe lowered after swipe, shield down slightly, same grip. Do not swap weapon hands or mirror the actor between cells.
+Match approved muted steel grey/brown/cloth colors and fine pixel-like texture. Full clean silhouettes, no glowing contour, NO cut-off boots, weapon handles, axe blade, fists or helmet. The source sheet is only new arm/weapon attack pose art; all dynamic slash trails and auras will be independently rendered at runtime.
+```
+
+완료: 내장 imagegen1회. 생성원본 C:/Users/SDSPRO/.codex/generated_images/01a13828-0d36-7292-9c64-ff00ee502b14/exec-64200a57-cebc-4734-9abd-9ff39f0355e5.png 유지.
+무변환 사본: C:/baggam-dev/spirebound/assets/images/enemy-melee-poses-v1.png 및 C:/baggam-dev/spirebound/docs/design-drafts/monster-ai-20261021/enemy-melee-poses-v1.png.
+1536×1024/2행3열. 직접PNG확인·모서리/내부여백 알파0 메타정보확인(캐릭터·파지·부위일관성 시각확인, 게임실화면검증 아님). 타격궤적/오라/바닥예고는 nativeCanvas 별도. 코드의 crop anchor·52/67px 몸높이·21/24px 발기준은 runtime미검증.

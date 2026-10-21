@@ -2,10 +2,11 @@ const clamp=n=>Math.max(0,Math.min(1,n));
 // Poses read the existing attack state; they never advance or delay combat.
 export function bossPose(e,room={}){
  const p={stage:'idle',charge:0,release:0,bodyY:0,lift:0,weapon:0};
+ if(e.meleeAttack){const a=e.meleeAttack,warning=e.type==='brute'||e.type==='demonCaptain'?.3:e.type==='ambusher'?.18:.2;return {...p,stage:a.stage==='windup'?'windup':a.stage==='strike'?'strike':'recover',charge:a.stage==='windup'?clamp(1-a.time/warning):0,release:a.stage==='strike'?clamp(a.time/.12):0,bodyY:a.stage==='recover'?2:0,weapon:a.aim-Math.PI/2};}
  if(e.darkFlash?.time>0){return {...p,stage:'strike',release:clamp(e.darkFlash.time/.18),weapon:(e.darkFlash.aim||0)+Math.PI/2+.65*(1-e.darkFlash.time/.18)};}
  if(e.kneel>0||e.opening>0)return {...p,stage:'recover',bodyY:e.kneel>0?0:3,weapon:e.kneel>0?Math.PI:.3};
  if(e.darkAttack){const a=e.darkAttack;if(a.moving)return {...p,stage:'strike',release:1,bodyY:-2,weapon:(a.aim||0)+Math.PI/2};
-  const duration=a.kind==='slash'?.5:a.kind==='judgment'||a.finisher?1.1:e.type==='astralSniper'?.6:e.variant==='king'&&e.hp/e.max<=.65?.65:.85,charge=clamp(1-a.time/duration);
+  const duration=a.kind==='slash'?(e.type==='boss'?.5:.25):a.kind==='judgment'||a.finisher?1.1:e.type==='astralSniper'?.6:e.variant==='king'&&e.hp/e.max<=.65?.65:.85,charge=clamp(1-a.time/duration);
   return {...p,stage:'windup',charge,bodyY:Math.round(charge*2),weapon:a.kind==='mark'&&a.finisher?Math.PI:(a.aim||0)+Math.PI/2-1.25-charge*.25};
  }
  if(e.variant==='prism'){

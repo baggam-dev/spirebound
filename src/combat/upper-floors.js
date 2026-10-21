@@ -1,3 +1,5 @@
+import {seekEnemyShot,enemyShotLane,clearEnemyShot} from './enemy-sightline.js';
+import {meleeIntersects} from './enemy-melee.js';
 import {fastKing} from './boss-pressure.js';
 import {moveBody,steering,segmentBlocked,safeSpawn} from '../world/terrain.js';
 import {emitShot} from './patterns.js';
@@ -17,7 +19,7 @@ function walk(e,p,r,dt,speed){const a=steering(e,p,r.obstacles,22);moveBody(e,Ma
 function shot(e,a,bullets,speed=230){emitShot(e,a,speed,bullets);const b=bullets.at(-1);b.damage=9;b.source=e.variant==='king'?'타락한 왕의 검기':e.type==='astralSniper'?'별자리 저격수 별빛 화살':'상층 암흑탄';b.dark=true;}
 function ring(e,a,bullets){for(const offset of ringOffsets)shot(e,a.aim+offset,bullets,fastKing(e)?240:185);}
 function dashEnd(e,p,r){const end={x:Math.max(60,Math.min(900,p.x)),y:Math.max(80,Math.min(460,p.y))},steps=Math.max(1,Math.ceil(dist(e,end)/5));let last={x:e.x,y:e.y};for(let i=1;i<=steps;i++){const next={x:e.x+(end.x-e.x)*i/steps,y:e.y+(end.y-e.y)*i/steps};if(segmentBlocked(last,next,r.obstacles,25)){last.blocked=true;break;}last=next;}return last;}
-export function startUpperAttack(e,kind,p,r){const end=kind==='dash'?dashEnd(e,p,r):{x:p.x,y:p.y};e.darkAttack={kind,time:fastKing(e)?(kind==='judgment'?.8:kind==='slash'?.32:.45):kind==='judgment'?1.1:kind==='slash'?.5:e.type==='astralSniper'?.6:e.variant==='king'&&kingPhase(e)>=2?.65:.85,x:e.x,y:e.y,tx:end.x,ty:end.y,aim:angle(e,p),step:0};if(kind==='dash'&&end.blocked)e.darkAttack.coverStopped=true;e.facing=e.darkAttack.aim;
+export function startUpperAttack(e,kind,p,r){const end=kind==='dash'?dashEnd(e,p,r):{x:p.x,y:p.y};e.darkAttack={kind,time:fastKing(e)?(kind==='judgment'?.8:kind==='slash'?.32:.45):kind==='judgment'?1.1:kind==='slash'?(e.type==='boss'?.5:.25):e.type==='astralSniper'?.6:e.variant==='king'&&kingPhase(e)>=2?.65:.85,x:e.x,y:e.y,tx:end.x,ty:end.y,aim:angle(e,p),step:0};if(kind==='dash'&&end.blocked)e.darkAttack.coverStopped=true;e.facing=e.darkAttack.aim;
  if(kind==='ring'){const a=e.darkAttack.aim+(e.escapeDepth?(e.darkTurn??0)*.45:0);e.darkAttack.aim=Math.atan2(Math.sin(a),Math.cos(a));}
  if(kind==='judgment'){e.darkAttack.axis=(e.judgmentTurn??0)%2?'horizontal':'vertical';e.judgmentTurn=((e.judgmentTurn??0)+1)%2;}
  e.lastDarkAttack=kind;e.darkTurn=(e.darkTurn??0)+1;
@@ -28,13 +30,13 @@ function resolve(e,p,r,dt,bullets,hurt){const a=e.darkAttack;if(!a)return false;
  a.time=Math.max(0,a.time-dt);if(a.time>1e-9)return true;
  if(a.kind==='dash'){a.moving=true;a.elapsed=0;a.hit=false;return true;}
  const delta=Math.atan2(Math.sin(angle(e,p)-a.aim),Math.cos(angle(e,p)-a.aim));
- if(a.kind==='slash'&&dist(e,p)<slashReach(e)&&Math.abs(delta)<1.15&&!segmentBlocked(e,p,r.obstacles)){a.landed=true;hurt(9);}
- if(a.kind==='blink'){e.x=Math.max(60,Math.min(900,a.tx));e.y=Math.max(80,Math.min(460,a.ty));safeSpawn(e,r.obstacles,22);startUpperAttack(e,'slash',p,r);e.darkAttack.time=fastKing(e)?.32:.5;return true;}
+ if(a.kind==='slash'&&meleeIntersects(e,p,a.aim,slashReach(e),1.15)&&!segmentBlocked(e,p,r.obstacles)){a.landed=true;hurt(9);}
+ if(a.kind==='blink'){e.x=Math.max(60,Math.min(900,a.tx));e.y=Math.max(80,Math.min(460,a.ty));safeSpawn(e,r.obstacles,22);startUpperAttack(e,'slash',p,r);e.darkAttack.time=e.type==='boss'?(fastKing(e)?.32:.5):.25;return true;}
  if(a.kind==='mark'&&Math.hypot(p.x-a.tx,p.y-a.ty)<65)hurt(a.finisher?18:9);
- if(a.kind==='fan'){for(const offset of fanOffsets(e))shot(e,a.aim+offset,bullets,e.type==='astralSniper'?330:fastKing(e)?360:290);if(e.variant==='king'&&kingPhase(e)===1&&a.step===0){a.step=1;a.time=.28;return true;}}
+ if(a.kind==='fan'&&(e.type==='boss'||enemyShotLane(e,a.aim,p,r.obstacles))){for(const offset of fanOffsets(e))shot(e,a.aim+offset,bullets,e.type==='astralSniper'?330:fastKing(e)?360:290);if(e.variant==='king'&&kingPhase(e)===1&&a.step===0){a.step=1;a.time=.28;return true;}}
  if(a.kind==='ring')ring(e,a,bullets);
  if(a.kind==='judgment'){if(pointInStripe(p,judgmentStripe(a)))hurt(18);e.darkFlash={...a,time:.18};a.step++;if(a.step<4){a.time=fastKing(e)?.42:.65;return true;}e.darkAttack={kind:'mark',time:fastKing(e)?.75:1.1,x:e.x,y:e.y,tx:p.x,ty:p.y,aim:angle(e,p),step:2,finisher:true};return true;}
- if(a.kind==='slash'&&(e.gateTitle||e.variant==='king'&&kingPhase(e)>=2)&&a.step<(e.variant==='king'&&kingPhase(e)===3?2:1)){e.darkFlash={...a,time:.18};a.step++;a.aim=angle(e,p);e.facing=a.aim;a.time=fastKing(e)?.32:.5;return true;}
+ if(a.kind==='slash'&&(e.gateTitle||e.variant==='king'&&kingPhase(e)>=2)&&a.step<(e.variant==='king'&&kingPhase(e)===3?2:1)){e.darkFlash={...a,time:.18};a.step++;a.aim=angle(e,p);e.facing=a.aim;a.time=e.type==='boss'?(fastKing(e)?.32:.5):.25;return true;}
  finish(e,a);return true;
 }
 export function tickUpperState(e,p,r,dt,bullets){
@@ -52,7 +54,9 @@ export function tickUpperState(e,p,r,dt,bullets){
 }
 export function chooseKingAttack(e,p){const phase=kingPhase(e),near=dist(e,p)<155;let options=near?['slash','mark','dash']:['fan','dash','mark'];if(phase>=2)options.push(near?'ring':'blink');if(phase===3&&(e.darkTurn??0)%3===0&&e.lastDarkAttack!=='judgment')return 'judgment';options=options.filter(k=>k!==e.lastDarkAttack);return options[(e.darkTurn??0)%options.length];}
 export function updateUpper(e,p,r,dt,bullets,hurt){
- if(e.type==='astralSniper'&&e.gateTitle){
+ const seeking=e.type==='astralSniper'&&e.gateTitle&&!clearEnemyShot(e,p,r.obstacles);
+ if(seeking){if(!e.darkAttack)seekEnemyShot(e,p,r.obstacles,dt,{radius:22,speed:60*(e.slow>0?(e.slowFactor??1):1),preferred:280});}
+ if(e.type==='astralSniper'&&e.gateTitle&&!seeking){
   const a=e.darkAttack,movingTime=a?Math.min(dt,Math.max(0,a.time-.3)):dt;
   if(movingTime>0&&e.hp>0&&!(e.frozen>0)&&!(e.opening>0)){
    const distance=dist(e,p),theta=angle(p,e),side=(e.id||0)%2?1:-1;
@@ -61,6 +65,7 @@ export function updateUpper(e,p,r,dt,bullets,hurt){
    if(a){a.x=e.x;a.y=e.y;a.aim=angle(e,p);e.facing=a.aim;}
   }
  }
+ if(e.type==='astralSniper'&&e.darkAttack?.kind==='fan'&&!enemyShotLane(e,e.darkAttack.aim,p,r.obstacles)){delete e.darkAttack;e.cd=.2;}
  if(resolve(e,p,r,dt,bullets,hurt))return;
  e.cd=Math.max(0,(e.cd??1)-dt*(e.gateFury?1.3:1));const slowed=e.slow>0?(e.slowFactor??1):1,ready=e.cd<=0&&warningCount(r,e)<2;
  if(e.variant==='king'){const phase=kingPhase(e);if(dist(e,p)>95)walk(e,p,r,dt,[0,60,90,110][phase]*slowed);if(ready)startUpperAttack(e,chooseKingAttack(e,p),p,r);return;}
@@ -69,12 +74,14 @@ export function updateUpper(e,p,r,dt,bullets,hurt){
  if(e.type==='gravityMage'&&e.escapeDepth){if(ready)startUpperAttack(e,'ring',p,r);return;}
  if(e.type==='gravityMage'){if(ready){e.gravity={x:p.x,y:p.y,time:2.2};e.cd=2.8;}if(e.gravity){const g=e.gravity;g.time=Math.max(0,g.time-dt);if(g.time<1.7&&dist(p,g)<115){const a=angle(p,g);moveBody(p,Math.cos(a)*85*dt,Math.sin(a)*85*dt,r.obstacles,14);}if(!g.time)delete e.gravity;}return;}
  if(['starKnight','royalGuard','riftHunter'].includes(e.type))walk(e,p,r,dt,(e.gateTitle?96.8:78)*slowed);
- if(ready&&e.gateTitle){startUpperAttack(e,e.type==='starKnight'?((e.darkTurn??0)%2?'dash':'slash'):((e.darkTurn??0)%3===2?'ring':'fan'),p,r);return;}
- if(ready)startUpperAttack(e,e.type==='astralSniper'?'fan':e.type==='pulseTurret'?'ring':e.type==='riftHunter'?'blink':'slash',p,r);
+ if(e.type==='astralSniper'&&!clearEnemyShot(e,p,r.obstacles))return;
+ if(ready&&e.gateTitle){if(e.type==='starKnight'&&dist(e,p)<=slashReach(e)+14&&!segmentBlocked(e,p,r.obstacles)){startUpperAttack(e,'slash',p,r);return;}startUpperAttack(e,e.type==='starKnight'?'dash':((e.darkTurn??0)%3===2?'ring':'fan'),p,r);return;}
+ if(ready){const kind=e.type==='astralSniper'?'fan':e.type==='pulseTurret'?'ring':e.type==='riftHunter'?(dist(e,p)<=slashReach(e)+14?'slash':'blink'):'slash';if(kind==='slash'&&(dist(e,p)>slashReach(e)+14||segmentBlocked(e,p,r.obstacles)))return;startUpperAttack(e,kind,p,r);}
 }
 // Approach from range, retreat when crowded, otherwise make a slow lateral step.
 // resolve() already stops this movement during attack preparation/release.
 function moveRangedUpper(e,p,r,dt,slowed){
+ if(e.type==='astralSniper'&&!clearEnemyShot(e,p,r.obstacles)){seekEnemyShot(e,p,r.obstacles,dt,{radius:22,speed:34*slowed,preferred:290});return;}
  const distance=dist(e,p),theta=angle(p,e),side=(e.id||0)%2?1:-1;
  const target=distance>350?p:{x:Math.max(65,Math.min(895,p.x+Math.cos(theta+side*.22)*290)),y:Math.max(85,Math.min(455,p.y+Math.sin(theta+side*.22)*290))};
  walk(e,target,r,dt,(e.type==='gravityMage'?28:34)*slowed);

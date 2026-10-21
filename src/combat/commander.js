@@ -1,3 +1,4 @@
+import {seekEnemyShot,clearEnemyShot,enemyShotLane} from './enemy-sightline.js';
 import {pressureBoss,commanderProfile,commanderOffsets} from './boss-pressure.js';
 import {moveBody,safeSpawn,steering} from '../world/terrain.js';
 import {emitShot} from './patterns.js';
@@ -47,23 +48,28 @@ export function updateCommander(e,p,r,dt,bullets,hurt){
   return;
  }
  if(c.rainFlash){c.rainFlash.time=Math.max(0,c.rainFlash.time-dt);if(!c.rainFlash.time)delete c.rainFlash;}
- if(c.blink){c.blink.time=Math.max(0,c.blink.time-dt);if(!c.blink.time){e.x=c.blink.x;e.y=c.blink.y;c.blinkFlash=.35;c.blinkClock=q.blink;delete c.blink;if(pressureBoss(e))c.volley={aim:Math.atan2(p.y-e.y,p.x-e.x),count:q.count,time:.55,fired:0};}return;}
+ if(c.blink){c.blink.time=Math.max(0,c.blink.time-dt);if(!c.blink.time){e.x=c.blink.x;e.y=c.blink.y;c.blinkFlash=.35;c.blinkClock=q.blink;delete c.blink;if(pressureBoss(e)&&clearEnemyShot(e,p,r.obstacles,650))c.volley={aim:Math.atan2(p.y-e.y,p.x-e.x),count:q.count,time:.55,fired:0};}return;}
+ if(c.ricochet&&!enemyShotLane(e,c.ricochet.aim,p,r.obstacles)){delete c.ricochet;c.ricochetClock=.3;}
  if(c.ricochet){const a=c.ricochet;a.time=Math.max(0,a.time-dt);if(!a.time){for(const offset of commanderOffsets(a.count)){emitShot(e,a.aim+offset,q.reflectSpeed,bullets);Object.assign(bullets.at(-1),{ricochet:true,bounces:1,life:5,damage:9,source:'서리군단장 벨카르 반사탄'});}delete c.ricochet;c.volleyClock=Math.max(c.volleyClock,.85);}return;}
+ if(c.snipe&&!enemyShotLane(e,c.snipe.aim,p,r.obstacles)){delete c.snipe;c.snipeClock=.3;}
  if(c.snipe){c.snipe.time=Math.max(0,c.snipe.time-dt);if(!c.snipe.time){emitShot(e,c.snipe.aim,q.snipeSpeed,bullets);const b=bullets.at(-1);b.damage=11;b.source='서리군단장 벨카르 저격 화살';b.frostArrow=true;delete c.snipe;c.volleyClock=Math.max(c.volleyClock,.9);}return;}
  if(!c.rainClock){c.rain={x:clamp(p.x,145,815),y:clamp(p.y,125,415),radius:120,time:q.rainWindup};c.rainClock=q.rain;delete c.volley;return;}
+ if(c.volley&&!enemyShotLane(e,c.volley.aim,p,r.obstacles)){delete c.volley;c.volleyClock=.3;}
  if(c.volley){
   const a=c.volley;a.time=Math.max(0,a.time-dt);
   if(!a.time){fireSpread(e,a,bullets);a.fired++;if(a.fired===2){delete c.volley;c.volleyClock=Math.max(c.volleyClock,q.recovery);}else a.time=q.beat;}
   return;
  }
  if(!c.blinkClock){const point=blinkDestination(e,p,r);if(point){c.blink={...point,time:.4};c.volleyClock=Math.max(c.volleyClock,.5);}return;}
+ const direct=clearEnemyShot(e,p,r.obstacles,650);
+ if(!direct){seekEnemyShot(e,p,r.obstacles,dt,{radius:32,speed:q.move*(e.slow>0?e.slowFactor??1:1),range:650,preferred:300});return;}
  if(pressureBoss(e)&&!c.ricochetClock){c.ricochet={aim:Math.atan2(p.y-e.y,p.x-e.x),count:q.reflectCount,time:q.reflectWindup};c.ricochetClock=q.reflect;return;}
  if(!c.snipeClock){c.snipe={aim:Math.atan2(p.y-e.y,p.x-e.x),time:q.snipeWindup};c.snipeClock=q.snipe;return;}
  if(!pressureBoss(e))moveCommander(e,p,r,dt);
  if(!c.volleyClock)c.volley={aim:Math.atan2(p.y-e.y,p.x-e.x),count:q.count,time:q.windup,fired:0};
 }
 
-function moveCommander(e,p,r,dt){const c=e.commander,phase=commanderPhase(e);
+function moveCommander(e,p,r,dt){if(!clearEnemyShot(e,p,r.obstacles,650))return;const c=e.commander,phase=commanderPhase(e);
  const distance=Math.hypot(p.x-e.x,p.y-e.y),angle=steering(e,p,r.obstacles,32);
  c.strafeClock-=dt;if(c.strafeClock<=0){c.strafeDirection*=-1;c.strafeClock=phase===2?2.5:3.5;}
  const radial=distance<190?-1:distance>330?1:0,side=c.strafeDirection;
