@@ -1,0 +1,19 @@
+# 최종 탈출·생환 3초 통합 시안 정확 프롬프트
+
+내장 imagegen 1회 생성. 세 참조 PNG를 먼저 직접 확인. 시안용으로 runtime 자산이 아니며 원본/버전 파일 유지.
+
+참조1: C:/baggam-dev/spirebound/docs/design-drafts/narrative-20261020/storyboard-v2.png (승인된06생환구도만)
+참조2: C:/baggam-dev/spirebound/assets/images/title-hero-idle-v1.png (기존주인공)
+참조3: C:/baggam-dev/spirebound/assets/images/entrance-plates-v1.png (기존문/돌벽톤)
+저장 예정: C:/baggam-dev/spirebound/docs/design-drafts/escape-20261021/escape-storyboard-v1.png
+
+```text
+Use case: illustration-story. Create ONE polished design-review storyboard PNG for SPIREBOUND, THREE wide 16:9 cinematic panels stacked VERTICALLY, thin dark dividers, total portrait composition. Fine restrained pixel art matching the supplied actual title hero and gothic stone gate artwork, dark stone with a muted dawn outside. The first supplied six-panel storyboard is continuity reference: use ONLY the existing final "06 생환" idea, no earlier bosses. The second reference is the EXACT approved protagonist: blond short-haired rear/three-quarter-rear scout with red scarf, worn blue-grey short cloak, brown boots/leather armor, bow held down and quiver. Preserve this identity and proportions in ALL panels; no front face, no armor redesign, no sword, no new NPC/monster or new tower design. The third reference is the actual existing exterior/interior gate plate: preserve its carved stone, torch colors and broad arch framing. This is a new short EPILOGUE after confirmed escape, not another fight or new level.
+Top panel caption exactly "01 봉인 해제 · 0–0.8초": from inside the same dark gothic entrance, behind the same small existing rear-view scout, the two carved gate leaves part naturally, a thin warm dawn beam widens along the stone floor. A small existing golden escape-key sigil near the seam breaks into just a few faint gold fragments; quiet release rather than an explosive burst. Hero remains grounded near center-bottom, looking out. Closed-to-open visual idea, no magic portal, no enemy.
+Middle panel caption exactly "02 문밖으로 · 0.8–2.4초": same interior-to-outside camera axis and same hero, hero taking a small step forward through the open arch. Warm restrained dawn sky and distant quiet valley/city silhouettes beyond, as in the approved storyboard's final panel. Keep the gate jambs visible left/right and the same floor leading outward, avoid looking as if the hero enters the tower. Cloak subtly lifted by a light breeze, a few soft dust motes in the beam; bow down, five-finger anatomically normal hands if visible, no extra arms. Warm highlights on stone edges with dark interior preserved, not oversaturated orange.
+Bottom panel caption exactly "03 생환 · 2.4–3초": settle on the same open doorway and same scout now just OUTSIDE the threshold, slightly smaller deeper in the scene, back to viewer, quietly facing the dawn valley. Pale gold-grey dawn, no triumph pose or added plot twist. Small understated bottom-center subtitle exactly "살아서 내려왔다." and small bottom-right button-like label exactly "건너뛰기 ▸". Cinematic stays readable on landscape mobile; no HUD, score, fake stats, title logo, ranking form, next button or changed result UI. Existing result screen will follow automatically after 3 seconds.
+Emphasize subtle breathing/cape movement and quiet survival in the key poses, not long dialogue. No BGM depiction, no large smoke obscuring hero, no permanent aura drawn on the hero, no overexposed white background. This is a static storyboard proposal, not a sprite atlas or already implemented screenshot. Preserve all originals and avoid extra panels.
+```
+
+생성 원본: C:/Users/SDSPRO/.codex/generated_images/01a13828-0d36-7292-9c64-ff00ee502b14/exec-8555034f-d2f4-4c3f-9f7b-1df7a92036d7.png
+직접확인: 세로3컷/문안에서밖으로향하는동일카메라축/기존금발·붉은스카프·짧은회청망토·활/여명·한줄자막·우하단스킵. 새NPC/보스/결과통계없음. 시안의열쇠가루/나뭇잎·먼지·망토 움직임은정지구도예시,실제효과는별도native canvas. 시안그림을잘라캐릭터runtime으로쓰지않고기존승인hero3프레임을재사용한다. 정확한문열림·외부판만승인후파생준비,원본/버전보존/불필요한재생성없음.
