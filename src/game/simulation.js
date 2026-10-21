@@ -1,4 +1,5 @@
 import {beginWardenArrival,tickWardenArrival} from '../combat/warden-arrival.js';
+import {startApproachedBoss} from '../world/boss-approach.js';
 import {reactToRelicHit} from '../combat/relic-effects.js';
 import {tickRoll,tickRollMines,rollImmune} from '../combat/roll.js';
 import {syncUnlocks} from '../progression/skill-overhaul.js';
@@ -78,6 +79,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  let hitOrigin=null;
  const hurt=(raw,source='알 수 없는 공격',kind=null,origin=hitOrigin)=>{if(s.entryGrace>0||p.hp<=0||s.invulnerable>0||rollImmune(s)||raw<=0)return;if(absorbGuardian(s)){s.invulnerable=.65;effects.push({x:p.x,y:p.y-35,t:.8,color:'#b8d9f1',text:'수호!'});metrics.shields++;return;}const before=p.hp,result=takeDamage(s,r.trialState==='active'?Math.min(raw,9):raw,kind);if(before>p.hp)effects.push({x:p.x,y:p.y-35,t:1,color:'#ff7188',text:'-'+(before-p.hp)+' ♥',hitSource:source,hitAngle:origin?Math.atan2(origin.y-p.y,origin.x-p.x):null});metrics.damageTaken+=before-p.hp;recordHit(s,source,before-p.hp,result==='blocked');if(result==='blocked'){metrics.shields++;events.push('shield');}if(before>p.hp&&reactToRelicHit(s,r,effects))events.push('phoenixRevived');};
  if(Math.hypot(input.x,input.y)>.01)p.lastMove={x:input.x,y:input.y};
+ const approachFrom={x:p.x,y:p.y},approachRoom=r;
  const rolling=tickRoll(s,r,dt,effects);if(!rolling){const n=Math.max(1,Math.hypot(input.x,input.y)),frostSlow=p.frostSlow>0?.72:1;moveBody(p,input.x/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),input.y/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),r.obstacles);}p.frostSlow=Math.max(0,(p.frostSlow||0)-dt);
 
  const d=p.y<48?0:p.x>930?1:p.y>492?2:p.x<30?3:-1;
@@ -85,6 +87,8 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(next>=0&&aligned&&!roomLocked(s,r)){s.room=next;r=currentRoom(s);Object.assign(p,doorArrival(r,(d+2)%4));enterRoom(s);events.push('room');}
   else{p.x=Math.max(31,Math.min(929,p.x));p.y=Math.max(49,Math.min(491,p.y));}
  }
+ const approached=startApproachedBoss(s,r,r===approachRoom?approachFrom:p,p);
+ if(approached)events.push('bossApproach:'+approached);
  // Also catches the tick that crosses the doorway into a sleeping warden's room.
  if(tickWardenArrival(r,dt))return {events,effects};
  if(r.shrineState==='choice'&&!r.used)return {events:[...events,'incantation'],effects};
