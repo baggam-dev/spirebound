@@ -1,6 +1,6 @@
-# 자동 전투·열쇠·하강 / 악마 흡인 하향 — 배포 검증 기록
+# 자동 전투·열쇠·하강 / 악마 흡인 하향 — 배포·공개 검증 완료
 
-2026-10-21 KST / main. 사용자 ‘배포 및 다음 건 설명’ 승인. 아래 공개 결과는 완료 후 추가한다.
+2026-10-21 KST / main. 사용자 ‘배포 및 다음 건 설명’ 승인. 운영 release-20261021-112337-1fe32f / runtime50a0d99 / 0.44.0-prebeta.
 
 ## 범위
 - da8042d: pressureVersion1 악마2페이즈만 입 반경360→210px,속도225→110px/s,지속1.2→.7초/예고.42→.85/발동후쿨.65→3초. 실판정/경고·활성표시 공통profile,벽·충돌/구저장기간cap/입사망종료. 눈코/1·3페이즈/legacy직렬·체력·피해량·점수식불변.
@@ -17,7 +17,7 @@
 - 최종표현이후local-approach-final 가로3/오류0통과. local-key-final9/오류0통과,local-descent-final cached/cold/blur3통과 후 파일실패가즉시복구창으로전환됐는데도구가짧은journey창을180초기다려실패. 해당관찰순서만수정해local-descent-recovery1/오류0통과. 원본failure.json에앞선3통과와실제복구창보존. 총19범위는분할성공이며단일19일괄성공아님. 최종 PNG에서hero/표시겹침제거·차분한접근영역·불투명로딩직접확인.
 
 ## 공개 결과
-아직미배포. 공식배포/실온라인UI2·핵심7·HTTPS192/PNG·TLS/쿠키이관결과를완료후추가한다.
+운영 release-20261021-112337-1fe32f/runtime50a0d99/0.44.0-prebeta 활성. 공식321파일·서버27·nginx/health/index/TLS 성공,이전052348/DB원본보존. 공개실온라인UI2 session/runs200·온라인true·첫층ready·버전44/오류0·점수0 통과. 공개핵심7(3보스자동접근/저장재개,열쇠자동·Space입력소비·기존pending이어하기,cold하강암전·시간정지/층1회) 모두통과/오류0·점수0(public/result.json). 실제공개key-auto-844.png직접확인. HTTPS192개코드·스타일및대상PNG전체바이트일치·HTTP308·랭킹·SecureHttpOnly·쿠키갱신·기존HTTP기록신규/기존브라우저이관및원본보존 모두통과(public-https.png.log). 해당API직접시작2는실제UI2와별도/점수0. 모든검사·서버·배포명령종료/차단없음,최종문서·증거커밋은런타임재배포불필요.
 
 ## 한계/다음
 실제iPhone/하드웨어음질·safearea·장시간미검증. Edge PC/모바일에뮬레이션,blur는공통pause이벤트경로범위. 합성저장fixture는격리컨텍스트에서만사용/점수제출0,공개온라인UI는별도실제새원정2건과분리한다.
