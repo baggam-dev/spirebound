@@ -13,4 +13,10 @@
 - 첫 실패는 제품 오류가 아니라 expanded QA fixture에서 demonPending=false만 지정하고 실제 demon상태 누락. 실제 보스 단계 전개로 fixture수정, 실패 원본 local/failure.json 및 fixture-failure.log 보존. runtime 우회 없음.
 
 ## 배포·공개
-아직 배포 전. 최종 로컬 UI 완료 후 main 커밋/푸시→공식 deploy.ps1→공개 생환핵심·실온라인시작2·HTTPS194소스/대상PNG 바이트/TLS308·기록이관 검증 예정. 합성 점수 POST 금지. 실제 iPhone/기기 음질·장시간 플레이 미검증.
+완료: release-20261021-133538-f2c264 / runtime053e2e3 / 0.44.0-prebeta / https://168.107.21.43/. 공식324파일·서버27/nginx/health/index 성공(deploy.log). 이전 release-20261021-112337-1fe32f와 DB/기록 보존.
+
+- 공개 생환core3 자동/Space/held(.8초지연복구) 통과(public/result.json), 오류0·점수0.
+- 실제 PC/가로 모바일 온라인 UI2 정상, session/runs200·0.44·그림ready(public-online/result.json), 점수0.
+- HTTPS194소스·대상PNG바이트·TLS/308·랭킹쿠키·기존기록이관 통과(public-https.log). API직접시작2는 위UI2와 별도이며 점수제출0.
+- 실제 운영 장면 public/escape-auto-844-2.png 직접 확인. 원본PNG·초안·최종실화면 모두 별도 보존. 모든 QA/서버/배포명령 종료.
+- 마지막 문서·공개증거 마감 커밋/main푸시 후 clean/HEAD==origin 확인으로 종료, 런타임 재배포 불필요. 이후 새명시배포까지 테스트·푸시·배포 보류. 실제 iPhone/기기 음질·장시간 플레이 미검증.

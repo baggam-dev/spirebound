@@ -13,3 +13,5 @@ Beyond opening show the SAME quiet valley with layered mist, distant medieval ci
 ```
 
 완료: 내장 imagegen 1회, 원본 exec-939cc0aa-4912-43df-8e43-5a33a5e376e8.png 보존. 1672×940 / 2,788,985 bytes. 위 두 출력 경로에 변환 없이 복사. 실제 PNG 직접 확인: 중앙 통로/여명 풍경, 주인공·문구·별도 효과 없음. 기존 hero/doors를 Canvas에서 합성.
+
+생성 원본 절대경로: C:/Users/SDSPRO/.codex/generated_images/01a13828-0d36-7292-9c64-ff00ee502b14/exec-939cc0aa-4912-43df-8e43-5a33a5e376e8.png

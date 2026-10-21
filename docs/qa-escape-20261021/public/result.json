@@ -1,0 +1,28 @@
+{
+  "base": "https://168.107.21.43",
+  "results": [
+    {
+      "kind": "auto",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "space",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "held",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}
