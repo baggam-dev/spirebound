@@ -1,0 +1,19 @@
+approach 1280 7
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.goto: net::ERR_CONNECTION_TIMED_OUT at http://localhost:5173/
+Call log:
+  - navigating to "http://localhost:5173/", waiting until "domcontentloaded"
+
+    at open (C:\baggam-dev\spirebound\tools\qa\journey-release-qa.mjs:21:10)
+    at async approach (C:\baggam-dev\spirebound\tools\qa\journey-release-qa.mjs:41:14)
+    at async file:///C:/baggam-dev/spirebound/tools/qa/journey-release-qa.mjs:84:109 {
+  log: [
+    '  - navigating to "http://localhost:5173/", waiting until "domcontentloaded"'
+  ],
+  name: 'Error'
+}
+
+Node.js v24.14.0

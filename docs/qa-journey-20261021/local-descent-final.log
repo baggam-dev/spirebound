@@ -1,0 +1,19 @@
+descent descent 1280
+descent cold 844
+descent loading-blur 844
+descent load-fail 844
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 180000ms exceeded.
+Call log:
+  - waiting for locator('.journey-descent') to be visible
+
+    at descent (C:\baggam-dev\spirebound\tools\qa\journey-release-qa.mjs:69:159)
+    at async file:///C:/baggam-dev/spirebound/tools/qa/journey-release-qa.mjs:87:183 {
+  log: [ "  - waiting for locator('.journey-descent') to be visible" ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

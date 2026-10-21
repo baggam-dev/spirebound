@@ -1,0 +1,12 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "descent-failure",
+      "width": 844,
+      "recovery": true
+    }
+  ],
+  "errors": [],
+  "productionRecordsSubmitted": 0
+}

@@ -1,0 +1,28 @@
+✔ approach ellipse catches exact boundaries and a roll crossing with both ends outside (1.7323ms)
+✔ all three pending bosses start through simulation once and stay started after save (168.2502ms)
+✔ walls, practice, the return journey and ordinary rooms cannot trigger a pending boss (32.29ms)
+✔ phase two mouth has an escape window and retains a valid saved cooldown (88.3851ms)
+✔ phase two pull respects its boundary, walls, death and old saved force duration (41.697ms)
+✔ final core and legacy phase two retain their existing force behavior (51.4072ms)
+✔ new demon uses separate clocks and wider hand salvos; old runs stay serial (60.0899ms)
+✔ foot shield blocks a complete elemental hit once and recharges without stacking (53.5994ms)
+✔ large footprints exceed four while blocking shots and preserving the exit route (36.6922ms)
+✔ eye and nose retain their patterns while phase two mouth pull is short and local (43.5797ms)
+✔ three-second specials lock their target, resume deterministically, deal two then one hearts (160.5007ms)
+✔ electric aura stuns every player action without damage and has a shared retrigger grace (50.6037ms)
+✔ summons are two per interval, capped at eight and award no kills, XP or rankings (65.9568ms)
+✔ phase changes retain pits; reentry cancels pending specials; death clears bolts and summons (81.5046ms)
+✔ two minutes of every phase stay bounded and round-trip at each checkpoint (1584.8409ms)
+✔ specials telegraph the room edge rather than leaving a safe border band (31.6273ms)
+✔ key reveal auto finishes without mutating rewards, clocks or saved pending state (1.3118ms)
+✔ loaded notice has no fresh particles; skip and cancel cannot duplicate a reveal (0.2564ms)
+✔ descent stays dark until ready; late work from a cancelled transition is ignored (0.3176ms)
+✔ journey ignores stale run/floor identity and invalid time without changing the save (0.2002ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5117.9617

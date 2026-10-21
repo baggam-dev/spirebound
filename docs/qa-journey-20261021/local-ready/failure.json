@@ -1,0 +1,124 @@
+{
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 0.2333333333333333\n- 0\n",
+  "completed": [
+    {
+      "kind": "approach",
+      "width": 1280,
+      "floor": 8,
+      "once": true,
+      "saveResume": true,
+      "bosses": 1
+    },
+    {
+      "kind": "approach",
+      "width": 1280,
+      "floor": 9,
+      "once": true,
+      "saveResume": true,
+      "bosses": 1
+    },
+    {
+      "kind": "approach",
+      "width": 1280,
+      "floor": 10,
+      "once": true,
+      "saveResume": true,
+      "bosses": 2
+    },
+    {
+      "kind": "approach",
+      "width": 844,
+      "floor": 8,
+      "once": true,
+      "saveResume": true,
+      "bosses": 1
+    },
+    {
+      "kind": "approach",
+      "width": 844,
+      "floor": 9,
+      "once": true,
+      "saveResume": true,
+      "bosses": 1
+    },
+    {
+      "kind": "approach",
+      "width": 844,
+      "floor": 10,
+      "once": true,
+      "saveResume": true,
+      "bosses": 2
+    },
+    {
+      "kind": "key-auto",
+      "width": 1280,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-auto",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-space",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-loaded",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-blur",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-portrait",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-lease",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-save-fail",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-reduced",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    }
+  ],
+  "overlay": "아래층으로 · 2층",
+  "snapshot": {
+    "floor": 1,
+    "elapsed": 0.2333333333333333,
+    "key": true,
+    "pending": false,
+    "bossPending": false,
+    "bosses": 0,
+    "hp": 10,
+    "dodge": 0,
+    "x": 480,
+    "y": 220,
+    "live": 0,
+    "persistentPresentation": false
+  },
+  "errors": [],
+  "scores": 0
+}

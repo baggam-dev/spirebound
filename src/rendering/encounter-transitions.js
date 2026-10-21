@@ -13,7 +13,7 @@ export function drawEncounterGround(c,s,r,reduced=false){
   const {x,y,rx,ry}=BOSS_APPROACH;c.save();c.translate(x,y);c.scale(1,ry/rx);c.globalAlpha=visible;
   const g=c.createRadialGradient(0,0,0,0,0,rx);g.addColorStop(0,'#bd835b28');g.addColorStop(.65,'#a7644818');g.addColorStop(1,'#a7644800');
   c.fillStyle=g;c.beginPath();c.arc(0,0,rx,0,Math.PI*2);c.fill();c.strokeStyle='#d6a57588';c.lineWidth=1.2;c.setLineDash([7,6]);c.beginPath();c.arc(0,0,rx,0,Math.PI*2);c.stroke();c.restore();
-  if(pendingBoss(s,r)){c.textAlign='center';c.font='11px Galmuri, monospace';c.fillStyle='#d5b08b';c.fillText('다가가면 전투 시작',x,y+ry+18);}
+  if(pendingBoss(s,r)){c.textAlign='center';c.font='13px Galmuri, monospace';c.fillStyle='#d5b08b';c.fillText('다가가면 전투 시작',x,y+26);}
  }
  const defeatAge=s.elapsed-(data?.defeat??-Infinity);
  if(defeatAge<.45){const p=objectPoint(r),q=defeatAge/.45;c.globalAlpha=(1-q)*.6;c.strokeStyle='#e1c48d';c.lineWidth=1.5;c.setLineDash([]);c.beginPath();c.ellipse(p.x,p.y+10,24+q*30,9+q*10,0,0,Math.PI*2);c.stroke();if(!reduced)for(let i=0;i<6;i++){c.fillStyle=i%2?'#e1c48d':'#fff0bd';c.fillRect(Math.round(p.x+Math.cos(i)*q*33),Math.round(p.y-8-q*16+i%2*4),2,2);}}

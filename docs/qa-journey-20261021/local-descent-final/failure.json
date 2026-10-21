@@ -1,0 +1,40 @@
+{
+  "error": "TimeoutError: locator.waitFor: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.journey-descent') to be visible\u001b[22m\n",
+  "completed": [
+    {
+      "kind": "descent-descent",
+      "width": 1280,
+      "clockFrozenDuringHold": true,
+      "floorChangedOnce": true
+    },
+    {
+      "kind": "descent-cold",
+      "width": 844,
+      "clockFrozenDuringHold": true,
+      "floorChangedOnce": true
+    },
+    {
+      "kind": "descent-loading-blur",
+      "width": 844,
+      "clockFrozenDuringHold": true,
+      "floorChangedOnce": true
+    }
+  ],
+  "overlay": "그림을 불러오지 못했습니다\n\n진행은 보존했습니다. 연결을 확인한 뒤 다시 불러오세요.\n\n다시 불러오기입구로",
+  "snapshot": {
+    "floor": 1,
+    "elapsed": 0.3,
+    "key": true,
+    "pending": false,
+    "bossPending": false,
+    "bosses": 0,
+    "hp": 10,
+    "dodge": 0,
+    "x": 480,
+    "y": 220,
+    "live": 0,
+    "persistentPresentation": false
+  },
+  "errors": [],
+  "scores": 0
+}

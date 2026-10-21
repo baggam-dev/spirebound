@@ -1,0 +1,72 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "auto",
+      "width": 1280,
+      "duration": 3163,
+      "noReplayOnReload": true
+    },
+    {
+      "kind": "auto",
+      "width": 844,
+      "duration": 3517,
+      "noReplayOnReload": true
+    },
+    {
+      "kind": "space",
+      "width": 844,
+      "inputConsumed": true
+    },
+    {
+      "kind": "held",
+      "width": 844,
+      "skipQueued": true,
+      "lateArtIgnored": true
+    },
+    {
+      "kind": "timeout",
+      "width": 844,
+      "artTimeoutFallback": true,
+      "lateArtIgnored": true
+    },
+    {
+      "kind": "asset-fail",
+      "width": 844,
+      "failureFallback": true
+    },
+    {
+      "kind": "blur",
+      "width": 844,
+      "clockFrozen": true,
+      "noHiddenAutoResume": true
+    },
+    {
+      "kind": "portrait",
+      "width": 844,
+      "rotationPause": true
+    },
+    {
+      "kind": "lease",
+      "width": 844,
+      "leaseLossStops": true
+    },
+    {
+      "kind": "save-fail",
+      "width": 844,
+      "noReplay": true
+    },
+    {
+      "kind": "reduced",
+      "width": 844,
+      "reducedMutedSkip": true
+    },
+    {
+      "kind": "practice",
+      "width": 844,
+      "noReplay": true
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

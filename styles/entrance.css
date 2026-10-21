@@ -17,3 +17,4 @@
 .journey-scene button{pointer-events:auto;min-height:44px;touch-action:manipulation;background:#0b1019bb;color:#eee6d0;border:1px solid #9d9a7b88;font-size:13px}
 #journeySkip{position:absolute;right:calc(16px + env(safe-area-inset-right));bottom:calc(12px + env(safe-area-inset-bottom));min-width:112px;margin:0}
 .journey-scene [hidden]{display:none}
+body:has(.journey-scene) #notice{visibility:hidden}

@@ -1,0 +1,37 @@
+approach 1280 7
+approach 1280 8
+approach 1280 9
+approach 844 7
+approach 844 8
+approach 844 9
+key auto 1280
+key auto 844
+key space 844
+key loaded 844
+key blur 844
+key portrait 844
+key lease 844
+key save-fail 844
+key reduced 844
+descent descent 1280
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 0.2333333333333333
+- 0
+
+    at descent (file:///C:/baggam-dev/spirebound/tools/qa/journey-release-qa.mjs:70:63)
+    at async file:///C:/baggam-dev/spirebound/tools/qa/journey-release-qa.mjs:86:156 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 0.2333333333333333,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0
