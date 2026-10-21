@@ -1,0 +1,17 @@
+✔ entrance token is presentation-only, once per new run and never alters save fields (2.2203ms)
+✔ skip while queued consumes the token; delayed art completion cannot restart it (0.2962ms)
+✔ continue, practice, stale run identity and finished runs cannot start an entrance (0.3214ms)
+✔ only an active independent clock advances; repeated keys and invalid deltas do not skip time (0.3077ms)
+✔ only a successfully recorded ordinary win can queue a survival scene (43.6176ms)
+✔ queued art has an independent bounded wait; cancelling consumes late art (26.5253ms)
+✔ three-second survival clock freezes all run fields and skips invalid deltas (22.0609ms)
+✔ state changes or another run cannot resume the ending (30.2423ms)
+✔ record precedes survival and remains single after skip/auto/reload tombstone (44.5521ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 706.0699

@@ -1,0 +1,211 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "draft",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-logo-v1.png",
+        "title-branch-v1.png"
+      ]
+    },
+    {
+      "kind": "auto",
+      "width": 1280,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-logo-v1.png",
+        "title-branch-v1.png",
+        "title-hero-idle-v1.png"
+      ]
+    },
+    {
+      "kind": "auto",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-branch-v1.png",
+        "title-hero-idle-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "space",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-branch-v1.png",
+        "title-hero-idle-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "click",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "blur",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "portrait",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "resize",
+      "width": 1280,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "pagehide",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "hidden",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "gap",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "reduced",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "held",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "fail",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "queued-skip",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "queued-blur",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    },
+    {
+      "kind": "save-fail",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": [
+        "title-background-v1.png",
+        "title-hero-idle-v1.png",
+        "title-branch-v1.png",
+        "title-logo-v1.png"
+      ]
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

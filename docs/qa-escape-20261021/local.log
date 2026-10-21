@@ -1,0 +1,14 @@
+auto 1280
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Error: 게임 상태를 저장할 수 없습니다. 현재 도전은 닫지 말고 진단 기록을 내려받아 보관하세요.
+    at eval (eval at evaluate (:311:30), <anonymous>:6:72)
+    at async <anonymous>:337:30
+    at open (C:\baggam-dev\spirebound\tools\qa\escape-release-qa.mjs:16:10)
+    at async file:///C:/baggam-dev/spirebound/tools/qa/escape-release-qa.mjs:31:87 {
+  log: []
+}
+
+Node.js v24.14.0

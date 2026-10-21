@@ -1,0 +1,12 @@
+{
+  "error": "Error: page.evaluate: Error: 게임 상태를 저장할 수 없습니다. 현재 도전은 닫지 말고 진단 기록을 내려받아 보관하세요.\n    at eval (eval at evaluate (:311:30), <anonymous>:6:72)\n    at async <anonymous>:337:30",
+  "results": [],
+  "overlay": "살아서 내려와라.\n\n새로운 원정\n기록실\n설정\n명예의 전당\n전투 훈련\n\n이동하며 자동 공격 · 진행 상황은 이 브라우저에 저장됩니다.",
+  "record": {
+    "history": [],
+    "ended": null,
+    "saved": false
+  },
+  "errors": [],
+  "scores": 0
+}

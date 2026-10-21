@@ -1,14 +1,18 @@
 import {titleArt} from './title-scene.js';
-let preparation=null;
+let preparation=null,gatePreparation=null;
 const load=name=>new Promise(resolve=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=()=>resolve(null);image.src=new URL('../../assets/images/'+name,import.meta.url).href;});
 function leafBounds(image,side){
  const c=document.createElement('canvas');c.width=image.naturalWidth;c.height=image.naturalHeight;const g=c.getContext('2d',{willReadFrequently:true});g.drawImage(image,0,0);const d=g.getImageData(0,0,c.width,c.height).data,start=Math.floor(side*c.width/2),end=Math.floor((side+1)*c.width/2);let left=end,right=start,top=c.height,bottom=-1;
  for(let y=0;y<c.height;y++)for(let x=start;x<end;x++)if(d[(y*c.width+x)*4+3]>=32){left=Math.min(left,x);right=Math.max(right,x);top=Math.min(top,y);bottom=Math.max(bottom,y);}
  return bottom<top?null:{x:left,y:top,w:right-left+1,h:bottom-top+1};
 }
+export function prepareGateDoors(){
+ if(!gatePreparation)gatePreparation=load('entrance-doors-v1.png').then(doors=>{if(!doors)return null;const leaves=[leafBounds(doors,0),leafBounds(doors,1)];return leaves.every(Boolean)?{doors,leaves}:null;}).catch(()=>null);
+ const current=gatePreparation;current.then(value=>{if(!value&&gatePreparation===current)gatePreparation=null;});return current;
+}
 export function prepareEntranceArt(){
  if(preparation)return preparation;
- const work=(async()=>{const [plates,doors,background,hero]=await Promise.all([load('entrance-plates-v1.png'),load('entrance-doors-v1.png'),titleArt.background.decode().then(()=>true,()=>false),titleArt.hero.decode().then(()=>true,()=>false)]);if(!plates||!doors||!background||!hero)return null;const ratio=plates.naturalWidth/(plates.naturalHeight/2),leaves=[leafBounds(doors,0),leafBounds(doors,1)];return ratio>1.6&&ratio<1.9&&leaves.every(Boolean)?{plates,doors,leaves,background:titleArt.background,hero:titleArt.hero}:null;})();
+ const work=(async()=>{const [plates,gate,background,hero]=await Promise.all([load('entrance-plates-v1.png'),prepareGateDoors(),titleArt.background.decode().then(()=>true,()=>false),titleArt.hero.decode().then(()=>true,()=>false)]);if(!plates||!gate||!background||!hero)return null;const ratio=plates.naturalWidth/(plates.naturalHeight/2);return ratio>1.6&&ratio<1.9?{plates,...gate,background:titleArt.background,hero:titleArt.hero}:null;})();
  preparation=new Promise(resolve=>{const timer=setTimeout(()=>resolve(null),15000);work.then(value=>{clearTimeout(timer);resolve(value);},()=>{clearTimeout(timer);resolve(null);});});
  const current=preparation;current.then(value=>{if(!value&&preparation===current)preparation=null;});return current;
 }
