@@ -1,3 +1,15 @@
+## 최신 복사 가능한 인계 — 몬스터 전투 배포 완료 (2026-10-21)
+```text
+C:\baggam-dev\spirebound/main. 사용자 ‘배포 및 다음 검토’ 완료. 운영 release-20261021-172036-67029e / runtime871623a / client·API0.45.0-prebeta / https://168.107.21.43/. 2834e60/fbe0029/5a4ec73 누적 구현과 871623a 검증 수정 main푸시·공식329파일 배포. 이동형 사수 사선 확보 우회·고정조준/발사벽재검사, 근접5종 .18~.3초/추적자.1초·상층.25초 준비→원교차/벽·단발·후딜·접촉대체, 거인/돌진병6포즈좌우·저장/방진입 보호. 기존 고정형·곡사·광역 역할 유지. 별도 광포화 연무/불티·정예호박/시련보라/수호청백/실returnGuardianId금백, 최고위상1개+얇은광포화·상세10/완화5. 승인PNG/원본prompt보존·재생성없음.
+검증에서 실제 시련 돌진 회복 중 근접 끼어듦 chargerRecovering으로 차단, 첫층팩40MB 초과는 이미 feedback걷기로 대체된 brute-walk 중복요청만 제외/원본·후속fallback보존. 시련 이름 중복 제거·광포화 대비 보완. 완화모드 universal CSS animation-duration이 canvas font/style비용을 키워 평균86ms: 실제 애니메이션 대상만 제한해 최종 평균17.46/p95 18.2ms(가로에뮬60RAF). client/API0.45 동기화, 최신버전랭킹정책/원본DB·시즌v13·지도35·점수식·저장 보존.
+full-v2 616/616은 로직 수정 후/마지막 표현CSS 전, 이후 final-targeted23·실UI20·최종상태3·HUD5 확인. 공개 전투3/실온라인UI2(session/runs200·0.45·10층·첫방5/6·ready)/HTTPS204소스·PNG바이트·TLS308·쿠키·이관·랭킹조회 통과. API직접시작2는 UI2와 별도. 오류0/생산점수0. 실제 public/brute-844-early.png와status-844.png 확인. 서버27/nginx/health/index/TLS 성공·이전133538-f2c264/DB보존. docs/qa-monster-combat-20261021/RELEASE_SUMMARY.md 참조. 실패로그도 보존: 구기대/QA촬영 지연·장판fixture만료/잘못된HUD도구명, 수정후재검증. 실제iPhone/장시간미검증. 모든QA/공식배포명령·로컬5173종료/차단없음.
+다음 검토 docs/monster-group-ai-review-20261021.md: 지형만 충돌하는 moveBody/한점추적을 개선할 군집간격·근접공격자리 분산·후열사수·동시예고. 검토만/임의구현 없음. 우선 체력/피해/이속 유지·좁은통로/회피공간/부하 확인 방향. BGM보류. 이번배포권한완료/이후 기본수정·문서·로컬커밋만, 새명시배포전 테스트푸시배포공개검증금지. 다음 시작은 gitstatus/WORK_STATUS→TODO→최근LOG→HANDOFF. 이 블록은 배포후 문서마감커밋에 포함하며 실제 HEAD/origin·clean은 git으로 확인. 한국어기본5줄/실제PNG절대경로.
+```
+[공식 배포 활성 / 공개 QA 중 — 2026-10-21 KST]
+- release-20261021-172036-67029e / runtime871623a / client·API0.45.0-prebeta가 HTTPS운영에활성. 공식329파일/서버27/인증서·nginx·health/index일치성공, 이전133538-f2c264보존. deploy.log 근거.
+- 다음공개전투3(session67638)·실온라인2+HTTPS파일쿠키조회(session54855)확인중/점수제출금지. 로컬서버종료. 성공후4문서/요약·HANDOFF복사블록마감/커밋푸시·clean/동기확인. 다음군집AI는검토문서만/BGM보류.
+[공식 배포 업로드 중 — 2026-10-21 KST]
+- 871623a까지 main푸시성공. 공식 deploy.ps1/session36363: release-20261021-172036-67029e 후보/329runtime 패키지·scp업로드중(승격/공개확인전), 아직운영0.44완료상태와구분. 로컬서버5173종료/다른QA종료. 다음deploy.log 종료확인→공개전투3/실온라인2/TLS·소스PNG일치→최종4문서/커밋푸시. 근거 docs/qa-monster-combat-20261021/RELEASE_SUMMARY.md.
 [로컬 최종 검증 완료 / 배포 진행 — 2026-10-21 KST]
 - 최종CSS후 status-final-v3 3종/기존HUD-final-v2 5장면 통과·오류0/점수0. 평균/p95 PC17.45/18.3ms·가로17.44/18.3·완화17.46/18.2, 장판실제그림/저장정상. 전체616은앞선로직수정후/최종표현CSS전이며 최종23·UI로후속검증. hud-final 잘못된파일명실행전실패→정확도구재실행성공 기록.
 - 다음검토 docs/monster-group-ai-review-20261021.md: 군집간격·근접자리분산/사수후열·동시예고. 검토만/새구현없음. BGM보류. 다음커밋main푸시→공식배포→공개전투/온라인/TLS·소스PNG일치확인. 현재 운영0.44유지/공개성공전완료주장금지.

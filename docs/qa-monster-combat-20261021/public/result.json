@@ -1,0 +1,30 @@
+{
+  "base": "https://168.107.21.43",
+  "results": [
+    {
+      "kind": "brute",
+      "width": 844,
+      "hp": 8,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "nav-archer",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "status",
+      "width": 844,
+      "resume": true,
+      "frameTiming": {
+        "samples": 60,
+        "mean": 17.453333334922778,
+        "p95": 18.200000000000728
+      },
+      "hazardDraws": 184
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}
