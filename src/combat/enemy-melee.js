@@ -1,3 +1,4 @@
+import {chargerRecovering} from './balance.js';
 import {segmentBlocked} from '../world/terrain.js';
 export const meleeProfiles=Object.freeze({
  charger:{kind:'axe',warning:.2,radius:58,halfAngle:Math.PI/3,damage:9,recover:.65},
@@ -26,7 +27,7 @@ export function updateEnemyMelee(e,p,obstacles,dt){
   if(attack.stage==='strike'){attack.stage='recover';attack.time=profile.recover;return {handled:true,damage:0};}
   delete e.meleeAttack;e.meleeCooldown=.25;return {handled:true,damage:0};
  }
- const busy=e.eliteWarning>0||e.phase||e.attackPhase||e.darkAttack||e.gravity||Number.isFinite(e.chargeAngle);
+ const busy=chargerRecovering(e)||e.eliteWarning>0||e.phase||e.attackPhase||e.darkAttack||e.gravity||Number.isFinite(e.chargeAngle);
  const near=Math.hypot(e.x-p.x,e.y-p.y)<=radius+14&&!segmentBlocked(e,p,obstacles,0);
  if(busy||!near)return {handled:false,damage:0};
  if(e.meleeCooldown>0)return {handled:true,damage:0};

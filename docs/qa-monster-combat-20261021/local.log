@@ -1,0 +1,22 @@
+brute 1280
+brute 844
+charger 844
+demonSoldier 844
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(after.enemies[0].melee)
+
+    at file:///C:/baggam-dev/spirebound/tools/qa/monster-combat-release-qa.mjs:45:302 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

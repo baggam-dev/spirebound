@@ -19,7 +19,7 @@ test('an already activated source starts immediately; replacing a deferred sourc
 });
 test('all floor packs point at existing originals and floor1 excludes later bosses and halls',()=>{
  for(let floor=0;floor<10;floor++)for(const file of assetPlanFiles(floorAssetPlan(floor)))assert.equal(existsSync('assets/images/'+file),true,file);
- const files=assetPlanFiles(floorAssetPlan(0));assert.ok(files.includes('hero-reference-atlas.png'));assert.ok(files.includes('chaser-walk-atlas.png'));
+ const files=assetPlanFiles(floorAssetPlan(0));assert.ok(files.includes('enemy-melee-poses-v1.png'));assert.ok(files.includes('feedback-named-brute-v1.png'));assert.equal(files.includes('brute-walk-atlas.png'),false);assert.ok(files.includes('hero-reference-atlas.png'));assert.ok(files.includes('chaser-walk-atlas.png'));
  assert.equal(files.some(f=>/demon|mordo|commander|royal-hall|warden|prism-hall/.test(f)),false);
  assert.ok(files.reduce((n,f)=>n+statSync('assets/images/'+f).size,0)<40_000_000,'first floor pack should stay below 40 MB without modifying art');
  assert.equal(assetPlanFiles(floorAssetPlan(8)).includes('demon-core-body-atlas.png'),false);assert.equal(assetPlanFiles(floorAssetPlan(9)).includes('demon-core-body-atlas.png'),true);

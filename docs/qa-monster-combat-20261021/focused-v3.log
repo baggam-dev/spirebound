@@ -1,0 +1,47 @@
+✔ gate knight health upgrade preserves health ratio and cannot stack across reloads (110.1425ms)
+✔ gate knight walks ten percent faster and has shorter post-attack cooldown (2.141ms)
+✔ a mobile shooter routes around cover to a clear shot without crossing it (10.9062ms)
+✔ enclosed shooters report no route and never accept a blocked shot (4.7811ms)
+✔ fixed aim checks the committed lane rather than following a dodging player (0.3957ms)
+✔ all new melee profiles telegraph, hit once and keep a recovery window (1.1193ms)
+✔ melee windup keeps its direction and rechecks walls and current player position (0.6129ms)
+✔ committed jumps and charge windups do not also start a close-range swing (0.523ms)
+✔ mid-windup save resumes exactly once and invalid new combat fields are rejected (110.1164ms)
+✔ status priority follows real guardian identity without changing actors or room (0.4052ms)
+✔ compact early floors include all facilities and preserve saved maps and tutorial gates (8445.304ms)
+✔ trial charger gives a full contact-free stationary recovery after each charge and reload (43.8532ms)
+✔ sniper and gravity caster move between attacks and hold their position while channeling (1.2338ms)
+✔ Velkar both stages have deliberate recovery, blink followup and serializable longer clocks (191.2866ms)
+✔ named guardians have separate identity and art while display scale never changes combat radius (58.1938ms)
+✔ fast rounds bounce once then disappear at the next wall (2.6585ms)
+✔ cover absorbs fast bullets and swept collision detects crossed player (1.0716ms)
+✔ laser routes before aiming; fixed aim survives save and a new wall clips the active beam (5.053ms)
+✔ laser damages only once per burst and can be avoided by walking (0.8715ms)
+✔ ricochet fires a fixed symmetric pair only after warning (0.5204ms)
+✔ first main consumes one earned point and permanently excludes other elements (87.3896ms)
+✔ legacy mixed elements preserve total investment through explicit main choice and one-time refunds (94.6998ms)
+✔ choosing an unlearned main from an old build spends one refunded point (46.5025ms)
+✔ rare support weights are lower and offers never duplicate (95.3962ms)
+✔ level one frost freezes on the fourth primary impact and cannot permanently lock enemies (3.4913ms)
+✔ frozen attack phases and elite salvos stop and resume without restarting telegraphs (42.6879ms)
+✔ repeat adds one delayed same-direction primary without repeating the split fan (30.6463ms)
+✔ homing has a bounded turn rate, avoids walls and keeps projectile speed (1.6392ms)
+✔ Vergas strikes nearby grounded enemies after preparation and damage support does not automatically unlock the ultimate (35.4212ms)
+✔ main lock, delayed homing shots and frozen states round-trip and reject corruption (45.7761ms)
+✔ freezing stops unlaunched poison warnings but does not stop airborne projectiles (0.3727ms)
+✔ Vergas respects intervening cover and cannot damage airborne enemies (25.1114ms)
+✔ fire splash and field have enlarged radius and increased damage (0.4259ms)
+✔ split secondary arrows carry the chosen element with proportional damage (29.9022ms)
+✔ knight strike lands after a quarter second and reaches the expanded warning edge (3.0019ms)
+✔ king second phase changes pursuit, fan count, available attacks and combo cadence (118.2492ms)
+✔ gravity activates after half a second with stronger pull and a shorter recast (1.1901ms)
+✔ rare ascent visitors are restricted to floors three through six and replace one enemy (13.2487ms)
+✔ slime ordinary salvos scale five/two/zero with phase and persist their timer (1.8374ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9620.4492

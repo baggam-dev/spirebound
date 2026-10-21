@@ -1,0 +1,21 @@
+status 1280
+status 844
+status-reduced 844
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(before.hazards.length>=1)
+
+    at file:///C:/baggam-dev/spirebound/tools/qa/monster-combat-release-qa.mjs:44:513 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

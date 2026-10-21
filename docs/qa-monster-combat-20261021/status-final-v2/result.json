@@ -1,0 +1,37 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "status",
+      "width": 1280,
+      "resume": true,
+      "frameTiming": {
+        "samples": 60,
+        "mean": 17.388333332935964,
+        "p95": 18.199999999999818
+      }
+    },
+    {
+      "kind": "status",
+      "width": 844,
+      "resume": true,
+      "frameTiming": {
+        "samples": 60,
+        "mean": 17.5150000011921,
+        "p95": 18.300000000000182
+      }
+    },
+    {
+      "kind": "status-reduced",
+      "width": 844,
+      "resume": true,
+      "frameTiming": {
+        "samples": 60,
+        "mean": 70.93000000079473,
+        "p95": 105.69999999999982
+      }
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

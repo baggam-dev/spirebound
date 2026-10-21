@@ -1,0 +1,87 @@
+✔ ultimate requires an explicit choice and casts three local pulses with cooldown (78.1806ms)
+✔ brute locks a safe landing, crosses cover, and leaves a recovery window (3.5442ms)
+✔ short melee attack is telegraphed and can be escaped without dodge (0.582ms)
+✔ imported images do not request a source until their pack is activated (3.2913ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.5534ms)
+✖ all floor packs point at existing originals and floor1 excludes later bosses and halls (57.7924ms)
+✔ selected portraits do not require every monster or any dungeon hall (0.9199ms)
+✔ fresh return saves prepare descent-only enemies without making first ascent download them (0.3924ms)
+✔ rare upper-floor expeditions and chest bosses are loaded from the actual roster (0.4669ms)
+✔ floor discovery covers later rooms while a combat check can inspect only its current room (0.4501ms)
+✔ knife reach triggers before contact, resolves rapidly and respects cooldown (1.6345ms)
+✔ escaping blade reach and walls avoid damage at resolution (0.9698ms)
+✔ simulation replaces immediate contact and save/resume retains blade timing (119.6387ms)
+✔ freezing prevents chaser blade progression (74.0993ms)
+✔ wide slash intersects player circle at radial and angular boundaries (0.5759ms)
+✔ windup locks direction and survives save without following escape behind (69.8726ms)
+✖ grounded contact and timed weapon strikes share one-heart immunity (290.9447ms)
+✔ airborne bodies cannot contact hit, entry grace protects nearby bodies (30.5307ms)
+✔ ricochet projectile inflicts one heart (32.2788ms)
+✔ ascent gates require a clear room; descent gates allow living bosses and stairs (28.4487ms)
+✔ fountain generation includes empty, bounded solo fights, and full combined fights (1519.9242ms)
+✔ combined chest and fountain each pay once and persist independently (54.7076ms)
+✔ trial enemies equal floor number with bounded repeats, stagger and persistent count (1939.8252ms)
+✔ essence counts save without applying bonuses twice and show multiplicative cooldown (38.6432ms)
+✔ a mobile shooter routes around cover to a clear shot without crossing it (10.6766ms)
+✔ enclosed shooters report no route and never accept a blocked shot (4.0015ms)
+✔ fixed aim checks the committed lane rather than following a dodging player (0.286ms)
+✔ all new melee profiles telegraph, hit once and keep a recovery window (1.0965ms)
+✔ melee windup keeps its direction and rechecks walls and current player position (0.5507ms)
+✔ committed jumps and charge windups do not also start a close-range swing (0.3419ms)
+✔ mid-windup save resumes exactly once and invalid new combat fields are rejected (96.2418ms)
+✔ status priority follows real guardian identity without changing actors or room (0.4331ms)
+✔ reroll consumes one run charge, preserves points and stores exact candidates (138.829ms)
+✔ legacy reroll allowance is once only and invalid contexts do not spend it (78.6034ms)
+✔ two warnings defer another start but never interrupt an attack already telegraphed (0.5971ms)
+✔ charging into cover stops contact damage and creates a saved opening (55.8304ms)
+✔ volley elites stop their normal AI after their added salvo (43.7416ms)
+✔ warden slam, prism laser and expired slime aura expose their owner (1.9011ms)
+✔ support-led formations contain a guardian, escorts and staggered initial clocks (0.5484ms)
+✔ crowded charging packs do not starve ranged attacks or reset deferred cooldowns (304.8862ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 38
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4909.5466
+
+✖ failing tests:
+
+test at tests\unit\asset-requests.test.js:20:1
+✖ all floor packs point at existing originals and floor1 excludes later bosses and halls (57.7924ms)
+  AssertionError [ERR_ASSERTION]: first floor pack should stay below 40 MB without modifying art
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/asset-requests.test.js:24:9)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\unit\feedback20.test.js:14:1
+✖ grounded contact and timed weapon strikes share one-heart immunity (290.9447ms)
+  AssertionError [ERR_ASSERTION]: brute
+  
+  8 !== 9
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/feedback20.test.js:15:444)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 8,
+    expected: 9,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

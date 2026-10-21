@@ -1,0 +1,124 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "brute",
+      "width": 1280,
+      "hp": 8,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "brute",
+      "width": 844,
+      "hp": 8,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "charger",
+      "width": 844,
+      "hp": 9,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "demonSoldier",
+      "width": 844,
+      "hp": 9,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "demonCaptain",
+      "width": 844,
+      "hp": 8,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "ambusher",
+      "width": 844,
+      "hp": 9,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "wall",
+      "width": 844,
+      "hp": 10,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "behind",
+      "width": 844,
+      "hp": 10,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "nav-archer",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "nav-scatter",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "nav-laser",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "nav-ricochet",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "nav-demonArcher",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "nav-astralSniper",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "nav-strafer",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "nav-vera",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "nav-commander",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "status",
+      "width": 1280,
+      "resume": true
+    },
+    {
+      "kind": "status",
+      "width": 844,
+      "resume": true
+    },
+    {
+      "kind": "status-reduced",
+      "width": 844,
+      "resume": true
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

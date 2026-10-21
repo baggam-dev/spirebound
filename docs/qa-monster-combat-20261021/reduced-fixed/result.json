@@ -1,0 +1,18 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "status-reduced",
+      "width": 844,
+      "resume": true,
+      "frameTiming": {
+        "samples": 60,
+        "mean": 17.523333334525432,
+        "p95": 18.699999999999818
+      },
+      "hazardDraws": 182
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

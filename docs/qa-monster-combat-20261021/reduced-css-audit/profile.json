@@ -1,0 +1,182 @@
+[
+  {
+    "function": "(idle)",
+    "file": "",
+    "line": 0,
+    "samples": 484
+  },
+  {
+    "function": "(program)",
+    "file": "",
+    "line": 0,
+    "samples": 183
+  },
+  {
+    "function": "text",
+    "file": "/src/game/game.js",
+    "line": 387,
+    "samples": 128
+  },
+  {
+    "function": "updateHUD",
+    "file": "/src/ui/hud.js",
+    "line": 26,
+    "samples": 13
+  },
+  {
+    "function": "draw",
+    "file": "/src/game/game.js",
+    "line": 389,
+    "samples": 11
+  },
+  {
+    "function": "(garbage collector)",
+    "file": "",
+    "line": 0,
+    "samples": 5
+  },
+  {
+    "function": "rect",
+    "file": "/src/game/game.js",
+    "line": 386,
+    "samples": 4
+  },
+  {
+    "function": "drawEnvironmentFloorLife",
+    "file": "/src/rendering/environment-ambience.js",
+    "line": 27,
+    "samples": 4
+  },
+  {
+    "function": "drawImage",
+    "file": "",
+    "line": 0,
+    "samples": 3
+  },
+  {
+    "function": "drawImage",
+    "file": "",
+    "line": 0,
+    "samples": 3
+  },
+  {
+    "function": "stepRun",
+    "file": "/src/game/simulation.js",
+    "line": 72,
+    "samples": 3
+  },
+  {
+    "function": "tickEffects",
+    "file": "/src/progression/progression.js",
+    "line": 68,
+    "samples": 3
+  },
+  {
+    "function": "validateRun",
+    "file": "/src/persistence/storage.js",
+    "line": 34,
+    "samples": 3
+  },
+  {
+    "function": "frame",
+    "file": "/src/game/game.js",
+    "line": 441,
+    "samples": 2
+  },
+  {
+    "function": "matchMedia",
+    "file": "",
+    "line": 0,
+    "samples": 2
+  },
+  {
+    "function": "fillRect",
+    "file": "",
+    "line": 0,
+    "samples": 2
+  },
+  {
+    "function": "drawImage",
+    "file": "",
+    "line": 0,
+    "samples": 2
+  },
+  {
+    "function": "fillRect",
+    "file": "",
+    "line": 0,
+    "samples": 2
+  },
+  {
+    "function": "drawWalkingFrame",
+    "file": "/src/rendering/locomotion.js",
+    "line": 16,
+    "samples": 2
+  },
+  {
+    "function": "drawUpper",
+    "file": "/src/rendering/upper-visuals.js",
+    "line": 50,
+    "samples": 2
+  },
+  {
+    "function": "drawEnemyField",
+    "file": "/src/rendering/enemy-attack-vfx.js",
+    "line": 6,
+    "samples": 2
+  },
+  {
+    "function": "validateRun",
+    "file": "/src/persistence/storage.js",
+    "line": 34,
+    "samples": 2
+  },
+  {
+    "function": "drawStoneWalls",
+    "file": "/src/rendering/stone-walls.js",
+    "line": 103,
+    "samples": 1
+  },
+  {
+    "function": "drawWardenAwakening",
+    "file": "/src/rendering/warden-awakening.js",
+    "line": 6,
+    "samples": 1
+  },
+  {
+    "function": "getElementById",
+    "file": "",
+    "line": 0,
+    "samples": 1
+  },
+  {
+    "function": "",
+    "file": "/src/ui/hud.js",
+    "line": 12,
+    "samples": 1
+  },
+  {
+    "function": "drawOpenings",
+    "file": "/src/combat/tactics.js",
+    "line": 12,
+    "samples": 1
+  },
+  {
+    "function": "updateMobileActions",
+    "file": "/src/ui/mobile-hud.js",
+    "line": 26,
+    "samples": 1
+  },
+  {
+    "function": "rollAction",
+    "file": "/src/combat/roll.js",
+    "line": 7,
+    "samples": 1
+  },
+  {
+    "function": "drawMonsterStatusEffects",
+    "file": "/src/rendering/monster-status-effects.js",
+    "line": 14,
+    "samples": 1
+  }
+]

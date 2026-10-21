@@ -1,0 +1,41 @@
+{
+  "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok(after.enemies[0].melee)\n",
+  "completed": [
+    {
+      "kind": "brute",
+      "width": 1280,
+      "hp": 8,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "brute",
+      "width": 844,
+      "hp": 8,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "charger",
+      "width": 844,
+      "hp": 9,
+      "noRepeatOnResume": true
+    }
+  ],
+  "overlay": "TAKE A BREATH\n잠시 쉬어가기\n\n게임과 기록 시간이 멈췄습니다.\n진행 상황이 저장되었습니다.\n\n계속 탐험저장 후 입구로조작 안내소리·화면 설정원정 기록 · 도감진단 기록 받기",
+  "snapshot": {
+    "hp": 9,
+    "elapsed": 1.100000000000001,
+    "floor": 0,
+    "phase": "playing",
+    "enemies": [
+      {
+        "type": "demonSoldier",
+        "x": 430,
+        "y": 300,
+        "cd": 999
+      }
+    ],
+    "projectiles": 0
+  },
+  "errors": [],
+  "scores": 0
+}

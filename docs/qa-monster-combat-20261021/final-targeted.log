@@ -1,0 +1,31 @@
+✔ imported images do not request a source until their pack is activated (2.0565ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.3607ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (30.4941ms)
+✔ selected portraits do not require every monster or any dungeon hall (0.9235ms)
+✔ fresh return saves prepare descent-only enemies without making first ascent download them (0.4287ms)
+✔ rare upper-floor expeditions and chest bosses are loaded from the actual roster (0.4265ms)
+✔ floor discovery covers later rooms while a combat check can inspect only its current room (1.5269ms)
+✔ a mobile shooter routes around cover to a clear shot without crossing it (7.4182ms)
+✔ enclosed shooters report no route and never accept a blocked shot (3.2126ms)
+✔ fixed aim checks the committed lane rather than following a dodging player (0.2445ms)
+✔ all new melee profiles telegraph, hit once and keep a recovery window (0.7236ms)
+✔ melee windup keeps its direction and rechecks walls and current player position (0.3482ms)
+✔ committed jumps and charge windups do not also start a close-range swing (0.2742ms)
+✔ mid-windup save resumes exactly once and invalid new combat fields are rejected (82.0485ms)
+✔ status priority follows real guardian identity without changing actors or room (0.2925ms)
+✔ reroll consumes one run charge, preserves points and stores exact candidates (79.8877ms)
+✔ legacy reroll allowance is once only and invalid contexts do not spend it (47.5734ms)
+✔ two warnings defer another start but never interrupt an attack already telegraphed (0.6086ms)
+✔ charging into cover stops contact damage and creates a saved opening (49.626ms)
+✔ volley elites stop their normal AI after their added salvo (37.1662ms)
+✔ warden slam, prism laser and expired slime aura expose their owner (1.3818ms)
+✔ support-led formations contain a guardian, escorts and staggered initial clocks (0.4199ms)
+✔ crowded charging packs do not starve ranged attacks or reset deferred cooldowns (266.1152ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1220.2851

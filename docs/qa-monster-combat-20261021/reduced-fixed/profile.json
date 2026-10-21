@@ -1,0 +1,182 @@
+[
+  {
+    "function": "(idle)",
+    "file": "",
+    "line": 0,
+    "samples": 286
+  },
+  {
+    "function": "(program)",
+    "file": "",
+    "line": 0,
+    "samples": 161
+  },
+  {
+    "function": "text",
+    "file": "/src/game/game.js",
+    "line": 387,
+    "samples": 135
+  },
+  {
+    "function": "draw",
+    "file": "/src/game/game.js",
+    "line": 389,
+    "samples": 12
+  },
+  {
+    "function": "updateHUD",
+    "file": "/src/ui/hud.js",
+    "line": 26,
+    "samples": 12
+  },
+  {
+    "function": "fillRect",
+    "file": "",
+    "line": 0,
+    "samples": 8
+  },
+  {
+    "function": "rect",
+    "file": "/src/game/game.js",
+    "line": 386,
+    "samples": 4
+  },
+  {
+    "function": "drawMonsterStatusEffects",
+    "file": "/src/rendering/monster-status-effects.js",
+    "line": 14,
+    "samples": 3
+  },
+  {
+    "function": "frame",
+    "file": "/src/game/game.js",
+    "line": 441,
+    "samples": 2
+  },
+  {
+    "function": "drawEnvironmentFloorLife",
+    "file": "/src/rendering/environment-ambience.js",
+    "line": 27,
+    "samples": 2
+  },
+  {
+    "function": "rect",
+    "file": "/src/game/game.js",
+    "line": 386,
+    "samples": 2
+  },
+  {
+    "function": "fillRect",
+    "file": "",
+    "line": 0,
+    "samples": 2
+  },
+  {
+    "function": "drawEnemyField",
+    "file": "/src/rendering/enemy-attack-vfx.js",
+    "line": 6,
+    "samples": 2
+  },
+  {
+    "function": "(garbage collector)",
+    "file": "",
+    "line": 0,
+    "samples": 2
+  },
+  {
+    "function": "update",
+    "file": "/src/game/game.js",
+    "line": 368,
+    "samples": 1
+  },
+  {
+    "function": "actorPlan",
+    "file": "/src/rendering/asset-packs.js",
+    "line": 13,
+    "samples": 1
+  },
+  {
+    "function": "",
+    "file": "/src/game/simulation.js",
+    "line": 136,
+    "samples": 1
+  },
+  {
+    "function": "",
+    "file": "/src/game/simulation.js",
+    "line": 108,
+    "samples": 1
+  },
+  {
+    "function": "moveBody",
+    "file": "/src/world/terrain.js",
+    "line": 23,
+    "samples": 1
+  },
+  {
+    "function": "drawImage",
+    "file": "",
+    "line": 0,
+    "samples": 1
+  },
+  {
+    "function": "stroke",
+    "file": "",
+    "line": 0,
+    "samples": 1
+  },
+  {
+    "function": "fill",
+    "file": "",
+    "line": 0,
+    "samples": 1
+  },
+  {
+    "function": "environmentPlan",
+    "file": "/src/rendering/environment-ambience.js",
+    "line": 14,
+    "samples": 1
+  },
+  {
+    "function": "fillRect",
+    "file": "",
+    "line": 0,
+    "samples": 1
+  },
+  {
+    "function": "drawEnemyGroundTransitions",
+    "file": "/src/rendering/enemy-attack-vfx.js",
+    "line": 55,
+    "samples": 1
+  },
+  {
+    "function": "querySelector",
+    "file": "",
+    "line": 0,
+    "samples": 1
+  },
+  {
+    "function": "",
+    "file": "/src/game/game.js",
+    "line": 404,
+    "samples": 1
+  },
+  {
+    "function": "drawPixelActor",
+    "file": "/src/rendering/pixel-world.js",
+    "line": 43,
+    "samples": 1
+  },
+  {
+    "function": "drawImage",
+    "file": "",
+    "line": 0,
+    "samples": 1
+  },
+  {
+    "function": "save",
+    "file": "",
+    "line": 0,
+    "samples": 1
+  }
+]

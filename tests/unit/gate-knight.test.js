@@ -11,5 +11,5 @@ test('gate knight health upgrade preserves health ratio and cannot stack across 
 });
 test('gate knight walks ten percent faster and has shorter post-attack cooldown',()=>{
  const e={id:0,type:'starKnight',gateTitle:'Cald',hp:100,max:100,x:300,y:270,cd:2},p={x:600,y:270},r={enemies:[e],obstacles:[]};updateUpper(e,p,r,.1,[],()=>{});assert.ok(Math.abs(e.x-309.68)<1e-9);
- startUpperAttack(e,'slash',p,r);updateUpper(e,p,r,.5,[],()=>{});assert.equal(e.darkAttack.time,.5);updateUpper(e,p,r,.5,[],()=>{});assert.equal(e.cd,.585);
+ startUpperAttack(e,'slash',p,r);updateUpper(e,p,r,.25,[],()=>{});assert.equal(e.darkAttack.time,.25);updateUpper(e,p,r,.25,[],()=>{});assert.equal(e.cd,.585);
 });

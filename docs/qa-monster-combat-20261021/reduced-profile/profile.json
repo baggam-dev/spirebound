@@ -1,0 +1,182 @@
+[
+  {
+    "function": "(program)",
+    "file": "",
+    "line": 0,
+    "samples": 1174
+  },
+  {
+    "function": "text",
+    "file": "/src/game/game.js",
+    "line": 387,
+    "samples": 1112
+  },
+  {
+    "function": "(idle)",
+    "file": "",
+    "line": 0,
+    "samples": 802
+  },
+  {
+    "function": "updateHUD",
+    "file": "/src/ui/hud.js",
+    "line": 26,
+    "samples": 44
+  },
+  {
+    "function": "(garbage collector)",
+    "file": "",
+    "line": 0,
+    "samples": 14
+  },
+  {
+    "function": "stepRun",
+    "file": "/src/game/simulation.js",
+    "line": 72,
+    "samples": 12
+  },
+  {
+    "function": "draw",
+    "file": "/src/game/game.js",
+    "line": 389,
+    "samples": 10
+  },
+  {
+    "function": "parseSave",
+    "file": "/src/persistence/storage.js",
+    "line": 128,
+    "samples": 6
+  },
+  {
+    "function": "update",
+    "file": "/src/game/game.js",
+    "line": 368,
+    "samples": 5
+  },
+  {
+    "function": "encodeSave",
+    "file": "/src/persistence/storage.js",
+    "line": 132,
+    "samples": 4
+  },
+  {
+    "function": "validateRun",
+    "file": "/src/persistence/storage.js",
+    "line": 34,
+    "samples": 4
+  },
+  {
+    "function": "rect",
+    "file": "/src/game/game.js",
+    "line": 386,
+    "samples": 4
+  },
+  {
+    "function": "frame",
+    "file": "/src/game/game.js",
+    "line": 441,
+    "samples": 3
+  },
+  {
+    "function": "",
+    "file": "/src/game/game.js",
+    "line": 404,
+    "samples": 3
+  },
+  {
+    "function": "drawMonsterStatusEffects",
+    "file": "/src/rendering/monster-status-effects.js",
+    "line": 14,
+    "samples": 3
+  },
+  {
+    "function": "",
+    "file": "/src/combat/tactics.js",
+    "line": 5,
+    "samples": 2
+  },
+  {
+    "function": "updateUpper",
+    "file": "/src/combat/upper-floors.js",
+    "line": 56,
+    "samples": 2
+  },
+  {
+    "function": "updateElites",
+    "file": "/src/combat/elites.js",
+    "line": 10,
+    "samples": 2
+  },
+  {
+    "function": "floorAssetPlan",
+    "file": "/src/rendering/asset-packs.js",
+    "line": 24,
+    "samples": 2
+  },
+  {
+    "function": "validateRun",
+    "file": "/src/persistence/storage.js",
+    "line": 34,
+    "samples": 2
+  },
+  {
+    "function": "validateSynergyEnemy",
+    "file": "/src/persistence/synergy-save.js",
+    "line": 8,
+    "samples": 2
+  },
+  {
+    "function": "setItem",
+    "file": "",
+    "line": 0,
+    "samples": 2
+  },
+  {
+    "function": "fillRect",
+    "file": "",
+    "line": 0,
+    "samples": 2
+  },
+  {
+    "function": "setProperty",
+    "file": "",
+    "line": 0,
+    "samples": 2
+  },
+  {
+    "function": "drawImage",
+    "file": "",
+    "line": 0,
+    "samples": 2
+  },
+  {
+    "function": "drawImage",
+    "file": "",
+    "line": 0,
+    "samples": 2
+  },
+  {
+    "function": "drawEnvironmentFloorLife",
+    "file": "/src/rendering/environment-ambience.js",
+    "line": 27,
+    "samples": 2
+  },
+  {
+    "function": "objectPoint",
+    "file": "/src/world/object-positions.js",
+    "line": 4,
+    "samples": 2
+  },
+  {
+    "function": "warningCount",
+    "file": "/src/combat/tactics.js",
+    "line": 5,
+    "samples": 1
+  },
+  {
+    "function": "steering",
+    "file": "/src/world/terrain.js",
+    "line": 54,
+    "samples": 1
+  }
+]

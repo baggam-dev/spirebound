@@ -23,7 +23,8 @@ function actorPlan(key){
 }
 export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
  if(!Number.isInteger(floor)||floor<0||floor>9)throw Error('Invalid asset floor');
- const modules=[...common,...early],feedback=['named-brute'];
+ // The first-floor brute uses mandatory feedback walking; its legacy walk sheet is redundant.
+ const modules=[...common,...early.filter(name=>floor!==0||name!=='brute-walk')],feedback=['named-brute'];
  if(floor===1)modules.push(...warden,'warden-room-art');
  if(floor>=3)modules.push('flower-sprite','prism-sprite','slime-sprite','prism-presentation-art');
  if(floor>=6){modules.push(...upper);feedback.push('upper');}

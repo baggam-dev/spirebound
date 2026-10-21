@@ -18,9 +18,11 @@ export function drawMonsterStatusEffects(c,run,room,{reduced=false}={}){
  for(const [index,e] of actors.entries()){
   const type=monsterStatus(e,room),s=styles[type],b=body(e),t=reduced||e.frozen>0?0:time+(e.id||0)*.31,full=index<(reduced?5:10),foot=e.y+b.feet-2;
   if(run.key||e.escapeDepth){
-   if(full&&!reduced)drawShadowAura(c,e,t,{color:'#a44365',width:b.r*2.3,height:b.h+18,opacity:type?.16:.22,speed:1.5,reduced});
-   c.save();c.strokeStyle='#c36b88';c.globalAlpha=full?.45:.26;
-   for(const side of [-1,1]){const x=e.x+side*(b.r*.65),lift=full&&!reduced?Math.sin(t*5+side)*2:0;c.beginPath();c.moveTo(x,foot-3);c.lineTo(x+side*3,foot-13);c.lineTo(x-side*2,foot-24+lift);c.stroke();
+   if(full&&!reduced)drawShadowAura(c,e,t,{color:'#cf567a',width:b.r*2.3,height:b.h+18,opacity:type?.24:.34,speed:1.5,reduced});
+   c.save();c.strokeStyle='#d57c97';c.globalAlpha=full?.55:.3;
+   for(const side of [-1,1]){const x=e.x+side*(b.r*.65),lift=full&&!reduced?Math.sin(t*5+side)*2:0;
+    if(full){c.globalAlpha=reduced?.28:.52;c.beginPath();c.moveTo(x,foot-3);c.bezierCurveTo(x+side*10,foot-b.h*.3,x-side*3,foot-b.h*.4,x+side*4+lift,foot-b.h*.83);c.bezierCurveTo(x+side*9,foot-b.h*.59,x+side*12,foot-b.h*.31,x,foot-3);c.stroke();c.fillStyle='#c1507722';c.fill();}
+    c.beginPath();c.moveTo(x,foot-3);c.lineTo(x+side*3,foot-13);c.lineTo(x-side*2,foot-24+lift);c.stroke();
     if(full&&!reduced)for(let k=0;k<2;k++){const q=(t*.7+k*.47)%1;c.globalAlpha=(1-q)*.5;c.fillStyle='#d98b9a';c.fillRect(Math.round(x+side*q*5),Math.round(foot-16-q*b.h),2,2);}}
    c.restore();
   }

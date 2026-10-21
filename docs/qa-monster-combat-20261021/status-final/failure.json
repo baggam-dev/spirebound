@@ -1,0 +1,74 @@
+{
+  "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok(before.hazards.length>=1)\n",
+  "completed": [
+    {
+      "kind": "status",
+      "width": 1280,
+      "resume": true,
+      "frameTiming": {
+        "samples": 60,
+        "mean": 19.358333333333334,
+        "p95": 18.300000000000182
+      }
+    },
+    {
+      "kind": "status",
+      "width": 844,
+      "resume": true,
+      "frameTiming": {
+        "samples": 60,
+        "mean": 18.653333333730703,
+        "p95": 18.399999999999636
+      }
+    }
+  ],
+  "overlay": "TAKE A BREATH\n잠시 쉬어가기\n\n게임과 기록 시간이 멈췄습니다.\n진행 상황이 저장되었습니다.\n\n계속 탐험저장 후 입구로조작 안내소리·화면 설정원정 기록 · 도감진단 기록 받기",
+  "snapshot": {
+    "hp": 10,
+    "elapsed": 4.8333333333333215,
+    "floor": 0,
+    "phase": "playing",
+    "enemies": [
+      {
+        "type": "archer",
+        "x": 228.02180111550962,
+        "y": 289.1886535645457,
+        "cd": 994.9666666666703
+      },
+      {
+        "type": "starKnight",
+        "x": 471.5320306714775,
+        "y": 422.68675376173064,
+        "cd": 995.4166666666699
+      },
+      {
+        "type": "royalGuard",
+        "x": 479.9026098425973,
+        "y": 429.8149587009348,
+        "cd": 995.4166666666699
+      },
+      {
+        "type": "starKnight",
+        "x": 480.0708086220185,
+        "y": 429.3273180908242,
+        "cd": 994.9666666666703
+      },
+      {
+        "type": "brute",
+        "x": 527.0496653978441,
+        "y": 366.1468826743562,
+        "melee": {
+          "stage": "windup",
+          "time": 0.050000000000000044,
+          "aim": 2.205823062185224
+        },
+        "meleeCooldown": 0,
+        "cd": 999
+      }
+    ],
+    "hazards": [],
+    "projectiles": 0
+  },
+  "errors": [],
+  "scores": 0
+}

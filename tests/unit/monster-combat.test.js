@@ -40,7 +40,7 @@ test('melee windup keeps its direction and rechecks walls and current player pos
  assert.equal(meleeIntersects({x:0,y:0},{x:72.01,y:0},0,58,Math.PI/3),false);
 });
 test('committed jumps and charge windups do not also start a close-range swing',()=>{
- for(const e of [{type:'brute',phase:'air'},{type:'charger',chargeAngle:0},{type:'demonCaptain',attackPhase:'warning'}]){
+ for(const e of [{type:'brute',phase:'air'},{type:'charger',chargeAngle:0},{type:'charger',trialChampion:true,cd:2},{type:'demonCaptain',attackPhase:'warning'}]){
   Object.assign(e,{x:200,y:200});assert.equal(updateEnemyMelee(e,{x:220,y:200},[],.01).handled,false);assert.equal(e.meleeAttack,undefined);
  }
 });
