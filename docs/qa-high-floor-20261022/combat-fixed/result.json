@@ -1,0 +1,139 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "starKnight",
+      "width": 1280,
+      "saveResume": true,
+      "elapsed": 2.633333333333329,
+      "warnings": 0,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 19.204166666467987,
+        "p95": 17.299999999999272
+      }
+    },
+    {
+      "kind": "royalGuard",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.4833333333333294,
+      "warnings": 1,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 18.85999999980132,
+        "p95": 33.30000000000018
+      }
+    },
+    {
+      "kind": "astralSniper",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.466666666666663,
+      "warnings": 0,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 18.20750000059605,
+        "p95": 33.30000000000018
+      }
+    },
+    {
+      "kind": "gravityMage",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.6833333333333287,
+      "warnings": 0,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 20.617499999602636,
+        "p95": 33.399999999999636
+      }
+    },
+    {
+      "kind": "starBearer",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.549999999999996,
+      "warnings": 0,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 20.00750000059605,
+        "p95": 33.5
+      }
+    },
+    {
+      "kind": "pulseTurret",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.5666666666666624,
+      "warnings": 0,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 18.189166666666665,
+        "p95": 33.30000000000018
+      }
+    },
+    {
+      "kind": "riftHunter",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.2166666666666637,
+      "warnings": 0,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 17.401666666467985,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "kind": "demonSoldier",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.966666666666661,
+      "warnings": 0,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 22.81416666646798,
+        "p95": 33.399999999999636
+      }
+    },
+    {
+      "kind": "demonCaptain",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.883333333333328,
+      "warnings": 0,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 22.1733333337307,
+        "p95": 33.30000000000018
+      }
+    },
+    {
+      "kind": "crowd",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 3.4666666666666592,
+      "warnings": 2,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 27.086666666467984,
+        "p95": 49.80000000000018
+      }
+    },
+    {
+      "kind": "crowd-reduced",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.8999999999999946,
+      "warnings": 2,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 23.264166666467986,
+        "p95": 33.600000000000364
+      }
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

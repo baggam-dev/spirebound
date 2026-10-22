@@ -13,10 +13,10 @@ infernal.regions=[
 ];
 const pack=floor=>floor===6||floor===7?royal:floor===8||floor===9?infernal:null;
 // v2 has hand-inspected row gutters; keep old regions for source-load fallback.
-const rows=[0,273,522,750,973,1221,1448];
+const rows=[0,273,522,750,973,1221,1448],columns=[0,273,543,790,1086];
 for(const [offset,p] of [[0,royal],[3,infernal]]){
  p.legacyFile=p.file;p.legacyRegions=p.regions;p.file='high-hall-atlas-v2.png';
- p.regions=Array.from({length:12},(_,i)=>[i%4/4,rows[Math.floor(i/4)+offset]/1448,1/4,(rows[Math.floor(i/4)+offset+1]-rows[Math.floor(i/4)+offset])/1448]);
+ p.regions=Array.from({length:12},(_,i)=>[columns[i%4]/1086,rows[Math.floor(i/4)+offset]/1448,(columns[i%4+1]-columns[i%4])/1086,(rows[Math.floor(i/4)+offset+1]-rows[Math.floor(i/4)+offset])/1448]);
 }
 export const isUpperHallFloor=floor=>pack(floor)!==null;
 export const royalHallLoaded=()=>royal.frames.length===12;

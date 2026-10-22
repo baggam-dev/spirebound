@@ -1,0 +1,92 @@
+✔ imported images do not request a source until their pack is activated (3.8154ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.5351ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (47.2209ms)
+✔ selected portraits do not require every monster or any dungeon hall (0.9857ms)
+✔ fresh return saves prepare descent-only enemies without making first ascent download them (0.4219ms)
+✔ rare upper-floor expeditions and chest bosses are loaded from the actual roster (0.4289ms)
+✔ floor discovery covers later rooms while a combat check can inspect only its current room (1.6741ms)
+✔ knife reach triggers before contact, resolves rapidly and respects cooldown (2.3292ms)
+✔ escaping blade reach and walls avoid damage at resolution (0.9674ms)
+✔ simulation replaces immediate contact and save/resume retains blade timing (134.266ms)
+✔ freezing prevents chaser blade progression (58.3089ms)
+✔ wide slash intersects player circle at radial and angular boundaries (0.5591ms)
+✔ windup locks direction and survives save without following escape behind (48.1662ms)
+✔ crowded melee choose distinct approach positions without writing actors or the player (4.3766ms)
+✔ attack, frozen, boss, named and fixed bodies never receive formation movement (0.9139ms)
+✔ separation preserves the movement budget and cannot push the player or redirect a new windup (1.7441ms)
+✔ a close ranged actor repositions during cooldown but a ready shot is never held for a group slot (1.4815ms)
+✔ waiting movement stays bounded, respects cover and leaves player coordinates unchanged (2.4838ms)
+✔ new room/actor references discard hints and normal single-enemy pursuit remains available (0.3702ms)
+✔ chaser shares the two-warning budget without canceling an existing fixed-aim attack (0.6144ms)
+✔ an elite volley does not begin on top of a committed chaser slash or charger dash (0.4301ms)
+✔ all nine generic kinds start their own controller, while bosses and named gates keep legacy behavior (4.5559ms)
+✔ halberd is a fixed narrow thrust rather than the old shared sector and is blocked by cover (3.53ms)
+✔ shield advances within its budget, keeps old frontal reduction and lowers the guard in recovery (0.7554ms)
+✔ sniper locks both marks, fires exactly twice and preserves the saved second aim (1.0761ms)
+✔ turret uses only two fixed four-way volleys, with a separate second warning (0.6344ms)
+✔ gravity has no warning pull, a finite active window and cancels on freeze (0.5361ms)
+✔ resonance is a single cooldown pulse with a floor and does not affect a named/boss ally (0.5109ms)
+✔ rift marks a side landing, slashes once and returns without an arrival/return damage event (0.4841ms)
+✔ soldier steps no more than 24px and hits only once at the end of the strike (0.512ms)
+✔ captain gets one dash and one separately warned axe finish; close range skips the dash (1.4775ms)
+✔ every produced stage is serializable and pending combos retain the shared warning reservation (54.3247ms)
+✖ renderer leaves actors and combat data unchanged and high-floor art is not in the first-floor pack (3.6609ms)
+✔ real simulation saves a resolved thrust and resume never applies that hit a second time (123.24ms)
+✔ versioned save round trips projectiles, phases, food, and metrics (78.3558ms)
+✔ rejects broken values, impossible current room, unsupported version and corrupt checksum (50.4451ms)
+✔ backup recovers last good save and terminal tombstone prevents dead-run resurrection (62.2259ms)
+✔ storage exceptions become explicit failure, not a false save confirmation (24.3499ms)
+✔ quota on the optional backup still saves the current run without losing the old main (58.5356ms)
+✔ invalid game state is reported separately from browser storage errors (27.8254ms)
+✔ legacy raw saves are accepted and strengthened only once (38.9682ms)
+✔ reroll consumes one run charge, preserves points and stores exact candidates (109.5286ms)
+✔ legacy reroll allowance is once only and invalid contexts do not spend it (62.9867ms)
+✔ two warnings defer another start but never interrupt an attack already telegraphed (0.4935ms)
+✔ charging into cover stops contact damage and creates a saved opening (59.743ms)
+✔ volley elites stop their normal AI after their added salvo (40.8531ms)
+✔ warden slam, prism laser and expired slime aura expose their owner (1.4152ms)
+✔ support-led formations contain a guardian, escorts and staggered initial clocks (0.4946ms)
+✔ crowded charging packs do not starve ranged attacks or reset deferred cooldowns (650.4827ms)
+✔ layouts preserve central routes, facilities, perimeter and some empty rooms (18.724ms)
+✔ movement and dodge cannot tunnel through cover, sliding remains possible (1.4106ms)
+✔ enemies can route around cover to player (6.5868ms)
+✔ spawns are clear and terrain survives frenzy and serialization (2264.3494ms)
+✔ doors describe visited-room edges without revealing neighboring rooms (0.8038ms)
+✔ new runs actually contain persisted obstacle arrays (502.5137ms)
+✔ minimap neighbor lookup shares tutorial entrance restrictions even from another room (25.2347ms)
+✔ knight strike lands after a quarter second and reaches the expanded warning edge (2.2464ms)
+✔ king second phase changes pursuit, fan count, available attacks and combo cadence (80.9452ms)
+✔ gravity activates after half a second with stronger pull and a shorter recast (1.1843ms)
+✔ rare ascent visitors are restricted to floors three through six and replace one enemy (10.4399ms)
+✔ slime ordinary salvos scale five/two/zero with phase and persist their timer (1.8549ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 60
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5095.8266
+
+✖ failing tests:
+
+test at tests\unit\high-floor-patterns.test.js:54:1
+✖ renderer leaves actors and combat data unchanged and high-floor art is not in the first-floor pack (3.6609ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(assetPlanFiles(floorAssetPlan(6)).includes('high-hall-atlas-v2.png'))
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/high-floor-patterns.test.js:57:9)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

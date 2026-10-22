@@ -1,0 +1,54 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "brute",
+      "width": 1280,
+      "hp": 8,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "brute",
+      "width": 844,
+      "hp": 8,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "wall",
+      "width": 844,
+      "hp": 10,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "behind",
+      "width": 844,
+      "hp": 10,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "nav-vera",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "nav-commander",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "status-reduced",
+      "width": 844,
+      "resume": true,
+      "frameTiming": {
+        "samples": 60,
+        "mean": 16.44500000119209,
+        "p95": 16.800000000000182
+      },
+      "hazardDraws": 210
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

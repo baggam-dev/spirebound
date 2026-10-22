@@ -1,0 +1,28 @@
+✔ imported images do not request a source until their pack is activated (12.5069ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (1.2019ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (213.2336ms)
+✔ selected portraits do not require every monster or any dungeon hall (2.294ms)
+✔ fresh return saves prepare descent-only enemies without making first ascent download them (1.2033ms)
+✔ rare upper-floor expeditions and chest bosses are loaded from the actual roster (1.4592ms)
+✔ floor discovery covers later rooms while a combat check can inspect only its current room (12.396ms)
+✔ all nine generic kinds start their own controller, while bosses and named gates keep legacy behavior (8.6116ms)
+✔ halberd is a fixed narrow thrust rather than the old shared sector and is blocked by cover (48.1613ms)
+✔ shield advances within its budget, keeps old frontal reduction and lowers the guard in recovery (1.2256ms)
+✔ sniper locks both marks, fires exactly twice and preserves the saved second aim (2.3967ms)
+✔ turret uses only two fixed four-way volleys, with a separate second warning (1.3041ms)
+✔ gravity has no warning pull, a finite active window and cancels on freeze (2.0046ms)
+✔ resonance is a single cooldown pulse with a floor and does not affect a named/boss ally (0.9566ms)
+✔ rift marks a side landing, slashes once and returns without an arrival/return damage event (0.7549ms)
+✔ soldier steps no more than 24px and hits only once at the end of the strike (39.1499ms)
+✔ captain gets one dash and one separately warned axe finish; close range skips the dash (1.6951ms)
+✔ every produced stage is serializable and pending combos retain the shared warning reservation (117.5364ms)
+✔ renderer leaves actors and combat data unchanged and high-floor art is not in the first-floor pack (7.7587ms)
+✔ real simulation saves a resolved thrust and resume never applies that hit a second time (482.5057ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4898.5797
