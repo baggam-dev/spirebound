@@ -2,7 +2,7 @@
 import {chargerRecovering} from '../combat/balance.js';
 let goals=new WeakMap();
 export function replaceEnemyMovementGoals(next){goals=next;}
-export function enemyMovementLocked(e){return e.hp<=0||e.frozen>0||e.spawnGrace>0||e.opening>0||e.eliteWarning>0||e.meleeAttack||e.meleeCooldown>0||chargerRecovering(e)||e.darkAttack||e.gravity||e.attackPhase||e.phase||Number.isFinite(e.chargeAngle)||e.chaserWindup>0||e.chaserStrike>0;}
+export function enemyMovementLocked(e){return e.hp<=0||e.frozen>0||e.spawnGrace>0||e.opening>0||e.eliteWarning>0||e.highAttack||e.meleeAttack||e.meleeCooldown>0||chargerRecovering(e)||e.darkAttack||e.gravity||e.attackPhase||e.phase||Number.isFinite(e.chargeAngle)||e.chaserWindup>0||e.chaserStrike>0;}
 export function enemyMovementGoal(e,player){const g=goals.get(e);return g&&!enemyMovementLocked(e)&&(!player||g.player===player)?g:null;}
 export function enemyNavigationTarget(e,target){return enemyMovementGoal(e,target)?.target||target;}
 export function enemySeparationStep(e,dx,dy){

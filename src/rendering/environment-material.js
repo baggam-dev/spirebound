@@ -26,11 +26,11 @@ function palette(c,prop){
  }
  g.putImageData(pixels,0,0);
 }
-export function environmentMaterial(source,prop=false,wall=false){
+export function environmentMaterial(source,prop=false,wall=false,{preserve=false}={}){
  // Keep aspect ratios, including narrow flags and tall gates. Original PNGs stay intact.
  const scale=Math.min(1,(prop?64:96)/Math.max(source.width,source.height)),c=surface(Math.max(1,Math.round(source.width*scale)),Math.max(1,Math.round(source.height*scale)));
  if(!c)return source;const g=c.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(source,0,0,c.width,c.height);
- if(reference&&!prop){
+ if(reference&&!prop&&!preserve){
   // Reuse the approved raster material sample itself, rather than amplifying the
   // old atlas noise. Original theme chroma survives in this derived render cache.
   const old=g.getImageData(0,0,c.width,c.height).data,mean=[0,0,0];let count=0;

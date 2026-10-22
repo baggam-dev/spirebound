@@ -1,0 +1,5 @@
+export const highFloorKinds={starKnight:'guard',royalGuard:'thrust',astralSniper:'twoShot',gravityMage:'gravity',starBearer:'resonate',pulseTurret:'cross',riftHunter:'rift',demonSoldier:'soldier',demonCaptain:'captain'};
+export const highFloorEnemy=e=>!!highFloorKinds[e.type]&&e.type!=='boss'&&!e.gateTitle;
+export const highShapes={guard:{range:100,half:1.05,damage:9},thrust:{range:135,width:10,damage:9},butt:{range:46,half:1.2,damage:9},rift:{range:82,half:.9,damage:9},soldier:{range:58,half:1.05,damage:9},captain:{range:70,half:1.15,damage:12}};
+export const highStages={guard:['advance','windup','strike','recover'],thrust:['windup','strike','recover'],butt:['windup','strike','recover'],twoShot:['windup','windup2','recover'],gravity:['windup','channel','recover'],resonate:['windup','channel','recover'],cross:['windup','windup2','recover'],rift:['windup','windup2','strike','return','recover'],soldier:['windup','strike','recover'],captain:['windup','dash','windup2','strike','recover']};
+export const highWarning=e=>e.hp>0&&e.highAttack&&e.highAttack.stage!=='recover';

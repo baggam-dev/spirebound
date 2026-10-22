@@ -44,7 +44,7 @@ export function tickUpperState(e,p,r,dt,bullets){
  if(!(e.opening>0))delete e.counterReason;
  if(e.darkFlash){e.darkFlash.time=Math.max(0,e.darkFlash.time-dt);if(!e.darkFlash.time)delete e.darkFlash;}
  e.kneel=Math.max(0,(e.kneel||0)-dt);
- if(e.type==='starBearer'&&e.hp>0&&!(e.frozen>0))for(const n of r.enemies)if(n!==e&&n.hp>0&&dist(n,e)<170&&n.cd>0)n.cd=Math.max(0,n.cd-dt*.25);
+ if(e.type==='starBearer'&&e.gateTitle&&e.hp>0&&!(e.frozen>0))for(const n of r.enemies)if(n!==e&&n.hp>0&&dist(n,e)<170&&n.cd>0)n.cd=Math.max(0,n.cd-dt*.25);
  if(e.hp<=0||e.variant!=='king')return false;
  const phase=kingPhase(e);e.kingStage??=phase;
  if(phase>e.kingStage){e.kingStage=phase;e.kingTransition=1.4;e.cd=1;delete e.darkAttack;delete e.darkFlash;delete e.guardPortal;e.opening=0;delete e.counterReason;e.kneel=0;e.frozen=0;for(const n of r.enemies){delete n.darkAttack;delete n.darkFlash;n.cd=Math.max(1,n.cd||0);}for(const b of bullets)if(b.enemy)b.life=0;}

@@ -55,10 +55,10 @@ export const feedbackSpritesReady=Promise.all(Object.values(sheetReady)).then(ok
 export const feedbackSpritesReadyFor=groups=>Promise.all(groups.map(name=>sheetReady[name])).then(ok=>ok.every(Boolean));
 export function drawFeedbackSprite(c,e,time=0,{reduced=false,staticPose=false,attack=null,local=false,face:forcedFace}={}){
  const key=feedbackSpriteKey(e),pair=frames.get(key);if(!pair)return false;
- const state=e.commander||{},active=!!(e.meleeAttack&&e.meleeAttack.stage!=='recover'||attack&&['windup','strike','channel','air'].includes(attack.stage)||state.volley||state.snipe||state.ricochet||state.rain||e.gravity||e.phase==='swing'||e.phase==='windup'||e.phase==='air'||['warning','dash','firing','strike','windup'].includes(e.attackPhase));
+ const state=e.commander||{},active=!!(e.highAttack&&e.highAttack.stage!=='recover'||e.meleeAttack&&e.meleeAttack.stage!=='recover'||attack&&['windup','strike','channel','air'].includes(attack.stage)||state.volley||state.snipe||state.ricochet||state.rain||e.gravity||e.phase==='swing'||e.phase==='windup'||e.phase==='air'||['warning','dash','firing','strike','windup'].includes(e.attackPhase));
  const f=pair[active?1:0];let m=motion.get(e);if(!m){m={x:e.x,time,face:1};motion.set(e,m);}
  if(time!==m.time){if(Math.abs(e.x-m.x)>.1&&Math.abs(e.x-m.x)<36)m.face=Math.sign(e.x-m.x);m.x=e.x;m.time=time;}
- const aim=e.meleeAttack?.aim??e.darkAttack?.aim??e.darkFlash?.aim??state.volley?.aim??state.snipe?.aim??state.ricochet?.aim??e.aim??e.facing;
+ const aim=e.highAttack?.aim??e.meleeAttack?.aim??e.darkAttack?.aim??e.darkFlash?.aim??state.volley?.aim??state.snipe?.aim??state.ricochet?.aim??e.aim??e.facing;
  const face=forcedFace??(active&&Number.isFinite(aim)?(Math.cos(aim)<0?-1:1):staticPose?1:m.face);
  const blocked=active||e.kingTransition>0||e.kneel>0||state.transition>0||state.blinkFlash>0;
  const g=locomotion(e,time,{reduced,staticPose,blocked,stride:key==='brute'?30:24}),foot=key.startsWith('commander')?29:key==='brute'?24:21;

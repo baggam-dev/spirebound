@@ -12,6 +12,12 @@ infernal.regions=[
  [0,2/3,.33,1/3],[.365,2/3,.13,1/3],[.55,2/3,.12,1/3],[.72,2/3,.26,1/3]
 ];
 const pack=floor=>floor===6||floor===7?royal:floor===8||floor===9?infernal:null;
+// v2 has hand-inspected row gutters; keep old regions for source-load fallback.
+const rows=[0,273,522,750,973,1221,1448];
+for(const [offset,p] of [[0,royal],[3,infernal]]){
+ p.legacyFile=p.file;p.legacyRegions=p.regions;p.file='high-hall-atlas-v2.png';
+ p.regions=Array.from({length:12},(_,i)=>[i%4/4,rows[Math.floor(i/4)+offset]/1448,1/4,(rows[Math.floor(i/4)+offset+1]-rows[Math.floor(i/4)+offset])/1448]);
+}
 export const isUpperHallFloor=floor=>pack(floor)!==null;
 export const royalHallLoaded=()=>royal.frames.length===12;
 export const infernalHallLoaded=()=>infernal.frames.length===12;
@@ -21,16 +27,17 @@ function load(p){
  if(p.pending)return p.pending;
  p.pending=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
   const image=new DeferredImage();image.onload=async()=>{try{await environmentReferenceReady;
+   if(!p.fallback&&(image.naturalWidth!==1086||image.naturalHeight!==1448)){image.onerror();return;}
    const next=[];
    for(let i=0;i<12;i++){
     const [rx,ry,rw,rh]=p.regions[i],sw=rw*image.naturalWidth,sh=rh*image.naturalHeight,scan=document.createElement('canvas');scan.width=Math.ceil(sw);scan.height=Math.ceil(sh);const c=scan.getContext('2d');c.drawImage(image,rx*image.naturalWidth,ry*image.naturalHeight,sw,sh,0,0,sw,sh);
     const pixels=c.getImageData(0,0,scan.width,scan.height),data=pixels.data;let left=scan.width,top=scan.height,right=-1,bottom=-1;
     for(let y=0;y<scan.height;y++)for(let x=0;x<scan.width;x++){const alpha=(y*scan.width+x)*4+3;if(data[alpha]<64){data[alpha]=0;continue;}left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);}
-    if(right<=left||bottom<=top){resolve(false);return;}c.putImageData(pixels,0,0);
-    const width=right-left+1,height=bottom-top+1,target=i<4?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<4?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(environmentMaterial(canvas,i>=4,i===3));
+    if(right<=left||bottom<=top){image.onerror();return;}c.putImageData(pixels,0,0);
+    const width=right-left+1,height=bottom-top+1,target=i<4?128:Math.min(128,width/height*96),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(target));canvas.height=i<4?128:Math.max(1,Math.ceil(target*height/width));const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.drawImage(scan,left,top,width,height,0,0,canvas.width,canvas.height);next.push(environmentMaterial(canvas,i>=4,i===3,{preserve:true}));
    }
    p.frames=next;p.epoch++;p.floors.clear();resolve(true);
-  }catch{resolve(false);}};image.onerror=()=>resolve(false);image.src=new URL('../../assets/images/'+p.file,import.meta.url).href;
+  }catch{image.onerror();}};image.onerror=()=>{if(!p.fallback){p.fallback=true;p.file=p.legacyFile;p.regions=p.legacyRegions;image.src=new URL('../../assets/images/'+p.file,import.meta.url).href;}else resolve(false);};image.src=new URL('../../assets/images/'+p.file,import.meta.url).href;
  });return p.pending;
 }
 export const loadRoyalHallArt=()=>load(royal);
@@ -42,8 +49,7 @@ export function drawUpperHallProp(c,floor,index,x,feet,width){
 export function drawUpperHallFloor(c,s,r){
  const p=pack(s.floor);if(!p)return false;if(p.frames.length!==12){load(p);return false;}const seed=seedFor(s,r),key=[seed,s.floor,r.type,r.gate,p.epoch].join(':');let layer=p.floors.get(r);
  if(!layer||layer.key!==key){const canvas=document.createElement('canvas');canvas.width=960;canvas.height=540;const cc=canvas.getContext('2d');cc.imageSmoothingEnabled=false;cc.fillStyle=p===royal?'#333641':'#2a292e';cc.fillRect(0,0,960,540);
-  for(let row=0;row<6;row++)for(let col=0;col<8;col++){const x=col*144-(row%2?72:0),y=row*96,h=(seed+Math.imul(row+5,7919)+Math.imul(col+11,17389))>>>0;cc.save();cc.translate(x+72,y+48);cc.rotate((h>>>5)%2*Math.PI);cc.drawImage(p.frames[h%3],-72,-48,144,96);cc.restore();}
-  if(s.floor===6){cc.strokeStyle='#b4a5831c';cc.lineWidth=1;cc.beginPath();cc.ellipse(480,270,130,80,0,0,Math.PI*2);cc.stroke();}
+  for(let row=0;row<6;row++)for(let col=0;col<8;col++){const x=col*144-(row%2?72:0),y=row*96,h=(seed+Math.imul(row+5,7919)+Math.imul(col+11,17389))>>>0;cc.save();cc.translate(x+72,y+48);cc.rotate((h>>>5)%2*Math.PI);cc.drawImage(p.frames[h%2],-74,-50,148,100);cc.restore();}
   const shade=cc.createRadialGradient(480,270,100,480,270,540);shade.addColorStop(0,'#17162420');shade.addColorStop(1,'#12121d70');cc.fillStyle=shade;cc.fillRect(0,0,960,540);layer={key,canvas:environmentSurface(canvas)};p.floors.set(r,layer);while(p.floors.size>3)p.floors.delete(p.floors.keys().next().value);
  }
  c.save();c.beginPath();c.rect(26,45,908,455);c.clip();c.imageSmoothingEnabled=false;c.drawImage(layer.canvas,0,0);c.restore();return true;

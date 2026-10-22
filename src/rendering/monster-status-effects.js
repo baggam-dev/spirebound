@@ -16,9 +16,9 @@ export function drawMonsterStatusEffects(c,run,room,{reduced=false}={}){
  const actors=living.filter(e=>monsterStatus(e,room)||run.key||e.escapeDepth).sort((a,b)=>(styles[monsterStatus(b,room)]?.rank||0)-(styles[monsterStatus(a,room)]?.rank||0)||Math.hypot(a.x-run.player.x,a.y-run.player.y)-Math.hypot(b.x-run.player.x,b.y-run.player.y));
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.lineWidth=1.2;
  for(const [index,e] of actors.entries()){
-  const type=monsterStatus(e,room),s=styles[type],b=body(e),t=reduced||e.frozen>0?0:time+(e.id||0)*.31,full=index<(reduced?5:10),foot=e.y+b.feet-2;
+  const type=monsterStatus(e,room),s=styles[type],b=body(e),t=reduced||e.frozen>0?0:time+(e.id||0)*.31,full=index<(reduced?5:10),foot=e.y+b.feet-2,high=run.floor>=6||(e.tier||0)>=6;
   if(run.key||e.escapeDepth){
-   if(full&&!reduced)drawShadowAura(c,e,t,{color:'#cf567a',width:b.r*2.3,height:b.h+18,opacity:type?.24:.34,speed:1.5,reduced});
+   if(full&&!reduced)drawShadowAura(c,e,t,{color:high?'#a660b1':'#cf567a',width:b.r*(high?1.9:2.3),height:b.h+(high?28:18),opacity:type?.24:.34,speed:1.5,reduced});
    c.save();c.strokeStyle='#d57c97';c.globalAlpha=full?.55:.3;
    for(const side of [-1,1]){const x=e.x+side*(b.r*.65),lift=full&&!reduced?Math.sin(t*5+side)*2:0;
     if(full){c.globalAlpha=reduced?.28:.52;c.beginPath();c.moveTo(x,foot-3);c.bezierCurveTo(x+side*10,foot-b.h*.3,x-side*3,foot-b.h*.4,x+side*4+lift,foot-b.h*.83);c.bezierCurveTo(x+side*9,foot-b.h*.59,x+side*12,foot-b.h*.31,x,foot-3);c.stroke();c.fillStyle='#c1507722';c.fill();}
@@ -30,6 +30,7 @@ export function drawMonsterStatusEffects(c,run,room,{reduced=false}={}){
   c.save();c.globalAlpha=full?.52:.3;ring(c,e.x,foot,b.r,s.color,type==='elite');
   if(full){
    c.strokeStyle=s.color;
+   if(high){c.save();c.globalAlpha=.32;c.setLineDash([]);c.beginPath();for(let i=0;i<=6;i++){const a=i*TAU/6,x=e.x+Math.cos(a)*(b.r-3),y=foot+Math.sin(a)*(b.r-3)*.43;if(i)c.lineTo(x,y);else c.moveTo(x,y);}c.stroke();for(let i=0;i<3;i++){const a=i*TAU/3;c.beginPath();c.moveTo(e.x+Math.cos(a)*(b.r-3),foot+Math.sin(a)*(b.r-3)*.43);c.lineTo(e.x+Math.cos(a+Math.PI)*(b.r-3),foot+Math.sin(a+Math.PI)*(b.r-3)*.43);c.stroke();}c.restore();}
    if(type==='trial'||type==='key'||type==='guardian'){
     ring(c,e.x,foot,b.r+4,s.color,true);
     for(let i=0;i<(reduced?3:6);i++){const a=i*TAU/(reduced?3:6)+(reduced?0:t*.18),x=e.x+Math.cos(a)*b.r,y=foot+Math.sin(a)*b.r*.43;rune(c,x,y,2.5);}

@@ -173,7 +173,7 @@ export const assetFiles={
   "strafer-reference-atlas.png"
  ],
  "upper-hall-art": [
-  "royal-hall-atlas-v1.png",
+  "high-hall-atlas-v2.png","royal-hall-atlas-v1.png",
   "infernal-hall-atlas-v1.png"
  ],
  "velkar-presentation-art": [
