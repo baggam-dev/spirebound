@@ -13,7 +13,7 @@ export function updateElites(room,dt,bullets,player){
   if(e.elite==='guardian')for(const n of room.enemies)if(n!==e&&n.hp>0&&Math.hypot(n.x-e.x,n.y-e.y)<140)n.protected=true;
   if(e.elite==='volley'){
    if(e.eliteWarning>0&&!enemyShotLane(e,e.eliteAim,player,room.obstacles)){e.eliteWarning=0;e.eliteCooldown=.2;}
-   if(e.meleeAttack||e.darkAttack||e.attackPhase||e.phase)continue;
+   if(e.meleeAttack||e.darkAttack||e.attackPhase||e.phase||e.chaserWindup>0||e.chaserStrike>0||Number.isFinite(e.chargeAngle))continue;
    if(e.eliteWarning>0){e.eliteWarning-=dt;if(e.eliteWarning<=0){e.eliteWarning=0;if(enemyShotLane(e,e.eliteAim,player,room.obstacles))for(let i=-1;i<=1;i++)emitShot(e,e.eliteAim+i*.18,180,bullets);e.eliteCooldown=3;openGuard(e,1.25);}}
    else if(e.eliteCooldown<=0&&warningCount(room,e)<2&&clearEnemyShot(e,player,room.obstacles,650)){e.eliteWarning=.8;e.eliteAim=Math.atan2(player.y-e.y,player.x-e.x);}
   }

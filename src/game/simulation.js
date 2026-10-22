@@ -1,4 +1,5 @@
 import {updateEnemyMelee,weaponContactReplaced} from '../combat/enemy-melee.js';
+import {prepareEnemyGroup,moveWaitingEnemy} from '../combat/enemy-group.js';
 import {beginWardenArrival,tickWardenArrival} from '../combat/warden-arrival.js';
 import {startApproachedBoss} from '../world/boss-approach.js';
 import {reactToRelicHit} from '../combat/relic-effects.js';
@@ -28,7 +29,7 @@ import {bindDefenses,enemyDamageFactor} from '../combat/enemy-defense.js';
 import {enterShrine,prepareIncantations,shrineLocked} from '../world/shrine.js';
 import {updateReturnEnemy,returnEnemyTypes} from '../combat/return-enemies.js';
 import {updateInfernal,infernalTypes} from '../combat/infernal-enemies.js';
-import {coordinateAttack,openGuard} from '../combat/tactics.js';
+import {coordinateAttack,openGuard,warningCount} from '../combat/tactics.js';
 import {steerArrow,frostShatter} from '../progression/skill-tree.js';
 import {prepareChest,prepareTrialLoot} from '../progression/loot.js';
 import {tickElements,resolveFireFields} from '../combat/elements.js';
@@ -108,11 +109,12 @@ export function stepRun(s,dt,input={x:0,y:0}){
  const target=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!segmentBlocked(p,e,r.obstacles,3)).sort((a,b)=>distance(a,p)-distance(b,p))[0];
  tickSpectralBlade(s,r,dt,effects);
  if(target&&target.hp>0&&s.attack<=0&&!rolling&&!(p.actionStun>0)){fireArrow(s,target);events.push('shot');}
+ prepareEnemyGroup(r,p,dt);
  for(const e of r.enemies){
   hitOrigin=e;const hpBefore=Math.max(0,e.hp);tickEffects(e,dt);metrics.damageDealt+=hpBefore-Math.max(0,e.hp);const upper=e.variant==='king'||upperTypes.includes(e.type);const transitioning=upper&&tickUpperState(e,p,r,s.entryGrace>0?0:dt,s.projectiles);if(e.hp<=0||e.frozen>0||transitioning||r.enemies.some(n=>n.variant==='king'&&n.kingTransition>0))continue;
   if(e.cd>0)e.cd+=dt*(1-frostAttackRate(e));if(e.jumpCooldown>0)e.jumpCooldown+=dt*(1-frostAttackRate(e));
   if(e.variant==='prism'&&s.entryGrace<=0)updatePrismSummons(e,p,r,dt,()=>runRandom(s));
-  if(e.opening>0){e.opening=Math.max(0,e.opening-dt);continue;}if(!coordinateAttack(e,r))continue;
+  if(e.opening>0){e.opening=Math.max(0,e.opening-dt);continue;}if(!coordinateAttack(e,r)){if(s.entryGrace<=0&&!(e.spawnGrace>0))moveWaitingEnemy(e,p,r,dt);continue;}
   e.spawnGrace=Math.max(0,(e.spawnGrace||0)-dt);if(s.entryGrace>0||e.spawnGrace>0)continue;
   if(e.variant==='demon')continue;
   const melee=updateEnemyMelee(e,p,r.obstacles,dt*frostAttackRate(e));if(melee.handled){hurt(melee.damage,enemyName(e)+' 근접 타격',null,e);continue;}
@@ -129,7 +131,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(e.type==='charger'){const charge=chargeProfile(e);if(e.cd<charge.duration+charge.warning&&e.chargeAngle===undefined){e.chargeAngle=Math.atan2(p.y-e.y,p.x-e.x);e.chargeHit=false;}if(e.cd<charge.duration){a=e.chargeAngle??a;speed=charge.speed;}else speed=e.cd<charge.duration+charge.warning||chargerRecovering(e)?0:35;}
   speed*=(e.trialChampion?1.15:1)*(1+(e.tier||0)*.035+(e.escapeDepth||0)*.07)*(e.slow>0?e.slowFactor:1);const beforeMove={x:e.x,y:e.y};moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,r.obstacles,18);if(e.type==='charger'&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration&&segmentBlocked(beforeMove,{x:beforeMove.x+Math.cos(a)*speed*dt,y:beforeMove.y+Math.sin(a)*speed*dt},r.obstacles,18)){openGuard(e,1.1);delete e.chargeAngle;e.cd=Math.max(1.5,chargeProfile(e).duration+chargeProfile(e).warning+chargeProfile(e).recovery);continue;}e.x=Math.max(40,Math.min(920,e.x));e.y=Math.max(60,Math.min(480,e.y));
   if(e.cd<=0){e.cd=Math.max(2.3*ENEMY_COOLDOWN_FACTOR*profile.recovery,e.type==='charger'?chargeProfile(e).duration+chargeProfile(e).warning+chargeProfile(e).recovery:0);delete e.chargeAngle;}
-  if(e.type==='chaser')hurt(updateChaserAttack(e,p,r.obstacles,dt),enemyName(e)+' 단검 베기',null,e);
+  if(e.type==='chaser')hurt(updateChaserAttack(e,p,r.obstacles,dt,warningCount(r,e)<2),enemyName(e)+' 단검 베기',null,e);
   else if(e.type==='charger'&&!e.chargeHit&&e.chargeAngle!==undefined&&e.cd<chargeProfile(e).duration&&distance(e,p)<32&&!segmentBlocked(e,p,r.obstacles,0)){hurt(18,enemyName(e)+' 돌진 충돌',null,e);e.chargeHit=true;}
  }
  hitOrigin=null;

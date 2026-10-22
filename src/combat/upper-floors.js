@@ -1,5 +1,6 @@
 import {seekEnemyShot,enemyShotLane,clearEnemyShot} from './enemy-sightline.js';
 import {meleeIntersects} from './enemy-melee.js';
+import {enemyMovementGoal} from '../world/enemy-movement-goals.js';
 import {fastKing} from './boss-pressure.js';
 import {moveBody,steering,segmentBlocked,safeSpawn} from '../world/terrain.js';
 import {emitShot} from './patterns.js';
@@ -82,6 +83,7 @@ export function updateUpper(e,p,r,dt,bullets,hurt){
 // resolve() already stops this movement during attack preparation/release.
 function moveRangedUpper(e,p,r,dt,slowed){
  if(e.type==='astralSniper'&&!clearEnemyShot(e,p,r.obstacles)){seekEnemyShot(e,p,r.obstacles,dt,{radius:22,speed:34*slowed,preferred:290});return;}
+ const group=enemyMovementGoal(e,p);if(group?.rear&&group.positioned){if(dist(e,group.target)>12)walk(e,group.target,r,dt,(e.type==='gravityMage'?28:34)*slowed);return;}
  const distance=dist(e,p),theta=angle(p,e),side=(e.id||0)%2?1:-1;
  const target=distance>350?p:{x:Math.max(65,Math.min(895,p.x+Math.cos(theta+side*.22)*290)),y:Math.max(85,Math.min(455,p.y+Math.sin(theta+side*.22)*290))};
  walk(e,target,r,dt,(e.type==='gravityMage'?28:34)*slowed);

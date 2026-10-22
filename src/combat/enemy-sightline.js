@@ -1,4 +1,5 @@
 import {blocked,segmentBlocked,moveBody,navigationRoute} from '../world/terrain.js';
+import {enemyMovementGoal} from '../world/enemy-movement-goals.js';
 // Navigation intentions are disposable, never saved or drawn as combat state.
 const goals=new WeakMap();
 export const clearEnemyShot=(e,p,obstacles=[],range=480,width=4)=>Math.hypot(e.x-p.x,e.y-p.y)<=range&&!segmentBlocked(e,p,obstacles,width);
@@ -7,7 +8,15 @@ export function enemyShotLane(e,aim,p,obstacles=[],width=4){
  return !segmentBlocked(e,{x:e.x+Math.cos(aim)*length,y:e.y+Math.sin(aim)*length},obstacles,width);
 }
 export function seekEnemyShot(e,p,obstacles,dt,{radius=18,speed=34,range=480,preferred=270,width=4}={}){
- if(clearEnemyShot(e,p,obstacles,range,width)){goals.delete(e);return true;}
+ if(clearEnemyShot(e,p,obstacles,range,width)){
+  goals.delete(e);const group=enemyMovementGoal(e,p);
+  // Reposition during the existing cooldown only; never postpone a ready shot forever.
+  if(group?.rear&&group.positioned&&e.cd>0&&Math.hypot(group.target.x-e.x,group.target.y-e.y)>45&&(Math.hypot(e.x-p.x,e.y-p.y)<170||Math.hypot(group.push.x,group.push.y)>.25)){
+   const route=navigationRoute(e,group.target,obstacles,radius),step=Math.min(route.distance,speed*dt);
+   if(Number.isFinite(step)){moveBody(e,Math.cos(route.angle)*step,Math.sin(route.angle)*step,obstacles,radius,{minX:40+radius,maxX:920-radius,minY:55+radius,maxY:485-radius});e.facing=route.angle;return false;}
+  }
+  return true;
+ }
  let goal=goals.get(e);if(goal)goal.ttl-=dt;
  if(!goal||goal.obstacles!==obstacles||goal.ttl<=0||Math.hypot(goal.px-p.x,goal.py-p.y)>48){
   const base=Math.atan2(e.y-p.y,e.x-p.x),candidates=[];

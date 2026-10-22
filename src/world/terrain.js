@@ -1,4 +1,5 @@
 import {stoneFragments} from './stone-shape.js';
+import {enemyNavigationTarget,enemySeparationStep} from './enemy-movement-goals.js';
 import {environmentMaterial} from '../rendering/environment-material.js';
 import {isUpperHallFloor,drawUpperHallObstacle} from '../rendering/upper-hall-art.js';
 import {isInfestedFloor,drawInfestedHallObstacle} from '../rendering/infested-hall-art.js';
@@ -21,8 +22,16 @@ export function segmentBlocked(a,b,obstacles=[],radius=0){
  return obstacles.some(source=>{if(!intersects(source))return false;const parts=stoneFragments(source);return parts.length===1||parts.some(intersects);});
 }
 export function moveBody(body,dx,dy,obstacles=[],radius=14,bounds=null){
+ const original={dx,dy,x:body.x,y:body.y};
+ ({dx,dy}=enemySeparationStep(body,dx,dy));
  const steps=Math.max(1,Math.ceil(Math.hypot(dx,dy)/5));
  for(let i=0;i<steps;i++){const x=bounds?Math.max(bounds.minX,Math.min(bounds.maxX,body.x+dx/steps)):body.x+dx/steps;if(!blocked(x,body.y,radius,obstacles))body.x=x;const y=bounds?Math.max(bounds.minY,Math.min(bounds.maxY,body.y+dy/steps)):body.y+dy/steps;if(!blocked(body.x,y,radius,obstacles))body.y=y;}
+ // At a narrow corner, prefer the original route over crowd separation that cannot move.
+ if(body.x===original.x&&body.y===original.y&&Math.hypot(dx,dy)>0&&(dx!==original.dx||dy!==original.dy)){
+  const scale=Math.min(1,5/(Math.hypot(original.dx,original.dy)||1)),x=bounds?Math.max(bounds.minX,Math.min(bounds.maxX,body.x+original.dx*scale)):body.x+original.dx*scale;
+  if(!blocked(x,body.y,radius,obstacles))body.x=x;
+  const y=bounds?Math.max(bounds.minY,Math.min(bounds.maxY,body.y+original.dy*scale)):body.y+original.dy*scale;if(!blocked(body.x,y,radius,obstacles))body.y=y;
+ }
 }
 export function safeSpawn(body,obstacles=[],radius=18){
  if(!blocked(body.x,body.y,radius,obstacles))return;
@@ -51,7 +60,7 @@ export function navigationRoute(body,target,obstacles=[],radius=18){
  while(visited.size<nodes.length){let at=-1;for(let i=0;i<nodes.length;i++)if(!visited.has(i)&&(at<0||dist[i]<dist[at]))at=i;if(at<0||!Number.isFinite(dist[at])||at===1)break;visited.add(at);for(let j=0;j<nodes.length;j++)if(!visited.has(j)&&(at>=2&&j>=2?graph.visible[at-2][j-2]:!segmentBlocked(nodes[at],nodes[j],obstacles,radius))){const d=dist[at]+Math.hypot(nodes[j].x-nodes[at].x,nodes[j].y-nodes[at].y);if(d<dist[j]){dist[j]=d;prev[j]=at;}}}
  let next=1;if(prev[next]===undefined)return {angle:Math.atan2(target.y-body.y,target.x-body.x),distance:Infinity};while(prev[next]!==0)next=prev[next];return {angle:Math.atan2(nodes[next].y-body.y,nodes[next].x-body.x),distance:dist[1]};
 }
-export function steering(body,target,obstacles=[],radius=18){return navigationRoute(body,target,obstacles,radius).angle;}
+export function steering(body,target,obstacles=[],radius=18){return navigationRoute(body,enemyNavigationTarget(body,target),obstacles,radius).angle;}
 function paintBasicObstacle(ctx,o){
  const {x,y,w,h}=o;ctx.fillStyle='#0007';ctx.fillRect(x-3,y+7,w+6,h);ctx.fillStyle='#17201e';ctx.fillRect(x-2,y-2,w+4,h+4);
  if(o.type==='rock'){ctx.fillStyle='#647169';ctx.fillRect(x+8,y,w-16,h);ctx.fillRect(x,y+10,w,h-20);ctx.fillStyle='#8c9480';ctx.fillRect(x+12,y+5,w-30,7);ctx.fillStyle='#414e49';ctx.fillRect(x+20,y+22,5,h-27);}
