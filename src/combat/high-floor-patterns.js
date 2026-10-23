@@ -1,4 +1,4 @@
-import {highFloorEnemy,highFloorKinds,highShapes} from './high-floor-profile.js';
+import {highFloorEnemy,highFloorKinds,highShapes,highRecovery,highAttackStartAllowed} from './high-floor-profile.js';
 import {blocked,segmentBlocked,moveBody,steering} from '../world/terrain.js';
 import {seekEnemyShot,clearEnemyShot} from './enemy-sightline.js';
 import {meleeIntersects} from './enemy-melee.js';
@@ -14,7 +14,8 @@ export function highStepEnd(e,aim,length,obstacles){const b=boundsFor(e);let las
 function walk(e,target,room,dt,speed){const radius=bodyRadius(e),a=steering(e,target,room.obstacles,radius),step=Math.min(dist(e,target),speed*dt*(e.slow>0?(e.slowFactor??1):1));moveBody(e,Math.cos(a)*step,Math.sin(a)*step,room.obstacles,radius,boundsFor(e));e.facing=a;}
 function phase(a,stage,time){a.stage=stage;a.time=time;a.duration=time;}
 function flash(e,a){e.highFlash={...a,time:.18};}
-function recover(e,a,time=.7){if(['twoShot','cross','resonate'].includes(a.kind))flash(e,a);phase(a,'recover',time);}
+function recover(e,a,time=highRecovery[a.kind]??.7){if(['twoShot','cross','resonate'].includes(a.kind))flash(e,a);phase(a,'recover',time);}
+function landingOccupied(e,q,room){return room.enemies.some(n=>n!==e&&n.hp>0&&dist(n,q)<22+bodyRadius(n)+8);}
 function shoot(e,target,room,bullets,speed=330){if(segmentBlocked(e,target,room.obstacles,4))return;emitShot(e,angle(e,target),speed,bullets);const b=bullets.at(-1);b.damage=9;b.dark=true;}
 function hit(e,p,room,a,hurt){const shape=highShapes[a.kind];if(!shape||segmentBlocked(e,p,room.obstacles))return;
  if(shape.width){const dx=p.x-e.x,dy=p.y-e.y,t=clamp(dx*Math.cos(a.aim)+dy*Math.sin(a.aim),0,shape.range);if(Math.hypot(dx-Math.cos(a.aim)*t,dy-Math.sin(a.aim)*t)<=shape.width+14)hurt(shape.damage);}
@@ -34,7 +35,7 @@ function start(e,p,room){
  if(kind==='captain'){phase(a,'windup',a.close?.3:.75);const end=highStepEnd(e,aim,255*.42,room.obstacles);a.tx=end.x;a.ty=end.y;}
  if(kind==='rift'){
   const theta=angle(p,e),side=e.id%2?1:-1;let landing;
-  for(const turn of [side*Math.PI/2,-side*Math.PI/2,0]){const q=point(p.x+Math.cos(theta+turn)*92,p.y+Math.sin(theta+turn)*92);if(dist(q,p)>=70&&!blocked(q.x,q.y,22,room.obstacles)&&!segmentBlocked(e,q,room.obstacles,22)&&!segmentBlocked(q,p,room.obstacles)){landing=q;break;}}
+  for(const turn of [side*Math.PI/2,-side*Math.PI/2,0]){const q=point(p.x+Math.cos(theta+turn)*92,p.y+Math.sin(theta+turn)*92);if(dist(q,p)>=70&&!landingOccupied(e,q,room)&&!blocked(q.x,q.y,22,room.obstacles)&&!segmentBlocked(e,q,room.obstacles,22)&&!segmentBlocked(q,p,room.obstacles)){landing=q;break;}}
   if(!landing){e.cd=.3;return;}a.tx=landing.x;a.ty=landing.y;phase(a,'windup',.45);
  }
  e.highAttack=a;e.facing=aim;
@@ -56,12 +57,12 @@ function advance(e,p,room,dt,bullets,hurt){
  if(a.stage==='recover'){delete e.highAttack;e.cd=a.kind==='gravity'?2.8:a.kind==='captain'?2.3:a.kind==='twoShot'?1.6:a.kind==='resonate'?2.4:1.4;return;}
  if(a.stage==='advance'){phase(a,'windup',.3);a.x=e.x;a.y=e.y;return;}
  if(a.stage==='dash'){a.aim=angle(e,p);e.facing=a.aim;phase(a,'windup2',.4);return;}
- if(a.stage==='return'){if(!blocked(a.homeX,a.homeY,22,room.obstacles)){e.x=a.homeX;e.y=a.homeY;}recover(e,a);return;}
- if(a.stage==='channel'){recover(e,a,.6);return;}
+ if(a.stage==='return'){const home={x:a.homeX,y:a.homeY};if(!blocked(home.x,home.y,22,room.obstacles)&&!landingOccupied(e,home,room)){e.x=home.x;e.y=home.y;}recover(e,a);return;}
+ if(a.stage==='channel'){recover(e,a,highRecovery[a.kind]??.6);return;}
  if(a.stage==='strike'){
   if(a.kind==='soldier'){hit(e,p,room,a,hurt);flash(e,a);}
   if(a.kind==='rift'){phase(a,'return',.35);return;}
-  phase(a,'recover',a.kind==='captain'?.9:.7);return;
+  phase(a,'recover',highRecovery[a.kind]??.7);return;
  }
  if(a.kind==='twoShot'){
   shoot(e,{x:a.stage==='windup'?a.tx:a.secondX,y:a.stage==='windup'?a.ty:a.secondY},room,bullets);
@@ -77,7 +78,7 @@ function advance(e,p,room,dt,bullets,hurt){
   flash(e,a);phase(a,'channel',.18);return;
  }
  if(a.kind==='rift'&&a.stage==='windup'){
-  if(blocked(a.tx,a.ty,22,room.obstacles)||segmentBlocked(e,{x:a.tx,y:a.ty},room.obstacles,22)){cancelHighAttack(e);return;}
+  if(landingOccupied(e,{x:a.tx,y:a.ty},room)||blocked(a.tx,a.ty,22,room.obstacles)||segmentBlocked(e,{x:a.tx,y:a.ty},room.obstacles,22)){cancelHighAttack(e);return;}
   e.x=a.tx;e.y=a.ty;a.aim=angle(e,p);e.facing=a.aim;phase(a,'windup2',.25);return;
  }
  if(a.kind==='captain'&&!a.close&&a.stage==='windup'){phase(a,'dash',.42);return;}
@@ -91,7 +92,7 @@ export function updateHighFloorEnemy(e,p,room,dt,bullets,hurt){
  if(e.eliteWarning>0)return true;
  if(e.meleeCooldown>0){e.meleeCooldown=Math.max(0,e.meleeCooldown-dt*frostAttackRate(e));return true;}
  e.cd=Math.max(0,(e.cd??1)-dt);
- const kind=highFloorKinds[e.type],gap=dist(e,p),ready=e.cd<=0&&warningCount(room,e)<2;
+ const kind=highFloorKinds[e.type],gap=dist(e,p),ready=e.cd<=0&&warningCount(room,e)<2&&highAttackStartAllowed(e,p,room);
  if(['twoShot','gravity'].includes(kind)&&!clearEnemyShot(e,p,room.obstacles,kind==='twoShot'?480:400)){
   seekEnemyShot(e,p,room.obstacles,dt,{radius:22,speed:kind==='twoShot'?34:28,preferred:270});return true;
  }

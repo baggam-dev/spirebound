@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {highFloorKinds} from '../../src/combat/high-floor-profile.js';
+import {highFloorKinds,highAttackStartAllowed} from '../../src/combat/high-floor-profile.js';
 import {updateHighFloorEnemy,tickHighState,highStepEnd} from '../../src/combat/high-floor-patterns.js';
 import {validateHighFloorEnemy} from '../../src/persistence/high-floor-save.js';
 import {enemyDamageFactor} from '../../src/combat/enemy-defense.js';
@@ -58,4 +58,41 @@ test('renderer leaves actors and combat data unchanged and high-floor art is not
 });
 test('real simulation saves a resolved thrust and resume never applies that hit a second time',()=>{
  const s=newRun(810,{campaign:'expanded'}),r=currentRoom(s);s.attack=999;s.entryGrace=0;Object.assign(s.player,{x:420,y:270});r.obstacles=[];r.enemies=[actor('royalGuard')];stepRun(s,.01);assert.equal(r.enemies[0].highAttack.kind,'thrust');stepRun(s,.3);const hp=s.player.hp,loaded=parseSave(encodeSave(s));assert.equal(currentRoom(loaded).enemies[0].highAttack.stage,'strike');stepRun(loaded,.05);stepRun(loaded,.12);assert.equal(loaded.player.hp,hp);
+});
+
+test('heavy starts wait for each other while an ordinary frontliner can use the second warning slot',()=>{
+ const s=scene('gravityMage');s.tick();
+ const turret={...actor('pulseTurret',230,140),id:1},knight={...actor('starKnight'),id:2};s.room.enemies.push(turret,knight);
+ updateHighFloorEnemy(turret,s.p,s.room,.01,s.bullets,()=>{});assert.equal(turret.highAttack,undefined);assert.equal(turret.cd,0);
+ updateHighFloorEnemy(knight,s.p,s.room,.01,s.bullets,()=>{});assert.equal(knight.highAttack.kind,'guard');
+ assert.equal(warningCount(s.room,null),2);
+ s.e.frozen=1;assert.equal(highAttackStartAllowed(turret,s.p,s.room),true);s.e.frozen=0;s.e.hp=0;assert.equal(highAttackStartAllowed(turret,s.p,s.room),true);
+});
+
+test('a committed second volley is never interrupted by a newly restored heavy attack',()=>{
+ const s=scene('pulseTurret');s.tick();s.tick(.7);assert.equal(s.bullets.length,4);
+ const other=scene('gravityMage');other.tick();other.e.id=1;s.room.enemies.push(other.e);
+ s.tick(.65);assert.equal(s.bullets.length,8);assert.equal(s.e.highAttack.stage,'recover');
+});
+
+test('the short high-floor breather survives serialization and then releases a ready attacker',()=>{
+ const s=scene('pulseTurret');s.tick();s.tick(.7);s.tick(.65);
+ s.e.highAttack=JSON.parse(JSON.stringify(s.e.highAttack));validateHighFloorEnemy(s.e,check,number);
+ const soldier={...actor('demonSoldier',340),id:1};s.room.enemies.push(soldier);
+ updateHighFloorEnemy(soldier,s.p,s.room,.01,s.bullets,()=>{});assert.equal(soldier.highAttack,undefined);assert.equal(soldier.cd,0);
+ s.tick(.2);updateHighFloorEnemy(soldier,s.p,s.room,.01,s.bullets,()=>{});assert.equal(soldier.highAttack.kind,'soldier');
+});
+
+test('rift refuses occupied landing candidates and rechecks a landing after its warning',()=>{
+ const p={x:500,y:270},s=scene('riftHunter',p);
+ s.room.enemies.push(...[[500,362],[500,178],[408,270]].map(([x,y],i)=>({...actor('chaser',x,y),id:i+1,cd:999})));
+ s.tick();assert.equal(s.e.highAttack,undefined);assert.deepEqual([s.e.x,s.e.y],[300,270]);assert.equal(s.hits.length,0);
+ const fresh=scene('riftHunter',p);fresh.tick();const a=fresh.e.highAttack;fresh.room.enemies.push({...actor('chaser',a.tx,a.ty),id:1});fresh.tick(.45);
+ assert.equal(fresh.e.highAttack,undefined);assert.deepEqual([fresh.e.x,fresh.e.y],[300,270]);assert.equal(fresh.hits.length,0);
+});
+
+test('an occupied rift home cancels only the return displacement and still finishes recovery',()=>{
+ const s=scene('riftHunter',{x:500,y:270});s.tick();const home={x:s.e.x,y:s.e.y};s.tick(.45);s.tick(.25);s.tick(.12);
+ const landing={x:s.e.x,y:s.e.y};s.room.enemies.push({...actor('chaser',home.x,home.y),id:1});s.tick(.35);
+ assert.deepEqual({x:s.e.x,y:s.e.y},landing);assert.equal(s.e.highAttack.stage,'recover');const hits=s.hits.length;finish(s);assert.equal(s.hits.length,hits);
 });
