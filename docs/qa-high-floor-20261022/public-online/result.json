@@ -1,0 +1,49 @@
+{
+  "base": "https://168.107.21.43",
+  "results": [
+    {
+      "width": 1280,
+      "version": "0.46.0-prebeta",
+      "online": true,
+      "floors": 10,
+      "first": [
+        5,
+        6
+      ],
+      "ready": true,
+      "responses": [
+        {
+          "url": "/api/session",
+          "status": 200
+        },
+        {
+          "url": "/api/runs",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "width": 844,
+      "version": "0.46.0-prebeta",
+      "online": true,
+      "floors": 10,
+      "first": [
+        5,
+        6
+      ],
+      "ready": true,
+      "responses": [
+        {
+          "url": "/api/session",
+          "status": 200
+        },
+        {
+          "url": "/api/runs",
+          "status": 200
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

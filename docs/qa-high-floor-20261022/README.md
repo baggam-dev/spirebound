@@ -8,3 +8,5 @@
 - art-fixed: 24모듈 실제 crop/원본 실패 시 v1 왕국·마족 fallback 통과. 원본 PNG는 변환하지 않고 source crop 열 경계만 보정했다.
 - 밀집24마리: 일반 평균27.09ms/p95 49.8, 완화 평균23.26ms/p95 33.6. 다른 QA와 병행한 데스크톱 헤드리스 Edge 측정이며 실제 휴대폰·장기 플레이 검증이 아니다.
 - 다음: 최종 관련 결과 확인 → 커밋/푸시 → 공식 배포 → HTTPS 파일·온라인 시작/고층 공개 확인. 원격 기록 POST는 하지 않는다.
+
+최종: environment-final 및 final-related20 통과. release-20261022-194335-06691a/runtime e868e2e 배포 완료, 서버API27 통과. 공개 고층3/온라인시작2/HTTPS210파일·PNG일치·308·랭킹·보안쿠키·저장이전 통과. JS오류0/순위기록제출0. public-combat/result.json, public-online/result.json, public-https.log 참고. 개발서버 종료.
