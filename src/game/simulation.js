@@ -36,6 +36,7 @@ import {prepareChest,prepareTrialLoot} from '../progression/loot.js';
 import {tickElements,resolveFireFields} from '../combat/elements.js';
 import {dropEssences,collectEssences,essenceInfo} from '../progression/essences.js';
 import {dropXp,collectXp} from '../progression/xp-drops.js';
+import {enemyXpReward} from '../progression/enemy-rewards.js';
 import {movementSpeed,relicStat,offerRelics,attackInterval} from '../progression/relics.js';
 import {observeRoom,recordDefeat,recordHit,enemyName} from '../world/expedition.js';
 import {updateElites,eliteDeath,tickBlasts} from '../combat/elites.js';
@@ -172,7 +173,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(eliteDeath(e,r)&&!r.elitePotionDropped){r.elitePotionDropped=true;r.potionDropped=true;if(monsterPotionReward(s,r,e,()=>runRandom(s))==='potion')events.push('eliteReward');}
   s.kills++;
   if(e.type!=='boss'&&killRecovery(s,r,false,()=>runRandom(s),e))events.push('potion');
-  if(!s.key&&e.type!=='boss'&&dropXp(s,r,e,e.xpReward??12)==='elite')events.push('xpElite');
+  if(!s.key&&e.type!=='boss'&&dropXp(s,r,e,enemyXpReward(e),e.elite||e.trialChampion||e.gateTitle?'elite':'normal')==='elite')events.push('xpElite');
  }
  if(r.gate&&!s.key&&defeated.length&&r.enemies.length===1){r.enemies[0].cd=Math.min(r.enemies[0].cd,.4);r.enemies[0].gateFury=true;}
  if(r.gate&&!r.used&&defeated.length&&!r.enemies.length){r.used=true;r.gateBanner=3;offerRelics(s,r);events.push('gateReward');}
