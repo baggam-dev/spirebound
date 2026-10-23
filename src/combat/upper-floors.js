@@ -37,7 +37,7 @@ function resolve(e,p,r,dt,bullets,hurt){const a=e.darkAttack;if(!a)return false;
  if(a.kind==='fan'&&(e.type==='boss'||enemyShotLane(e,a.aim,p,r.obstacles))){for(const offset of fanOffsets(e))shot(e,a.aim+offset,bullets,e.type==='astralSniper'?330:fastKing(e)?360:290);if(e.variant==='king'&&kingPhase(e)===1&&a.step===0){a.step=1;a.time=.28;return true;}}
  if(a.kind==='ring')ring(e,a,bullets);
  if(a.kind==='judgment'){if(pointInStripe(p,judgmentStripe(a)))hurt(18);e.darkFlash={...a,time:.18};a.step++;if(a.step<4){a.time=fastKing(e)?.42:.65;return true;}e.darkAttack={kind:'mark',time:fastKing(e)?.75:1.1,x:e.x,y:e.y,tx:p.x,ty:p.y,aim:angle(e,p),step:2,finisher:true};return true;}
- if(a.kind==='slash'&&(e.gateTitle||e.variant==='king'&&kingPhase(e)>=2)&&a.step<(e.variant==='king'&&kingPhase(e)===3?2:1)){e.darkFlash={...a,time:.18};a.step++;a.aim=angle(e,p);e.facing=a.aim;a.time=e.type==='boss'?(fastKing(e)?.32:.5):.25;return true;}
+ if(a.kind==='slash'&&(e.gateTitle||e.variant==='king'&&kingPhase(e)>=2)&&a.step<(e.variant==='king'&&kingPhase(e)===3?2:1)){e.darkFlash={...a,time:.18};a.step++;a.aim=angle(e,p);e.facing=a.aim;a.time=e.type==='boss'?(fastKing(e)?.32:.5):e.gateTitle&&e.type==='starKnight'?.2:.25;return true;}
  finish(e,a);return true;
 }
 export function tickUpperState(e,p,r,dt,bullets){

@@ -14,4 +14,10 @@ export function attackProfile(e){const depth=e.escapeDepth||0,tier=depth?5:(e.ti
 export const chargeProfile=e=>({duration:e.trialChampion?.65:CHARGE_DURATION,warning:e.trialChampion?.4:CHARGE_WARNING,speed:e.trialChampion?305:235,recovery:e.trialChampion?1:.1});
 export const chargerRecovering=e=>e.type==='charger'&&!!e.trialChampion&&e.cd>=chargeProfile(e).duration+chargeProfile(e).warning;
 
-export function strengthenGateKnight(e){if(e.type!=='starKnight'||!e.gateTitle||e.gateKnightBuff===1)return e;const ratio=e.max>0?e.hp/e.max:1;e.max=Math.ceil(e.max*1.1);e.hp=e.hp<=0?0:Math.ceil(e.max*ratio);e.gateKnightBuff=1;return e;}
+export function strengthenGateKnight(e){
+ if(!e.gateTitle||!['starKnight','astralSniper'].includes(e.type))return e;
+ const scale=factor=>{const ratio=e.max>0?e.hp/e.max:1;e.max=Math.ceil(e.max*factor);e.hp=e.hp<=0?0:Math.ceil(e.max*ratio);};
+ if(e.type==='starKnight'&&e.gateKnightBuff!==1){scale(1.1);e.gateKnightBuff=1;}
+ if(e.gateDurabilityVersion!==1){scale(1.4);e.gateDurabilityVersion=1;}
+ return e;
+}
