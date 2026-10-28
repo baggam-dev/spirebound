@@ -1,0 +1,43 @@
+{
+  "base": "https://168.107.21.43",
+  "results": [
+    {
+      "kind": "royalGuard",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.1833333333333305,
+      "warnings": 0,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 16.485833333730685,
+        "p95": 16.80000000000291
+      }
+    },
+    {
+      "kind": "astralSniper",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.199999999999997,
+      "warnings": 0,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 16.487500001192107,
+        "p95": 16.80000000000291
+      }
+    },
+    {
+      "kind": "crowd-reduced",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 3.133333333333327,
+      "warnings": 2,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 24.2,
+        "p95": 33.400000000001455
+      }
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

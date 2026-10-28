@@ -5,3 +5,5 @@
 - 처음 동시 실행한 gate/high-floor/regression은 전체 테스트와 자원 경합으로 중단했으며 성공 근거에서 제외한다. gate-final과 gate-ready도 검사 스크립트가 미사용 보스 자산 대기 또는 로딩 종료를 놓치는 문제를 고치기 위해 중단했다. gate-fixed 이후 통과 결과만 사용한다.
 - regression-final: 벽/후방·베라·군단장·일반/완화 상태 저장 재개. 로그를 확인해 완료 여부를 판정한다.
 - 코드는 체력/피해·보상 조건이 바뀌므로 client/API 최신 등록버전을0.47로 맞춘다. 이전 DB·시즌·개인저장·지도·점수식 보존. 테스트용 기록은 순위 POST 없이 격리한다.
+
+- 최종 공개: release-20261028-232125-7f8c30/runtime52b7791, 서버 API27/nginx/health 통과. public-online2/public-gate2/public-high3, public-https211파일·PNG·308·랭킹·보안쿠키/저장이전 통과. 오류0/순위기록제출0. 개발서버 종료.
