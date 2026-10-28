@@ -1,3 +1,9 @@
+## 최신 복사 가능한 인계 — 전투 가독성 통합 시안 (2026-10-29)
+```text
+C:\baggam-dev\spirebound/main, 시작27011e2/gitclean. 사용자 ‘이어서 진행’으로 다음개선 전투가독성 검토/시안만 준비. docs/combat-readability-review-20261029.md 최신설계, docs/design-drafts/combat-readability-20261029/combat-readability-v1.png1536x1024 내장imagegen1회/직접확인·원본 exec-6cb16692-0b4b-4d64-9722-26cddb11d675 유지/무변환복사·prompt-v1.md/README. 실제0.47게이트·주인공·승인베라원본을참조. 기본/효과줄이기 두패널모두제안안, 실제현재/변경후스크린샷 아님. 적준비점선/활성실선·미세어두운밑선/위험경계 및적탄중심우선, 아군화염/가스/폭발밀도완화/중앙비움. 기존원소색·몸체·공격도형/판정유지. 그림불꽃은실제적용더낮춤/배경캐릭터재해석및도형을그대로runtime에넣지않음.
+코드근거 game.js drawHazards뒤drawElements·탄환뒤아군fx, compact필터일부만/아군지속장판 reduced미전달. 이미있는적탄밑선/점선·실선효과재구현아님/겹침과순서·완화전달보완. 이번runtime/배포자산변경0, 테스트/서버/브라우저/푸시배포공개확인0. AGENTS시안먼저컨펌규칙으로다음사용자통합확인후 Canvas순서/경계·장식밀도만구현/로컬커밋. 프레임당화면픽셀readback/큰임시canvas반복생성 피함/적위협개수생략없음·안전통로표시없음.
+기존베라27011e2 로컬구현미검증/미푸시 보존(설계0fae4d7도미푸시). 베라신규회귀4미실행·실제PNG/좌우/걷기/피격사망·초상/fallback·실가로모바일미검증. 새명시배포시베라+가독성관련전체·실PC모바일/하강밀집·벽판정불변·기본완화·저장재개/부하 검증후푸시배포공개확인. 운영release-20261028-232125-7f8c30/runtime52b7791/0.47 그대로. BGM보류·실행중명령없음/차단없음. 실제PNG절대경로최종표시·한국어5줄. 문서시안로컬커밋후git상태확인.
+```
 ## 최신 복사 가능한 인계 — 베라 승인 패키지 로컬 구현 (2026-10-28)
 ```text
 C:\baggam-dev\spirebound/main. 사용자 ‘좋다 진행’으로 vera-royal-eye-v1 승인. 시작0fae4d7/gitclean. 내장imagegen 생산1회 assets/images/vera-royal-eye-atlas-v1.png 2172x724/1,656,784bytes/alpha0. 원본 exec-f2892943-2e67-4fef-8b3f-3af04f5781a2.png 및 docs/design-drafts/vera-20261028/ 동일무변환사본·prompt-production-v1.md 보존. 생산PNG직접확인/System.Drawing메타열람만. 기존승인원화그대로은발/편측황동가면·회청피부/청록외투/긴활3자세. vera-sprite.js 셀724, heads124/126/126, feet708/707/708, anchors327.5/1017.5/1752로69.6px·발21 런타임crop, 파일편집없음.
