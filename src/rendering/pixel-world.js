@@ -18,6 +18,7 @@ import {objectPoint} from '../world/object-positions.js';
 import {interactionAge} from './interaction-visuals.js';
 import {bossPose} from './boss-poses.js';
 import {drawSynergyTrail,drawHostileProjectile} from './combat-vfx.js';
+import {drawVeraArrow} from './vera-effects.js';
 import {drawElementNock,drawSkillTrail} from './skill-visuals.js';
 import {segmentBlocked} from '../world/terrain.js';
 // Presentation only: animation history never enters the saved run or combat RNG.
@@ -113,7 +114,7 @@ export function drawObjectDetails(c,s,r,reduced=false){c.save();const t=s.elapse
 export function drawProjectile(c,b,time=0,player={},reduced=false){if(b.delay>0)return;const [color,light]=palettes[b.element]||[({sunFairy:'#ff993f',snowFairy:'#99ddff',stormFairy:'#ffe16a',turret:'#cfb786'})[b.passive]|| (b.demonIce?'#85e6ff':b.frostArrow?'#8bd5f4':b.dark?'#c792ee':b.ricochet?'#74e1dd':b.poisonShot?'#d59bea':b.enemy?'#ed8877':b.seeker?'#bfdaee':'#d9c492'),b.frostArrow?'#e7fbff':'#fff2cd'];
  c.save();c.translate(Math.round(b.x),Math.round(b.y));c.rotate(Math.atan2(b.vy??0,b.vx??1));
  if(b.frostShard&&!b.enemy){c.scale(.5,.5);c.globalAlpha*=.75;}
- if(drawHostileProjectile(c,b,time,reduced)){}else if(b.enemy){const size=b.demonIce?5:b.poisonShot==='orb'?6:3;diamond(c,0,0,size+1,ink);diamond(c,0,0,size,color);box(c,-1,-1,2,2,light);}
+ if(drawVeraArrow(c,b,time,reduced)||drawHostileProjectile(c,b,time,reduced)){}else if(b.enemy){const size=b.demonIce?5:b.poisonShot==='orb'?6:3;diamond(c,0,0,size+1,ink);diamond(c,0,0,size,color);box(c,-1,-1,2,2,light);}
  else{box(c,-17,-2,14,4,color+'44');box(c,-10,-1,16,2,light);diamond(c,5,0,b.frostShard?4:3,color);box(c,-9,-3,3,2,color);box(c,-9,2,3,2,color);
   if(b.element){c.save();if(!reduced)drawSkillTrail(c,b.element,b.weapon||player,time);drawSynergyTrail(c,b.element,b.weapon||player,time,reduced);c.restore();
    if(b.element==='chain')line(c,[[-20,0],[-14,-4],[-11,2],[-5,-2]],color,1);

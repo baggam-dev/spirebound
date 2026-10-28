@@ -2,6 +2,7 @@ import {drawEnemyField,drawEnemySector} from './enemy-attack-vfx.js';
 import {drawJudgmentStripe} from './boss-attack-vfx.js';
 import {drawMordoPresentation} from './mordo-presentation-art.js';
 import {drawFeedbackSprite} from './feedback-sprites.js';
+import {drawVeraSigil} from './vera-effects.js';
 import {drawKingAura} from './king-aura.js';
 import {drawMordoPhase3Sprite} from './mordo-phase3-sprite.js';
 import {drawMordoPhase2Sprite} from './mordo-phase2-sprite.js';
@@ -30,7 +31,7 @@ function attackShape(c,e,a,flash=false,reduced=false){c.save();const strong=a.ki
  else if(a.kind==='fan'){for(const offset of fanOffsets(e,a)){c.beginPath();c.moveTo(a.x,a.y);c.lineTo(a.x+Math.cos(a.aim+offset)*850,a.y+Math.sin(a.aim+offset)*850);c.stroke();}}
  else if(a.kind==='ring'){c.beginPath();c.arc(a.x,a.y,90,a.aim+Math.PI/10,a.aim+TAU-Math.PI/10);c.stroke();for(const offset of ringOffsets){const theta=a.aim+offset;c.beginPath();c.moveTo(a.x+Math.cos(theta)*78,a.y+Math.sin(theta)*78);c.lineTo(a.x+Math.cos(theta)*108,a.y+Math.sin(theta)*108);c.stroke();}c.strokeStyle='#9edac9';c.setLineDash([]);c.beginPath();c.arc(a.x,a.y,93,a.aim-Math.PI/20,a.aim+Math.PI/20);c.stroke();label(c,'틈',a.x+Math.cos(a.aim)*125,a.y+Math.sin(a.aim)*125,'#9edac9');}
  c.restore();}
-export function drawUpperGround(c,e,time=0,reduced=false){c.save();c.beginPath();c.rect(25,45,910,455);c.clip();if(e.darkFlash)attackShape(c,e,e.darkFlash,true,reduced);if(e.darkAttack)attackShape(c,e,e.darkAttack,false,reduced);c.save();
+export function drawUpperGround(c,e,time=0,reduced=false){c.save();c.beginPath();c.rect(25,45,910,455);c.clip();drawVeraSigil(c,e,time,{reduced});if(e.darkFlash)attackShape(c,e,e.darkFlash,true,reduced);if(e.darkAttack)attackShape(c,e,e.darkAttack,false,reduced);c.save();
  if(e.gravity){const g=e.gravity,active=g.time<1.7;drawEnemyField(c,g.x,g.y,115,{kind:active?'gravity':'warning',accent:'#b69ad4',time,reduced,progress:1-Math.min(1,Math.max(0,g.time-1.7))});label(c,active?'인력 활성':'인력 예고',g.x,g.y-125);}
  if(e.guardPortal){const g=e.guardPortal;c.strokeStyle='#ccb2fa';c.fillStyle='#7c4c9b55';c.setLineDash([4,4]);circle(c,g.x,g.y,30);c.beginPath();c.moveTo(g.x-20,g.y);c.lineTo(g.x+20,g.y);c.moveTo(g.x,g.y-20);c.lineTo(g.x,g.y+20);c.stroke();label(c,'망령 소환',g.x,g.y-40);}
  c.restore();c.restore();}

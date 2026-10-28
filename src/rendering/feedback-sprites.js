@@ -1,6 +1,7 @@
 import {DeferredImage} from './asset-requests.js';
 import {locomotion,drawWalkingFrame,drawGlidingFrame} from './locomotion.js';
 import {applyRemainingBossPose} from './remaining-boss-presentation.js';
+import {veraFrame,veraSpriteState} from './vera-sprite.js';
 
 // Native imagegen originals; only crop/downsample here. Feet anchors are independent
 // of weapon/horn extents. No actor, combat clock, save or RNG writes.
@@ -33,7 +34,7 @@ export function feedbackSpriteKey(e){
  if(e.gateTitle&&e.type==='astralSniper')return 'vera';
  return e.type;
 }
-export const feedbackSpriteState=()=>({ready:frames.size===20,keys:[...frames.keys()].sort()});
+export const feedbackSpriteState=()=>({ready:frames.size===20,keys:[...frames.keys()].sort(),veraReady:veraSpriteState().ready});
 const sheetReady=Object.fromEntries(Object.entries(sheets).map(([name,s])=>[name,typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
  const image=new DeferredImage();image.onload=()=>{try{
   if(image.naturalWidth!==s.width||image.naturalHeight!==s.height){resolve(false);return;}
@@ -54,9 +55,9 @@ const sheetReady=Object.fromEntries(Object.entries(sheets).map(([name,s])=>[name
 export const feedbackSpritesReady=Promise.all(Object.values(sheetReady)).then(ok=>ok.every(Boolean));
 export const feedbackSpritesReadyFor=groups=>Promise.all(groups.map(name=>sheetReady[name])).then(ok=>ok.every(Boolean));
 export function drawFeedbackSprite(c,e,time=0,{reduced=false,staticPose=false,attack=null,local=false,face:forcedFace}={}){
- const key=feedbackSpriteKey(e),pair=frames.get(key);if(!pair)return false;
- const state=e.commander||{},active=!!(e.highAttack&&e.highAttack.stage!=='recover'||e.meleeAttack&&e.meleeAttack.stage!=='recover'||attack&&['windup','strike','channel','air'].includes(attack.stage)||state.volley||state.snipe||state.ricochet||state.rain||e.gravity||e.phase==='swing'||e.phase==='windup'||e.phase==='air'||['warning','dash','firing','strike','windup'].includes(e.attackPhase));
- const f=pair[active?1:0];let m=motion.get(e);if(!m){m={x:e.x,time,face:1};motion.set(e,m);}
+ const key=feedbackSpriteKey(e),pair=frames.get(key),named=key==='vera'?veraFrame(e,{staticPose}):null;if(key==='vera'?!named:!pair)return false;
+ const state=e.commander||{},active=!!(key==='vera'&&(e.darkAttack||e.darkFlash?.time>0||e.eliteWarning>0||e.elite==='volley'&&e.opening>0&&e.eliteCooldown>2.82)||e.highAttack&&e.highAttack.stage!=='recover'||e.meleeAttack&&e.meleeAttack.stage!=='recover'||attack&&['windup','strike','channel','air'].includes(attack.stage)||state.volley||state.snipe||state.ricochet||state.rain||e.gravity||e.phase==='swing'||e.phase==='windup'||e.phase==='air'||['warning','dash','firing','strike','windup'].includes(e.attackPhase));
+ const f=named||pair[active?1:0];let m=motion.get(e);if(!m){m={x:e.x,time,face:1};motion.set(e,m);}
  if(time!==m.time){if(Math.abs(e.x-m.x)>.1&&Math.abs(e.x-m.x)<36)m.face=Math.sign(e.x-m.x);m.x=e.x;m.time=time;}
  const aim=e.highAttack?.aim??e.meleeAttack?.aim??e.darkAttack?.aim??e.darkFlash?.aim??state.volley?.aim??state.snipe?.aim??state.ricochet?.aim??e.aim??e.facing;
  const face=forcedFace??(active&&Number.isFinite(aim)?(Math.cos(aim)<0?-1:1):staticPose?1:m.face);

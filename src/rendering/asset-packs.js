@@ -26,6 +26,7 @@ export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
  // The first-floor brute uses mandatory feedback walking; its legacy walk sheet is redundant.
  const modules=[...common,...early.filter(name=>floor!==0||name!=='brute-walk')],feedback=['named-brute'];
  if(floor===1)modules.push(...warden,'warden-room-art');
+ if(floor===6)modules.push('vera-sprite');
  if(floor>=3)modules.push('flower-sprite','prism-sprite','slime-sprite','prism-presentation-art');
  if(floor>=6){modules.push(...upper);feedback.push('upper');}
  if(floor===7){modules.push('mordo-phase1-sprite','mordo-phase2-sprite','mordo-phase3-sprite','mordo-presentation-art');feedback.push('bosses');}
@@ -40,7 +41,8 @@ export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
 }
 export function portraitAssetPlan(key){
  if(key==='warden')return {modules:warden,feedback:[],extra:[]};
- if(['kald','vera','brute'].includes(key))return {modules:[],feedback:['named-brute'],extra:[]};
+ if(key==='vera')return {modules:['vera-sprite'],feedback:[],extra:[]};
+ if(['kald','brute'].includes(key))return {modules:[],feedback:['named-brute'],extra:[]};
  if(key==='king')return {modules:['mordo-phase3-sprite','shadow-aura'],feedback:['bosses'],extra:[]};
  if(key==='commander')return {modules:['commander-phase1-sprite','shadow-aura'],feedback:['bosses'],extra:[]};
  if(key==='demon')return {modules:['demon-sprite','demon-core-sprite','demon-presentation-art','shadow-aura'],feedback:[],extra:[]};

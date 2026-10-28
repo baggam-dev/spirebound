@@ -1,3 +1,9 @@
+## 최신 복사 가능한 인계 — 베라 승인 패키지 로컬 구현 (2026-10-28)
+```text
+C:\baggam-dev\spirebound/main. 사용자 ‘좋다 진행’으로 vera-royal-eye-v1 승인. 시작0fae4d7/gitclean. 내장imagegen 생산1회 assets/images/vera-royal-eye-atlas-v1.png 2172x724/1,656,784bytes/alpha0. 원본 exec-f2892943-2e67-4fef-8b3f-3af04f5781a2.png 및 docs/design-drafts/vera-20261028/ 동일무변환사본·prompt-production-v1.md 보존. 생산PNG직접확인/System.Drawing메타열람만. 기존승인원화그대로은발/편측황동가면·회청피부/청록외투/긴활3자세. vera-sprite.js 셀724, heads124/126/126, feet708/707/708, anchors327.5/1017.5/1752로69.6px·발21 런타임crop, 파일편집없음.
+feedback-sprites는 keyvera만새프레임/준비전false(옛금발프레임사용안함), 정지대기·darkAttack/정예준비조준·darkFlash/정예포화직후발사 선택. 기존cutout걷기·remaining-boss 피격/등장변형 및 사망스냅샷사용(새걷기/피격사망PNG별도프레임아님). 7층·실roster/초상vera 모듈온디맨드, journal ready캐시, 첫층기본새PNG미포함. 로딩규격오류false→기존층재시도화면. named-brute원본칼드/거인등유지. vera-effects 별도작은분절마법진(원래공격예고아래)·베라출처탄환 짧은잔광/효과줄이기. upper-floors fan/ring 출처문자열을 베라명칭으로구분(기존저장탄소급변경없음), 그외AI/탄수5/19·탄속피해·HP충돌·보상·대사/버전0.47불변.
+server/deploy PNG허용목록·public-https 새모듈/PNG 및서버테스트목록준비. 신규미실행회귀4 tests/unit/vera-presentation.test.js(지연팩/초상·자세와시계불변·별도효과데이터불변/일반탄제외·기존fan유지). 테스트/서버/브라우저/푸시/배포/공개확인0, 과거650통과는이번근거아님. 코드/차이열람·gitdiffcheck만. 실제게임crop/좌우·발손/초상ready-fallback·걷기/피격사망·정지완화·저장·모바일미검증. 상세 docs/vera-implementation-20261028.md. 다음새명시배포시신규4+관련전체/실PC가로모바일·게이트/5/19발포화/벽·일반저격수칼드주인공벨카르불변/첫층로딩·공개PNG파일검증 후푸시배포. 현운영release-20261028-232125-7f8c30/runtime52b7791/0.47 그대로/BGM보류. 실행중명령없음/차단없음. 문서/로컬커밋후git상태확인. 한캐릭터패키지승인완료/추가부위재확인불필요, 새명시배포전테스트금지. 최종실제PNG절대경로표시/한국어5줄.
+```
 ## 최신 복사 가능한 인계 — 베라 시안 패키지 준비 (2026-10-28)
 ```text
 C:\baggam-dev\spirebound/main. 사용자 ‘해보자’로 베라 전용외형 시안 준비, 시작e917c02/gitclean. docs/design-drafts/vera-20261028/vera-royal-eye-v1.png 내장imagegen1회/실제PNG직접확인·원본 exec-fd5010fa-1152-41eb-af87-991dd37afd2b.png 보존·프로젝트무변환복사·정확prompt-v1.md/README. 주인공·기존일반저격수·벨카르 원본열람/구분참조. 새방향은백은발·편측눈황동가면·회청색피부·비대칭낡은청록외투/긴활의침식된왕실궁정사냥꾼. 기본대기/조준/발사+가면/장비상세·별도마법진/화살효과 한캐릭터패키지. 4~5등신·현69.6px목표/기존fan/ring·역할·대사/전투수치유지, 효과범위/새AI승인아님.
