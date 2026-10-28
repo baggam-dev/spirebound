@@ -1,0 +1,64 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "wall",
+      "width": 844,
+      "hp": 10,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "behind",
+      "width": 844,
+      "hp": 10,
+      "noRepeatOnResume": true
+    },
+    {
+      "kind": "nav-vera",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "nav-commander",
+      "width": 844,
+      "moved": true,
+      "noBlindShot": true
+    },
+    {
+      "kind": "status",
+      "width": 1280,
+      "resume": true,
+      "frameTiming": {
+        "samples": 60,
+        "mean": 16.458333334922795,
+        "p95": 16.900000000000546
+      },
+      "hazardDraws": 182
+    },
+    {
+      "kind": "status",
+      "width": 844,
+      "resume": true,
+      "frameTiming": {
+        "samples": 60,
+        "mean": 16.481666669050856,
+        "p95": 16.899999999999636
+      },
+      "hazardDraws": 196
+    },
+    {
+      "kind": "status-reduced",
+      "width": 844,
+      "resume": true,
+      "frameTiming": {
+        "samples": 60,
+        "mean": 22.79333333492279,
+        "p95": 33.400000000000546
+      },
+      "hazardDraws": 220
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

@@ -25,7 +25,7 @@ function cleanCrop(canvas){
  }
  c.putImageData(image,0,0);
 }
-export const feedbackBodyHeight=key=>key==='brute'?67:key==='demonCaptain'?66:key.startsWith('king')?92.4:key.startsWith('commander')?75.6:['kald','vera'].includes(key)?58:52;
+export const feedbackBodyHeight=key=>key==='brute'?67:key==='demonCaptain'?66:key.startsWith('king')?92.4:key.startsWith('commander')?75.6:['kald','vera'].includes(key)?69.6:52;
 export function feedbackSpriteKey(e){
  if(e.variant==='king')return 'king'+(e.hp/e.max>.65?1:e.hp/e.max>.3?2:3);
  if(e.variant==='commander')return 'commander'+(e.hp/e.max<=.5||e.commander?.phase===2?2:1);
@@ -63,7 +63,7 @@ export function drawFeedbackSprite(c,e,time=0,{reduced=false,staticPose=false,at
  const blocked=active||e.kingTransition>0||e.kneel>0||state.transition>0||state.blinkFlash>0;
  const g=locomotion(e,time,{reduced,staticPose,blocked,stride:key==='brute'?30:24}),foot=key.startsWith('commander')?29:key==='brute'?24:21;
  c.save();if(!local)c.translate(Math.round(e.x),Math.round(e.y));
- c.fillStyle='#0005';c.fillRect(-18,foot-2,36,5);c.translate(0,(attack?.bodyY||0)-(attack?.lift||0));c.scale(face,1);c.imageSmoothingEnabled=false;
+ const shadowWidth=['kald','vera'].includes(key)?43.2:36;c.fillStyle='#0005';c.fillRect(-shadowWidth/2,foot-2,shadowWidth,5);c.translate(0,(attack?.bodyY||0)-(attack?.lift||0));c.scale(face,1);c.imageSmoothingEnabled=false;
  applyRemainingBossPose(c,e,{reduced,staticPose},foot);
  if(['gravityMage','royalGuard'].includes(key))drawGlidingFrame(c,f,g,{feet:foot});else drawWalkingFrame(c,f,g,{feet:foot,hip:foot-15,weight:key==='brute'?.6:1});
  if(e.escapeDepth){c.strokeStyle='#ed9aab';c.lineWidth=1.5;c.beginPath();c.moveTo(-16,foot-2);c.lineTo(-21,foot-7);c.moveTo(16,foot-2);c.lineTo(21,foot-7);c.stroke();}

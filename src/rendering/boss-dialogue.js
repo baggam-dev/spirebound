@@ -16,7 +16,7 @@ function kind(e){
 const phase=e=>e.variant==='king'?kingPhase(e):e.variant==='commander'?commanderPhase(e):1;
 function anchor(e){
  const scale=e.scale??1;
- const offset=e.variant==='demon'?demonHealthOffset(e):e.variant==='king'?83:e.variant==='commander'?70:kind(e)==='warden'?wardenHealthOffset()*scale:e.variant==='slime'?Math.max(52,([76,56,40][e.stage||0]*832/1330-21)*1.3*scale+9):e.variant==='prism'?12+350*84/675*scale+5:52;
+ const offset=e.variant==='demon'?demonHealthOffset(e):e.variant==='king'?83:e.variant==='commander'?70:kind(e)==='warden'?wardenHealthOffset()*scale:e.variant==='slime'?Math.max(52,([76,56,40][e.stage||0]*832/1330-21)*1.3*scale+9):e.variant==='prism'?12+350*84/675*scale+5:e.gateTitle?64:52;
  const lift=e.attackPhase==='leap'?bossPose(e).lift:0;
  return {x:e.x,y:e.y-offset-7-lift};
 }

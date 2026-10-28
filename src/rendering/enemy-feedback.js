@@ -22,7 +22,7 @@ function style(e){
 export function enemyHitEffects(before,enemies){return enemies.filter(e=>e.hp>0&&before.has(e)&&e.hp<before.get(e)).map(e=>({
  enemyFeedback:'hit',enemyId:e.id,x:e.x,y:e.y,boss:e.type==='boss',demonCore:e.variant==='demon'&&e.part==='core',
  beforeRatio:Math.min(1,before.get(e)/e.max),afterRatio:Math.max(0,e.hp/e.max),
- healthOffset:e.variant==='king'?-83:e.type==='boss'?-52:-36,t:.28,duration:.28
+ healthOffset:e.variant==='king'?-83:e.type==='boss'?-52:e.gateTitle?-48:-36,t:.28,duration:.28
 }));}
 export function enemyDeathEffect(e,returning=false,previousHp){const split=e.variant==='slime'&&!e.summoned&&(e.stage||0)<2;
  const ordinary=isOrdinary(e),remainingBoss=remainingBossKey(e),demonCore=e.variant==='demon'&&e.part==='core',warden=isWarden(e),prism=e.variant==='prism',duration=split?.38:e.variant==='king'?1.1:e.variant==='commander'||demonCore||warden||prism||remainingBoss?1:.55;

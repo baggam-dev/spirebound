@@ -7,7 +7,7 @@ export function monsterStatus(e,room){
  if(e.gateTitle||e.elite==='guardian')return 'guardian';
  return e.elite?'elite':null;
 }
-function body(e){const h=e.type==='brute'?67:e.type==='demonCaptain'?66:e.gateTitle?58:e.type==='boss'?82:52;return {h,feet:e.type==='brute'?24:21,r:e.type==='boss'?34:e.type==='brute'?28:24};}
+function body(e){const h=e.type==='brute'?67:e.type==='demonCaptain'?66:e.gateTitle?69.6:e.type==='boss'?82:52;return {h,feet:e.type==='brute'?24:21,r:e.type==='boss'?34:e.type==='brute'?28:e.gateTitle?28.8:24};}
 function ring(c,x,y,r,color,dashed=false){c.strokeStyle=color;c.setLineDash(dashed?[5,4]:[]);c.beginPath();c.ellipse(x,y,r,r*.43,0,0,TAU);c.stroke();c.setLineDash([]);}
 function rune(c,x,y,size){c.beginPath();c.moveTo(x,y-size);c.lineTo(x+size*.55,y);c.lineTo(x,y+size);c.lineTo(x-size*.55,y);c.closePath();c.stroke();}
 // Render-only layers: never write actors, saves, timers, combat RNG or drop state.
