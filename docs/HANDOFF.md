@@ -1,3 +1,9 @@
+## 최신 복사 가능한 인계 — 고층 보스 가독성2 구현 완료·미검증 (2026-10-29)
+```text
+C:\baggam-dev\spirebound/main. 사용자 ㄱㄱ로 3종 통합 시안 승인, 시작2b22005/gitclean. docs/boss-readability-review-20261029.md 최신 구현기록. boss-threat-contours.js 새 헬퍼: 모르도 판단선/현재다음·표적원, 벨카르 비/연사2회·저격/반사/출현 의도선, 악마 실제210흡입·광선폭30/벽끝·혀/휘두르기 공유형상·착지95/발돌진캡슐/독길 샘플·잔존 독불번개 경계. game.js에서 아군FX뒤·적탄앞 선만 재표시/적탄기존1회. 모르도 초록반격원은 tactics.drawOpenings skipKing 선택렌더인자로만 숨기고 작은 회복검. 전환 브래킷·오라/장판 내부농도완화·팔회수회색흔적(reduced생략). 다른 적탄/장판/소환몹/부위공격/특수 등이 남으면 회복표식억제. 벨카르 종료관찰/실clock>.25·.35초제한, 악마페이즈 렌더WeakMap/동일elapsed정지·시간역행/첫로드재생방지. AI/판정/시간/피해/탄수/몸PNG·저장/RNG/버전변경없음. 공개파일목록 새헬퍼추가.
+테스트8개 tests/unit/boss-readability.test.js 준비/미실행. 소스/diff 및 git diff --check 정적대조만. 테스트구문실행/서버/브라우저/푸시/배포/공개확인0, 기존0.48 전체658은 이번 검증아님. 실제PC모바일가독성/중첩·하강/완화·성능/저장 미확인. 다음새명시배포때 신규8+관련/전체·보스실전PC/가로모바일/단계·경계/벽·동결/actor/저장·공개검증 후배포. 평소로컬커밋까지만.
+현운영release-20261029-110731-62e7e0/runtimed50a0cf/client·API0.48 유지. BGM보류·실행명령없음/차단없음. 새PNG생성없음·승인시안 docs/design-drafts/boss-readability-20261029/boss-readability-v1.png 및원본/프롬프트보존. 로컬커밋후git상태확인. 한국어5줄/이미지를다시보일경우실제PNG절대경로·승인시안과실제검증화면구분.
+```
 ## 최신 복사 가능한 인계 — 고층 보스 가독성2 시안 완료 (2026-10-29)
 ```text
 C:\baggam-dev\spirebound/main. 사용자 ㄱㄱ로 모르도·벨카르·최종보스 가독성2 시안만준비, 시작5981fd9/gitclean. docs/boss-readability-review-20261029.md 코드근거/범위, docs/design-drafts/boss-readability-20261029/boss-readability-v1.png1536×1024 내장imagegen1회/직접확인·무변환사본/원본exec-b6b46a0f-2398-4da1-81ae-0160dde7f39a 유지·prompt-v1.md/README. 현재심판vs다음·비/조준·악마흡입/본체휘두르기 실제경계와 별도페이즈오라/공격종료를한패키지제안. 기존효과이미있음을확인, 0.48 일반경계가보스고유state전체를다루지않으므로 겹침순서/종료/장식완화보완만. 새공격/수치/판정/시간/탄수/부위수·몸PNG변경없음. 시안은실제QA아님, 추가눈·왕관/인물·타일재해석생산반영금지. 오라더절제분리/회복표식은다른탄·장판무시하는안전보장금지.

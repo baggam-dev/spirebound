@@ -1,4 +1,5 @@
 import {drawEnemyBeam} from './enemy-attack-vfx.js';
+import {strokeThreat} from './threat-contours.js';
 const TAU=Math.PI*2,clamp=n=>Math.max(0,Math.min(1,n));
 const prismHistory=new WeakMap();
 function pixel(c,x,y,w,h,color){c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h);}
@@ -20,12 +21,15 @@ export function drawPrismRays(c,actor,rays,time,{phase,laser,reduced=false,progr
 }
 
 // The stripe is judgmentStripe itself, never the perspective shape in the concept PNG.
-export function drawJudgmentStripe(c,z,{flash=false,remaining=.18,progress=0,reduced=false}={}){
+export function drawJudgmentStripe(c,z,{flash=false,remaining=.18,progress=0,reduced=false,outlineOnly=false,secondary=false}={}){
  const horizontal=z.w>z.h,length=horizontal?z.w:z.h,width=horizontal?z.h:z.w;
  const age=clamp(1-remaining/.18),impact=flash&&age<.6;
  c.save();c.beginPath();c.rect(z.x,z.y,z.w,z.h);c.clip();c.translate(z.x,z.y);
  if(!horizontal){c.translate(z.w,0);c.rotate(Math.PI/2);}
  c.setLineDash([]);c.lineCap='butt';
+ if(outlineOnly||secondary){
+  c.strokeStyle=secondary?'#aaa6b0':'#e7b87e';c.lineWidth=secondary?1:1.5;c.setLineDash(secondary?[3,9]:[5,4]);c.beginPath();c.rect(1,1,length-2,width-2);strokeThreat(c);c.restore();return;
+ }
  if(!flash){
   c.fillStyle='#9b73551a';c.fillRect(0,0,length,width);
   c.strokeStyle='#e7b87e';c.lineWidth=1;c.globalAlpha*=.6+.3*clamp(progress);
@@ -40,12 +44,13 @@ export function drawJudgmentStripe(c,z,{flash=false,remaining=.18,progress=0,red
  c.restore();
 }
 
-export function drawFrostRain(c,a,{flash=false,progress=0,reduced=false}={}){
+export function drawFrostRain(c,a,{flash=false,progress=0,reduced=false,outlineOnly=false}={}){
  if(!(a.radius>0))return;
  const r=a.radius,age=clamp(1-(a.time??0)/.4),impact=flash&&age<.45;
  c.save();c.beginPath();c.arc(a.x,a.y,r,0,TAU);c.clip();c.translate(a.x,a.y);c.setLineDash([]);c.lineCap='butt';
+ if(outlineOnly){c.strokeStyle='#b0dfed';c.lineWidth=1.5;c.setLineDash([5,4]);c.beginPath();c.arc(0,0,Math.max(0,r-1),0,TAU);strokeThreat(c);c.restore();return;}
  if(!flash){
-  c.fillStyle='#70b4ce12';c.fillRect(-r,-r,2*r,2*r);c.strokeStyle='#b0dfed';c.lineWidth=1;c.globalAlpha*=.55+.3*clamp(progress);
+  c.fillStyle='#70b4ce08';c.fillRect(-r,-r,2*r,2*r);c.strokeStyle='#b0dfed';c.lineWidth=1;c.globalAlpha*=.55+.3*clamp(progress);
   const n=reduced?8:12;
   for(let i=0;i<n;i++){const angle=i*TAU/n;c.beginPath();c.arc(0,0,r-2,angle-.04,angle+.04);c.stroke();c.save();c.rotate(angle);c.beginPath();c.moveTo(r-8,-3);c.lineTo(r-15,0);c.lineTo(r-8,3);c.stroke();c.restore();}
   pixel(c,-1,-4,2,8,'#c4e8f1');pixel(c,-4,-1,8,2,'#c4e8f1');

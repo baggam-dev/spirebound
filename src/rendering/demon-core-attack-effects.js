@@ -1,12 +1,13 @@
 import {CORE_MOTION} from '../combat/demon-core-motion.js';
 import {DEMON_EYE,DEMON_TONGUE,demonEyeOffsets,demonRayLength} from '../combat/demon-attack-shapes.js';
+import {strokeThreat} from './threat-contours.js';
 function tongueSector(c,a,obstacles){
  c.beginPath();c.moveTo(a.x,a.y);
  for(let i=0;i<=24;i++){const angle=a.aim-DEMON_TONGUE.halfAngle+2*DEMON_TONGUE.halfAngle*i/24,r=demonRayLength(a,angle,obstacles,DEMON_TONGUE.radius);c.lineTo(a.x+Math.cos(angle)*r,a.y+Math.sin(angle)*r);}
  c.closePath();
 }
-export function drawDemonTongueWarning(c,a,obstacles=[]){
- c.save();tongueSector(c,a,obstacles);c.fillStyle='#d399bc30';c.fill();c.strokeStyle='#e7afd08c';c.lineWidth=1;c.stroke();c.restore();
+export function drawDemonTongueWarning(c,a,obstacles=[],{outlineOnly=false,active=false}={}){
+ c.save();tongueSector(c,a,obstacles);if(!outlineOnly){c.fillStyle='#d399bc15';c.fill();}c.strokeStyle='#e7afd0';c.lineWidth=1.2;c.setLineDash(active?[]:[5,4]);strokeThreat(c);c.restore();
 }
 export function drawDemonCoreAttackEffects(c,d,obstacles=[],reduced=false){
  const f=d.coreFlash;if(!f)return;

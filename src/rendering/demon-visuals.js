@@ -24,21 +24,21 @@ export function drawDemonGround(c,r,time=0,reduced=false){
  c.restore();}
  if(d.pressureVersion!==1)for(const t of d.trails)drawSoftField(c,t.x,t.y,t.radius,'#aa75bc',Math.min(.58,t.time/4*.58));
  if(d.force&&d.pressureVersion!==1){drawSoftField(c,d.force.x,d.force.y,d.pressureVersion===1?360:180,'#c883b6',.2*d.force.time/.8);c.strokeStyle='#e4a9d077';c.lineWidth=1;for(let i=0;i<8;i++){const angle=i*Math.PI/4+time*.3,x=d.force.x+Math.cos(angle)*100,y=d.force.y+Math.sin(angle)*100,sign=d.force.kind==='mouthPull'?-1:1;c.beginPath();c.moveTo(x,y);c.lineTo(x+Math.cos(angle)*20*sign,y+Math.sin(angle)*20*sign);c.stroke();}}
- if(d.sweepFlash?.time>DEMON_SWEEP.recover)drawDemonSweep(c,d.sweepFlash,{flash:true,reduced});
+ if(d.sweepFlash?.time>0)drawDemonSweep(c,d.sweepFlash,{flash:true,reduced});
  drawDemonCoreImpact(c,d,reduced);
  drawDemonCoreAttackEffects(c,d,r.obstacles,reduced);
  for(const a of (d.pressureVersion===1?d.attacks:d.attack?[d.attack]:[])){
   const shade=a.kind.startsWith('foot')?'#d2a0c9':a.kind.startsWith('mouth')?'#e4a0c8':'#cc96df';
   if(isDemonSweep(a.kind))drawDemonSweep(c,a,{reduced});
   if(a.kind==='mouthTongue')drawDemonTongueWarning(c,a,r.obstacles);
-  if(['footJump','noseTrail'].includes(a.kind))drawSoftField(c,a.tx,a.ty,a.kind==='footJump'?95:80,shade,.63);
-  if(['eyeRay','footDash'].includes(a.kind)){
-   c.strokeStyle=shade+'99';c.lineWidth=a.kind==='eyeRay'?1:2;
-   const offsets=a.kind==='eyeRay'?demonEyeOffsets(d.pressureVersion===1):[0];
-   for(const offset of offsets){const angle=a.aim+offset,length=a.kind==='eyeRay'?demonRayLength(a,angle,r.obstacles,1200,2):850;c.beginPath();c.moveTo(a.x,a.y);c.lineTo(a.x+Math.cos(angle)*length,a.y+Math.sin(angle)*length);c.stroke();}
+  if(a.kind==='footJump')drawSoftField(c,a.tx,a.ty,95,shade,.18);
+  if(a.kind==='eyeRay'){
+   c.strokeStyle=shade+'99';c.lineWidth=1;
+   const offsets=demonEyeOffsets(d.pressureVersion===1);
+   for(const offset of offsets){const angle=a.aim+offset,length=demonRayLength(a,angle,r.obstacles,1200,2);c.beginPath();c.moveTo(a.x,a.y);c.lineTo(a.x+Math.cos(angle)*length,a.y+Math.sin(angle)*length);c.stroke();}
   }
   if(['hand','eyeOrb','coreBurst'].includes(a.kind))drawSoftField(c,a.x,a.y,a.kind==='coreBurst'?82:44,shade,.42);
-  if(['mouthPull','mouthPush'].includes(a.kind))drawSoftField(c,a.x,a.y,d.pressureVersion===1?demonForceProfile(d).radius:245,shade,.22);
+  if(['mouthPull','mouthPush'].includes(a.kind))drawSoftField(c,a.x,a.y,d.pressureVersion===1?demonForceProfile(d).radius:245,shade,.08);
   c.fillStyle='#f4d9f2';c.font='11px Galmuri, monospace';c.textAlign='center';
   const finger=['엄지 부채','검지 저격','중지 관통','약지 곡사','새끼 산탄'];
   c.fillText(a.kind==='hand'?finger[a.finger]:({footJump:'발 착지',footDash:'발 돌진',eyeRay:'눈 광선',eyeOrb:'눈 탄환',noseTrail:'독길',mouthPull:'흡입',mouthPush:'밀어내기',mouthTongue:'혀 공격',coreBurst:'심연 탄막',coreSweepLeft:'왼팔 휘두르기 · 범위 밖으로',coreSweepRight:'오른팔 휘두르기 · 범위 밖으로'})[a.kind],a.x,a.y-65);
