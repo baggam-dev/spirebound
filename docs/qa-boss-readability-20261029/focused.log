@@ -1,0 +1,20 @@
+✔ Mordo late judgment uses actual horizontal and vertical stripes without drawing the future strike or filling (3.1628ms)
+✔ Velkar rain clips to its real radius and both spread beats retain the real offset count (1.0454ms)
+✔ phase2 mouth keeps 210px warning and active edges in both motion settings with no field repaint (0.5602ms)
+✔ core eye outlines share five wall-ended rays and sweep outlines share the damage sector (1.0257ms)
+✔ persistent demon fields remain visible while no global recovery cue is allowed (1.4254ms)
+✔ Velkar recovery requires an observed attack end and hides with live bullets; reload never replays a cue (0.5036ms)
+✔ phase accents keep render-only history, do not replay on initial load, and cover reduced mode (1.3365ms)
+✔ Mordo replaces the old green ground cue and suppresses recovery during hazards, freeze or an attack (0.5637ms)
+✔ all live field contours keep their real radii and warning/active styles without mutating hazards (5.9755ms)
+✔ reduced ally ground rendering is static while normal ground continues to animate (2.1749ms)
+✔ late high-floor contours reuse thrust and gravity geometry without another fill or particles (0.7418ms)
+✔ late Kald slash and dash contours neither replay hits nor paint a second filled area (0.5466ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 676.0534

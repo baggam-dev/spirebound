@@ -1,0 +1,277 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "width": 1280,
+      "reduced": false,
+      "scene": "king-judgment",
+      "floor": 8,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "king",
+      "phase": 3,
+      "resume": true,
+      "timing": {
+        "mean": 16.540000000000003,
+        "p95": 16.799999999999727
+      }
+    },
+    {
+      "width": 1280,
+      "reduced": false,
+      "scene": "king-transition",
+      "floor": 8,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "king",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 16.458333333333332,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 1280,
+      "reduced": false,
+      "scene": "velkar-rain",
+      "floor": 9,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "commander",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 16.286666664282485,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 1280,
+      "reduced": false,
+      "scene": "velkar-transition",
+      "floor": 9,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "commander",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 16.20000000238418,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 1280,
+      "reduced": false,
+      "scene": "demon-mouth",
+      "floor": 10,
+      "hp": 10,
+      "enemies": 3,
+      "variant": "demon",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 23.810000000794723,
+        "p95": 33.399999999999636
+      }
+    },
+    {
+      "width": 1280,
+      "reduced": false,
+      "scene": "demon-core",
+      "floor": 10,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "demon",
+      "phase": 3,
+      "resume": true,
+      "timing": {
+        "mean": 16.358333334922797,
+        "p95": 16.799999999999272
+      }
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "scene": "king-judgment",
+      "floor": 8,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "king",
+      "phase": 3,
+      "resume": true,
+      "timing": {
+        "mean": 16.743333330154414,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "scene": "king-transition",
+      "floor": 8,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "king",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 16.741666666666667,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "scene": "velkar-rain",
+      "floor": 9,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "commander",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 17.17333333492279,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "scene": "velkar-transition",
+      "floor": 9,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "commander",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 18.563333334128068,
+        "p95": 33.399999999999636
+      }
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "scene": "demon-mouth",
+      "floor": 10,
+      "hp": 10,
+      "enemies": 3,
+      "variant": "demon",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 19.54833333174388,
+        "p95": 33.399999999999636
+      }
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "scene": "demon-core",
+      "floor": 10,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "demon",
+      "phase": 3,
+      "resume": true,
+      "timing": {
+        "mean": 17.313333332538605,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "scene": "king-judgment",
+      "floor": 8,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "king",
+      "phase": 3,
+      "resume": true,
+      "timing": {
+        "mean": 19.349999998410535,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "scene": "king-transition",
+      "floor": 8,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "king",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 17.068333331743876,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "scene": "velkar-rain",
+      "floor": 9,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "commander",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 21.025,
+        "p95": 33.30000000000018
+      }
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "scene": "velkar-transition",
+      "floor": 9,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "commander",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 17.15000000079473,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "scene": "demon-mouth",
+      "floor": 10,
+      "hp": 10,
+      "enemies": 3,
+      "variant": "demon",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 21.510000000000005,
+        "p95": 33.399999999999636
+      }
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "scene": "demon-core",
+      "floor": 10,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "demon",
+      "phase": 3,
+      "resume": true,
+      "timing": {
+        "mean": 16.391666669050846,
+        "p95": 16.800000000000182
+      }
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

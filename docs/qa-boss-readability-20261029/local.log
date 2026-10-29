@@ -1,0 +1,19 @@
+1280 false king-judgment
+1280 false king-transition
+1280 false velkar-rain
+1280 false velkar-transition
+1280 false demon-mouth
+1280 false demon-core
+844 false king-judgment
+844 false king-transition
+844 false velkar-rain
+844 false velkar-transition
+844 false demon-mouth
+844 false demon-core
+844 true king-judgment
+844 true king-transition
+844 true velkar-rain
+844 true velkar-transition
+844 true demon-mouth
+844 true demon-core
+{"scenes":18,"errors":[],"scoreSubmissions":0}
