@@ -1,0 +1,39 @@
+✔ compact rendering keeps critical feedback while bounding crowded accents (3.6749ms)
+✔ mobile pickup labels stay separated at the lower screen edge without moving inputs (0.8542ms)
+✔ all nine generic kinds start their own controller, while bosses and named gates keep legacy behavior (5.0798ms)
+✔ halberd is a fixed narrow thrust rather than the old shared sector and is blocked by cover (2.8091ms)
+✔ shield advances within its budget, keeps old frontal reduction and lowers the guard in recovery (0.6556ms)
+✔ sniper locks both marks, fires exactly twice and preserves the saved second aim (1.0719ms)
+✔ turret uses only two fixed four-way volleys, with a separate second warning (0.858ms)
+✔ gravity has no warning pull, a finite active window and cancels on freeze (0.5628ms)
+✔ resonance is a single cooldown pulse with a floor and does not affect a named/boss ally (0.5103ms)
+✔ rift marks a side landing, slashes once and returns without an arrival/return damage event (0.4263ms)
+✔ soldier steps no more than 24px and hits only once at the end of the strike (0.4824ms)
+✔ captain gets one dash and one separately warned axe finish; close range skips the dash (0.7759ms)
+✔ every produced stage is serializable and pending combos retain the shared warning reservation (37.661ms)
+✔ renderer leaves actors and combat data unchanged and high-floor art is not in the first-floor pack (3.0363ms)
+✔ real simulation saves a resolved thrust and resume never applies that hit a second time (109.005ms)
+✔ heavy starts wait for each other while an ordinary frontliner can use the second warning slot (0.3132ms)
+✔ a committed second volley is never interrupted by a newly restored heavy attack (0.2202ms)
+✔ the short high-floor breather survives serialization and then releases a ready attacker (0.3414ms)
+✔ rift refuses occupied landing candidates and rechecks a landing after its warning (0.3302ms)
+✔ an occupied rift home cancels only the return displacement and still finishes recovery (0.3304ms)
+✔ all live field contours keep their real radii and warning/active styles without mutating hazards (5.4853ms)
+✔ reduced ally ground rendering is static while normal ground continues to animate (3.7186ms)
+✔ late high-floor contours reuse thrust and gravity geometry without another fill or particles (1.2683ms)
+✔ late Kald slash and dash contours neither replay hits nor paint a second filled area (0.8628ms)
+✔ player explosion budget never discards hostile fields or damage labels (2.5335ms)
+✔ synergy budget retains newest effects and unrelated warnings (0.5627ms)
+✔ mobile density deduplicates player effects while retaining every hostile warning (0.5224ms)
+✔ Vera art is prepared for the actual gate and isolated portrait without first-floor overhead (3.955ms)
+✔ existing aim, release and elite recovery select poses without changing saved attack clocks (0.6647ms)
+✔ separate effects are read-only and do not restyle ordinary or friendly projectiles (0.9137ms)
+✔ Vera keeps the five-shot fan and ordinary snipers retain their original source label (3.2803ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1034.072

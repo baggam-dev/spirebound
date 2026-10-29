@@ -19,7 +19,7 @@ export function drawPlayerBlast(c,f){
  const age=1-Math.max(0,Math.min(1,f.t/(f.duration||.22))),radius=Math.max(0,f.r||0);
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(f.x),Math.round(f.y));
  // Open flame petals expose the floor between lobes, rather than an opaque disk.
- for(let i=0;i<8;i++){const a=i*Math.PI/4;c.save();c.rotate(a);const reach=radius*(.2+.68*Math.sin(age*Math.PI*.85));c.globalAlpha=(1-age)*.38;polygon(c,[[2,-3],[reach*.65,-6],[reach,0],[reach*.55,5],[2,3]],'#b44b37');c.globalAlpha=(1-age)*.65;polygon(c,[[3,-2],[reach*.65,-3],[reach*.86,0],[reach*.55,2]],'#f8a15b');box(c,reach*.78,0,3,2,'#fbe0a0');c.restore();}
+ for(let i=0;i<8;i++){const a=i*Math.PI/4;c.save();c.rotate(a);const reach=radius*(.2+.68*Math.sin(age*Math.PI*.85));c.globalAlpha=(1-age)*.26;polygon(c,[[2,-3],[reach*.65,-6],[reach,0],[reach*.55,5],[2,3]],'#b44b37');c.globalAlpha=(1-age)*.42;polygon(c,[[3,-2],[reach*.65,-3],[reach*.86,0],[reach*.55,2]],'#f8a15b');box(c,reach*.78,0,3,2,'#fbe0a0');c.restore();}
  drawElementCrown(c,'fire',age,3);c.restore();return true;
 }
 export function limitPlayerBlasts(effects,max=12){let skip=Math.max(0,effects.filter(f=>f.playerBlast).length-max);return effects.filter(f=>!f.playerBlast||skip--<=0);}

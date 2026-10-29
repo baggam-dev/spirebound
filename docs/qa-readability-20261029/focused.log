@@ -1,0 +1,37 @@
+✔ imported images do not request a source until their pack is activated (3.711ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.5152ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (47.0249ms)
+✔ selected portraits do not require every monster or any dungeon hall (0.9119ms)
+✔ fresh return saves prepare descent-only enemies without making first ascent download them (0.4015ms)
+✔ rare upper-floor expeditions and chest bosses are loaded from the actual roster (0.4229ms)
+✔ floor discovery covers later rooms while a combat check can inspect only its current room (1.7622ms)
+✔ all nine generic kinds start their own controller, while bosses and named gates keep legacy behavior (6.3385ms)
+✔ halberd is a fixed narrow thrust rather than the old shared sector and is blocked by cover (3.7471ms)
+✔ shield advances within its budget, keeps old frontal reduction and lowers the guard in recovery (0.9081ms)
+✔ sniper locks both marks, fires exactly twice and preserves the saved second aim (1.9001ms)
+✔ turret uses only two fixed four-way volleys, with a separate second warning (0.65ms)
+✔ gravity has no warning pull, a finite active window and cancels on freeze (0.6186ms)
+✔ resonance is a single cooldown pulse with a floor and does not affect a named/boss ally (0.4668ms)
+✔ rift marks a side landing, slashes once and returns without an arrival/return damage event (0.4189ms)
+✔ soldier steps no more than 24px and hits only once at the end of the strike (0.4786ms)
+✔ captain gets one dash and one separately warned axe finish; close range skips the dash (0.7906ms)
+✔ every produced stage is serializable and pending combos retain the shared warning reservation (45.3929ms)
+✔ renderer leaves actors and combat data unchanged and high-floor art is not in the first-floor pack (2.4693ms)
+✔ real simulation saves a resolved thrust and resume never applies that hit a second time (128.565ms)
+✔ heavy starts wait for each other while an ordinary frontliner can use the second warning slot (0.4707ms)
+✔ a committed second volley is never interrupted by a newly restored heavy attack (0.3397ms)
+✔ the short high-floor breather survives serialization and then releases a ready attacker (0.3947ms)
+✔ rift refuses occupied landing candidates and rechecks a landing after its warning (0.3508ms)
+✔ an occupied rift home cancels only the return displacement and still finishes recovery (0.3415ms)
+✔ Vera art is prepared for the actual gate and isolated portrait without first-floor overhead (2.083ms)
+✔ existing aim, release and elite recovery select poses without changing saved attack clocks (0.598ms)
+✔ separate effects are read-only and do not restyle ordinary or friendly projectiles (0.8167ms)
+✔ Vera keeps the five-shot fan and ordinary snipers retain their original source label (2.0297ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4248.6813

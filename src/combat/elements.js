@@ -79,10 +79,10 @@ export function tickElements(room,dt,poisonLevel=0){bindDefenses(room.enemies);
  let pending;do{pending=enemies.filter(e=>e.hp<=0&&e.poisonKilled&&(e.poisonLevel>=3||poisonLevel>=3)&&!e.corpseExploded);for(const e of pending){e.corpseExploded=true;for(const other of enemies)if(grounded(other)&&near(e,other,85))damage(other,e.poisonBlast??24,true);effects.push({x:e.x,y:e.y,r:85,t:.6,color:'#96ff72',groundBurst:true});}}while(pending.length);
  return effects;
 }
-export function drawElements(ctx,room,time=0){
- ctx.save();for(const z of room.fireZones||[]){drawGroundField(ctx,z,'fire',time);}
+export function drawElements(ctx,room,time=0,reduced=false){
+ ctx.save();for(const z of room.fireZones||[]){drawGroundField(ctx,z,'fire',time,reduced);}
  for(const e of room.enemies){
-  if(e.poisonStacks?.length>=2){drawGroundField(ctx,{x:e.x,y:e.y,r:e.poisonRadius},'gas',time);}
+  if(e.poisonStacks?.length>=2){drawGroundField(ctx,{x:e.x,y:e.y,r:e.poisonRadius},'gas',time,reduced);}
   if(e.poisonStacks?.length){ctx.fillStyle='#8dea77';ctx.font='11px Galmuri, monospace';ctx.fillText('독 '+e.poisonStacks.length,e.x-15,e.y+31);}
   if(e.sporeDot){ctx.fillStyle='#a6cc83';ctx.fillRect(e.x+12,e.y-18,3,3);}
   if(e.burnStacks?.length){ctx.fillStyle='#ff9b49';ctx.fillRect(e.x-20,e.y-8,4,12);}

@@ -1,0 +1,43 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "royalGuard",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.083333333333331,
+      "warnings": 0,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 17.140000001192092,
+        "p95": 16.899999999999636
+      }
+    },
+    {
+      "kind": "astralSniper",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 2.033333333333331,
+      "warnings": 0,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 16.605833331743877,
+        "p95": 16.899999999999636
+      }
+    },
+    {
+      "kind": "crowd-reduced",
+      "width": 844,
+      "saveResume": true,
+      "elapsed": 3.099999999999994,
+      "warnings": 2,
+      "frameTiming": {
+        "samples": 120,
+        "mean": 25.092500000794725,
+        "p95": 49.899999999999636
+      }
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

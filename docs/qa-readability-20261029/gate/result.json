@@ -1,0 +1,32 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "scene": "gate",
+      "width": 1280,
+      "floor": 7,
+      "pending": false,
+      "enemies": 2,
+      "phase": null,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    },
+    {
+      "scene": "gate",
+      "width": 844,
+      "floor": 7,
+      "pending": false,
+      "enemies": 2,
+      "phase": null,
+      "hero": {
+        "ready": true,
+        "frames": 4,
+        "bodyHeight": 58
+      }
+    }
+  ],
+  "errors": []
+}

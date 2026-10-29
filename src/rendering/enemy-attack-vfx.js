@@ -1,4 +1,5 @@
 // Code-native VFX use the real attack geometry. No actor, combat clock or RNG writes.
+import {drawThreatCircle,strokeThreat} from './threat-contours.js';
 const TAU=Math.PI*2;
 const clamp=n=>Math.max(0,Math.min(1,n));
 function disk(c,x,y,r){c.beginPath();c.arc(x,y,Math.max(0,r),0,TAU);c.clip();}
@@ -10,6 +11,7 @@ export function drawEnemyField(c,x,y,r,{kind='warning',time=0,reduced=false,prog
  const ticks=warning?12:8,phase=reduced?0:time*.7;
  for(let i=0;i<ticks;i++){const a=i*TAU/ticks,rr=r-2;c.strokeStyle=color;c.lineWidth=warning?1.3:1;c.globalAlpha=alpha*(warning?.62+.22*clamp(progress):.4);c.beginPath();c.moveTo(x+Math.cos(a)*(rr-3),y+Math.sin(a)*(rr-3));c.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);c.stroke();}
  c.globalAlpha=alpha;
+ drawThreatCircle(c,x,y,r,{warning,progress,opacity:.8});
  if(warning){dot(c,x-1,y-8,2,7,'#f4d19a');dot(c,x-1,y+2,2,2,'#f4d19a');return c.restore();}
  if(gravity){
   for(let i=0;i<4;i++){const a=i*TAU/4+(reduced?0:time*.35),rr=r*(reduced?.48:.22+(1-(time*.32+i*.25)%1)*.52);c.strokeStyle='#b69ad4';c.lineWidth=1.5;c.globalAlpha=alpha*.6;c.beginPath();c.arc(x,y,rr,a,a+.22);c.stroke();dot(c,x+Math.cos(a)*(rr-4),y+Math.sin(a)*(rr-4),2,1,'#d0b3e8');}
@@ -23,16 +25,16 @@ export function drawEnemyImpact(c,x,y,r,age,{reduced=false,color='#eab18a',opaci
  const rr=r*(.12+age*.68);for(let i=0;i<(reduced?4:10);i++){const a=i*2.4,rad=rr*(.55+(i%3)*.15),px=x+Math.cos(a)*rad,py=y+Math.sin(a)*rad*.72;dot(c,px-2,py,4,2,'#302e33');dot(c,px-1,py-1,3,1,i%3?color:'#f6dfb5');}
  if(age<.3){c.globalAlpha*=.7;dot(c,x-5,y-1,10,2,'#f6e3bc');dot(c,x-1,y-4,2,8,color);}c.restore();
 }
-export function drawEnemySector(c,x,y,r,aim,halfAngle,{warning=false,progress=0,fade=1,reduced=false,accent='#d7907e'}={}){
+export function drawEnemySector(c,x,y,r,aim,halfAngle,{warning=false,progress=0,fade=1,reduced=false,outlineOnly=false,accent='#d7907e'}={}){
  c.save();c.translate(x,y);c.rotate(aim);c.setLineDash([]);c.lineCap='butt';c.beginPath();c.moveTo(0,0);c.arc(0,0,r,-halfAngle,halfAngle);c.closePath();c.clip();
- if(warning){c.strokeStyle='#edb092';c.lineWidth=1.3;for(let i=0;i<7;i++){const a=-halfAngle+(i+.5)*halfAngle*2/7;c.beginPath();c.arc(0,0,r-1,a-.06,a+.06);c.stroke();}c.globalAlpha*=.1+clamp(progress)*.1;c.fillStyle='#d78673';c.beginPath();c.moveTo(0,0);c.arc(0,0,r,-halfAngle,halfAngle);c.closePath();c.fill();}
+ if(warning){c.strokeStyle='#edb092';c.lineWidth=1.4;c.setLineDash([5,4]);c.beginPath();c.moveTo(0,0);c.arc(0,0,r-1,-halfAngle,halfAngle);c.closePath();strokeThreat(c);c.setLineDash([]);if(!outlineOnly){c.globalAlpha*=.07+clamp(progress)*.06;c.fillStyle='#d78673';c.fill();}}
  else{c.globalAlpha*=fade;c.fillStyle='#e1a58a14';c.fill();c.fillStyle=accent;c.beginPath();c.arc(0,0,r-1,-halfAngle,halfAngle);c.arc(0,0,r*.72,halfAngle,-halfAngle,true);c.closePath();c.fill();c.strokeStyle='#fff0d9';c.lineWidth=2;c.beginPath();c.arc(0,0,r-2,-halfAngle+.03,halfAngle-.03);c.stroke();if(!reduced)for(let i=0;i<3;i++){const a=-halfAngle+(i+.5)*halfAngle*2/3;dot(c,Math.cos(a)*r*.82,Math.sin(a)*r*.82,2,1,'#ffe2bb');}}
  c.restore();
 }
 export function drawEnemyBeam(c,a,b,{active=false,width=30,color='#ed9988',progress=0,reduced=false}={}){
  const length=Math.hypot(b.x-a.x,b.y-a.y);if(!length)return;c.save();const alpha=c.globalAlpha;c.translate(a.x,a.y);c.rotate(Math.atan2(b.y-a.y,b.x-a.x));c.lineCap='butt';c.beginPath();c.rect(0,-width/2,length,width);c.clip();
  if(active){c.setLineDash([]);c.strokeStyle='#28212e';c.lineWidth=width;c.beginPath();c.moveTo(0,0);c.lineTo(length,0);c.stroke();c.strokeStyle=color;c.lineWidth=Math.max(2,width*.6);c.globalAlpha*=.75;c.stroke();c.globalAlpha=alpha;c.strokeStyle='#fff0df';c.lineWidth=2;c.stroke();if(!reduced)for(let x=12;x<length;x+=64)dot(c,x,-2,3,4,'#fff3dc');}
- else{c.strokeStyle=color;c.lineWidth=1;c.globalAlpha*=.38+.36*clamp(progress);c.setLineDash([3,6]);c.beginPath();c.moveTo(0,0);c.lineTo(length,0);c.stroke();}
+ else{c.strokeStyle=color;c.lineWidth=1.4;c.globalAlpha*=.5+.3*clamp(progress);c.setLineDash([3,6]);c.beginPath();c.moveTo(0,0);c.lineTo(length,0);strokeThreat(c);}
  c.restore();
 }
 export function drawEnemyMuzzle(c,x,y,aim,{active=false,progress=0,reduced=false}={}){

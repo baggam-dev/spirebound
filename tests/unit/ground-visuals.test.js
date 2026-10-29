@@ -14,7 +14,8 @@ test('hostile fields clip edge notches and fade at the real radius',()=>{
  const c={globalAlpha:1,save(){},restore(){},setLineDash(){},createRadialGradient(x,y,a,b,d,r){radii.push(r);return {addColorStop(at,color){stops.push([at,color]);}};},beginPath(){},arc(){},clip(){clips++;},fillRect(){},moveTo(x,y){from={x,y};},lineTo(x,y){segments.push([from,{x,y}]);},stroke(){}};
  const z=Object.freeze({x:100,y:100,r:85,time:.4});
  for(const kind of ['hostile','warning','blast']){radii.length=0;segments.length=0;drawGroundField(c,z,kind,1);assert.equal(radii[0],85);assert.deepEqual(stops.at(-1),[1,'#00000000']);assert.ok(segments.length>=8);for(const pair of segments)for(const p of pair)assert.ok(Math.hypot(p.x-100,p.y-100)<=85);}
- assert.equal(clips,3);
+ // Both sparse fill and the new contour clip to the same tested real radius.
+ assert.equal(clips,6);
 });
 test('fields fade to transparent at the real radius without outlines',()=>{
  const radii=[],stops=[];const c={globalAlpha:1,save(){},restore(){},createRadialGradient(x,y,a,b,d,r){radii.push(r);return {addColorStop(at,color){stops.push([at,color]);}};},beginPath(){},arc(){},clip(){},fillRect(){},stroke(){throw Error('circular outline');}};

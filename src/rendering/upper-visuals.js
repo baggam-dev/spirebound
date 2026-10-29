@@ -3,6 +3,7 @@ import {drawJudgmentStripe} from './boss-attack-vfx.js';
 import {drawMordoPresentation} from './mordo-presentation-art.js';
 import {drawFeedbackSprite} from './feedback-sprites.js';
 import {drawVeraSigil} from './vera-effects.js';
+import {strokeThreat} from './threat-contours.js';
 import {drawKingAura} from './king-aura.js';
 import {drawMordoPhase3Sprite} from './mordo-phase3-sprite.js';
 import {drawMordoPhase2Sprite} from './mordo-phase2-sprite.js';
@@ -22,7 +23,7 @@ import {upperTypes,kingPhase,fanOffsets,judgmentStripe,slashReach,ringOffsets} f
 const TAU=Math.PI*2;
 function circle(c,x,y,r){drawSoftField(c,x,y,r,typeof c.strokeStyle==='string'?c.strokeStyle.slice(0,7):'#dba5ff',.6);}
 function label(c,text,x,y,color='#eacaff'){c.fillStyle=color;c.font='bold 12px Galmuri, monospace';c.textAlign='center';c.fillText(text,x,y);}
-function capsule(c,a){const dx=a.tx-a.x,dy=a.ty-a.y,theta=Math.atan2(dy,dx);c.save();c.translate(a.x,a.y);c.rotate(theta);const length=Math.hypot(dx,dy);c.beginPath();c.moveTo(0,-35);c.lineTo(length,-35);c.arc(length,0,35,-Math.PI/2,Math.PI/2);c.lineTo(0,35);c.arc(0,0,35,Math.PI/2,Math.PI*1.5);c.closePath();c.fill();c.stroke();c.restore();}
+function capsule(c,a,outlineOnly=false){const dx=a.tx-a.x,dy=a.ty-a.y,theta=Math.atan2(dy,dx);c.save();c.translate(a.x,a.y);c.rotate(theta);const length=Math.hypot(dx,dy);c.beginPath();c.moveTo(0,-35);c.lineTo(length,-35);c.arc(length,0,35,-Math.PI/2,Math.PI/2);c.lineTo(0,35);c.arc(0,0,35,Math.PI/2,Math.PI*1.5);c.closePath();if(!outlineOnly)c.fill();strokeThreat(c);c.restore();}
 function attackShape(c,e,a,flash=false,reduced=false){c.save();const strong=a.kind==='judgment'||a.finisher;c.strokeStyle=strong?'#ffc091':'#dba5ff';c.fillStyle=flash?'#f1d8ff66':strong?'#e36c7838':'#ad5bdd30';c.lineWidth=flash?4:1;if(!flash)c.globalAlpha=a.time<.25?.75:.5;c.setLineDash(flash||a.moving?[]:[6,4]);
  if(a.kind==='dash'){capsule(c,a);if(!flash&&!a.moving)label(c,e.gateTitle?'돌진 · 장애물로 유도':'돌진',a.tx,a.ty-42);}
  else if(a.kind==='slash'){drawEnemySector(c,a.x,a.y,slashReach(e),a.aim,1.15,{warning:!flash,fade:flash?Math.min(1,(a.time??.25)/.25):1,reduced,accent:strong?'#f3ae8a':'#c3a0e4'});if(!flash&&e.variant==='king'&&kingPhase(e)>=2)label(c,'연속 베기 '+(a.step+1)+'/'+(kingPhase(e)===3?3:2),a.x,a.y-58);}
@@ -36,6 +37,13 @@ export function drawUpperGround(c,e,time=0,reduced=false){c.save();c.beginPath()
  if(e.guardPortal){const g=e.guardPortal;c.strokeStyle='#ccb2fa';c.fillStyle='#7c4c9b55';c.setLineDash([4,4]);circle(c,g.x,g.y,30);c.beginPath();c.moveTo(g.x-20,g.y);c.lineTo(g.x+20,g.y);c.moveTo(g.x,g.y-20);c.lineTo(g.x,g.y+20);c.stroke();label(c,'망령 소환',g.x,g.y-40);}
  c.restore();c.restore();}
 export function drawUpperLinks(c,room,time=0){c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.lineWidth=1;for(const e of room.enemies)if(e.type==='starBearer'&&e.gateTitle&&e.hp>0&&!(e.frozen>0)){c.strokeStyle='#edcf7980';c.fillStyle='#ddbb6320';c.setLineDash([3,7]);drawSoftField(c,e.x,e.y,170,'#edcf79',.25);for(const n of room.enemies)if(n!==e&&n.hp>0&&Math.hypot(n.x-e.x,n.y-e.y)<170){c.beginPath();c.moveTo(e.x,e.y);c.lineTo(n.x,n.y);c.stroke();label(c,'↑',n.x,n.y-42,'#f1d883');}label(c,'공격 가속',e.x,e.y-58,'#f1d883');}c.restore();}
+export function drawUpperThreatContours(c,e,reduced=false){
+ const a=e.darkAttack;if(e.hp<=0||!a||!['slash','dash'].includes(a.kind))return;
+ c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.globalAlpha*=.8;
+ if(a.kind==='slash')drawEnemySector(c,a.x,a.y,slashReach(e),a.aim,1.15,{warning:true,outlineOnly:true,reduced});
+ else{c.strokeStyle='#dba5ff';c.lineWidth=1.4;c.setLineDash(a.moving?[]:[6,4]);capsule(c,a,true);}
+ c.restore();
+}
 function polygon(c,points,color){c.fillStyle=color;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.fill();}
 function sword(c,x,y,rotation=0){c.save();c.translate(x,y);c.rotate(rotation);polygon(c,[[-5,12],[-5,-27],[0,-40],[5,-27],[5,12]],'#d4c6e4');polygon(c,[[-2,7],[-2,-28],[0,-36],[1,-27],[1,7]],'#f4eaff');c.fillStyle='#c5a56c';c.fillRect(-11,9,22,4);c.fillStyle='#58405c';c.fillRect(-2,13,4,11);c.fillStyle='#e5c985';c.fillRect(-3,21,6,3);c.restore();}
 function armor(c,body,trim,glow,legs=true){c.fillStyle=body;c.fillRect(-14,-16,28,31);c.fillStyle=trim;c.fillRect(-20,-17,9,15);c.fillRect(11,-17,9,15);c.fillRect(-10,-31,20,18);c.fillStyle=glow;c.fillRect(-7,-23,14,3);c.fillRect(-2,-9,4,19);if(legs){c.fillStyle=body;c.fillRect(-12,13,9,12);c.fillRect(3,13,9,12);}}

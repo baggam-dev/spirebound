@@ -1,4 +1,5 @@
 import {DeferredImage} from './asset-requests.js';
+import {strokeThreat} from './threat-contours.js';
 import {meleeProfiles} from '../combat/enemy-melee.js';
 const frames=new Map();
 export const enemyMeleeArtReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
@@ -27,4 +28,8 @@ export function drawEnemyMeleeGround(c,e,reduced=false){
 export function applyEnemyMeleePose(c,e,{reduced=false}={}){
  const a=e.meleeAttack;if(!a||['brute','charger'].includes(e.type)||reduced)return;
  const push=a.stage==='strike'?2:a.stage==='windup'?-1:0;c.translate(Math.cos(a.aim)*push,Math.sin(a.aim)*push);
+}
+export function drawMeleeThreatContours(c,e){
+ const a=e.meleeAttack,p=meleeProfiles[e.type];if(e.hp<=0||!p||a?.stage!=='windup')return;
+ c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(e.x,e.y);c.rotate(a.aim);c.globalAlpha*=.8;c.strokeStyle='#df9e79';c.lineWidth=1.4;c.setLineDash([4,4]);c.beginPath();c.moveTo(0,0);c.arc(0,0,p.radius*(e.scale??1),-p.halfAngle,p.halfAngle);c.closePath();strokeThreat(c);c.restore();
 }
