@@ -1,0 +1,25 @@
+{
+  "base": "https://168.107.21.43",
+  "results": [
+    {
+      "width": 844,
+      "reduced": false,
+      "resume": true,
+      "timing": {
+        "mean": 16.88833333412804,
+        "p95": 16.799999999999272
+      }
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "resume": true,
+      "timing": {
+        "mean": 17.181666668256124,
+        "p95": 16.80000000000291
+      }
+    }
+  ],
+  "errors": [],
+  "records": 0
+}

@@ -1,0 +1,12 @@
+844 false
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 180000ms exceeded.
+    at C:\baggam-dev\spirebound\tools\qa\readability-release-qa.mjs:19:95 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

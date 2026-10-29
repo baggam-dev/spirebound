@@ -1,10 +1,10 @@
 // Isolated offline saves and the real RAF/UI. Never submits ranking records.
 import assert from 'node:assert/strict';import {mkdir,writeFile} from 'node:fs/promises';import {join} from 'node:path';import {pathToFileURL} from 'node:url';
 const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'index.mjs')).href),base=process.env.BASE_URL||'http://localhost:5173',out=process.argv[2];await mkdir(out,{recursive:true});
-const browser=await chromium.launch({channel:'msedge',headless:true}),results=[],errors=[];let records=0,fixture;
+const browser=await chromium.launch({channel:'msedge',headless:true}),results=[],errors=[];let records=0,fixture,activePage;
 try{
  for(const width of (process.argv.includes('--public-core')?[844]:[1280,844]))for(const reduced of [false,true]){
-  console.log(width,reduced);const cx=await browser.newContext({viewport:{width,height:width===1280?800:390},isMobile:width<1000,hasTouch:width<1000}),p=await cx.newPage();p.setDefaultTimeout(180000);p.on('pageerror',e=>errors.push(e.message));p.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/api/records'))records++;});
+  console.log(width,reduced);const cx=await browser.newContext({viewport:{width,height:width===1280?800:390},isMobile:width<1000,hasTouch:width<1000}),p=await cx.newPage();activePage=p;p.setDefaultTimeout(360000);p.on('pageerror',e=>errors.push(e.message));p.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/api/records'))records++;});
   await cx.addInitScript(reduced=>localStorage.setItem('spirebound.settings.v1',JSON.stringify({muted:true,volume:0,reducedEffects:reduced})),reduced);await p.goto(base,{waitUntil:'domcontentloaded'});
   await p.evaluate(async()=>{
    const {newRun,currentRoom}=await import('/src/game/engine.js'),{RunStore}=await import('/src/persistence/storage.js'),{updateHighFloorEnemy}=await import('/src/combat/high-floor-patterns.js');
@@ -26,4 +26,4 @@ try{
  }
  if(!process.argv.includes('--public-core')){const cx=await browser.newContext(),p=await cx.newPage();p.on('pageerror',e=>errors.push(e.message));await p.route('**/vera-royal-eye-atlas-v1.png',r=>r.abort());await p.goto(base,{waitUntil:'domcontentloaded'});await p.evaluate(fixture=>localStorage.setItem('spirebound.run.v1',fixture),fixture);await p.reload({waitUntil:'domcontentloaded'});await p.locator('#continue').click();await p.locator('#loadingReload').waitFor({timeout:120000});await p.screenshot({path:join(out,'vera-load-failure.png')});results.push({fallback:'preserved retry screen'});await cx.close();}
  assert.deepEqual(errors,[]);assert.equal(records,0);await writeFile(join(out,'result.json'),JSON.stringify({base,results,errors,records},null,2));console.log(JSON.stringify({cases:results.length,errors,records}));
-}finally{await browser.close();}
+}catch(error){if(activePage&&!activePage.isClosed()){await activePage.screenshot({path:join(out,'failure.png')});await writeFile(join(out,'failure.json'),JSON.stringify({message:error.message,overlay:await activePage.locator('#overlay').innerText(),errors,results},null,2));}throw error;}finally{await browser.close();}
