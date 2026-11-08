@@ -33,7 +33,7 @@ function hit(s,room,state,profile,effects){
   const damage=profile.damage*(marked?1.2:1)*enemyDamageFactor(e,origin);
   if(damage<=0)continue;e.hp-=damage;
   s.metrics.damageDealt+=before-Math.max(0,e.hp);
-  effects.push({x:e.x,y:e.y,r:17,t:.14,color:bladeColor(p),slash:true});
+  effects.push({x:e.x,y:e.y,r:17,t:.14,color:bladeColor(p),slash:true,angle:state.aim});
   // Lightweight, bounded secondary effects: never call hitEnemy or advance
   // primary marks/freezes/chain counters, nor seed poison corpse chains.
   if(e.hp>0&&p.mainSkill==='frost'){e.slow=Math.max(e.slow||0,.6);e.slowFactor=Math.min(e.slowFactor??1,e.type==='boss'?.94:.8);}

@@ -1,5 +1,6 @@
 import {DeferredImage} from './asset-requests.js';
 import {bladeProfile,bladeColor,spectralBladeState} from '../combat/spectral-blade.js';
+import {drawSlashRibbon} from './arrow-impact-visuals.js';
 
 let image=null;
 export const spectralBladeReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
@@ -21,7 +22,7 @@ export function drawSpectralBlade(c,s,reduced=false){
    const local=Math.min(1,(active% .18)/.12);swing=1;
    angle=state.aim+Math.PI/2-profile.halfAngle+2*profile.halfAngle*local;
    x=p.x+Math.cos(angle-Math.PI/2)*profile.radius*.72;y=p.y+Math.sin(angle-Math.PI/2)*profile.radius*.72-7;
-   if(!reduced){c.save();c.strokeStyle=bladeColor(p);c.globalAlpha=.45;c.lineWidth=p.evolutions?.aura==='judgment'?5:3;c.beginPath();c.arc(p.x,p.y-7,profile.radius*.82,state.aim-profile.halfAngle,state.aim+profile.halfAngle);c.stroke();c.globalAlpha=.8;c.strokeStyle='#eee6fb';c.lineWidth=1;c.beginPath();c.arc(p.x,p.y-7,profile.radius*.84,angle-Math.PI/2-.3,angle-Math.PI/2+.3);c.stroke();c.restore();}
+   c.save();c.translate(p.x,p.y-7);c.globalAlpha*=reduced?.55:.7;drawSlashRibbon(c,profile.radius*.82,local,{start:state.aim-profile.halfAngle,end:state.aim+profile.halfAngle,color:bladeColor(p),reduced});c.restore();
   }else{const back=Math.max(0,1-(active-end)/.16);x+=(p.x+Math.cos(state.aim)*profile.radius*.72-x)*back;y+=(p.y+Math.sin(state.aim)*profile.radius*.72-7-y)*back;angle=state.aim+Math.PI/2;}
  }
  c.save();c.translate(Math.round(x),Math.round(y));c.rotate(angle);c.scale(1.25,1.25);c.imageSmoothingEnabled=false;

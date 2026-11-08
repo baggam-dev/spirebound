@@ -1,9 +1,9 @@
 import {segmentBlocked} from '../world/terrain.js';
+import {drawSlashRibbon} from './arrow-impact-visuals.js';
 export function drawOverhaulEffects(c,s,reduced=false){const r=s.floors[s.floor][s.room],p=s.player,t=s.elapsed;c.save();
  if(s.roll?.kind==='slash'){
   const q=s.roll,progress=Math.min(1,q.elapsed/q.duration);c.save();c.translate(p.x,p.y-10);c.rotate(Math.atan2(q.y,q.x));
-  if(!reduced){c.fillStyle='#98dfff55';for(let i=1;i<=3;i++)c.fillRect(-i*14,-8+i,16,2);}
-  c.strokeStyle='#6caade';c.lineWidth=reduced?3:6;c.beginPath();c.arc(5,0,28+progress*5,-1.2+progress*.2,1.2+progress*.2);c.stroke();c.strokeStyle='#edfbff';c.lineWidth=2;c.stroke();
+  c.save();c.translate(5,0);drawSlashRibbon(c,28+progress*5,progress,{start:-1.2+progress*.2,end:1.2+progress*.2,reduced});c.restore();
   c.fillStyle='#edf7ff';c.fillRect(3,-2,33,3);c.fillStyle='#c9b58a';c.fillRect(1,-6,3,11);c.restore();
  }
  for(const m of r.rollMines||[]){c.fillStyle=m.time<.5?'#f6d58a':'#a38ad5';c.fillRect(m.x-4,m.y-3,8,6);c.strokeStyle='#e7deef';c.strokeRect(m.x-6,m.y-5,12,10);}
