@@ -1,0 +1,17 @@
+{
+  "results": [
+    {
+      "existing": false,
+      "originalPreserved": true,
+      "securePreserved": true,
+      "backup": true
+    },
+    {
+      "existing": true,
+      "originalPreserved": true,
+      "securePreserved": true,
+      "backup": true
+    }
+  ],
+  "errors": []
+}

@@ -5,7 +5,7 @@ const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'in
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 const base='https://168.107.21.43',old='http://168.107.21.43';
-const browser=await chromium.launch({channel:'msedge',headless:true}); const errors=[];
+const browser=await chromium.launch({channel:'msedge',headless:true,args:['--disable-features=HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,HttpsFirstModeV2']}); const errors=[];
 try {
  const context=await browser.newContext(); const page=await context.newPage(); page.on('pageerror',e=>errors.push(e.message));
  await page.goto(base,{waitUntil:'domcontentloaded',timeout:120000}); await page.locator('#rank').waitFor();
