@@ -1,3 +1,7 @@
+## 최신 복사 가능한 인계 — 0.50 검증·배포 진행 (2026-11-08)
+```text
+사용자 ‘끝까지 다 하고 배포도해’ 승인. c8f7334에이어3/4단계기존디자인내마감/0.50client/API/header동기. docs/release-0.50.0-prebeta.md. 전투판정/RNG/DB저장/시즌지도점수/몸PNG유지/외부엔진자산도입없음. 집중39·전체670+마감3/Canvas8×84검사·실RAF PC가로모바일기본완화4+실패재시도1/저장·스킬UI4/갤러리66/검10·5원소600프레임저장/검실패fallback通過。실PNG직접확인/오류0/실점수제출0。샌드박스EACCES/서버접속초기실패로그보존, 옛스킬QA 지연자산activate누락대기중단후QA수정성공。보스4진행67720/boss.log,서버90016/5173. 다음結果실PNG→로컬커밋누적푸시→공식tools/deploy/deploy.ps1→공개HTTPS218파일/온라인PC모바일/핵심FX/보스/실PNG→문서증거최종커밋푸시·서버종료. 현재운영0.49/未배포。実폰·장기부하미검증,Canvas평균비용개선은전체게임FPS보장아님。차단없음/임의범위확장금지。
+```
 ## 최신 복사 가능한 인계 — 승인 이펙트2단계 구현·미검증 (2026-11-08)
 ```text
 ㄱㄱ로f04a640통합시안승인→2단계実装. docs/effects-stage2-implementation-20261108.md 참조. runtime7: arrow-impact/element-hit/skill-overhaul-effects/rendering spectral-blade/game.js/progression.js/combat spectral-blade. 일반정밀방향파편/4원소핵+감쇠·기존약점!메타첫.2초강조(無새치명판정)/회피·망령검14구간taper ribbon·현재진행률/반경경로·피격aim。reduced피격/베기만스킵예외·형태유지입자잔상감소. 기존24/48상한/수명/판정RNG저장·경계적탄순서몸PNG유지. 外부코드복사/설치/생산PNG/신규모듈공개목록0. tests/unit/effects-stage2.test.js4건작성미실행. 정적diff/콜사이트/gitdiffcheck만; 테스트구문서버QA푸시배포공개확인0. 움직임/축소/겹침·완화부하/성능未検証. 새명시배포시신규4+관련/전체·PC가로모바일정밀주기/4원소분기전이/베기벽2연타/적경계/저장정지/부하比較→修正検証→버전검토푸시공식배포공개확인. 기존운영0.49이전記録/재확인無. 다음로컬커밋git상태확인; 단계3/4미착수/자동확장금지. 실행중명령없음/차단없음.

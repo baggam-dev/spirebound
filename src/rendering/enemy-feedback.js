@@ -78,7 +78,7 @@ export function drawEnemyFeedback(c,f,options={}){
   c.restore();return true;
  }
  c.scale(f.scale||1,f.scale||1);const fade=(1-age)**1.3,spread=1-(1-age)**2,red=f.returning;
- c.globalAlpha=fade*.85;
+ c.globalAlpha*=fade*.85;
  if(f.style==='batExplosion'){
   // Visual only: the existing combat update has already resolved the single hit.
   c.strokeStyle=red?'#eaa4bc':'#d88b9f';c.lineWidth=2;

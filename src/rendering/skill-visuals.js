@@ -19,14 +19,17 @@ export function drawElementNock(c,element,charge=0){if(!['fire','frost','poison'
  c.globalAlpha=alpha;
 }
 // Extra detail stays behind the same arrowhead; it never advertises a larger hitbox.
-export function drawSkillTrail(c,element,player,time){if(!colors[element])return;const v=skillVisualProfile(element,player),[color,light]=colors[element],phase=Math.floor(time*18)%3;
+export function drawSkillTrail(c,element,player,time,reduced=false){if(!colors[element])return;const v=skillVisualProfile(element,player),[color,light]=colors[element],phase=Math.floor(time*18)%3;
+ c.save();
+ if(reduced){box(c,-12,-1,3,2,color+'88');c.restore();return;}
  for(let i=0;i<v.segments;i++){const x=-12-i*5,y=(i%2?1:-1)*(2+(phase+i)%3);
+  c.save();c.globalAlpha*=1-i/(v.segments+1);
   if(element==='fire'){box(c,x,y-2,3,4,color+(i?'88':'cc'));box(c,x+1,y-4,1,2,light+'bb');}
   else if(element==='frost'){line(c,[[x-2,y],[x,y-2],[x+2,y],[x,y+2],[x-2,y]],color+'bb',1);box(c,x,y,1,1,light);}
   else if(element==='poison'){box(c,x,y,3,3,'#416e54aa');box(c,x+1,y+2,2,2,color+'bb');}
   else if(element==='chain')line(c,[[x-2,y-2],[x+1,y],[x-1,y+2],[x+2,y+3]],color+'aa',1);
   else box(c,x,y,3,2,color+(i?'88':'cc'));
-  if(v.level>=3)box(c,x+2,-y,2,1,color+'66');}
+  if(v.level>=3)box(c,x+2,-y,2,1,color+'66');c.restore();}
  if(v.level>=2)line(c,[[-9,0],[-3,0]],light,1);
  if(element==='precision'){
   // A narrow measured wake, distinct from elemental glow and no wider than the arrow.
@@ -52,6 +55,7 @@ export function drawSkillTrail(c,element,player,time){if(!colors[element])return
  }else if(element==='chain'&&v.branch==='web'){
   for(const side of [-1,1])line(c,[[-27,side*3],[-21,-side*3],[-15,side*3],[-8,0]],'#b7b1fa',1);
  }
+ c.restore();
 }
 // Evolution accents are localized marks, not extra damage areas or fake chain targets.
 export function drawSkillHitMark(c,f,age){const v=skillVisualProfile(f.hitElement,{[f.hitElement]:f.level,evolutions:{[f.hitElement]:f.branch}});if(!v.branch)return;

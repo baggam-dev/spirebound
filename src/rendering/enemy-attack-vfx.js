@@ -21,8 +21,8 @@ export function drawEnemyField(c,x,y,r,{kind='warning',time=0,reduced=false,prog
  c.restore();
 }
 export function drawEnemyImpact(c,x,y,r,age,{reduced=false,color='#eab18a',opacity=1}={}){
- if(!(r>0)||age<0||age>=1)return;c.save();disk(c,x,y,r);c.globalAlpha*=opacity*(1-age);
- const rr=r*(.12+age*.68);for(let i=0;i<(reduced?4:10);i++){const a=i*2.4,rad=rr*(.55+(i%3)*.15),px=x+Math.cos(a)*rad,py=y+Math.sin(a)*rad*.72;dot(c,px-2,py,4,2,'#302e33');dot(c,px-1,py-1,3,1,i%3?color:'#f6dfb5');}
+ if(!(r>0)||age<0||age>=1)return;c.save();disk(c,x,y,r);c.globalAlpha*=opacity*(1-age)**1.5;
+ const rr=r*(.12+(1-(1-age)**2)*.68);for(let i=0;i<(reduced?4:10);i++){const a=i*2.4,rad=rr*(.55+(i%3)*.15),px=x+Math.cos(a)*rad,groundY=y+Math.sin(a)*rad*.72,py=groundY-(reduced?0:Math.sin(age*Math.PI)*(4+i%3*2));dot(c,px-2,groundY+1,4,1,'#302e33');dot(c,px-1,py-1,3,1,i%3?color:'#f6dfb5');}
  if(age<.3){c.globalAlpha*=.7;dot(c,x-5,y-1,10,2,'#f6e3bc');dot(c,x-1,y-4,2,8,color);}c.restore();
 }
 export function drawEnemySector(c,x,y,r,aim,halfAngle,{warning=false,progress=0,fade=1,reduced=false,outlineOnly=false,accent='#d7907e'}={}){

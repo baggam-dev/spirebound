@@ -37,5 +37,5 @@ export function drawXpDrops(c,s,r,reduced=false){
  c.restore();
 }
 export function drawXpPickup(c,f,reduced=false){
- if(!f.xpPickup)return false;c.save();c.globalAlpha*=Math.min(1,f.t/.16);c.fillStyle='#c9e8ff';c.fillRect(Math.round(f.x-2),Math.round(f.y),5,1);if(!reduced)c.fillRect(Math.round(f.x),Math.round(f.y-2),1,5);c.restore();return true;
+ if(!f.xpPickup)return false;if(!(f.t>0))return true;const life=Math.min(1,f.t/.16),size=life>.5?2:1;c.save();c.globalAlpha*=life*life;c.fillStyle='#c9e8ff';c.fillRect(Math.round(f.x-size),Math.round(f.y),size*2+1,1);if(!reduced)c.fillRect(Math.round(f.x),Math.round(f.y-size),1,size*2+1);c.restore();return true;
 }

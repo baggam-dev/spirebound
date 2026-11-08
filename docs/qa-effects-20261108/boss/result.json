@@ -1,0 +1,67 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "width": 844,
+      "reduced": false,
+      "scene": "king-judgment",
+      "floor": 8,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "king",
+      "phase": 3,
+      "resume": true,
+      "timing": {
+        "mean": 18.93166666666667,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "scene": "velkar-rain",
+      "floor": 9,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "commander",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 16.386666666666663,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "scene": "demon-mouth",
+      "floor": 10,
+      "hp": 10,
+      "enemies": 3,
+      "variant": "demon",
+      "phase": 2,
+      "resume": true,
+      "timing": {
+        "mean": 16.258333334128064,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "scene": "demon-core",
+      "floor": 10,
+      "hp": 10,
+      "enemies": 1,
+      "variant": "demon",
+      "phase": 3,
+      "resume": true,
+      "timing": {
+        "mean": 16.290000000397367,
+        "p95": 16.800000000000182
+      }
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

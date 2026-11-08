@@ -116,7 +116,7 @@ export function drawProjectile(c,b,time=0,player={},reduced=false){if(b.delay>0)
  if(b.frostShard&&!b.enemy){c.scale(.5,.5);c.globalAlpha*=.75;}
  if(drawVeraArrow(c,b,time,reduced)||drawHostileProjectile(c,b,time,reduced)){}else if(b.enemy){const size=b.demonIce?5:b.poisonShot==='orb'?6:3;diamond(c,0,0,size+1,ink);diamond(c,0,0,size,color);box(c,-1,-1,2,2,light);}
  else{box(c,-17,-2,14,4,color+'44');box(c,-10,-1,16,2,light);diamond(c,5,0,b.frostShard?4:3,color);box(c,-9,-3,3,2,color);box(c,-9,2,3,2,color);
-  if(b.element){c.save();if(!reduced)drawSkillTrail(c,b.element,b.weapon||player,time);drawSynergyTrail(c,b.element,b.weapon||player,time,reduced);c.restore();
+  if(b.element){c.save();drawSkillTrail(c,b.element,b.weapon||player,time,reduced);drawSynergyTrail(c,b.element,b.weapon||player,time,reduced);c.restore();
    if(b.element==='chain')line(c,[[-20,0],[-14,-4],[-11,2],[-5,-2]],color,1);
    if(b.element==='fire'){box(c,-7,-3,9,6,color);box(c,-3,-1,7,2,light);box(c,-11,-2,4,3,'#e64f36');}
    if(b.element==='frost'){diamond(c,3,0,4,color);line(c,[[-3,0],[7,0]],light,1);box(c,-12,-4,2,8,color+'88');box(c,-15,-1,8,2,color+'88');}

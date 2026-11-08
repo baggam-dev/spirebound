@@ -1,0 +1,11 @@
+✔ ally bursts respect inherited opacity and disappear at their real lifetime (2.2686ms)
+✔ ally fields and trails preserve frozen inputs, opacity and reduced identity (1.4638ms)
+✔ successful interactions and XP keep incoming opacity and freeze with elapsed time (1.6904ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 250.6022

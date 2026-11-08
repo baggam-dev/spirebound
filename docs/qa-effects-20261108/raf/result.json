@@ -1,0 +1,46 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "width": 1280,
+      "reduced": false,
+      "resume": true,
+      "timing": {
+        "mean": 16.368333334128064,
+        "p95": 16.90000000000009
+      }
+    },
+    {
+      "width": 1280,
+      "reduced": true,
+      "resume": true,
+      "timing": {
+        "mean": 16.518333331743875,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "resume": true,
+      "timing": {
+        "mean": 18.133333332141245,
+        "p95": 16.800000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "resume": true,
+      "timing": {
+        "mean": 18.126666667858764,
+        "p95": 16.899999999999636
+      }
+    },
+    {
+      "fallback": "preserved retry screen"
+    }
+  ],
+  "errors": [],
+  "records": 0
+}

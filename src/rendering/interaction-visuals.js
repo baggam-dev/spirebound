@@ -11,7 +11,7 @@ function chestEffect(c,x,y,p,trap,reduced){
  if(p<.35){c.fillStyle=trap?'#c66f7438':'#f2ce8430';c.fillRect(x-15,y-12,30,6);}
  const n=reduced?3:8;
  for(let i=0;i<n;i++){
-  const t=Math.max(0,Math.min(1,p*1.5-i*.04)),side=i/(n-1)*2-1;
+  const q=Math.max(0,Math.min(1,p*1.5-i*.04)),t=1-(1-q)**2,side=i/(n-1)*2-1;
   const px=Math.round(x+side*(5+t*15)),py=Math.round(y-10-t*(16+(i%3)*4));
   c.fillStyle=i%3?color:core;c.fillRect(px,py,2,2);
   if(!reduced&&p<.6&&i%3===0){c.fillRect(px-1,py+1,4,1);c.fillRect(px+1,py-1,1,4);}
@@ -106,10 +106,10 @@ function stairsEffect(c,x,y,p,direction,reduced){
  c.restore();
 }
 export function drawInteractionEffects(c,s,r,reduced=false){
- c.save();
+ c.save();const alpha=c.globalAlpha;
  for(const e of effects.get(s)||[]){
   const age=s.elapsed-e.start;if(e.room!==r||age<0||age>=.9)continue;
-  const p=age/.9,x=e.x??480,y=e.y??112;c.globalAlpha=(1-p)*.8;
+  const p=age/.9,x=e.x??480,y=e.y??112;c.globalAlpha=alpha*(1-p)**1.5*.8;
   const color=e.kind==='fountain'?'#a9e9d4':e.kind==='stairs'?'#c9d4e3':e.trap?'#dc8e8e':'#eed08a';c.fillStyle=color;
   if(e.kind==='essence'){
    essenceEffect(c,s,e,p,reduced);

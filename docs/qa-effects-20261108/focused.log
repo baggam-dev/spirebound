@@ -1,0 +1,47 @@
+✔ contact renderers preserve frozen effects and incoming opacity in both modes (6.2703ms)
+✔ reduced chain retains its real endpoints without mutating target coordinates (0.5975ms)
+✔ precision accent follows the existing burst cadence and expires before its label (2.4719ms)
+✔ slash ribbon is deterministic, bounded by its radius, and has less decoration when reduced (7.1115ms)
+✔ elite blast emits one burst at the unchanged damage time (2.9931ms)
+✔ hostile fields clip edge notches and fade at the real radius (3.2002ms)
+✔ fields fade to transparent at the real radius without outlines (1.4357ms)
+✔ roll travels continuously, freezes with pause, survives save, ends at140 and does not create post-roll immunity (82.1049ms)
+✔ roll avoids a live projectile and checks walls for every movement segment (45.1482ms)
+✔ roll branches deal once and place timed mines only in their own room (100.8817ms)
+✔ roll action follows learned evolution immediately and after saved-run resume (53.4227ms)
+✔ old immunity relic remains a short roll bonus and cooldown has a hard lower bound (18.6952ms)
+✔ free unlocks require both the intended boss and level without consuming normal choices (16.6009ms)
+✔ fairy king stays guaranteed through reroll, saved stale choices and declining the offer (32.4266ms)
+✔ migration refunds capped levels once, preserves learned utilities, and removes duplicate fairy relics (26.7767ms)
+✔ all legacy snapshots and saved repeat rewards remain loadable before and after one migration (31.1913ms)
+✔ blood pact shares a two-heart cap across kills and boss damage, excluding summons, and cannot revive (17.7457ms)
+✔ awakening costs one heart without triggering shields or invulnerability and refuses the last heart (25.8278ms)
+✔ king laser has bounded damage, respects walls, and does not recursively emit arrows or elements (48.0328ms)
+✔ bow mastery changes direct damage but not fire explosion and midgame xp is reduced (1.2495ms)
+✔ rain applies six scaled pulses, has no off-region damage and survives midcast save (24.957ms)
+✔ new fairy skills never appear in randomly offered relic pools (17.5918ms)
+✔ precision main guarantees an early direct synergy and only primary arrows advance a saved mark (96.2748ms)
+✔ precision branches retain focus while awakening spends health for cadence and not extra damage (59.928ms)
+✔ blood pact needs kills while guardian intercepts one live hit without slowing enemies (39.9875ms)
+✔ player explosion budget never discards hostile fields or damage labels (1.9004ms)
+✔ synergy budget retains newest effects and unrelated warnings (0.5478ms)
+✔ mobile density deduplicates player effects while retaining every hostile warning (0.6399ms)
+✔ contact appearance snapshots the hit level and evolution without retaining mutable player state (1.6827ms)
+✔ legacy projectiles can use current build appearance without adding persistent fields (0.3729ms)
+✔ evolved chain appearance follows real links without creating fake destinations (1.4735ms)
+✔ a wall appearing during preparation blocks damage; an escaping enemy is not hit (104.5798ms)
+✔ dance rechecks its target and never hits a dead target twice (27.3342ms)
+✔ precision blade favors an existing mark without advancing it (25.5237ms)
+✔ blade poison cannot create poison gas, explosions or primary marks (24.3652ms)
+✔ saved cooldown prevents a repeated slash after loading and rejects corruption (63.5164ms)
+✔ old level-three aura keeps its guard once; newly learned Vergas does not grant a shield (52.9213ms)
+✔ Vergas remains unique while acquisition is rare and owned upgrades use normal weight (26.8072ms)
+✔ saved ordinary-support Vergas rewards remain claimable even when all ordinary supports are capped (49.7635ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1521.6202

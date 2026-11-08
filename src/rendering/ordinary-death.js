@@ -18,7 +18,7 @@ export function drawOrdinaryDeath(c,f,{reduced=false}={}){
   snapshots.set(f,canvas);
  }
  const age=Math.max(0,Math.min(1,1-f.t/f.duration));c.save();c.beginPath();c.rect(25,45,910,455);c.clip();
- c.globalAlpha*=Math.max(0,1-age)*.85;c.translate(Math.round(f.x),Math.round(f.y));
+ c.globalAlpha*=Math.max(0,1-age)**1.5*.85;c.translate(Math.round(f.x),Math.round(f.y));
  if(!reduced){const feet=f.bodyType==='brute'?24:21;c.translate(0,feet);c.scale(1+age*.07,1-age*.25);c.translate(0,-feet);}
  c.imageSmoothingEnabled=false;c.drawImage(canvas,-128,-160);c.restore();return true;
 }

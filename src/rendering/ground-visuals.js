@@ -9,15 +9,15 @@ export function drawGroundField(c,z,kind,time=0,reduced=false){
  if(['warning','blast','hostile'].includes(kind)){drawEnemyField(c,z.x,z.y,z.r,{kind:kind==='hostile'?'poison':'warning',time,reduced,progress:1-Math.min(1,z.time??1)});return;}
  const hostile=kind==='hostile',warning=kind==='warning'||kind==='blast',fire=kind==='fire';
  const color=warning?'#f2a08d':hostile?'#d6a1ef':fire?'#f7a45c':'#9bd788';
- c.save();time=reduced?0:time;const baseAlpha=c.globalAlpha;
+ c.save();time=reduced?0:time;const baseAlpha=c.globalAlpha*Math.min(1,Math.max(0,z.time??1)/.35);c.globalAlpha=baseAlpha;
  const glow=c.createRadialGradient(z.x,z.y,0,z.x,z.y,z.r);glow.addColorStop(0,color+'00');glow.addColorStop(.5,color+'0b');glow.addColorStop(.78,color+'25');glow.addColorStop(1,color+'00');c.globalAlpha*=reduced?.3:.5;c.fillStyle=glow;c.fillRect(z.x-z.r,z.y-z.r,z.r*2,z.r*2);c.globalAlpha=baseAlpha;
  if(warning){
   c.fillStyle=color;const size=kind==='blast'?4:3;c.fillRect(z.x-size/2,z.y-10,size,11);c.fillRect(z.x-size/2,z.y+5,size,size);
  }else{
   c.beginPath();c.arc(z.x,z.y,Math.max(0,z.r-2),0,Math.PI*2);c.clip();
-  const count=reduced?3:7;for(let i=0;i<count;i++){const a=i*2.4,rad=z.r*Math.sqrt((i+.5)/count)*.85,x=Math.round(z.x+Math.cos(a)*rad),y=Math.round(z.y+Math.sin(a)*rad),phase=(time*(fire?1.6:.65)+i*.31)%1;
-   c.fillStyle=color;c.globalAlpha=baseAlpha*(reduced?.14:fire?.3:.18);
-   if(fire){const h=4+Math.round(phase*9);c.fillStyle='#a84935';c.fillRect(x-3,y-h,6,h);c.fillStyle='#ed9556';c.fillRect(x-2,y-h-2,3,h+1);c.fillRect(x+1,y-h+3,2,h-2);c.fillStyle='#ffe3a1';c.fillRect(x-1,y-h+2,2,3);}
+  const count=reduced?3:7;for(let i=0;i<count;i++){const a=i*2.4,rad=z.r*(.55+.3*(i+.5)/count),x=Math.round(z.x+Math.cos(a)*rad),y=Math.round(z.y+Math.sin(a)*rad),phase=(time*(fire?1.6:.65)+i*.31)%1;
+   c.fillStyle=color;c.globalAlpha=baseAlpha*(reduced?.14:fire?.3:.18)*(reduced?1:.35+.65*Math.sin(phase*Math.PI));
+   if(fire){const h=4+Math.round((1-phase)*9);c.fillStyle='#a84935';c.fillRect(x-3,y-h,6,h);c.fillStyle='#ed9556';c.fillRect(x-2,y-h-2,3,h+1);c.fillRect(x+1,y-h+3,2,h-2);if(!reduced&&phase<.6){c.fillStyle='#ffe3a1';c.fillRect(x-1,y-h+2,2,3);}}
    else{c.fillRect(x-5,y-Math.round(phase*9),10,3);c.fillRect(x-2,y-3-Math.round(phase*9),7,3);if(!hostile){c.fillStyle='#b9dba0';c.fillRect(x+3,y-6-Math.round(phase*7),2,2);c.fillStyle='#547b57';c.fillRect(x-4,y+2,7,2);}}
   }
  }
@@ -30,9 +30,10 @@ export function drawAuraField(c,p,r,time,shieldReady){
  c.restore();
 }
 export function drawBurst(c,f,reduced=false){
- if(!f.groundBurst)return false;const p=1-Math.max(0,Math.min(1,f.t/.6));
+ if(!f.groundBurst)return false;const p=1-Math.max(0,Math.min(1,f.t/(f.duration||.6)));
  if(f.hostileBurst){drawEnemyImpact(c,f.x,f.y,f.r,p,{reduced,color:f.color});return true;}
- c.save();c.globalAlpha=1-p;drawSoftField(c,f.x,f.y,f.r*(.2+.8*p),f.color,.75);
- for(let i=0;i<12;i++){const a=i*Math.PI/6,rr=f.r*(.15+p*.75),x=Math.round(f.x+Math.cos(a)*rr),y=Math.round(f.y+Math.sin(a)*rr);c.fillStyle=i%2?f.color:'#ffe5ba';c.fillRect(x-2,y-2,4,4);}
+ if(!(f.t>0))return true;
+ c.save();c.beginPath();c.arc(f.x,f.y,Math.max(0,f.r),0,Math.PI*2);c.clip();c.globalAlpha*=(1-p)**1.5;const spread=1-(1-p)**2;
+ for(let i=0;i<(reduced?4:10);i++){const a=i*2.4,rr=f.r*(.15+spread*.65),x=Math.round(f.x+Math.cos(a)*rr),y=Math.round(f.y+Math.sin(a)*rr*.8-Math.sin(p*Math.PI)*(reduced?0:6));c.fillStyle=i%2?f.color:'#d3c6a3';c.fillRect(x-1,y-1,reduced?2:3,2);}
  c.restore();return true;
 }

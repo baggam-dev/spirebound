@@ -14,12 +14,14 @@ export function drawElementCrown(c,kind,age,level=1){
  }
  c.restore();
 }
-export function drawPlayerBlast(c,f){
+export function drawPlayerBlast(c,f,reduced=false){
  if(f.playerBlast!=='fire')return false;
  const age=1-Math.max(0,Math.min(1,f.t/(f.duration||.22))),radius=Math.max(0,f.r||0);
+ if(!(f.t>0)||!radius)return true;
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(f.x),Math.round(f.y));
+ c.beginPath();c.arc(0,0,radius,0,Math.PI*2);c.clip();const alpha=c.globalAlpha,spread=1-(1-age)**2;
  // Open flame petals expose the floor between lobes, rather than an opaque disk.
- for(let i=0;i<8;i++){const a=i*Math.PI/4;c.save();c.rotate(a);const reach=radius*(.2+.68*Math.sin(age*Math.PI*.85));c.globalAlpha=(1-age)*.26;polygon(c,[[2,-3],[reach*.65,-6],[reach,0],[reach*.55,5],[2,3]],'#b44b37');c.globalAlpha=(1-age)*.42;polygon(c,[[3,-2],[reach*.65,-3],[reach*.86,0],[reach*.55,2]],'#f8a15b');box(c,reach*.78,0,3,2,'#fbe0a0');c.restore();}
- drawElementCrown(c,'fire',age,3);c.restore();return true;
+ for(let i=0;i<(reduced?4:8);i++){const a=i*Math.PI*2/(reduced?4:8);c.save();c.rotate(a);const reach=radius*(.2+.68*spread),inner=reach*(.32+age*.25);c.globalAlpha=alpha*(1-age)**1.5*(reduced?.24:.38);polygon(c,[[inner,-2],[reach*.72,-4],[reach,0],[reach*.7,3],[inner,2]],'#f8a15b');if(!reduced&&age<.55){c.globalAlpha*=.7;box(c,reach*.78,0,3,2,'#fbe0a0');}c.restore();}
+ if(!reduced&&age<.6)drawElementCrown(c,'fire',age,3);c.restore();return true;
 }
 export function limitPlayerBlasts(effects,max=12){let skip=Math.max(0,effects.filter(f=>f.playerBlast).length-max);return effects.filter(f=>!f.playerBlast||skip--<=0);}
