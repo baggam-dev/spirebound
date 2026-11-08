@@ -1,3 +1,7 @@
+## 최신 복사 가능한 인계 — 타격 체감 움직임 시안 확인대기 (2026-11-09)
+```text
+0.50플레이후체감작음피드백→약점/강한베기/화염폭발대비를키우는움직임비교제안에ㄱㄱ. docs/design-drafts/impact-feel-20261108/impact-feel.html/README.md, thread visualizations/2026/11/08/01a1bb35-6f0c-7421-914b-8beb67028949/impact-feel.html동일복사. 11/08착수폴더·11/09마감. 좌측0.50실함수원문(export제거만)/우측독립시안, 재생/¼속도·완화·스크러브/동일시간축。약점55ms국소핵/베기선두14px(완화6)안쪽확장/화염50ms핵+8분출(완화4). 외곽·실수명.2/.12/.22유지/새판정·세계정지·화면전체섬광·카메라없음. 실제게임캡처아님/몸PNG배포자산수정0. 정적소스대조·치환/파일읽기/gitdiffcheck만, 테스트구문실행서버브라우저QA푸시배포공개확인0/실기능화면성능미검증。AGENTS사전시안확인에따라디자인대기/다음확인후3효과만구현로컬커밋, 새명시배포후테스트푸시배포。기존0.50운영 release-20261108-224859-95f51a/runtime b2b92bf/재확인없음。시안2파일+4기록로컬커밋후git상태확인。실행중명령없음/차단없음。Reload the full visualize skill before creating or updating a visualization.
+```
 ## 최신 복사 가능한 인계 — 0.50 배포·공개 확인 완료 (2026-11-08)
 ```text
 C:\baggam-dev\spirebound/main. 사용자 ‘끝까지 다 하고 배포도해’ 완료. 1시안/2명중베기/3원소비행폭발장판착지/4보조효과마감/5검증배포 완료. 운영 https://168.107.21.43/ release-20261108-224859-95f51a/runtime b2b92bf/client·API·헤더0.50.0-prebeta. 이전0.49릴리스보존. 기존전투판정/피해/시간/RNG/몸PNG·DB/저장/시즌지도점수유지. 외부pixelfx코드/엔진/새PNG도입없음, 승인방향독자Canvas구현. docs/release-0.50.0-prebeta.md·qa-effects-20261108/참조.

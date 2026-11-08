@@ -1,0 +1,179 @@
+<div id="spire-impact-feel">
+  <div class="viz-controls">
+    <button class="btn btn-primary" type="button" data-play>재생</button>
+    <label class="form-label">재생 속도<select class="form-select" data-speed><option value="1">실제 속도</option><option value="0.25">¼ 속도</option></select></label>
+    <label class="form-check"><input class="form-check-input" type="checkbox" data-reduced><span class="form-check-label">효과 줄이기</span></label>
+  </div>
+  <div class="impact-columns text-small"><span>현재 0.50</span><span>타격 강조 제안</span></div>
+  <div class="impact-rows">
+    <section><h3>약점 적중</h3><div class="impact-pair"><canvas width="480" height="200" data-scene="precision" data-after="0" role="img" aria-label="현재 약점 적중 효과"></canvas><canvas width="480" height="200" data-scene="precision" data-after="1" role="img" aria-label="약점 적중 강조 제안"></canvas></div></section>
+    <section><h3>강한 베기</h3><div class="impact-pair"><canvas width="480" height="200" data-scene="slash" data-after="0" role="img" aria-label="현재 망령검 베기 효과"></canvas><canvas width="480" height="200" data-scene="slash" data-after="1" role="img" aria-label="선두를 강조한 망령검 베기 제안"></canvas></div></section>
+    <section><h3>화염 폭발</h3><div class="impact-pair"><canvas width="480" height="200" data-scene="fire" data-after="0" role="img" aria-label="현재 화염 폭발 효과"></canvas><canvas width="480" height="200" data-scene="fire" data-after="1" role="img" aria-label="분출을 강조한 화염 폭발 제안"></canvas></div></section>
+  </div>
+  <label class="form-label impact-time">타격 후 <output class="tabular-nums" data-time>40 ms</output><input class="form-range" data-seek type="range" min="0" max="650" value="40" step="1" aria-label="타격 후 시간"></label>
+  <div class="text-small" role="status" aria-live="polite" data-status>움직임 시안 · 게임 미반영 · 점선은 범위 비교 보조선</div>
+  <style>
+    #spire-impact-feel{color:var(--foreground);display:grid;gap:calc(var(--font-size-base)*1)}
+    #spire-impact-feel .impact-columns{display:grid;grid-template-columns:1fr 1fr;text-align:center}
+    #spire-impact-feel .impact-rows{display:grid;gap:calc(var(--font-size-base)*1)}
+    #spire-impact-feel .impact-pair{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--font-size-base)*.5);margin-top:calc(var(--font-size-base)*.25)}
+    #spire-impact-feel canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
+    #spire-impact-feel .impact-time{display:grid;gap:calc(var(--font-size-base)*.25)}
+  </style>
+  <script>
+  (()=>{
+    const root=document.getElementById('spire-impact-feel');
+    const current=(()=>{
+      // A contact accent for plain and precision arrows, including lethal hits.
+// Elemental arrows already have dedicated contact visuals.
+function arrowImpactEffect(arrow,point){
+ if(arrow.frostShard||['fire','frost','poison','chain'].includes(arrow.element))return null;
+ return {arrowImpact:true,x:point.x,y:point.y,angle:Math.atan2(arrow.vy,arrow.vx),precision:arrow.element==='precision',t:.2,duration:.2};
+}
+function limitArrowImpacts(effects,max=24){
+ let skip=Math.max(0,effects.reduce((n,f)=>n+!!f.arrowImpact,0)-max);
+ return effects.filter(f=>!f.arrowImpact||skip--<=0);
+}
+function drawArrowImpact(c,f,reduced=false){
+ if(!f.arrowImpact)return false;
+ if(!(f.t>0))return true;
+ const life=Math.max(0,Math.min(1,f.t/f.duration));
+ c.save();c.beginPath();c.rect(25,45,910,455);c.clip();
+ c.translate(Math.round(f.x),Math.round(f.y));c.rotate(f.angle);
+ const age=1-life,spread=1-life*life;
+ c.globalAlpha*=life*life*.9;
+ const light=f.precision?'#fff0bf':'#f4e6c4',shade=f.precision?'#d4b775':'#baa88e';
+ if(age<.4){c.fillStyle=shade;c.fillRect(-3,-2,6,4);c.fillStyle=light;c.fillRect(-1,-2,3,4);c.fillRect(-3,-1,7,2);}
+ c.fillStyle=age<.45?light:shade;
+ for(let i=0;i<(reduced?2:5);i++){
+  const side=i%2?1:-1,x=2+spread*(5+i*2),y=side*(1+spread*(2+i));
+  c.fillRect(Math.round(x),Math.round(y),Math.max(1,Math.round((f.precision?6:4)*life)),1);
+ }
+ if(f.precision&&age<.55){c.fillStyle='#fff3ce';c.fillRect(2+Math.round(spread*8),-1,reduced?3:6,2);}
+ c.restore();return true;
+}
+
+// Attached to the existing precision burst label, never a new damage roll.
+function drawPrecisionBurst(c,f,reduced=false){
+ if(!f.precisionBurst)return;
+ const age=(.65-f.t)/.2;if(age<0||age>=1)return;
+ c.save();c.beginPath();c.rect(25,45,910,455);c.clip();
+ c.translate(Math.round(f.x),Math.round(f.y+28));c.rotate(f.hitAngle||0);
+ c.globalAlpha*=(1-age)**2;
+ c.strokeStyle=age<.35?'#fff3ce':'#d4b775';c.lineWidth=age<.35?2:1;
+ for(const side of [-1,1]){c.beginPath();c.moveTo(-3,side*2);c.lineTo(5+age*12,side*(2+age*3));c.lineTo(9+age*12,side*(3+age*5));c.stroke();}
+ if(!reduced){c.fillStyle='#d4b775';for(let i=0;i<4;i++)c.fillRect(Math.round(4+age*(9+i*3)),Math.round((i%2?1:-1)*(4+age*i*3)),2,1);}
+ c.restore();
+}
+
+// Original Canvas geometry: narrow tapered ribbon, no particle simulation.
+function drawSlashRibbon(c,radius,progress,{start=-1.2,end=1.2,color='#6caade',reduced=false}={}){
+ const p=Math.max(0,Math.min(1,progress)),sweep=end-start,head=start+sweep*p,tail=start+sweep*Math.max(0,p-.55);
+ if(head<=tail)return;
+ c.save();c.globalAlpha*=Math.min(1,(1-p)*4);
+ const ribbon=(r,width,light)=>{
+  for(let i=0;i<14;i++){
+   const u=i/14,v=(i+1)/14,a=tail+(head-tail)*u,b=tail+(head-tail)*v,w=width*(.12+.88*Math.sin(u*Math.PI/2));
+   c.fillStyle=light&&i>10?'#edfbff':color;c.beginPath();c.moveTo(Math.cos(a)*r,Math.sin(a)*r);c.lineTo(Math.cos(b)*r,Math.sin(b)*r);c.lineTo(Math.cos(b)*(r-w),Math.sin(b)*(r-w));c.lineTo(Math.cos(a)*(r-w),Math.sin(a)*(r-w));c.closePath();c.fill();
+  }
+ };
+ ribbon(radius,reduced?3:6,true);
+ if(!reduced){c.globalAlpha*=.28;ribbon(radius-7,2,false);}
+ c.restore();
+}
+
+function drawSlashContact(c,f,reduced=false){
+ if(!f.slash)return false;if(!(f.t>0))return true;
+ c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(f.x),Math.round(f.y));c.rotate(f.angle||0);
+ drawSlashRibbon(c,17,1-Math.min(1,f.t/.14),{color:f.color||'#c8b3e7',reduced});c.restore();return true;
+}
+
+      // Layered pixel effects, always local to contact or the real spell area.
+const box=(c,x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h);};
+function polygon(c,points,color){c.fillStyle=color;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(Math.round(x),Math.round(y)):c.moveTo(Math.round(x),Math.round(y)));c.closePath();c.fill();}
+function drawElementCrown(c,kind,age,level=1){
+ c.save();c.globalAlpha*=Math.max(0,1-age)*.75;const r=5+Math.sin(age*Math.PI)*12;
+ if(kind==='fire'){
+  for(let i=0;i<5;i++){const a=i*Math.PI*2/5;c.save();c.rotate(a);polygon(c,[[2,-3],[r+8,-5],[r+3,0],[r+6,3],[2,3]],'#9b4134');polygon(c,[[2,-2],[r+5,-3],[r,1],[2,2]],'#f7a45c');box(c,r-1,-2,3,2,'#ffe3a4');c.restore();}
+ }else if(kind==='frost'){
+  for(let i=0;i<4;i++){c.save();c.rotate(i*Math.PI/2+.35);polygon(c,[[3,0],[r+7,-4],[r+3,5]],'#346c93');polygon(c,[[3,0],[r+7,-4],[r+2,1]],'#b9edfa');box(c,r+3,-3,2,2,'#f3ffff');c.restore();}
+ }else if(kind==='poison'){
+  for(let i=0;i<5;i++){const a=i*2.4,x=Math.cos(a)*r,y=Math.sin(a)*r*.6-age*8;box(c,x-3,y-2,7,4,'#345946');box(c,x-1,y-4,4,7,'#6eaa61');box(c,x,y-3,2,2,'#d0eb9d');}
+ }else{
+  for(let i=0;i<Math.min(5,level+2);i++){const a=i*2.4;polygon(c,[[Math.cos(a)*3,Math.sin(a)*3],[Math.cos(a+.15)*(r+6),Math.sin(a+.15)*(r+6)],[Math.cos(a+.35)*7,Math.sin(a+.35)*7]],'#d7c7f4');}
+ }
+ c.restore();
+}
+function drawPlayerBlast(c,f,reduced=false){
+ if(f.playerBlast!=='fire')return false;
+ const age=1-Math.max(0,Math.min(1,f.t/(f.duration||.22))),radius=Math.max(0,f.r||0);
+ if(!(f.t>0)||!radius)return true;
+ c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(f.x),Math.round(f.y));
+ c.beginPath();c.arc(0,0,radius,0,Math.PI*2);c.clip();const alpha=c.globalAlpha,spread=1-(1-age)**2;
+ // Open flame petals expose the floor between lobes, rather than an opaque disk.
+ for(let i=0;i<(reduced?4:8);i++){const a=i*Math.PI*2/(reduced?4:8);c.save();c.rotate(a);const reach=radius*(.2+.68*spread),inner=reach*(.32+age*.25);c.globalAlpha=alpha*(1-age)**1.5*(reduced?.24:.38);polygon(c,[[inner,-2],[reach*.72,-4],[reach,0],[reach*.7,3],[inner,2]],'#f8a15b');if(!reduced&&age<.55){c.globalAlpha*=.7;box(c,reach*.78,0,3,2,'#fbe0a0');}c.restore();}
+ if(!reduced&&age<.6)drawElementCrown(c,'fire',age,3);c.restore();return true;
+}
+function limitPlayerBlasts(effects,max=12){let skip=Math.max(0,effects.filter(f=>f.playerBlast).length-max);return effects.filter(f=>!f.playerBlast||skip--<=0);}
+
+      return {drawPrecisionBurst,drawSlashRibbon,drawPlayerBlast};
+    })();
+    const canvases=[...root.querySelectorAll('canvas')],play=root.querySelector('[data-play]'),speed=root.querySelector('[data-speed]'),reduced=root.querySelector('[data-reduced]'),seek=root.querySelector('[data-seek]'),clock=root.querySelector('[data-time]'),status=root.querySelector('[data-status]');
+    const clamp=x=>Math.max(0,Math.min(1,x));
+    let time=.04,playing=false,previous=0,animation=0;
+    const saved=window.openai?.widgetState?.modelContent;
+    if(saved&&typeof saved==='object'){speed.value=saved.speed===.25?'0.25':'1';reduced.checked=!!saved.reduced;time=Number.isFinite(saved.time)?Math.max(0,Math.min(.65,saved.time)):.04;}
+    function remember(){window.openai?.setWidgetState?.({modelContent:{speed:Number(speed.value),reduced:reduced.checked,time},privateContent:null})?.catch(()=>{});}
+    function line(c,points,color,width){c.strokeStyle=color;c.lineWidth=width;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.stroke();}
+    function shard(c,x,y,angle,length,width,color){c.save();c.translate(x,y);c.rotate(angle);c.fillStyle=color;c.beginPath();c.moveTo(-length*.3,0);c.lineTo(length*.35,-width);c.lineTo(length,0);c.lineTo(length*.35,width);c.closePath();c.fill();c.restore();}
+    function proposedPrecision(c,t,quiet){
+      if(t<0||t>=.2)return;const p=t/.2,travel=1-(1-p)**3;
+      c.save();c.translate(480,230);
+      if(t<.055){c.globalAlpha=1-t/.075;shard(c,0,0,0,quiet?16:23,quiet?3:5,'#fff3ce');if(!quiet)shard(c,0,0,Math.PI/2,9,2,'#fff3ce');}
+      c.globalAlpha=(1-p)**1.2;
+      for(let i=0;i<(quiet?2:6);i++){const a=(i-(quiet?.5:2.5))*.22,r=4+travel*(14+i*2);shard(c,Math.cos(a)*r,Math.sin(a)*r,a,(quiet?7:12)*(1-p)+1,quiet?1:2,t<.075?'#ffe1a0':'#c99b57');}
+      c.restore();
+    }
+    function proposedSlash(c,t,quiet){
+      if(t<0||t>=.12)return;const p=t/.12,head=-1.05+2.1*p,tail=Math.max(-1.05,head-(quiet?.65:1.05)),r=148;
+      c.save();c.translate(400,230);c.globalAlpha=clamp((1-p)*5);
+      // The outside radius and angle match the baseline; extra mass grows inward.
+      for(let i=0;i<16;i++){const u=i/16,v=(i+1)/16,a=tail+(head-tail)*u,b=tail+(head-tail)*v,w=(quiet?6:14)*(.1+.9*u*u);c.fillStyle=i>12?'#edfbff':'#91b4e2';c.beginPath();c.moveTo(Math.cos(a)*r,Math.sin(a)*r);c.lineTo(Math.cos(b)*r,Math.sin(b)*r);c.lineTo(Math.cos(b)*(r-w),Math.sin(b)*(r-w));c.lineTo(Math.cos(a)*(r-w),Math.sin(a)*(r-w));c.closePath();c.fill();}
+      if(!quiet){c.globalAlpha*=.4;line(c,[[Math.cos(tail)*134,Math.sin(tail)*134],[Math.cos((head+tail)/2)*134,Math.sin((head+tail)/2)*134],[Math.cos(head)*134,Math.sin(head)*134]],'#91b4e2',2);}
+      c.restore();
+    }
+    function proposedFire(c,t,quiet){
+      if(t<0||t>=.22)return;const p=t/.22,travel=1-(1-p)**3,radius=85;
+      c.save();c.translate(480,230);c.beginPath();c.arc(0,0,radius,0,Math.PI*2);c.clip();
+      if(t<.05){c.globalAlpha=(1-t/.05)*.85;c.fillStyle='#fff0b5';c.fillRect(-5,-2,10,4);c.fillRect(-2,-5,4,10);}
+      c.globalAlpha=(1-p)**1.3;
+      const n=quiet?4:8;for(let i=0;i<n;i++){const a=i*Math.PI*2/n,rr=9+travel*57,x=Math.cos(a)*rr,y=Math.sin(a)*rr;c.save();c.translate(x,y);c.rotate(a);shard(c,0,0,0,(quiet?9:18)*(1-p)+2,quiet?2:5,'#f7a45c');if(!quiet&&t<.12)shard(c,2,0,0,8*(1-p),2,'#fff0b5');c.restore();}
+      c.restore();
+    }
+    function backdrop(c,kind){
+      // Fixed game-art palette is intentional; surrounding controls use the host theme.
+      c.fillStyle='#1a1d24';c.fillRect(0,0,480,200);c.strokeStyle='#292c33';c.lineWidth=1;
+      for(let y=0;y<200;y+=25)for(let x=0;x<480;x+=25)c.strokeRect(x,y,25,25);
+      c.save();c.translate(-240,-130);c.setLineDash([2,5]);c.lineWidth=1;c.strokeStyle='#62666e';c.beginPath();
+      if(kind==='slash')c.arc(400,230,148,-1.05,1.05);else c.arc(480,230,kind==='fire'?85:28,0,Math.PI*2);c.stroke();c.restore();
+    }
+    function draw(){
+      clock.textContent=Math.round(time*1000)+' ms';seek.value=String(Math.round(time*1000));
+      for(const canvas of canvases){const c=canvas.getContext('2d'),kind=canvas.dataset.scene,after=canvas.dataset.after==='1',quiet=reduced.checked;backdrop(c,kind);c.save();c.translate(-240,-130);
+        if(kind==='precision'){if(after)proposedPrecision(c,time,quiet);else current.drawPrecisionBurst(c,{x:480,y:202,t:.65-time,precisionBurst:true,hitAngle:0},quiet);}
+        else if(kind==='slash'){if(after)proposedSlash(c,time,quiet);else if(time<.12){c.translate(400,230);current.drawSlashRibbon(c,148,time/.12,{start:-1.05,end:1.05,color:'#91b4e2',reduced:quiet});}}
+        else if(after)proposedFire(c,time,quiet);else current.drawPlayerBlast(c,{x:480,y:230,playerBlast:'fire',r:85,t:Math.max(0,.22-time),duration:.22},quiet);
+        c.restore();
+      }
+    }
+    function stop(){playing=false;cancelAnimationFrame(animation);play.textContent='다시 재생';status.textContent='움직임 시안 · 게임 미반영 · 점선은 범위 비교 보조선';}
+    function frame(now){if(!playing)return;time+=Math.min(.05,(now-previous)/1000)*Number(speed.value);previous=now;if(time>=.65){time=.65;draw();stop();remember();return;}draw();animation=requestAnimationFrame(frame);}
+    play.addEventListener('click',()=>{if(playing){stop();remember();return;}time=0;playing=true;previous=performance.now();play.textContent='일시정지';status.textContent='동일 시점 재생 중';draw();animation=requestAnimationFrame(frame);});
+    seek.addEventListener('input',()=>{stop();time=Number(seek.value)/1000;draw();});seek.addEventListener('change',remember);
+    speed.addEventListener('change',remember);reduced.addEventListener('change',()=>{draw();remember();});
+    window.addEventListener('openai:set_globals',event=>{const s=event.detail?.globals?.widgetState?.modelContent;if(!s||typeof s!=='object')return;stop();speed.value=s.speed===.25?'0.25':'1';reduced.checked=!!s.reduced;time=Number.isFinite(s.time)?Math.max(0,Math.min(.65,s.time)):.04;draw();});
+    // No autoplay, camera shake or world hit-stop, including under reduced-motion.
+    draw();
+  })();
+  </script>
+</div>
