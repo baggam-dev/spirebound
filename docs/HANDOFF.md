@@ -1,3 +1,7 @@
+## 배포 전 검증 완료 — 효과음0.53 (2026-11-09)
+- 집중11/전체688·nativeWebAudio12큐 유효/검사복합peak.0397166·duck RMS.28·정지/mute꼬리0. 실제Edge PC/가로모바일2의제스처/실제명중·화살비6회/5낙하·석궁발사장전·정지/mute/volume0복귀 통과. 주관청취/실기검증과구분. 오류0·순위제출0.
+- 교정QA2종 각각기본완화4/actualReduced실제false/true 일치·궁극기Canvas80/실샷저장/fallback·모션클리어보상/최종keyXP까지통과. getter사본의과거실게임완화전환한계이번설정재검증으로해결. QA설정선택자오류/세션환경중단로그보존·필요QA만재실행/런타임추가수정없음.
+- docs/release-0.53.0-prebeta.md·qa-sound-20261109/. client/API/헤더0.53·전투/DB저장시즌지도점수식 유지. 로컬서버50577/5173종료·검증명령종료. 다음 커밋푸시→공식배포→공개파일/WebAudio/온라인·실제완화궁극기 검증을묶어실행. 아직미배포/차단없음.
 ## 최신 복사 가능한 인계 — 효과음 구현 완료/검증 대기 (2026-11-09)
 ~~~text
 C:\baggam-dev\spirebound/main. 사용자ㄱㄱ로타격/궁극기효과음구현. docs/combat-sound-implementation-20261109.md. WebAudio합성큐 일반/약점/베기·rainCast(첫즉시착탄)/rainFall5·rainImpact4/rainFinal·crossbowDeploy/Shot/Reload/Retract. ui/combat-audio.js 전투전prepare/행동cast/step뒤update: 실제접점/pulses/clock/roll.hit증가(마지막roll삭제참조포함)만관찰/최강접점하나·DOT일반healthfeedback제외. 로드방이동새run기준점만/과거큐재생안함·캐치업최신회차하나. 게임전투/RNG/저장필드추가없음.

@@ -1,0 +1,19 @@
+✔ contact audio selects the strongest real contact and ignores periodic health feedback (1.0838ms)
+✔ rain cast includes the immediate landing, then five falls and five real remaining impacts without duplicates (0.7627ms)
+✔ load, room change and reset seed existing clocks without replay; catch-up coalesces to the latest landing (1.081ms)
+✔ turret shots and reloads follow real clocks, replacements retract once and final roll contacts survive roll deletion (1.2689ms)
+✔ distinct contact weights can supersede weaker sounds and danger ducks only the combat bus (2.7022ms)
+✔ combat polyphony is bounded while a strong impact can replace weaker voices and warnings retain reserved capacity (1.2965ms)
+✔ pause cancels current and future combat/alert notes but preserves UI cues; reset cancels everything (0.5388ms)
+✔ entrance gate cues respect mute, user unlock and individual cue throttles (2.4368ms)
+✔ sound settings persist separately from run saves and reject malformed values (1.0498ms)
+✔ cues need a user gesture, obey mute and throttle repeated attacks (1.5573ms)
+✔ reward family cannot stack, pickup and danger cues stay independent (0.4256ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 306.0329

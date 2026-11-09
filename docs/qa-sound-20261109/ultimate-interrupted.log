@@ -1,0 +1,10 @@
+case 1280 false
+turret save/reload
+turret restored 13.86666666666666
+case 1280 true
+turret save/reload
+turret restored 13.883333333333328
+case 844 false
+turret save/reload
+turret restored 13.816666666666658
+case 844 true
