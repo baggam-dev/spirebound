@@ -5,7 +5,7 @@ import {join} from 'node:path';
 import {pathToFileURL} from 'node:url';
 const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'index.mjs')).href);
 const base=process.env.BASE_URL||'http://localhost:5173',out=process.argv[2];await mkdir(out,{recursive:true});
-const hook=`\nconst qaClear=await import('/src/rendering/boss-clear.js');globalThis.__combatQA={clear:()=>qaClear.bossClearState(s),state:()=>s,mode:()=>mode,pause:()=>pause(),resume:()=>resume(),save:()=>save(),reduced:v=>{sound.settings.reducedEffects=v;},async load(run){await lease.acquire();renderTitleScene=null;s=run;resetTransient();enterRoom(s);await prepareFloorAssets(s.floor,floorAssetOptions(s));resume();}};`;
+const hook=`\nconst qaClear=await import('/src/rendering/boss-clear.js');globalThis.__combatQA={clear:()=>qaClear.bossClearState(s),state:()=>s,mode:()=>mode,pause:()=>pause(),resume:()=>resume(),save:()=>save(),reduced:v=>{sound.update({reducedEffects:v});return sound.settings.reducedEffects;},async load(run){await lease.acquire();renderTitleScene=null;s=run;resetTransient();enterRoom(s);await prepareFloorAssets(s.floor,floorAssetOptions(s));resume();}};`;
 const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[],reports=[];let scores=0;
 try{
  for(const width of (process.env.EXTRA_ONLY?[]:[1280,844]))for(const reduced of [false,true]){
@@ -16,9 +16,9 @@ try{
   const setup=await p.evaluate(async reduced=>{
    const {newRun,currentRoom}=await import('/src/game/engine.js');const s=newRun(31);s.floor=1;s.room=s.floors[1].findIndex(r=>r.type==='boss');s.tutorialComplete=true;s.invulnerable=999;s.attack=999;s.player.mainSkill='fire';s.player.fire=1;s.player.rollMastery=1;s.player.evolutions={rollMastery:'slash'};s.player.x=420;s.player.y=330;
    const r=currentRoom(s);r.seen=true;r.obstacles=[];r.enemies[0].hp=r.enemies[0].max=99999;r.enemies[0].x=600;r.enemies[0].y=240;r.enemies[0].cd=999;
-   await __combatQA.load(s);__combatQA.reduced(reduced);
-   const h=await import('/src/rendering/companion-roll-art.js'),w=await import('/src/rendering/warden-walk.js');return {hero:h.dashArtState(),warden:w.wardenWalkState()};
-  },reduced);assert.equal(setup.hero.frames,4);assert.equal(setup.warden.frames,8);
+   await __combatQA.load(s);const actualReduced=__combatQA.reduced(reduced);
+   const h=await import('/src/rendering/companion-roll-art.js'),w=await import('/src/rendering/warden-walk.js');return {hero:h.dashArtState(),warden:w.wardenWalkState(),actualReduced};
+  },reduced);assert.equal(setup.actualReduced,reduced);assert.equal(setup.hero.frames,4);assert.equal(setup.warden.frames,8);
   // Render all approved phases from the actual runtime crop caches.
   const gallery=await p.evaluate(async()=>{
    const {drawRollHero}=await import('/src/rendering/companion-roll-art.js'),{drawWardenWalk}=await import('/src/rendering/warden-walk.js');const c=document.createElement('canvas');c.width=960;c.height=460;c.id='motion-gallery';const g=c.getContext('2d');g.fillStyle='#202832';g.fillRect(0,0,960,460);g.font='16px monospace';g.fillStyle='#eee';g.fillText('DRAW DASH: 4 PHASES / WALK: 8 PHASES',20,25);

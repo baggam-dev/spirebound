@@ -1,3 +1,11 @@
+## 최신 복사 가능한 인계 — 효과음 구현 완료/검증 대기 (2026-11-09)
+~~~text
+C:\baggam-dev\spirebound/main. 사용자ㄱㄱ로타격/궁극기효과음구현. docs/combat-sound-implementation-20261109.md. WebAudio합성큐 일반/약점/베기·rainCast(첫즉시착탄)/rainFall5·rainImpact4/rainFinal·crossbowDeploy/Shot/Reload/Retract. ui/combat-audio.js 전투전prepare/행동cast/step뒤update: 실제접점/pulses/clock/roll.hit증가(마지막roll삭제참조포함)만관찰/최강접점하나·DOT일반healthfeedback제외. 로드방이동새run기준점만/과거큐재생안함·캐치업최신회차하나. 게임전투/RNG/저장필드추가없음.
+sound.js master/combat/world/alert 버스/12·8·8음성상한·큐/계열간격·강한음성우선교체. warning/hurt/boss경보시combat.28배(.008초하강/.32유지/.08복원). stop모드전환 combat-alert음성취소/UI유지, transientreset전체음성/간격초기화, 음소거/볼륨0예약잔여음정리. 기존설정키·필드/음량/제스처unlock유지/설정volume0→양수입력unlock추가. BGM/외부음원/UI신규없음·공용궁극기boss발동음대체. 공개파일QA목록에ui/combat-audio.js연결.
+신규combat-audio.test.js4/sound-mix.test.js3=7건작성만/미실행. 기존sound4와다음배포때실행. 테스트구문실행/서버/브라우저QA/오디오렌더청취/푸시배포공개확인0. 소스호출순서/설정저장분리·모듈목록/gitdiffcheck만. 실제음색가청성/최대진폭클리핑·경고겹침·Safari제스처/음소거볼륨0정지/저장/6회타격·석궁무표적교체/성능미검증. 새명시배포후관련전체·실브라우저오디오파형/청취조건·실기한계구분→수정재검증/버전검토→푸시공식배포공개확인.
+추가발견: 시각QA ultimate-release/combat-growth helper가sound.settings getter사본만수정하던것을sound.update반환값/실제assert·actualReduced결과로교정(미실행). 과거directCanvas reduced검사와실제게임완화모드전환을구분할것. 다음배포에서두QA실제설정/저장재개다시검증필수. 기존운영0.52 release-20261109-175931-1c7475/runtime130239f는이전기록/이번재확인없음. DB시즌지도점수식/랭킹버전변경없음.
+관련소스/QA/미실행회귀·상세/4기록로컬커밋후git상태확인. 실행중명령/세션·차단없음. 사용자승인요청최소화선호: 이미맡긴범위재질문없이진행·필수권한만묶고좁은재사용prefix선호/시스템우회없음. 새명시배포/디자인확인규칙임의확대없음.
+~~~
 ## 최신 복사 가능한 인계 — 0.52 배포·공개 확인 완료 (2026-11-09)
 ~~~text
 C:\baggam-dev\spirebound/main. 사용자 ‘배포’ 완료. 운영 https://168.107.21.43/ release-20261109-175931-1c7475/runtime130239f/client·API·헤더0.52.0-prebeta. 이전 release-20261109-140228-2f2d11 보존. 타격3가중치/45ms국소핵, 화살비24/완화12·주력보조깊이/6회착탄먼지·마감, 승인석궁v2/고정받침·상부조준/설치장전반동회수/fallback·실제14초/.6초사격. 실제주인공가림은구조물전패스/게임후패스중복제외로수정·회귀1추가. 전투수치판정AI/RNG/DB저장원본/시즌지도점수식 유지/최신랭킹정책.
