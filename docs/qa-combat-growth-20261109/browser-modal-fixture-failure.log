@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 0.6148000000000002
+- 0.43710000000000043
+
+    at file:///C:/baggam-dev/spirebound/tools/qa/combat-growth-release-qa.mjs:33:203 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 0.6148000000000002,
+  expected: 0.43710000000000043,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

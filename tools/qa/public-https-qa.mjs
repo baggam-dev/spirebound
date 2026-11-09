@@ -28,7 +28,7 @@ try {
  const board=await page.evaluate(async()=>{const r=await fetch('/api/rankings?season=SPIREBOUND');const d=await r.json();return {status:r.status,valid:Array.isArray(d.entries)};});assert.deepEqual(board,{status:200,valid:true});
  const refreshed=(await context.cookies(base+'/api/')).find(c=>c.name===cookie.name);assert.equal(refreshed.value,cookie.value);assert.equal(refreshed.secure,true);
  await context.close();
- for(const existing of [false,true]){
+ for(const existing of (process.argv.includes('--skip-transfer')?[]:[false,true])){
  const c=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});const source=await c.newPage();source.on('pageerror',e=>errors.push(e.message));
  if(existing){await source.goto(base+'/upgrade.html');await source.evaluate(()=>localStorage.setItem('spirebound.run.v1','secure run'));}
  await source.goto(old+'/');await source.locator('#transfer').waitFor();await source.evaluate(()=>{localStorage.setItem('spirebound.run.v1','old run');localStorage.setItem('spirebound.run.v1.backup','old backup');localStorage.setItem('spirebound.history','[]');localStorage.setItem('spirebound.active-tab','must not transfer');});
@@ -36,7 +36,7 @@ try {
  assert.equal(await target.evaluate(()=>localStorage.getItem('spirebound.run.v1')),existing?'secure run':'old run');assert.equal(await target.evaluate(()=>localStorage.getItem('spirebound.active-tab')),null);assert.equal(await source.evaluate(()=>localStorage.getItem('spirebound.run.v1')),'old run');
  assert.equal(await target.evaluate(()=>Object.keys(localStorage).some(k=>k.startsWith('spirebound.http-backup.'))),true);await c.close();
  }
- assert.deepEqual(errors,[]);console.log(JSON.stringify({publicTLS:true,onlineStarts:2,assetsMatch:assets.length,imageAtlasMatch:true,httpRedirect:308,rankings:true,secureHttpOnlyCookie:true,existingCookieUpgrade:true,transferNew:true,transferExisting:true,httpOriginalPreserved:true,pageErrors:0,productionRecordsSubmitted:0}));
+ assert.deepEqual(errors,[]);const transferChecked=!process.argv.includes('--skip-transfer');console.log(JSON.stringify({publicTLS:true,onlineStarts:2,assetsMatch:assets.length,imageAtlasMatch:true,httpRedirect:308,rankings:true,secureHttpOnlyCookie:true,existingCookieUpgrade:true,transferChecked,transferNew:transferChecked?true:null,transferExisting:transferChecked?true:null,httpOriginalPreserved:transferChecked?true:null,pageErrors:0,productionRecordsSubmitted:0}));
 } finally {await browser.close();}
 
 

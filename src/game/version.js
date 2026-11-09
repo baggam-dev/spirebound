@@ -1,1 +1,1 @@
-export const RELEASE='0.50.0-prebeta';
+export const RELEASE='0.51.0-prebeta';

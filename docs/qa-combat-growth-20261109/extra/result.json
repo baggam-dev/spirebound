@@ -1,0 +1,30 @@
+{
+  "base": "http://localhost:5173",
+  "reports": [],
+  "fallback": {
+    "hero": {
+      "ready": false,
+      "frames": 0
+    },
+    "warden": {
+      "ready": true,
+      "frames": 4
+    }
+  },
+  "canvas": {
+    "restored": true,
+    "edgeCoverage": true,
+    "counts": [
+      10980,
+      2678
+    ]
+  },
+  "final": {
+    "key": true,
+    "xp": 360,
+    "age": 0.20539999999999964,
+    "mode": "journey-return"
+  },
+  "errors": [],
+  "scoreSubmissions": 0
+}

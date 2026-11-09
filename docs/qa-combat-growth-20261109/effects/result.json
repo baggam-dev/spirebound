@@ -1,0 +1,51 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "baseline": false,
+      "width": 1280,
+      "reduced": false,
+      "probes": 12,
+      "renderMs": {
+        "mean": 1.046875,
+        "p95": 1.2000000476837158
+      },
+      "heap": 25778108
+    },
+    {
+      "baseline": false,
+      "width": 1280,
+      "reduced": true,
+      "probes": 12,
+      "renderMs": {
+        "mean": 0.34062499925494194,
+        "p95": 0.6000000238418579
+      },
+      "heap": 24972008
+    },
+    {
+      "baseline": false,
+      "width": 844,
+      "reduced": false,
+      "probes": 12,
+      "renderMs": {
+        "mean": 1.0374999977648258,
+        "p95": 1.2000000476837158
+      },
+      "heap": 25818336
+    },
+    {
+      "baseline": false,
+      "width": 844,
+      "reduced": true,
+      "probes": 12,
+      "renderMs": {
+        "mean": 0.3218749985098839,
+        "p95": 0.7000000476837158
+      },
+      "heap": 25023400
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

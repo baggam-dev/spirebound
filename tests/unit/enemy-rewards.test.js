@@ -20,8 +20,8 @@ test('real defeats drop the risk XP on the floor and save/resume never repeats t
  }
 });
 
-test('descent keeps XP disabled even for an elite with a larger ascent reward',()=>{
- const {s}=setup();enrage(s);const r=currentRoom(s);r.enemies=[foe({elite:'guardian'})];r.obstacles=[];s.entryGrace=0;stepRun(s,.01);assert.equal(value(r),0);assert.equal(s.player.xp,0);
+test('descent elite drops its normal XP reward without an immediate award',()=>{
+ const {s}=setup();enrage(s);const r=currentRoom(s);r.enemies=[foe({elite:'guardian'})];r.obstacles=[];s.entryGrace=0;stepRun(s,.01);assert.equal(value(r),18);assert.equal(s.player.xp,0);
 });
 
 test('key and named essence thresholds have strict boundaries with no stacked elite chance',()=>{

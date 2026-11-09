@@ -1,0 +1,12 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.evaluate: TypeError: Cannot set properties of undefined (setting 'max')
+    at eval (eval at evaluate (:311:30), <anonymous>:1:362)
+    at async <anonymous>:337:30
+    at C:\baggam-dev\spirebound\tools\qa\combat-growth-release-qa.mjs:60:10 {
+  log: []
+}
+
+Node.js v24.14.0

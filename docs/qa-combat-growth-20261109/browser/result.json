@@ -1,0 +1,101 @@
+{
+  "base": "http://localhost:5173",
+  "reports": [
+    {
+      "width": 1280,
+      "reduced": false,
+      "hero": {
+        "ready": true,
+        "frames": 4
+      },
+      "warden": {
+        "ready": true,
+        "frames": 8
+      },
+      "boss": {
+        "xp": 180,
+        "used": true,
+        "age": 0.20450000000000002
+      },
+      "returnXp": 12,
+      "pauseStable": true,
+      "modalWorldPaused": true,
+      "saveNoReplay": true
+    },
+    {
+      "width": 1280,
+      "reduced": true,
+      "hero": {
+        "ready": true,
+        "frames": 4
+      },
+      "warden": {
+        "ready": true,
+        "frames": 8
+      },
+      "boss": {
+        "xp": 180,
+        "used": true,
+        "age": 0.20620000000000027
+      },
+      "returnXp": 12,
+      "pauseStable": true,
+      "modalWorldPaused": true,
+      "saveNoReplay": true
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "hero": {
+        "ready": true,
+        "frames": 4
+      },
+      "warden": {
+        "ready": true,
+        "frames": 8
+      },
+      "boss": {
+        "xp": 180,
+        "used": true,
+        "age": 0.2112999999999997
+      },
+      "returnXp": 12,
+      "pauseStable": true,
+      "modalWorldPaused": true,
+      "saveNoReplay": true
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "hero": {
+        "ready": true,
+        "frames": 4
+      },
+      "warden": {
+        "ready": true,
+        "frames": 8
+      },
+      "boss": {
+        "xp": 180,
+        "used": true,
+        "age": 0.2127999999999997
+      },
+      "returnXp": 12,
+      "pauseStable": true,
+      "modalWorldPaused": true,
+      "saveNoReplay": true
+    }
+  ],
+  "fallback": {
+    "hero": {
+      "ready": false,
+      "frames": 0
+    },
+    "warden": {
+      "ready": true,
+      "frames": 4
+    }
+  },
+  "errors": [],
+  "scoreSubmissions": 0
+}
