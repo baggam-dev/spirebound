@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spirebound 타격·궁극기 움직임 비교</title>
+<style>:root{--font-size-base:14px;--foreground:#e5decf;--muted:#29313a;--border:#46505a;--muted-foreground:#91a0a9;color-scheme:dark}body{margin:20px auto;padding:0 12px;max-width:1024px;font:14px system-ui;background:#141b21;color:var(--foreground)}.viz-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px}.form-label{display:grid;gap:4px}.text-small{font-size:12px}h3{font-size:16px;font-weight:500;margin:0}button,input,select{font:inherit}.form-range{width:100%;box-sizing:border-box}</style></head><body>
+<div id="spire-ultimate-motion">
+ <div class="viz-controls">
+  <label class="form-label">비교 장면<select class="form-select" data-scene><option value="rain">궁극기 · 화살비</option><option value="hit">일반·강타·궁극기 명중</option><option value="turret" data-turret-option>궁극기 · 자동 석궁</option></select></label>
+  <button class="btn btn-primary" type="button" data-play>재생</button>
+  <label class="form-label">속도<select class="form-select" data-speed><option value="1">실제 속도</option><option value="0.25">¼ 속도</option></select></label>
+  <label class="form-check"><input class="form-check-input" type="checkbox" data-reduced><span class="form-check-label">효과 줄이기</span></label>
+ </div>
+ <div class="motion-pair">
+  <section><h3>현재 0.51</h3><canvas width="480" height="300" data-before role="img" aria-label="현재 게임 효과를 같은 시각에 그린 비교"></canvas></section>
+  <section><h3>개선 시안</h3><canvas width="480" height="300" data-after role="img" aria-label="명중 강약과 낙하 깊이 및 별도 석궁 자산을 비교하는 시안"></canvas></section>
+ </div>
+ <label class="form-label motion-seek">진행 <output class="tabular-nums" data-clock>120 ms</output><input class="form-range" data-seek type="range" min="0" max="1800" value="120" step="1" aria-label="장면 진행 시간"></label>
+ <div class="text-small" data-status role="status" aria-live="polite">화살비 · 즉시 착탄 + 0.3초 간격 6회 · 게임 미반영</div>
+ <style>
+ #spire-ultimate-motion{color:var(--foreground);display:grid;gap:calc(var(--font-size-base,14px)*1)}
+ #spire-ultimate-motion .motion-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--font-size-base,14px)*.75)}
+ #spire-ultimate-motion section{min-width:0;display:grid;gap:calc(var(--font-size-base,14px)*.25)}
+ #spire-ultimate-motion canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
+ #spire-ultimate-motion .motion-seek{display:grid;gap:calc(var(--font-size-base,14px)*.25)}
+ @media(max-width:540px){#spire-ultimate-motion .motion-pair{grid-template-columns:1fr}}
+ </style>
+ <script>
+ (()=>{
+ const root=document.getElementById('spire-ultimate-motion');
+ const currentImpact=(()=>{// A contact accent for plain and precision arrows, including lethal hits.
+// Elemental arrows already have dedicated contact visuals.
+function arrowImpactEffect(arrow,point){
+ if(arrow.frostShard||['fire','frost','poison','chain'].includes(arrow.element))return null;
+ return {arrowImpact:true,x:point.x,y:point.y,angle:Math.atan2(arrow.vy,arrow.vx),precision:arrow.element==='precision',t:.2,duration:.2};
+}
+function limitArrowImpacts(effects,max=24){
+ let skip=Math.max(0,effects.reduce((n,f)=>n+!!f.arrowImpact,0)-max);
+ return effects.filter(f=>!f.arrowImpact||skip--<=0);
+}
+function drawArrowImpact(c,f,reduced=false){
+ if(!f.arrowImpact)return false;
+ if(!(f.t>0))return true;
+ const life=Math.max(0,Math.min(1,f.t/f.duration));
+ c.save();c.beginPath();c.rect(25,45,910,455);c.clip();
+ c.translate(Math.round(f.x),Math.round(f.y));c.rotate(f.angle);
+ const age=1-life,spread=1-life*life;
+ c.globalAlpha*=life*life*.9;
+ const light=f.precision?'#fff0bf':'#f4e6c4',shade=f.precision?'#d4b775':'#baa88e';
+ if(age<.4){c.fillStyle=shade;c.fillRect(-3,-2,6,4);c.fillStyle=light;c.fillRect(-1,-2,3,4);c.fillRect(-3,-1,7,2);}
+ c.fillStyle=age<.45?light:shade;
+ for(let i=0;i<(reduced?2:5);i++){
+  const side=i%2?1:-1,x=2+spread*(5+i*2),y=side*(1+spread*(2+i));
+  c.fillRect(Math.round(x),Math.round(y),Math.max(1,Math.round((f.precision?6:4)*life)),1);
+ }
+ if(f.precision&&age<.55){c.fillStyle='#fff3ce';c.fillRect(2+Math.round(spread*8),-1,reduced?3:6,2);}
+ c.restore();return true;
+}
+
+// Attached to the existing precision burst label, never a new damage roll.
+function drawPrecisionBurst(c,f,reduced=false){
+ if(!f.precisionBurst)return;
+ const seconds=.65-f.t,age=seconds/.2;if(age<0||age>=1)return;
+ c.save();c.beginPath();c.rect(25,45,910,455);c.clip();
+ c.translate(Math.round(f.x),Math.round(f.y+28));c.rotate(f.hitAngle||0);
+ c.globalAlpha*=(1-age)**1.2;
+ const shard=(x,y,a,length,width,color)=>{c.save();c.translate(x,y);c.rotate(a);c.fillStyle=color;c.beginPath();c.moveTo(-length*.3,0);c.lineTo(length*.35,-width);c.lineTo(length,0);c.lineTo(length*.35,width);c.closePath();c.fill();c.restore();};
+ if(seconds<.055){shard(0,0,0,reduced?16:23,reduced?3:5,'#fff3ce');if(!reduced)shard(0,0,Math.PI/2,9,2,'#fff3ce');}
+ const spread=1-(1-age)**3,count=reduced?2:6;
+ for(let i=0;i<count;i++){const a=(i-(count-1)/2)*.22,r=4+spread*(14+i*2);shard(Math.cos(a)*r,Math.sin(a)*r,a,(reduced?7:12)*(1-age)+1,reduced?1:2,seconds<.075?'#ffe1a0':'#c99b57');}
+ c.restore();
+}
+
+// Original Canvas geometry: narrow tapered ribbon, no particle simulation.
+function drawSlashRibbon(c,radius,progress,{start=-1.2,end=1.2,color='#6caade',reduced=false,heavy=false}={}){
+ const p=Math.max(0,Math.min(1,progress)),sweep=end-start,head=start+sweep*p,tail=start+sweep*Math.max(0,p-.55);
+ if(head<=tail)return;
+ c.save();c.globalAlpha*=Math.min(1,(1-p)*4);
+ const ribbon=(r,width,light)=>{
+  for(let i=0;i<14;i++){
+   const u=i/14,v=(i+1)/14,a=tail+(head-tail)*u,b=tail+(head-tail)*v,w=width*(.12+.88*Math.sin(u*Math.PI/2));
+   c.fillStyle=light&&i>10?'#edfbff':color;c.beginPath();c.moveTo(Math.cos(a)*r,Math.sin(a)*r);c.lineTo(Math.cos(b)*r,Math.sin(b)*r);c.lineTo(Math.cos(b)*(r-w),Math.sin(b)*(r-w));c.lineTo(Math.cos(a)*(r-w),Math.sin(a)*(r-w));c.closePath();c.fill();
+  }
+ };
+ ribbon(radius,Math.min(radius*.35,heavy?(reduced?6:14):(reduced?3:6)),true);
+ if(!reduced){c.globalAlpha*=.28;ribbon(radius-7,2,false);}
+ c.restore();
+}
+
+function drawSlashContact(c,f,reduced=false){
+ if(!f.slash)return false;if(!(f.t>0))return true;
+ c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(f.x),Math.round(f.y));c.rotate(f.angle||0);
+ drawSlashRibbon(c,17,1-Math.min(1,f.t/.14),{color:f.color||'#c8b3e7',reduced});c.restore();return true;
+}
+
+ return {drawArrowImpact,drawPrecisionBurst,drawSlashRibbon};})();
+ const currentUltimate=(()=>{const CROSSBOW={lifetime:14,interval:.6};const clamp=n=>Math.max(0,Math.min(1,n));
+const box=(c,x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h);};
+function line(c,points,color,width=2){c.strokeStyle=color;c.lineWidth=width;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(Math.round(x),Math.round(y)):c.moveTo(Math.round(x),Math.round(y)));c.stroke();}
+function clipArena(c){c.beginPath();c.rect(25,45,910,455);c.clip();}
+function rainVisualState(z){
+ const pulse=Math.max(0,Math.min(5,z.pulses-1)),age=Math.max(0,z.elapsed-pulse*.3);
+ return {pulse,impact:z.pulses>0?clamp(1-age/.28):0,fall:z.pulses<6?clamp((z.elapsed-(z.pulses*.3-.18))/.18):0,opacity:clamp((1.8-z.elapsed)/.3)};
+}
+function turretVisualState(t){
+ return {build:clamp((CROSSBOW.lifetime-t.time)/.28),recoil:clamp(1-(CROSSBOW.interval-t.clock)/.14),opacity:clamp(t.time/1.2),remaining:clamp(t.time/CROSSBOW.lifetime)};
+}
+// Ground markings stay below hostile warnings and actors.
+function drawUltimateGround(c,room){} // No circular floor marker.
+function drawArrowRain(c,z){const v=rainVisualState(z);c.save();clipArena(c);c.beginPath();c.arc(z.x,z.y,z.r,0,Math.PI*2);c.clip();c.globalAlpha=v.opacity;
+ // Every arrow lands on the actual 0 / .6 / 1.2-second damage pulse.
+ // The first pulse is immediate: never delay damage to fit an anticipation.
+ for(let i=0;i<36;i++){
+  const angle=i*2.3999632297,r=z.r*Math.sqrt((i+.5)/36)*.95,x=z.x+Math.cos(angle)*r,y=z.y+Math.sin(angle)*r;
+  if(v.impact>0){const spread=(1-v.impact)*13;c.globalAlpha=v.opacity*v.impact;
+   line(c,[[x-7,y-38],[x,y]],'#d7eef088',5);line(c,[[x-4,y-28],[x,y]],'#fff1c6',2);box(c,x-7,y-1,15,2,'#f8dd9188');box(c,x-1,y-7,2,14,'#fff1cc');box(c,x-3,y-3,7,3,'#f5e7b5');
+   for(let j=0;j<3;j++){const a=j*Math.PI*2/3+i;box(c,x+Math.cos(a)*spread,y+Math.sin(a)*spread*.5,3,2,j===0?'#f8e1a1':'#89c3c7');}
+  }
+  if(v.fall>0){c.globalAlpha=v.opacity*.8;const lift=(1-v.fall)*145,ax=x-lift*.22,ay=y-lift;
+   line(c,[[ax-6,ay-28],[ax,ay]],'#8fc6d955',4);line(c,[[ax-5,ay-22],[ax,ay]],'#d6e9e9',2);
+   line(c,[[ax-5,ay-7],[ax,ay],[ax+3,ay-8]],'#182a32',5);line(c,[[ax-4,ay-6],[ax,ay],[ax+2,ay-7]],'#f6dfac',2);box(c,ax-8,ay-22,6,3,'#78a6ad');box(c,ax-9,ay-25,3,2,'#c7e9eb');
+  }
+ }
+ c.restore();}
+function drawCrossbow(c,t){const v=turretVisualState(t);if(t.time<=0)return;c.save();clipArena(c);c.translate(Math.round(t.x),Math.round(t.y));c.globalAlpha=v.opacity;
+ // Feet deploy outward; the mechanism can still fire immediately as before.
+ box(c,-20,12,40,7,'#0c151c88');
+ for(const side of [-1,1]){const x=side*(7+v.build*9);line(c,[[0,3],[x,14]],'#202730',7);line(c,[[0,3],[x,14]],'#8b7858',3);box(c,x-4,13,8,4,'#b39a6d');}
+ for(const side of [-1,1]){box(c,side*12-2,6,4,3,'#96abb0');box(c,side*12-1,6,2,1,'#d2e7e4');}box(c,-9,0,18,12,'#3c3934');box(c,-8,0,16,3,'#d5bb80');box(c,-3,-4,6,11,'#a68b5d');
+ if(v.build<1){c.globalAlpha=v.opacity*(1-v.build);for(let i=0;i<6;i++){const a=i*Math.PI/3;box(c,Math.cos(a)*(14+v.build*20),14+Math.sin(a)*7,4,2,'#d8c690');box(c,Math.cos(a)*(10+v.build*12),-28*(1-v.build)+Math.sin(a)*8,2,5,'#fff0bd');}c.globalAlpha=v.opacity;}
+ c.save();c.translate(0,-3-(1-v.build)*8);c.rotate(t.aim||0);c.translate(-v.recoil*5,0);
+ line(c,[[-7,-19],[5,-13],[10,0],[5,13],[-7,19]],'#18222c',7);
+ line(c,[[-7,-19],[5,-13],[10,0],[5,13],[-7,19]],'#bba16c',4);
+ line(c,[[-7,-19],[-7-v.recoil*5,0],[-7,19]],'#eee0b5',1);
+ const tint=t.build?.fire?'#efaa78':t.build?.frost?'#a9deee':t.build?.poison?'#b4d68b':t.build?.chain?'#cdb6ed':'#e4cf9d';box(c,-16,-5,39,10,'#222b31');box(c,-14,-4,34,3,'#d8c492');box(c,-11,2,28,2,'#8f7853');box(c,-5,-8,6,16,'#a18556');box(c,-3,-3,3,5,tint);for(let i=0;i<3;i++){box(c,-12+i*8,-3,2,1,'#f0dfb6');box(c,-12+i*8,3,2,1,'#6f8586');}
+ box(c,12,-2,16,4,'#dbe2d4');box(c,-16,-3,4,6,'#6b5541');for(const side of [-1,1])box(c,-8,side*16-2,4,4,'#e7ca82');
+ if(v.recoil>.35){c.globalAlpha=v.opacity*v.recoil;line(c,[[27,0],[36,0]],'#fff0bb',2);line(c,[[28,-2],[32,-6]],'#d7c493',1);line(c,[[28,2],[32,6]],'#d7c493',1);}
+ c.restore();c.globalAlpha=v.opacity*.8;box(c,-17,23,34,2,'#17212b');box(c,-17,23,Math.ceil(34*v.remaining),2,'#d5b97a');c.restore();}
+
+function drawCrossbowEnding(c,t){const age=1-t.time/.4;c.save();c.globalAlpha=1-age;c.translate(t.x,t.y);for(let i=0;i<10;i++){const a=i*Math.PI/5,r=6+age*22;box(c,Math.cos(a)*r,Math.sin(a)*r*.4-age*17,3,3,i%2?'#c6ae7b':'#e4eee3');}line(c,[[-16*(1-age),5],[0,12-age*8],[16*(1-age),5]],'#ad9a75',3);c.restore();}
+
+ return {drawArrowRain,drawCrossbow,drawCrossbowEnding};})();
+ const scene=root.querySelector('[data-scene]'),play=root.querySelector('[data-play]'),speed=root.querySelector('[data-speed]'),reduced=root.querySelector('[data-reduced]'),seek=root.querySelector('[data-seek]'),clock=root.querySelector('[data-clock]'),status=root.querySelector('[data-status]');
+ const canvases=[root.querySelector('[data-before]'),root.querySelector('[data-after]')];
+ const image=new Image(),imageSource='crossbow-poses-v2.png';let imageReady=false;
+ if(imageSource&&!imageSource.startsWith('__')){image.onload=()=>{imageReady=true;render();};image.onerror=()=>{status.textContent='석궁 시안 이미지를 읽지 못했습니다. 화살비·명중 비교는 사용 가능합니다.';};image.src=imageSource;}
+ let time=.12,playing=false,last=0,frameId=0;
+ const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+ const label=()=>scene.value==='hit'?'명중 3단계 · 무음 시각 비교 · 게임 미반영':scene.value==='rain'?'화살비 · 즉시 착탄 + 0.3초 간격 6회 · 게임 미반영':'석궁 · 설치/발사/회수 모아보기 · 실제 14초 수명은 시안에서 압축';
+ const length=()=>scene.value==='hit'?.65:scene.value==='rain'?1.8:2.2;
+ const palette=()=>{const s=getComputedStyle(root),v=n=>s.getPropertyValue(n).trim();return {floor:v('--muted')||'#29313a',grid:v('--border')||'#48525b',text:v('--foreground')||'#e6dfce',enemy:v('--muted-foreground')||'#8f9fa8'};};
+ const box=(c,x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),Math.max(1,Math.round(w)),Math.max(1,Math.round(h)));};
+ function stroke(c,x,y,x2,y2,color,width=2){c.strokeStyle=color;c.lineWidth=width;c.beginPath();c.moveTo(x,y);c.lineTo(x2,y2);c.stroke();}
+ function wedge(c,x,y,a,long,wide,color){c.save();c.translate(x,y);c.rotate(a);c.fillStyle=color;c.beginPath();c.moveTo(-long*.2,0);c.lineTo(long*.5,-wide);c.lineTo(long,0);c.lineTo(long*.5,wide);c.closePath();c.fill();c.restore();}
+ function actor(c,x,y,color){box(c,x-8,y-21,16,26,color);box(c,x-6,y-32,12,12,color);box(c,x-11,y+3,8,5,color);box(c,x+3,y+3,8,5,color);}
+ function spark(c,x,y,age,strength){
+  if(age<0||age>.24)return;const power=[1,1.6,2.2][strength],core=.045,fade=clamp(1-age/.24);c.save();
+  if(age<core){c.globalAlpha=(1-age/core)*.95;wedge(c,x,y,0,12*power,5*power,'#fff2ce');wedge(c,x,y,Math.PI/2,6*power,2,'#f4de9f');}
+  const count=reduced.checked?2:4+strength*2;
+  for(let i=0;i<count;i++){const a=-1.2+i*2.4/Math.max(1,count-1),distance=(5+age*130)*power;c.globalAlpha=fade**1.5;wedge(c,x+Math.cos(a)*distance,y+Math.sin(a)*distance*.6,a,Math.max(2,(7+strength*3)*fade),1+strength*.5,i%2?'#d9aa61':'#fff0c5');}
+  c.restore();
+ }
+ function hit(c,after,p){
+  const kinds=['일반 명중','약점·강한 베기','궁극기 명중'];
+  kinds.forEach((name,i)=>{const y=140+i*145;actor(c,480,y,p.enemy);c.fillStyle=p.text;c.font='34px sans-serif';c.textAlign='left';c.fillText(name,70,y-2);
+   if(after){const dark=clamp(1-time/.1);c.save();c.globalAlpha=dark*.7;box(c,467,y-36,27,44,'#231d19');c.restore();spark(c,480,y-15,time,i);if(i===1&&time<.12){c.save();c.translate(475,y-15);currentImpact.drawSlashRibbon(c,43,time/.12,{heavy:true,reduced:reduced.checked,color:'#d5bcf3'});c.restore();}}
+   else if(i===1)currentImpact.drawPrecisionBurst(c,{x:480,y:y-15,t:.65-time,precisionBurst:true,hitAngle:0},reduced.checked);
+   else currentImpact.drawArrowImpact(c,{arrowImpact:true,x:480,y:y-15,angle:0,t:.2-time,duration:.2,precision:false},reduced.checked);
+  });
+ }
+ const rainPoint=i=>{const a=i*2.3999632297,r=258*Math.sqrt((i+.5)/24);return {x:480+Math.cos(a)*r,y:315+Math.sin(a)*r*.66};};
+ function rain(c,after,p){
+  for(const [x,y] of [[350,260],[520,320],[620,360],[430,420]])actor(c,x,y,p.enemy);
+  if(!after){currentUltimate.drawArrowRain(c,{x:480,y:315,r:280,elapsed:time,pulses:Math.min(6,Math.floor((time+1e-9)/.3)+1)});return;}
+  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.beginPath();c.arc(480,315,280,0,Math.PI*2);c.clip();
+  const fade=clamp((1.8-time)/.3),pulse=Math.min(5,Math.floor((time+1e-9)/.3)),age=time-pulse*.3,count=reduced.checked?12:24;
+  for(let j=0;j<count;j++){const i=reduced.checked?j*2:j,q=rainPoint(i),major=i%4===0,scale=major?1.45:.8;
+   if(age<.26){const decay=1-age/.26;c.globalAlpha=fade*decay*.8;const spread=6+age*(major?75:45);for(let k=0;k<(reduced.checked?2:5);k++){const a=k*2.4+i;box(c,q.x+Math.cos(a)*spread,q.y+Math.sin(a)*spread*.35,major?5:3,2,k%2?'#9d8871':'#d6c4a4');}
+    if(age<.055){c.globalAlpha=fade*(1-age/.055);box(c,q.x-7*scale,q.y-2,14*scale,4,'#fff0c7');box(c,q.x-2,q.y-8*scale,4,16*scale,'#fff0c7');}
+    c.globalAlpha=fade*decay;stroke(c,q.x-6*scale,q.y-24*scale,q.x,q.y,'#ccb576',3*scale);box(c,q.x-9*scale,q.y-27*scale,6*scale,3,'#e6e5d5');}
+   if(pulse<5&&age>.12){const fall=clamp((age-.12)/.18),lift=(1-fall)*190,x=q.x-lift*.3,y=q.y-lift;c.globalAlpha=fade*.85;stroke(c,x-12*scale,y-40*scale,x,y,'#e2cc95',major?4:2);wedge(c,x,y,Math.PI*.43,8*scale,3*scale,'#fff2d4');box(c,x-15*scale,y-41*scale,9*scale,4,'#b7995f');if(!reduced.checked){c.globalAlpha*=.3;stroke(c,x-18*scale,y-65*scale,x-9*scale,y-32*scale,'#bbd3d0',major?5:2);}}
+  }
+  if(pulse===5&&age<.16){c.globalAlpha=fade*(1-age/.16)*.5;for(let i=0;i<(reduced.checked?4:12);i++){const a=i*Math.PI*2/(reduced.checked?4:12);wedge(c,480+Math.cos(a)*(40+age*400),315+Math.sin(a)*(25+age*200),a,8,2,'#d5b46e');}}
+  c.restore();
+ }
+ function turret(c,after,p){
+  actor(c,720,315,p.enemy);const shot=Math.floor((time+1e-9)/.6),age=time-shot*.6,ending=time>=1.8;
+  if(!after){if(ending)currentUltimate.drawCrossbowEnding(c,{x:420,y:340,time:Math.max(0,2.2-time)});else currentUltimate.drawCrossbow(c,{x:420,y:340,time:14-time,clock:.6-age,aim:0,build:{}});}
+  else if(imageReady){const index=ending?3:time<.28?0:age<.12?2:1,sw=image.naturalWidth/2,sh=image.naturalHeight/2,anchors=[350,320,320,320],feet=[520,560,550,515],anchorScale=sw/640,scale=.19;c.save();c.globalAlpha=ending?clamp((2.2-time)/.3):1;const recoil=ending?0:Math.max(0,1-age/.12)*6;c.drawImage(image,(index%2)*sw,Math.floor(index/2)*sh,sw,sh,420-anchors[index]*anchorScale*scale-recoil,340-feet[index]*anchorScale*scale,sw*scale,sh*scale);c.restore();}
+  if(!ending){const x=470+age*900;if(x<720){stroke(c,x-28,285,x,285,'#c9b078',after?4:2);wedge(c,x,285,0,after?12:6,after?4:2,'#f5e8cb');}if(after&&age<.06){c.save();c.globalAlpha=1-age/.06;wedge(c,468,285,0,20,5,'#fff0c7');c.restore();}if(after&&age>.23&&age<.45)spark(c,720,285,age-.23,2);}
+  if(after&&!imageReady){c.fillStyle=p.text;c.font='34px sans-serif';c.textAlign='center';c.fillText('석궁 원본 로딩 중',420,250);}
+ }
+ function render(){const p=palette();canvases.forEach((canvas,i)=>{const c=canvas.getContext('2d');c.clearRect(0,0,480,300);c.save();c.scale(.5,.5);c.fillStyle=p.floor;c.fillRect(0,0,960,600);c.strokeStyle=p.grid;c.lineWidth=1;for(let x=0;x<=960;x+=48){c.beginPath();c.moveTo(x,0);c.lineTo(x,600);c.stroke();}for(let y=0;y<=600;y+=48){c.beginPath();c.moveTo(0,y);c.lineTo(960,y);c.stroke();}c.imageSmoothingEnabled=false;if(scene.value==='hit')hit(c,!!i,p);else if(scene.value==='rain')rain(c,!!i,p);else turret(c,!!i,p);c.restore();});clock.textContent=Math.round(time*1000)+' ms';seek.max=Math.round(length()*1000);seek.value=Math.round(time*1000);}
+ const remember=()=>{window.openai?.setWidgetState({modelContent:{scene:scene.value,reduced:reduced.checked},privateContent:{speed:speed.value,time}}).catch(()=>{});};
+ function stop(){playing=false;play.textContent='재생';cancelAnimationFrame(frameId);}
+ function animate(now){if(!playing)return;const dt=Math.min(.05,(now-last)/1000);last=now;time=Math.min(length(),time+dt*Number(speed.value));render();if(time>=length()){stop();return;}frameId=requestAnimationFrame(animate);}
+ play.onclick=()=>{if(playing){stop();return;}if(time>=length())time=0;playing=true;last=performance.now();play.textContent='일시정지';remember();frameId=requestAnimationFrame(animate);};
+ scene.onchange=()=>{stop();time=.12;status.textContent=label();render();remember();};reduced.onchange=()=>{render();remember();};speed.onchange=remember;seek.oninput=()=>{stop();time=Number(seek.value)/1000;render();};seek.onchange=remember;
+ function restore(s){if(!s)return;const m=s.modelContent||{},v=s.privateContent||{};if(['hit','rain','turret'].includes(m.scene)&&!(m.scene==='turret'&&!imageSource))scene.value=m.scene;if(typeof m.reduced==='boolean')reduced.checked=m.reduced;if(['1','0.25'].includes(v.speed))speed.value=v.speed;if(Number.isFinite(v.time))time=clamp(v.time,0,length());status.textContent=label();render();}
+ if(!imageSource)root.querySelector('[data-turret-option]').remove();
+ reduced.checked=matchMedia('(prefers-reduced-motion: reduce)').matches;restore(window.openai?.widgetState);render();
+ window.addEventListener('openai:set_globals',e=>{if(e.detail.globals?.widgetState){stop();restore(e.detail.globals.widgetState);}});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});new MutationObserver(()=>render()).observe(document.documentElement,{attributes:true,attributeFilter:['class','style']});
+ })();
+ </script>
+</div>
+</body></html>
