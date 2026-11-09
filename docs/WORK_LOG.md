@@ -1849,7 +1849,7 @@ e50369c / release-20261012-173829-3baf4d 활성. 서버Python25개/Nginx/인증�
 - [모르도1페이즈v5 승인·구현 진행 중] 2026-10-14 사용자컨펌진행. v5재생성없이phase1만84px/feet29 연결·phase2/3既존외형유지/패턴불변. 사용자저해상도시안속도질문: 이후小크기요청선호·生成速度단축보장없음. 테스트푸시배포없음·현재4기록수정·실행중세션없음·다음king-sprite/PNG/초상목록→記録→로컬커밋.
 
 ### 2026-10-14 모르도1페이즈v5승인runtime접속
-- [모르도1페이즈v5 승인·로컬구현/미검증] 2026-10-14 사용자컨펌·v5原본mordo-phase1-reference-atlas/mordo-phase1-sprite2캐시接続. kingHP>.65에만몸높이84/feet29·idle/recover대기/windup·strike준비·WeakMap좌우/aim/bodyY·로드실패기존fallback. 2/3페이즈外형既존·전투/HP경계/패턴/저장actor불변. 원정초상은既존최종형HP25維持·ready캐시대기만추가. server/deploy/publicQA목록準備未실행. 독립걷기/할버드휘두르기없음·crop/무기손연속성/해골손함몰小가독성/左右/phase전환/fallback/actor불변未검증. 累積12단위runtime未검증未배포·테스트푸시배포공개확인없음·로컬커밋만. 이후시안小크기요청선호記録(내장도구크기인자없음·시간단축보장없음)·v5재생성없음. 운영release-20261013-213959-7366e5/마지막성공검증유지. 현재PNG/sprite/upper/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음1페이즈승인외형基準2페이즈침식시안부터.
+- [모르도1페이즈v5 승인·로컬구현/미검증] 2026-10-14 사용자컨펌·v5原본mordo-phase1-reference-atlas/mordo-phase1-sprite2캐시接続. kingHP>.65에만몸높이84/feet29·idle/recover대기/windup·strike준비·WeakMap좌우/aim/bodyY·로드실패기존fallback. 2/3페이즈外형既존·전투/HP경계/패턴/저장actor불변. 원정초상은既존최종형HP25維持·ready캐시대기만추가. server/deploy/publicQA목록準備미실행. 독립걷기/할버드휘두르기없음·crop/무기손연속성/해골손함몰小가독성/左右/phase전환/fallback/actor불변未검증. 累積12단위runtime未검증未배포·테스트푸시배포공개확인없음·로컬커밋만. 이후시안小크기요청선호記録(내장도구크기인자없음·시간단축보장없음)·v5재생성없음. 운영release-20261013-213959-7366e5/마지막성공검증유지. 현재PNG/sprite/upper/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음1페이즈승인외형基準2페이즈침식시안부터.
 
 ### 2026-10-14 모르도2페이즈침식시안 着수
 - [모르도2페이즈 침식시안 진행 중] 2026-10-14 승인1페이즈v5기준·한쪽팔견갑악마화/흉갑목균열/왕관한쪽파손/해골침식 제안. 해골성왕왕관할버드붉은망토同一性유지·오라공통分리(原본내포안함)·小크기1024x512요청/도구크기인자없음. 내장imagegen편집1회예정·컨펌전runtime미반영·3페이즈未착수. 누적12단위미검증미배포/운영release-20261013-213959-7366e5유지·테스트푸시배포없음. 현재4기록수정·실행중세션없음·다음2페이즈PNG/프롬프트→직접표시+파일패널→컨펌대기로컬커밋.
@@ -1873,7 +1873,7 @@ e50369c / release-20261012-173829-3baf4d 활성. 서버Python25개/Nginx/인증�
 - [모르도2페이즈v3 승인·구현 진행 중] 2026-10-14 사용자확정다음진행. 승인v3phase2(.3<HP<=.65)84px/feet29/2자세+공통다크오라接続예정. phase1오라X·phase3外형기존/큰오라후속시안未구현·패턴저장불변. 테스트푸시배포없음·현재4기록수정·실행중세션없음·다음PNG/sprite/upper/초상목록→기록→로컬커밋.
 
 ### 2026-10-14 모르도2페이즈確定runtime接続
-- [모르도2페이즈v3 승인·로컬구현/미검증] 2026-10-14 사용자확정·승인PNG mordo-phase2-reference-atlas/mordo-phase2-sprite2캐시接続. king.3<HP비율<=.65만84px/feet29·idle/recover대기/windup·strike준비·WeakMap/aim/bodyY/fallback. 分리공통오라100x92/.26농도/2.1초루프/준비1.1배·동결효과줄이기정지·phase1오라X/phase3큰오라外형후속未구현(기존維持). kingTransition표시helper추출로sprite後에도維持. 전투경계패턴저장actor불변·최종형초상HP25기존維持/ready대기추가. server/deploy/publicQA목록준비未실행. 独立걷기/할버드타격없음·crop手파지同一性/84px가독성/phase전환/오라性能색/fallback/actor불변未검증. 累積13단위runtime未검증未배포·테스트푸시배포공개확인없음·로컬커밋만. 운영release-20261013-213959-7366e5維持. 현재PNG/sprite/upper/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음승인2페이즈기준3페이즈악마형상시안→컨펌.
+- [모르도2페이즈v3 승인·로컬구현/미검증] 2026-10-14 사용자확정·승인PNG mordo-phase2-reference-atlas/mordo-phase2-sprite2캐시接続. king.3<HP비율<=.65만84px/feet29·idle/recover대기/windup·strike준비·WeakMap/aim/bodyY/fallback. 分리공통오라100x92/.26농도/2.1초루프/준비1.1배·동결효과줄이기정지·phase1오라X/phase3큰오라外형후속未구현(기존維持). kingTransition표시helper추출로sprite後에도維持. 전투경계패턴저장actor불변·최종형초상HP25기존維持/ready대기추가. server/deploy/publicQA목록준비미실행. 独立걷기/할버드타격없음·crop手파지同一性/84px가독성/phase전환/오라性能색/fallback/actor불변未검증. 累積13단위runtime未검증未배포·테스트푸시배포공개확인없음·로컬커밋만. 운영release-20261013-213959-7366e5維持. 현재PNG/sprite/upper/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음승인2페이즈기준3페이즈악마형상시안→컨펌.
 
 ### 2026-10-14 모르도3페이즈시안 着수
 - [모르도3페이즈 악마형상 시안 진행 중] 2026-10-14 사용자이미지안보임원인未확인/진행지시. 승인2v3기준마족육체대부분/악마해골큰뿔/왕관잔편붉은보석/왕실망토문장잔재/같은할버드·날개없는compact제안. 오라1X/2O/3확대공통分리/원본미내포·小크기요청. 내장imagegen편집1회예정·승인전runtime미반영·테스트푸시배포없음. 현재4기록수정·실행중세션없음·다음3v1PNG/프롬프트→패널직접표시→컨펌대기로컬커밋.
@@ -1885,7 +1885,7 @@ e50369c / release-20261012-173829-3baf4d 활성. 서버Python25개/Nginx/인증�
 - [모르도3페이즈v1 승인·구현 진행 중] 2026-10-14 사용자딱좋아명시외형승인. phase3HP<=.3/84px몸/feet29/2자세+2보다큰공통오라/최종형초상ready 연결예정. phase1X/2O/3확대規則·패턴저장불변·테스트푸시배포없음. 현재4기록수정·실행중세션없음·다음PNG/sprite/aura/초상목록→기록→로컬커밋.
 
 ### 2026-10-14 모르도3페이즈승인runtime接続
-- [모르도3페이즈v1 승인·로컬구현/미검증] 2026-10-14 사용자딱좋아승인·PNG mordo-phase3-reference-atlas/mordo-phase3-sprite2캐시接続. kingHP<=.3 몸높이84(큰뿔별도)/feet29·idle/recover대기/windup·strike준비·WeakMap/aim/bodyY/fallback/kingTransition표시維持. 共通오라phase1X/phase2 100x92 .26/phase3 130x112 .32 speed1.15·준비1.1배·효과줄이기동결정지·초상정지농도.16/ready캐시새최종형. 패턴HP경계전투저장actor불변. server/deploy/publicQA목록準備未실행. 원본右무기망토잘림保留·독립걷기할버드휘두르기없음·crop좌우손同一性84px가독성단계크기오라性能전환fallbackactor불변未검증. 累積14단위runtime未검증未배포·테스트푸시배포공개확인없음·로컬커밋만. 운영release-20261013-213959-7366e5維持. 현재PNG/sprite/upper/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음後속미리뉴얼범위docs/코드確認후시안(임의확대금지), 배포지시때누적검증.
+- [모르도3페이즈v1 승인·로컬구현/미검증] 2026-10-14 사용자딱좋아승인·PNG mordo-phase3-reference-atlas/mordo-phase3-sprite2캐시接続. kingHP<=.3 몸높이84(큰뿔별도)/feet29·idle/recover대기/windup·strike준비·WeakMap/aim/bodyY/fallback/kingTransition표시維持. 共通오라phase1X/phase2 100x92 .26/phase3 130x112 .32 speed1.15·준비1.1배·효과줄이기동결정지·초상정지농도.16/ready캐시새최종형. 패턴HP경계전투저장actor불변. server/deploy/publicQA목록準備미실행. 원본右무기망토잘림保留·독립걷기할버드휘두르기없음·crop좌우손同一性84px가독성단계크기오라性能전환fallbackactor불변未검증. 累積14단위runtime未검증未배포·테스트푸시배포공개확인없음·로컬커밋만. 운영release-20261013-213959-7366e5維持. 현재PNG/sprite/upper/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음後속미리뉴얼범위docs/코드確認후시안(임의확대금지), 배포지시때누적검증.
 
 ### 2026-10-14 누적배포검증着수
 - [누적배포 검증 진행 중] 2026-10-14 사용자 이보스까지배포 명시승인. 3페이즈코드/기록未커밋중단상태確認·既存수정保留. chaser旧45경계→69원교차/도주70·전후각도경계방향고정저장회귀test追加·guide접촉文구정정. node --test 실행/로그docs/deploy-20261014-tests.log·다음누적spriteQA/초상QA/커밋푸시배포공개확인. 운영기존release-20261013-213959-7366e5기록유지·실제새배포아직없음.
@@ -1918,7 +1918,7 @@ e50369c / release-20261012-173829-3baf4d 활성. 서버Python25개/Nginx/인증�
 - [군단장1페이즈v1 승인·구현 진행 중] 2026-10-14 사용자좋아外형승인. 승인PNG/84px2자세/전투초상ready/fallback接続예정·빙결패턴移動/phase2不変. 활손전환원본制約維持(별도보완未승인)·테스트푸시배포공개검증없음·현재4기록수정·실행중세션없음·다음sprite/PNG/commander/journal/목록→記録→로컬커밋.
 
 ### 2026-10-14 군단장1페이즈승인runtime接続
-- [군단장1페이즈v1 승인·로컬구현/미검증] 2026-10-14 사용자좋아승인·PNG commander-phase1-reference-atlas/commander-phase1-sprite2캐시接続. phase1HP>.5/state.phase!=2만 몸높이84/feet29·대기/volley snipe ricochet rain조준·WeakMap방향/고정aim반전·blinkFlash/transition효과維持·초상ready캐시재표시/fallback. 2페이즈기존外형/ground예고/移動패턴HP저장actor不変. server/deploy/publicQA목록준비未실행. 独立보행발사회수프레임없음·승인원본대기/조준활손불일치保留·crop手形상84px가독성전환fallbackactor未검증. 배포후新미검증1단위·테스트푸시배포공개확인없음·로컬커밋만. 운영release-20261014-201910-449d0e/기존14단위455개公開QA통과維持. 현재PNG/sprite/commander/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음군단장2페이즈빙결강화시안→컨펌 또는 활손細부보완.
+- [군단장1페이즈v1 승인·로컬구현/미검증] 2026-10-14 사용자좋아승인·PNG commander-phase1-reference-atlas/commander-phase1-sprite2캐시接続. phase1HP>.5/state.phase!=2만 몸높이84/feet29·대기/volley snipe ricochet rain조준·WeakMap방향/고정aim반전·blinkFlash/transition효과維持·초상ready캐시재표시/fallback. 2페이즈기존外형/ground예고/移動패턴HP저장actor不変. server/deploy/publicQA목록준비미실행. 独立보행발사회수프레임없음·승인원본대기/조준활손불일치保留·crop手形상84px가독성전환fallbackactor未검증. 배포후新미검증1단위·테스트푸시배포공개확인없음·로컬커밋만. 운영release-20261014-201910-449d0e/기존14단위455개公開QA통과維持. 현재PNG/sprite/commander/journal/server/deploy/QA/4기록수정·실행중세션없음·차단없음·다음군단장2페이즈빙결강화시안→컨펌 또는 활손細부보완.
 
 ### 2026-10-14 군단장2페이즈빙결시안 着수
 - [군단장2페이즈 빙결시안 진행 중] 2026-10-14 사용자진행지시·승인1v1基準phase2흉갑冰균열/견갑짧은서리가시/강화활·얼굴뿔갑옷망토톤維持·다크오라없음. 같은왼손활/오른손현조준일관성교정요청. 내장imagegen편집1회예정·小크기요청·컨펌전runtime미반영. 기존군단장1로컬未검증未배포/운영release-20261014-201910-449d0e/마지막455개QA維持·테스트푸시배포없음. 현재4기록수정·실행중세션없음·차단없음·다음2v1PNG/프롬프트→직접表示패널→컨펌대기로컬커밋.
@@ -2663,3 +2663,6 @@ release-20261109-140228-2f2d11/runtime4db3209 활성/이전0.50 보존. 서버AP
 
 ## 2026-11-09 — 타격·궁극기 통합시안 완료
 사용자ㄱㄱ로통합 비교 시안 작성.docs/design-drafts/impact-ultimate-20261109/5파일: 석궁v1/v2원본사본·정확prompt·README·3장면HTML. 내장imagegen생성1/픽셀편집1·1254²/RGBA/v2 1,017,542bytes·SHA일치/원본보존직접확인. 일반강타궁극기강약·화살비6회깊이/먼지·석궁설치장전반동회수모음(14초→2.2초시안압축). 대화내명중/화살비·전체HTML은석궁PNG포함, 게임미반영. 정적파일소스대조·PNG메타/gitdiffcheck만/테스트구문실행서버브라우저QA푸시배포공개확인0. 동작·방향/분리·기계일관성/발앵커/알파경계·실게임겹침·성능미검증. 다음방향확인후구현로컬커밋/새배포후검증. 기존0.51재확인없음/차단없음.
+
+## 2026-11-09 — 승인 타격·궁극기 그래픽 구현
+e076f14시안 사용자ㄱㄱ승인후구현. 일반강타궁극기접점·화살비24/완화12/주력보조깊이6회착탄먼지·마감, 승인석궁v2생산사본/상하부캐시·상부조준4자세/별도섬광속성·수명·회수/도형fallback. PNG1,017,542bytes/원본SHA일치·새생성없음. 공통팩/허용목록연결·기존자산예산+승인2개분리. 전투/RNG/저장·즉시+.3초6회/1.8초/280반경·14초/.6초사격 유지. 신규회귀3/자산예산갱신은미실행. 정적소스/호출대조·PNG해시/gitdiffcheck만/테스트구문실행서버브라우저QA푸시배포공개확인0. 실제방향접합앵커발사점/기계일관성/알파경계·실기성능체감미검증. 상세 impact-ultimate-implementation-20261109.md. 신규명시배포후묶음검증/버전정책검토필요. 기존0.51재확인없음·효과음미추가/BGM보류. 실행중명령/차단없음·관련변경로컬커밋후상태확인.

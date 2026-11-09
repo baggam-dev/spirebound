@@ -21,9 +21,10 @@ test('all floor packs point at existing originals and floor1 excludes later boss
  for(let floor=0;floor<10;floor++)for(const file of assetPlanFiles(floorAssetPlan(floor)))assert.equal(existsSync('assets/images/'+file),true,file);
  const files=assetPlanFiles(floorAssetPlan(0));assert.ok(files.includes('enemy-melee-poses-v1.png'));assert.ok(files.includes('feedback-named-brute-v1.png'));assert.equal(files.includes('brute-walk-atlas.png'),false);assert.ok(files.includes('hero-reference-atlas.png'));assert.ok(files.includes('chaser-walk-atlas.png'));
  assert.equal(files.some(f=>/demon|mordo|commander|royal-hall|warden|prism-hall/.test(f)),false);
- const size=files.reduce((n,f)=>n+statSync('assets/images/'+f).size,0),dash=statSync('assets/images/hero-draw-dash-v2.png').size;
+ const size=files.reduce((n,f)=>n+statSync('assets/images/'+f).size,0),dash=statSync('assets/images/hero-draw-dash-v2.png').size,crossbow=statSync('assets/images/crossbow-poses-v2.png').size;
  assert.ok(files.includes('hero-draw-dash-v2.png'));assert.ok(dash<2_000_000,'approved dash art budget');
- assert.ok(size-dash<40_000_000&&size<42_000_000,'first floor retains the original 40 MB budget plus approved dash art');
+ assert.ok(files.includes('crossbow-poses-v2.png'));assert.ok(crossbow<2_000_000,'approved crossbow art budget');
+ assert.ok(size-dash-crossbow<40_000_000&&size<44_000_000,'first floor retains the original 40 MB budget plus two approved atlases');
  assert.equal(assetPlanFiles(floorAssetPlan(8)).includes('demon-core-body-atlas.png'),false);assert.equal(assetPlanFiles(floorAssetPlan(9)).includes('demon-core-body-atlas.png'),true);
 });
 test('selected portraits do not require every monster or any dungeon hall',()=>{

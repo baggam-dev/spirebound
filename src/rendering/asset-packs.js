@@ -1,6 +1,6 @@
 import {assetFiles} from './asset-manifest.js';
 import {activateAssetFiles} from './asset-requests.js';
-const common=['hero-sprite','grunt-sprite','companion-roll-art','skill-icons','relic-icons','xp-shards','spectral-blade'];
+const common=['hero-sprite','grunt-sprite','companion-roll-art','skill-icons','relic-icons','xp-shards','spectral-blade','crossbow-art'];
 const early=['enemy-melee-art','chaser-walk','chaser-slash','archer-walk','charger-walk','scatter-walk','ricochet-walk','laser-walk','brute-walk'];
 const warden=['warden-sprite','warden-motion','warden-walk','warden-recover','warden-presentation-art'];
 const upper=['astral-sniper-sprite','gravity-mage-sprite','star-knight-sprite','star-bearer-sprite','royal-guard-sprite','pulse-turret-sprite','rift-hunter-sprite','shadow-aura'];

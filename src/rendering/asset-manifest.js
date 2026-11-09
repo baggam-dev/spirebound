@@ -1,5 +1,6 @@
 // Source filenames for explicit on-demand packs. Original PNGs are unchanged.
 export const assetFiles={
+ "crossbow-art":["crossbow-poses-v2.png"],
  "vera-sprite":["vera-royal-eye-atlas-v1.png"],
  "enemy-melee-art":["enemy-melee-poses-v1.png"],
  "ambusher-sprite": [

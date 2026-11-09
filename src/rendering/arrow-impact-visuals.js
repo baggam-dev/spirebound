@@ -8,37 +8,27 @@ export function limitArrowImpacts(effects,max=24){
  let skip=Math.max(0,effects.reduce((n,f)=>n+!!f.arrowImpact,0)-max);
  return effects.filter(f=>!f.arrowImpact||skip--<=0);
 }
+// One short contact, three visual weights. No actor motion or gameplay clocks.
+export function drawImpactAccent(c,{x,y,age,angle=0,strength=0,reduced=false,color='#fff0c5',duration=.2}){
+ if(age<0||age>=duration)return;
+ const power=[1,1.6,2.2][Math.max(0,Math.min(2,strength))],fade=1-age/duration;
+ const shard=(x,y,a,length,width,fill)=>{c.save();c.translate(x,y);c.rotate(a);c.fillStyle=fill;c.beginPath();c.moveTo(-length*.2,0);c.lineTo(length*.5,-width);c.lineTo(length,0);c.lineTo(length*.5,width);c.closePath();c.fill();c.restore();};
+ c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(x),Math.round(y));c.rotate(angle);const alpha=c.globalAlpha;
+ if(age<.045){c.globalAlpha=alpha*(1-age/.045);shard(0,0,0,14*power,6*power,'#3b2c24');shard(0,0,0,12*power,3*power,color);if(strength&&!reduced)shard(0,0,Math.PI/2,6*power,2,color);}
+ const count=reduced?2:4+strength*2;c.globalAlpha=alpha*fade**1.5;
+ for(let i=0;i<count;i++){const a=-1.2+i*2.4/(count-1),r=(4+age*105)*power;shard(Math.cos(a)*r,Math.sin(a)*r*.6,a,Math.max(1,(7+strength*3)*fade),1+strength*.5,i%2?'#c99b57':color);}
+ c.restore();
+}
 export function drawArrowImpact(c,f,reduced=false){
  if(!f.arrowImpact)return false;
  if(!(f.t>0))return true;
- const life=Math.max(0,Math.min(1,f.t/f.duration));
- c.save();c.beginPath();c.rect(25,45,910,455);c.clip();
- c.translate(Math.round(f.x),Math.round(f.y));c.rotate(f.angle);
- const age=1-life,spread=1-life*life;
- c.globalAlpha*=life*life*.9;
- const light=f.precision?'#fff0bf':'#f4e6c4',shade=f.precision?'#d4b775':'#baa88e';
- if(age<.4){c.fillStyle=shade;c.fillRect(-3,-2,6,4);c.fillStyle=light;c.fillRect(-1,-2,3,4);c.fillRect(-3,-1,7,2);}
- c.fillStyle=age<.45?light:shade;
- for(let i=0;i<(reduced?2:5);i++){
-  const side=i%2?1:-1,x=2+spread*(5+i*2),y=side*(1+spread*(2+i));
-  c.fillRect(Math.round(x),Math.round(y),Math.max(1,Math.round((f.precision?6:4)*life)),1);
- }
- if(f.precision&&age<.55){c.fillStyle='#fff3ce';c.fillRect(2+Math.round(spread*8),-1,reduced?3:6,2);}
- c.restore();return true;
+ drawImpactAccent(c,{x:f.x,y:f.y,age:f.duration-f.t,duration:f.duration,angle:f.angle,strength:f.precision?1:0,reduced});return true;
 }
 
 // Attached to the existing precision burst label, never a new damage roll.
 export function drawPrecisionBurst(c,f,reduced=false){
  if(!f.precisionBurst)return;
- const seconds=.65-f.t,age=seconds/.2;if(age<0||age>=1)return;
- c.save();c.beginPath();c.rect(25,45,910,455);c.clip();
- c.translate(Math.round(f.x),Math.round(f.y+28));c.rotate(f.hitAngle||0);
- c.globalAlpha*=(1-age)**1.2;
- const shard=(x,y,a,length,width,color)=>{c.save();c.translate(x,y);c.rotate(a);c.fillStyle=color;c.beginPath();c.moveTo(-length*.3,0);c.lineTo(length*.35,-width);c.lineTo(length,0);c.lineTo(length*.35,width);c.closePath();c.fill();c.restore();};
- if(seconds<.055){shard(0,0,0,reduced?16:23,reduced?3:5,'#fff3ce');if(!reduced)shard(0,0,Math.PI/2,9,2,'#fff3ce');}
- const spread=1-(1-age)**3,count=reduced?2:6;
- for(let i=0;i<count;i++){const a=(i-(count-1)/2)*.22,r=4+spread*(14+i*2);shard(Math.cos(a)*r,Math.sin(a)*r,a,(reduced?7:12)*(1-age)+1,reduced?1:2,seconds<.075?'#ffe1a0':'#c99b57');}
- c.restore();
+ drawImpactAccent(c,{x:f.x,y:f.y+28,age:.65-f.t,angle:f.hitAngle||0,strength:1,reduced,color:'#fff3ce'});
 }
 
 // Original Canvas geometry: narrow tapered ribbon, no particle simulation.
@@ -59,6 +49,7 @@ export function drawSlashRibbon(c,radius,progress,{start=-1.2,end=1.2,color='#6c
 
 export function drawSlashContact(c,f,reduced=false){
  if(!f.slash)return false;if(!(f.t>0))return true;
+ drawImpactAccent(c,{x:f.x,y:f.y,age:.14-f.t,duration:.14,angle:f.angle||0,strength:1,reduced,color:f.color||'#e4d7f7'});
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(f.x),Math.round(f.y));c.rotate(f.angle||0);
  drawSlashRibbon(c,17,1-Math.min(1,f.t/.14),{color:f.color||'#c8b3e7',reduced});c.restore();return true;
 }
