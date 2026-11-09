@@ -2678,3 +2678,6 @@ release-20261109-175931-1c7475/runtime130239f 활성/이전0.51보존. 공식347
 
 ## 2026-11-09 — 효과음0.53 검증 완료/배포 준비
 사용자배포승인. 집중11/전체688·nativePCM12큐/복합peak.0397166/duckRMS.28/정지mute꼬리0·실EdgePC가로모바일2제스처/명중/화살비6회5낙하/석궁실샷장전/정지/mute/volume0복귀통과. 주관청취실기와구분/장치출력음소거/QA WAV보존. 실제완화설정교정QA2종각각4조합actualReduced일치/Canvas80·저장/fallback·모션클리어보상최종key360XP통과. 선택자QA실패와실행환경세션중단증거보존/필요QA만재실행/런타임추가수정없음. release-0.53.0-prebeta.md·qa-sound-20261109/참조. client/API/헤더0.53/DB저장시즌지도점수식전투불변. 로컬서버/명령종료·다음커밋푸시공식배포공개확인. 실iPhone/Safari·기기청취장기부하미확인.
+
+## 2026-11-09 — 효과음0.53 배포·공개 확인 완료
+release-20261109-224959-c1e7d6/runtime65f27e6 활성/이전0.52보존. 공식348파일/서버API27/nginx/health/indexSHA 통과. 공개HTTPS221파일·새모듈/PNG·308·랭킹보안쿠키/시작2·별도온라인PC모바일2·공개nativePCM12/peak.0397166·duckRMS.28/stopmute꼬리0·실전투2·실제완화궁극기4/Canvas80·실샷정지저장/fallback 통과. 로컬11/688·nativeWebAudio/실기아닌Edge2·교정QA2종4조합통과. rawPNG직접확인·오류0/순위제출0. QA선택자실패·환경세션중단증거보존/필요QA만재실행·runtime추가수정재배포없음. getter사본QA한계는실제actualReduced assert로해결. HTTP이전미변경이번제외. 장치출력mute상태그래프/PCM검사·주관기기청취/실iPhoneSafari/장기부하미확인·QA WAV보존. 상세 release-0.53.0-prebeta.md·qa-sound-20261109/. 모든서버/명령종료·최종증거커밋푸시/상태확인으로마감.

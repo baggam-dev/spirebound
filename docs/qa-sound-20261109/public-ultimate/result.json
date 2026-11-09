@@ -1,0 +1,105 @@
+{
+  "base": "https://168.107.21.43",
+  "reports": [
+    {
+      "width": 1280,
+      "reduced": false,
+      "actualReduced": false,
+      "art": {
+        "ready": true,
+        "frames": 4
+      },
+      "probes": 20,
+      "restored": true,
+      "realRadius": true,
+      "pauseStable": true,
+      "turret": {
+        "time": 13.899999999999995,
+        "aim": -2.1864162162240066,
+        "bullet": true,
+        "angle": -2.1864162162240066
+      },
+      "loadedTime": 13.899999999999995,
+      "rainPulses": 1,
+      "saveReload": true
+    },
+    {
+      "width": 1280,
+      "reduced": true,
+      "actualReduced": true,
+      "art": {
+        "ready": true,
+        "frames": 4
+      },
+      "probes": 20,
+      "restored": true,
+      "realRadius": true,
+      "pauseStable": true,
+      "turret": {
+        "time": 13.916666666666663,
+        "aim": -2.1864162162240066,
+        "bullet": true,
+        "angle": -2.1864162162240066
+      },
+      "loadedTime": 13.916666666666663,
+      "rainPulses": 1,
+      "saveReload": true
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "actualReduced": false,
+      "art": {
+        "ready": true,
+        "frames": 4
+      },
+      "probes": 20,
+      "restored": true,
+      "realRadius": true,
+      "pauseStable": true,
+      "turret": {
+        "time": 13.899999999999995,
+        "aim": -2.1864162162240066,
+        "bullet": true,
+        "angle": -2.1864162162240066
+      },
+      "loadedTime": 13.899999999999995,
+      "rainPulses": 1,
+      "saveReload": true
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "actualReduced": true,
+      "art": {
+        "ready": true,
+        "frames": 4
+      },
+      "probes": 20,
+      "restored": true,
+      "realRadius": true,
+      "pauseStable": true,
+      "turret": {
+        "time": 13.916666666666663,
+        "aim": -2.1864162162240066,
+        "bullet": true,
+        "angle": -2.1864162162240066
+      },
+      "loadedTime": 13.916666666666663,
+      "rainPulses": 1,
+      "saveReload": true
+    },
+    {
+      "fallback": {
+        "ready": true,
+        "state": {
+          "ready": false,
+          "frames": 0
+        },
+        "ink": true
+      }
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

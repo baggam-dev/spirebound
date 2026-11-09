@@ -1,3 +1,10 @@
+## 최신 복사 가능한 인계 — 효과음0.53 배포 완료 (2026-11-09)
+~~~text
+C:\baggam-dev\spirebound/main. 사용자 ‘배포까지 해’ 완료. 운영 https://168.107.21.43/ release-20261109-224959-c1e7d6/runtime65f27e6/client·API·헤더0.53.0-prebeta. 이전 release-20261109-175931-1c7475 보존. f86e0e6효과음/관찰자(타격·화살비6회5낙하·석궁실샷장전회수)/3버스·12/8/8상한·경보.28duck/음소거정지·제스처volume0복귀·기존시각QA actualReduced교정 반영. 전투수치AI/RNG/시간/DB저장원본/시즌지도점수식 유지·최신버전랭킹정책/BGM보류.
+집중11/전체688, nativeOfflineAudioContext12큐 유효·검사복합peak.0397166(fullscale1)/duckRMS비.28/정지mute꼬리0, 실제Edge PC1280/가로모바일844×2 제스처/실명중·화살비1+4+1착탄/5낙하·석궁실샷장전/정지mutevolume0복귀 통과. 교정시각QA2종 각기본완화4/actualReduced false,true 일치·궁극기Canvas80/실샷저장/fallback·모션클리어보상최종key360XP 통과. 과거getter사본helper한계는이번실제설정전환assert로닫음.
+공식348파일/서버API27/nginx/health/indexSHA 통과. 공개HTTPS221파일/새모듈·PNG·308·랭킹보안쿠키갱신/클래식확장시작2·별도PC가로모바일온라인2, 공개WebAudio12큐/동일지표·실전투2·실제완화궁극기4/Canvas80·사격정지저장/fallback 통과. rawPNG 직접확인/오류0/실순위제출0. 초기QA #settings→#titleSettings교정/실패PNGJSON로그보존. 실행환경세션변경으로미완료시각QA만서버재시작후실행/성공한단위오디오는반복안함. 런타임추가수정/재배포없음. HTTP저장이전미변경/이번제외(transferChecked=false).
+증거 docs/qa-sound-20261109/ 및 release-0.53.0-prebeta.md. effects-demo.wav는QA파형출력/외부음원아님. 출력장치음소거로그래프/PCM검사했으며주관청취·실iPhone/Safari·장기복귀부하미확인. 로컬서버50577종료/배포공개세션79825종료·차단없음. 최종기록/공개증거커밋푸시후gitclean/HEADorigin확인. 다음실기청취/실플레이후기기반조정/임의기능확장없음. 새명시배포전테스트푸시배포보류. 승인요청최소화선호유지/시스템권한우회없음.
+~~~
 ## 배포 전 검증 완료 — 효과음0.53 (2026-11-09)
 - 집중11/전체688·nativeWebAudio12큐 유효/검사복합peak.0397166·duck RMS.28·정지/mute꼬리0. 실제Edge PC/가로모바일2의제스처/실제명중·화살비6회/5낙하·석궁발사장전·정지/mute/volume0복귀 통과. 주관청취/실기검증과구분. 오류0·순위제출0.
 - 교정QA2종 각각기본완화4/actualReduced실제false/true 일치·궁극기Canvas80/실샷저장/fallback·모션클리어보상/최종keyXP까지통과. getter사본의과거실게임완화전환한계이번설정재검증으로해결. QA설정선택자오류/세션환경중단로그보존·필요QA만재실행/런타임추가수정없음.
