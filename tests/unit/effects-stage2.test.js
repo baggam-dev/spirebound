@@ -47,7 +47,7 @@ test('precision accent follows the existing burst cadence and expires before its
  }
  assert.equal(burst.text,'약점!');assert.equal(burst.hitAngle,0);assert.equal(e.precisionHits,0);
  const live=canvas(),expired=canvas();drawPrecisionBurst(live,Object.freeze(burst),true);drawPrecisionBurst(expired,Object.freeze({...burst,t:.4}),true);
- assert.ok(live.calls.some(x=>x.op==='stroke'));assert.equal(expired.calls.length,0);
+ assert.ok(live.calls.some(x=>x.op==='fill'));assert.equal(expired.calls.length,0);
 });
 
 test('slash ribbon is deterministic, bounded by its radius, and has less decoration when reduced',()=>{

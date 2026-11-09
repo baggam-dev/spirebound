@@ -30,18 +30,19 @@ export function drawArrowImpact(c,f,reduced=false){
 // Attached to the existing precision burst label, never a new damage roll.
 export function drawPrecisionBurst(c,f,reduced=false){
  if(!f.precisionBurst)return;
- const age=(.65-f.t)/.2;if(age<0||age>=1)return;
+ const seconds=.65-f.t,age=seconds/.2;if(age<0||age>=1)return;
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();
  c.translate(Math.round(f.x),Math.round(f.y+28));c.rotate(f.hitAngle||0);
- c.globalAlpha*=(1-age)**2;
- c.strokeStyle=age<.35?'#fff3ce':'#d4b775';c.lineWidth=age<.35?2:1;
- for(const side of [-1,1]){c.beginPath();c.moveTo(-3,side*2);c.lineTo(5+age*12,side*(2+age*3));c.lineTo(9+age*12,side*(3+age*5));c.stroke();}
- if(!reduced){c.fillStyle='#d4b775';for(let i=0;i<4;i++)c.fillRect(Math.round(4+age*(9+i*3)),Math.round((i%2?1:-1)*(4+age*i*3)),2,1);}
+ c.globalAlpha*=(1-age)**1.2;
+ const shard=(x,y,a,length,width,color)=>{c.save();c.translate(x,y);c.rotate(a);c.fillStyle=color;c.beginPath();c.moveTo(-length*.3,0);c.lineTo(length*.35,-width);c.lineTo(length,0);c.lineTo(length*.35,width);c.closePath();c.fill();c.restore();};
+ if(seconds<.055){shard(0,0,0,reduced?16:23,reduced?3:5,'#fff3ce');if(!reduced)shard(0,0,Math.PI/2,9,2,'#fff3ce');}
+ const spread=1-(1-age)**3,count=reduced?2:6;
+ for(let i=0;i<count;i++){const a=(i-(count-1)/2)*.22,r=4+spread*(14+i*2);shard(Math.cos(a)*r,Math.sin(a)*r,a,(reduced?7:12)*(1-age)+1,reduced?1:2,seconds<.075?'#ffe1a0':'#c99b57');}
  c.restore();
 }
 
 // Original Canvas geometry: narrow tapered ribbon, no particle simulation.
-export function drawSlashRibbon(c,radius,progress,{start=-1.2,end=1.2,color='#6caade',reduced=false}={}){
+export function drawSlashRibbon(c,radius,progress,{start=-1.2,end=1.2,color='#6caade',reduced=false,heavy=false}={}){
  const p=Math.max(0,Math.min(1,progress)),sweep=end-start,head=start+sweep*p,tail=start+sweep*Math.max(0,p-.55);
  if(head<=tail)return;
  c.save();c.globalAlpha*=Math.min(1,(1-p)*4);
@@ -51,7 +52,7 @@ export function drawSlashRibbon(c,radius,progress,{start=-1.2,end=1.2,color='#6c
    c.fillStyle=light&&i>10?'#edfbff':color;c.beginPath();c.moveTo(Math.cos(a)*r,Math.sin(a)*r);c.lineTo(Math.cos(b)*r,Math.sin(b)*r);c.lineTo(Math.cos(b)*(r-w),Math.sin(b)*(r-w));c.lineTo(Math.cos(a)*(r-w),Math.sin(a)*(r-w));c.closePath();c.fill();
   }
  };
- ribbon(radius,reduced?3:6,true);
+ ribbon(radius,Math.min(radius*.35,heavy?(reduced?6:14):(reduced?3:6)),true);
  if(!reduced){c.globalAlpha*=.28;ribbon(radius-7,2,false);}
  c.restore();
 }

@@ -35,7 +35,7 @@ export const assetFiles={
   "commander-phase2-reference-atlas.png"
  ],
  "companion-roll-art": [
-  "companions-roll-v1.png"
+  "companions-roll-v1.png","hero-draw-dash-v2.png"
  ],
  "demon-archer-sprite": [
   "demon-archer-reference-atlas.png"
@@ -197,7 +197,7 @@ export const assetFiles={
   "warden-horns-blood-atlas.png"
  ],
  "warden-walk": [
-  "warden-walk-atlas.png"
+  "warden-walk-atlas.png","warden-walk-v2.png"
  ],
  "xp-shards": [
   "xp-shards-atlas-v1.png"

@@ -32,11 +32,11 @@ test('per-tier cap bundles value without losing XP or consuming RNG',()=>{
 test('save rejects duplicated drops, altered values, invalid tiers and missing ledger',()=>{
  for(const corrupt of [r=>r.xpDrops.push({...r.xpDrops[0]}),r=>r.xpDrops[0].value++,r=>r.xpDrops[0].tier=2,r=>delete r.xpCollectedTotal]){const {s,r}=setup();dropXp(s,r,{x:700,y:270},12);corrupt(r);assert.throws(()=>encodeSave(s));}
 });
-test('summons and descent kills create no new experience shards',()=>{
- for(const returning of [false,true]){const {s,r}=setup();s.key=returning;r.enemies=[{id:0,type:'chaser',x:700,y:270,hp:0,max:100,...(!returning?{summoned:true}: {})}];stepRun(s,.01);assert.equal(remaining(r),0);assert.equal(s.player.xp,0);}
+test('summons remain excluded while descent kills create experience shards',()=>{
+ for(const returning of [false,true]){const {s,r}=setup();s.key=returning;r.enemies=[{id:0,type:'chaser',x:700,y:270,hp:0,max:100,...(!returning?{summoned:true}: {})}];stepRun(s,.01);assert.equal(remaining(r),returning?12:0);assert.equal(s.player.xp,0);}
 });
-test('normal boss completion drops exactly 45 once, not on every following tick',()=>{
- const {s}=setup();s.floor=1;s.room=s.floors[1].findIndex(r=>r.type==='boss');const r=currentRoom(s);r.obstacles=[];r.enemies=[{id:0,type:'boss',x:700,y:270,hp:0,max:100,variant:'warden'}];s.player.x=150;s.player.y=300;stepRun(s,.01);assert.equal(remaining(r),45);assert.equal(s.player.xp,0);assert.equal(r.used,true);stepRun(s,.01);assert.equal(remaining(r),45);
+test('normal boss completion drops exactly 180 once, not on every following tick',()=>{
+ const {s}=setup();s.floor=1;s.room=s.floors[1].findIndex(r=>r.type==='boss');const r=currentRoom(s);r.obstacles=[];r.enemies=[{id:0,type:'boss',x:700,y:270,hp:0,max:100,variant:'warden'}];s.player.x=150;s.player.y=300;stepRun(s,.01);assert.equal(remaining(r),180);assert.equal(s.player.xp,0);assert.equal(r.used,true);stepRun(s,.01);assert.equal(remaining(r),180);
 });
 
 test('elite and boss presentation split existing XP while preserving value, RNG and bounds',()=>{
@@ -46,7 +46,7 @@ test('elite and boss presentation split existing XP while preserving value, RNG 
   assert.ok(r.xpDrops.length<=192);assert.ok(r.xpDrops.every(d=>d.burst===kind&&d.burstOrder>=0&&d.burstOrder<192));
   assert.equal(parseSave(encodeSave(s)).floors[0][0].xpDroppedTotal,amount);
  }
- const {s,r}=setup();dropXp(s,r,{x:700,y:270},45,'boss');assert.deepEqual(r.xpDrops.map(d=>d.tier),[9,9,9,9,3,3,1,1,1]);
+ const {s,r}=setup();dropXp(s,r,{x:700,y:270},45,'boss');assert.equal(remaining(r),45);assert.ok(r.xpDrops.length<=64);
  const {s:a,r:b}=setup();dropXp(a,b,{x:700,y:270,elite:'guardian'},12);assert.deepEqual(b.xpDrops.map(d=>d.tier),[9,1,1,1]);
 });
 
@@ -58,10 +58,10 @@ test('burst metadata roundtrips, legacy drops still load, malformed profiles are
  }
 });
 
-test('broader burst respects walls, retains .18s pickup and bundles without replay events',()=>{
+test('boss burst respects walls, waits .6s before pickup and bundles without replay events',()=>{
  const {s,r}=setup(),origin={x:700,y:270};r.obstacles=[{x:710,y:200,w:20,h:180,type:'wall'}];dropXp(s,r,origin,45,'boss');
  for(const d of r.xpDrops){assert.equal(blocked(d.x,d.y,6,r.obstacles),false);assert.equal(segmentBlocked(origin,d,r.obstacles,6),false);}
- s.player.x=r.xpDrops[0].x;s.player.y=r.xpDrops[0].y;s.elapsed=.179;assert.equal(collectXp(s,r,1),0);s.elapsed=.18;assert.ok(collectXp(s,r,1)>0);
+ s.player.x=r.xpDrops[0].x;s.player.y=r.xpDrops[0].y;s.elapsed=.599;assert.equal(collectXp(s,r,1),0);s.elapsed=.6;assert.ok(collectXp(s,r,1)>0);
  const {s:a,r:b}=setup();for(const tier of [9,3,1])for(let i=0;i<64;i++)dropXp(a,b,origin,tier);dropXp(a,b,origin,9000);const random=a.randomState;
  assert.equal(dropXp(a,b,origin,45,'boss'),undefined);assert.equal(remaining(b),64*13+9000+45);assert.equal(a.randomState,random);assert.doesNotThrow(()=>encodeSave(a));
 });

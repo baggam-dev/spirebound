@@ -1,3 +1,4 @@
+import {startBossClear,resetBossClear,advanceBossClear,drawBossClear} from '../rendering/boss-clear.js';
 import {drawHighFloorGround} from '../rendering/high-floor-vfx.js';
 import {drawEnemyMeleeGround,applyEnemyMeleePose,drawMeleeThreatContours} from '../rendering/enemy-melee-art.js';
 import {drawMonsterStatusEffects} from '../rendering/monster-status-effects.js';
@@ -250,7 +251,7 @@ async function loadCurrentFloor(){
   $('overlay').firstElementChild.classList.add('floor-loading-panel');button('loadingReload',()=>location.reload());button('loadingBack',title);
  }finally{if(floorLoading===task)floorLoading=null;}
 }
-function resetTransient({loaded=false}={}){escapeScene.cancel();renderEscape=null;escapeAssets=null;floorLoading=null;journey.cancel();descentFrame=null;clearEncounterTransitions();entrance.cancel();renderEntrance=null;entranceAssets=null;bossDialogue=s?createBossDialogue(s,{loaded}):null;relicBanner.clear();resetWardenPresentation(s?.floors?.flat()||[]);resetPrismPresentation(s?.floors?.flat()||[]);resetRemainingBossPresentation(s?.floors?.flat()||[]);resetOrdinaryPresentation(s?.floors?.flat()||[]);clearMordoPresentation();clearVelkarPresentation();clearDemonPresentation();fx=[];bullets=s?.projectiles||[];saveTick=0;accumulator=0;last=performance.now();}
+function resetTransient({loaded=false}={}){resetBossClear(s);escapeScene.cancel();renderEscape=null;escapeAssets=null;floorLoading=null;journey.cancel();descentFrame=null;clearEncounterTransitions();entrance.cancel();renderEntrance=null;entranceAssets=null;bossDialogue=s?createBossDialogue(s,{loaded}):null;relicBanner.clear();resetWardenPresentation(s?.floors?.flat()||[]);resetPrismPresentation(s?.floors?.flat()||[]);resetRemainingBossPresentation(s?.floors?.flat()||[]);resetOrdinaryPresentation(s?.floors?.flat()||[]);clearMordoPresentation();clearVelkarPresentation();clearDemonPresentation();fx=[];bullets=s?.projectiles||[];saveTick=0;accumulator=0;last=performance.now();}
 function title(){
  stop('title');lease.release();s=null;resetTransient();$('route').hidden=true;$('skill').hidden=true;$('utility').hidden=true;$('interact').hidden=true;
  $('floor').textContent='잊힌 탑의 입구';$('phase').textContent='THE FORSAKEN SPIRE';$('health').textContent='♥♥♥♥♥';$('level').textContent='LV 1';$('timer').textContent='00:00';$('objective').textContent='탑에 들어가 탈출 열쇠를 찾으세요.';
@@ -378,6 +379,7 @@ function update(dt){if(!s||paused)return;if(!floorAssetsLoaded(s.floor,floorAsse
   else startRemainingBosses(room(),{partsOnly:true});
   if(!save()){pause('전투 시작을 저장하지 못했습니다. 저장 상태를 확인한 뒤 계속하세요.');return;}
  }
+ if(result.events.some(e=>['stairs','key','practiceWon'].includes(e))){const death=result.effects.findLast(f=>f.enemyFeedback==='death'&&f.boss);startBossClear(s,room(),death);}
  if(s.practice){s.player.xp=0;s.pendingLevels=0;s.levelQueue=[];if(practiceCleared(s)&&!result.events.includes('dead')){finish(true);return;}}
  if(result.events.includes('dead')){finish(false);return;}
  const messages={demonPhase:room().demon?.phase===2?'대악마가 눈·코·입으로 갈라집니다.':'상단 벽이 무너지고 대악마 본체가 나타납니다.',returnUnlock:'봉인 해제 · 다시 이동할 수 있습니다.',gateReward:'정예 관문 돌파 · 계단에서 유물을 선택하세요.',eliteReward:'정예 처치 · 물약 1개 획득',trialReward:'시련 완료 · 제단에서 보상을 선택하세요.',shield:'보호막이 공격을 막았습니다.',potion:'회복 물약 획득',key:'열쇠 획득! 1층 출구로 귀환하세요.',finalWave:'악마 잔영이 출구를 습격합니다!',finalReady:'마지막 봉인 파괴 · 지금 탈출하세요!',stairs:'중간 보스 격파! 위층 계단이 열렸습니다.'};for(const event of result.events)if(messages[event])toast(messages[event]);
@@ -448,7 +450,8 @@ function frame(now){const elapsed=(now-last)/1000,presentation=mode.startsWith('
  if(mode==='entrance'&&renderEntrance&&!document.hidden){if(elapsed>1)pause('화면 응답이 지연되어 멈췄습니다.');else{const before=entrance.time(s),done=entrance.advance(s,elapsed),after=entrance.time(s);for(const [at,cue] of [[1,'gateOpen'],[1.35,'gateStep'],[1.9,'gateStep'],[3.12,'gateClose']])if(before<at&&after>=at)sound.play(cue);renderEntrance(after);if(done)finishEntrance();}}
  if(toastTime>0){toastTime-=Math.min(elapsed,.25);if(toastTime<=0)$('notice').textContent='';}
  if(!paused&&!presentation){if(elapsed>1){pause('화면 응답이 지연되어 자동으로 멈췄습니다.');}else{accumulator+=elapsed;while(accumulator>=1/60&&!paused){update(1/60);accumulator=Math.max(0,accumulator-1/60);}}}
- draw();drawJourney();if(s?.status==='playing'&&mode==='play')bossDialogue?.draw(ctx,{compact:touchControls.matches});renderTitleScene?.(now);requestAnimationFrame(frame);
+ const clearActive=!document.hidden&&elapsed<=1&&(['play','level','main','evolution','utility','relic','journey-return'].includes(mode)||mode==='result'&&!!s?.practice);advanceBossClear(s,s?room():null,elapsed,clearActive);
+ draw();drawJourney();if(clearActive)drawBossClear(ctx,s,s?room():null,{reduced:sound.settings.reducedEffects});if(s?.status==='playing'&&mode==='play')bossDialogue?.draw(ctx,{compact:touchControls.matches});renderTitleScene?.(now);requestAnimationFrame(frame);
 }
 title();requestAnimationFrame(frame);
 

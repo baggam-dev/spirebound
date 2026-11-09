@@ -15,12 +15,12 @@ export function enterWardenPresentation(room,{practice=false,returning=false}={}
 export function notifyWardenHits(enemies,effects=[]){
  for(const e of enemies){
   if(!isWarden(e)||e.hp<=0)continue;
-  const f=effects.find(f=>f.enemyFeedback==='hit'&&f.enemyId===e.id);if(!f)continue;
+  const f=effects.find(f=>f.enemyFeedback==='hit'&&f.enemyId===e.id&&f.wardenDirect);if(!f)continue;
   let v=actors.get(e);if(!v){v={intro:null,hit:null,cooldown:0};actors.set(e,v);}
-  if(v.cooldown>0)continue;v.cooldown=.24;v.intro=null;
+  if(v.cooldown>0)continue;v.intro=null;
   if(priority(e)){v.hit=null;continue;}
-  const heavy=f.beforeRatio-f.afterRatio>=.015;
-  v.hit={pose:heavy?'heavy':'light',age:0,duration:heavy?.16:.10};
+  const heavy=f.beforeRatio-f.afterRatio>=.015;if(!heavy)continue;
+  v.cooldown=.6;v.hit={pose:'heavy',age:0,duration:.09};
  }
 }
 export function tickWardenPresentation(enemies,dt,effects=[]){
@@ -30,8 +30,8 @@ export function tickWardenPresentation(enemies,dt,effects=[]){
   if(v.hit){v.hit.age+=dt;if(v.hit.age>=v.hit.duration||priority(e)||e.hp<=0)v.hit=null;}
  }notifyWardenHits(enemies,effects);
 }
-export function wardenPresentationPose(e,{reduced=false,staticPose=false}={}){
+export function wardenPresentationPose(e,{reduced=false,staticPose=false,moving=false}={}){
  if(!isWarden(e)||e.hp<=0||reduced||staticPose||priority(e))return null;
  const v=actors.get(e);if(!v)return null;
- return v.intro!==null?(v.intro<.35?'arrival':'ready'):v.hit?.pose??null;
+ return v.intro!==null?(v.intro<.35?'arrival':'ready'):moving?null:v.hit?.pose??null;
 }

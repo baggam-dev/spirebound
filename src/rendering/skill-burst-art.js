@@ -16,12 +16,13 @@ export function drawElementCrown(c,kind,age,level=1){
 }
 export function drawPlayerBlast(c,f,reduced=false){
  if(f.playerBlast!=='fire')return false;
- const age=1-Math.max(0,Math.min(1,f.t/(f.duration||.22))),radius=Math.max(0,f.r||0);
+ const duration=f.duration||.22,age=1-Math.max(0,Math.min(1,f.t/duration)),radius=Math.max(0,f.r||0);
  if(!(f.t>0)||!radius)return true;
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(f.x),Math.round(f.y));
- c.beginPath();c.arc(0,0,radius,0,Math.PI*2);c.clip();const alpha=c.globalAlpha,spread=1-(1-age)**2;
- // Open flame petals expose the floor between lobes, rather than an opaque disk.
- for(let i=0;i<(reduced?4:8);i++){const a=i*Math.PI*2/(reduced?4:8);c.save();c.rotate(a);const reach=radius*(.2+.68*spread),inner=reach*(.32+age*.25);c.globalAlpha=alpha*(1-age)**1.5*(reduced?.24:.38);polygon(c,[[inner,-2],[reach*.72,-4],[reach,0],[reach*.7,3],[inner,2]],'#f8a15b');if(!reduced&&age<.55){c.globalAlpha*=.7;box(c,reach*.78,0,3,2,'#fbe0a0');}c.restore();}
- if(!reduced&&age<.6)drawElementCrown(c,'fire',age,3);c.restore();return true;
+ c.beginPath();c.arc(0,0,radius,0,Math.PI*2);c.clip();const alpha=c.globalAlpha;
+ if(age*duration<.05){c.globalAlpha=alpha*(1-age*duration/.05)*.85;box(c,-5,-2,10,4,'#fff0b5');box(c,-2,-5,4,10,'#fff0b5');}
+ // A short local core followed by separated flame wedges; the center clears fast.
+ for(let i=0;i<(reduced?4:8);i++){const a=i*Math.PI*2/(reduced?4:8);c.save();c.rotate(a);const reach=radius*(.16+.7*(1-(1-age)**3)),width=(reduced?3:7)*(1-age)+1,inner=Math.max(5,reach-(reduced?12:24)*(1-age));c.globalAlpha=alpha*(1-age)**1.3*(reduced?.65:.85);polygon(c,[[inner,0],[reach*.8,-width],[reach,0],[reach*.8,width]],'#f8a15b');if(!reduced&&age<.55){c.globalAlpha*=.8;box(c,reach*.8,-1,4,2,'#fff0b5');}c.restore();}
+ c.restore();return true;
 }
 export function limitPlayerBlasts(effects,max=12){let skip=Math.max(0,effects.filter(f=>f.playerBlast).length-max);return effects.filter(f=>!f.playerBlast||skip--<=0);}

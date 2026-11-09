@@ -7,7 +7,7 @@ import {currentRoom} from '../../src/game/engine.js';
 import {stepRun} from '../../src/game/simulation.js';
 const actor=()=>({id:7,type:'boss',hp:100,max:100,x:480,y:180,cd:2});
 const room=()=>({type:'boss',enemies:[actor()]});
-const hit=(loss=.01)=>[{enemyFeedback:'hit',enemyId:7,beforeRatio:1,afterRatio:1-loss}];
+const hit=(loss=.01)=>[{enemyFeedback:'hit',wardenDirect:true,enemyId:7,beforeRatio:1,afterRatio:1-loss}];
 test('Warden first-entry arrival is update-timed and does not replay after visit or load',()=>{
  const r=room(),e=r.enemies[0];resetWardenPresentation([r]);r.seen=true;const saved=JSON.stringify(r);enterWardenPresentation(r);
  for(let i=0;i<8;i++)assert.equal(wardenPresentationPose(e),'arrival');tickWardenPresentation([e],.4);assert.equal(wardenPresentationPose(e),'ready');tickWardenPresentation([e],.41);assert.equal(wardenPresentationPose(e),null);assert.equal(JSON.stringify(r),saved);
@@ -16,10 +16,12 @@ test('Warden first-entry arrival is update-timed and does not replay after visit
  for(const flags of [{practice:true},{returning:true}]){const other=room();resetWardenPresentation();enterWardenPresentation(other,flags);assert.equal(wardenPresentationPose(other.enemies[0]),null);}
  const used=room();used.used=true;resetWardenPresentation();enterWardenPresentation(used);assert.equal(wardenPresentationPose(used.enemies[0]),null);
 });
-test('Warden weak and strong hits respect cooldown, static/reduced and every combat pose priority',()=>{
- resetWardenPresentation();const e=actor(),saved=JSON.stringify(e);notifyWardenHits([e],hit());assert.equal(wardenPresentationPose(e),'light');notifyWardenHits([e],hit(.04));assert.equal(wardenPresentationPose(e),'light');
- tickWardenPresentation([e],.11);assert.equal(wardenPresentationPose(e),null);tickWardenPresentation([e],.14);notifyWardenHits([e],hit(.04));assert.equal(wardenPresentationPose(e),'heavy');
- assert.equal(wardenPresentationPose(e,{reduced:true}),null);assert.equal(wardenPresentationPose(e,{staticPose:true}),null);tickWardenPresentation([e],.17);assert.equal(wardenPresentationPose(e),null);assert.equal(JSON.stringify(e),saved);
+test('Warden light and periodic hits keep walking while heavy direct hits respect longer cooldown and attack priority',()=>{
+ resetWardenPresentation();const e=actor(),saved=JSON.stringify(e);notifyWardenHits([e],hit());assert.equal(wardenPresentationPose(e),null);
+ notifyWardenHits([e],hit(.04).map(f=>({...f,wardenDirect:false})));assert.equal(wardenPresentationPose(e),null);
+ notifyWardenHits([e],hit(.04));assert.equal(wardenPresentationPose(e),'heavy');assert.equal(wardenPresentationPose(e,{moving:true}),null);
+ assert.equal(wardenPresentationPose(e,{reduced:true}),null);assert.equal(wardenPresentationPose(e,{staticPose:true}),null);
+ tickWardenPresentation([e],.1);notifyWardenHits([e],hit(.04));assert.equal(wardenPresentationPose(e),null);tickWardenPresentation([e],.51);notifyWardenHits([e],hit(.04));assert.equal(wardenPresentationPose(e),'heavy');tickWardenPresentation([e],.1);assert.equal(wardenPresentationPose(e),null);assert.equal(JSON.stringify(e),saved);
  for(const flags of [{attackPhase:'warning'},{attackPhase:'leap'},{attackPhase:'firing'},{attackPhase:'recover'},{opening:1},{frozen:1},{kneel:1}]){
   const r=room(),a=r.enemies[0];resetWardenPresentation();enterWardenPresentation(r);Object.assign(a,flags);const snapshot=JSON.stringify(a);assert.equal(wardenPresentationPose(a),null);tickWardenPresentation([a],.01,hit(.04));assert.equal(JSON.stringify(a),snapshot);for(const key of Object.keys(flags))delete a[key];assert.equal(wardenPresentationPose(a),null);
  }

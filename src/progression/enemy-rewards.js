@@ -1,4 +1,5 @@
 // Classification only: no RNG, mutation, collection or extra reward event.
+export const bossXpReward=floor=>({1:180,3:240,5:300,7:360,8:420,9:480})[floor]??180;
 export function enemyXpReward(e){
  if(e.summoned||e.type==='boss')return 0;
  // Tutorial and other explicitly authored awards retain their exact total.

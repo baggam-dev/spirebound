@@ -26,7 +26,7 @@ export function drawWardenSprite(c,e,p,attack,red=false,options={}){
  if(!options.staticPose)rememberWardenFacing(e,face);
  const f=frames[['windup','air'].includes(attack.stage)?1:0];c.save();c.translate(0,29);c.scale(1.1,1.1);c.translate(0,-29);c.scale(face,1);c.imageSmoothingEnabled=false;
  c.filter='saturate(.88)';
- const presented=options.awakening>0?drawWardenPose(c,'rest'):options.rising>0?drawWardenRising(c,options.rising):attack.stage==='idle'&&drawWardenPresentation(c,e,options),recovering=!presented&&attack.stage==='recover'&&drawWardenRecover(c,e),walking=!presented&&!recovering&&attack.stage==='idle'&&drawWardenWalk(c,p);
+ const presented=options.awakening>0?drawWardenPose(c,'rest'):options.rising>0?drawWardenRising(c,options.rising):attack.stage==='idle'&&drawWardenPresentation(c,e,{...options,moving:p.moving}),recovering=!presented&&attack.stage==='recover'&&drawWardenRecover(c,e),walking=!presented&&!recovering&&attack.stage==='idle'&&drawWardenWalk(c,p);
  if(recovering){const progress=wardenRecoverProgress(e);if(progress>.8){c.save();c.globalAlpha*=(progress-.8)/.2;if(!drawWardenMotion(c,{...p,moving:false},{stage:'idle'}))c.drawImage(frames[0].canvas,Math.round(frames[0].x),Math.round(frames[0].y));c.restore();}}
  else if(!presented&&!walking&&!drawWardenMotion(c,p,attack))c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));
  if(red){c.strokeStyle='#ee8791';c.lineWidth=2;c.beginPath();c.moveTo(-22,20);c.lineTo(-27,13);c.moveTo(22,20);c.lineTo(27,13);c.stroke();}c.restore();return true;

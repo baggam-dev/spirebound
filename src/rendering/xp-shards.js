@@ -1,4 +1,5 @@
 import {DeferredImage} from './asset-requests.js';
+import {BOSS_XP_FLIGHT} from '../progression/xp-drops.js';
 const SIZE={1:4,3:6,9:10},COLOR={1:'#e1f9ff',3:'#94e7ff',9:'#d2b8ff'};
 const frames=[];let loaded=false;
 export const xpShardsReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
@@ -19,9 +20,10 @@ function shard(c,tier,x,y){
 export function drawXpDrops(c,s,r,reduced=false){
  if(!r.xpDrops?.length)return;c.save();c.imageSmoothingEnabled=false;
  for(const d of r.xpDrops){
-  const age=Math.max(0,s.elapsed-d.born),boss=d.burst==='boss',elite=d.burst==='elite',delay=boss&&!reduced?(d.burstOrder%3)*.025:0;
-  const q=d.attract?1:Math.min(1,Math.max(0,age-delay)/(reduced ? .18 : boss ? .34 : elite ? .24 : .18));
-  const x=d.fromX+(d.x-d.fromX)*q,y=d.fromY+(d.y-d.fromY)*q-(reduced?0:Math.sin(q*Math.PI)*(boss?14:elite?10:7));
+  const age=Math.max(0,s.elapsed-d.born),boss=d.burst==='boss',elite=d.burst==='elite';
+  const progress=Math.min(1,age/(boss?BOSS_XP_FLIGHT:reduced?.18:elite?.24:.18)),q=d.attract?1:boss?1-(1-progress)**2:progress;
+  const bounce=boss&&progress>.8?Math.sin((progress-.8)/.2*Math.PI)*2:0;
+  const x=d.fromX+(d.x-d.fromX)*q,y=d.fromY+(d.y-d.fromY)*q-(reduced?0:Math.sin(progress*Math.PI)*(boss?25:elite?10:7)+bounce);
   if(!reduced){
    c.fillStyle=COLOR[d.tier];
    if(d.attract){const angle=Math.atan2(s.player.y-d.y,s.player.x-d.x);for(let i=1;i<=3;i++){c.globalAlpha=.32/i;c.fillRect(Math.round(x-Math.cos(angle)*i*3),Math.round(y-Math.sin(angle)*i*3),1,1);}}
