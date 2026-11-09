@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spirebound 모션·클리어 시안</title></head><body><div id="cg-motion-package" data-inline="false">
+  <div class="viz-controls">
+    <label class="form-label">비교 대상<select class="form-select" data-scene><option value="hero">발도 대시</option><option value="warden">파수꾼 보행</option><option value="clear">보스 클리어·경험치 분출</option></select></label>
+    <button class="btn btn-primary" type="button" data-play>재생</button>
+    <label class="form-label">속도<select class="form-select" data-speed><option value="1">실제 속도</option><option value="0.25">¼ 속도</option></select></label>
+    <label class="form-check"><input type="checkbox" class="form-check-input" data-reduced><span class="form-check-label">효과 줄이기</span></label>
+  </div>
+  <div class="cg-labels text-small"><span>현재 구조 참고</span><span>개선 제안</span></div>
+  <div class="cg-pair"><canvas width="480" height="300" data-side="before" role="img" aria-label="현재 모션과 보상 연출 구조 참고"></canvas><canvas width="480" height="300" data-side="after" role="img" aria-label="새 발도 보행 또는 전역 클리어 연출 제안"></canvas></div>
+  <label class="form-label">진행 <output class="tabular-nums" data-time>0.10초</output><input class="form-range" type="range" min="0" max="1700" step="1" value="100" data-seek aria-label="움직임 비교 시간"></label>
+  <div class="text-small" data-detail role="status" aria-live="polite">디자인 시안 · 게임 미반영</div>
+  <style>
+    #cg-motion-package{display:grid;gap:calc(var(--font-size-base,16px)*.75);color:var(--foreground);font-family:system-ui,sans-serif}
+    #cg-motion-package .cg-labels,#cg-motion-package .cg-pair{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--font-size-base,16px)*.5);text-align:center}
+    #cg-motion-package canvas{width:100%;height:auto;display:block;image-rendering:pixelated}
+
+  </style>
+  <script>
+  (()=>{
+    const root=document.getElementById('cg-motion-package'),inline=root.dataset.inline==='true';
+    const scene=root.querySelector('[data-scene]'),play=root.querySelector('[data-play]'),speed=root.querySelector('[data-speed]'),reduced=root.querySelector('[data-reduced]'),seek=root.querySelector('[data-seek]'),clock=root.querySelector('[data-time]'),detail=root.querySelector('[data-detail]'),canvases=[...root.querySelectorAll('canvas')];
+    if(inline){for(const o of [...scene.options])if(o.value!=='clear')o.remove();scene.value='clear';}
+    const images={};
+    let t=.1,playing=false,last=0,handle=0;
+    const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n));
+    function store(){window.openai?.setWidgetState?.({modelContent:{scene:scene.value,speed:Number(speed.value),reduced:reduced.checked,time:t},privateContent:null})?.catch(()=>{});}
+    function restore(s){if(!s||typeof s!=='object')return;if(!inline&&['hero','warden','clear'].includes(s.scene))scene.value=s.scene;speed.value=s.speed===.25?'0.25':'1';reduced.checked=!!s.reduced;t=Number.isFinite(s.time)?clamp(s.time,0,1.7):.1;}
+    restore(window.openai?.widgetState?.modelContent);
+    function stop(){playing=false;cancelAnimationFrame(handle);play.textContent='다시 재생';}
+    function img(key,src){const im=new Image();images[key]=im;im.onload=()=>draw();im.onerror=()=>{detail.textContent='이미지 준비 실패 · 같은 폴더의 원본이 필요합니다';};im.src=src;}
+    if(!inline){
+      img('hero','hero-draw-dash-v2.png');img('warden','warden-walk-v1.png');
+      img('oldHero','../../../assets/images/hero-reference-atlas.png');img('oldWarden','../../../assets/images/warden-walk-atlas.png');
+    }
+    function line(c,points,color,width=1){c.strokeStyle=color;c.lineWidth=width;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.stroke();}
+    function floor(c){c.fillStyle='#1a1e25';c.fillRect(0,0,480,300);c.strokeStyle='#282d35';c.lineWidth=1;for(let y=0;y<300;y+=25)for(let x=0;x<480;x+=25)c.strokeRect(x,y,25,25);}
+    function cell(c,image,index,cols,rows,x,y,scale,anchorX=.5,feet=.9){if(!image?.complete||!image.naturalWidth)return;const w=image.naturalWidth/cols,h=image.naturalHeight/rows;c.drawImage(image,(index%cols)*w,Math.floor(index/cols)*h,w,h,x-w*anchorX*scale,y-h*feet*scale,w*scale,h*scale);}
+    function swordArc(c,x,y,p,quiet){if(p<0||p>=1)return;c.save();c.translate(x,y);c.globalAlpha=clamp((1-p)*4);const a=-1.2+p*2.4,r=33;c.strokeStyle='#bfe9ff';c.lineWidth=quiet?3:7;c.beginPath();c.arc(0,0,r,a-.6,a);c.stroke();c.restore();}
+    function hero(c,after){const q=clamp(t/.28),x=150+q*145,y=210;
+      if(after){const index=q<.15?0:q<.4?1:q<.8?2:3;cell(c,images.hero,index,4,1,x,y,.155,.45,.82);}
+      else{const im=images.oldHero;if(im?.complete&&im.naturalWidth)c.drawImage(im,1601,70,468,593,x-(1785-1601)*65/546,y-589*65/546,468*65/546,593*65/546);}
+      if(t<.28)swordArc(c,x+5,y-18,q,reduced.checked);
+      c.fillStyle='#d8ccb2';c.font='13px system-ui';c.textAlign='center';c.fillText(after?'준비 → 발도 → 이동 → 회수':'활 발사 자세 재사용',240,270);
+    }
+    function warden(c,after){const phase=clamp(t/1.6)*2,step=phase%1,x=140+clamp(t/1.6)*150,y=236;
+      if(after)cell(c,images.warden,Math.floor(step*8)%8,4,2,x,y,.245,.57,.918);
+      else{const im=images.oldWarden,frames=[[0,35,627,580,405,601],[650,35,604,580,1000,601],[0,632,627,595,405,1205],[650,640,604,587,1000,1205]],f=frames[Math.floor(step*4)%4],scale=92.4/(f[5]-f[1]);if(im?.complete&&im.naturalWidth)c.drawImage(im,f[0],f[1],f[2],f[3],x+(f[0]-f[4])*scale,y-(f[5]-f[1])*scale,f[2]*scale,f[3]*scale);}
+      c.fillStyle='#d8ccb2';c.font='13px system-ui';c.textAlign='center';c.fillText(after?'상체 고정 · 발 교대 8자세':'기존 전신 4자세',240,275);
+    }
+    function shard(c,x,y,size,color,angle=0){c.save();c.translate(Math.round(x),Math.round(y));c.rotate(angle);c.fillStyle=color;c.beginPath();c.moveTo(0,-size*1.5);c.lineTo(size,0);c.lineTo(0,size);c.lineTo(-size,0);c.closePath();c.fill();c.restore();}
+    function clear(c,after){const quiet=reduced.checked,origin={x:240,y:140},player={x:240,y:225};
+      c.fillStyle='#8797aa';c.fillRect(player.x-4,player.y-14,8,14);c.fillStyle='#c5a17e';c.fillRect(player.x-3,player.y-20,6,6);
+      if(after&&t<1.5){
+        const wave=clamp(t/.55),fade=clamp((1.5-t)/.45);
+        c.save();c.globalAlpha=fade*(quiet?.27:.6);c.strokeStyle='#f1d398';c.lineWidth=quiet?2:4;c.beginPath();c.ellipse(origin.x,origin.y,10+wave*300,5+wave*190,0,0,Math.PI*2);c.stroke();
+        if(!quiet){
+          const n=24;for(let i=0;i<n;i++){const a=i*Math.PI*2/n,reach=25+wave*310,x=origin.x+Math.cos(a)*reach,y=origin.y+Math.sin(a)*reach*.7;c.fillStyle=i%3?'#d4ad67':'#fff0c9';c.fillRect(Math.round(x),Math.round(y),2,4);}
+          if(t>.15&&t<1.15){const p=(t-.15),alpha=Math.sin(Math.min(1,p)*Math.PI);c.globalAlpha=alpha*.35;c.fillStyle='#e4c888';for(const side of [-1,1]){c.fillRect(side<0?8:468,15,4,270);for(let i=0;i<5;i++)c.fillRect(side<0?14+i*3:464-i*3,45+i*37,2,10);}}
+        }
+        c.globalAlpha=clamp(t/.12)*clamp((1.2-t)/.25);c.fillStyle='#fff0ce';c.font='500 22px system-ui';c.textAlign='center';c.fillText('보스 격파',240,65);c.restore();
+      }else if(!after&&t<.45){c.save();c.globalAlpha=(1-t/.45)*.6;c.strokeStyle='#e1c48d';c.beginPath();c.ellipse(240,140,24+t/.45*30,9+t/.45*10,0,0,Math.PI*2);c.stroke();c.restore();}
+      const n=after?(quiet?18:42):9;
+      for(let i=0;i<n;i++){
+        const a=i*2.3999632297,r=after?80+i%7*14:20+i%5*8,dy=after?1:.7;
+        const end={x:clamp(origin.x+Math.cos(a)*r,15,465),y:clamp(origin.y+Math.sin(a)*r*dy,25,270)};
+        let x,y,flight=clamp(t/(after?.55:.34));
+        if(t<(after?.6:.18)){const ease=1-(1-flight)**2;x=origin.x+(end.x-origin.x)*ease;y=origin.y+(end.y-origin.y)*ease-(quiet?0:Math.sin(flight*Math.PI)*(after?25:14));}
+        else{const pull=clamp((t-(after?.6:.18))/(after?.65:.28)),ease=pull*pull;x=end.x+(player.x-end.x)*ease;y=end.y+(player.y-8-end.y)*ease;if(pull>=1)continue;}
+        c.globalAlpha=1;shard(c,x,y,i%5?2:3,i%5?'#94e7ff':'#d2b8ff',after?t*2+i:0);
+      }
+      c.fillStyle='#d8ccb2';c.font='13px system-ui';c.textAlign='center';c.fillText(after?'사방 분출 → 짧은 착지 → 회수':'근거리 분출 · 조기 흡입',240,290);
+    }
+    function draw(){clock.textContent=t.toFixed(2)+'초';seek.value=String(Math.round(t*1000));for(const canvas of canvases){const c=canvas.getContext('2d');c.imageSmoothingEnabled=false;floor(c);const after=canvas.dataset.side==='after';if(scene.value==='hero')hero(c,after);else if(scene.value==='warden')warden(c,after);else clear(c,after);}detail.textContent=scene.value==='clear'?'연출 시안 · XP 총량은 45 → 층별 180~480 제안 · 게임 미반영':scene.value==='hero'?'생성 자세 시안 · 실제 대시 시간 0.28초 기준 · 게임 미반영':'생성 보행 시안 · 손·발 정렬과 실제 연속성 미검증 · 게임 미반영';}
+    function tick(now){if(!playing)return;t+=Math.min(.05,(now-last)/1000)*Number(speed.value);last=now;const duration=scene.value==='hero'?.4:1.7;if(t>=duration){t=duration;draw();stop();store();return;}draw();handle=requestAnimationFrame(tick);}
+    play.addEventListener('click',()=>{if(playing){stop();store();return;}t=0;last=performance.now();playing=true;play.textContent='일시정지';draw();handle=requestAnimationFrame(tick);});
+    scene.addEventListener('change',()=>{stop();t=.1;draw();store();});speed.addEventListener('change',store);reduced.addEventListener('change',()=>{draw();store();});seek.addEventListener('input',()=>{stop();t=Number(seek.value)/1000;draw();});seek.addEventListener('change',store);
+    window.addEventListener('openai:set_globals',e=>{stop();restore(e.detail?.globals?.widgetState?.modelContent);draw();});
+    draw();
+  })();
+  </script>
+</div>
+</body></html>
