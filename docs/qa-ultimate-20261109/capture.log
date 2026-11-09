@@ -1,0 +1,7 @@
+case 1280 false
+turret save/reload
+turret restored 13.916666666666663
+case 1280 true
+turret save/reload
+turret restored 13.916666666666663
+{"reports":[{"width":1280,"reduced":false,"art":{"ready":true,"frames":4},"probes":20,"restored":true,"realRadius":true,"pauseStable":true,"turret":{"time":13.916666666666663,"aim":-2.1864162162240066,"bullet":true,"angle":-2.1864162162240066},"loadedTime":13.916666666666663,"rainPulses":1,"saveReload":true},{"width":1280,"reduced":true,"art":{"ready":true,"frames":4},"probes":20,"restored":true,"realRadius":true,"pauseStable":true,"turret":{"time":13.916666666666663,"aim":-2.1864162162240066,"bullet":true,"angle":-2.1864162162240066},"loadedTime":13.916666666666663,"rainPulses":1,"saveReload":true},{"fallback":{"ready":true,"state":{"ready":false,"frames":0},"ink":true}}],"errors":[],"scoreSubmissions":0}

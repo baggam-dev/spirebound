@@ -1,0 +1,15 @@
+{
+  "base": "http://localhost:5173",
+  "reports": [
+    {
+      "width": 1280,
+      "reduced": false,
+      "art": {
+        "ready": true,
+        "frames": 4
+      }
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

@@ -1,0 +1,19 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: rain save
+
+false !== true
+
+    at saveFixture (file:///C:/baggam-dev/spirebound/tools/qa/ultimate-release-qa.mjs:11:106)
+    at async file:///C:/baggam-dev/spirebound/tools/qa/ultimate-release-qa.mjs:37:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

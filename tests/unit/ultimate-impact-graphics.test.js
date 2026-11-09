@@ -5,6 +5,7 @@ import {castUltimate,tickRain} from '../../src/combat/abilities.js';
 import {drawArrowRain,drawCrossbow,drawCrossbowEnding} from '../../src/rendering/ultimate-visuals.js';
 import {drawImpactAccent,drawArrowImpact} from '../../src/rendering/arrow-impact-visuals.js';
 import {crossbowArtReady,crossbowArtState} from '../../src/rendering/crossbow-art.js';
+import {drawPassives,drawUltimateStructures} from '../../src/progression/passives.js';
 function canvas(){
  const calls=[],stack=[],c={globalAlpha:.4,calls};c.save=()=>stack.push(c.globalAlpha);c.restore=()=>{c.globalAlpha=stack.pop();};
  for(const op of ['beginPath','closePath','rect','clip','translate','rotate','moveTo','lineTo','stroke','fill','fillRect','arc','drawImage'])c[op]=(...args)=>{assert.ok(args.every(a=>typeof a!=='number'||Number.isFinite(a)),op);assert.ok(c.globalAlpha>=0&&c.globalAlpha<=.4,op);calls.push({op,args,alpha:c.globalAlpha});};
@@ -33,4 +34,9 @@ test('contact weights preserve frozen effects, pause determinism, incoming opaci
   assert.ok(reduced.calls.some(c=>c.op==='fill'));assert.ok(reduced.calls.length<normal.calls.length);assert.equal(normal.globalAlpha,.4);const paused=canvas();drawImpactAccent(paused,effect);assert.deepEqual(paused.calls,normal.calls);
  }
  const expired=canvas();assert.equal(drawArrowImpact(expired,{arrowImpact:true,x:300,y:200,t:0,duration:.2}),true);assert.equal(expired.calls.length,0);
+});
+test('the hero foreground pass can exclude structures without losing the standalone renderer',()=>{
+ const s=newRun(31),r=currentRoom(s);r.turrets=[{x:480,y:270,time:12,clock:.6,aim:0,build:{}}];
+ const normal=canvas(),foreground=canvas(),structures=canvas();drawPassives(normal,s);drawPassives(foreground,s,false,{structures:false});drawUltimateStructures(structures,s);
+ assert.ok(normal.calls.length>0);assert.equal(foreground.calls.length,0);assert.deepEqual(normal.calls,structures.calls);assert.equal(foreground.globalAlpha,.4);
 });

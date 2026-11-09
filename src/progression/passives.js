@@ -27,8 +27,9 @@ export function tickPassives(s,dt){const r=s.floors[s.floor][s.room],p=s.player;
   if(t.time<=0)retireTurret(r,t);
  }r.turrets=(r.turrets||[]).filter(t=>t.time>0);r.passiveArcs=(r.passiveArcs||[]).map(a=>({...a,time:a.time-dt})).filter(a=>a.time>0);
 }
-export function drawPassives(ctx,s,reduced=false){const r=s.floors[s.floor][s.room],p=s.player;ctx.save();if(r.arrowRain)drawArrowRain(ctx,r.arrowRain,reduced);
- for(const t of r.turrets||[])drawCrossbow(ctx,t,reduced);for(const t of turretEndings(r))drawCrossbowEnding(ctx,t,reduced);
+export function drawUltimateStructures(ctx,s,reduced=false){const r=s.floors[s.floor][s.room];ctx.save();for(const t of r.turrets||[])drawCrossbow(ctx,t,reduced);for(const t of turretEndings(r))drawCrossbowEnding(ctx,t,reduced);ctx.restore();}
+export function drawPassives(ctx,s,reduced=false,{structures=true}={}){const r=s.floors[s.floor][s.room],p=s.player;ctx.save();if(r.arrowRain)drawArrowRain(ctx,r.arrowRain,reduced);
+ if(structures)drawUltimateStructures(ctx,s,reduced);
  if(hasRelic(p,'orbitBlades'))for(let i=0;i<2;i++){const a=s.elapsed*2.5+i*Math.PI;ctx.save();ctx.translate(p.x+Math.cos(a)*65,p.y+Math.sin(a)*65);ctx.rotate(a);ctx.fillStyle='#eaf4ff';ctx.fillRect(-3,-15,6,25);ctx.fillStyle='#c6a35b';ctx.fillRect(-7,8,14,4);ctx.restore();}
  for(const [i,id] of ['sunFairy','snowFairy','stormFairy','fairyKing'].entries())if(i===3?p.fairyKing:hasFairy(p,id)){const {x,y}=i===3&&r.fairyBeam?r.fairyBeam:fairyPosition(s,i,r.obstacles);if(!drawFairy(ctx,i,x,y,s.elapsed,reduced)){ctx.fillStyle=['#ffb963','#b2e9ff','#d1a4f6','#e8d4ff'][i];ctx.fillRect(x-2,y-3,5,6);}}
  if(r.voidPull){ctx.strokeStyle='#d8a5ff';ctx.beginPath();ctx.arc(r.voidPull.x,r.voidPull.y,180*r.voidPull.time,0,Math.PI*2);ctx.stroke();}for(const a of r.passiveArcs||[]){ctx.strokeStyle='#ffe16a';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(a.toX,a.toY);ctx.stroke();}ctx.restore();}

@@ -1,0 +1,25 @@
+✔ imported images do not request a source until their pack is activated (2.167ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.3659ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (146.8987ms)
+✔ selected portraits do not require every monster or any dungeon hall (0.6191ms)
+✔ fresh return saves prepare descent-only enemies without making first ascent download them (0.2689ms)
+✔ rare upper-floor expeditions and chest bosses are loaded from the actual roster (1.036ms)
+✔ floor discovery covers later rooms while a combat check can inspect only its current room (0.2996ms)
+✔ contact renderers preserve frozen effects and incoming opacity in both modes (3.6213ms)
+✔ reduced chain retains its real endpoints without mutating target coordinates (0.3258ms)
+✔ precision accent follows the existing burst cadence and expires before its label (1.5104ms)
+✔ slash ribbon is deterministic, bounded by its radius, and has less decoration when reduced (2.1449ms)
+✔ rain graphics stay pure at all six real damage pulses and retain the real clip in both modes (92.3419ms)
+✔ missing optional crossbow art keeps a finite, opacity-safe vector fallback for every aim (1.6511ms)
+✔ contact weights preserve frozen effects, pause determinism, incoming opacity and reduced cores (0.7664ms)
+✔ rain landings coincide with six scaled damage pulses and expire at1.8 seconds (55.3307ms)
+✔ crossbow recoil follows an actual shot and remains idle without a target (33.6803ms)
+✔ ultimate poses are read-only, deterministic on pause and survive serialized state (41.0525ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 603.1014
