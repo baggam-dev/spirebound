@@ -43,6 +43,7 @@ test('new final king stays on ten, saves phase three, and final ranking gate fol
 test('resurrection cues fire once on a real phase transition, pause does not advance, reload never replays',()=>{
  clearKingResurrection();const e={variant:'king',resurrectionVersion:1,hp:100,max:100,kingStage:1};tickKingResurrection([e],0);e.hp=29;e.kingStage=3;e.kingTransition=1.4;
  assert.deepEqual(tickKingResurrection([e],.01),['kingResurrection']);assert.equal(kingResurrectionAge(e),0);assert.deepEqual(tickKingResurrection([e],0),[]);assert.equal(kingResurrectionAge(e),0);
+ assert.deepEqual(tickKingResurrection([e],.56),[]);assert.equal(kingResurrectionAge(e),0);e.kingTransition=.84;
  assert.deepEqual(tickKingResurrection([e],.56),['kingResurrectionBell']);assert.deepEqual(tickKingResurrection([e],.1),[]);
  clearKingResurrection();assert.deepEqual(tickKingResurrection([e],.1),[]);assert.equal(kingResurrectionAge(e),null);
  e.hp=0;assert.deepEqual(tickKingResurrection([e],.1),[]);assert.equal(kingResurrectionAge(e),null);

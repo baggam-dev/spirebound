@@ -1,0 +1,119 @@
+{
+  "base": "http://localhost:5173",
+  "reports": [
+    {
+      "width": 1280,
+      "reduced": false,
+      "hero": {
+        "ready": true,
+        "frames": 4
+      },
+      "warden": {
+        "ready": true,
+        "frames": 8
+      },
+      "actualReduced": false,
+      "boss": {
+        "xp": 180,
+        "used": true,
+        "age": 0.2836000000000004
+      },
+      "returnXp": 12,
+      "pauseStable": true,
+      "modalWorldPaused": true,
+      "saveNoReplay": true
+    },
+    {
+      "width": 1280,
+      "reduced": true,
+      "hero": {
+        "ready": true,
+        "frames": 4
+      },
+      "warden": {
+        "ready": true,
+        "frames": 8
+      },
+      "actualReduced": true,
+      "boss": {
+        "xp": 180,
+        "used": true,
+        "age": 0.21659999999999946
+      },
+      "returnXp": 12,
+      "pauseStable": true,
+      "modalWorldPaused": true,
+      "saveNoReplay": true
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "hero": {
+        "ready": true,
+        "frames": 4
+      },
+      "warden": {
+        "ready": true,
+        "frames": 8
+      },
+      "actualReduced": false,
+      "boss": {
+        "xp": 180,
+        "used": true,
+        "age": 0.21669999999999984
+      },
+      "returnXp": 12,
+      "pauseStable": true,
+      "modalWorldPaused": true,
+      "saveNoReplay": true
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "hero": {
+        "ready": true,
+        "frames": 4
+      },
+      "warden": {
+        "ready": true,
+        "frames": 8
+      },
+      "actualReduced": true,
+      "boss": {
+        "xp": 180,
+        "used": true,
+        "age": 0.21660000000000038
+      },
+      "returnXp": 12,
+      "pauseStable": true,
+      "modalWorldPaused": true,
+      "saveNoReplay": true
+    }
+  ],
+  "fallback": {
+    "hero": {
+      "ready": false,
+      "frames": 0
+    },
+    "warden": {
+      "ready": true,
+      "frames": 4
+    }
+  },
+  "canvas": {
+    "restored": true,
+    "edgeCoverage": true,
+    "counts": [
+      10980,
+      2678
+    ]
+  },
+  "final": {
+    "key": true,
+    "xp": 360,
+    "age": 0.20269999999851007,
+    "mode": "journey-return"
+  },
+  "errors": [],
+  "scoreSubmissions": 0
+}

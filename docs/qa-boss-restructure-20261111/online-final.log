@@ -1,0 +1,8 @@
+file:///C:/baggam-dev/spirebound/tools/qa/ranking-online-qa.mjs:41
+ await expandedPage.reload();await expandedPage.locator('#continue').click();await expandedPage.waitForTimeout(350);if(!await expandedPage.locator('#interact').isVisible())throw Error('Expanded exit unavailable: '+JSON.stringify(await expandedPage.evaluate(()=>({overlay:document.querySelector('#overlay').textContent.slice(0,200),state:(()=>{const v=JSON.parse(JSON.parse(localStorage.getItem('spirebound.run.v1')).payload),r=v.floors[v.floor][v.room];return {floor:v.floor,room:v.room,x:v.player.x,y:v.player.y,key:v.key,status:v.status,enemies:r.enemies.length,object:r.objectPosition,seal:r.returnSeal,pausedButton:document.querySelector('#potion').disabled}})(),interact:document.querySelector('#interact').hidden}))));await expandedPage.locator('#interact').click();await expandedPage.locator('#rankRegister').click();await expandedPage.locator('#rankName').fill('확장모험가');await expandedPage.locator('#rankSubmit').click();await expandedPage.getByText('등록 완료 ·',{exact:false}).waitFor();await expandedPage.locator('#rankViewBoard').click();await expandedPage.locator('.rank-mine').first().waitFor();assert.equal(await expandedPage.locator('.rank-personal').getByText('확장모험가',{exact:false}).count(),1);
+                                                                                                                                                                                  ^
+
+Error: Expanded exit unavailable: {"overlay":"SPIREBOUND1층 · 잊힌 돌의 전당탑의 길을 여는 중…입구로","state":{"floor":0,"room":0,"x":480,"y":115,"key":true,"status":"playing","enemies":0,"pausedButton":false},"interact":true}
+    at file:///C:/baggam-dev/spirebound/tools/qa/ranking-online-qa.mjs:41:179
+
+Node.js v24.14.0

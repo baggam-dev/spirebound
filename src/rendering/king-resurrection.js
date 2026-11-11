@@ -8,7 +8,9 @@ export function tickKingResurrection(enemies,dt){
   let v=actors.get(e);if(!v){actors.set(e,{stage:e.kingStage??1,age:null,bell:false});continue;}
   const stage=e.kingStage??1;
   if(e.hp>0&&v.stage<3&&stage===3&&e.kingTransition>0){v.age=0;v.bell=false;events.push('kingResurrection');}
-  else if(v.age!==null)v.age+=dt;
+  // Entry grace can freeze the combat transition even while updates continue.
+  // Follow the actual transition clock so the reveal cannot end early.
+  if(v.age!==null)v.age=Math.max(0,1.4-(e.kingTransition||0));
   v.stage=stage;
   if(e.hp<=0||!(e.kingTransition>0)||v.age>=1.4){v.age=null;continue;}
   if(v.age!==null&&v.age>=.55&&!v.bell){v.bell=true;events.push('kingResurrectionBell');}

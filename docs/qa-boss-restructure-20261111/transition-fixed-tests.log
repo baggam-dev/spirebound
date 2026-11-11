@@ -1,0 +1,14 @@
+✔ both new campaigns fight remnant on eight; legacy save keeps king and final demon (452.2851ms)
+✔ all remnant phases save; classic final key and expanded stairs retain distinct endings (379.0925ms)
+✔ remnant has one attack stream and lower direct damage without pressure summons (83.3564ms)
+✔ new final king stays on ten, saves phase three, and final ranking gate follows king (144.7505ms)
+✔ resurrection cues fire once on a real phase transition, pause does not advance, reload never replays (1.2324ms)
+✔ save validation rejects mismatched new boss layout and misplaced appearance flags (169.5944ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2640.0953

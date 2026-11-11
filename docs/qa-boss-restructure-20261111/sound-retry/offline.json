@@ -1,0 +1,96 @@
+{
+  "single": [
+    {
+      "name": "hit",
+      "peak": 0.017533855512738228,
+      "rms": 0.0011295463566966127,
+      "crossings": 27
+    },
+    {
+      "name": "criticalHit",
+      "peak": 0.024228857830166817,
+      "rms": 0.0018133350089253885,
+      "crossings": 162
+    },
+    {
+      "name": "slashHit",
+      "peak": 0.017155056819319725,
+      "rms": 0.0010239752399669529,
+      "crossings": 45
+    },
+    {
+      "name": "rainCast",
+      "peak": 0.02236541546881199,
+      "rms": 0.0019512337945196208,
+      "crossings": 35
+    },
+    {
+      "name": "rainFall",
+      "peak": 0.009097153320908546,
+      "rms": 0.0008691346557745663,
+      "crossings": 107
+    },
+    {
+      "name": "rainImpact",
+      "peak": 0.024310238659381866,
+      "rms": 0.001830495210646892,
+      "crossings": 28
+    },
+    {
+      "name": "rainFinal",
+      "peak": 0.025649433955550194,
+      "rms": 0.0027214501616847613,
+      "crossings": 44
+    },
+    {
+      "name": "crossbowDeploy",
+      "peak": 0.015574763529002666,
+      "rms": 0.0015270349568017884,
+      "crossings": 40
+    },
+    {
+      "name": "crossbowShot",
+      "peak": 0.02079484425485134,
+      "rms": 0.0014388657348378129,
+      "crossings": 41
+    },
+    {
+      "name": "crossbowReload",
+      "peak": 0.008425229229032993,
+      "rms": 0.0005033366879204714,
+      "crossings": 80
+    },
+    {
+      "name": "crossbowRetract",
+      "peak": 0.012793973088264465,
+      "rms": 0.0012157111759120219,
+      "crossings": 40
+    },
+    {
+      "name": "warning",
+      "peak": 0.03440045937895775,
+      "rms": 0.004801059846746698,
+      "crossings": 196
+    },
+    {
+      "name": "resurrectionRise",
+      "peak": 0.017622241750359535,
+      "rms": 0.002944942618389243,
+      "crossings": 109
+    },
+    {
+      "name": "resurrectionBell",
+      "peak": 0.03753386065363884,
+      "rms": 0.006276874543187902,
+      "crossings": 132
+    }
+  ],
+  "mixed": {
+    "peak": 0.03971664607524872,
+    "rms": 0.005113286226089064,
+    "crossings": 202
+  },
+  "duckRatio": 0.28000000116289253,
+  "stopTail": 0,
+  "muteTail": 0
+}

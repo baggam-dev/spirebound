@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 0.26666666666666655
+- 0
+
+    at file:///C:/baggam-dev/spirebound/tools/qa/boss-restructure-qa.mjs:33:42 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 0.26666666666666655,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

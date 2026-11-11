@@ -1,0 +1,11 @@
+node:internal/fs/promises:853
+  path = getValidatedPath(path);
+         ^
+
+TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string or an instance of Buffer or URL. Received undefined
+    at mkdir (node:internal/fs/promises:853:10)
+    at file:///C:/baggam-dev/spirebound/tools/qa/ranking-online-qa.mjs:12:36 {
+  code: 'ERR_INVALID_ARG_TYPE'
+}
+
+Node.js v24.14.0

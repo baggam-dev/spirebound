@@ -15,7 +15,7 @@ function box(c,x,y,w,h,fill){c.fillStyle=fill;c.fillRect(Math.round(x),Math.roun
 function oval(c,x,y,rx,ry,fill){c.fillStyle=fill;c.beginPath();c.ellipse(x,y,rx,ry,0,0,Math.PI*2);c.fill();}
 export function drawDemonGround(c,r,time=0,reduced=false){
  const d=r.demon;if(!d)return;c.save();if(d.pressureVersion===1){c.beginPath();c.rect(25,45,910,455);c.clip();}
- if(d.phase===3){box(c,353,72,254,72,'#0a0913');for(let i=0;i<8;i++){const x=365+i*32,y=72+(i%3)*5;box(c,x,y,27,7,'#48504c');box(c,x+4,145+(i%2)*3,24,5,'#4e5151');if(d.recovery>0)box(c,x+12,92+((time*80+i*23)%65),5,4,'#a38a9a');}}
+ if(d.phase===3&&d.remnantVersion!==1){box(c,353,72,254,72,'#0a0913');for(let i=0;i<8;i++){const x=365+i*32,y=72+(i%3)*5;box(c,x,y,27,7,'#48504c');box(c,x+4,145+(i%2)*3,24,5,'#4e5151');if(d.recovery>0)box(c,x+12,92+((time*80+i*23)%65),5,4,'#a38a9a');}}
  for(const o of r.obstacles)if(o.demonHole){
   c.save();c.translate(o.x,o.y);c.scale(o.w/54,o.h/54);const x=0,y=0;
   oval(c,x+27,y+35,22,17,'#634967');oval(c,x+27,y+34,18,14,'#090914');

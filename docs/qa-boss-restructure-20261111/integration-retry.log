@@ -1,0 +1,13 @@
+✔ every browser module dependency resolves inside src, including side-effect imports (4939.8156ms)
+✔ ranking API SQLite and HTTP integration suite (8921.3235ms)
+✔ actual generated classic and expanded maps satisfy Python online-start validation (3879.3747ms)
+✔ development API proxy forwards cookies and overrides claimed client IP (294.707ms)
+✔ server serves game modules and refuses repository files and unsupported methods (1880.9975ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10264.7675

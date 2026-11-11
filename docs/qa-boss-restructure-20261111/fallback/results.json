@@ -1,0 +1,13 @@
+{
+  "reports": [],
+  "fallback": {
+    "remnant": false,
+    "king": false,
+    "playing": true,
+    "saved": true
+  },
+  "errors": [],
+  "submissions": 0,
+  "actualDevice": false,
+  "audioListening": false
+}
