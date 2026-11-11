@@ -23,7 +23,7 @@ export function drawDemonCoreAttackEffects(c,d,obstacles=[],reduced=false){
  }else if(f.kind==='mouthTongue'){
   const retract=striking?1:Math.max(0,Math.min(1,f.time/CORE_MOTION.recover)),length=demonRayLength(f,f.aim,obstacles,DEMON_TONGUE.radius)*retract;
   if(striking){tongueSector(c,f,obstacles);c.fillStyle='#d591bc45';c.fill();}
-  if(length>0){c.translate(f.x,f.y);c.rotate(f.aim);c.strokeStyle='#945074';c.lineWidth=reduced?5:8;c.lineCap='round';c.beginPath();c.moveTo(0,0);c.lineTo(length,0);c.stroke();c.strokeStyle='#efb1c8';c.lineWidth=2;c.stroke();}
+  if(length>0){c.translate(f.x,f.y);c.rotate(f.aim);c.strokeStyle=d.remnantVersion===1?'#9e8a68':'#945074';c.lineWidth=reduced?5:8;c.lineCap='round';if(d.remnantVersion===1)c.setLineDash([9,3]);c.beginPath();c.moveTo(0,0);c.lineTo(length,0);c.stroke();c.strokeStyle=d.remnantVersion===1?'#f2cf88':'#efb1c8';c.lineWidth=2;c.stroke();}
  }
  c.restore();
 }

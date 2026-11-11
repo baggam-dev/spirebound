@@ -28,6 +28,15 @@ class RankingTests(unittest.TestCase):
                          gameVersion='0.34.0-prebeta', elapsedMs=1200000,
                          visited=[f'{f}:0' for f in range(8)], defeated=list(range(180)), mainSkill='fire', total=99999999)
 
+    def test_boss_layout_metadata_is_bounded_and_preserved_without_score_changes(self):
+        self.reject(lambda: self.app.submit(self.token, dict(self.body, bossLayoutVersion=True)), 'invalid_request')
+        self.reject(lambda: self.app.submit(self.token, dict(self.body, bossLayoutVersion=2)), 'invalid_request')
+        self.app.submit(self.token, dict(self.body, bossLayoutVersion=1))
+        with self.app.connect() as db:
+            snapshot = json.loads(db.execute('SELECT snapshot FROM records').fetchone()[0])
+        self.assertEqual(snapshot['bossLayoutVersion'], 1)
+        self.assertEqual(snapshot['total'], score(1200000, 180, 8, 60)['total'])
+
     def test_latest_version_board_preserves_old_rows_and_rejects_old_run(self):
         self.app.submit(self.token, self.body)
         self.assertEqual(len(self.app.leaderboard(self.token, 'SPIREBOUND')['entries']), 1)

@@ -9,7 +9,7 @@ import {createPractice,practiceBosses} from '../../src/game/boss-practice.js';
 
 function fight(){const s=newRun(77,{campaign:'expanded'});s.generationVersion=31;s.floor=9;s.room=1;s.player.x=800;s.player.y=410;const r=currentRoom(s);assert.equal(challengeDemon(s),true);return {s,r,d:r.demon,p:s.player};}
 test('final boss is hidden, enters with two separate targets and round trips',()=>{
- assert.equal(practiceBosses.some(b=>b.id==='demon'),false);
+ assert.equal(practiceBosses.find(b=>b.id==='demon').floor,7);
  assert.equal(currentRoom(createPractice('demon','fire',4)).demon.phase,1);
  const {s,r}=fight();assert.equal(r.demonPending,false);assert.deepEqual(r.enemies.map(e=>e.part),['hand','foot']);assert.equal(parseSave(encodeSave(s)).floors[9][1].demon.phase,1);
  assert.equal(challengeDemon(s),false);

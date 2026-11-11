@@ -21,7 +21,7 @@ try{
    const buffer=await real.startRendering();return {samples:buffer.getChannelData(0),accepted};
   }
   const stats=(samples,start=0,end=samples.length)=>{let peak=0,sum=0,crossings=0;for(let i=start;i<end;i++){const v=samples[i];if(!Number.isFinite(v))throw Error('non-finite PCM');peak=Math.max(peak,Math.abs(v));sum+=v*v;if(i>start&&Math.sign(v)!==Math.sign(samples[i-1]))crossings++;}return {peak,rms:Math.sqrt(sum/Math.max(1,end-start)),crossings};};
-  const cues=['hit','criticalHit','slashHit','rainCast','rainFall','rainImpact','rainFinal','crossbowDeploy','crossbowShot','crossbowReload','crossbowRetract','warning'],single=[];
+  const cues=['hit','criticalHit','slashHit','rainCast','rainFall','rainImpact','rainFinal','crossbowDeploy','crossbowShot','crossbowReload','crossbowRetract','warning','resurrectionRise','resurrectionBell'],single=[];
   for(const name of cues){const r=await render([{at:.05,name}]),s=stats(r.samples);if(!(s.peak>1e-4&&s.peak<.4&&s.rms>1e-5))throw Error('bad PCM '+name);single.push({name,...s});}
   const demo=await render(cues.map((name,i)=>({at:.1+i*.45,name})),{duration:5.8,volume:.5});
   const plain=await render([{at:.05,name:'rainFinal'}],{silentAlert:true}),duck=await render([{at:.05,name:'rainFinal'},{at:.06,name:'warning'}],{silentAlert:true});

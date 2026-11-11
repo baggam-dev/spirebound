@@ -6,9 +6,9 @@ export const enemyGuide={
  demonSoldier:{name:'악마 병사',tip:'짧은 보폭을 실어 전진하며 대각으로 한 번 벱니다. 몸 앞의 이동 구간까지 보고 옆으로 피하세요.'},
  demonArcher:{name:'악마 사수',tip:'고정 조준 후 두 갈래 화살을 발사합니다.'},
  demonCaptain:{name:'악마 부대장',tip:'먼 거리에서는 돌진 후 별도 예고를 둔 도끼 마무리를 합니다. 가까우면 돌진 없이 도끼만 쓰며 연계 뒤 빈틈이 큽니다.'},
- demon:{name:'대악마의 신체',tip:'손·발, 눈·코·입, 벽 너머 본체의 세 단계를 차례로 무너뜨리세요. 본체 근처에서는 좌우 팔의 휘두르기 예고 범위 밖으로 피하세요.'},
+ demon:{name:'봉인의 잔해',tip:'손·발, 눈·코·입, 벽 너머 본체의 세 단계를 차례로 무너뜨리세요. 본체 근처에서는 좌우 팔의 휘두르기 예고 범위 밖으로 피하세요.'},
  commander:{name:'서리군단장 벨카르',tip:'측면을 돌며 빠른 측면 이동과 네 갈래에서 여섯 갈래로 강화되는 빙결 연사·고정 조준 저격·벽 반사탄을 씁니다. 저격선과 화살비 착탄 지점에서 벗어나고 점멸 뒤 위치를 확인하세요.'},
- king:{name:'타락한 왕, 모르도',tip:'검은 왕 → 타락 → 마왕의 세 단계. 보라 전조를 피하고 검이 멈추면 공격하세요.'},
+ king:{name:'타락한 왕, 모르도',tip:'해골왕 → 봉인 균열 → 육신을 되찾은 대악마의 세 단계. 보라 전조를 피하고 장병기가 멈추면 공격하세요.'},
  astralSniper:{name:'별자리 저격수',tip:'현재 위치와 이동 방향 앞의 두 지점을 고정해 시간차로 두 발 쏩니다. 두 조준선을 확인하고 방향을 바꾸세요.'},
  gravityMage:{name:'인력술사',tip:'예고된 인력 결절이 잠깐만 약하게 끌어당깁니다. 경계 밖으로 빠지거나 시전자를 먼저 제압하세요.'},
  starKnight:{name:'성운 기사',tip:'방패를 앞세워 짧게 전진한 뒤 방향을 고정해 벱니다. 측면으로 돌아가고 방패를 내리는 회복 때 공격하세요.'},
@@ -33,7 +33,7 @@ export const enemyGuide={
  slime:{name:'독성 군체',tip:'거대 1 → 중형 2 → 소형 4. 모든 분열체를 처치해야 끝납니다.'}
 };
 export function enemyKey(e){if(e.gateTitle&&e.type==='starKnight')return 'kald';if(e.gateTitle&&e.type==='astralSniper')return 'vera';return e.type==='boss'?(e.variant||'warden'):e.type;}
-export function enemyName(e){if(e.variant==='demon')return ({hand:'대악마의 손',foot:'대악마의 발',eye:'대악마의 눈',nose:'대악마의 코',mouth:'대악마의 입',core:'대악마 본체'})[e.part]||enemyGuide.demon.name;return Object.hasOwn(enemyGuide,enemyKey(e))?enemyGuide[enemyKey(e)].name:'알 수 없는 적';}
+export function enemyName(e){if(e.remnantVersion===1)return ({hand:'잔해의 손',foot:'잔해의 발',eye:'봉인 눈가면',nose:'봉인 코가면',mouth:'봉인 입가면',core:'봉인의 거상'})[e.part]||'봉인의 잔해';if(e.variant==='demon')return ({hand:'대악마의 손',foot:'대악마의 발',eye:'대악마의 눈',nose:'대악마의 코',mouth:'대악마의 입',core:'대악마 본체'})[e.part]||enemyGuide.demon.name;return Object.hasOwn(enemyGuide,enemyKey(e))?enemyGuide[enemyKey(e)].name:'알 수 없는 적';}
 export function observeRoom(s,room){
  for(const e of room.enemies){const key=enemyKey(e);if(!Object.hasOwn(enemyGuide,key))continue;const entry=(s.bestiary??={})[key]??={kills:0,traits:[]};if(e.elite&&!entry.traits.includes(e.elite))entry.traits.push(e.elite);}
 }

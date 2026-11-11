@@ -12,9 +12,9 @@ export function floorAssetOptions(run,allRooms=true){
 }
 function actorPlan(key){
  if(key==='warden')return {modules:warden,feedback:[]};
- if(key==='king')return {modules:['mordo-phase1-sprite','mordo-phase2-sprite','mordo-phase3-sprite','mordo-presentation-art','shadow-aura'],feedback:['bosses']};
+ if(key==='king')return {modules:['mordo-phase1-sprite','mordo-phase2-sprite','mordo-phase3-sprite','resurrected-king','mordo-presentation-art','shadow-aura'],feedback:['bosses']};
  if(key==='commander')return {modules:['commander-phase1-sprite','commander-phase2-sprite','velkar-presentation-art','shadow-aura'],feedback:['bosses']};
- if(key==='demon')return {modules:['demon-sprite','demon-core-sprite','demon-presentation-art','shadow-aura',...infernal],feedback:['demons']};
+ if(key==='demon')return {modules:['demon-sprite','remnant-sprite','demon-core-sprite','demon-presentation-art','shadow-aura',...infernal],feedback:['demons']};
  if(key==='prism')return {modules:['prism-sprite','prism-presentation-art'],feedback:[]};
  const plan=portraitAssetPlan(key);
  if(['astralSniper','gravityMage','starKnight','starBearer','royalGuard','riftHunter'].includes(key))plan.feedback.push('upper');
@@ -29,9 +29,9 @@ export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
  if(floor===6)modules.push('vera-sprite');
  if(floor>=3)modules.push('flower-sprite','prism-sprite','slime-sprite','prism-presentation-art');
  if(floor>=6){modules.push(...upper);feedback.push('upper');}
- if(floor===7){modules.push('mordo-phase1-sprite','mordo-phase2-sprite','mordo-phase3-sprite','mordo-presentation-art');feedback.push('bosses');}
+ if(floor===7||floor===9){modules.push('mordo-phase1-sprite','mordo-phase2-sprite','mordo-phase3-sprite','resurrected-king','mordo-presentation-art');feedback.push('bosses');}
  if(floor>=8){modules.push('commander-phase1-sprite','commander-phase2-sprite','velkar-presentation-art',...infernal);feedback.push('demons','bosses');}
- if(floor===9)modules.push('demon-sprite','demon-core-sprite','demon-presentation-art');
+ if(floor===7||floor===9)modules.push('demon-sprite','remnant-sprite','demon-core-sprite','demon-presentation-art');
  if(returning){modules.push('shadow-aura','ambusher-sprite','ringcaster-sprite','strafer-sprite');feedback.push('demons');}
  // The final escape can create these actors after entry. Rare expeditions and
  // chest bosses are taken from the real floor/room roster rather than floor number.
@@ -43,9 +43,9 @@ export function portraitAssetPlan(key){
  if(key==='warden')return {modules:warden,feedback:[],extra:[]};
  if(key==='vera')return {modules:['vera-sprite'],feedback:[],extra:[]};
  if(['kald','brute'].includes(key))return {modules:[],feedback:['named-brute'],extra:[]};
- if(key==='king')return {modules:['mordo-phase3-sprite','shadow-aura'],feedback:['bosses'],extra:[]};
+ if(key==='king')return {modules:['mordo-phase3-sprite','resurrected-king','shadow-aura'],feedback:['bosses'],extra:[]};
  if(key==='commander')return {modules:['commander-phase1-sprite','shadow-aura'],feedback:['bosses'],extra:[]};
- if(key==='demon')return {modules:['demon-sprite','demon-core-sprite','demon-presentation-art','shadow-aura'],feedback:[],extra:[]};
+ if(key==='demon')return {modules:['demon-sprite','remnant-sprite','demon-core-sprite','demon-presentation-art','shadow-aura'],feedback:[],extra:[]};
  const module=({'astralSniper':'astral-sniper-sprite',gravityMage:'gravity-mage-sprite',starKnight:'star-knight-sprite',starBearer:'star-bearer-sprite',royalGuard:'royal-guard-sprite',pulseTurret:'pulse-turret-sprite',riftHunter:'rift-hunter-sprite',minislime:'slime-sprite',demonSoldier:'demon-soldier-sprite',demonArcher:'demon-archer-sprite',demonCaptain:'demon-captain-sprite',demonBat:'demon-bat-sprite',spikeNest:'spike-nest-sprite'})[key]||(['flower','prism','slime','ambusher','ringcaster','strafer'].includes(key)?key+'-sprite':'grunt-sprite');
  return {modules:[module,...(key==='riftHunter'?['shadow-aura']:[])],feedback:[],extra:[]};
 }

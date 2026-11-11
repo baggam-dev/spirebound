@@ -1,3 +1,4 @@
+import {kingFloor,revisedBosses} from '../game/boss-layout.js';
 import {seekEnemyShot,enemyShotLane,clearEnemyShot} from './enemy-sightline.js';
 import {meleeIntersects} from './enemy-melee.js';
 import {enemyMovementGoal} from '../world/enemy-movement-goals.js';
@@ -88,4 +89,4 @@ function moveRangedUpper(e,p,r,dt,slowed){
  const target=distance>350?p:{x:Math.max(65,Math.min(895,p.x+Math.cos(theta+side*.22)*290)),y:Math.max(85,Math.min(455,p.y+Math.sin(theta+side*.22)*290))};
  walk(e,target,r,dt,(e.type==='gravityMage'?28:34)*slowed);
 }
-export function challengeKing(s){const r=s.floors[s.floor][s.room];if(s.key||!r.kingPending||r.enemies.length)return false;r.kingPending=false;r.enemies=[{id:0,type:'boss',variant:'king',x:480,y:180,hp:11700,max:11700,cd:1.5,tier:7,balanceVersion:1,bossHealthVersion:1,bossPowerVersion:18,kingStage:1}];if(s.generationVersion>=31)r.enemies[0].bossPressureVersion=1;s.entryGrace=1;return true;}
+export function challengeKing(s){const r=s.floors[s.floor][s.room];if(s.key||s.floor!==kingFloor(s)||!r.kingPending||r.enemies.length)return false;r.kingPending=false;r.enemies=[{id:0,type:'boss',variant:'king',x:480,y:180,hp:revisedBosses(s)?16000:11700,max:revisedBosses(s)?16000:11700,cd:1.5,tier:revisedBosses(s)?9:7,...(revisedBosses(s)?{resurrectionVersion:1}:{}),balanceVersion:1,bossHealthVersion:1,bossPowerVersion:18,kingStage:1}];if(s.generationVersion>=31)r.enemies[0].bossPressureVersion=1;s.entryGrace=1;return true;}

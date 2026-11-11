@@ -1,3 +1,4 @@
+import {drawRemnant} from './remnant-sprite.js';
 import {drawDemonPressureGround} from './demon-pressure-visuals.js';
 import {drawSoftField} from './ground-visuals.js';
 import {drawDemonSprite} from './demon-sprite.js';
@@ -48,6 +49,7 @@ export function drawDemonGround(c,r,time=0,reduced=false){
 export function drawDemon(c,e,time=0,reduced=false,staticPose=false,room=null){
  if(e.variant!=='demon')return;
  const d=room?.demon,attack=(d?.attacks||[]).find(a=>a.owner===e.part)||(d?.attack?.owner===e.part?d.attack:null);
+ if(drawRemnant(c,e,time,{attack,reduced,staticPose,room}))return;
  if(drawDemonCoreSprite(c,e,time,{attack,reduced,staticPose,wall:!staticPose,sweepFlash:d?.sweepFlash,coreFlash:d?.coreFlash,enhanced:d?.pressureVersion===1,room}))return;
  const auraRendered=e.part!=='core'&&drawShadowAura(c,e,time,{color:'#895496',opacity:.16,width:126,height:96,reduced,staticPose});
  if(drawDemonSprite(c,e,time,{attack,reduced,staticPose,wall:d?.phase===3})){

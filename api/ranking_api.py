@@ -175,6 +175,7 @@ class Ranking:
             require(body.get('finalSealBroken') is True, 'not_eligible')
             if len(json.loads(run['rooms'])) == 10:
                 require(body.get('finalDemonDefeated') is True, 'not_eligible')
+            require(integer(body.get('bossLayoutVersion', 0), 0, 1), 'invalid_request')
             nickname = self.nickname(body.get('nickname'))
             elapsed, visited, defeated = body.get('elapsedMs'), body.get('visited'), body.get('defeated')
             rooms = json.loads(run['rooms'])
@@ -193,7 +194,8 @@ class Ranking:
             status = 'held' if reason else 'accepted'
             snapshot = dict(parts, elapsedMs=elapsed, kills=len(defeated), visited=visited, defeated=defeated,
                             campaign='expanded' if len(rooms) == 10 else 'classic',
-                            totalRooms=sum(rooms), seed=run['seed'], gameVersion=run['version'], rulesVersion=rules)
+                            totalRooms=sum(rooms), seed=run['seed'], gameVersion=run['version'], rulesVersion=rules,
+                            bossLayoutVersion=body.get('bossLayoutVersion', 0))
             record_id = str(uuid.uuid4())
             db.execute('INSERT INTO records VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
                        (record_id, run['id'], identity, run['season'], nickname, parts['total'], elapsed,

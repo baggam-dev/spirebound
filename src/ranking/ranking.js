@@ -1,3 +1,4 @@
+import {finalBossDefeated} from '../game/boss-layout.js';
 import {RELEASE} from '../game/version.js';
 export const RANKING_RULES='ranking-v13';
 export const RANKING_SEASON='SPIREBOUND';
@@ -32,7 +33,7 @@ export function calculateScore({elapsedMs,kills,visited,totalRooms}){
 }
 export function finishRanking(s){
  const q=s.ranking,newSeason=q?.rulesVersion===(s.campaign==='expanded'?EXPANDED_RULES:RANKING_RULES);
- if(!q||s.practice||s.status!=='won'||!s.key||s.floor!==0||newSeason&&!s.floors[0][0].finalEscape?.ready||s.campaign==='expanded'&&(!s.floors[9][1].used||s.floors[9][1].demonPending!==false))return null;
+ if(!q||s.practice||s.status!=='won'||!s.key||s.floor!==0||newSeason&&!s.floors[0][0].finalEscape?.ready||s.campaign==='expanded'&&!finalBossDefeated(s))return null;
  if(!q.result){const metrics={elapsedMs:Math.round(s.elapsed*1000),kills:q.defeated.length,visited:q.visited.length,totalRooms:q.totalRooms};q.result={...metrics,...calculateScore(metrics)};}
  return q.result;
 }

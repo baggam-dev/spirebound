@@ -8,12 +8,12 @@ import {seededRandom} from './random.js';
 import {challengeKing} from '../combat/upper-floors.js';
 import {challengeCommander} from '../combat/commander.js';
 import {challengeDemon} from '../combat/demon.js';
-export const practiceBosses=[{id:'warden',floor:1,name:'2층 수호자'},{id:'prism',floor:3,name:'4층 프리즘'},{id:'slime',floor:5,name:'6층 슬라임 군체'},{id:'gate',floor:6,name:'왕 문지기 · 칼드와 베라'},{id:'king',floor:7,name:'모르도'}];
+export const practiceBosses=[{id:'warden',floor:1,name:'2층 수호자'},{id:'prism',floor:3,name:'4층 프리즘'},{id:'slime',floor:5,name:'6층 슬라임 군체'},{id:'gate',floor:6,name:'왕 문지기 · 칼드와 베라'},{id:'demon',floor:7,name:'8층 봉인의 잔해'},{id:'king',floor:9,name:'10층 해골왕 모르도'}];
 const hiddenPracticeBoss={id:'commander',floor:8,name:'9층 서리군단장 벨카르'};
-const hiddenFinalBoss={id:'demon',floor:9,name:'10층 대악마'};
+const hiddenFinalBoss={id:'king',floor:9,name:'10층 해골왕 모르도'};
 export function createPractice(bossId,main,seed=Math.floor(Math.random()*4294967296)){
  const boss=practiceBosses.find(b=>b.id===bossId)||(bossId==='commander'?hiddenPracticeBoss:bossId==='demon'?hiddenFinalBoss:null);if(!boss||!mainSkills.includes(main))throw Error('잘못된 테스트 설정');
- const s=newRun(seed,['commander','demon'].includes(bossId)?{campaign:'expanded'}:undefined),p=s.player,random=seededRandom(seed^0x46a513);delete s.ranking;s.practice={boss:bossId,main,seed};s.floor=boss.floor;s.room=s.floors[s.floor].findIndex(r=>bossId==='gate'?r.gate:r.type==='boss');
+ const s=newRun(seed,{campaign:['commander','king'].includes(bossId)?'expanded':'classic',bossLayoutVersion:1}),p=s.player,random=seededRandom(seed^0x46a513);delete s.ranking;s.practice={boss:bossId,main,seed};s.floor=boss.floor;s.room=s.floors[s.floor].findIndex(r=>bossId==='gate'?r.gate:r.type==='boss');
  const r=currentRoom(s);p.x=480;p.y=430;p.level=10;for(let i=0;i<3;i++)applySkill(p,main);
  for(let i=0;i<7;i++){const pool=skills.filter(k=>k.tree==='support'&&allowedSkill(p,k.id)&&(p[k.id]||0)<k.max).map(k=>({...k,weight:skillOfferWeight(p,k)}));let roll=random()*pool.reduce((n,k)=>n+k.weight,0),chosen=pool.at(-1);for(const k of pool){roll-=k.weight;if(roll<0){chosen=k;break;}}applySkill(p,chosen.id);}
  if(boss.floor>=3)p.utility='guardian';if(boss.floor>=5)p.ultimate=1;

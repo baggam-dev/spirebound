@@ -9,6 +9,11 @@ export const BOSS_LINES=Object.freeze({
  commander:{intro:['왕은 잠들었군.','하지만 봉인은 아직이다.'],phase2:['여기서 멈춰라.']},
  demon:{intro:['이 탑에서…','나갈 수 있을 것 같으냐.']}
 });
+export const REVISED_BOSS_LINES=Object.freeze({
+ king:{intro:['이 왕좌는… 아직 나의 것이다.'],phase2:['봉인의 힘도… 내 것으로 삼겠다.'],phase3:['죽음조차… 나를 꺾지 못한다.'],death:['이것이… 마지막이란 말이냐…']},
+ commander:{intro:['잔해는 무너졌어도,','왕은 아직 기다린다.'],phase2:['여기서 멈춰라.']},
+ demon:{intro:['봉인 유지…','침입자를 배제한다.'],death:['봉인 잔해… 정지…']}
+});
 export function validBossDialogueSeen(value){
  return value===undefined||Array.isArray(value)&&value.length<=128&&new Set(value).size===value.length&&value.every(k=>typeof k==='string'&&/^[0-9]:[0-9]{1,3}:(warden|prism|slime|kald|vera|king|commander|demon):(intro|phase2|phase3|death)$/.test(k));
 }

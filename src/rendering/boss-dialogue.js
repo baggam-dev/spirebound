@@ -1,4 +1,4 @@
-import {BOSS_LINES} from '../ui/boss-dialogue-data.js';
+import {BOSS_LINES,REVISED_BOSS_LINES} from '../ui/boss-dialogue-data.js';
 import {kingPhase} from '../combat/upper-floors.js';
 import {commanderPhase} from '../combat/commander.js';
 import {wardenHealthOffset} from './warden-sprite.js';
@@ -37,7 +37,7 @@ export function createBossDialogue(run,{loaded=false}={}){
  }
  function add(r,e,event,{lines=null}={}){
   const k=kind(e);if(!k||!remember(id(r,k,event)))return;
-  const words=lines||BOSS_LINES[k][event];if(!words)return;
+  const words=lines||(run.bossLayoutVersion===1?REVISED_BOSS_LINES[k]?.[event]:undefined)||BOSS_LINES[k][event];if(!words)return;
   queue.push({room:r,actor:event==='death'?null:e,point:anchor(e),lines:words,age:0});
   if(queue.length>6)queue.splice(0,queue.length-6);
  }

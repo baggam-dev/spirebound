@@ -2,6 +2,8 @@
 export const SETTINGS_KEY='spirebound.settings.v1';
 export const DEFAULT_SETTINGS=Object.freeze({muted:false,volume:.5,reducedEffects:false});
 const CUES={
+ resurrectionRise:{gap:1.5,duck:.55,priority:4,notes:[[0,82,.28,'sine',.018],[.04,164,.3,'triangle',.009]]},
+ resurrectionBell:{gap:1.5,duck:.85,priority:4,notes:[[0,110,.65,'sine',.025],[.008,220,.55,'sine',.013],[.02,329.6,.43,'sine',.007],[.035,554.4,.32,'sine',.004]]},
  gateOpen:{gap:1,notes:[[0,82,.3,'triangle',.018],[.14,67,.38,'triangle',.015]]},
  gateStep:{gap:.3,notes:[[0,110,.07,'triangle',.017],[.025,55,.09,'sine',.012]]},
  gateClose:{gap:1,notes:[[0,54,.28,'triangle',.055],[.025,89,.13,'sawtooth',.02],[.12,40,.34,'sine',.025]]},
@@ -34,11 +36,11 @@ export function readSoundSettings(storage){
 export function createSoundSystem(storage,AudioCtor=globalThis.AudioContext||globalThis.webkitAudioContext){
  let settings=readSoundSettings(storage),context=null,master=null,buses=null,duckUntil=0;const last=new Map(),voices=new Set();
  const save=()=>{try{storage?.setItem(SETTINGS_KEY,JSON.stringify(settings));}catch{}};
- const busOf=name=>['warning','hurt','boss'].includes(name)?'alert':name==='shot'||name==='hit'||CUES[name]?.group?'combat':'world';
+ const busOf=name=>['warning','hurt','boss','resurrectionRise','resurrectionBell'].includes(name)?'alert':name==='shot'||name==='hit'||CUES[name]?.group?'combat':'world';
  const kill=voice=>{try{voice.amp.gain.cancelScheduledValues?.(context.currentTime);voice.amp.gain.setValueAtTime(.0001,context.currentTime);voice.osc.stop(context.currentTime+.008);}catch{}voices.delete(voice);};
  const clear=filter=>{for(const voice of voices)if(filter(voice))kill(voice);};
  const setVolume=()=>{if(!master)return;const now=context.currentTime;master.gain.cancelScheduledValues?.(now);master.gain.setValueAtTime(settings.muted?0:settings.volume,now);};
- const duck=now=>{duckUntil=Math.max(duckUntil,now+.32);const gain=buses.combat.gain;gain.cancelScheduledValues?.(now);gain.setValueAtTime(Math.min(gain.value??1,1),now);gain.linearRampToValueAtTime(.28,now+.008);gain.setValueAtTime(.28,duckUntil);gain.linearRampToValueAtTime(1,duckUntil+.08);};
+ const duck=(now,hold=.32)=>{duckUntil=Math.max(duckUntil,now+hold);const gain=buses.combat.gain;gain.cancelScheduledValues?.(now);gain.setValueAtTime(Math.min(gain.value??1,1),now);gain.linearRampToValueAtTime(.28,now+.008);gain.setValueAtTime(.28,duckUntil);gain.linearRampToValueAtTime(1,duckUntil+.08);};
  return {
   get settings(){return {...settings};},
   update(patch){settings={...settings,...Object.fromEntries(Object.entries(patch).filter(([key])=>key in DEFAULT_SETTINGS))};settings={...DEFAULT_SETTINGS,...readSoundSettings({getItem:()=>JSON.stringify(settings)})};if(settings.muted||settings.volume===0)clear(()=>true);setVolume();save();return {...settings};},
@@ -56,7 +58,7 @@ export function createSoundSystem(storage,AudioCtor=globalThis.AudioContext||glo
    let excess=active.length+cue.notes.length-limit;
    if(excess>0){const replace=active.filter(v=>v.priority<priority).sort((a,b)=>a.priority-b.priority||a.until-b.until);if(replace.length<excess)return false;for(const voice of replace.slice(0,excess))kill(voice);}
    const made=[];
-   try{if(bus==='alert')duck(now);
+   try{if(bus==='alert')duck(now,cue.duck??.32);
     for(const [delay,hz,duration,wave,gain,toHz] of cue.notes){const start=now+delay,osc=context.createOscillator(),amp=context.createGain(),voice={osc,amp,bus,priority,until:start+duration+.01};made.push(voice);voices.add(voice);osc.type=wave;osc.frequency.value=hz;osc.frequency.setValueAtTime?.(hz,start);if(toHz)osc.frequency.exponentialRampToValueAtTime?.(toHz,start+duration);amp.gain.setValueAtTime(.0001,start);amp.gain.linearRampToValueAtTime(gain,start+Math.min(.008,duration/3));amp.gain.exponentialRampToValueAtTime(.0001,start+duration);osc.connect(amp);amp.connect(buses[bus]);osc.onended=()=>{voices.delete(voice);try{osc.disconnect();amp.disconnect();}catch{}};osc.start(start);osc.stop(voice.until);}
     last.set(name,now);if(group){last.set('group:'+group,now);last.set('priority:'+group,priority);}if(reward)last.set('rewardFeedback',now);return true;
    }catch{for(const voice of made)kill(voice);return false;}
