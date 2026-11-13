@@ -38,6 +38,11 @@ export function enemyDeathEffect(e,returning=false,previousHp){const split=e.var
   wardenScale:warden&&Number.isFinite(e.scale)?e.scale:1,
   scale:e.type==='boss'?(e.variant==='slime'?[1.5,1.1,.8][e.stage||0]:1.5):e.type==='minislime'?.55:1,t:duration,duration};
 }
+// Incoming contacts happened during this simulation step and start at age zero.
+// Expire old contacts first so they cannot suppress a fresh hit on the boundary.
+export function advanceFeedback(current,incoming,dt){
+ return mergeEnemyFeedback(current.filter(f=>(f.t-=dt)>0),incoming.filter(f=>f.t>0));
+}
 export function mergeEnemyFeedback(current,incoming){
  const deaths=new Set(incoming.filter(f=>f.enemyFeedback==='death').map(f=>f.enemyId));
  const result=current.filter(f=>!(f.enemyFeedback==='hit'&&deaths.has(f.enemyId)));
