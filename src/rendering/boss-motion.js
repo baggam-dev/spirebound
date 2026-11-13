@@ -55,7 +55,7 @@ export function kingWeaponMotion(e,{reduced=false,staticPose=false}={}){
  if(staticPose)return {from:0,to:0,mix:0,lean:0,blocked:true};
  if(e.kingTransition>0){
   const settle=e.kingStage===3?clamp(1-e.kingTransition/.28):0;
-  return {from:3,to:0,mix:reduced?(settle>.5?1:0):smooth(settle),lean:0,blocked:true};
+  return {from:3,to:0,mix:reduced?(settle>.5?1:0):smooth(settle),lean:reduced?0:-.012*(1-smooth(settle)),blocked:true};
  }
  if(e.kneel>0)return {from:5,to:5,mix:0,lean:0,blocked:true};
  if(f?.time>0){

@@ -1,0 +1,32 @@
+✔ core sweep uses the same anatomical side as damage and returns continuously to neutral (4.5466ms)
+✔ part release observes actual recovery, does not replay on load, and cancels on phase/reset/death (1.9534ms)
+✔ king keeps spell flashes in casting pose, prepares from true fast slash clock, and preserves source state (0.5501ms)
+✔ warden lift occurs only during the existing leap phase (2.0879ms)
+✔ prism charge and release follow real warning and beam timing (1.283ms)
+✔ slime pose follows its own hazard, never another enemy warning (0.2734ms)
+✔ king windup changes to follow-through only after the real attack resolves (1.0278ms)
+✔ render pose is read-only and reconstructs identically after save or pause (1.006ms)
+✔ both new campaigns fight remnant on eight; legacy save keeps king and final demon (149.2577ms)
+✔ all remnant phases save; classic final key and expanded stairs retain distinct endings (120.7987ms)
+✔ remnant has one attack stream and lower direct damage without pressure summons (26.9869ms)
+✔ new final king stays on ten, saves phase three, and final ranking gate follows king (61.1663ms)
+✔ resurrection cues fire once on a real phase transition, pause does not advance, reload never replays (0.5029ms)
+✔ save validation rejects mismatched new boss layout and misplaced appearance flags (58.1338ms)
+✔ both core arms intersect player circles at front and angular edges, never behind (2.4715ms)
+✔ saved combat flashes determine strike and recovery without inferring canceled attacks (0.5782ms)
+✔ core arrival starts only on actual phase-three spawn event and never from draw/load (1.8345ms)
+✔ core hits distinguish reused part ids, have a cooldown and preserve actor/room state (0.5458ms)
+✔ attacks and specials immediately cancel presentation without extending combat clocks (0.7153ms)
+✔ core keeps its own detached snapshot while other parts use the shared presentation (0.8335ms)
+✔ actual phase spawn and final core removal keep key reward immediate and single (127.5717ms)
+✔ first warning belongs only to the first real attack and ends before chained strikes (2.0468ms)
+✔ reload, cleared room state and dead king do not replay the first warning (1.5081ms)
+✔ final transition settles within its existing clock and static/reduced modes keep representative poses (0.6936ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1162.5398

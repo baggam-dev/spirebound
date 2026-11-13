@@ -33,9 +33,19 @@ try{
    for(let i=0;i<36;i++)__bossQA.tick();return {stage:e.kingStage,age:view.kingResurrectionAge(e),flag:e.resurrectionVersion,actualReduced:(await __bossQA.reduced(reduced)).reducedEffects};
   },reduced);assert.equal(king.stage,3);assert.equal(king.flag,1);assert.equal(king.actualReduced,reduced);assert.ok(king.age>.5&&king.age<.8);
   await page.screenshot({path:join(out,`resurrection-halo-${width}-${reduced}.png`)});
-  const finished=await page.evaluate(async()=>{const v=await import('/src/rendering/king-resurrection.js');const s=__bossQA.state(),e=s.floors[9][1].enemies[0];for(let i=0;i<65;i++)__bossQA.tick();const age=v.kingResurrectionAge(e);const {encodeSave,parseSave}=await import('/src/persistence/storage.js');const restored=parseSave(encodeSave(s));v.clearKingResurrection();const cues=v.tickKingResurrection(restored.floors[9][1].enemies,1/60);return {age,transition:e.kingTransition,cues,layout:restored.bossLayoutVersion};});
+  const finished=await page.evaluate(async()=>{const v=await import('/src/rendering/king-resurrection.js');const s=__bossQA.state(),e=s.floors[9][1].enemies[0];for(let i=0;i<65;i++)__bossQA.tick();const age=v.kingResurrectionAge(e);const {encodeSave,parseSave}=await import('/src/persistence/storage.js');const restored=parseSave(encodeSave(s));const cues=v.tickKingResurrection(restored.floors[9][1].enemies,1/60);return {age,transition:e.kingTransition,cues,layout:restored.bossLayoutVersion};});
   assert.equal(finished.age,null);assert.equal(finished.transition,0);assert.deepEqual(finished.cues,[]);assert.equal(finished.layout,1);
-  await page.screenshot({path:join(out,`revived-king-${width}-${reduced}.png`)});reports.push({width,reduced,remnant,king,finished});await cx.close();
+  await page.screenshot({path:join(out,`revived-king-${width}-${reduced}.png`)});
+  const first=await page.evaluate(async()=>{
+   const v=await import('/src/rendering/king-resurrection.js'),s=__bossQA.state(),e=s.floors[9][1].enemies[0];let a=null;
+   for(let i=0;i<180&&!a;i++){__bossQA.tick();a=v.kingFirstAttack(e);}if(!a)throw Error('first warning not observed');
+   globalThis.__firstSnapshot=JSON.stringify(s);return {kind:a.kind,step:a.step??0,time:a.time};
+  });assert.ok(first.time>0);assert.equal(first.step,0);await page.screenshot({path:join(out,`king-first-warning-${width}-${reduced}.png`)});
+  const noReplay=await page.evaluate(async()=>{
+   const v=await import('/src/rendering/king-resurrection.js'),s=__bossQA.state(),e=s.floors[9][1].enemies[0];if(JSON.stringify(s)!==__firstSnapshot)throw Error('paused warning advanced');
+   for(let i=0;i<120&&v.kingFirstAttack(e);i++)__bossQA.tick();if(v.kingFirstAttack(e))throw Error('first warning did not finish');
+   for(let i=0;i<180;i++){__bossQA.tick();if(v.kingFirstAttack(e))throw Error('first warning replayed');}return true;
+  });assert.equal(noReplay,true);reports.push({width,reduced,remnant,king,finished,first,noReplay});await cx.close();
  }
  const fallbackContext=await browser.newContext(),fallbackPage=await fallbackContext.newPage();fallbackPage.on('pageerror',e=>errors.push(e.message));
  await fallbackPage.route('**/src/game/game.js',async route=>{const response=await route.fetch();await route.fulfill({response,body:await response.text()+hook});});

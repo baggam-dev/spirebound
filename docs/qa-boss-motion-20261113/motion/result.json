@@ -1,0 +1,707 @@
+{
+  "reports": [
+    {
+      "probes": 35,
+      "rows": [
+        {
+          "kind": "hand",
+          "hits": [],
+          "poses": [
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": -0.07294931813555879,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": -0.15993408508039894,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": -0.07269675925925922,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0.8041087962962966,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0.21917820699708457,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 3.4869260204081636,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0.098234329446064,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 1.5628188775510181,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "footJump",
+          "hits": [],
+          "poses": [
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0.021600300525920376,
+              "lift": 30.792899397564415,
+              "squash": 0.06840904886476666,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0.04834470323065365,
+              "lift": 1.9558032936563485,
+              "squash": 0.0072672570914618755,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0.02986689814814816,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0.12939814814814812,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0.065,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "coreSweepLeft",
+          "hits": [
+            {
+              "damage": 6,
+              "source": "봉인 잔해 왼팔 휘두르기"
+            }
+          ],
+          "poses": [
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                -0.12000000000000008
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                -0.2399117695473251
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                -0.09248542274052465
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0.4662900874635568
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0.3768573173213925
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "coreSweepRight",
+          "hits": [
+            {
+              "damage": 6,
+              "source": "봉인 잔해 오른팔 휘두르기"
+            }
+          ],
+          "poses": [
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0.12000000000000008,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0.2399117695473251,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0.09248542274052465,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                -0.4662900874635568,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                -0.3768573173213925,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "reduced": false,
+      "fixtureOnly": true,
+      "invulnerableKing": true
+    },
+    {
+      "probes": 35,
+      "rows": [
+        {
+          "kind": "hand",
+          "hits": [],
+          "poses": [
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "footJump",
+          "hits": [],
+          "poses": [
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "coreSweepLeft",
+          "hits": [
+            {
+              "damage": 6,
+              "source": "봉인 잔해 왼팔 휘두르기"
+            }
+          ],
+          "poses": [
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "coreSweepRight",
+          "hits": [
+            {
+              "damage": 6,
+              "source": "봉인 잔해 오른팔 휘두르기"
+            }
+          ],
+          "poses": [
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 1.5707963267948966,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            },
+            {
+              "tilt": 0,
+              "lift": 0,
+              "squash": 0,
+              "lunge": 0,
+              "aim": 0,
+              "arms": [
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "reduced": true,
+      "fixtureOnly": true,
+      "invulnerableKing": true
+    }
+  ],
+  "errors": [],
+  "balanceEvidence": false,
+  "actualDevice": false
+}

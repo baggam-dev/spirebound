@@ -14,8 +14,10 @@ export function drawResurrectedKing(c,e,attack,time=0,{reduced=false,staticPose=
  c.save();c.translate(Math.round(e.x),Math.round(e.y));c.scale(face,1);c.imageSmoothingEnabled=false;
  c.translate(0,29);c.rotate(forced===null?motion.lean:0);c.translate(0,-29);
  const gait=locomotion(e,time,{staticPose,reduced,blocked:forced!==null||motion.blocked||e.frozen>0,stride:28});
- const draw=(index,alpha)=>{if(alpha<=0)return;const f=atlas.frames[index];c.save();c.globalAlpha*=alpha;drawWalkingFrame(c,{canvas:f,x:-f.width/2,y:29-f.height},gait,{feet:29,hip:14,weight:.65});c.restore();};
- if(forced!==null)draw(forced,1);else if(motion.from===motion.to)draw(motion.from,1);else{draw(motion.from,1-motion.mix);draw(motion.to,motion.mix);}
+ // These are distinct painted silhouettes. Alpha blending duplicates the face
+ // and halberd; use one clear key pose while weight shifts remain continuous.
+ const index=forced??(motion.mix<.5?motion.from:motion.to),f=atlas.frames[index];
+ drawWalkingFrame(c,{canvas:f,x:-f.width/2,y:29-f.height},gait,{feet:29,hip:14,weight:.65});
  c.restore();return true;
 }
 export function drawResurrectedDeath(c,f,options={}){

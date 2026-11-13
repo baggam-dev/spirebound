@@ -20,7 +20,10 @@ export function drawRemnant(c,e,time=0,{attack=null,reduced=false,staticPose=fal
   for(const side of [-1,1]){
    const sx=side<0?0:w-sideW,hinge=side<0?-w/2+sideW:w/2-sideW;
    const turn=m.arms[side<0?0:1];
-   c.save();c.translate(hinge,top+cut);c.rotate(turn);c.drawImage(f,sx,cut,sideW,h-cut,side<0?-sideW:0,0,sideW,h-cut);c.restore();
+   // Carry a short elbow overlap through the hinge so rotation cannot expose
+   // the straight crop edge between the moving forearm and fixed upper arm.
+   const overlap=18;
+   c.save();c.translate(hinge,top+cut);c.rotate(turn);c.drawImage(f,sx,cut-overlap,sideW,h-cut+overlap,side<0?-sideW:0,-overlap,sideW,h-cut+overlap);c.restore();
   }
  }else if(e.part==='hand'||e.part==='foot'){
   c.translate(Math.cos(m.aim)*m.lunge,Math.sin(m.aim)*m.lunge);c.translate(0,22);c.rotate(m.tilt);c.scale(1+m.squash*.65,1-m.squash);c.drawImage(f,-f.width/2,-f.height-m.lift);
