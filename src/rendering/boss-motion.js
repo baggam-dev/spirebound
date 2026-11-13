@@ -1,3 +1,4 @@
+import {upperAttackProgress} from '../combat/boss-pressure.js';
 import {DEMON_SWEEP,demonSweepSide,isDemonSweep} from '../combat/demon-sweep.js';
 import {CORE_MOTION} from '../combat/demon-core-motion.js';
 const clamp=n=>Math.max(0,Math.min(1,n));
@@ -66,8 +67,7 @@ export function kingWeaponMotion(e,{reduced=false,staticPose=false}={}){
  if(a){
   if(spell)return {from:3,to:3,mix:0,lean:0,blocked:true};
   if(a.moving)return {from:2,to:2,mix:0,lean:reduced?0:.035,blocked:true};
-  const fast=e.bossPressureVersion===1&&e.hp/e.max<=.3,windup=a.kind==='slash'?(fast?.32:.5):fast?.45:.65;
-  const charge=smooth(1-a.time/windup);
+  const charge=smooth(upperAttackProgress(e,a));
   return {from:0,to:1,mix:reduced?1:smooth(charge/.7),lean:reduced?0:-.018*charge,blocked:true};
  }
  return {from:0,to:0,mix:0,lean:0,blocked:false};

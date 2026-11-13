@@ -2,7 +2,7 @@ import {kingFloor,revisedBosses} from '../game/boss-layout.js';
 import {seekEnemyShot,enemyShotLane,clearEnemyShot} from './enemy-sightline.js';
 import {meleeIntersects} from './enemy-melee.js';
 import {enemyMovementGoal} from '../world/enemy-movement-goals.js';
-import {fastKing} from './boss-pressure.js';
+import {fastKing,upperAttackWindup} from './boss-pressure.js';
 import {moveBody,steering,segmentBlocked,safeSpawn} from '../world/terrain.js';
 import {emitShot} from './patterns.js';
 import {warningCount} from './tactics.js';
@@ -21,7 +21,7 @@ function walk(e,p,r,dt,speed){const a=steering(e,p,r.obstacles,22);moveBody(e,Ma
 function shot(e,a,bullets,speed=230){emitShot(e,a,speed,bullets);const b=bullets.at(-1);b.damage=9;b.source=e.variant==='king'?'타락한 왕의 검기':e.type==='astralSniper'?(e.gateTitle?'별의 눈, 베라 별빛 화살':'별자리 저격수 별빛 화살'):'상층 암흑탄';b.dark=true;}
 function ring(e,a,bullets){for(const offset of ringOffsets)shot(e,a.aim+offset,bullets,fastKing(e)?240:185);}
 function dashEnd(e,p,r){const end={x:Math.max(60,Math.min(900,p.x)),y:Math.max(80,Math.min(460,p.y))},steps=Math.max(1,Math.ceil(dist(e,end)/5));let last={x:e.x,y:e.y};for(let i=1;i<=steps;i++){const next={x:e.x+(end.x-e.x)*i/steps,y:e.y+(end.y-e.y)*i/steps};if(segmentBlocked(last,next,r.obstacles,25)){last.blocked=true;break;}last=next;}return last;}
-export function startUpperAttack(e,kind,p,r){const end=kind==='dash'?dashEnd(e,p,r):{x:p.x,y:p.y};e.darkAttack={kind,time:fastKing(e)?(kind==='judgment'?.8:kind==='slash'?.32:.45):kind==='judgment'?1.1:kind==='slash'?(e.type==='boss'?.5:.25):e.type==='astralSniper'?.6:e.variant==='king'&&kingPhase(e)>=2?.65:.85,x:e.x,y:e.y,tx:end.x,ty:end.y,aim:angle(e,p),step:0};if(kind==='dash'&&end.blocked)e.darkAttack.coverStopped=true;e.facing=e.darkAttack.aim;
+export function startUpperAttack(e,kind,p,r){const end=kind==='dash'?dashEnd(e,p,r):{x:p.x,y:p.y};e.darkAttack={kind,time:upperAttackWindup(e,kind),x:e.x,y:e.y,tx:end.x,ty:end.y,aim:angle(e,p),step:0};if(kind==='dash'&&end.blocked)e.darkAttack.coverStopped=true;e.facing=e.darkAttack.aim;
  if(kind==='ring'){const a=e.darkAttack.aim+(e.escapeDepth?(e.darkTurn??0)*.45:0);e.darkAttack.aim=Math.atan2(Math.sin(a),Math.cos(a));}
  if(kind==='judgment'){e.darkAttack.axis=(e.judgmentTurn??0)%2?'horizontal':'vertical';e.judgmentTurn=((e.judgmentTurn??0)+1)%2;}
  e.lastDarkAttack=kind;e.darkTurn=(e.darkTurn??0)+1;
@@ -33,12 +33,12 @@ function resolve(e,p,r,dt,bullets,hurt){const a=e.darkAttack;if(!a)return false;
  if(a.kind==='dash'){a.moving=true;a.elapsed=0;a.hit=false;return true;}
  const delta=Math.atan2(Math.sin(angle(e,p)-a.aim),Math.cos(angle(e,p)-a.aim));
  if(a.kind==='slash'&&meleeIntersects(e,p,a.aim,slashReach(e),1.15)&&!segmentBlocked(e,p,r.obstacles)){a.landed=true;hurt(9);}
- if(a.kind==='blink'){e.x=Math.max(60,Math.min(900,a.tx));e.y=Math.max(80,Math.min(460,a.ty));safeSpawn(e,r.obstacles,22);startUpperAttack(e,'slash',p,r);e.darkAttack.time=e.type==='boss'?(fastKing(e)?.32:.5):.25;return true;}
+ if(a.kind==='blink'){e.x=Math.max(60,Math.min(900,a.tx));e.y=Math.max(80,Math.min(460,a.ty));safeSpawn(e,r.obstacles,22);startUpperAttack(e,'slash',p,r);e.darkAttack.time=upperAttackWindup(e,'slash');return true;}
  if(a.kind==='mark'&&Math.hypot(p.x-a.tx,p.y-a.ty)<65)hurt(a.finisher?18:9);
- if(a.kind==='fan'&&(e.type==='boss'||enemyShotLane(e,a.aim,p,r.obstacles))){for(const offset of fanOffsets(e))shot(e,a.aim+offset,bullets,e.type==='astralSniper'?330:fastKing(e)?360:290);if(e.variant==='king'&&kingPhase(e)===1&&a.step===0){a.step=1;a.time=.28;return true;}}
+ if(a.kind==='fan'&&(e.type==='boss'||enemyShotLane(e,a.aim,p,r.obstacles))){for(const offset of fanOffsets(e))shot(e,a.aim+offset,bullets,e.type==='astralSniper'?330:fastKing(e)?360:290);if(e.variant==='king'&&kingPhase(e)===1&&a.step===0){a.step=1;a.time=upperAttackWindup(e,'fan',a);return true;}}
  if(a.kind==='ring')ring(e,a,bullets);
- if(a.kind==='judgment'){if(pointInStripe(p,judgmentStripe(a)))hurt(18);e.darkFlash={...a,time:.18};a.step++;if(a.step<4){a.time=fastKing(e)?.42:.65;return true;}e.darkAttack={kind:'mark',time:fastKing(e)?.75:1.1,x:e.x,y:e.y,tx:p.x,ty:p.y,aim:angle(e,p),step:2,finisher:true};return true;}
- if(a.kind==='slash'&&(e.gateTitle||e.variant==='king'&&kingPhase(e)>=2)&&a.step<(e.variant==='king'&&kingPhase(e)===3?2:1)){e.darkFlash={...a,time:.18};a.step++;a.aim=angle(e,p);e.facing=a.aim;a.time=e.type==='boss'?(fastKing(e)?.32:.5):e.gateTitle&&e.type==='starKnight'?.2:.25;return true;}
+ if(a.kind==='judgment'){if(pointInStripe(p,judgmentStripe(a)))hurt(18);e.darkFlash={...a,time:.18};a.step++;if(a.step<4){a.time=upperAttackWindup(e,'judgment',a);return true;}e.darkAttack={kind:'mark',time:upperAttackWindup(e,'mark',{finisher:true}),x:e.x,y:e.y,tx:p.x,ty:p.y,aim:angle(e,p),step:2,finisher:true};return true;}
+ if(a.kind==='slash'&&(e.gateTitle||e.variant==='king'&&kingPhase(e)>=2)&&a.step<(e.variant==='king'&&kingPhase(e)===3?2:1)){e.darkFlash={...a,time:.18};a.step++;a.aim=angle(e,p);e.facing=a.aim;a.time=upperAttackWindup(e,'slash',a);return true;}
  finish(e,a);return true;
 }
 export function tickUpperState(e,p,r,dt,bullets){
