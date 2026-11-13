@@ -44,7 +44,34 @@ try{
    }
    const s=newRun(77,{campaign:'expanded',bossLayoutVersion:1});s.floor=9;s.room=1;challengeKing(s);s.entryGrace=0;s.attack=999;s.invulnerable=999;const r=s.floors[9][1],e=r.enemies[0];e.hp=e.max*.29;e.kingStage=3;e.cd=0;startUpperAttack(e,'slash',s.player,r);
    let elapsed=0;for(const [col,time] of [0,.16,.33,.46,.65,.82,1.10].entries()){while(elapsed<time-1e-9){const dt=Math.min(.01,time-elapsed),result=stepRun(s,dt);tickMordoPresentation(r.enemies,dt,result.effects);elapsed+=dt;}paint(e,r,time,4,col,`king slash ${time.toFixed(2)}s`,true);}
-   return {image:sheet.toDataURL().split(',')[1],probes,rows,reduced,fixtureOnly:true,invulnerableKing:true};
+   // Body-only fixtures isolate hit pose replacement from retained contact VFX.
+   const state=await import('/src/rendering/mordo-presentation-state.js'),{drawUpper}=await import('/src/rendering/upper-visuals.js');
+   const {kingWeaponMotion,kingLocomotionBlocked}=await import('/src/rendering/boss-motion.js');
+   const {updateUpper,tickUpperState}=await import('/src/combat/upper-floors.js');
+   const {locomotion}=await import('/src/rendering/locomotion.js');
+   activateAssetFiles(['feedback-bosses-v1.png','mordo-phase1-reference-atlas.png','mordo-phase2-reference-atlas.png','mordo-phase3-reference-atlas.png']);
+   const feedback=await import('/src/rendering/feedback-sprites.js');
+   const loaded=await Promise.all([feedback.feedbackSpritesReadyFor(['bosses']),...(await Promise.all([1,2,3].map(i=>import(`/src/rendering/mordo-phase${i}-sprite.js`)))).map((m,i)=>m[`mordoPhase${i+1}SpriteReady`])]);
+   check(loaded.every(Boolean),'king body assets missing');
+   const body=document.createElement('canvas');body.width=960;body.height=540;const bc=body.getContext('2d'),hitCases=[];
+   function bodyImage(actor){bc.clearRect(0,0,960,540);drawUpper(bc,actor,1,reduced);return body.toDataURL();}
+   for(const phase of [1,2,3]){
+    state.clearMordoPresentation();const actor={id:100+phase,type:'boss',variant:'king',x:480,y:240,hp:[0,1000,500,250][phase],max:1000,kingStage:phase,resurrectionVersion:1};
+    const before=JSON.stringify(actor),image=bodyImage(actor);
+    for(let i=0;i<30;i++){const effects=[{enemyFeedback:'hit',enemyId:actor.id,beforeRatio:.3,afterRatio:i%2?.29:.25}];state.notifyMordoHits([actor],effects);state.tickMordoPresentation([actor],.01,effects);check(state.mordoPresentationPose(actor,{reduced})===null,'hit body pose returned');}
+    check(bodyImage(actor)===image,'hit changed body pixels');check(JSON.stringify(actor)===before,'hit view mutated actor');hitCases.push({phase,repeatedHits:30,bodyPixelsUnchanged:true});
+   }
+   const actor={id:200,type:'boss',variant:'king',x:480,y:180,hp:250,max:1000,kingStage:3,bossPressureVersion:1,guardClock:999},target={x:900,y:480},combatRoom={obstacles:[],enemies:[]};combatRoom.enemies=[actor];startUpperAttack(actor,'slash',target,combatRoom);updateUpper(actor,target,combatRoom,.32,[],()=>{});
+   tickUpperState(actor,target,combatRoom,.112,[]);updateUpper(actor,target,combatRoom,.112,[],()=>{});
+   const motion=kingWeaponMotion(actor,{reduced});check(actor.darkFlash.time>0,'combo fixture missed afterglow');check((motion.mix<.5?motion.from:motion.to)===1,'combo preparation hidden');check(bossPose(actor).stage==='windup','common combo preparation hidden');
+   const walker={id:201,type:'boss',variant:'king',x:480,y:180,hp:1000,max:1000,kingStage:1,cd:0},walkingRoom={obstacles:[],enemies:[]};walkingRoom.enemies=[walker];locomotion(walker,0);updateUpper(walker,target,walkingRoom,.05,[],()=>{});
+   check(walker.x!==480||walker.y!==180,'walking fixture never moved');check(!!walker.darkAttack,'walking fixture never attacked');check(!locomotion(walker,.05,{reduced,blocked:kingLocomotionBlocked(walker,bossPose(walker))}).moving,'attack started with walking feet');
+   const growth=await import('/src/progression/growth-records.js'),{encodeSave,parseSave}=await import('/src/persistence/storage.js'),{usePotion}=await import('/src/combat/abilities.js');
+   let recorded=newRun(78,{campaign:'expanded',bossLayoutVersion:1});recorded.floor=9;recorded.room=recorded.floors[9].findIndex(v=>v.type==='boss');challengeKing(recorded);const recordRoom=recorded.floors[9][recorded.room];recorded.player.hp=3;recorded.player.potions=2;
+   check(usePotion(recorded),'pre-tick potion failed');growth.tickBossRecord(recorded,recordRoom,2);growth.recordBossResource(recorded,'damageTaken',1);recordRoom.enemies[0].kingStage=3;recordRoom.enemies[0].hp=recordRoom.enemies[0].max*.25;growth.tickBossRecord(recorded,recordRoom,3);growth.recordBossResource(recorded,'damageTaken',2);
+   recorded=parseSave(encodeSave(recorded));const record=recorded.metrics.bossRecords[0];check(record.entry.hp===3&&record.entry.potions===2,'entry recorded after potion');check(record.seconds===5&&record.resources.damageTaken===3&&record.resources.potionsUsed===1,'resource save lost');check(JSON.stringify(record.stages.entries.map(v=>[v.stage,v.seconds,v.damageTaken]))==='[[1,2,1],[3,3,2]]','stage save lost or invented skipped stage');
+   const saveBefore=JSON.stringify(recorded),markup=growth.growthRecordMarkup(recorded);check(markup.includes('교전 첫 관찰')&&markup.includes('3단계 각성'),'journal missing new records');check(JSON.stringify(recorded)===saveBefore,'journal mutated saved run');
+   return {image:sheet.toDataURL().split(',')[1],probes,rows,reduced,hitCases,comboPreparationVisible:true,walkingAttackBlocked:true,recordSave:{entry:record.entry,stages:record.stages,resources:record.resources},fixtureOnly:true,invulnerableKing:true};
   },reduced);
   const {image,...report}=result;assert.equal(result.probes,35);await writeFile(join(out,`motion-${reduced}.png`),Buffer.from(image,'base64'));reports.push(report);
  }
