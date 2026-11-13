@@ -28,9 +28,9 @@ test('common king combo pose exposes followup preparation while preserving the f
   const saved=JSON.stringify(e);bossPose(e);assert.equal(JSON.stringify(e),saved);
  }
 });
-test('a hit pose already in progress yields immediately to a new attack and is not replayed afterwards',()=>{
+test('hits never replace the king body before, during or after an attack',()=>{
  clearMordoPresentation();const e=king(1);
- notifyMordoHits([e],[{enemyFeedback:'hit',enemyId:0,beforeRatio:.3,afterRatio:.27}]);assert.equal(mordoPresentationPose(e).pose,'heavy');
+ notifyMordoHits([e],[{enemyFeedback:'hit',enemyId:0,beforeRatio:.3,afterRatio:.27}]);assert.equal(mordoPresentationPose(e),null);
  e.darkAttack={kind:'slash',step:0,time:.32};assert.equal(mordoPresentationPose(e),null);
  tickMordoPresentation([e],.01);delete e.darkAttack;assert.equal(mordoPresentationPose(e),null);
 });
