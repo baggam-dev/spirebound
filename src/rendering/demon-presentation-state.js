@@ -1,7 +1,8 @@
+import {tickRemnantMotion,clearRemnantMotion} from './boss-motion.js';
 // Presentation state belongs to the view, never the enemy or saved room.
 let actors=new WeakMap();
 const core=e=>e?.variant==='demon'&&e.part==='core'&&e.hp>0;
-export const clearDemonPresentation=()=>{actors=new WeakMap();};
+export const clearDemonPresentation=()=>{actors=new WeakMap();clearRemnantMotion();};
 export function demonPresentationPriority(e,room){
  const d=room?.demon;
  return !!(e.frozen>0||e.opening>0||d?.attack||d?.attacks?.length||d?.coreFlash?.time>0||d?.sweepFlash?.time>0||d?.special||d?.flash?.time>0||d?.force?.time>0);
@@ -20,6 +21,7 @@ export function notifyDemonHits(room,effects=[]){
  }
 }
 export function tickDemonPresentation(room,dt,effects=[],events=[]){
+ tickRemnantMotion(room);
  // Phase events are emitted by actual simulation spawning, never on load/draw.
  const spawned=events.includes('demonPhase')&&room?.demon?.phase===3;
  for(const e of room?.enemies||[]){
