@@ -9,7 +9,7 @@ const base=process.env.BASE_URL||'http://localhost:5173',reports=[],errors=[];le
 const hook=`\nglobalThis.__bossQA={state:()=>s,reduced:v=>sound.update({reducedEffects:v}),async load(run){await lease.acquire();renderTitleScene=null;s=run;resetTransient();enterRoom(s);await prepareFloorAssets(s.floor,floorAssetOptions(s));resume();paused=true;},tick(){paused=false;update(1/60);paused=true;}};`;
 const browser=await chromium.launch({channel:'msedge',headless:true,args:['--mute-audio']});
 try{
- for(const width of (process.argv.includes('--fallback-only')?[]:[1280,844]))for(const reduced of [false,true]){
+ for(const width of (process.argv.includes('--fallback-only')?[]:[1280,844]))for(const reduced of (process.argv.includes('--warning-only')?[false]:[false,true])){
   const cx=await browser.newContext({viewport:{width,height:width===1280?800:390},isMobile:width===844,hasTouch:width===844}),page=await cx.newPage();
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/api/records'))submissions++;});
   await page.route('**/src/game/game.js',async route=>{const response=await route.fetch();await route.fulfill({response,body:await response.text()+hook});});

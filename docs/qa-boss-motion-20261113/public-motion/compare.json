@@ -1,0 +1,12 @@
+[
+  {
+    "sha256": "02B4A7C3A33DF0BE66E3A96D852D5F19B28BDC36BE0A177B6ECEFE01126ECFBB",
+    "matchesLocal": true,
+    "reduced": "false"
+  },
+  {
+    "sha256": "2A3B18A1EFCEC768209C0D1F9880CAD9FEA9B4BB3A48D2BA4CD4359CC00F8125",
+    "matchesLocal": true,
+    "reduced": "true"
+  }
+]

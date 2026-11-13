@@ -1,0 +1,19 @@
+✔ core sweep uses the same anatomical side as damage and returns continuously to neutral (2.2885ms)
+✔ part release observes actual recovery, does not replay on load, and cancels on phase/reset/death (1.3852ms)
+✔ king keeps spell flashes in casting pose, prepares from true fast slash clock, and preserves source state (0.408ms)
+✔ warden lift occurs only during the existing leap phase (2.7679ms)
+✔ prism charge and release follow real warning and beam timing (0.6213ms)
+✔ slime pose follows its own hazard, never another enemy warning (0.2721ms)
+✔ king windup changes to follow-through only after the real attack resolves (1.0154ms)
+✔ render pose is read-only and reconstructs identically after save or pause (0.9887ms)
+✔ first warning belongs only to the first real attack and ends before chained strikes (1.2996ms)
+✔ reload, cleared room state and dead king do not replay the first warning (1.1077ms)
+✔ final transition settles within its existing clock and static/reduced modes keep representative poses (0.5074ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 446.5629
