@@ -5,18 +5,25 @@ export function tickKingResurrection(enemies,dt){
  const events=[];
  for(const e of enemies){
   if(e.variant!=='king'||e.resurrectionVersion!==1)continue;
-  let v=actors.get(e);if(!v){actors.set(e,{stage:e.kingStage??1,age:null,bell:false});continue;}
+  let v=actors.get(e);if(!v){actors.set(e,{stage:e.kingStage??1,age:null,bell:false,waiting:false,first:null,step:0});continue;}
   const stage=e.kingStage??1;
-  if(e.hp>0&&v.stage<3&&stage===3&&e.kingTransition>0){v.age=0;v.bell=false;events.push('kingResurrection');}
+  if(e.hp>0&&v.stage<3&&stage===3&&e.kingTransition>0){v.age=0;v.bell=false;v.waiting=true;v.first=null;events.push('kingResurrection');}
   // Entry grace can freeze the combat transition even while updates continue.
   // Follow the actual transition clock so the reveal cannot end early.
   if(v.age!==null)v.age=Math.max(0,1.4-(e.kingTransition||0));
   v.stage=stage;
+  if(e.hp<=0||stage!==3){v.waiting=false;v.first=null;}
+  if(v.waiting&&!(e.kingTransition>0)&&e.darkAttack){v.waiting=false;v.first=e.darkAttack;v.step=e.darkAttack.step??0;}
+  if(v.first&&(v.first!==e.darkAttack||(e.darkAttack.step??0)!==v.step||e.darkAttack.moving))v.first=null;
   if(e.hp<=0||!(e.kingTransition>0)||v.age>=1.4){v.age=null;continue;}
   if(v.age!==null&&v.age>=.55&&!v.bell){v.bell=true;events.push('kingResurrectionBell');}
  }return events;
 }
 export function kingResurrectionAge(e){return actors.get(e)?.age??null;}
+export function kingFirstAttack(e){
+ const v=actors.get(e),a=e.darkAttack;
+ return e.hp>0&&!(e.kingTransition>0)&&v?.first===a&&a?.time>0&&!a.moving&&(a.step??0)===v.step?a:null;
+}
 export function drawKingResurrection(c,enemies,{reduced=false}={}){
  for(const e of enemies){const age=kingResurrectionAge(e);if(age===null||e.hp<=0)continue;
   const fade=Math.min(1,age/.2,(1.4-age)/.25);c.save();c.beginPath();c.rect(25,45,910,455);c.clip();

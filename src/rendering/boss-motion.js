@@ -53,7 +53,10 @@ export function kingWeaponMotion(e,{reduced=false,staticPose=false}={}){
  const a=e.darkAttack,f=e.darkFlash,kind=f?.kind||a?.kind;
  const spell=['mark','fan','ring','judgment','blink'].includes(kind);
  if(staticPose)return {from:0,to:0,mix:0,lean:0,blocked:true};
- if(e.kingTransition>0)return {from:3,to:3,mix:0,lean:0,blocked:true};
+ if(e.kingTransition>0){
+  const settle=e.kingStage===3?clamp(1-e.kingTransition/.28):0;
+  return {from:3,to:0,mix:reduced?(settle>.5?1:0):smooth(settle),lean:0,blocked:true};
+ }
  if(e.kneel>0)return {from:5,to:5,mix:0,lean:0,blocked:true};
  if(f?.time>0){
   if(spell)return {from:3,to:3,mix:0,lean:0,blocked:true};
