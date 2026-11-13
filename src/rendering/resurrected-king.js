@@ -1,7 +1,7 @@
 import {bossAtlas} from './boss-atlas.js';
 import {locomotion,drawWalkingFrame} from './locomotion.js';
 import {mordoPresentationPose} from './mordo-presentation-state.js';
-import {kingWeaponMotion} from './boss-motion.js';
+import {kingWeaponMotion,kingLocomotionBlocked} from './boss-motion.js';
 const atlas=bossAtlas('king-resurrection-poses-v1.png',[[145,104],[145,123],[165,106],[130,128],[145,104],[145,104]]);
 export const resurrectedKingReady=atlas.ready.then(()=>true);
 export const resurrectedKingState=atlas.state;
@@ -13,7 +13,7 @@ export function drawResurrectedKing(c,e,attack,time=0,{reduced=false,staticPose=
  const aim=e.darkAttack?.aim??e.darkFlash?.aim??e.facing??0,face=Math.cos(aim)<0?-1:1;
  c.save();c.translate(Math.round(e.x),Math.round(e.y));c.scale(face,1);c.imageSmoothingEnabled=false;
  c.translate(0,29);c.rotate(forced===null?motion.lean:0);c.translate(0,-29);
- const gait=locomotion(e,time,{staticPose,reduced,blocked:forced!==null||motion.blocked||e.frozen>0,stride:28});
+ const gait=locomotion(e,time,{staticPose,reduced,blocked:forced!==null||motion.blocked||kingLocomotionBlocked(e,attack),stride:28});
  // These are distinct painted silhouettes. Alpha blending duplicates the face
  // and halberd; use one clear key pose while weight shifts remain continuous.
  const index=forced??(motion.mix<.5?motion.from:motion.to),f=atlas.frames[index];

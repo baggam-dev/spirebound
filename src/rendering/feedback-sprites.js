@@ -1,3 +1,4 @@
+import {kingLocomotionBlocked} from './boss-motion.js';
 import {DeferredImage} from './asset-requests.js';
 import {locomotion,drawWalkingFrame,drawGlidingFrame} from './locomotion.js';
 import {applyRemainingBossPose} from './remaining-boss-presentation.js';
@@ -61,7 +62,7 @@ export function drawFeedbackSprite(c,e,time=0,{reduced=false,staticPose=false,at
  if(time!==m.time){if(Math.abs(e.x-m.x)>.1&&Math.abs(e.x-m.x)<36)m.face=Math.sign(e.x-m.x);m.x=e.x;m.time=time;}
  const aim=e.highAttack?.aim??e.meleeAttack?.aim??e.darkAttack?.aim??e.darkFlash?.aim??state.volley?.aim??state.snipe?.aim??state.ricochet?.aim??e.aim??e.facing;
  const face=forcedFace??(active&&Number.isFinite(aim)?(Math.cos(aim)<0?-1:1):staticPose?1:m.face);
- const blocked=active||e.kingTransition>0||e.kneel>0||state.transition>0||state.blinkFlash>0;
+ const blocked=active||e.variant==='king'&&kingLocomotionBlocked(e,attack)||e.kingTransition>0||e.kneel>0||state.transition>0||state.blinkFlash>0;
  const g=locomotion(e,time,{reduced,staticPose,blocked,stride:key==='brute'?30:24}),foot=key.startsWith('commander')?29:key==='brute'?24:21;
  c.save();if(!local)c.translate(Math.round(e.x),Math.round(e.y));
  const shadowWidth=['kald','vera'].includes(key)?43.2:36;c.fillStyle='#0005';c.fillRect(-shadowWidth/2,foot-2,shadowWidth,5);c.translate(0,(attack?.bodyY||0)-(attack?.lift||0));c.scale(face,1);c.imageSmoothingEnabled=false;

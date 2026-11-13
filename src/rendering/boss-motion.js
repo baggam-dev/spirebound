@@ -4,6 +4,9 @@ import {CORE_MOTION} from '../combat/demon-core-motion.js';
 const clamp=n=>Math.max(0,Math.min(1,n));
 const smooth=n=>{const t=clamp(n);return t*t*(3-2*t);};
 const out=n=>1-(1-clamp(n))**3;
+export function kingLocomotionBlocked(e,attack={}){
+ return !!(e.hp<=0||e.darkAttack||e.darkFlash?.time>0||e.kingTransition>0||e.kneel>0||e.opening>0||e.frozen>0||['windup','strike','channel','air','recover'].includes(attack?.stage));
+}
 let remnants=new WeakMap();
 export const clearRemnantMotion=()=>{remnants=new WeakMap();};
 // Observe simulation updates, never draw calls. No run/enemy/save fields added.
