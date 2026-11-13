@@ -22,9 +22,9 @@ test('part release observes actual recovery, does not replay on load, and cancel
  room.demon.recovery=0;tickRemnantMotion(room);e.hp=0;assert.equal(remnantMotion(e,room,null).lunge,0);
 });
 test('king keeps spell flashes in casting pose, prepares from true fast slash clock, and preserves source state',()=>{
- const e={hp:29,max:100,bossPressureVersion:1,darkAttack:{kind:'slash',time:.32}},before=JSON.stringify(e);
+ const e={type:'boss',variant:'king',hp:29,max:100,bossPressureVersion:1,darkAttack:{kind:'slash',time:.32}},before=JSON.stringify(e);
  assert.equal(kingWeaponMotion(e).mix,0);assert.equal(JSON.stringify(e),before);
- e.darkFlash={kind:'judgment',time:.18};assert.equal(kingWeaponMotion(e).from,3);
+ delete e.darkAttack;e.darkFlash={kind:'judgment',time:.18};assert.equal(kingWeaponMotion(e).from,3);
  e.darkFlash={kind:'slash',time:.001};assert.ok(kingWeaponMotion(e).mix>.99);
  assert.equal(kingWeaponMotion(e,{reduced:true}).lean,0);assert.equal(kingWeaponMotion(e,{staticPose:true}).from,0);
 });

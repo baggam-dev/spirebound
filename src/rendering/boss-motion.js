@@ -59,6 +59,12 @@ export function kingWeaponMotion(e,{reduced=false,staticPose=false}={}){
   return {from:3,to:0,mix:reduced?(settle>.5?1:0):smooth(settle),lean:reduced?0:-.012*(1-smooth(settle)),blocked:true};
  }
  if(e.kneel>0)return {from:5,to:5,mix:0,lean:0,blocked:true};
+ // A combo starts its next windup while the previous ground strike still fades.
+ // Keep the body's full windup visible; do not wait for that flash to expire.
+ if(a?.kind==='slash'&&a.step>0){
+  const charge=smooth(upperAttackProgress(e,a));
+  return {from:2,to:1,mix:reduced?1:smooth(charge/.45),lean:reduced?0:.035-.053*charge,blocked:true};
+ }
  if(f?.time>0){
   if(spell)return {from:3,to:3,mix:0,lean:0,blocked:true};
   const t=clamp(1-f.time/.18),recover=smooth((t-.55)/.45);
