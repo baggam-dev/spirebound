@@ -10,11 +10,14 @@ export function limitArrowImpacts(effects,max=24){
  return effects.filter(f=>!f.arrowImpact||skip--<=0);
 }
 // One short contact, three visual weights. No actor motion or gameplay clocks.
+export function prepareContactStyle(c){
+ c.globalCompositeOperation='source-over';c.setLineDash([]);c.lineCap='butt';c.lineJoin='miter';
+}
 export function drawImpactAccent(c,{x,y,age,angle=0,strength=0,reduced=false,color='#fff0c5',duration=.2}){
  if(age<0||age>=duration)return;
  const power=[1,1.45,1.9][Math.max(0,Math.min(2,strength))],fade=1-age/duration;
  const shard=(x,y,a,length,width,fill)=>{c.save();c.translate(x,y);c.rotate(a);c.fillStyle=fill;c.beginPath();c.moveTo(-length*.2,0);c.lineTo(length*.5,-width);c.lineTo(length,0);c.lineTo(length*.5,width);c.closePath();c.fill();c.restore();};
- c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(x),Math.round(y));c.rotate(angle);const alpha=c.globalAlpha;
+ c.save();prepareContactStyle(c);c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(x),Math.round(y));c.rotate(angle);const alpha=c.globalAlpha;
  if(age<.045){c.globalAlpha=alpha*(1-age/.045);shard(0,0,0,13*power,4*power,'#3b2c24');shard(0,0,0,10*power,1.8*power,color);if(strength&&!reduced)shard(0,0,Math.PI/2,5*power,1.4,color);}
  const count=reduced?(strength?3:2):3+strength*2;c.globalAlpha=alpha*fade**1.5;
  for(let i=0;i<count;i++){const a=-1.1+i*2.2/(count-1),r=(3+age*78)*power;shard(Math.cos(a)*r,Math.sin(a)*r*.55,a,Math.max(1,(6+strength*2)*fade),.8+strength*.4,i%2?'#c99b57':color);}
@@ -24,7 +27,7 @@ export function drawImpactAccent(c,{x,y,age,angle=0,strength=0,reduced=false,col
 export function drawGroundContact(c,{x,y,age,reduced=false,finishing=false}){
  if(age<0||age>=.26)return;
  const fade=1-age/.26,power=finishing?1.15:1,count=reduced?3:6;
- c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(x),Math.round(y));
+ c.save();prepareContactStyle(c);c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(x),Math.round(y));
  const alpha=c.globalAlpha;c.globalAlpha=alpha*fade*.35;c.fillStyle='#251e19';c.fillRect(-9,-2,18,4);
  for(let i=0;i<count;i++){
   const a=i*2.4,r=(6+age*75)*power,px=Math.cos(a)*r,py=Math.sin(a)*r*.3;
@@ -49,7 +52,7 @@ export function drawPrecisionBurst(c,f,reduced=false){
 export function drawSlashRibbon(c,radius,progress,{start=-1.2,end=1.2,color='#6caade',reduced=false,heavy=false}={}){
  const p=Math.max(0,Math.min(1,progress)),sweep=end-start,head=start+sweep*p,tail=start+sweep*Math.max(0,p-.55);
  if(head<=tail)return;
- c.save();c.globalAlpha*=Math.min(1,(1-p)*4);
+ c.save();prepareContactStyle(c);c.globalAlpha*=Math.min(1,(1-p)*4);
  const ribbon=(r,width,light)=>{
   for(let i=0;i<14;i++){
    const u=i/14,v=(i+1)/14,a=tail+(head-tail)*u,b=tail+(head-tail)*v,w=width*(.12+.88*Math.sin(u*Math.PI/2));
