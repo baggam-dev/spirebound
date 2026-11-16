@@ -12,12 +12,25 @@ export function limitArrowImpacts(effects,max=24){
 // One short contact, three visual weights. No actor motion or gameplay clocks.
 export function drawImpactAccent(c,{x,y,age,angle=0,strength=0,reduced=false,color='#fff0c5',duration=.2}){
  if(age<0||age>=duration)return;
- const power=[1,1.6,2.2][Math.max(0,Math.min(2,strength))],fade=1-age/duration;
+ const power=[1,1.45,1.9][Math.max(0,Math.min(2,strength))],fade=1-age/duration;
  const shard=(x,y,a,length,width,fill)=>{c.save();c.translate(x,y);c.rotate(a);c.fillStyle=fill;c.beginPath();c.moveTo(-length*.2,0);c.lineTo(length*.5,-width);c.lineTo(length,0);c.lineTo(length*.5,width);c.closePath();c.fill();c.restore();};
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(x),Math.round(y));c.rotate(angle);const alpha=c.globalAlpha;
- if(age<.045){c.globalAlpha=alpha*(1-age/.045);shard(0,0,0,14*power,6*power,'#3b2c24');shard(0,0,0,12*power,3*power,color);if(strength&&!reduced)shard(0,0,Math.PI/2,6*power,2,color);}
- const count=reduced?2:4+strength*2;c.globalAlpha=alpha*fade**1.5;
- for(let i=0;i<count;i++){const a=-1.2+i*2.4/(count-1),r=(4+age*105)*power;shard(Math.cos(a)*r,Math.sin(a)*r*.6,a,Math.max(1,(7+strength*3)*fade),1+strength*.5,i%2?'#c99b57':color);}
+ if(age<.045){c.globalAlpha=alpha*(1-age/.045);shard(0,0,0,13*power,4*power,'#3b2c24');shard(0,0,0,10*power,1.8*power,color);if(strength&&!reduced)shard(0,0,Math.PI/2,5*power,1.4,color);}
+ const count=reduced?(strength?3:2):3+strength*2;c.globalAlpha=alpha*fade**1.5;
+ for(let i=0;i<count;i++){const a=-1.1+i*2.2/(count-1),r=(3+age*78)*power;shard(Math.cos(a)*r,Math.sin(a)*r*.55,a,Math.max(1,(6+strength*2)*fade),.8+strength*.4,i%2?'#c99b57':color);}
+ c.restore();
+}
+// Low ground chips and dust belong to landings, not every hit on an enemy body.
+export function drawGroundContact(c,{x,y,age,reduced=false,finishing=false}){
+ if(age<0||age>=.26)return;
+ const fade=1-age/.26,power=finishing?1.15:1,count=reduced?3:6;
+ c.save();c.beginPath();c.rect(25,45,910,455);c.clip();c.translate(Math.round(x),Math.round(y));
+ const alpha=c.globalAlpha;c.globalAlpha=alpha*fade*.35;c.fillStyle='#251e19';c.fillRect(-9,-2,18,4);
+ for(let i=0;i<count;i++){
+  const a=i*2.4,r=(6+age*75)*power,px=Math.cos(a)*r,py=Math.sin(a)*r*.3;
+  c.globalAlpha=alpha*fade*(reduced?.35:.5);c.fillStyle='#897660';c.fillRect(Math.round(px-3),Math.round(py),6,2);
+  c.globalAlpha=alpha*fade*.85;c.fillStyle=i%2?'#9e8a6b':'#5d5344';c.beginPath();c.moveTo(px-2,py);c.lineTo(px,py-3-age*12);c.lineTo(px+3,py-1);c.closePath();c.fill();
+ }
  c.restore();
 }
 export function drawArrowImpact(c,f,reduced=false){

@@ -15,10 +15,10 @@ const load=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve
 // Optional art failure must leave the existing vector crossbow usable.
 export const crossbowArtReady=load.then(()=>true);
 export const crossbowArtState=()=>({ready:frames.length===4,frames:frames.length});
-export function drawCrossbowArt(c,t,{build=1,recoil=0,ending=false}={}){
+export function drawCrossbowArt(c,t,{build=1,recoil=0,ending=false,reduced=false}={}){
  if(frames.length!==4)return false;
- const i=ending?3:build<1?0:recoil>.15?2:1,f=frames[i];
+ const i=ending?3:build<1?0:recoil>.15?2:1,f=frames[i],base=frames[ending?3:build<1?0:1];
  c.save();c.imageSmoothingEnabled=false;
- c.drawImage(f.base,Math.round(f.x),Math.round(f.baseY));
- c.save();c.translate(0,-3);c.rotate(t.aim||0);c.translate(-recoil*5,0);c.drawImage(f.head,Math.round(f.x),Math.round(f.headY));c.restore();c.restore();return true;
+ c.drawImage(base.base,Math.round(base.x),Math.round(base.baseY));
+ c.save();c.translate(0,-3);c.rotate(t.aim||0);c.translate(-recoil*(reduced?1:5),0);c.drawImage(f.head,Math.round(f.x),Math.round(f.headY));c.restore();c.restore();return true;
 }

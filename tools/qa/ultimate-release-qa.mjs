@@ -18,9 +18,12 @@ try{
    const {activateAssetFiles}=await import('/src/rendering/asset-requests.js');activateAssetFiles(['crossbow-poses-v2.png']);const art=await import('/src/rendering/crossbow-art.js');await art.crossbowArtReady;if(!art.crossbowArtState().ready)throw Error('crossbow art missing');const v=await import('/src/rendering/ultimate-visuals.js');
    const canvas=document.createElement('canvas');canvas.width=960;canvas.height=920;const c=canvas.getContext('2d');c.fillStyle='#29313a';c.fillRect(0,0,960,920);c.font='14px monospace';c.fillStyle='#eee';c.fillText('ACTUAL CACHED ART / 0, 90, 180, 270 degrees',18,22);
    for(let row=0;row<4;row++)for(let col=0;col<4;col++){const x=120+col*240,y=135+row*215,aim=col*Math.PI/2;c.strokeStyle='#768594';c.lineWidth=1;c.beginPath();c.moveTo(x,y);c.lineTo(x+Math.cos(aim)*80,y+Math.sin(aim)*80);c.stroke();c.fillStyle='#eee';c.fillText(['DEPLOY','LOADED','RECOIL','FOLD'][row],x-45,y+65);c.save();c.translate(x-480,y-270);const t={x:480,y:270,time:row===0?13.95:12,clock:row===2?.6:.2,aim,build:{frost:1}};if(row===3)v.drawCrossbowEnding(c,{...t,time:.2},reduced);else v.drawCrossbow(c,t,reduced);c.restore();}
-   return {image:canvas.toDataURL().split(',')[1],art:art.crossbowArtState()};
+   const parts=[],spy={save(){},restore(){},translate(){},rotate(){},drawImage(...args){parts.push(args);}};
+   for(const recoil of [0,1])art.drawCrossbowArt(spy,{aim:0},{build:1,recoil,reduced});
+   if(parts.length!==4||parts[0][0]!==parts[2][0]||parts[0][1]!==parts[2][1]||parts[0][2]!==parts[2][2]||parts[1][0]===parts[3][0])throw Error('crossbow feet changed with firing head');
+   return {image:canvas.toDataURL().split(',')[1],art:art.crossbowArtState(),baseAnchored:true};
   },reduced);await writeFile(join(out,`crossbow-${width}-${reduced}.png`),Buffer.from(gallery.image,'base64'));
-  if(galleryOnly){reports.push({width,reduced,art:gallery.art});await cx.close();continue;}
+  if(galleryOnly){reports.push({width,reduced,art:gallery.art,baseAnchored:gallery.baseAnchored});await cx.close();continue;}
   const canvasChecks=await p.evaluate(async reduced=>{
    const v=await import('/src/rendering/ultimate-visuals.js'),a=await import('/src/rendering/arrow-impact-visuals.js');const c=document.createElement('canvas');c.width=960;c.height=540;const g=c.getContext('2d',{willReadFrequently:true});g.globalAlpha=.4;g.lineWidth=3;g.setLineDash([2,7]);const snapshot=()=>JSON.stringify([g.globalAlpha,g.lineWidth,g.getLineDash(),g.getTransform().toString(),g.strokeStyle,g.fillStyle,g.imageSmoothingEnabled]);const saved=snapshot();let probes=0;
    const check=(ok,msg)=>{if(!ok)throw Error(msg);};
