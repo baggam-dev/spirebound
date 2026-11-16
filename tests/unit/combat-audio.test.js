@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {combatHitCue,createCombatAudio} from '../../src/ui/combat-audio.js';
 function setup(){const calls=[],audio=createCombatAudio({play:name=>{calls.push(name);return true;}}),run={player:{evolutions:{ultimate:'burst'}}},room={turrets:[]};return {calls,audio,run,room};}
 test('contact audio selects the strongest real contact and ignores periodic health feedback',()=>{
- assert.equal(combatHitCue([{enemyFeedback:'hit'}]),null);assert.equal(combatHitCue([{arrowImpact:true}]),'hit');assert.equal(combatHitCue([{hitElement:'fire'},{slash:true}]),'slashHit');assert.equal(combatHitCue([{slash:true},{precisionBurst:true}]),'criticalHit');assert.equal(combatHitCue([],true),'slashHit');
+ assert.equal(combatHitCue([{enemyFeedback:'hit'}]),null);assert.equal(combatHitCue([{arrowImpact:true}]),'hit');assert.equal(combatHitCue([{hitElement:'fire'},{slash:true}]),'slashHit');assert.equal(combatHitCue([{slash:true},{precisionBurst:true}]),'precisionHit');assert.equal(combatHitCue([],true),'slashHit');
 });
 test('rain cast includes the immediate landing, then five falls and five real remaining impacts without duplicates',()=>{
  const {calls,audio,run,room}=setup(),z={elapsed:0,pulses:1};room.arrowRain=z;audio.prepare(run,room);audio.cast(run,room);

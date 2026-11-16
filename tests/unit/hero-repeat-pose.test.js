@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {newRun,currentRoom} from '../../src/game/engine.js';
 import {stepRun} from '../../src/game/simulation.js';
-import {notifyHeroShot,clearHeroShots,heroShotRecoil,heroShotProjectile} from '../../src/rendering/pixel-world.js';
+import {notifyHeroShot,clearHeroShots,heroShotRecoil,heroShotProjectile,observeHeroRoll} from '../../src/rendering/pixel-world.js';
 import {heroFrameIndex} from '../../src/rendering/hero-sprite.js';
 test('actual primary and delayed repeat releases show separate hero release poses',()=>{
  const s=newRun(42),r=currentRoom(s);s.player.repeat=1;s.invulnerable=999;r.obstacles=[];
@@ -23,4 +23,14 @@ test('hero facing selects its own released arrow and ignores turrets, passives a
  const own={vx:420,vy:0,life:3},run={projectiles:[own,{turretShot:true,life:3},{passive:'turret',life:3},{seeker:true,life:3},{delay:.1,life:3}]};
  assert.equal(heroShotProjectile(run),own);const repeat={vx:-420,vy:0,delay:0,life:2.99};run.projectiles.push(repeat);assert.equal(heroShotProjectile(run),repeat);
  assert.equal(heroShotProjectile({projectiles:[{enemy:true,life:3}]}),undefined);
+});
+
+test('roll and blade dash keep a view baseline and suppress old shot poses without changing the run',()=>{
+ for(const kind of [null,'slash','swift']){
+  const player=Object.freeze({x:400,y:300}),run=Object.freeze({player,attack:.8,roll:Object.freeze({x:-1,y:0,kind})});
+  const before=JSON.stringify(run);notifyHeroShot(player,2);const pose=observeHeroRoll(run,2.01);
+  assert.equal(pose.face,-1);assert.equal(pose.walk,0);assert.equal(pose.moving,false);assert.equal(heroShotRecoil(player,2.01),0);
+  assert.deepEqual(observeHeroRoll(run,2.01),pose);assert.equal(JSON.stringify(run),before);
+  assert.equal(observeHeroRoll({player},2.02),undefined);notifyHeroShot(player,2.03);assert.equal(heroShotRecoil(player,2.03),1);clearHeroShots(player);
+ }
 });

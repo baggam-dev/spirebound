@@ -45,6 +45,16 @@ function pose(e,time,attack=0,stride=.16){
  if(time!==p.time){const d=Math.hypot(e.x-p.x,e.y-p.y);if(d>.05&&d<40){p.walk+=d*stride;if(Math.abs(e.x-p.x)>.1)p.face=Math.sign(e.x-p.x);}if(attack>p.attack+.02)p.release=time;p.moving=d>.05&&d<40;p.x=e.x;p.y=e.y;p.time=time;p.attack=attack;}
  return {...p,step:p.moving?Math.round(Math.sin(p.walk)*3):0,recoil:heroShots.has(e)?heroShotRecoil(e,time):Math.max(0,1-(time-p.release)/.2)};
 }
+// The dedicated roll renderer bypasses the ordinary actor renderer. Keep its
+// position/facing baseline current without counting a dash as walking strides.
+export function observeHeroRoll(run,time){
+ if(!run?.roll)return;
+ pose(run.player,time,run.attack||0,.09);
+ const p=motion.get(run.player);p.x=run.player.x;p.y=run.player.y;p.time=time;p.walk=0;p.moving=false;p.release=-Infinity;
+ if(Math.abs(run.roll.x)>.1)p.face=Math.sign(run.roll.x);
+ heroShots.set(run.player,-Infinity);
+ return {...p,recoil:0};
+}
 function bow(c,x,y,pull=0){line(c,[[x,y-15],[x+5,y-11],[x+8,y],[x+5,y+11],[x,y+15]],ink,5);line(c,[[x,y-15],[x+5,y-11],[x+8,y],[x+5,y+11],[x,y+15]],'#c9a066',3);line(c,[[x,y-15],[x-pull,y],[x,y+15]],'#efe0b6',1);box(c,x-10-pull,y-1,23,2,'#f4deb0');diamond(c,x+14,y,3,'#d9e8df');}
 export function drawPixelActor(c,e,time=0,run=null,reduced=false){
  if(drawAmbusherSprite(c,e,time,reduced)||drawRingcasterSprite(c,e)||drawStraferSprite(c,e,time,reduced))return;

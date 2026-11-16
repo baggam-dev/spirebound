@@ -10,12 +10,12 @@ const CUES={
  shot:{gap:.17,notes:[[0,360,.055,'triangle',.011],[.025,240,.055,'triangle',.008]]},
  repeatShot:{gap:.09,group:'repeatShot',priority:1,notes:[[0,360,.055,'triangle',.011],[.025,240,.055,'triangle',.008]]},
  hit:{gap:.09,group:'contact',priority:1,notes:[[0,210,.055,'triangle',.018,90],[.006,950,.024,'square',.004,520]]},
- criticalHit:{gap:.18,group:'contact',priority:3,notes:[[0,145,.075,'triangle',.023,65],[.004,1250,.035,'square',.005,680],[.025,880,.09,'sine',.009,660]]},
+ precisionHit:{gap:.18,group:'contact',priority:3,notes:[[0,145,.075,'triangle',.023,65],[.004,1250,.035,'square',.005,680],[.025,880,.09,'sine',.009,660]]},
  slashHit:{gap:.17,group:'contact',priority:2,notes:[[0,230,.09,'sawtooth',.009,80],[.006,820,.035,'triangle',.015,300]]},
  rainCast:{gap:.5,group:'rain',priority:2,notes:[[0,165,.12,'triangle',.023,65],[.008,1100,.055,'triangle',.008,420]]},
  rainFall:{gap:.15,group:'rain',priority:1,notes:[[0,1000,.085,'sine',.008,350],[.012,640,.07,'triangle',.006,210]]},
  rainImpact:{gap:.17,group:'rain',priority:2,notes:[[0,155,.105,'triangle',.023,60],[.005,720,.034,'square',.005,260]]},
- rainFinal:{gap:.4,group:'rain',priority:3,notes:[[0,95,.15,'triangle',.026,42],[.005,750,.06,'square',.006,300],[.035,180,.12,'sine',.012,65]]},
+ rainFinal:{gap:.4,group:'rain',priority:4,notes:[[0,95,.15,'triangle',.026,42],[.005,750,.06,'square',.006,300],[.035,180,.12,'sine',.012,65]]},
  crossbowDeploy:{gap:.3,group:'mechanism',priority:1,notes:[[0,115,.12,'triangle',.018,80],[.045,480,.035,'square',.004,300]]},
  crossbowShot:{gap:.18,group:'crossbow',priority:2,notes:[[0,340,.09,'triangle',.019,100],[.004,1050,.03,'square',.005,450]]},
  crossbowRepeat:{gap:.09,group:'crossbowRepeat',priority:2,notes:[[0,340,.09,'triangle',.019,100],[.004,1050,.03,'square',.005,450]]},
@@ -52,7 +52,8 @@ export function createSoundSystem(storage,AudioCtor=globalThis.AudioContext||glo
   }catch{}},
   stopCombat(){clear(v=>v.bus==='combat'||v.bus==='alert');if(buses){buses.combat.gain.cancelScheduledValues?.(context.currentTime);buses.combat.gain.setValueAtTime(1,context.currentTime);}duckUntil=0;},
   stop(){clear(()=>true);last.clear();if(buses){buses.combat.gain.cancelScheduledValues?.(context.currentTime);buses.combat.gain.setValueAtTime(1,context.currentTime);}duckUntil=0;},
-  play(name){const cue=CUES[name];if(!cue||settings.muted||settings.volume===0||!context||context.state!=='running')return false;
+  play(name){if(name==='criticalHit')name='precisionHit'; // Legacy callers share the same cooldown and voice budget.
+   const cue=CUES[name];if(!cue||settings.muted||settings.volume===0||!context||context.state!=='running')return false;
    const now=context.currentTime,reward=['reward','xpElite','xpBoss','growth'].includes(name),bus=busOf(name),group=cue.group,priority=cue.priority||1;
    if(now-(last.get(name)??-Infinity)<cue.gap||reward&&now-(last.get('rewardFeedback')??-Infinity)<.2||group&&now-(last.get('group:'+group)??-Infinity)<(group==='contact'?.075:.045)&&priority<=(last.get('priority:'+group)??0))return false;
    for(const voice of voices)if(voice.until<=now)voices.delete(voice);

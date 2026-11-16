@@ -1,6 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readableEffects,drawCombatLabels} from '../../src/combat/combat-readability.js';
+test('compact multishot contacts share the accent budget while precision and warnings survive',()=>{
+ const arrows=Array.from({length:40},(_,i)=>Object.freeze({arrowImpact:true,x:i*50,y:100}));
+ const important=[{arrowImpact:true,precision:true},{precisionBurst:true,text:'약점!'},{thunder:true},{enemyFeedback:'death'}].map(Object.freeze);
+ const all=Object.freeze([...important,...arrows]),before=JSON.stringify(all),result=readableEffects(all,true);
+ assert.equal(result.filter(f=>f.arrowImpact&&!f.precision).length,16);for(const f of important)assert.ok(result.includes(f));assert.equal(JSON.stringify(all),before);
+ assert.equal(readableEffects(all,false),all);
+});
 test('compact rendering keeps critical feedback while bounding crowded accents',()=>{
  const important=[{text:'-1',hitSource:'boss'},{thunder:true},{enemyFeedback:'death'},{slash:true}];
  const accents=Array.from({length:40},(_,i)=>Object.freeze({x:i*50,y:90,hitElement:'fire'}));

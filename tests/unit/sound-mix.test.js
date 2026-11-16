@@ -15,6 +15,11 @@ class Audio{
  createOscillator(){const o={frequency:new Param(),stops:[],connect(to){this.to=to;},disconnect(){},start(t){this.startAt=t;},stop(t){this.stops.push(t);}};this.oscs.push(o);return o;}
 }
 function setup(){const sound=createSoundSystem({getItem:()=>null,setItem(){}},Audio);sound.unlock();return {sound,a:Audio.last};}
+test('precision sound and its legacy name share cooldown; the real rain finale survives busy contact audio',()=>{
+ const {sound,a}=setup();assert.equal(sound.play('precisionHit'),true);assert.equal(sound.play('criticalHit'),false);
+ assert.equal(sound.play('rainCast'),true);assert.equal(sound.play('crossbowShot'),true);assert.equal(sound.play('rainFinal'),true);assert.equal(sound.play('rainFinal'),false);
+ a.currentTime+=.2;assert.equal(sound.play('criticalHit'),true);assert.equal(sound.play('precisionHit'),false);
+});
 test('repeat shot cues survive the primary shot gap and still suppress duplicate calls',()=>{
  for(const [primary,repeat] of [['shot','repeatShot'],['crossbowShot','crossbowRepeat']]){
   const {sound,a}=setup();assert.equal(sound.play(primary),true);a.currentTime+=.16;
