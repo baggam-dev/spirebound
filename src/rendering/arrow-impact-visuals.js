@@ -1,7 +1,8 @@
 // A contact accent for plain and precision arrows, including lethal hits.
 // Elemental arrows already have dedicated contact visuals.
-export function arrowImpactEffect(arrow,point){
- if(arrow.frostShard||['fire','frost','poison','chain'].includes(arrow.element))return null;
+export function arrowImpactEffect(arrow,point,elementContacts=null){
+ const elemental=elementContacts!==null?elementContacts.length>0:arrow.element==='poison'||arrow.elemental!==false&&['fire','frost','chain'].includes(arrow.element);
+ if(arrow.frostShard||elemental)return null;
  return {arrowImpact:true,x:point.x,y:point.y,angle:Math.atan2(arrow.vy,arrow.vx),precision:arrow.element==='precision',t:.2,duration:.2};
 }
 export function limitArrowImpacts(effects,max=24){
