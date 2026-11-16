@@ -1,0 +1,23 @@
+{
+  "reports": [
+    {
+      "width": 1280,
+      "overflow": {
+        "width": 947,
+        "scroll": 947
+      },
+      "savedFixture": true,
+      "actualDevice": false
+    },
+    {
+      "width": 844,
+      "overflow": {
+        "width": 844,
+        "scroll": 844
+      },
+      "savedFixture": true,
+      "actualDevice": false
+    }
+  ],
+  "errors": []
+}

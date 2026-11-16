@@ -1,0 +1,142 @@
+{
+  "reports": [
+    {
+      "width": 1280,
+      "reduced": false,
+      "remnant": {
+        "floor": 7,
+        "layout": 1,
+        "parts": [
+          "hand",
+          "foot"
+        ],
+        "pressure": null,
+        "actualReduced": false
+      },
+      "king": {
+        "stage": 3,
+        "age": 0.6166666666666659,
+        "flag": 1,
+        "actualReduced": false
+      },
+      "finished": {
+        "age": null,
+        "transition": 0,
+        "cues": [],
+        "layout": 1
+      },
+      "first": {
+        "kind": "judgment",
+        "step": 0,
+        "time": 0.8
+      },
+      "noReplay": true
+    },
+    {
+      "width": 1280,
+      "reduced": true,
+      "remnant": {
+        "floor": 7,
+        "layout": 1,
+        "parts": [
+          "hand",
+          "foot"
+        ],
+        "pressure": null,
+        "actualReduced": true
+      },
+      "king": {
+        "stage": 3,
+        "age": 0.6166666666666659,
+        "flag": 1,
+        "actualReduced": true
+      },
+      "finished": {
+        "age": null,
+        "transition": 0,
+        "cues": [],
+        "layout": 1
+      },
+      "first": {
+        "kind": "judgment",
+        "step": 0,
+        "time": 0.8
+      },
+      "noReplay": true
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "remnant": {
+        "floor": 7,
+        "layout": 1,
+        "parts": [
+          "hand",
+          "foot"
+        ],
+        "pressure": null,
+        "actualReduced": false
+      },
+      "king": {
+        "stage": 3,
+        "age": 0.6166666666666659,
+        "flag": 1,
+        "actualReduced": false
+      },
+      "finished": {
+        "age": null,
+        "transition": 0,
+        "cues": [],
+        "layout": 1
+      },
+      "first": {
+        "kind": "judgment",
+        "step": 0,
+        "time": 0.8
+      },
+      "noReplay": true
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "remnant": {
+        "floor": 7,
+        "layout": 1,
+        "parts": [
+          "hand",
+          "foot"
+        ],
+        "pressure": null,
+        "actualReduced": true
+      },
+      "king": {
+        "stage": 3,
+        "age": 0.6166666666666659,
+        "flag": 1,
+        "actualReduced": true
+      },
+      "finished": {
+        "age": null,
+        "transition": 0,
+        "cues": [],
+        "layout": 1
+      },
+      "first": {
+        "kind": "judgment",
+        "step": 0,
+        "time": 0.8
+      },
+      "noReplay": true
+    }
+  ],
+  "fallback": {
+    "remnant": false,
+    "king": false,
+    "playing": true,
+    "saved": true
+  },
+  "errors": [],
+  "submissions": 0,
+  "actualDevice": false,
+  "audioListening": false
+}

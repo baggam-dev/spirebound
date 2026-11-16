@@ -8,7 +8,7 @@ import {hitEnemy} from '../../src/progression/progression.js';
 function canvas(){
  const calls=[],stack=[],c={globalAlpha:.4,calls};
  c.save=()=>stack.push(c.globalAlpha);c.restore=()=>{c.globalAlpha=stack.pop();};
- for(const op of ['beginPath','closePath','rect','clip','translate','rotate','scale','moveTo','lineTo','stroke','fill','fillRect'])c[op]=(...args)=>{
+ for(const op of ['setLineDash','beginPath','closePath','rect','clip','translate','rotate','scale','moveTo','lineTo','stroke','fill','fillRect'])c[op]=(...args)=>{
   assert.ok(args.every(x=>typeof x!=='number'||Number.isFinite(x)),op);
   assert.ok(c.globalAlpha>=0&&c.globalAlpha<=.4,op);
   calls.push({op,args,alpha:c.globalAlpha});

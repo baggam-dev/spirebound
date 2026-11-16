@@ -9,7 +9,7 @@ import {drawRepeatedCrossbowRelease} from '../../src/rendering/ultimate-visuals.
 test('only the actual delayed crossbow departure emits a muzzle, at its original source rather than the moving hero',()=>{
  for(const turret of [false,true]){
   let s=newRun(42);const r=currentRoom(s);s.attack=999;s.invulnerable=999;s.player.repeat=1;r.obstacles=[];
-  r.enemies=[{id:1,type:'chaser',x:900,y:300,hp:10000,max:10000,frozen:999,cd:999}];
+  r.enemies=[{id:1,type:'chaser',x:900,y:300,hp:10000,max:10000,frozen:4,cd:999}];
   emitWeaponVolley(s.projectiles,weaponSnapshot(s.player),s.player,r.enemies[0],1,turret);
   assert.equal(stepRun(s,.1).effects.some(f=>f.turretMuzzle),false);s.player.x=520;
   const result=stepRun(s,.07),flashes=result.effects.filter(f=>f.turretMuzzle);

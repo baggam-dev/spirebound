@@ -1,0 +1,14 @@
+✔ contact renderers preserve frozen effects and incoming opacity in both modes (5.0118ms)
+✔ reduced chain retains its real endpoints without mutating target coordinates (0.3541ms)
+✔ precision accent follows the existing burst cadence and expires before its label (1.3423ms)
+✔ slash ribbon is deterministic, bounded by its radius, and has less decoration when reduced (2.7852ms)
+✔ only the actual delayed crossbow departure emits a muzzle, at its original source rather than the moving hero (126.2992ms)
+✔ repeat muzzle lives in the structure pass, follows the shot angle and restores draw state in both modes (50.1929ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 943.6459
