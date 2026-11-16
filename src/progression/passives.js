@@ -3,7 +3,7 @@ import {fairyPosition} from '../combat/fairy-position.js';
 import {drawFairy} from '../rendering/companion-roll-art.js';
 import {tickFairyKing} from '../combat/fairy-king.js';
 import {weaponSnapshot,emitWeaponVolley,emitSeeker,retireTurret,tickTurretEndings,turretEndings} from '../combat/weapon-projectiles.js';
-import {drawArrowRain,drawCrossbow,drawCrossbowEnding} from '../rendering/ultimate-visuals.js';
+import {drawArrowRain,drawCrossbow,drawCrossbowEnding,drawRepeatedCrossbowRelease} from '../rendering/ultimate-visuals.js';
 import {CROSSBOW} from '../combat/combat-tuning.js';
 import {hasRelic,relicStat,hexFactor} from './relics.js';
 import {bindDefenses,enemyDamageFactor,absorbDemonShield} from '../combat/enemy-defense.js';
@@ -27,7 +27,7 @@ export function tickPassives(s,dt){const r=s.floors[s.floor][s.room],p=s.player;
   if(t.time<=0)retireTurret(r,t);
  }r.turrets=(r.turrets||[]).filter(t=>t.time>0);r.passiveArcs=(r.passiveArcs||[]).map(a=>({...a,time:a.time-dt})).filter(a=>a.time>0);
 }
-export function drawUltimateStructures(ctx,s,reduced=false){const r=s.floors[s.floor][s.room];ctx.save();for(const t of r.turrets||[])drawCrossbow(ctx,t,reduced);for(const t of turretEndings(r))drawCrossbowEnding(ctx,t,reduced);ctx.restore();}
+export function drawUltimateStructures(ctx,s,reduced=false,{effects=[]}={}){const r=s.floors[s.floor][s.room];ctx.save();for(const t of r.turrets||[])drawCrossbow(ctx,t,reduced);for(const t of turretEndings(r))drawCrossbowEnding(ctx,t,reduced);for(const f of effects)if(f.turretMuzzle)drawRepeatedCrossbowRelease(ctx,f,reduced);ctx.restore();}
 export function drawPassives(ctx,s,reduced=false,{structures=true}={}){const r=s.floors[s.floor][s.room],p=s.player;ctx.save();if(r.arrowRain)drawArrowRain(ctx,r.arrowRain,reduced);
  if(structures)drawUltimateStructures(ctx,s,reduced);
  if(hasRelic(p,'orbitBlades'))for(let i=0;i<2;i++){const a=s.elapsed*2.5+i*Math.PI;ctx.save();ctx.translate(p.x+Math.cos(a)*65,p.y+Math.sin(a)*65);ctx.rotate(a);ctx.fillStyle='#eaf4ff';ctx.fillRect(-3,-15,6,25);ctx.fillStyle='#c6a35b';ctx.fillRect(-7,8,14,4);ctx.restore();}

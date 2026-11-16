@@ -8,7 +8,7 @@ import {crossbowArtReady,crossbowArtState} from '../../src/rendering/crossbow-ar
 import {drawPassives,drawUltimateStructures} from '../../src/progression/passives.js';
 function canvas(){
  const calls=[],stack=[],c={globalAlpha:.4,calls};c.save=()=>stack.push(c.globalAlpha);c.restore=()=>{c.globalAlpha=stack.pop();};
- for(const op of ['beginPath','closePath','rect','clip','translate','rotate','moveTo','lineTo','stroke','fill','fillRect','arc','drawImage'])c[op]=(...args)=>{assert.ok(args.every(a=>typeof a!=='number'||Number.isFinite(a)),op);assert.ok(c.globalAlpha>=0&&c.globalAlpha<=.4,op);calls.push({op,args,alpha:c.globalAlpha});};
+ for(const op of ['setLineDash','beginPath','closePath','rect','clip','translate','rotate','moveTo','lineTo','stroke','fill','fillRect','arc','drawImage'])c[op]=(...args)=>{assert.ok(args.every(a=>typeof a!=='number'||Number.isFinite(a)),op);assert.ok(c.globalAlpha>=0&&c.globalAlpha<=.4,op);calls.push({op,args,alpha:c.globalAlpha});};
  return c;
 }
 test('rain graphics stay pure at all six real damage pulses and retain the real clip in both modes',()=>{

@@ -43,6 +43,13 @@ export function drawCrossbowRelease(c,v,{reduced=false,tint='#e4cf9d'}={}){
  if(!reduced){line(c,[[30,-1],[36,-6]],tint,1);line(c,[[30,1],[36,6]],tint,1);line(c,[[-17,-4],[-20-v.recoil*3,0],[-17,4]],'#ead9aa',1);}
  c.restore();
 }
+// Ephemeral release effects come from the actual delayed projectile boundary.
+export function drawRepeatedCrossbowRelease(c,f,reduced=false){
+ if(!f.turretMuzzle||!(f.t>0))return false;
+ const recoil=clamp(f.t/f.duration);
+ c.save();clipArena(c);c.translate(Math.round(f.x),Math.round(f.y)-3);c.rotate(f.angle);
+ drawCrossbowRelease(c,{recoil:.35+.65*recoil},{reduced,tint:f.color});c.restore();return true;
+}
 function drawCrossbowLegacy(c,t,reduced=false){const v=turretVisualState(t);if(t.time<=0)return;c.save();clipArena(c);c.translate(Math.round(t.x),Math.round(t.y));c.globalAlpha*=v.opacity;const alpha=c.globalAlpha;
  // Feet deploy outward; the mechanism can still fire immediately as before.
  box(c,-20,12,40,7,'#0c151c88');
