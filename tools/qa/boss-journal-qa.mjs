@@ -15,6 +15,7 @@ try{for(const width of [1280,844]){
   let s=newRun(78,{campaign:'expanded',bossLayoutVersion:1});s.floor=9;s.room=s.floors[9].findIndex(v=>v.type==='boss');challengeKing(s);const room=s.floors[9][s.room];s.player.hp=3;s.player.potions=2;usePotion(s);growth.tickBossRecord(s,room,2);growth.recordBossResource(s,'damageTaken',1);room.enemies[0].kingStage=3;growth.tickBossRecord(s,room,3);s=parseSave(encodeSave(s));await __journalQA.load(s);__journalQA.open();
  });
  const overlay=p.locator('#overlay');await overlay.getByText('교전 첫 관찰',{exact:false}).first().waitFor();assert.ok((await overlay.innerText()).includes('3단계 각성'));
+ await overlay.getByText('교전 첫 관찰',{exact:false}).first().scrollIntoViewIfNeeded();
  const overflow=await overlay.evaluate(e=>({width:e.clientWidth,scroll:e.scrollWidth}));assert.ok(overflow.scroll<=overflow.width+2,JSON.stringify(overflow));
  await p.screenshot({path:join(out,`journal-${width}.png`)});reports.push({width,overflow,savedFixture:true,actualDevice:false});await cx.close();
 }assert.deepEqual(errors,[]);await writeFile(join(out,'result.json'),JSON.stringify({reports,errors},null,2));}finally{await browser.close();}

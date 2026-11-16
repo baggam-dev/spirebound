@@ -1,0 +1,250 @@
+{
+  "base": "https://168.107.21.43",
+  "reports": [
+    {
+      "width": 1280,
+      "reduced": false,
+      "assets": {
+        "walk": 8,
+        "actions": 8,
+        "uniqueWalk": 8,
+        "clearEdges": true
+      },
+      "frames": [
+        {
+          "time": 0.3,
+          "phase": "0",
+          "frame": "2"
+        },
+        {
+          "time": 0.78,
+          "phase": "0",
+          "frame": "6"
+        },
+        {
+          "time": 1.44,
+          "phase": "0",
+          "frame": "4"
+        },
+        {
+          "time": 2.04,
+          "phase": "1",
+          "frame": "1"
+        },
+        {
+          "time": 2.44,
+          "phase": "1",
+          "frame": "2"
+        },
+        {
+          "time": 3.22,
+          "phase": "1",
+          "frame": "1"
+        },
+        {
+          "time": 3.92,
+          "phase": "2",
+          "frame": "6"
+        },
+        {
+          "time": 4.58,
+          "phase": "2",
+          "frame": "4"
+        },
+        {
+          "time": 5.25,
+          "phase": "2",
+          "frame": "4"
+        }
+      ],
+      "pauseStable": true,
+      "animation": {
+        "duration": 5.8,
+        "visibleWalkFrames": 8
+      }
+    },
+    {
+      "width": 1280,
+      "reduced": true,
+      "assets": {
+        "walk": 8,
+        "actions": 8,
+        "uniqueWalk": 8,
+        "clearEdges": true
+      },
+      "frames": [
+        {
+          "time": 0.3,
+          "phase": "0",
+          "frame": "0"
+        },
+        {
+          "time": 0.78,
+          "phase": "0",
+          "frame": "0"
+        },
+        {
+          "time": 1.44,
+          "phase": "0",
+          "frame": "0"
+        },
+        {
+          "time": 2.04,
+          "phase": "1",
+          "frame": "1"
+        },
+        {
+          "time": 2.44,
+          "phase": "1",
+          "frame": "2"
+        },
+        {
+          "time": 3.22,
+          "phase": "1",
+          "frame": "0"
+        },
+        {
+          "time": 3.92,
+          "phase": "2",
+          "frame": "4"
+        },
+        {
+          "time": 4.58,
+          "phase": "2",
+          "frame": "4"
+        },
+        {
+          "time": 5.25,
+          "phase": "2",
+          "frame": "4"
+        }
+      ],
+      "pauseStable": true,
+      "animation": null
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "assets": {
+        "walk": 8,
+        "actions": 8,
+        "uniqueWalk": 8,
+        "clearEdges": true
+      },
+      "frames": [
+        {
+          "time": 0.3,
+          "phase": "0",
+          "frame": "2"
+        },
+        {
+          "time": 0.78,
+          "phase": "0",
+          "frame": "6"
+        },
+        {
+          "time": 1.44,
+          "phase": "0",
+          "frame": "4"
+        },
+        {
+          "time": 2.04,
+          "phase": "1",
+          "frame": "1"
+        },
+        {
+          "time": 2.44,
+          "phase": "1",
+          "frame": "2"
+        },
+        {
+          "time": 3.22,
+          "phase": "1",
+          "frame": "1"
+        },
+        {
+          "time": 3.92,
+          "phase": "2",
+          "frame": "6"
+        },
+        {
+          "time": 4.58,
+          "phase": "2",
+          "frame": "4"
+        },
+        {
+          "time": 5.25,
+          "phase": "2",
+          "frame": "4"
+        }
+      ],
+      "pauseStable": true,
+      "animation": {
+        "duration": 5.8,
+        "visibleWalkFrames": 8
+      }
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "assets": {
+        "walk": 8,
+        "actions": 8,
+        "uniqueWalk": 8,
+        "clearEdges": true
+      },
+      "frames": [
+        {
+          "time": 0.3,
+          "phase": "0",
+          "frame": "0"
+        },
+        {
+          "time": 0.78,
+          "phase": "0",
+          "frame": "0"
+        },
+        {
+          "time": 1.44,
+          "phase": "0",
+          "frame": "0"
+        },
+        {
+          "time": 2.04,
+          "phase": "1",
+          "frame": "1"
+        },
+        {
+          "time": 2.44,
+          "phase": "1",
+          "frame": "2"
+        },
+        {
+          "time": 3.22,
+          "phase": "1",
+          "frame": "0"
+        },
+        {
+          "time": 3.92,
+          "phase": "2",
+          "frame": "4"
+        },
+        {
+          "time": 4.58,
+          "phase": "2",
+          "frame": "4"
+        },
+        {
+          "time": 5.25,
+          "phase": "2",
+          "frame": "4"
+        }
+      ],
+      "pauseStable": true,
+      "animation": null
+    }
+  ],
+  "errors": [],
+  "isolatedRenderer": true,
+  "actualDevice": false
+}

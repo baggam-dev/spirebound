@@ -28,6 +28,11 @@ try{
   if(process.argv.includes('--visual-only')&&!['auto','reduced'].includes(kind))continue;
   if(process.argv.includes('--recovery-only')&&['auto','space'].includes(kind))continue;
   const {c,p,requests,release}=await open(kind,width,height);console.log('case '+kind+' '+width);
+  // Public cold downloads can exercise the intentional 15s fallback under
+  // concurrent asset QA. Separate animation/interaction checks from transport.
+  if(process.argv.includes('--warm-entrance')&&!['held','timeout','asset-fail','save-fail','practice'].includes(kind)){
+   const ready=await p.evaluate(async()=>{const {prepareEntranceArt}=await import('/src/ui/entrance-scene.js');for(let i=0;i<3;i++)if(await prepareEntranceArt())return true;return false;});assert.equal(ready,true,'public entrance warmup');
+  }
   if(kind==='practice'){await p.locator('#bossPractice').click();await p.locator('#practiceBoss').selectOption('warden');await p.locator('#rollPractice').click();await p.locator('#launchPractice').click();await game(p);assert.equal(await p.evaluate(()=>window.__entranceCount),0);assert.equal(requests.some(f=>f.startsWith('entrance-')),false);results.push({kind,width,noReplay:true});await c.close();continue;}
   // Isolate queued-skip from the independent 15s art timeout: warm only the
   // normal first-floor pack, while the entrance images remain unrequested.
