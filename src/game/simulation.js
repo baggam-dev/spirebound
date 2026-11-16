@@ -144,7 +144,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  for(const b of s.projectiles){
   if(b.life<=0)continue;
   if(b.ricochet){if(advanceRicochet(b,dt,r.obstacles,p))hurt(9,b.source||'반사탄',null,{x:p.x-b.vx,y:p.y-b.vy});if(p.hp<=0)break;continue;}
-  let travelDt=dt;if(b.delay>0){travelDt=Math.max(0,dt-b.delay);b.delay=Math.max(0,b.delay-dt);if(b.delay>0)continue;if(!b.turretShot){b.x=p.x;b.y=p.y;}}if(!b.enemy)steerArrow(b,r.enemies,r.obstacles,travelDt,segmentBlocked);
+  let travelDt=dt;if(b.delay>0){travelDt=Math.max(0,dt-b.delay);b.delay=Math.max(0,b.delay-dt);if(b.delay>0)continue;if(!b.enemy)events.push(b.turretShot?'crossbowRepeat':'repeatShot');if(!b.turretShot){b.x=p.x;b.y=p.y;}}if(!b.enemy)steerArrow(b,r.enemies,r.obstacles,travelDt,segmentBlocked);
   if(b.demonCurve){const turn=b.demonCurve*travelDt,c=Math.cos(turn),sin=Math.sin(turn),vx=b.vx;b.vx=vx*c-b.vy*sin;b.vy=vx*sin+b.vy*c;}
   const next={x:b.x+b.vx*travelDt,y:b.y+b.vy*travelDt};b.life-=travelDt;
   if(b.enemy){const t=collisionTime(b,next,p,15);if(t!==Infinity&&!segmentBlocked(b,{x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t},r.obstacles,3)){const before=p.hp;hurt(b.damage??10,b.source||'적 탄환',null,{x:p.x-b.vx,y:p.y-b.vy});if(b.frostArrow&&p.hp<before)p.frostSlow=Math.max(p.frostSlow||0,1.35);b.life=0;}}

@@ -15,6 +15,12 @@ class Audio{
  createOscillator(){const o={frequency:new Param(),stops:[],connect(to){this.to=to;},disconnect(){},start(t){this.startAt=t;},stop(t){this.stops.push(t);}};this.oscs.push(o);return o;}
 }
 function setup(){const sound=createSoundSystem({getItem:()=>null,setItem(){}},Audio);sound.unlock();return {sound,a:Audio.last};}
+test('repeat shot cues survive the primary shot gap and still suppress duplicate calls',()=>{
+ for(const [primary,repeat] of [['shot','repeatShot'],['crossbowShot','crossbowRepeat']]){
+  const {sound,a}=setup();assert.equal(sound.play(primary),true);a.currentTime+=.16;
+  assert.equal(sound.play(repeat),true);assert.equal(sound.play(repeat),false);
+ }
+});
 test('distinct contact weights can supersede weaker sounds and danger ducks only the combat bus',()=>{
  const {sound,a}=setup();assert.equal(sound.play('hit'),true);assert.equal(sound.play('slashHit'),true);assert.equal(sound.play('criticalHit'),true);assert.equal(sound.play('hit'),false);assert.equal(sound.play('criticalHit'),false);
  const frequencies=a.oscs.map(o=>o.frequency.events.find(e=>e[0]==='set')?.[1]);assert.ok(frequencies.includes(210)&&frequencies.includes(230)&&frequencies.includes(145));

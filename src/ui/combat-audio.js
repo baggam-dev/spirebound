@@ -23,11 +23,13 @@ export function createCombatAudio(sound){
     sound.play('crossbowDeploy');turrets=new Map((room.turrets||[]).map(t=>[t,turrets.get(t)||observeTurret(t)]));
    }else if(room.arrowRain){sound.play('rainCast');rain={ref:room.arrowRain,pulses:room.arrowRain.pulses,fallFor:-1};}
   },
-  update(nextRun,nextRoom,effects=[]){
+  update(nextRun,nextRoom,effects=[],events=[]){
    if(!nextRun||!nextRoom){reset();return;}if(!attach(nextRun,nextRoom))return;
    const q=run.roll||roll?.ref,oldHits=roll&&q===roll.ref?roll.hits:0,slash=q?.kind==='slash'&&(q.hit?.length||0)>oldHits;
    roll=run.roll?{ref:run.roll,hits:run.roll.hit?.length||0}:null;
    const hit=combatHitCue(effects,slash);if(hit)sound.play(hit);
+   if(events.includes('repeatShot'))sound.play('repeatShot');
+   if(events.includes('crossbowRepeat'))sound.play('crossbowRepeat');
    const z=room.arrowRain;
    if(!z)rain=null;
    else if(rain?.ref!==z)rain=observeRain(z); // Loaded/replaced state never replays past pulses.
