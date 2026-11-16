@@ -1,6 +1,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readableEffects,drawCombatLabels} from '../../src/combat/combat-readability.js';
+test('mobile blasts and elemental contacts survive newer ordinary hits without increasing the budget',()=>{
+ const blast=Object.freeze({playerBlast:'fire',x:20,y:20}),element=Object.freeze({hitElement:'frost',x:80,y:20});
+ const arrows=Array.from({length:30},(_,i)=>Object.freeze({arrowImpact:true,x:i*50,y:100}));
+ const glints=Array.from({length:30},(_,i)=>Object.freeze({enemyFeedback:'hit',x:i*50,y:200}));
+ const effects=Object.freeze([blast,element,...arrows,...glints]),before=JSON.stringify(effects),visible=readableEffects(effects,true);
+ assert.equal(visible.length,16);assert.ok(visible.includes(blast)&&visible.includes(element));assert.equal(visible.filter(f=>f.arrowImpact).length,14);assert.equal(visible.some(f=>f.enemyFeedback==='hit'),false);
+ assert.deepEqual(visible,[blast,element,...arrows.slice(-14)]);assert.equal(JSON.stringify(effects),before);
+});
+test('mobile priority selection deduplicates within each contact family and retains mixed important effects',()=>{
+ const old={hitElement:'fire',x:1,y:1},latest={...old},blast={playerBlast:'fire',x:1,y:1};
+ const important=[{text:'약점!',hitElement:'fire'},{enemyFeedback:'death',hitElement:'fire'},{thunder:true,hitElement:'chain'}];
+ const effects=[old,blast,latest,...important];assert.deepEqual(readableEffects(effects,true),[blast,latest,...important]);assert.equal(readableEffects(effects,false),effects);
+});
 test('compact multishot contacts share the accent budget while precision and warnings survive',()=>{
  const arrows=Array.from({length:40},(_,i)=>Object.freeze({arrowImpact:true,x:i*50,y:100}));
  const important=[{arrowImpact:true,precision:true},{precisionBurst:true,text:'약점!'},{thunder:true},{enemyFeedback:'death'}].map(Object.freeze);

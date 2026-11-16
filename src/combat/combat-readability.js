@@ -2,10 +2,16 @@ import {characterSizes} from '../rendering/character-sizes.js';
 // Rendering-only density control. Damage, bullets, hazards and hit directions stay intact.
 export function readableEffects(effects,compact=false){
  if(!compact)return effects;
- const cells=new Set(),keep=new Set();let accents=0;
+ const cells=new Set(),keep=new Set(),tiers=[[],[],[],[]];let accents=0;
  for(let i=effects.length-1;i>=0;i--){const f=effects[i];
-  if(f.precisionBurst||f.precision||(!f.arrowImpact&&!f.hitElement&&!f.playerBlast&&!f.synergyEffect&&f.enemyFeedback!=='hit')){keep.add(f);continue;}
-  const key=`${Math.floor(f.x/40)},${Math.floor(f.y/40)},${f.hitElement||f.playerBlast||f.synergyEffect||(f.arrowImpact?'arrow':'glint')}`;
+  if(f.text||f.precisionBurst||f.precision||f.thunder||f.enemyFeedback==='death'||(!f.arrowImpact&&!f.hitElement&&!f.playerBlast&&!f.synergyEffect&&f.enemyFeedback!=='hit')){keep.add(f);continue;}
+  tiers[f.playerBlast||f.synergyEffect?3:f.hitElement?2:f.arrowImpact?1:0].push(f);
+ }
+ // A late ordinary hit must not consume the space needed by a real blast or
+ // elemental contact. Newest-first within a tier; drawing order stays unchanged.
+ for(let tier=3;tier>=0;tier--)for(const f of tiers[tier]){
+  const family=f.playerBlast?'blast:'+f.playerBlast:f.synergyEffect?'synergy:'+f.synergyEffect:f.hitElement?'element:'+f.hitElement:f.arrowImpact?'arrow':'glint';
+  const key=`${Math.floor(f.x/40)},${Math.floor(f.y/40)},${family}`;
   if(accents<16&&!cells.has(key)){cells.add(key);keep.add(f);accents++;}
  }
  return effects.filter(f=>keep.has(f));
