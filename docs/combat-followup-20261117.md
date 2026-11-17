@@ -15,3 +15,8 @@
 사용자 다음수정. 이전draw관찰은tickRoll이마지막이동후s.roll을삭제하면최종대쉬좌표를보행으로읽는경계가남았다. game.update에서stepRun전roll참조보관→직후observeHeroRoll(s,s.elapsed,beforeRoll)로최종좌표/방향기준동기화→실shot/repeatShot통지순으로연결. observeHeroRoll은종료된roll참조를선택인자로받으며run/player필드변이없이WeakMap시각이력만갱신. 렌더사이에여러고정틱이돌거나벽에막혀조기종료되어도관찰경로가유지된다. 기존draw관찰은남아반복그리기안정성유지. 외형/보행키·발도원화/회피속도거리판정/실사격간격피해/AI·저장랭킹변경없음.
 회귀1건작성만: 실제castRoll→stepRun(duration)으로roll삭제확인→종료참조로최종좌표·왼쪽방향/보행0/과거발사억제→같은시각실새발사재관찰시자세복귀·run무변이. 기존반복/roll회귀보존. 정적stepRun종료/실발사통지/room리셋순서 및 git diff --check 통과. 테스트/구문실행/서버/브라우저QA/청취/푸시배포/공개조회없음. 누적신규6미실행, 실제모션체감미확인.
 수정 src/game/game.js,src/rendering/pixel-world.js,tests/unit/hero-repeat-pose.test.js 및상세/기록. 이전로컬9f9f884/6e67ad2보존. 다음새배포지시시누적6/관련전체·기본/발도/가속회피끝·벽조기종료/반복샷/정지·리로드·다수전·입장순서QA→필요수정→버전검토푸시배포공개확인. 운영마지막0.56/runtime0f53e31/증거b62a5de·이번조회없음. 실행중명령/서버없음·차단없음. 로컬커밋·누적미푸시미배포.
+
+## 로딩 중 일시정지·재개 경계 로컬 수정 완료 (2026-11-17)
+사용자 다음수정. loadCurrentFloor 중복방지조건이원정/층/귀환만보고mode를보지않아 기존로드대기중pause→resume시새재개요청을막는경계를수정. floorLoadMatches(task,run,mode,loadingMode)로원정참조/층/귀환/현재화면을함께판단, 같은로딩화면에서만중복차단. 이전task와현재task의참조가다르면비동기완료/실패·finally가새화면을건드리지않는기존identity가드유지. 대기전/첫층팩후/RAF후/실패가드에도같은조건을적용해타원정·층이동·귀환전환·일시정지화면으로늦게덮어쓰지않게함. 기본/하강로딩구분·최대15초입장준비/기존팩promise재사용·게임시계저장·전투디자인유지.
+수정 game.js,신규ui/floor-loading-state.js·tests/unit/floor-loading-state.test.js,public-https QA대조목록에새모듈추가. 회귀3건작성만(로드자체중복/일시정지·title·warmup재개허용,원정복제/층·귀환변경/무변이,하강vs일반화면구분). 정적중복/완료/실패/finally·재개호출순서/배포src자동허용규칙·git diff --check 통과. 테스트/구문실행/서버/브라우저QA/청취/푸시배포/공개조회없음. 누적신규9미실행/실UI재개미확인.
+이전로컬9f9f884/6e67ad2/f0f1727보존. 운영마지막0.56/runtime0f53e31/증거b62a5de(이번조회없음). 다음새명시배포지시시누적9/전체와입장대기·층팩대기중blur/회전→resume·취소→새원정·귀환·하강·자산실패·스킵·기존전투QA묶음검증→필요수정→버전검토/푸시배포공개확인. 실행중명령/서버없음·차단없음. 수정/회귀/기록로컬커밋·누적미푸시미배포.

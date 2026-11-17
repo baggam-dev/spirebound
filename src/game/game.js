@@ -1,3 +1,4 @@
+import {floorLoadMatches} from '../ui/floor-loading-state.js';
 import {clearKingResurrection,tickKingResurrection,drawKingResurrection} from '../rendering/king-resurrection.js';
 import {startBossClear,resetBossClear,advanceBossClear,drawBossClear} from '../rendering/boss-clear.js';
 import {drawHighFloorGround} from '../rendering/high-floor-vfx.js';
@@ -233,8 +234,8 @@ async function showEntrance(){
 let floorLoading=null;
 async function loadCurrentFloor(){
  if(!s||s.status!=='playing')return;
- if(floorLoading?.run===s&&floorLoading.floor===s.floor&&floorLoading.returning===!!s.key)return;
  const transition=journey.current(s),descending=transition?.kind==='descent',loadingMode=descending?'journey-descent':'floor-loading';
+ if(floorLoadMatches(floorLoading,s,mode,loadingMode))return;
  const task={run:s,floor:s.floor,returning:!!s.key,options:floorAssetOptions(s)};stop(loadingMode);floorLoading=task;
  if(descending)journeyPanel('descent');else{
   panel('<small>SPIREBOUND</small><h2>'+(s.floor+1)+'층 · '+escapeHtml(floorNames[s.floor]||'탑의 길')+'</h2><p role="status">탑의 길을 여는 중…</p><button id="loadingBack">입구로</button>');
@@ -244,16 +245,16 @@ async function loadCurrentFloor(){
   // On a new run the entrance art was already requested. Let its bounded
   // preparation finish before the large first-floor pack competes for bandwidth.
   if(entrance.queued(task.run)&&entranceAssets)await entranceAssets;
-  if(floorLoading!==task||s!==task.run||s.floor!==task.floor||mode!==loadingMode)return;
+  if(floorLoading!==task||!floorLoadMatches(task,s,mode,loadingMode))return;
   await waitForAssets(prepareFloorAssets(task.floor,task.options));
-  if(floorLoading!==task||s!==task.run||s.floor!==task.floor||mode!==loadingMode)return;
+  if(floorLoading!==task||!floorLoadMatches(task,s,mode,loadingMode))return;
   // Warm room-specific terrain caches while the opaque loading screen is still present.
   mode='floor-warmup';draw();mode=loadingMode;if(descending)drawDescentBase(transition);
   await new Promise(resolve=>requestAnimationFrame(resolve));
-  if(floorLoading!==task||s!==task.run||s.floor!==task.floor||mode!==loadingMode)return;
+  if(floorLoading!==task||!floorLoadMatches(task,s,mode,loadingMode))return;
   floorLoading=null;if(document.hidden||mobilePortrait())pause('화면으로 돌아온 뒤 계속 탐험을 눌러주세요.');else if(descending)journey.markReady(s,transition);else resume();
  }catch{
-  if(floorLoading!==task||s!==task.run||s.floor!==task.floor||mode!==loadingMode)return;
+  if(floorLoading!==task||!floorLoadMatches(task,s,mode,loadingMode))return;
   stop('floor-loading');save();panel('<h2>그림을 불러오지 못했습니다</h2><p>진행은 보존했습니다. 연결을 확인한 뒤 다시 불러오세요.</p><button id="loadingReload">다시 불러오기</button><button id="loadingBack">입구로</button>');
   $('overlay').firstElementChild.classList.add('floor-loading-panel');button('loadingReload',()=>location.reload());button('loadingBack',title);
  }finally{if(floorLoading===task)floorLoading=null;}
