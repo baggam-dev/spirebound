@@ -2,9 +2,21 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {newRun,currentRoom} from '../../src/game/engine.js';
 import {stepRun} from '../../src/game/simulation.js';
-import {notifyHeroShot,clearHeroShots,heroShotRecoil,heroShotProjectile,observeHeroRoll} from '../../src/rendering/pixel-world.js';
+import {notifyHeroShot,clearHeroShots,heroShotRecoil,heroShotProjectile,heroShotFacing,observeHeroRoll} from '../../src/rendering/pixel-world.js';
 import {heroFrameIndex} from '../../src/rendering/hero-sprite.js';
 import {castRoll} from '../../src/combat/roll.js';
+test('observed shot facing survives projectile removal or steering only during that release',()=>{
+ const player=Object.freeze({x:400,y:300}),arrow={vx:-420},before=JSON.stringify(player);notifyHeroShot(player,2);
+ assert.equal(heroShotFacing(player,2,arrow),-1);arrow.vx=420;
+ assert.equal(heroShotFacing(player,2.05,arrow),-1);assert.equal(heroShotFacing(player,2.1),-1);assert.equal(heroShotFacing(player,2.21),0);
+ notifyHeroShot(player,2.22);assert.equal(heroShotFacing(player,2.22,{vx:420}),1);assert.equal(JSON.stringify(player),before);
+ clearHeroShots(player);assert.equal(heroShotFacing(player,2.23,{vx:-420}),0);
+});
+test('unobserved or vertical releases never invent a facing and a roll clears recorded direction',()=>{
+ const player={x:400,y:300};notifyHeroShot(player,2);assert.equal(heroShotFacing(player,2),0);assert.equal(heroShotFacing(player,2,{vx:0}),0);
+ assert.equal(heroShotFacing(player,2,{vx:-420}),-1);observeHeroRoll({player,roll:{x:1,y:0}},2.01);assert.equal(heroShotFacing(player,2.01),0);
+ notifyHeroShot(player,2.02);assert.equal(heroShotFacing(player,2.02),0);clearHeroShots(player);
+});
 
 test('the final simulation roll step supplies a baseline even after the action deletes itself',()=>{
  const s=newRun(43),r=currentRoom(s);r.obstacles=[];r.enemies=[];s.entryGrace=0;

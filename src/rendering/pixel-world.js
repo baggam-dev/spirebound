@@ -23,10 +23,15 @@ import {drawElementNock,drawSkillTrail} from './skill-visuals.js';
 import {segmentBlocked} from '../world/terrain.js';
 // Presentation only: animation history never enters the saved run or combat RNG.
 const motion = new WeakMap();
-let heroShots=new WeakMap();
-export function notifyHeroShot(player,time){if(player&&Number.isFinite(time))heroShots.set(player,time);}
-export function clearHeroShots(player){if(player){heroShots.delete(player);motion.delete(player);}else heroShots=new WeakMap();}
+let heroShots=new WeakMap(),heroShotFaces=new WeakMap();
+export function notifyHeroShot(player,time){if(player&&Number.isFinite(time)){heroShots.set(player,time);heroShotFaces.delete(player);}}
+export function clearHeroShots(player){if(player){heroShots.delete(player);heroShotFaces.delete(player);motion.delete(player);}else{heroShots=new WeakMap();heroShotFaces=new WeakMap();}}
 export function heroShotRecoil(player,time){const age=time-(heroShots.get(player)??-Infinity);return age>=0?Math.max(0,1-age/.2):0;}
+export function heroShotFacing(player,time,projectile){
+ if(!(heroShotRecoil(player,time)>0))return 0;
+ if(!heroShotFaces.has(player)&&Number.isFinite(projectile?.vx)&&Math.abs(projectile.vx)>20)heroShotFaces.set(player,Math.sign(projectile.vx));
+ return heroShotFaces.get(player)||0;
+}
 export function heroShotProjectile(run){return run?.projectiles?.findLast(b=>!b.enemy&&!b.passive&&!b.turretShot&&!b.seeker&&!(b.delay>0)&&b.life>2.7);}
 const ink = '#111720';
 const palettes = {fire:['#ff713d','#ffe7a0'],frost:['#71c9ef','#e8fcff'],poison:['#73cc68','#d7ff99'],chain:['#a18aff','#f5e9ff'],precision:['#dbc18a','#fff0c6']};
@@ -53,6 +58,7 @@ export function observeHeroRoll(run,time,roll=run?.roll){
  const p=motion.get(run.player);p.x=run.player.x;p.y=run.player.y;p.time=time;p.walk=0;p.moving=false;p.release=-Infinity;
  if(Math.abs(roll.x)>.1)p.face=Math.sign(roll.x);
  heroShots.set(run.player,-Infinity);
+ heroShotFaces.delete(run.player);
  return {...p,recoil:0};
 }
 function bow(c,x,y,pull=0){line(c,[[x,y-15],[x+5,y-11],[x+8,y],[x+5,y+11],[x,y+15]],ink,5);line(c,[[x,y-15],[x+5,y-11],[x+8,y],[x+5,y+11],[x,y+15]],'#c9a066',3);line(c,[[x,y-15],[x-pull,y],[x,y+15]],'#efe0b6',1);box(c,x-10-pull,y-1,23,2,'#f4deb0');diamond(c,x+14,y,3,'#d9e8df');}
@@ -63,7 +69,8 @@ export function drawPixelActor(c,e,time=0,run=null,reduced=false){
  box(c,boss?-30:-15,17,boss?60:30,5,'#0005');
  if(hero){
   const shot=p.recoil>0&&heroShotProjectile(run);
-  if(shot&&Math.abs(shot.vx)>20){p.face=Math.sign(shot.vx);const history=motion.get(run.player);if(history)history.face=p.face;}
+  const shotFace=heroShots.has(run?.player)?heroShotFacing(run.player,time,shot):shot&&Math.abs(shot.vx)>20?Math.sign(shot.vx):0;
+  if(shotFace){p.face=shotFace;const history=motion.get(run.player);if(history)history.face=p.face;}
   const preparing=shotPreparation(run);
   c.scale(p.face,1);drawHero(c,p,time,bow);if(preparing){c.save();c.translate(29,-2);drawElementNock(c,preparing.element,preparing.charge);c.restore();}
  }else if(boss){
