@@ -1,6 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readableEffects,drawCombatLabels,combatEffectVisible} from '../../src/combat/combat-readability.js';
+test('pickup space is reserved before combat labels regardless of effect drawing order',()=>{
+ const pickup=Object.freeze({text:'정수 +1',essencePickup:true,x:480,y:200,t:1}),weakness=Object.freeze({text:'약점!',precisionBurst:true,x:480,y:286,t:1});
+ const before=JSON.stringify([pickup,weakness]);
+ for(const labels of [[weakness,pickup],[pickup,weakness]]){
+  const positions=[],c={save(){},restore(){},measureText(){return {width:100};},strokeText(){},fillText(text,x,y){positions.push({text,x,y});}};
+  drawCombatLabels(c,Object.freeze(labels),true);assert.equal(positions.find(p=>p.text==='정수 +1').y,286);assert.equal(positions.find(p=>p.text==='약점!').y,264);
+  assert.deepEqual(positions.map(p=>p.text),labels.map(f=>f.text));
+ }
+ assert.equal(JSON.stringify([pickup,weakness]),before);
+});
 test('mobile and reduced budgets retain direct elemental contacts before newer secondary shards',()=>{
  const direct=Array.from({length:4},(_,i)=>({hitElement:'frost',x:i*50,y:80})),shards=Array.from({length:30},(_,i)=>({hitElement:'frost',small:true,x:i*50,y:180})),all=[...direct,...shards];
  for(const [compact,reduced] of [[true,false],[false,true],[true,true]])assert.deepEqual(readableEffects(all,compact,reduced),[...direct,...shards.slice(-12)]);

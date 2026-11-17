@@ -25,11 +25,19 @@ export function readableEffects(effects,compact=false,reduced=false){
 export function drawCombatLabels(c,effects,compact=false){
  const labels=effects.filter(f=>f.text),essences=labels.filter(f=>f.essencePickup),placed=[];let row=0;
  c.save();c.textAlign='center';c.strokeStyle='#101016';c.lineWidth=4;
+ // Reserve the fixed pickup stack before placing combat labels, even when
+ // pickup effects occur later in the original drawing order.
+ const pickupBoxes=compact?essences.map((f,i)=>{
+  c.font='bold 15px Galmuri, monospace';
+  const width=Math.min(884,c.measureText(f.text).width),margin=width/2+8,base=essences[0];
+  return {x:Math.max(margin,Math.min(960-margin,base.x)),y:Math.max(62,Math.min(485,Math.max(80,Math.min(470-18*(essences.length-1),base.y+86))+i*18)),width,height:16};
+ }):[];
+ placed.push(...pickupBoxes);
  for(const f of labels){
   c.font=`bold ${compact?(f.essencePickup?15:18):20}px Galmuri, monospace`;
   let x=f.x,y=f.y-(1-f.t)*22-(f.hitSource?Math.max(0,characterSizes.hero-55):0);
   if(compact&&f.essencePickup){
-   const base=essences[0];x=base.x;y=Math.max(80,Math.min(470-18*(essences.length-1),base.y+86))+row++*18;
+   const reserved=pickupBoxes[row++];x=reserved.x;y=reserved.y;
   }
   if(compact){
    const width=Math.min(884,c.measureText(f.text).width),height=f.essencePickup?16:20,margin=width/2+8;
@@ -43,7 +51,7 @@ export function drawCombatLabels(c,effects,compact=false){
      y=candidate;break search;
     }
    }
-   placed.push({x,y,width,height});
+   if(!f.essencePickup)placed.push({x,y,width,height});
   }
   c.fillStyle=f.color;c.strokeText(f.text,x,y);c.fillText(f.text,x,y);
  }
