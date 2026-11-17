@@ -1,5 +1,6 @@
 import {ENTRANCE_DURATION,entranceMotion} from './entrance-state.js';
-let preparation=null,gatePreparation=null;
+import {createCachedPreparation} from '../rendering/asset-wait.js';
+let gatePreparation=null;
 const load=name=>new Promise(resolve=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=()=>resolve(null);image.src=new URL('../../assets/images/'+name,import.meta.url).href;});
 function leafBounds(image,side){
  const c=document.createElement('canvas');c.width=image.naturalWidth;c.height=image.naturalHeight;const g=c.getContext('2d',{willReadFrequently:true});g.drawImage(image,0,0);const d=g.getImageData(0,0,c.width,c.height).data,start=Math.floor(side*c.width/2),end=Math.floor((side+1)*c.width/2);let left=end,right=start,top=c.height,bottom=-1;
@@ -23,12 +24,7 @@ function actorFrames(image){
   frames.push({body,shadow,x:left-200,height:bottom-top+1});
  }return frames;
 }
-export function prepareEntranceArt(){
- if(preparation)return preparation;
- const work=(async()=>{const [plates,gate,walkImage,actionImage]=await Promise.all([load('entrance-plates-v1.png'),prepareGateDoors(),load('entrance-hero-walk-v2.png'),load('entrance-hero-actions-v2.png')]);if(!plates||!gate||!walkImage||!actionImage)return null;const walk=actorFrames(walkImage),actions=actorFrames(actionImage),ratio=plates.naturalWidth/(plates.naturalHeight/2);return walk&&actions&&ratio>1.6&&ratio<1.9?{plates,...gate,walk,actions}:null;})();
- preparation=new Promise(resolve=>{const timer=setTimeout(()=>resolve(null),15000);work.then(value=>{clearTimeout(timer);resolve(value);},()=>{clearTimeout(timer);resolve(null);});});
- const current=preparation;current.then(value=>{if(!value&&preparation===current)preparation=null;});return current;
-}
+export const prepareEntranceArt=createCachedPreparation(async()=>{const [plates,gate,walkImage,actionImage]=await Promise.all([load('entrance-plates-v1.png'),prepareGateDoors(),load('entrance-hero-walk-v2.png'),load('entrance-hero-actions-v2.png')]);if(!plates||!gate||!walkImage||!actionImage)return null;const walk=actorFrames(walkImage),actions=actorFrames(actionImage),ratio=plates.naturalWidth/(plates.naturalHeight/2);return walk&&actions&&ratio>1.6&&ratio<1.9?{plates,...gate,walk,actions}:null;});
 export const entranceMarkup=()=>'<div class="entrance-scene"><canvas class="entrance-canvas" aria-hidden="true"></canvas><p id="entranceSubtitle" role="status" hidden>돌아갈 길은 닫혔다.</p><button id="entranceSkip" type="button">건너뛰기 <span aria-hidden="true">▸</span></button></div>';
 const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n)),ease=n=>{n=clamp(n);return n*n*(3-2*n);};
 function exteriorLife(c,t,phase,reduced){
