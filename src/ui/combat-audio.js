@@ -31,7 +31,12 @@ export function createCombatAudio(sound){
    if(events.includes('repeatShot'))sound.play('repeatShot');
    if(events.includes('crossbowRepeat'))sound.play('crossbowRepeat');
    const z=room.arrowRain;
-   if(!z)rain=null;
+   if(!z){
+    // tickRain can perform the last real landing and remove its room reference
+    // in one step. The observed object still proves whether a landing occurred.
+    if(rain&&rain.ref.pulses>rain.pulses)sound.play(rain.ref.pulses>=6?'rainFinal':'rainImpact');
+    rain=null;
+   }
    else if(rain?.ref!==z)rain=observeRain(z); // Loaded/replaced state never replays past pulses.
    else{
     if(z.pulses>rain.pulses){sound.play(z.pulses>=6?'rainFinal':'rainImpact');rain.pulses=z.pulses;}

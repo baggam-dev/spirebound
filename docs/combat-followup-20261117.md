@@ -40,3 +40,8 @@
 사용자 다음수정. prepareEntranceArt가15초deadline으로null을반환한뒤실제이미지/캐시가늦게성공해도버려 다음원정에서재요청/재가공하던경로보강. asset-wait.createCachedPreparation으로동시요청공유/성공메모리캐시/실패재시도/15초caller대기상한을분리. timeout된호출은null로그대로종료되며늦은성공은같은세대일때만다음호출용캐시,새시도보다오래된성공은캐시를덮지않음. 거부된늦은작업도처리해재시도가능. browser원본요청취소/파일변환/현재화면자동재생없음, 기존run/task/mode가드·정지·skip/fallback유지. gate준비/탈출공용문캐시는기존그대로.
 수정 src/rendering/asset-wait.js,src/ui/entrance-scene.js,신규tests/unit/asset-preparation-cache.test.js. 회귀3건작성만(동시promise공유/timeout후늦은성공재사용·이전호출null유지,새성공뒤이전완료가캐시를덮지않음,늦은거부/빈결과후재시도). 정적promise세대/identity·타이머정리/입장호출·git diff --check통과. 테스트/구문실행/서버QA/푸시배포/공개조회없음. 누적신규18미실행·실네트워크/시작체감미측정. 새형상/판정/AI·저장랭킹/버전변경없음.
 이전로컬7커밋보존. 운영마지막0.56/runtime0f53e31/증거b62a5de·이번조회없음. 다음새명시배포지시시누적18/전체·입장timeout후재입장/동시재시도/늦은완료·취소/skip/로드·기존모션·다수전QA→필요수정→버전검토푸시배포공개확인. 실행중명령/서버없음·차단없음. 수정/회귀/기록로컬커밋·누적미푸시미배포.
+
+## 화살비 종료 틱 마지막 착탄음 로컬 수정 완료 (2026-11-17)
+사용자 다음수정. tickRain에서실pulses증가와elapsed>=1.8종료가동시에처리되어room.arrowRain=null이면audio가마지막착탄을놓치는경계수정. combat-audio가이미관찰중이던동일rain.ref의실pulses증가를확인해최종회차rainFinal/그외rainImpact를한번만재생후관찰초기화. 참조삭제만으로소리를추측하지않고이미관찰완료된6회차·취소·다른방·로드/reset은재생없음. 정상고정틱경로/약점실effects음·피해6회/간격/수명·저장랭킹/음원형상볼륨/전투시계유지. 큰단일dt의종료경계를보강한것이며실기프레임/청취미확인.
+수정 src/ui/combat-audio.js,tests/unit/combat-audio.test.js. 회귀2건작성만(실tickRain 5→6회차와삭제동시발생시마지막음정확히1회,취소/이미완료로드/방교체추측재생없음). 정적tickRain종료·관찰ref/카운터/attach/reset·git diff --check통과. 테스트/구문실행/서버QA/청취/푸시배포/공개조회없음. 누적신규20미실행. 이전로컬8커밋보존/운영마지막0.56/runtime0f53e31/증거b62a5de·이번조회없음.
+다음새명시배포지시시누적20/전체·화살비즉시/중간/마지막음·큰dt/로드취소/PC모바일완화·약점/포탑·기존모션/가독성/로딩QA→필요수정→버전검토푸시배포공개확인. 실행중명령/서버없음·차단없음. 수정/회귀/기록로컬커밋·누적미푸시미배포.

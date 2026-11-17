@@ -1,7 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {combatHitCue,createCombatAudio} from '../../src/ui/combat-audio.js';
+import {tickRain} from '../../src/combat/abilities.js';
 function setup(){const calls=[],audio=createCombatAudio({play:name=>{calls.push(name);return true;}}),run={player:{evolutions:{ultimate:'burst'}}},room={turrets:[]};return {calls,audio,run,room};}
+test('a real rain finale remains audible when its final damage step also removes the rain',()=>{
+ const {calls,audio,run,room}=setup();Object.assign(run,{floor:0,room:0,floors:[[room]]});room.enemies=[];
+ const rain={x:480,y:300,r:280,damage:10,elapsed:1.4,pulses:5};room.arrowRain=rain;audio.prepare(run,room);
+ tickRain(run,.4);assert.equal(room.arrowRain,null);assert.equal(rain.pulses,6);audio.update(run,room);audio.update(run,room);assert.deepEqual(calls,['rainFinal']);
+});
+test('rain cancellation, loaded completed rain and room replacement never invent a finale',()=>{
+ const {calls,audio,run,room}=setup();room.arrowRain={elapsed:1.4,pulses:5};audio.prepare(run,room);room.arrowRain=null;audio.update(run,room);assert.deepEqual(calls,[]);
+ audio.reset();room.arrowRain={elapsed:1.7,pulses:6};audio.prepare(run,room);room.arrowRain=null;audio.update(run,room);assert.deepEqual(calls,[]);
+ room.arrowRain={elapsed:1.4,pulses:5};audio.prepare(run,room);room.arrowRain.pulses=6;audio.update(run,{turrets:[]});assert.deepEqual(calls,[]);
+});
 test('contact audio selects the strongest real contact and ignores periodic health feedback',()=>{
  assert.equal(combatHitCue([{enemyFeedback:'hit'}]),null);assert.equal(combatHitCue([{arrowImpact:true}]),'hit');assert.equal(combatHitCue([{hitElement:'fire'},{slash:true}]),'slashHit');assert.equal(combatHitCue([{slash:true},{precisionBurst:true}]),'precisionHit');assert.equal(combatHitCue([],true),'slashHit');
 });
