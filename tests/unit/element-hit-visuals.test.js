@@ -3,6 +3,12 @@ import assert from 'node:assert/strict';
 import {newRun,currentRoom} from '../../src/game/engine.js';
 import {stepRun} from '../../src/game/simulation.js';
 import {elementHitEffects,limitElementHits} from '../../src/rendering/element-hit-visuals.js';
+test('global element budget retains direct contacts before newer shard contacts and keeps other effects untouched',()=>{
+ const direct=Array.from({length:4},(_,i)=>Object.freeze({hitElement:'frost',x:i*50,small:false})),shards=Array.from({length:60},(_,i)=>Object.freeze({hitElement:'frost',small:true,x:i})),other=Object.freeze({text:'약점!'});
+ const effects=Object.freeze([...direct,other,...shards]),before=JSON.stringify(effects),visible=limitElementHits(effects);
+ assert.deepEqual(visible,[...direct,other,...shards.slice(-44)]);assert.equal(JSON.stringify(effects),before);
+ const shared={hitElement:'fire'};assert.deepEqual(limitElementHits([shared,shared,shared],1),[shared]);assert.deepEqual(limitElementHits([other,shared],0),[other]);
+});
 function setup(element,{wall=false,lethal=false}={}){
  const s=newRun(42);s.attack=100;s.player.x=100;s.player.y=200;s.player[element]=1;
  const room=currentRoom(s);room.obstacles=wall?[{x:145,y:150,w:20,h:100}]:[];

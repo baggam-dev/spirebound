@@ -7,15 +7,15 @@ export function combatEffectVisible(f,reduced=false){
 }
 export function readableEffects(effects,compact=false,reduced=false){
  if(!compact&&!reduced)return effects;
- const cells=new Set(),keep=new Set(),tiers=[[],[],[],[]];let accents=0;
+ const cells=new Set(),keep=new Set(),tiers=[[],[],[],[],[]];let accents=0;
  for(let i=effects.length-1;i>=0;i--){const f=effects[i];
   if(!combatEffectVisible(f,reduced))continue;
   if(f.text||f.precisionBurst||f.precision||f.thunder||f.enemyFeedback==='death'||(!f.arrowImpact&&!f.hitElement&&!f.playerBlast&&!f.synergyEffect&&f.enemyFeedback!=='hit')){keep.add(f);continue;}
-  tiers[f.playerBlast||f.synergyEffect?3:f.hitElement?2:f.arrowImpact?1:0].push(f);
+  tiers[f.playerBlast||f.synergyEffect?4:f.hitElement?(f.small?2:3):f.arrowImpact?1:0].push(f);
  }
  // A late ordinary hit must not consume the space needed by a real blast or
  // elemental contact. Newest-first within a tier; drawing order stays unchanged.
- for(let tier=3;tier>=0;tier--)for(const f of tiers[tier]){
+ for(let tier=4;tier>=0;tier--)for(const f of tiers[tier]){
   const family=f.playerBlast?'blast:'+f.playerBlast:f.synergyEffect?'synergy:'+f.synergyEffect:f.hitElement?'element:'+f.hitElement:f.arrowImpact?'arrow':'glint';
   const key=`${Math.floor(f.x/40)},${Math.floor(f.y/40)},${family}`;
   if(accents<16&&!cells.has(key)){cells.add(key);keep.add(f);accents++;}

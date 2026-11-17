@@ -9,8 +9,13 @@ export function elementHitEffects(player,point,origin,elemental=true,shard=false
  }));
 }
 export function limitElementHits(effects,max=48){
- let skip=Math.max(0,effects.reduce((n,f)=>n+!!f.hitElement,0)-max);
- return effects.filter(f=>!f.hitElement||skip--<=0);
+ const keep=new Set();let slots=max;
+ // Direct contacts should survive a newer frost-shard chain. Preserve the
+ // original draw order, and use indices so repeated references still cost slots.
+ for(const small of [false,true])for(let i=effects.length-1;i>=0&&slots>=1;i--){
+  const f=effects[i];if(f.hitElement&&!!f.small===small){keep.add(i);slots--;}
+ }
+ return effects.filter((f,i)=>!f.hitElement||keep.has(i));
 }
 const box=(c,x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h);};
 function stroke(c,points,color,width=2){c.strokeStyle=color;c.lineWidth=width;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(Math.round(x),Math.round(y)):c.moveTo(Math.round(x),Math.round(y)));c.stroke();}

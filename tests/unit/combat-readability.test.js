@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readableEffects,drawCombatLabels,combatEffectVisible} from '../../src/combat/combat-readability.js';
+test('mobile and reduced budgets retain direct elemental contacts before newer secondary shards',()=>{
+ const direct=Array.from({length:4},(_,i)=>({hitElement:'frost',x:i*50,y:80})),shards=Array.from({length:30},(_,i)=>({hitElement:'frost',small:true,x:i*50,y:180})),all=[...direct,...shards];
+ for(const [compact,reduced] of [[true,false],[false,true],[true,true]])assert.deepEqual(readableEffects(all,compact,reduced),[...direct,...shards.slice(-12)]);
+});
 test('hidden reduced decorations do not consume contact slots on desktop or mobile',()=>{
  const arrows=Array.from({length:30},(_,i)=>({arrowImpact:true,x:i*50,y:100}));
  const hidden=Array.from({length:30},(_,i)=>({synergyEffect:'emberMark',x:i*50,y:200}));
