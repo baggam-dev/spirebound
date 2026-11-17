@@ -1,6 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readableEffects,drawCombatLabels} from '../../src/combat/combat-readability.js';
+import {readableEffects,drawCombatLabels,combatEffectVisible} from '../../src/combat/combat-readability.js';
+test('hidden reduced decorations do not consume contact slots on desktop or mobile',()=>{
+ const arrows=Array.from({length:30},(_,i)=>({arrowImpact:true,x:i*50,y:100}));
+ const hidden=Array.from({length:30},(_,i)=>({synergyEffect:'emberMark',x:i*50,y:200}));
+ const pickup={xpPickup:true,x:100,y:100},label={text:'약점!',precisionBurst:true},all=[...arrows,...hidden,pickup,label],before=JSON.stringify(all);
+ for(const compact of [false,true]){const visible=readableEffects(all,compact,true);assert.deepEqual(visible,[...arrows.slice(-16),pickup,label]);}
+ assert.equal(JSON.stringify(all),before);assert.equal(readableEffects(all,false,false),all);
+});
+test('reduced visibility retains pickups and essential contacts and leaves muzzle rendering to structures',()=>{
+ for(const f of [{xpPickup:true},{text:'-1'},{slash:true},{groundBurst:true},{hitElement:'fire'},{playerBlast:'fire'},{enemyFeedback:'death',warden:true},{enemyFeedback:'death',ordinary:true}])assert.equal(combatEffectVisible(f,true),true);
+ for(const f of [{enemyFeedback:'hit'},{synergyEffect:'emberMark'},{enemyFeedback:'death',ordinary:true,style:'batExplosion'},{enemyFeedback:'death',remainingBoss:true,split:true}])assert.equal(combatEffectVisible(f,true),false);
+ assert.equal(combatEffectVisible({turretMuzzle:true},false),false);assert.equal(combatEffectVisible({turretMuzzle:true},true),false);
+});
 test('mobile blasts and elemental contacts survive newer ordinary hits without increasing the budget',()=>{
  const blast=Object.freeze({playerBlast:'fire',x:20,y:20}),element=Object.freeze({hitElement:'frost',x:80,y:20});
  const arrows=Array.from({length:30},(_,i)=>Object.freeze({arrowImpact:true,x:i*50,y:100}));

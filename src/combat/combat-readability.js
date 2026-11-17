@@ -1,9 +1,15 @@
 import {characterSizes} from '../rendering/character-sizes.js';
 // Rendering-only density control. Damage, bullets, hazards and hit directions stay intact.
-export function readableEffects(effects,compact=false){
- if(!compact)return effects;
+export function combatEffectVisible(f,reduced=false){
+ if(f.turretMuzzle)return false; // Drawn only with the turret structure pass.
+ return !reduced||!!(f.xpPickup||f.text||f.arrowImpact||f.hitElement||f.slash||f.playerBlast||f.groundBurst||
+  f.enemyFeedback==='death'&&(f.demonCore||f.warden||f.prism||f.remainingBoss&&!f.split||f.ordinary&&f.style!=='batExplosion'));
+}
+export function readableEffects(effects,compact=false,reduced=false){
+ if(!compact&&!reduced)return effects;
  const cells=new Set(),keep=new Set(),tiers=[[],[],[],[]];let accents=0;
  for(let i=effects.length-1;i>=0;i--){const f=effects[i];
+  if(!combatEffectVisible(f,reduced))continue;
   if(f.text||f.precisionBurst||f.precision||f.thunder||f.enemyFeedback==='death'||(!f.arrowImpact&&!f.hitElement&&!f.playerBlast&&!f.synergyEffect&&f.enemyFeedback!=='hit')){keep.add(f);continue;}
   tiers[f.playerBlast||f.synergyEffect?3:f.hitElement?2:f.arrowImpact?1:0].push(f);
  }
