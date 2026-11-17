@@ -45,3 +45,17 @@ test('mobile pickup labels stay separated at the lower screen edge without movin
  const labels=Object.freeze(Array.from({length:5},(_,i)=>Object.freeze({text:`essence ${i}`,x:955,y:460,t:1,essencePickup:true})));
  drawCombatLabels(c,labels,true);assert.equal(new Set(positions.map(p=>p.y)).size,5);assert.ok(positions.every(p=>p.y<=485&&p.x<=892));assert.equal(labels[0].x,955);
 });
+
+test('mobile overlapping weakness and damage labels use bounded nearby rows without changing effects',()=>{
+ for(const edge of [62,485]){
+  const positions=[],c={save(){},restore(){},measureText(){return {width:100};},strokeText(){},fillText(text,x,y){positions.push({text,x,y});}};
+  const labels=Object.freeze(Array.from({length:5},(_,i)=>Object.freeze({text:i?'약점!':'-1 ♥',x:955,y:edge,t:1,color:'#fff'}))),before=JSON.stringify(labels);
+  drawCombatLabels(c,labels,true);assert.equal(positions.length,5);assert.equal(new Set(positions.map(p=>p.y)).size,5);assert.ok(positions.every(p=>p.y>=62&&p.y<=485&&p.x<=902));assert.equal(JSON.stringify(labels),before);
+ }
+});
+test('non-overlapping mobile labels and desktop label positions keep their existing anchors',()=>{
+ for(const compact of [false,true]){
+  const positions=[],c={save(){},restore(){},measureText(){return {width:80};},strokeText(){},fillText(text,x,y){positions.push([x,y]);}};
+  drawCombatLabels(c,[{text:'a',x:200,y:200,t:1},{text:'b',x:600,y:200,t:1}],compact);assert.deepEqual(positions,[[200,200],[600,200]]);
+ }
+});

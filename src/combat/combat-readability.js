@@ -23,7 +23,7 @@ export function readableEffects(effects,compact=false,reduced=false){
  return effects.filter(f=>keep.has(f));
 }
 export function drawCombatLabels(c,effects,compact=false){
- const labels=effects.filter(f=>f.text),essences=labels.filter(f=>f.essencePickup);let row=0;
+ const labels=effects.filter(f=>f.text),essences=labels.filter(f=>f.essencePickup),placed=[];let row=0;
  c.save();c.textAlign='center';c.strokeStyle='#101016';c.lineWidth=4;
  for(const f of labels){
   c.font=`bold ${compact?(f.essencePickup?15:18):20}px Galmuri, monospace`;
@@ -31,7 +31,20 @@ export function drawCombatLabels(c,effects,compact=false){
   if(compact&&f.essencePickup){
    const base=essences[0];x=base.x;y=Math.max(80,Math.min(470-18*(essences.length-1),base.y+86))+row++*18;
   }
-  if(compact){const margin=Math.min(450,c.measureText(f.text).width/2+8);x=Math.max(margin,Math.min(960-margin,x));y=Math.max(62,Math.min(485,y));}
+  if(compact){
+   const width=Math.min(884,c.measureText(f.text).width),height=f.essencePickup?16:20,margin=width/2+8;
+   x=Math.max(margin,Math.min(960-margin,x));y=Math.max(62,Math.min(485,y));
+   if(!f.essencePickup){
+    const base=y;
+    // Search nearby rows, bounded to the arena; never move or age the effect.
+    search:for(let step=0;step<=20;step++)for(const direction of step?[-1,1]:[0]){
+     const candidate=base+step*22*direction;if(candidate<62||candidate>485)continue;
+     if(placed.some(p=>Math.abs(p.x-x)<(p.width+width)/2+4&&Math.abs(p.y-candidate)<(p.height+height)/2+2))continue;
+     y=candidate;break search;
+    }
+   }
+   placed.push({x,y,width,height});
+  }
   c.fillStyle=f.color;c.strokeText(f.text,x,y);c.fillText(f.text,x,y);
  }
  c.restore();
