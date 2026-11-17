@@ -1,3 +1,10 @@
+## 최신 복사 가능한 인계 — 회피종료틱
+~~~text
+## 회피 종료 틱 모션 연결 로컬 완료 (2026-11-17)
+사용자 다음수정. 이전draw관찰은tickRoll이마지막이동후s.roll을삭제하면최종대쉬좌표를보행으로읽는경계가남았다. game.update에서stepRun전roll참조보관→직후observeHeroRoll(s,s.elapsed,beforeRoll)로최종좌표/방향기준동기화→실shot/repeatShot통지순으로연결. observeHeroRoll은종료된roll참조를선택인자로받으며run/player필드변이없이WeakMap시각이력만갱신. 렌더사이에여러고정틱이돌거나벽에막혀조기종료되어도관찰경로가유지된다. 기존draw관찰은남아반복그리기안정성유지. 외형/보행키·발도원화/회피속도거리판정/실사격간격피해/AI·저장랭킹변경없음.
+회귀1건작성만: 실제castRoll→stepRun(duration)으로roll삭제확인→종료참조로최종좌표·왼쪽방향/보행0/과거발사억제→같은시각실새발사재관찰시자세복귀·run무변이. 기존반복/roll회귀보존. 정적stepRun종료/실발사통지/room리셋순서 및 git diff --check 통과. 테스트/구문실행/서버/브라우저QA/청취/푸시배포/공개조회없음. 누적신규6미실행, 실제모션체감미확인.
+수정 src/game/game.js,src/rendering/pixel-world.js,tests/unit/hero-repeat-pose.test.js 및상세/기록. 이전로컬9f9f884/6e67ad2보존. 다음새배포지시시누적6/관련전체·기본/발도/가속회피끝·벽조기종료/반복샷/정지·리로드·다수전·입장순서QA→필요수정→버전검토푸시배포공개확인. 운영마지막0.56/runtime0f53e31/증거b62a5de·이번조회없음. 실행중명령/서버없음·차단없음. 로컬커밋·누적미푸시미배포.
+~~~
 ## 최신 복사 가능한 인계 — 접점우선순위
 ~~~text
 ## 다수전 접점 우선순위 보강 로컬 완료 (2026-11-17)

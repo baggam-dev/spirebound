@@ -47,11 +47,11 @@ function pose(e,time,attack=0,stride=.16){
 }
 // The dedicated roll renderer bypasses the ordinary actor renderer. Keep its
 // position/facing baseline current without counting a dash as walking strides.
-export function observeHeroRoll(run,time){
- if(!run?.roll)return;
+export function observeHeroRoll(run,time,roll=run?.roll){
+ if(!roll||!run?.player)return;
  pose(run.player,time,run.attack||0,.09);
  const p=motion.get(run.player);p.x=run.player.x;p.y=run.player.y;p.time=time;p.walk=0;p.moving=false;p.release=-Infinity;
- if(Math.abs(run.roll.x)>.1)p.face=Math.sign(run.roll.x);
+ if(Math.abs(roll.x)>.1)p.face=Math.sign(roll.x);
  heroShots.set(run.player,-Infinity);
  return {...p,recoil:0};
 }

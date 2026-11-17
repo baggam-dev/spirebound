@@ -4,6 +4,16 @@ import {newRun,currentRoom} from '../../src/game/engine.js';
 import {stepRun} from '../../src/game/simulation.js';
 import {notifyHeroShot,clearHeroShots,heroShotRecoil,heroShotProjectile,observeHeroRoll} from '../../src/rendering/pixel-world.js';
 import {heroFrameIndex} from '../../src/rendering/hero-sprite.js';
+import {castRoll} from '../../src/combat/roll.js';
+
+test('the final simulation roll step supplies a baseline even after the action deletes itself',()=>{
+ const s=newRun(43),r=currentRoom(s);r.obstacles=[];r.enemies=[];s.entryGrace=0;
+ s.player.x=480;s.player.y=300;assert.equal(castRoll(s,{x:-1,y:0}),true);const roll=s.roll;
+ notifyHeroShot(s.player,s.elapsed);stepRun(s,roll.duration);
+ assert.equal(s.roll,undefined);const saved=JSON.stringify(s),pose=observeHeroRoll(s,s.elapsed,roll);
+ assert.equal(pose.x,s.player.x);assert.equal(pose.y,s.player.y);assert.equal(pose.face,-1);assert.equal(pose.walk,0);assert.equal(pose.moving,false);assert.equal(heroShotRecoil(s.player,s.elapsed),0);
+ notifyHeroShot(s.player,s.elapsed);assert.equal(heroShotRecoil(s.player,s.elapsed),1);assert.equal(JSON.stringify(s),saved);clearHeroShots(s.player);
+});
 test('actual primary and delayed repeat releases show separate hero release poses',()=>{
  const s=newRun(42),r=currentRoom(s);s.player.repeat=1;s.invulnerable=999;r.obstacles=[];
  r.enemies=[{id:1,type:'chaser',x:800,y:300,hp:10000,max:10000,frozen:999,cd:999}];
