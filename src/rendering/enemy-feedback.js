@@ -46,8 +46,20 @@ export function advanceFeedback(current,incoming,dt){
 export function mergeEnemyFeedback(current,incoming){
  const deaths=new Set(incoming.filter(f=>f.enemyFeedback==='death').map(f=>f.enemyId));
  const result=current.filter(f=>!(f.enemyFeedback==='hit'&&deaths.has(f.enemyId)));
- const active=new Set(result.filter(f=>f.enemyFeedback==='hit'&&f.t>0).map(f=>f.enemyId));
- for(const f of incoming){if(f.enemyFeedback==='hit'){if(active.has(f.enemyId)||deaths.has(f.enemyId))continue;active.add(f.enemyId);}result.push(f);}
+ const active=new Map();result.forEach((f,i)=>{if(f.enemyFeedback==='hit'&&f.t>0)active.set(f.enemyId,i);});
+ for(const f of incoming){
+  if(f.enemyFeedback==='hit'){
+   if(deaths.has(f.enemyId))continue;
+   if(active.has(f.enemyId)){
+    const i=active.get(f.enemyId),previous=result[i];
+    // Refresh health-loss evidence without restarting the flash or its lifetime.
+    if(Number.isFinite(previous.beforeRatio)&&Number.isFinite(f.beforeRatio)&&Number.isFinite(f.afterRatio))result[i]={...previous,beforeRatio:Math.max(previous.beforeRatio,f.beforeRatio),afterRatio:f.afterRatio};
+    continue;
+   }
+   active.set(f.enemyId,result.length);
+  }
+  result.push(f);
+ }
  let hits=Math.max(0,result.filter(f=>f.enemyFeedback==='hit').length-32),dead=Math.max(0,result.filter(f=>f.enemyFeedback==='death').length-24);
  return result.filter(f=>f.enemyFeedback==='hit'?hits--<=0:f.enemyFeedback==='death'?dead--<=0:true);
 }
