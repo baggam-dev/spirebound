@@ -6,8 +6,13 @@ export function arrowImpactEffect(arrow,point,elementContacts=null){
  return {arrowImpact:true,x:point.x,y:point.y,angle:Math.atan2(arrow.vy,arrow.vx),precision:arrow.element==='precision',t:.2,duration:.2};
 }
 export function limitArrowImpacts(effects,max=24){
- let skip=Math.max(0,effects.reduce((n,f)=>n+!!f.arrowImpact,0)-max);
- return effects.filter(f=>!f.arrowImpact||skip--<=0);
+ const keep=new Set();let slots=max;
+ // Preserve precision contacts before ordinary multi-shot noise. Select by
+ // index so repeated references still count toward the unchanged global cap.
+ for(const precision of [true,false])for(let i=effects.length-1;i>=0&&slots>=1;i--){
+  const f=effects[i];if(f.arrowImpact&&!!f.precision===precision){keep.add(i);slots--;}
+ }
+ return effects.filter((f,i)=>!f.arrowImpact||keep.has(i));
 }
 // One short contact, three visual weights. No actor motion or gameplay clocks.
 export function prepareContactStyle(c){

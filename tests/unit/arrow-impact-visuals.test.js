@@ -3,6 +3,12 @@ import assert from 'node:assert/strict';
 import {newRun,currentRoom} from '../../src/game/engine.js';
 import {stepRun} from '../../src/game/simulation.js';
 import {limitArrowImpacts} from '../../src/rendering/arrow-impact-visuals.js';
+test('global arrow cap preserves precision before ordinary contacts without changing order or other effects',()=>{
+ const precise=Array.from({length:3},(_,i)=>Object.freeze({arrowImpact:true,precision:true,x:i})),ordinary=Array.from({length:30},(_,i)=>Object.freeze({arrowImpact:true,x:i})),label=Object.freeze({text:'약점!'});
+ const effects=Object.freeze([...precise,label,...ordinary]),before=JSON.stringify(effects);
+ assert.deepEqual(limitArrowImpacts(effects),[...precise,label,...ordinary.slice(-21)]);assert.equal(JSON.stringify(effects),before);
+ const shared={arrowImpact:true,precision:true};assert.deepEqual(limitArrowImpacts([shared,shared,shared],1),[shared]);assert.deepEqual(limitArrowImpacts([label,shared],0),[label]);
+});
 
 function hit({element=null,wall=false,lethal=false}={}){
  const run=newRun(42),room=currentRoom(run);
