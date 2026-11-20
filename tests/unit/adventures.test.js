@@ -9,7 +9,7 @@ import {castUltimate} from '../../src/combat/abilities.js';
 import {promoteElite,updateElites,eliteDeath,tickBlasts} from '../../src/combat/elites.js';
 import {returnRoutes} from '../../src/world/routes.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
-function at(type){const s=newRun(312);s.floor=type==='event'?2:0;s.room=s.floors[s.floor].findIndex(r=>r.type===type);currentRoom(s).enemies=[];currentRoom(s).seen=true;return s;}
+function at(type){const s=newRun(312);s.player.critChance=0;s.floor=type==='event'?2:0;s.room=s.floors[s.floor].findIndex(r=>r.type===type);currentRoom(s).enemies=[];currentRoom(s).seen=true;return s;}
 test('treasure grants one fixed random reward and rejects repeats or occupied rooms',()=>{const s=at('treasure');currentRoom(s).chestReward={id:'attack3'};assert.ok(claimTreasure(s));assert.equal(s.player.damage,20);assert.equal(claimTreasure(s),false);const t=at('treasure');currentRoom(t).enemies=[{}];assert.equal(claimTreasure(t),false);});
 test('events enforce affordable visible costs and cannot be purchased twice',()=>{
  const s=at('event');s.player.hp=2;assert.equal(canChooseEvent(s,'blood'),false);assert.equal(chooseEvent(s,'blood'),false);s.player.hp=3;assert.ok(chooseEvent(s,'blood'));assert.equal(s.player.hp,1);assert.equal(s.player.armor,2);assert.equal(chooseEvent(s,'supply'),false);

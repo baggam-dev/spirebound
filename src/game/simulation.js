@@ -1,3 +1,4 @@
+import {bindCriticalRun,applyBoundDamage,criticalInstance,drainDamageResults,clearDamageResults} from '../combat/critical.js';
 import {updateEnemyMelee,weaponContactReplaced} from '../combat/enemy-melee.js';
 import {prepareEnemyGroup,moveWaitingEnemy} from '../combat/enemy-group.js';
 import {updateHighFloorEnemy,tickHighState,cancelHighAttack} from '../combat/high-floor-patterns.js';
@@ -62,7 +63,7 @@ export function collisionTime(a,b,c,radius){
 export function enemyRadius(e){return e.variant==='slime'||e.type==='minislime'?slimeRadius(e):(e.type==='boss'?32:e.type==='brute'||e.type==='demonCaptain'?24:e.type==='demonBat'?14:19)*(e.scale??1);}
 export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||e.attackPhase==='leap';}
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
-export function enterRoom(s){beginWardenArrival(s,currentRoom(s),!currentRoom(s).seen);resetSpectralBlade(s);delete s.roll;s.bloodBossHealth={};
+export function enterRoom(s){clearDamageResults(s);beginWardenArrival(s,currentRoom(s),!currentRoom(s).seen);resetSpectralBlade(s);delete s.roll;s.bloodBossHealth={};
  recoverPlayerPosition(s.player,currentRoom(s).obstacles);trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.rollMines=[];r.fairyBeam=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
  s.player.actionStun=0;s.player.electricGrace=0;resetDemonAttack(r);
  // Do not preserve an off-screen attack aimed at the previous visit's position.
@@ -73,8 +74,8 @@ export function fireArrow(s,target){
  s.attack=attackInterval(p);
 }
 export function stepRun(s,dt,input={x:0,y:0}){
- const events=[],effects=[];if(s.status!=='playing')return {events,effects};
- if(s.player.hp<=0){events.push('dead');return {events,effects};}
+ const events=[],effects=[];if(s.status!=='playing')return {events,effects,damageResults:drainDamageResults(s)};
+ if(s.player.hp<=0){events.push('dead');return {events,effects,damageResults:drainDamageResults(s)};}
  recoverPlayerPosition(s.player,currentRoom(s).obstacles);
  if(currentRoom(s).shrineState==='choice'&&!currentRoom(s).used)return {events:['incantation'],effects};
  trackRankingRoom(s);const p=s.player,metrics=ensureMetrics(s);observeGrowth(s);tickBossRecord(s,currentRoom(s),dt);s.projectiles??=[];advanceClock(s,dt,false);metrics.floorTimes[s.floor]=(metrics.floorTimes[s.floor]||0)+dt;
@@ -84,7 +85,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  const hurt=(raw,source='알 수 없는 공격',kind=null,origin=hitOrigin)=>{if(s.entryGrace>0||p.hp<=0||s.invulnerable>0||rollImmune(s)||raw<=0)return;if(absorbGuardian(s)){s.invulnerable=.65;effects.push({x:p.x,y:p.y-35,t:.8,color:'#b8d9f1',text:'수호!'});metrics.shields++;return;}const before=p.hp,result=takeDamage(s,r.trialState==='active'?Math.min(raw,9):raw,kind);if(before>p.hp)effects.push({x:p.x,y:p.y-35,t:1,color:'#ff7188',text:'-'+(before-p.hp)+' ♥',hitSource:source,hitAngle:origin?Math.atan2(origin.y-p.y,origin.x-p.x):null});metrics.damageTaken+=before-p.hp;recordBossResource(s,'damageTaken',before-p.hp);recordHit(s,source,before-p.hp,result==='blocked');if(result==='blocked'){metrics.shields++;events.push('shield');}if(before>p.hp&&reactToRelicHit(s,r,effects))events.push('phoenixRevived');};
  if(Math.hypot(input.x,input.y)>.01)p.lastMove={x:input.x,y:input.y};
  const approachFrom={x:p.x,y:p.y},approachRoom=r;
- const rolling=tickRoll(s,r,dt,effects);if(!rolling){const n=Math.max(1,Math.hypot(input.x,input.y)),frostSlow=p.frostSlow>0?.72:1;moveBody(p,input.x/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),input.y/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),r.obstacles);}p.frostSlow=Math.max(0,(p.frostSlow||0)-dt);
+ bindCriticalRun(s,r.enemies);const rolling=tickRoll(s,r,dt,effects);if(!rolling){const n=Math.max(1,Math.hypot(input.x,input.y)),frostSlow=p.frostSlow>0?.72:1;moveBody(p,input.x/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),input.y/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),r.obstacles);}p.frostSlow=Math.max(0,(p.frostSlow||0)-dt);
 
  const d=p.y<48?0:p.x>930?1:p.y>492?2:p.x<30?3:-1;
  if(d>=0){const next=neighbor(s,d),aligned=Math.abs((d%2?p.y:p.x)-doorCenter(r,d))<(d%2?35:40);
@@ -94,9 +95,9 @@ export function stepRun(s,dt,input={x:0,y:0}){
  const approached=startApproachedBoss(s,r,r===approachRoom?approachFrom:p,p);
  if(approached)events.push('bossApproach:'+approached);
  // Also catches the tick that crosses the doorway into a sleeping warden's room.
- if(tickWardenArrival(r,dt))return {events,effects};
+ if(tickWardenArrival(r,dt))return {events,effects,damageResults:drainDamageResults(s)};
  if(r.shrineState==='choice'&&!r.used)return {events:[...events,'incantation'],effects};
- r.gateBanner=Math.max(0,(r.gateBanner||0)-dt);observeRoom(s,r);bindDefenses(r.enemies);if(r.enemies.some(e=>e.type==='boss'))bossHealth(r);
+ r.gateBanner=Math.max(0,(r.gateBanner||0)-dt);observeRoom(s,r);bindCriticalRun(s,r.enemies);bindDefenses(r.enemies);if(r.enemies.some(e=>e.type==='boss'))bossHealth(r);
  for(const item of collectEssences(s,r))effects.push({x:p.x,y:p.y-45,t:1.2,color:essenceInfo(item.id).color,text:essenceInfo(item.id).label,essencePickup:true,fromX:item.x,fromY:item.y});
  const collectedXp=collectXp(s,r,dt);if(collectedXp)effects.push({xpPickup:true,x:p.x,y:p.y-12,t:.16,xp:collectedXp});
  const enemyHealthBefore=new Map(r.enemies.map(e=>[e,e.hp]));
@@ -105,7 +106,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  tickBlasts(r,dt,p,raw=>hurt(raw,'정예 지연 폭발'),effects);
  if(s.entryGrace<=0)updateElites(r,dt,s.projectiles,p);
  if(r.allyZone){const z=r.allyZone,active=Math.min(dt,z.time);hitOrigin=null;
- for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,z)<z.r){const before=e.hp;e.hp-=(z.damage??40)*active*enemyDamageFactor(e);metrics.damageDealt+=before-Math.max(0,e.hp);}z.time-=dt;if(z.time<=0)r.allyZone=null;}
+ for(const e of r.enemies)if(e.hp>0&&!enemyAirborne(e)&&distance(e,z)<z.r){const before=e.hp;applyBoundDamage(e,(z.damage??40)*active,{snapshot:criticalInstance(e,z,{amount:(z.damage??40)*active}).criticalSnapshot,source:'allyZone'});metrics.damageDealt+=before-Math.max(0,e.hp);}z.time-=dt;if(z.time<=0)r.allyZone=null;}
  updateHazards(r,dt,p,raw=>hurt(raw,raw>=12?'독성 군체 독':'꽃봉우리 독'));
  if(s.entryGrace<=0)updateDemon(s,r,p,dt,s.projectiles,(raw,source)=>hurt(raw,source));
  const target=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!segmentBlocked(p,e,r.obstacles,3)).sort((a,b)=>distance(a,p)-distance(b,p))[0];
@@ -140,7 +141,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  hitOrigin=null;
  for(const e of r.enemies)if(!weaponContactReplaced(e)&&!(['charge','cleave'].includes(e.pattern)&&['dash','recover','warning'].includes(e.attackPhase))&&!chargerRecovering(e)&&e.hp>0&&!enemyAirborne(e)&&!(e.spawnGrace>0)&&!(e.counterReason&&e.opening>0)&&!r.enemies.some(n=>n.kingTransition>0)&&!e.darkAttack?.moving&&distance(e,p)<enemyRadius(e)+14&&!segmentBlocked(e,p,r.obstacles,0))hurt(9,enemyName(e)+' 접촉',null,e);
  // A lethal hit ends the simulation before drops or life-steal can heal the player.
- if(p.hp<=0){events.push('dead');return {events,effects};}
+ if(p.hp<=0){events.push('dead');return {events,effects,damageResults:drainDamageResults(s)};}
  for(const b of s.projectiles){
   if(b.life<=0)continue;
   if(b.ricochet){if(advanceRicochet(b,dt,r.obstacles,p))hurt(9,b.source||'반사탄',null,{x:p.x-b.vx,y:p.y-b.vy});if(p.hp<=0)break;continue;}
@@ -149,14 +150,14 @@ export function stepRun(s,dt,input={x:0,y:0}){
   const next={x:b.x+b.vx*travelDt,y:b.y+b.vy*travelDt};b.life-=travelDt;
   if(b.enemy){const t=collisionTime(b,next,p,15);if(t!==Infinity&&!segmentBlocked(b,{x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t},r.obstacles,3)){const before=p.hp;hurt(b.damage??10,b.source||'적 탄환',null,{x:p.x-b.vx,y:p.y-b.vy});if(b.frostArrow&&p.hp<before)p.frostSlow=Math.max(p.frostSlow||0,1.35);b.life=0;}}
   else{
-   const candidates=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!b.hit.includes(e.id)).map(e=>({e,t:collisionTime(b,next,e,enemyRadius(e))})).filter(h=>h.t!==Infinity).sort((a,b)=>a.t-b.t);
+   bindCriticalRun(s,r.enemies);const candidates=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!b.hit.includes(e.id)).map(e=>({e,t:collisionTime(b,next,e,enemyRadius(e))})).filter(h=>h.t!==Infinity).sort((a,b)=>a.t-b.t);
    for(const {e,t} of candidates){if(e.hp<=0)continue;const impact={x:b.x+(next.x-b.x)*t,y:b.y+(next.y-b.y)*t};if(segmentBlocked(b,impact,r.obstacles,3))break;if(b.passive){passiveHit(s,b,e);b.hit.push(e.id);b.life=0;break;}const shotPlayer=b.weapon||p;const elementContacts=elementHitEffects(b.frostShard?{frost:shotPlayer.frost,evolutions:shotPlayer.evolutions}:shotPlayer,impact,{x:impact.x-b.vx,y:impact.y-b.vy},b.elemental!==false,!!b.frostShard);effects.push(...elementContacts);const arrowImpact=arrowImpactEffect(b,impact,elementContacts);if(arrowImpact)effects.push(arrowImpact);const before=r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);effects.push(...hitEnemy(b.frostShard?{...shotPlayer,fire:0,poison:0,chain:0,frost:shotPlayer.frost,frostShardAttack:true}:shotPlayer,e,r.enemies,r.obstacles,(b.damageScale??1)*(b.frostShard?(b.shardBoost??1):1),b.frostShard?true:b.elemental!==false,r,{x:b.x-b.vx*.001,y:b.y-b.vy*.001},{projectile:b,venomPrimary:!!b.primary,primary:!!b.primary&&b.elemental!==false,focused:!!b.focused&&b.elemental!==false}));metrics.damageDealt+=before-r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);if(shotPlayer.frost)e.frostWeapon=b.weapon;if(b.turretShot)metrics.ultimateDamage=(metrics.ultimateDamage||0)+before-r.enemies.reduce((sum,e)=>sum+Math.max(0,e.hp),0);b.elemental=false;b.hit.push(e.id);if(b.pierce--<=0){b.life=0;break;}if(s.generationVersion>=29&&turnStormArrow(b,shotPlayer,impact,r.enemies,(a,target)=>segmentBlocked(a,target,r.obstacles,3))){next.x=impact.x;next.y=impact.y;break;}}
   }
   if(segmentBlocked(b,next,r.obstacles,3))b.life=0;b.x=next.x;b.y=next.y;if(p.hp<=0)break;
  }
  effects.push(...enemyHitEffects(enemyHealthBefore,r.enemies));
  s.projectiles=s.projectiles.filter(b=>b.life>0&&b.x>25&&b.x<935&&b.y>40&&b.y<500);
- if(p.hp<=0){events.push('dead');return {events,effects};}
+ if(p.hp<=0){events.push('dead');return {events,effects,damageResults:drainDamageResults(s)};}
  r.nextEnemyId=Math.max(r.nextEnemyId||0,...r.enemies.map(e=>e.id+1));
  resolveFireFields(r);
  tickBloodContract(s,r,dt,effects);
@@ -191,5 +192,5 @@ export function stepRun(s,dt,input={x:0,y:0}){
  if(!s.key&&shrineLocked(r)&&!r.enemies.length){prepareIncantations(s);events.push('incantation');}
  if(s.key&&releaseReturnSeal(r))events.push('returnUnlock');
  if(defeated.length&&!r.enemies.length)events.push('roomClear');
- if(s.pendingLevels)events.push('level');return {events,effects};
+ if(s.pendingLevels)events.push('level');return {events,effects,damageResults:drainDamageResults(s)};
 }

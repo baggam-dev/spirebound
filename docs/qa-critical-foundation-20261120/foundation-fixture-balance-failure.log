@@ -1,0 +1,40 @@
+✔ new runs have bounded critical stats and a separate seeded stream (77.1719ms)
+✔ one target packet shares the critical result across physical and elemental damage (21.0536ms)
+✔ a shield or zero damage cannot roll a critical or count a hit (18.494ms)
+✖ damage snapshots survive DoT reload without rerolling or recounting the same application (51.1348ms)
+✔ mixed continuous components apply defense once and attribute only the critical share (18.7501ms)
+✔ overkill critical accounting uses actual remaining HP (23.4434ms)
+✔ save reload reproduces the next roll and migrates legacy saves without resetting existing critical state (45.1967ms)
+✔ weapon snapshots retain cast-time critical stats and invalid saved critical data is rejected (23.2515ms)
+✔ invalid damage components do not mutate HP, consume a shield or advance RNG (19.8746ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 856.454
+
+✖ failing tests:
+
+test at tests\unit\critical-combat.test.js:29:1
+✖ damage snapshots survive DoT reload without rerolling or recounting the same application (51.1348ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1244 !== 994
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/critical-combat.test.js:33:199)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1244,
+    expected: 994,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

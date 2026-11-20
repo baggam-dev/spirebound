@@ -1,0 +1,84 @@
+✖ new rain casts deal 500 percent per pulse with six real pulses and retain the crown multiplier (173.4469ms)
+✔ an already active legacy rain keeps its saved cast damage while the next cast uses the new coefficient (81.746ms)
+✔ new runs have bounded critical stats and a separate seeded stream (159.3668ms)
+✔ one target packet shares the critical result across physical and elemental damage (39.7121ms)
+✔ a shield or zero damage cannot roll a critical or count a hit (36.2702ms)
+✔ damage snapshots survive DoT reload without rerolling or recounting the same application (85.7005ms)
+✔ mixed continuous components apply defense once and attribute only the critical share (46.4052ms)
+✔ overkill critical accounting uses actual remaining HP (37.9487ms)
+✔ save reload reproduces the next roll and migrates legacy saves without resetting existing critical state (102.9709ms)
+✔ weapon snapshots retain cast-time critical stats and invalid saved critical data is rejected (72.0424ms)
+✔ invalid damage components do not mutate HP, consume a shield or advance RNG (52.2066ms)
+✔ global element budget retains direct contacts before newer shard contacts and keeps other effects untouched (3.8653ms)
+✔ each elemental projectile emits a localized contact effect only on an actual hit (461.3902ms)
+✔ lethal poison contact still splashes; ordinary arrows do not create elemental flashes (89.8215ms)
+✔ piercing and frost-shard visuals respect actual elemental application (0.5014ms)
+✔ dense hit effects keep newest contacts without dropping damage text or other cues (0.5335ms)
+✔ all arrow counts retain exactly one aimed primary and alternate unmatched sides (255.8165ms)
+✔ fire levels grow splash damage and radius; burn starts at two and floor at three (1.841ms)
+✔ burn stacks expire individually and overlapping fire zones do not multiply damage (2.0264ms)
+✔ poison gains damage and gas radius by level; gas requires two live stacks (1.3247ms)
+✔ poison stack cap is bounded and gas only lasts until second latest stack expires (0.5029ms)
+✔ max poison corpse explosions chain once, and direct kills do not trigger them (0.5116ms)
+✔ fire activates only on first contact; explicitly spent fire procs stay spent (85.5473ms)
+✔ element timers, fields and volley direction resume deterministically and reject malformed stacks (117.4424ms)
+✔ legacy fire investments, evolution and pending offers become poison exactly once (57.1641ms)
+✔ new elite density rises from third to sixth floor across seeded populations (1069.8692ms)
+✔ trial uses three durable purple champions with stronger attack profiles (22.6839ms)
+✔ poison arrows infect every pierced target, respect penetration count and do not hit twice (57.0954ms)
+✔ poison piercing continues after saving an arrow whose first impact is spent (29.1323ms)
+✔ roll travels continuously, freezes with pause, survives save, ends at140 and does not create post-roll immunity (147.8004ms)
+✔ roll avoids a live projectile and checks walls for every movement segment (79.1574ms)
+✔ roll branches deal once and place timed mines only in their own room (193.8381ms)
+✔ roll action follows learned evolution immediately and after saved-run resume (80.9112ms)
+✔ old immunity relic remains a short roll bonus and cooldown has a hard lower bound (29.776ms)
+✔ free unlocks require both the intended boss and level without consuming normal choices (35.5796ms)
+✔ fairy king stays guaranteed through reroll, saved stale choices and declining the offer (40.14ms)
+✔ migration refunds capped levels once, preserves learned utilities, and removes duplicate fairy relics (41.1647ms)
+✔ all legacy snapshots and saved repeat rewards remain loadable before and after one migration (47.7649ms)
+✔ blood pact shares a two-heart cap across kills and boss damage, excluding summons, and cannot revive (18.0117ms)
+✔ awakening costs one heart without triggering shields or invulnerability and refuses the last heart (37.7135ms)
+✔ king laser has bounded damage, respects walls, and does not recursively emit arrows or elements (54.2ms)
+✔ bow mastery changes direct damage but not fire explosion and midgame xp is reduced (1.4444ms)
+✔ rain applies six scaled pulses, has no off-region damage and survives midcast save (28.0811ms)
+✔ new fairy skills never appear in randomly offered relic pools (17.8176ms)
+✔ a wall appearing during preparation blocks damage; an escaping enemy is not hit (175.2284ms)
+✔ dance rechecks its target and never hits a dead target twice (47.8381ms)
+✔ precision blade favors an existing mark without advancing it (40.1812ms)
+✔ blade poison cannot create poison gas, explosions or primary marks (40.043ms)
+✔ saved cooldown prevents a repeated slash after loading and rejects corruption (88.6393ms)
+✔ old level-three aura keeps its guard once; newly learned Vergas does not grant a shield (71.0135ms)
+✔ Vergas remains unique while acquisition is rare and owned upgrades use normal weight (44.5272ms)
+✔ saved ordinary-support Vergas rewards remain claimable even when all ordinary supports are capped (86.7696ms)
+✔ rain landings coincide with six scaled damage pulses and expire at1.8 seconds (102.9417ms)
+✔ crossbow recoil follows an actual shot and remains idle without a target (55.3002ms)
+✔ ultimate poses are read-only, deterministic on pause and survive serialized state (84.5682ms)
+ℹ tests 55
+ℹ suites 0
+ℹ pass 54
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2963.0568
+
+✖ failing tests:
+
+test at tests\unit\arrow-rain-balance.test.js:9:1
+✖ new rain casts deal 500 percent per pulse with six real pulses and retain the crown multiplier (173.4469ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Math.abs(r.arrowRain.damage-perPulse)<1e-8)
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/arrow-rain-balance.test.js:12:137)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

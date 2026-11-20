@@ -50,8 +50,8 @@ test('new save fields reject invalid relics, codex keys and damage history',()=>
  const s=boss();s.player.relic='broken';assert.throws(()=>encodeSave(s));delete s.player.relic;s.bestiary={constructor:{kills:1,traits:[]}};assert.throws(()=>encodeSave(s));delete s.bestiary;s.combatLog=[{source:'bad',time:0,floor:9,room:0,amount:1,blocked:false}];assert.throws(()=>encodeSave(s));
 });
 test('damage diagnostics include capped burn, field and instant ultimate damage',()=>{
- const s=newRun(7),r=currentRoom(s);ensureMetrics(s);s.attack=999;r.enemies=[{id:0,type:'archer',x:600,y:300,hp:50,max:50,cd:999,burn:2,burnDamage:5}];stepRun(s,.1);assert.equal(s.metrics.damageDealt,.5);
+ const s=newRun(7),r=currentRoom(s);s.player.critChance=0;ensureMetrics(s);s.attack=999;r.enemies=[{id:0,type:'archer',x:600,y:300,hp:50,max:50,cd:999,burn:2,burnDamage:5}];stepRun(s,.1);assert.equal(s.metrics.damageDealt,.5);
  s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};s.player.split=4;s.player.chain=1;assert.ok(castUltimate(s));assert.equal(s.metrics.damageDealt,50);
- r.enemies=[{id:1,type:'archer',x:500,y:300,hp:500,max:500,cd:999}];s.player.evolutions={ultimate:'burst'};s.skill=0;castUltimate(s);stepRun(s,.1);assert.equal(s.metrics.damageDealt,169);
+ r.enemies=[{id:1,type:'archer',x:500,y:300,hp:500,max:500,cd:999}];s.player.evolutions={ultimate:'burst'};s.skill=0;castUltimate(s);stepRun(s,.1);assert.equal(s.metrics.damageDealt,135);
 });
 

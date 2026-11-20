@@ -1,0 +1,27 @@
+✔ new rain casts deal 500 percent per pulse with six real pulses and retain the crown multiplier (96.0109ms)
+✔ an already active legacy rain keeps its saved cast damage while the next cast uses the new coefficient (47.395ms)
+✔ new runs have bounded critical stats and a separate seeded stream (99.7803ms)
+✔ one target packet shares the critical result across physical and elemental damage (24.9477ms)
+✔ a shield or zero damage cannot roll a critical or count a hit (23.433ms)
+✔ damage snapshots survive DoT reload without rerolling or recounting the same application (50.8623ms)
+✔ mixed continuous components apply defense once and attribute only the critical share (27.0843ms)
+✔ overkill critical accounting uses actual remaining HP (24.337ms)
+✔ save reload reproduces the next roll and migrates legacy saves without resetting existing critical state (53.292ms)
+✔ weapon snapshots retain cast-time critical stats and invalid saved critical data is rejected (25.3047ms)
+✔ invalid damage components do not mutate HP, consume a shield or advance RNG (34.1066ms)
+✔ actual frost projectile shares one critical decision between physical and elemental damage (68.5421ms)
+✔ a projectile miss consumes no critical random values (41.1353ms)
+✔ poison application keeps one decision across tick sizes and reload (58.2436ms)
+✔ mixed critical and ordinary burn accrual survives saving before its half-second pulse (37.0772ms)
+✔ rain makes one target decision per real pulse without changing its six-pulse damage snapshot (24.2924ms)
+✔ crossbow projectiles keep installed critical stats after player stats change (32.0377ms)
+✔ solar fairy burn inherits its actual shot result instead of rerolling each tick (24.102ms)
+✔ shared ongoing snapshot aliases are rejoined after serialization and do not recount a victim (36.9744ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1114.6976

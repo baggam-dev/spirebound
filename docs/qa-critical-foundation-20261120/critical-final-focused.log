@@ -1,0 +1,29 @@
+✔ new runs have bounded critical stats and a separate seeded stream (98.4733ms)
+✔ one target packet shares the critical result across physical and elemental damage (26.304ms)
+✔ a shield or zero damage cannot roll a critical or count a hit (20.663ms)
+✔ damage snapshots survive DoT reload without rerolling or recounting the same application (47.102ms)
+✔ mixed continuous components apply defense once and attribute only the critical share (27.1772ms)
+✔ overkill critical accounting uses actual remaining HP (26.6051ms)
+✔ save reload reproduces the next roll and migrates legacy saves without resetting existing critical state (53.2644ms)
+✔ weapon snapshots retain cast-time critical stats and invalid saved critical data is rejected (22.7355ms)
+✔ invalid damage components do not mutate HP, consume a shield or advance RNG (29.6764ms)
+✔ the default five-percent stream stays deterministic across a long sample without touching world RNG (40.9985ms)
+✔ legacy weapon builds receive default critical stats once instead of borrowing later player upgrades (34.9924ms)
+✔ actual frost projectile shares one critical decision between physical and elemental damage (71.8328ms)
+✔ a projectile miss consumes no critical random values (33.2398ms)
+✔ poison application keeps one decision across tick sizes and reload (47.8256ms)
+✔ mixed critical and ordinary burn accrual survives saving before its half-second pulse (33.5057ms)
+✔ rain makes one target decision per real pulse without changing its six-pulse damage snapshot (27.0753ms)
+✔ crossbow projectiles keep installed critical stats after player stats change (30.9619ms)
+✔ solar fairy burn inherits its actual shot result instead of rerolling each tick (25.303ms)
+✔ shared ongoing snapshot aliases are rejoined after serialization and do not recount a victim (42.0345ms)
+✔ a zero-duration update does not reroll legacy poison, burn or passive DOT applications (23.5896ms)
+✔ hostile projectiles never use player critical stats (21.9736ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1156.2117

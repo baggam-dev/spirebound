@@ -9,7 +9,7 @@ import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 import {turretEndings} from '../../src/combat/weapon-projectiles.js';
 import {updatePoisonEnemy,updateHazards} from '../../src/combat/poison.js';
 const foe=(id=0,x=650,y=300)=>({id,type:'chaser',x,y,hp:10000,max:10000,cd:99,balanceVersion:1});
-function setup(){const s=newRun(42),r=currentRoom(s);r.obstacles=[];r.enemies=[foe()];s.attack=99;s.entryGrace=99;s.player.damage=20;return s;}
+function setup(){const s=newRun(42),r=currentRoom(s);s.player.critChance=0;r.obstacles=[];r.enemies=[foe()];s.attack=99;s.entryGrace=99;s.player.damage=20;return s;}
 test('seeker is an independent normal 100% arrow; split arrows retain elements',()=>{
  const s=setup();Object.assign(s.player,{fire:3,mainSkill:'fire',homing:1,split:2,repeat:1});fireArrow(s,currentRoom(s).enemies[0]);assert.equal(s.projectiles.length,4);assert.ok(s.projectiles.every(b=>b.element==='fire'&&!b.homing));s.projectiles=[];
  tickPassives(s,1.49);assert.equal(s.projectiles.length,0);tickPassives(s,.01);assert.equal(s.projectiles.length,1);const b=s.projectiles[0];assert.ok(b.seeker&&b.homing);assert.equal(b.weapon.fire,0);assert.equal(b.weapon.split,0);const e=foe();hitEnemy(b.weapon,e,[e],[],1,false);assert.equal(e.hp,9980);assert.equal(e.burnStacks,undefined);assert.doesNotThrow(()=>parseSave(encodeSave(s)));
@@ -23,8 +23,8 @@ test('turret damage is frozen and delayed arrow stays at installation after play
 test('build corruption rejected and legacy turret snapshots once',()=>{
  const s=setup();currentRoom(s).turrets=[{x:480,y:300,time:19,clock:0,aim:0}];tickPassives(s,.01);assert.equal(currentRoom(s).turrets[0].build.damage,20);const copy=parseSave(encodeSave(s));currentRoom(copy).turrets[0].build.fire=99;assert.throws(()=>encodeSave(copy));s.projectiles[0].weapon.damage=-1;assert.throws(()=>encodeSave(s));
 });
-test('rain is 50 per pulse; retirement has no attacks',()=>{
- const s=setup();s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};castUltimate(s);tickRain(s,1.5);assert.equal(currentRoom(s).enemies[0].hp,9160);s.skill=0;s.player.evolutions.ultimate='turret';castUltimate(s);s.skill=0;castUltimate(s);s.skill=0;castUltimate(s);assert.equal(turretEndings(currentRoom(s)).length,1);tickPassives(s,19);assert.equal(currentRoom(s).turrets.length,0);s.projectiles=[];tickPassives(s,.5);assert.equal(turretEndings(currentRoom(s)).length,0);assert.equal(s.projectiles.length,0);
+test('rain is 100 per pulse for a 20 power build; retirement has no attacks',()=>{
+ const s=setup();s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};castUltimate(s);tickRain(s,1.5);assert.equal(currentRoom(s).enemies[0].hp,9400);s.skill=0;s.player.evolutions.ultimate='turret';castUltimate(s);s.skill=0;castUltimate(s);s.skill=0;castUltimate(s);assert.equal(turretEndings(currentRoom(s)).length,1);tickPassives(s,19);assert.equal(currentRoom(s).turrets.length,0);s.projectiles=[];tickPassives(s,.5);assert.equal(turretEndings(currentRoom(s)).length,0);assert.equal(s.projectiles.length,0);
 });
 test('four slime fragments maintain bounded hazards over a minute',()=>{
  const room={obstacles:[],hazards:[],enemies:Array.from({length:4},(_,i)=>({...foe(i,200+i*150,200),type:'boss',variant:'slime',stage:2,cd:i*.35,gasClock:i*.6}))};let max=0;

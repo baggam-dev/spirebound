@@ -1,3 +1,5 @@
+import {migrateCriticalCombat} from '../combat/critical.js';
+import {applyBoundDamage,createDamagePacket,criticalInstance,bindCriticalPlayer} from '../combat/critical.js';
 import {migrateSkillOverhaul,fairyTrio} from './skill-overhaul.js';
 import {lightningImpact,chargePrimary} from '../combat/lightning.js';
 import {growthRewards,growthAvailable,applyGrowth} from './growth.js';
@@ -42,7 +44,7 @@ export const recipes = [
  {name:'뇌우',needs:['chain','haste'],description:'번개 전이 거리 +40 · 레벨별 전이 45/55/65%, 이후 80% 유지'},
 ];
 export function combinations(p){return recipes.filter(r=>r.needs.every(id=>p[id]>0));}
-export function migrateRun(s){if(!s.upgrade21){s.player.ultimate=s.player.evolutions?.ultimate?1:0;if(s.player.evolutions?.ultimate==='field')s.player.evolutions.ultimate='turret';s.upgrade21=true;}s.player.relics=ownedRelics(s.player);delete s.player.relic;if(!s.combatVersion){for(const r of s.floors.flat())r.fireZones=[];s.combatVersion=17;}migrateHealth(s);migrateEnemies(s);s.player.speed=MOVE_SPEED;if(!s.skillSystemVersion){s.player.poison=s.player.fire||0;s.player.fire=0;if(s.player.evolutions?.fire){s.player.evolutions.poison=s.player.evolutions.fire;delete s.player.evolutions.fire;}if(s.choices)s.choices=s.choices.map(id=>id==='fire'?'poison':id);s.skillSystemVersion=13;}for(const skill of skills)s.player[skill.id]??=0;if(s.skillSystemVersion<14){s.skillSystemVersion=14;s.choices=null;}if(!s.spectralBladeVersion){s.player.legacyAuraGuard=(s.player.aura||0)>=3;s.spectralBladeVersion=1;delete s.auraVisual;}s.skillDraftVersion??=1;return migrateSkillOverhaul(s);}
+export function migrateRun(s){if(!s.upgrade21){s.player.ultimate=s.player.evolutions?.ultimate?1:0;if(s.player.evolutions?.ultimate==='field')s.player.evolutions.ultimate='turret';s.upgrade21=true;}s.player.relics=ownedRelics(s.player);delete s.player.relic;if(!s.combatVersion){for(const r of s.floors.flat())r.fireZones=[];s.combatVersion=17;}migrateHealth(s);migrateEnemies(s);s.player.speed=MOVE_SPEED;if(!s.skillSystemVersion){s.player.poison=s.player.fire||0;s.player.fire=0;if(s.player.evolutions?.fire){s.player.evolutions.poison=s.player.evolutions.fire;delete s.player.evolutions.fire;}if(s.choices)s.choices=s.choices.map(id=>id==='fire'?'poison':id);s.skillSystemVersion=13;}for(const skill of skills)s.player[skill.id]??=0;if(s.skillSystemVersion<14){s.skillSystemVersion=14;s.choices=null;}if(!s.spectralBladeVersion){s.player.legacyAuraGuard=(s.player.aura||0)>=3;s.spectralBladeVersion=1;delete s.auraVisual;}s.skillDraftVersion??=1;migrateCriticalCombat(s);return migrateSkillOverhaul(s);}
 // Unique rarity applies to acquisition; an owned blade upgrades at normal support weight.
 export const skillOfferWeight=(p,skill)=>skill.id==='aura'&&p.aura>0?1:skill.weight;
 export function skillChoices(p,random=Math.random){const pool=skills.filter(k=>k.id!=='ultimate'&&allowedSkill(p,k.id)&&(p[k.id]||0)<k.max).map(k=>({...k,weight:skillOfferWeight(p,k)})),chosen=[];while(pool.length&&chosen.length<3){let roll=random()*pool.reduce((n,k)=>n+k.weight,0),i=0;while(i<pool.length-1&&roll>=pool[i].weight)roll-=pool[i++].weight;chosen.push(pool.splice(i,1)[0]);}return chosen;}
@@ -50,23 +52,24 @@ export function applySkill(p,id){const skill=skills.find(k=>k.id===id);if(!skill
 // Both minimap cells and its bounds must derive only from explored rooms.
 export function discoveredRooms(rooms){return rooms.filter(r=>r.seen);}
 export function hitEnemy(p,e,enemies,obstacles=[],scale=1,elemental=true,room=null,origin=p,shot={}){
+ bindCriticalPlayer(p,enemies);
  const sourcePlayer=p,beforeDirect=e.hp,elementBase=p.damage*scale*hexFactor(p,'damage')*(1+relicStat(p,'damage'));
  if(absorbDemonShield(e))return [{x:e.x,y:e.y-45,t:.5,color:'#9edcf8',text:'방어막!'}];
- p={...p,damage:p.damage*scale*hexFactor(p,'damage')*(1+.12*(p.power||0)+relicStat(p,'damage')),effectScale:scale*hexFactor(p,'damage')*(1+relicStat(p,'damage'))*(1+relicStat(p,'element'))};
- bindDefenses(enemies);if(p.frost&&elemental)applyFrost(p,e);const wasFrozen=e.frozen>0,wasAlive=e.hp>0;const effects=[];const precision=shot.primary&&p.precision?precisionMultiplier(p,e):1;e.hp-=(p.damage+(p.split&&p.pierce?3*scale:0))*(p.evolutions?.pierce==='depth'?.85:p.evolutions?.pierce==='impact'?1.25:1)*(p.evolutions?.haste==='tempo'?.85:1)*directRelicFactor(p,e,!p.frostShardAttack)*(p.frost?FROST_DAMAGE_FACTOR:1)*(p.frostShardAttack?1+relicStat(p,'element'):1)*enemyDamageFactor(e,origin)*precision*(p.fairyKing?1.15:1);
+ p={...p,criticalPacket:createDamagePacket(),damage:p.damage*scale*hexFactor(p,'damage')*(1+.12*(p.power||0)+relicStat(p,'damage')),effectScale:scale*hexFactor(p,'damage')*(1+relicStat(p,'damage'))*(1+relicStat(p,'element'))};
+ bindDefenses(enemies);if(p.frost&&elemental)applyFrost(p,e);const wasFrozen=e.frozen>0,wasAlive=e.hp>0;const effects=[];const precision=shot.primary&&p.precision?precisionMultiplier(p,e):1;const directResult=applyBoundDamage(e,(p.damage+(p.split&&p.pierce?3*scale:0))*(p.evolutions?.pierce==='depth'?.85:p.evolutions?.pierce==='impact'?1.25:1)*(p.evolutions?.haste==='tempo'?.85:1)*directRelicFactor(p,e,!p.frostShardAttack)*(p.frost?FROST_DAMAGE_FACTOR:1)*(p.frostShardAttack?1+relicStat(p,'element'):1)*enemyDamageFactor(e,origin)*precision*(p.fairyKing?1.15:1),{player:p,packet:p.criticalPacket,source:p.frostShardAttack?'frostShard':'arrow',defended:true});
  if(e.type==='boss'&&(!e.variant||e.variant==='warden')&&e.hp<beforeDirect&&e.hp>0)effects.push({enemyFeedback:'hit',wardenDirect:true,enemyId:e.id,x:e.x,y:e.y,boss:true,beforeRatio:Math.min(1,beforeDirect/e.max),afterRatio:Math.max(0,e.hp/e.max),healthOffset:-52,t:.28,duration:.28});
- if(shot.primary&&p.precision){const burst=(e.precisionHits||0)>=(p.evolutions?.precision==='sniper'?1:2);recordPrecisionHit(p,e);if(burst)effects.push({x:e.x,y:e.y-28,t:.65,color:'#f9e2a5',text:'약점!',precisionBurst:true,hitAngle:Math.atan2(e.y-origin.y,e.x-origin.x)});}
+ if(shot.primary&&p.precision){const burst=(e.precisionHits||0)>=(p.evolutions?.precision==='sniper'?1:2);recordPrecisionHit(p,e);if(burst)effects.push({x:e.x,y:e.y-28,t:.65,color:'#f9e2a5',text:'약점!',precisionBurst:true,attackId:directResult.snapshot?.id??null,hitAngle:Math.atan2(e.y-origin.y,e.x-origin.x)});}
  shot={...shot,validDirect:e.hp<beforeDirect,venomPrimary:shot.venomPrimary??shot.primary};
  if(p.chain&&elemental&&shot.validDirect)p.chargeBonus=chargePrimary(sourcePlayer,shot);
  if(p.chargeBonus)effects.push({x:e.x,y:e.y-28,t:.5,color:'#dcc4ff',text:'축전 방전'},{x:e.x,y:e.y,t:.28,duration:.28,synergyEffect:'charge'});
  if(wasAlive)markFireKill(e,fireFieldSpec(p));
  if(elemental)effects.push(...elementalImpact({...p,damage:elementBase},e,enemies,room,shot));
  else if(p.poison)effects.push(...elementalImpact({...p,fire:0},e,enemies,room,shot));
- if(p.frost&&elemental&&!p.frostShardAttack)e.hp-=elementBase*FROST_DAMAGE_FACTOR*(.05+.05*p.frost)*(1+relicStat(p,'element'))*enemyDamageFactor(e,origin);
+ if(p.frost&&elemental&&!p.frostShardAttack)applyBoundDamage(e,elementBase*FROST_DAMAGE_FACTOR*(.05+.05*p.frost)*(1+relicStat(p,'element'))*enemyDamageFactor(e,origin),{player:p,packet:p.criticalPacket,source:'frostDirect',defended:true});
  if(p.chain&&elemental)effects.push(...lightningImpact({...p,damage:elementBase},e,enemies));
  if(wasFrozen&&e.hp<=0)e.frozenDeath=true;return effects;
 }
-export function tickEffects(e,dt){if(e.hp<=0){if(e.frozen>0)e.frozenDeath=true;return;}tickPrecision(e,dt);const wasFrozen=e.frozen>0;if(e.burn>0&&e.burnDamage>0)e.hp-=Math.min(dt,e.burn)*(e.burnDamage||0)*enemyDamageFactor(e);if(wasFrozen&&e.hp<=0)e.frozenDeath=true;for(const k of ['burn','slow','blastCooldown','frozen','freezeImmune','frostStackTime'])e[k]=Math.max(0,(e[k]||0)-dt);if(!e.frostStackTime)e.frostStacks=0;finishFrost(e,wasFrozen);}
+export function tickEffects(e,dt){if(e.hp<=0){if(e.frozen>0)e.frozenDeath=true;return;}tickPrecision(e,dt);const wasFrozen=e.frozen>0;if(e.burn>0&&e.burnDamage>0)applyBoundDamage(e,Math.min(dt,e.burn)*(e.burnDamage||0),{snapshot:criticalInstance(e,e,{amount:Math.min(dt,e.burn)*(e.burnDamage||0)}).criticalSnapshot,source:'legacyBurn',procDepth:1});if(wasFrozen&&e.hp<=0)e.frozenDeath=true;for(const k of ['burn','slow','blastCooldown','frozen','freezeImmune','frostStackTime'])e[k]=Math.max(0,(e[k]||0)-dt);if(!e.frostStackTime)e.frostStacks=0;finishFrost(e,wasFrozen);}
 
 export function rerollSkills(s){
  if(s.status!=='playing'||!s.player.mainSkill||s.pendingLevels<=0||!s.choices?.length||(s.rerolls??1)<=0)return false;

@@ -1,3 +1,4 @@
+import {bindCriticalRun,applyBoundDamage,criticalInstance} from './critical.js';
 import {basicShotPower} from './roll.js';
 import {segmentBlocked} from '../world/terrain.js';
 import {enemyDamageFactor} from './enemy-defense.js';
@@ -31,23 +32,23 @@ function hit(s,room,state,profile,effects){
   if(Math.abs(Math.atan2(Math.sin(angle),Math.cos(angle)))>profile.halfAngle||segmentBlocked(origin,e,room.obstacles,2))continue;
   const before=Math.max(0,e.hp),marked=p.mainSkill==='precision'&&e.precisionHits>0&&e.precisionTime>0;
   const damage=profile.damage*(marked?1.2:1)*enemyDamageFactor(e,origin);
-  if(damage<=0)continue;e.hp-=damage;
+  if(damage<=0)continue;const hitResult=applyBoundDamage(e,damage,{player:p,source:'spectralBlade',defended:true});
   s.metrics.damageDealt+=before-Math.max(0,e.hp);
   effects.push({x:e.x,y:e.y,r:17,t:.14,color:bladeColor(p),slash:true,angle:state.aim});
   // Lightweight, bounded secondary effects: never call hitEnemy or advance
   // primary marks/freezes/chain counters, nor seed poison corpse chains.
   if(e.hp>0&&p.mainSkill==='frost'){e.slow=Math.max(e.slow||0,.6);e.slowFactor=Math.min(e.slowFactor??1,e.type==='boss'?.94:.8);}
-  if(e.hp>0&&['fire','poison'].includes(p.mainSkill))e.bladeDot={time:1,dps:4,kind:p.mainSkill};
+  if(e.hp>0&&['fire','poison'].includes(p.mainSkill))e.bladeDot={time:1,dps:4,kind:p.mainSkill,...(hitResult.snapshot?{criticalSnapshot:hitResult.snapshot}:{})};
   if(p.mainSkill==='chain'&&!discharged){
    const other=room.enemies.filter(n=>n!==e&&n.hp>0&&!airborne(n)&&distance(n,e)<=64&&!segmentBlocked(e,n,room.obstacles,2)).sort((a,b)=>distance(a,e)-distance(b,e))[0];
-   if(other){const hp=other.hp;other.hp-=profile.damage*.25*enemyDamageFactor(other,e);s.metrics.damageDealt+=hp-Math.max(0,other.hp);effects.push({x:e.x,y:e.y,toX:other.x,toY:other.y,t:.16,color:bladeColor(p)});discharged=true;}
+   if(other){const hp=other.hp;applyBoundDamage(other,profile.damage*.25*enemyDamageFactor(other,e),{snapshot:hitResult.snapshot,source:'bladeTransfer',defended:true,procDepth:1});s.metrics.damageDealt+=hp-Math.max(0,other.hp);effects.push({x:e.x,y:e.y,toX:other.x,toY:other.y,t:.16,color:bladeColor(p)});discharged=true;}
   }
  }
 }
 export function tickSpectralBlade(s,room,dt,effects){
- const p=s.player;if(!p.aura){states.delete(s);return;}
+ bindCriticalRun(s,room.enemies);const p=s.player;if(!p.aura){states.delete(s);return;}
  for(const e of room.enemies)if(e.bladeDot){const dot=e.bladeDot;
-  if(e.hp>0&&!airborne(e)){const hp=e.hp;e.hp-=Math.min(dt,dot.time)*dot.dps*enemyDamageFactor(e);s.metrics.damageDealt+=hp-Math.max(0,e.hp);}
+  if(e.hp>0&&!airborne(e)){const hp=e.hp;applyBoundDamage(e,Math.min(dt,dot.time)*dot.dps,{snapshot:criticalInstance(e,dot,{amount:Math.min(dt,dot.time)*dot.dps}).criticalSnapshot,source:'bladeDot',procDepth:1});s.metrics.damageDealt+=hp-Math.max(0,e.hp);}
   dot.time=Math.max(0,dot.time-dt);if(!dot.time)delete e.bladeDot;
  }
  s.bladeCooldown=Math.max(0,(s.bladeCooldown||0)-dt);

@@ -8,7 +8,7 @@ import {evolutions} from '../../src/progression/evolutions.js';
 function fixture(){const s=newRun(85);s.player.ultimate=1;s.player.evolutions={ultimate:'burst'};const r=currentRoom(s);r.obstacles=[];r.enemies=[{id:0,type:'archer',x:s.player.x+30,y:s.player.y,hp:10000,max:10000,cd:99,balanceVersion:1}];return s;}
 test('new rain casts deal 500 percent per pulse with six real pulses and retain the crown multiplier',()=>{
  for(const crown of [false,true]){
-  const s=fixture(),r=currentRoom(s);if(crown)grantRelic(s,'crown');const perPulse=crown?114.75:85;
+  const s=fixture(),r=currentRoom(s);if(crown)grantRelic(s.player,'crown');const perPulse=crown?114.75:85;
   assert.equal(castUltimate(s),true);assert.equal(s.skill,25);assert.equal(r.arrowRain.r,280);assert.equal(r.arrowRain.pulses,1);assert.ok(Math.abs(r.arrowRain.damage-perPulse)<1e-8);
   for(let i=1;i<6;i++)tickRain(s,.3);assert.equal(r.arrowRain.pulses,6);assert.ok(Math.abs(10000-r.enemies[0].hp-perPulse*6)<1e-8);tickRain(s,.3);assert.equal(r.arrowRain,null);
  }

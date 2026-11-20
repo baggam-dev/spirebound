@@ -1,0 +1,17 @@
+✔ new runs have bounded critical stats and a separate seeded stream (76.1866ms)
+✔ one target packet shares the critical result across physical and elemental damage (20.4431ms)
+✔ a shield or zero damage cannot roll a critical or count a hit (18.4071ms)
+✔ damage snapshots survive DoT reload without rerolling or recounting the same application (40.0151ms)
+✔ mixed continuous components apply defense once and attribute only the critical share (18.61ms)
+✔ overkill critical accounting uses actual remaining HP (17.7401ms)
+✔ save reload reproduces the next roll and migrates legacy saves without resetting existing critical state (41.4962ms)
+✔ weapon snapshots retain cast-time critical stats and invalid saved critical data is rejected (20.7455ms)
+✔ invalid damage components do not mutate HP, consume a shield or advance RNG (19.4069ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 816.742
