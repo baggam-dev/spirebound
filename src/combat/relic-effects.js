@@ -10,7 +10,7 @@ export function reactToRelicHit(s,r,effects=[]){
  if(hasRelic(p,'thornBuckle')&&!(s.thornCooldown>0)){
   s.thornCooldown=2;bindCriticalRun(s,r.enemies);bindDefenses(r.enemies);const power=basicShotPower(p);
   for(const e of r.enemies){if(e.hp<=0||['air','splitJump'].includes(e.phase)||e.attackPhase==='leap'||Math.hypot(e.x-p.x,e.y-p.y)>80||segmentBlocked(p,e,r.obstacles,2))continue;
-   const before=Math.max(0,e.hp);applyBoundDamage(e,power*enemyDamageFactor(e,p),{source:'thornBuckle',defended:true});if(s.metrics)s.metrics.damageDealt+=before-Math.max(0,e.hp);
+   const before=Math.max(0,e.hp);applyBoundDamage(e,power*enemyDamageFactor(e,p),{source:'thornBuckle',defended:true,procDepth:1});if(s.metrics)s.metrics.damageDealt+=before-Math.max(0,e.hp);
   }
   effects.push({x:p.x,y:p.y-24,t:.3,text:'반격',color:'#d1c2a5'});
  }

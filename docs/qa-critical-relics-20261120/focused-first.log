@@ -1,0 +1,95 @@
+✔ new runs have bounded critical stats and a separate seeded stream (137.705ms)
+✔ one target packet shares the critical result across physical and elemental damage (39.2068ms)
+✔ a shield or zero damage cannot roll a critical or count a hit (37.5829ms)
+✔ damage snapshots survive DoT reload without rerolling or recounting the same application (73.04ms)
+✔ mixed continuous components apply defense once and attribute only the critical share (42.9791ms)
+✔ overkill critical accounting uses actual remaining HP (50.5906ms)
+✔ save reload reproduces the next roll and migrates legacy saves without resetting existing critical state (77.7992ms)
+✔ weapon snapshots retain cast-time critical stats and invalid saved critical data is rejected (46.534ms)
+✔ invalid damage components do not mutate HP, consume a shield or advance RNG (45.4385ms)
+✔ the default five-percent stream stays deterministic across a long sample without touching world RNG (87.099ms)
+✔ legacy weapon builds receive default critical stats once instead of borrowing later player upgrades (58.5302ms)
+✔ four approved relic objects share catalog, icon and rarity mappings without changing atlas indices (3.3521ms)
+✔ cracked crown pays max health once, clamps current health and restores no healing on removal (70.2016ms)
+✔ unaffordable crown is excluded from new offers and disabled in stale offers (69.1344ms)
+✔ relic and skill critical bonuses use common caps and are not counted again in weapon profiles (34.6138ms)
+✔ resolve grows only on throttled new noncritical hits, caps at ten points and resets on critical (30.7796ms)
+✔ hunter follows a critical against elites only once, cannot crit/recurse, and does not consume extra RNG (28.7753ms)
+✔ hunter does not proc on ordinary enemies, noncritical hits or lethal overkill (35.5367ms)
+✔ actual arrow route includes hunter damage exactly once in total damage metrics (40.6868ms)
+✖ proc state and resolved snapshots survive saving while invalid new fields are rejected (49.8125ms)
+✔ previews show critical and health costs with conditional explanations and live owned state (43.4316ms)
+✔ six supports use existing rarity, gated acquisition and exact level caps (77.6843ms)
+✔ chance and multiplier investment, decisive tradeoff, cap and summon snapshots agree (64.1947ms)
+✔ fracture applies only to later attacks and never stacks or buffs its own components (43.1648ms)
+✔ only successful rolls activate focus, pause freezes it and cooldown prevents refresh (38.227ms)
+✔ judgment counts throttled new critical contacts, excluding DOT, derived damage and empowered sources (53.6471ms)
+✔ ready judgment survives failed cast and empowers the full rain without self-recharging (38.5713ms)
+✔ empowered crossbow snapshots retain bonus and block charging after future player growth (99.5004ms)
+✔ save restores marks focus and charge; malformed skill levels and proc state are rejected (91.3065ms)
+✔ draft retains main-linked reservation and new skills have distinct medallions and clear descriptions (65.2697ms)
+✔ detached status drawing is deterministic and does not alter saved combat state (41.2392ms)
+✔ 41 relic IDs share one icon mapping; new rarity keeps existing uniques and excludes fairy offers (123.3503ms)
+✔ whetstone affects full-HP arrow direct hits only, not non-arrow effects or injured targets (64.4135ms)
+✔ thorn retaliation respects walls, airborne targets and cooldown without spending the phoenix (34.9165ms)
+✔ lethal contact revives before death, records actual HP loss, persists spend across trade and reload (76.3652ms)
+✔ ritual knot reduces all three utility cooldowns without changing costs, durations or current cooldown (155.7976ms)
+✔ fairy whistle multiplies projectiles and king beam once without granting companions (103.6564ms)
+✖ HUD caps visible slots with accurate overflow, keeps key and spent state, preview preserves source (39.7833ms)
+✔ new save flags validate and banner is transient, paused, room-bound and never replayed (37.5745ms)
+✔ every boss offers deterministic unowned relics once including the final boss (157.8355ms)
+✔ relics accumulate without duplicates and cannot be reclaimed after save (83.1059ms)
+✔ skipping relics preserves the equipped item and claims the cache without changing cooldowns (28.2717ms)
+✔ relic benefits use exact distance boundaries, shield limits and cooldowns (38.1576ms)
+✔ boots and stride bonuses are symmetric and diagonal motion is normalized (53.5207ms)
+✔ ember relic strengthens burn with no direct arrow penalty (2.1648ms)
+✔ journal observes only current enemies and retains discovered elite traits (48.8394ms)
+✔ successful hits record source and floor totals; ignored hits are absent and history is bounded (53.4586ms)
+✔ lethal projectile records its actual source before death and does not count invulnerable hits (61.9435ms)
+✔ new save fields reject invalid relics, codex keys and damage history (41.2543ms)
+✔ damage diagnostics include capped burn, field and instant ultimate damage (28.5198ms)
+ℹ tests 50
+ℹ suites 0
+ℹ pass 48
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1699.2423
+
+✖ failing tests:
+
+test at tests\unit\critical-relics.test.js:60:1
+✖ proc state and resolved snapshots survive saving while invalid new fields are rejected (49.8125ms)
+  Error: 저장 데이터 형식이 올바르지 않습니다.
+      at check (file:///C:/baggam-dev/spirebound/src/persistence/storage.js:34:47)
+      at validateRun (file:///C:/baggam-dev/spirebound/src/persistence/storage.js:89:477)
+      at encodeSave (file:///C:/baggam-dev/spirebound/src/persistence/storage.js:140:31)
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/critical-relics.test.js:62:106)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+
+test at tests\unit\relic-package.test.js:52:1
+✖ HUD caps visible slots with accurate overflow, keeps key and spent state, preview preserves source (39.7833ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(html.includes('+31'))
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/relic-package.test.js:53:185)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

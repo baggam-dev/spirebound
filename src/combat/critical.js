@@ -1,3 +1,4 @@
+import {criticalRelicBonuses,resolveChance,criticalRelicHit} from '../progression/critical-relics.js';
 import {criticalSkillBonuses,criticalSkillHit} from '../progression/critical-skills.js';
 import {enemyDamageFactor} from './enemy-defense.js';
 
@@ -33,21 +34,21 @@ export function migrateCriticalCombat(s){
  players.set(p,s);
  return s;
 }
-export function criticalStats(p={}){
+export function criticalStats(p={},conditional=true){
  const chance=Number.isFinite(p.critChance)?p.critChance:CRITICAL_DEFAULTS.chance;
  const multiplier=Number.isFinite(p.critMultiplier)?p.critMultiplier:CRITICAL_DEFAULTS.multiplier;
- const bonus=criticalSkillBonuses(p);return {chance:clamp(chance+bonus.chance,0,CRITICAL_DEFAULTS.chanceCap),multiplier:clamp(multiplier+bonus.multiplier,1,CRITICAL_DEFAULTS.multiplierCap)};
+ const skill=p.criticalResolved?{chance:0,multiplier:0}:criticalSkillBonuses(p),relic=p.criticalResolved?{chance:0,multiplier:0}:criticalRelicBonuses(p);return {chance:clamp(chance+skill.chance+relic.chance+(conditional&&!p.criticalResolved?resolveChance(p):0),0,CRITICAL_DEFAULTS.chanceCap),multiplier:clamp(multiplier+skill.multiplier+relic.multiplier,1,CRITICAL_DEFAULTS.multiplierCap)};
 }
-export function createCriticalProfile(p){const stats=criticalStats(p);return {critChance:stats.chance,critMultiplier:stats.multiplier,...(p?.judgmentEmpowered?{judgmentEmpowered:true}:{})};}
+export function createCriticalProfile(p){const stats=criticalStats(p,false);return {criticalResolved:true,critChance:stats.chance,critMultiplier:stats.multiplier,...(p?.judgmentEmpowered?{judgmentEmpowered:true}:{})};}
 export function nextCriticalRandom(s){
  migrateCriticalCombat(s);const state=s.critical;
  state.randomState=(Math.imul(state.randomState>>>0,1664525)+1013904223)>>>0;
  return state.randomState/4294967296;
 }
 // Serializable application/cast snapshot. Reuse it for DoT ticks, not a new roll.
-export function createCriticalSnapshot(s,player=s.player){
+export function createCriticalSnapshot(s,player=s.player,conditional=true){
  migrateCriticalCombat(s);if(s.critical.sequence>=UINT_MAX)throw Error('Critical sequence limit');
- const stats=criticalStats({...player,critChance:player?.critChance??s.player.critChance,critMultiplier:player?.critMultiplier??s.player.critMultiplier}),critical=stats.chance>0&&nextCriticalRandom(s)<stats.chance;
+ const stats=criticalStats({...player,critChance:player?.critChance??s.player.critChance,critMultiplier:player?.critMultiplier??s.player.critMultiplier},false),chance=clamp(stats.chance+(conditional?resolveChance(s.player):0),0,CRITICAL_DEFAULTS.chanceCap),critical=chance>0&&nextCriticalRandom(s)<chance;
  s.critical.sequence++;
  return {version:1,id:s.critical.sequence,critical,multiplier:critical?stats.multiplier:1,countedTargets:[]};
 }
@@ -93,6 +94,7 @@ export function applyPlayerDamage(s,enemy,amount,{player=s.player,source='direct
  const attackIds=[...new Set(resolved.map(part=>part.snapshot.id))];
  Object.assign(result,{applied:true,attackId:attackIds.length===1?attackIds[0]:null,attackIds,procDepth,procEligible:procDepth===0&&newHit,damage:actual,criticalDamage:actualCritical,critical,newHit,before,after:enemy.hp,multiplier:damage/(base*defense)});
  criticalSkillHit(s,enemy,result,player);
+ criticalRelicHit(s,enemy,result,value=>applyPlayerDamage(s,enemy,value,{source:'hunterSeal',origin,snapshot:createCriticalSnapshot(s,{critChance:0,critMultiplier:1,criticalResolved:true},false),procDepth:1}));
  const queue=queues.get(s)||[];queue.push({...result});if(queue.length>256)queue.splice(0,queue.length-256);queues.set(s,queue);
  return {...result,snapshot:resolved.length===1?resolved[0].snapshot:null};
 }

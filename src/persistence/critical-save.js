@@ -5,11 +5,14 @@ export function validateCriticalPlayer(p,check,number){
  if(p.critChance!==undefined)check(number(p.critChance,0,1));
  if(p.critMultiplier!==undefined)check(number(p.critMultiplier,1,10));
  if(p.judgmentEmpowered!==undefined)check(p.judgmentEmpowered===true);
+ if(p.criticalResolved!==undefined)check(p.criticalResolved===true);
 }
 export function validateCriticalSave(s,check,number){
  validateCriticalPlayer(s.player,check,number);
  for(const k of criticalSkills)if(s.player[k.id]!==undefined)check(Number.isInteger(s.player[k.id])&&number(s.player[k.id],0,k.max));
  for(const [key,max] of [['critFocusTime',3],['critFocusCooldown',8]])if(s.player[key]!==undefined)check(number(s.player[key],0,max));
+ if(s.player.resolveStacks!==undefined)check(Number.isInteger(s.player.resolveStacks)&&number(s.player.resolveStacks,0,5));
+ if(s.player.resolveNextAt!==undefined)check(number(s.player.resolveNextAt,0,1e9));
  if(s.critical!==undefined){
   const c=s.critical;check(c&&typeof c==='object'&&!Array.isArray(c)&&c.version===1);
   for(const key of ['randomState','sequence'])check(Number.isInteger(c[key])&&number(c[key],0,4294967295));
@@ -18,6 +21,7 @@ export function validateCriticalSave(s,check,number){
   check(c.criticalHits<=c.hits&&c.criticalDamage<=c.damage+Math.max(1e-6,c.damage*1e-12));
   if(c.royalCharges!==undefined)check(Number.isInteger(c.royalCharges)&&number(c.royalCharges,0,8));
   if(c.royalNextAt!==undefined)check(number(c.royalNextAt,0,1e9));
+  if(c.hunterNextAt!==undefined)check(number(c.hunterNextAt,0,1e9));
  }
  const snapshots=new Map();
  const inspect=value=>{

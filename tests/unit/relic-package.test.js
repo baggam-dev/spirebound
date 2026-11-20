@@ -15,8 +15,8 @@ import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 function setup(){const s=newRun(31),r=currentRoom(s);s.tutorialComplete=true;s.entryGrace=0;s.attack=999;s.invulnerable=0;r.obstacles=[];r.enemies=[];return {s,r,p:s.player};}
 const target=(x=530,y=300)=>({id:0,type:'archer',x,y,hp:100,max:100,cd:999,tier:0});
 
-test('37 relic IDs share one icon mapping; new rarity keeps existing uniques and excludes fairy offers',()=>{
- assert.equal(relics.length,37);assert.deepEqual(new Set(relicIconIds),new Set(relics.map(r=>r.id)));assert.equal(relics.filter(r=>r.grade==='rare').length,1);assert.equal(relics.filter(r=>r.grade==='unique').length,6);
+test('41 relic IDs share one icon mapping; new rarity keeps existing uniques and excludes fairy offers',()=>{
+ assert.equal(relics.length,41);assert.deepEqual(new Set(relicIconIds),new Set(relics.map(r=>r.id)));assert.equal(relics.filter(r=>r.grade==='rare').length,3);assert.equal(relics.filter(r=>r.grade==='unique').length,6);
  const {s,r,p}=setup();for(const id of relics.map(r=>r.id).filter(id=>id!=='phoenixReliquary'&&!id.endsWith('Fairy')))grantRelic(p,id);
  offerRelics(s,r);assert.deepEqual(r.relicOffers,['phoenixReliquary']);r.used=true;assert.equal(claimRelic(s,'phoenixReliquary'),true);assert.equal(claimRelic(s,'phoenixReliquary'),false);
  assert.doesNotThrow(()=>encodeSave(s));
@@ -50,7 +50,7 @@ test('fairy whistle multiplies projectiles and king beam once without granting c
 });
 
 test('HUD caps visible slots with accurate overflow, keeps key and spent state, preview preserves source',()=>{
- const {s,r,p}=setup();for(const id of relics.map(r=>r.id))grantRelic(p,id);const html=relicMarkup(p,true,8,true);assert.equal((html.match(/data-relic-detail=/g)||[]).length,8);assert.ok(html.includes('+31'));assert.ok(html.includes('탈출 열쇠'));assert.ok(relicMarkup({...p,relics:['phoenixReliquary']},false,8,true).includes('소모됨'));
+ const {s,r,p}=setup();for(const id of relics.map(r=>r.id))grantRelic(p,id);const html=relicMarkup(p,true,8,true);assert.equal((html.match(/data-relic-detail=/g)||[]).length,8);assert.ok(html.includes('+'+(relics.length-6)));assert.ok(html.includes('탈출 열쇠'));assert.ok(relicMarkup({...p,relics:['phoenixReliquary']},false,8,true).includes('소모됨'));
  r.relicOffers=['magnet','ritualKnot','phoenixReliquary'];const before=JSON.stringify(p);const ui=relicSelectionMarkup(s,r);assert.ok(ui.includes('relic0'));assert.ok(ui.includes('skipRelic'));assert.ok(ui.includes('레어'));assert.equal(JSON.stringify(p),before);
  const q=setup(),rows=relicPreview(q.p,'magnet').rows;assert.ok(rows.some(row=>row.label==='XP 흡인 반경'&&row.before===55&&row.after===125));assert.ok(rows.some(row=>row.label==='정수 획득 반경'&&row.before===30&&row.after===100));
 });

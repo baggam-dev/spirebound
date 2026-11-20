@@ -1,9 +1,11 @@
+import {criticalStats} from '../combat/critical.js';
 import {grantRelic,removeRelic,relicInfo,relicStat,movementSpeed,ultimateCooldown,dodgeCooldown,blinkDistance,utilityCooldown} from '../progression/relics.js';
 import {previewStats} from './skill-preview.js';
 import {shieldCooldown} from '../combat/survival.js';
 import {xpAttractionRadius} from '../progression/xp-drops.js';
 
-function values(p){const a=previewStats(p);return {
+function values(p){const a=previewStats(p),critical=criticalStats(p);return {
+ '치명타 확률(%)':critical.chance*100,'치명타 피해 배율(%)':critical.multiplier*100,
  '첫 적중 피해¹':a.hit,'초당 사격':a.rate,'이동속도':movementSpeed(p),'최대 체력':p.max,
  '현재 체력':p.hp,'XP 흡인 반경':xpAttractionRadius(p),'정수 획득 반경':30+relicStat(p,'pickup'),'액티브 재사용(초)':p.utility?utilityCooldown(p):null,'궁극기 재사용(초)':p.ultimate?ultimateCooldown(p):null,
  '구르기 재사용(초)':dodgeCooldown(p),'구르기 거리':blinkDistance(p),
@@ -20,6 +22,9 @@ export function relicRequirements(p,id){const stats=relicInfo(id)?.stats||{},not
  if(stats.dot&&!(p.fire>=2||p.poison))notes.push('화염 화살 2레벨 또는 독 화살 필요');
  if(stats.element&&!(p.fire||p.poison||p.frost||p.chain))notes.push('속성 화살 습득 후 적용');
  if(stats.utilityCooldown&&!p.utility)notes.push('액티브 습득 후 적용 · 궁극기·구르기 제외');if(stats.fairyDamage)notes.push('보유 요정·요정왕 피해에 적용');if(id==='openingWhetstone')notes.push('적 체력이 가득 찼을 때 화살 직격에만 적용');if(id==='thornBuckle')notes.push('보호막 방어·자가 비용 제외 · 재사용 2초');if(id==='phoenixReliquary')notes.push('소모 상태는 보유 상세에서 확인 · 재획득해도 초기화되지 않음');
+ if(id==='crackedCrown')notes.push('획득 즉시 최대 체력 -1 · 현재 체력은 새 상한까지만 유지 · 보호막/피격 유물 발동 없음');
+ if(id==='hunterSeal')notes.push('새 치명타의 실제 피해 20%, 기본 공격력 40% 상한(방어·표식 전) · 1초 재사용 · 추가 피해는 비치명 파생');
+ if(id==='resolveEmblem')notes.push('비치명타가 이어지면 확률 최대 +10%p · 치명타 후 초기화 · 상한 50% 유지');
  if(id==='lens')notes.push('거리 280 이상 적에게 적용');
  if(id==='hunter')notes.push('보스에게만 적용');
  if(id==='execution')notes.push('적 체력 30% 이하일 때 적용');

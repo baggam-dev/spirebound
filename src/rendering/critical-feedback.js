@@ -4,6 +4,7 @@ import {drawImpactAccent} from './arrow-impact-visuals.js';
 export function criticalFeedback(results=[],effects=[]){
  const selected=[],seen=new Set();
  for(const hit of results){
+  if(selected.length<6&&hit.source==='hunterSeal'&&hit.applied&&hit.damage>0&&Number.isFinite(hit.x)&&Number.isFinite(hit.y)){selected.push({x:hit.x,y:hit.y-28,t:.3,duration:.3,color:'#d6bf8f',hunterSeal:true});continue;}
   if(!hit.applied||!hit.critical||!hit.newHit||!(hit.damage>0)||!Number.isFinite(hit.x)||!Number.isFinite(hit.y))continue;
   const key=hit.enemyId+':'+hit.attackId;if(seen.has(key))continue;seen.add(key);
   const weak=effects.find(f=>f.precisionBurst&&f.attackId===hit.attackId&&f.attackId!==null);
@@ -19,6 +20,7 @@ export function limitCriticalFeedback(effects,max=12){
  return effects.filter((f,i)=>!f.criticalBurst||keep.has(i));
 }
 export function drawCriticalBurst(c,f,reduced=false){
+ if(f.hunterSeal){drawImpactAccent(c,{x:f.x,y:f.y+28,age:.3-f.t,duration:.3,strength:0,reduced,color:'#d6bf8f'});return;}
  if(!f.criticalBurst)return;
  drawImpactAccent(c,{x:f.x,y:f.y+28,age:.65-f.t,angle:f.hitAngle??-.5,strength:2,reduced,color:'#fff0bc'});
 }

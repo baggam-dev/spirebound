@@ -1,7 +1,9 @@
+import {criticalRelics} from './critical-relics.js';
 import {hasFairy} from './skill-overhaul.js';
 import {CROSSBOW} from '../combat/combat-tuning.js';
 import {seededRandom} from '../game/random.js';
 export const relics=[
+ ...criticalRelics,
  {id:'openingWhetstone',name:'선봉의 숫돌',description:'체력이 가득 찬 적에게 화살 직격 피해 +20%',stats:{}},
  {id:'thornBuckle',name:'가시 버클',description:'실제 피격 시 반경 80 반격 · 평타 100% · 재사용 2초',stats:{}},
  {id:'ritualKnot',name:'의식의 매듭',description:'액티브 재사용 시간 15% 감소 · 궁극기·구르기 제외',stats:{utilityCooldown:.15}},
@@ -212,11 +214,12 @@ export const relics=[
 export const relicInfo=id=>relics.find(r=>r.id===id);
 export const ownedRelics=p=>[...new Set([...(p.relics||[]),...(p.relic?[p.relic]:[]),...(p.unique?['windSeal']:[])])];
 export const hasRelic=(p,id)=>ownedRelics(p).includes(id);
-export function removeRelic(p,id){if(!hasRelic(p,id))return false;p.relics=ownedRelics(p).filter(key=>key!==id);delete p.relic;if(id==='windSeal'){p.unique=false;p.leechKills=0;}if(id==='heart'){p.max=Math.max(1,p.max-1);p.hp=Math.min(p.hp,p.max);}return true;}
+export function removeRelic(p,id){if(!hasRelic(p,id))return false;p.relics=ownedRelics(p).filter(key=>key!==id);delete p.relic;if(id==='windSeal'){p.unique=false;p.leechKills=0;}if(id==='crackedCrown')p.max=Math.min(1000,p.max+1);if(id==='resolveEmblem'){delete p.resolveStacks;delete p.resolveNextAt;}if(id==='heart'){p.max=Math.max(1,p.max-1);p.hp=Math.min(p.hp,p.max);}return true;}
 export const relicStat=(p,key)=>ownedRelics(p).reduce((n,id)=>n+(relicInfo(id)?.stats?.[key]||0),0);
 export const relicSummary=p=>ownedRelics(p).map(id=>relicInfo(id)?.name).filter(Boolean).join(' · ')||'없음';
-export function grantRelic(p,id){if(!relicInfo(id)||hasRelic(p,id))return false;p.relics=[...ownedRelics(p),id];delete p.relic;if(id==='heart'){p.max++;p.hp=Math.min(p.max,p.hp+1);}return true;}
-export function offerRelics(s,room){if(room.relicOffers)return;const random=seededRandom((s.seed??1)^((s.floor+1)*73471)^(s.room*1877)),pool=relics.filter(r=>!['sunFairy','snowFairy','stormFairy'].includes(r.id)&&!hasRelic(s.player,r.id));room.relicOffers=[];while(pool.length&&room.relicOffers.length<3){const chosen=weightedRelic(pool,random);room.relicOffers.push(chosen.id);pool.splice(pool.indexOf(chosen),1);}room.relicClaimed=false;}
+export const canGrantRelic=(p,id)=>!!relicInfo(id)&&!hasRelic(p,id)&&(id!=='crackedCrown'||p.max>=2);
+export function grantRelic(p,id){if(!canGrantRelic(p,id))return false;p.relics=[...ownedRelics(p),id];delete p.relic;if(id==='crackedCrown'){p.max--;p.hp=Math.min(p.hp,p.max);}if(id==='heart'){p.max++;p.hp=Math.min(p.max,p.hp+1);}return true;}
+export function offerRelics(s,room){if(room.relicOffers)return;const random=seededRandom((s.seed??1)^((s.floor+1)*73471)^(s.room*1877)),pool=relics.filter(r=>!['sunFairy','snowFairy','stormFairy'].includes(r.id)&&canGrantRelic(s.player,r.id));room.relicOffers=[];while(pool.length&&room.relicOffers.length<3){const chosen=weightedRelic(pool,random);room.relicOffers.push(chosen.id);pool.splice(pool.indexOf(chosen),1);}room.relicClaimed=false;}
 export function claimRelic(s,id){const r=s.floors[s.floor][s.room];if(s.status!=='playing'||!r.used||r.enemies.length||r.relicClaimed||!r.relicOffers||id!=='skip'&&!r.relicOffers.includes(id))return false;if(id!=='skip'&&!grantRelic(s.player,id))return false;r.relicClaimed=true;return true;}
 export function directRelicFactor(p,e,arrow=false){let factor=1+relicStat(p,'direct');if(hasRelic(p,'lens')&&Math.hypot(p.x-e.x,p.y-e.y)>=280)factor*=1.2;if(hasRelic(p,'hunter')&&e.type==='boss')factor*=1.25;if(hasRelic(p,'execution')&&e.hp<=e.max*.3)factor*=1.3;if(arrow&&hasRelic(p,'openingWhetstone')&&e.hp>=e.max)factor*=1.2;return factor;}
 export const utilityCooldown=(p,id=p.utility)=>({focus:25,firstAid:30,guardian:25}[id]??25)*(1-relicStat(p,'utilityCooldown'));

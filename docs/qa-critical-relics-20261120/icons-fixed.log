@@ -1,0 +1,44 @@
+✔ four approved relic objects share catalog, icon and rarity mappings without changing atlas indices (2.1376ms)
+✔ cracked crown pays max health once, clamps current health and restores no healing on removal (44.3524ms)
+✔ unaffordable crown is excluded from new offers and disabled in stale offers (42.5843ms)
+✔ relic and skill critical bonuses use common caps and are not counted again in weapon profiles (32.2909ms)
+✔ resolve grows only on throttled new noncritical hits, caps at ten points and resets on critical (23.2249ms)
+✔ hunter follows a critical against elites only once, cannot crit/recurse, and does not consume extra RNG (26.1244ms)
+✔ hunter does not proc on ordinary enemies, noncritical hits or lethal overkill (27.6185ms)
+✔ actual arrow route includes hunter damage exactly once in total damage metrics (33.283ms)
+✔ proc state and resolved snapshots survive saving while invalid new fields are rejected (86.4168ms)
+✔ previews show critical and health costs with conditional explanations and live owned state (28.864ms)
+✔ actual chain transfers, frost death shards and reflected thorns cannot trigger proc relics (23.9895ms)
+✔ shrine chooses on entry, pauses enemies, then retains elite combat and exit lock (86.8858ms)
+✔ shrine has ten blessings and five curses, including double-curse offers that persist on reload (2067.6883ms)
+✔ legacy unused shrine is populated once on entry, used shrines never regain rewards (12.1242ms)
+✔ all incantations apply once, affect combat stats, and preserve valid saves (302.5454ms)
+✔ prism first summons at two seconds, caps three living elites, and all summoned deaths have no rewards (32.8681ms)
+✔ prism summon timer is preserved rather than restarted on resume (28.8332ms)
+✔ slime splitting leaves a puddle and airborne children land at separated telegraphed destinations (27.3177ms)
+✔ airborne split progression resumes identically from saved mid-jump state (40.2938ms)
+✔ slime has needle and orb projectile patterns and shrinking close gas (1.2543ms)
+✔ boss health bar uses actual total health through splits and final fragment deaths (15.9013ms)
+✔ return variants replace part of existing packs without increasing count or appearing on ascent (2.3567ms)
+✔ new return attackers telegraph and produce distinct attacks with saved state (2.0738ms)
+✔ multiple elites award at most one potion per room even after save and reentry (27.0848ms)
+✔ pixel icons have distinct relic and skill silhouettes and hearts never show unused diamonds (11.8444ms)
+✔ DPS readout measures the last five seconds and resets between runs (0.2948ms)
+✔ invalid incantations, multipliers, summoning clocks and jump destinations are rejected (22.9956ms)
+✔ ascent trial strength does not enable descent-only enemy variants (0.7258ms)
+✔ 41 relic IDs share one icon mapping; new rarity keeps existing uniques and excludes fairy offers (86.9588ms)
+✔ whetstone affects full-HP arrow direct hits only, not non-arrow effects or injured targets (59.4473ms)
+✔ thorn retaliation respects walls, airborne targets and cooldown without spending the phoenix (35.5032ms)
+✔ lethal contact revives before death, records actual HP loss, persists spend across trade and reload (57.0876ms)
+✔ ritual knot reduces all three utility cooldowns without changing costs, durations or current cooldown (117.6058ms)
+✔ fairy whistle multiplies projectiles and king beam once without granting companions (69.7427ms)
+✔ HUD caps visible slots with accurate overflow, keeps key and spent state, preview preserves source (44.9378ms)
+✔ new save flags validate and banner is transient, paused, room-bound and never replayed (25.3586ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3504.0185

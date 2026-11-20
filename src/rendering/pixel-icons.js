@@ -10,6 +10,10 @@ export function iconSVG(id){
  const heart=(c=1)=>{for(const [y,row] of ['011100001110','111110011111','111111111111','111111111111','011111111110','001111111100','000111111000','000011110000','000001100000'].entries())for(let x=0;x<12;x++)if(row[x]==='1')put(x+2,y+3,c);};
  const arrow=(x=8,c=1)=>{line(x,2,x,13,c);line(x-3,5,x,2,c);line(x+3,5,x,2,c);};
  switch(id){
+  case 'hawkCharm':line(3,3,6,13,2);line(3,3,1,7,3);line(3,6,6,7,3);circle(10,10,4);circle(10,10,2,2);put(9,8,3);break;
+  case 'crackedCrown':line(2,4,4,12);line(13,4,11,12);line(2,4,6,7);line(6,7,8,2);line(8,2,10,7);line(10,7,13,4);rect(4,11,8,3,2);line(8,5,7,8,3);line(7,8,9,11,3);break;
+  case 'hunterSeal':circle(8,11,4,2);rect(3,2,10,8);rect(5,3,6,6,2);line(5,4,10,7,3);line(10,4,5,7,3);break;
+  case 'resolveEmblem':line(3,3,8,1);line(8,1,13,3);line(3,3,4,11);line(13,3,12,11);line(4,11,8,15);line(12,11,8,15);rect(6,5,2,5,2);rect(8,5,3,3,3);line(6,9,8,11,3);line(8,11,11,7,3);break;
   case 'potion':rect(6,1,4,3,2);rect(5,4,6,2,3);circle(8,10,5,1,true);rect(6,6,2,4,3);rect(4,13,8,1,2);break;
   case 'windSeal':circle(8,8,6,2);line(3,6,11,6,3);line(11,6,12,4,3);line(2,9,10,9);line(10,9,12,7);line(5,12,9,12,3);break;
   case 'turret':line(3,3,8,7);line(8,7,13,3);line(3,3,13,3,2);rect(7,2,2,10);rect(4,12,8,3,2);line(5,8,3,12);line(10,8,12,12);break;
