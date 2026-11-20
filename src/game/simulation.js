@@ -1,3 +1,4 @@
+import {planSpecialEncounters,activateSpecialEncounter,rewardSpecialEncounter} from '../world/special-encounters.js';
 import {tickCriticalSkills} from '../progression/critical-skills.js';
 import {bindCriticalRun,applyBoundDamage,criticalInstance,drainDamageResults,clearDamageResults} from '../combat/critical.js';
 import {updateEnemyMelee,weaponContactReplaced} from '../combat/enemy-melee.js';
@@ -65,7 +66,7 @@ export function enemyRadius(e){return e.variant==='slime'||e.type==='minislime'?
 export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||e.attackPhase==='leap';}
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
 export function enterRoom(s){clearDamageResults(s);beginWardenArrival(s,currentRoom(s),!currentRoom(s).seen);resetSpectralBlade(s);delete s.roll;s.bloodBossHealth={};
- recoverPlayerPosition(s.player,currentRoom(s).obstacles);trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.rollMines=[];r.fairyBeam=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
+ recoverPlayerPosition(s.player,currentRoom(s).obstacles);trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);planSpecialEncounters(s);activateSpecialEncounter(s,r);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.rollMines=[];r.fairyBeam=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
  s.player.actionStun=0;s.player.electricGrace=0;resetDemonAttack(r);
  // Do not preserve an off-screen attack aimed at the previous visit's position.
  for(const e of r.enemies){if(e.meleeAttack||e.meleeCooldown!==undefined){delete e.meleeAttack;e.meleeCooldown=Math.max(.5,e.meleeCooldown||0);}delete e.highAttack;delete e.highFlash;delete e.chargeHit;resetCommanderAttack(e);if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}if(e.type==='chaser'){e.chaserWindup=0;e.chaserStrike=0;e.chaserCooldown=0;delete e.chaserAim;}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
@@ -169,6 +170,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
   effects.push(enemyDeathEffect(e,!!s.key,enemyHealthBefore.get(e)));
   const shardStart=s.projectiles.length;frostShatter(e.frostWeapon||p,e,s.projectiles);if(e.frostWeapon)for(const shard of s.projectiles.slice(shardStart)){shard.weapon=e.frostWeapon;shard.turretShot=true;}if(!e.selfDestruct)recordDefeat(s,e);
   if(e.summoned){eliteDeath(e,r);continue;}
+  const specialReward=rewardSpecialEncounter(s,r,e,effects);if(specialReward)events.push(specialReward);
   if(splitSlime(e,r,p,()=>runRandom(s)))continue;
   if(e.type!=='boss')dropEssences(s,r,e);
   if(e.chestBoss){s.kills++;continue;}

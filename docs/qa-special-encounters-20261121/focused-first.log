@@ -1,0 +1,18 @@
+✔ plans reproduce independently of combat/map RNG and are never rerolled (112.2289ms)
+✔ floor caps and safe room exclusions hold across seeded campaigns (588.5591ms)
+✔ legacy planning excludes current and explored rooms and does not alter actors (24.2604ms)
+✔ first entry replaces one actor with a clearly named elite without extra enemies or unsafe spawning (18.22ms)
+✔ actual defeat grants 54XP and one essence once, persists defeat and cannot respawn on reentry (63.0467ms)
+✔ prepared relic reward and duplicate fallback each grant once without rerolling (92.0971ms)
+✔ descent regeneration retires ascent plans and actors without granting their rewards (97.4632ms)
+✔ practice/return never activate and a room without safe space cancels before mutation (74.1795ms)
+✔ active save loads without rerolling and rejects inconsistent plans, actors and reward flags (97.3626ms)
+✔ badge drawing is detached, clipped and leaves saved state unchanged in either mode (27.7172ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2326.1275

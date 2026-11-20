@@ -40,6 +40,7 @@ export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
  return {modules:[...new Set(modules)],feedback:[...new Set(feedback)],extra:['environment-hall-atlas-v1.png','environment-stone-reference-v1.png',halls[floor],...(floor>=6?['high-hall-atlas-v2.png']:[])].filter(Boolean)};
 }
 export function portraitAssetPlan(key){
+ if(key==='roamingElite')key='chaser';
  if(key==='warden')return {modules:warden,feedback:[],extra:[]};
  if(key==='vera')return {modules:['vera-sprite'],feedback:[],extra:[]};
  if(['kald','brute'].includes(key))return {modules:[],feedback:['named-brute'],extra:[]};

@@ -1,3 +1,4 @@
+import {validateSpecialEncounters} from './special-encounter-save.js';
 import {validateCriticalSave} from './critical-save.js';
 import {demonFloor,revisedBosses} from '../game/boss-layout.js';
 import {validateHighFloorEnemy} from './high-floor-save.js';
@@ -79,7 +80,7 @@ export function validateRun(s){
    if(r.returnRisk!==undefined)check(['high','low','normal'].includes(r.returnRisk));
    if(r.trialState!==undefined)check(['active','reward','done'].includes(r.trialState));
    if(r.tutorial!==undefined)check(typeof r.tutorial==='boolean');if(r.chestBattle!==undefined)check(['active','done'].includes(r.chestBattle));for(const key of ['chestReward','lastLoot'])if(r[key]!==undefined)loot(r[key]);if(r.trialOffers!==undefined){check(Array.isArray(r.trialOffers)&&r.trialOffers.length===3&&new Set(r.trialOffers.map(k=>k.id)).size===3);for(const item of r.trialOffers){loot(item);check(!lootInfo(item.id).trap);}}
-   for(const e of r.enemies){if(e.frostWeapon!==undefined)weapon(e.frostWeapon);if(e.xpReward!==undefined)check(Number.isInteger(e.xpReward)&&number(e.xpReward,0,41));if(e.chestBoss!==undefined)check(typeof e.chestBoss==='boolean');if(e.scale!==undefined)check(e.scale===.7);if(e.fireFieldSpawned!==undefined)check(typeof e.fireFieldSpawned==='boolean');for(const key of ['burnField','pendingFireField'])if(e[key]!==undefined)check(field(e[key]));}
+   for(const e of r.enemies){if(e.frostWeapon!==undefined)weapon(e.frostWeapon);if(e.xpReward!==undefined)check(Number.isInteger(e.xpReward)&&number(e.xpReward,0,e.roamingElite?54:41));if(e.chestBoss!==undefined)check(typeof e.chestBoss==='boolean');if(e.scale!==undefined)check(e.scale===.7);if(e.fireFieldSpawned!==undefined)check(typeof e.fireFieldSpawned==='boolean');for(const key of ['burnField','pendingFireField'])if(e[key]!==undefined)check(field(e[key]));}
    for(const e of r.enemies)if(e.gateDurabilityVersion!==undefined)check(e.gateDurabilityVersion===1&&!!e.gateTitle&&['starKnight','astralSniper'].includes(e.type));
    if(r.rewardChoice!==undefined)check(['weapon','survival','skill'].includes(r.rewardChoice));
    if(r.eventChoice!==undefined)check(['blood','supply','trial'].includes(r.eventChoice));
@@ -130,7 +131,7 @@ export function validateRun(s){
  if(s.projectiles!==undefined){check(Array.isArray(s.projectiles)&&s.projectiles.length<2000);for(const b of s.projectiles){if(b.weapon!==undefined)weapon(b.weapon);for(const k of ['seeker','turretShot'])if(b[k]!==undefined)check(typeof b[k]==='boolean');if(b.seeker||b.turretShot)check(!b.enemy&&!!b.weapon);check(number(b.x,-100,1100)&&number(b.y,-100,700)&&number(b.vx,-2000,2000)&&number(b.vy,-2000,2000)&&number(b.life,0,20)&&typeof b.enemy==='boolean');if(b.shardBoost!==undefined)check(b.frostShard&&[1,1.15,1.2,1.3].includes(b.shardBoost));if(b.shardSize!==undefined)check([.5,1,1.5].includes(b.shardSize));if(b.passive!==undefined)check(!b.enemy&&['sunFairy','snowFairy','stormFairy','turret'].includes(b.passive)&&number(b.passiveDamage,0,100000));if(b.poisonShot!==undefined)check(['needle','orb'].includes(b.poisonShot));if(b.frostArrow!==undefined)check(b.enemy===true&&b.frostArrow===true);if(b.demonIce!==undefined)check(b.enemy===true&&b.demonIce===true);if(b.demonShot!==undefined)check(b.enemy===true&&b.demonShot===true);if(b.demonCurve!==undefined)check(b.enemy===true&&number(b.demonCurve,-.6,.6));if(b.frostShard!==undefined)check(typeof b.frostShard==='boolean');if(b.frostShard)check(!b.enemy&&number(b.damageScale,.3,.51)&&b.pierce===0);if(b.delay!==undefined)check(number(b.delay,0,.16));if(b.homing!==undefined)check(typeof b.homing==='boolean');check(Array.isArray(b.hit)&&b.hit.length<128);}}
  for(const b of s.projectiles||[])for(const key of ['primary','focused','chargeChecked'])if(b[key]!==undefined)check(typeof b[key]==='boolean'&&!b.enemy);
  for(const r of s.floors.flat())for(const e of r.enemies){if(e.precisionHits!==undefined)check(Number.isInteger(e.precisionHits)&&number(e.precisionHits,0,2));if(e.precisionTime!==undefined)check(number(e.precisionTime,0,4));}
- validateOverhaul(s,check,number);validateCriticalSave(s,check,number);check(validateRanking(s));return s;
+ validateOverhaul(s,check,number);validateCriticalSave(s,check,number);validateSpecialEncounters(s,check,number);check(validateRanking(s));return s;
 }
 function fingerprint(text){let hash=2166136261;for(let i=0;i<text.length;i++)hash=Math.imul(hash^text.charCodeAt(i),16777619);return (hash>>>0).toString(16);}
 export function parseSave(raw){

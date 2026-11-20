@@ -1,0 +1,44 @@
+✔ all ordinary bestiary types receive bounded view reactions, with no boss overlap or actor writes (4.3435ms)
+✔ seen-room load and room reentry do not replay arrival, while new summons do (0.5833ms)
+✔ melee, charge, ranged, aerial, elite and hazard threats take priority without cancellation (1.0635ms)
+✔ ordinary death snapshots keep style/timing and root anchors, self-destruct stays distinct (1.3993ms)
+✔ hero reaction is visual only, reduced mode quiet, defeat immediate with no result delay (0.622ms)
+✔ ordinary removals and rewards remain immediate with one detached death effect (98.703ms)
+✔ 41 relic IDs share one icon mapping; new rarity keeps existing uniques and excludes fairy offers (118.0727ms)
+✔ whetstone affects full-HP arrow direct hits only, not non-arrow effects or injured targets (58.4901ms)
+✔ thorn retaliation respects walls, airborne targets and cooldown without spending the phoenix (34.1023ms)
+✔ lethal contact revives before death, records actual HP loss, persists spend across trade and reload (65.5105ms)
+✔ ritual knot reduces all three utility cooldowns without changing costs, durations or current cooldown (149.5602ms)
+✔ fairy whistle multiplies projectiles and king beam once without granting companions (103.8415ms)
+✔ HUD caps visible slots with accurate overflow, keeps key and spent state, preview preserves source (88.8393ms)
+✔ new save flags validate and banner is transient, paused, room-bound and never replayed (60.8882ms)
+✔ plans reproduce independently of combat/map RNG and are never rerolled (121.2718ms)
+✔ floor caps and safe room exclusions hold across seeded campaigns (600.2035ms)
+✔ legacy planning excludes current and explored rooms and does not alter actors (39.9939ms)
+✔ first entry replaces one actor with a clearly named elite without extra enemies or unsafe spawning (55.6251ms)
+✔ actual defeat grants 54XP and one essence once, persists defeat and cannot respawn on reentry (128.8539ms)
+✔ prepared relic reward and duplicate fallback each grant once without rerolling (100.1222ms)
+✔ descent regeneration retires ascent plans and actors without granting their rewards (125.1468ms)
+✔ practice/return never activate and a room without safe space cancels before mutation (115.9834ms)
+✔ active save loads without rerolling and rejects inconsistent plans, actors and reward flags (85.7676ms)
+✔ badge drawing is detached, clipped and leaves saved state unchanged in either mode (38.3003ms)
+✔ kill creates 1/3/9 valued shards instead of granting XP, collecting grants exactly once (156.3088ms)
+✔ shared magnet extends XP attraction 55px to 125px, walls block attraction and collection (97.7198ms)
+✔ XP attraction includes 55 and magnet 125 boundaries but excludes just outside, including after reload (261.298ms)
+✔ unclaimed XP survives leave/reload with no expiration or automatic award (61.7626ms)
+✔ per-tier cap bundles value without losing XP or consuming RNG (47.9987ms)
+✔ save rejects duplicated drops, altered values, invalid tiers and missing ledger (173.586ms)
+✔ summons remain excluded while descent kills create experience shards (85.2877ms)
+✔ normal boss completion drops exactly 180 once, not on every following tick (55.9598ms)
+✔ elite and boss presentation split existing XP while preserving value, RNG and bounds (913.6415ms)
+✔ burst metadata roundtrips, legacy drops still load, malformed profiles are refused (152.1525ms)
+✔ boss burst respects walls, waits .6s before pickup and bundles without replay events (58.8529ms)
+✔ explosive elite emits reward once without removing its delayed danger (33.9205ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3050.3588

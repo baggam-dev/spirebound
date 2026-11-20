@@ -1,4 +1,5 @@
 export const enemyGuide={
+ roamingElite:{name:'유랑 유물사냥꾼',tip:'입장 전에 정해지는 강한 수호 정예. 가까운 적의 피해를 줄이므로 우선 제압하세요. 54XP와 정수 1개, 드물게 유물을 남깁니다.'},
  kald:{name:'왕의 방패, 칼드',tip:'왕실 문장이 새겨진 큰 방패로 길을 막는 수문장. 전방을 피해 측면에서 공격하고 돌진을 장애물로 막으세요.'},
  vera:{name:'별의 눈, 베라',tip:'별빛 렌즈와 초승달 장궁을 쓰는 수문장. 거리를 유지하며 이동하고 별빛 화살과 고리 탄막을 쏩니다.'},
  demonBat:{name:'폭렬 박쥐',tip:'가까이 다가와 짧게 예고한 뒤 돌진·자폭합니다. 옆으로 벗어나세요.'},
@@ -32,7 +33,7 @@ export const enemyGuide={
  prism:{name:'프리즘의 수호자',tip:'반사 결정탄·오중 광선·회전 연사. 광선 예고 방향에서 벗어나세요.'},
  slime:{name:'독성 군체',tip:'거대 1 → 중형 2 → 소형 4. 모든 분열체를 처치해야 끝납니다.'}
 };
-export function enemyKey(e){if(e.gateTitle&&e.type==='starKnight')return 'kald';if(e.gateTitle&&e.type==='astralSniper')return 'vera';return e.type==='boss'?(e.variant||'warden'):e.type;}
+export function enemyKey(e){if(e.roamingElite)return 'roamingElite';if(e.gateTitle&&e.type==='starKnight')return 'kald';if(e.gateTitle&&e.type==='astralSniper')return 'vera';return e.type==='boss'?(e.variant||'warden'):e.type;}
 export function enemyName(e){if(e.remnantVersion===1)return ({hand:'잔해의 손',foot:'잔해의 발',eye:'봉인 눈가면',nose:'봉인 코가면',mouth:'봉인 입가면',core:'봉인의 거상'})[e.part]||'봉인의 잔해';if(e.variant==='demon')return ({hand:'대악마의 손',foot:'대악마의 발',eye:'대악마의 눈',nose:'대악마의 코',mouth:'대악마의 입',core:'대악마 본체'})[e.part]||enemyGuide.demon.name;return Object.hasOwn(enemyGuide,enemyKey(e))?enemyGuide[enemyKey(e)].name:'알 수 없는 적';}
 export function observeRoom(s,room){
  for(const e of room.enemies){const key=enemyKey(e);if(!Object.hasOwn(enemyGuide,key))continue;const entry=(s.bestiary??={})[key]??={kills:0,traits:[]};if(e.elite&&!entry.traits.includes(e.elite))entry.traits.push(e.elite);}
