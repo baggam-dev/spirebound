@@ -25,6 +25,7 @@ export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
  if(!Number.isInteger(floor)||floor<0||floor>9)throw Error('Invalid asset floor');
  // The first-floor brute uses mandatory feedback walking; its legacy walk sheet is redundant.
  const modules=[...common,...early.filter(name=>floor!==0||name!=='brute-walk')],feedback=['named-brute'];
+ if(floor>=2&&floor<=7)modules.push('support-sprites');
  if(floor===1)modules.push(...warden,'warden-room-art');
  if(floor===6)modules.push('vera-sprite');
  if(floor>=3)modules.push('flower-sprite','prism-sprite','slime-sprite','prism-presentation-art');
@@ -41,6 +42,7 @@ export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
  return {modules:[...new Set(modules)],feedback:[...new Set(feedback)],extra:['environment-hall-atlas-v1.png','environment-stone-reference-v1.png',halls[floor],...(floor>=6?['high-hall-atlas-v2.png']:[])].filter(Boolean)};
 }
 export function portraitAssetPlan(key){
+ if(['ossuarySummoner','choirCantor','ossuaryMinion'].includes(key))return {modules:['support-sprites'],feedback:[],extra:[]};
  if(key==='pursuer')return {modules:['pursuer-sprite'],feedback:[],extra:[]};
  if(key==='roamingElite')key='chaser';
  if(key==='warden')return {modules:warden,feedback:[],extra:[]};

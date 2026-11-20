@@ -2,8 +2,9 @@ import {enemyGuide} from '../world/expedition.js';
 import {renderJournalPortraits} from '../rendering/journal-portraits.js';
 import {escapeHtml} from './ui.js';
 
-const groups={일반:['chaser','charger','archer','scatter','brute','laser','ricochet','flower','minislime'],네임드:['roamingElite','kald','vera'],상층:['astralSniper','gravityMage','starKnight','starBearer','royalGuard','pulseTurret','riftHunter'],악마:['demonBat','spikeNest','demonSoldier','demonArcher','demonCaptain'],귀환:['pursuer','strafer','ringcaster','ambusher'],보스:['warden','prism','slime','king','commander','demon']};
+const groups={일반:['ossuarySummoner','choirCantor','ossuaryMinion','chaser','charger','archer','scatter','brute','laser','ricochet','flower','minislime'],네임드:['roamingElite','kald','vera'],상층:['astralSniper','gravityMage','starKnight','starBearer','royalGuard','pulseTurret','riftHunter'],악마:['demonBat','spikeNest','demonSoldier','demonArcher','demonCaptain'],귀환:['pursuer','strafer','ringcaster','ambusher'],보스:['warden','prism','slime','king','commander','demon']};
 const advice={
+ ossuarySummoner:'보라 소환 예고 중 공격을 집중하거나 빙결하세요. 살아 있는 수호체보다 소환사를 먼저 처치하면 전투가 짧아집니다.',choirCantor:'연결선이 이어진 회복 대상을 확인하고 시전자를 제압하세요. 벽으로 시야를 끊어도 회복을 막을 수 있습니다.',ossuaryMinion:'주먹 예고 방향의 측면으로 피하세요. 처치 보상을 주지 않으므로 소환사를 먼저 노리는 편이 유리합니다.',
  pursuer:'돌진 방향이 고정되면 옆으로 피하세요. 벽에 막히면 빈틈이 길어집니다. 돌진 뒤 별도 부채꼴 !! 2♥ 예고를 확인하고 베기가 끝난 뒤 반격하세요.',
  roamingElite:'주변 적을 보호하는 수호 정예입니다. 짧은 준비 뒤 전방 베기를 피하고 측면에서 우선 제압하세요. 처치 보상은 같은 조우에서 한 번만 지급됩니다.',
  kald:'방패 정면을 피해 돌아가고, 돌진을 장애물로 유도한 뒤 빈틈을 노리세요.',vera:'이동 후 조준이 고정될 때 옆으로 빠지고 고리의 틈으로 이동하세요.',

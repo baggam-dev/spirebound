@@ -1,0 +1,42 @@
+✔ actual frost projectile shares one critical decision between physical and elemental damage (102.8653ms)
+✔ a projectile miss consumes no critical random values (55.1966ms)
+✔ poison application keeps one decision across tick sizes and reload (90.2132ms)
+✔ mixed critical and ordinary burn accrual survives saving before its half-second pulse (85.3461ms)
+✔ rain makes one target decision per real pulse without changing its six-pulse damage snapshot (60.9634ms)
+✔ crossbow projectiles keep installed critical stats after player stats change (67.9187ms)
+✔ solar fairy burn inherits its actual shot result instead of rerolling each tick (40.2769ms)
+✔ shared ongoing snapshot aliases are rejoined after serialization and do not recount a victim (79.9635ms)
+✔ a zero-duration update does not reroll legacy poison, burn or passive DOT applications (61.0358ms)
+✔ hostile projectiles never use player critical stats (38.7805ms)
+✔ precision burst and critical feedback identify the same real hit for the visual layer (36.3238ms)
+✔ a legacy continuous exposure blocked by a shield never rolls or counts a hit (36.919ms)
+✔ all ordinary bestiary types receive bounded view reactions, with no boss overlap or actor writes (3.6491ms)
+✔ seen-room load and room reentry do not replay arrival, while new summons do (0.4636ms)
+✔ melee, charge, ranged, aerial, elite and hazard threats take priority without cancellation (0.7814ms)
+✔ ordinary death snapshots keep style/timing and root anchors, self-destruct stays distinct (1.2714ms)
+✔ hero reaction is visual only, reduced mode quiet, defeat immediate with no result delay (1.3684ms)
+✔ ordinary removals and rewards remain immediate with one detached death effect (99.3866ms)
+✔ summoning commits one fixed, safe point and allocates a new non-rewarding stone actor (3.3818ms)
+✔ live owner/room caps, lifetime summon budget and total enemy cap prevent unbounded spawning (0.9301ms)
+✔ blocked or occupied fixed spawn point fails without moving it or charging the lifetime budget (0.7924ms)
+✔ cast damage threshold, freeze and opening interrupt both support warnings before release (0.7546ms)
+✔ same-step legacy burn interrupts a finishing cast before it can summon or heal (142.065ms)
+✔ healer selects the most injured eligible ally, excluding bosses, pursuers, summons, self and walls (1.1015ms)
+✔ heals are capped by eight percent, 24HP, missing health and three lifetime uses (1.9278ms)
+✔ a lost target or broken healing sightline interrupts rather than silently retargeting (0.7958ms)
+✔ fallback bolt keeps its warned direction and remains a normal blockable enemy projectile (0.8081ms)
+✔ stone fist uses a distinct warning, one strike and no passive contact damage (1.5529ms)
+✔ lifetime expiry never generates XP, potions, essence, ranking kills or player DPS (69.6393ms)
+✔ owner defeat removes its army in the same step without farming damage or death shards (56.2474ms)
+✔ room planning respects the shared support budget and excludes special threats across seeded maps (447.0485ms)
+✔ reentry preserves lifetime budgets and return regeneration retires ascent support records (114.7636ms)
+✔ active cast and owner-linked minions roundtrip while malformed budgets and links reject (117.2152ms)
+✔ phase poses, detached effects and asset packs cover both casters and their minion without mutating gameplay (1.714ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2076.4897

@@ -7,6 +7,8 @@ export function enemyXpReward(e){
  return e.gateTitle?36:e.trialChampion?24:e.elite?18:12;
 }
 export function enemyEssenceChance(e,room){
+ if(e.summoned)return 0;
+ if(['ossuarySummoner','choirCantor'].includes(e.type))return .025;
  if(e.roamingElite||e.type==='pursuer')return 1;
  const key=room.returnSeal==='guardian'&&Number.isInteger(room.returnGuardianId)&&room.returnGuardianId===e.id;
  if(key&&(room.finalApproachDepth===1||room.finalApproachDepth===2))return 1;

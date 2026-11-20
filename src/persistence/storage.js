@@ -1,3 +1,4 @@
+import {validateSupportSave} from './support-save.js';
 import {validatePursuers} from './pursuer-save.js';
 import {validateSpecialEncounters} from './special-encounter-save.js';
 import {validateCriticalSave} from './critical-save.js';
@@ -32,7 +33,7 @@ export {RELEASE} from '../game/version.js';
 import {RELEASE} from '../game/version.js';
 import {validateRanking,rankingSummary} from '../ranking/ranking.js';
 const roomTypes=new Set(['exit','down','up','normal','boss','fountain','treasure','shrine','event']);
-const enemyTypes=new Set(['pursuer','chaser','charger','archer','scatter','brute','laser','ricochet','boss','flower','minislime','strafer','ringcaster','ambusher','astralSniper','gravityMage','starKnight','starBearer','royalGuard','pulseTurret','riftHunter','demonBat','spikeNest','demonSoldier','demonArcher','demonCaptain']);
+const enemyTypes=new Set(['ossuarySummoner','choirCantor','ossuaryMinion','pursuer','chaser','charger','archer','scatter','brute','laser','ricochet','boss','flower','minislime','strafer','ringcaster','ambusher','astralSniper','gravityMage','starKnight','starBearer','royalGuard','pulseTurret','riftHunter','demonBat','spikeNest','demonSoldier','demonArcher','demonCaptain']);
 function check(condition){if(!condition)throw new Error('저장 데이터 형식이 올바르지 않습니다.');}
 function number(value,min,max){return typeof value==='number'&&Number.isFinite(value)&&value>=min&&value<=max;}
 function finiteTree(value,depth=0){check(depth<15);if(typeof value==='number')check(Number.isFinite(value));if(value&&typeof value==='object')for(const item of Object.values(value))finiteTree(item,depth+1);}
@@ -132,7 +133,7 @@ export function validateRun(s){
  if(s.projectiles!==undefined){check(Array.isArray(s.projectiles)&&s.projectiles.length<2000);for(const b of s.projectiles){if(b.weapon!==undefined)weapon(b.weapon);for(const k of ['seeker','turretShot'])if(b[k]!==undefined)check(typeof b[k]==='boolean');if(b.seeker||b.turretShot)check(!b.enemy&&!!b.weapon);check(number(b.x,-100,1100)&&number(b.y,-100,700)&&number(b.vx,-2000,2000)&&number(b.vy,-2000,2000)&&number(b.life,0,20)&&typeof b.enemy==='boolean');if(b.shardBoost!==undefined)check(b.frostShard&&[1,1.15,1.2,1.3].includes(b.shardBoost));if(b.shardSize!==undefined)check([.5,1,1.5].includes(b.shardSize));if(b.passive!==undefined)check(!b.enemy&&['sunFairy','snowFairy','stormFairy','turret'].includes(b.passive)&&number(b.passiveDamage,0,100000));if(b.poisonShot!==undefined)check(['needle','orb'].includes(b.poisonShot));if(b.frostArrow!==undefined)check(b.enemy===true&&b.frostArrow===true);if(b.demonIce!==undefined)check(b.enemy===true&&b.demonIce===true);if(b.demonShot!==undefined)check(b.enemy===true&&b.demonShot===true);if(b.demonCurve!==undefined)check(b.enemy===true&&number(b.demonCurve,-.6,.6));if(b.frostShard!==undefined)check(typeof b.frostShard==='boolean');if(b.frostShard)check(!b.enemy&&number(b.damageScale,.3,.51)&&b.pierce===0);if(b.delay!==undefined)check(number(b.delay,0,.16));if(b.homing!==undefined)check(typeof b.homing==='boolean');check(Array.isArray(b.hit)&&b.hit.length<128);}}
  for(const b of s.projectiles||[])for(const key of ['primary','focused','chargeChecked'])if(b[key]!==undefined)check(typeof b[key]==='boolean'&&!b.enemy);
  for(const r of s.floors.flat())for(const e of r.enemies){if(e.precisionHits!==undefined)check(Number.isInteger(e.precisionHits)&&number(e.precisionHits,0,2));if(e.precisionTime!==undefined)check(number(e.precisionTime,0,4));}
- validateOverhaul(s,check,number);validateCriticalSave(s,check,number);validateSpecialEncounters(s,check,number);validatePursuers(s,check,number);check(validateRanking(s));return s;
+ validateOverhaul(s,check,number);validateCriticalSave(s,check,number);validateSpecialEncounters(s,check,number);validatePursuers(s,check,number);validateSupportSave(s,check,number);check(validateRanking(s));return s;
 }
 function fingerprint(text){let hash=2166136261;for(let i=0;i<text.length;i++)hash=Math.imul(hash^text.charCodeAt(i),16777619);return (hash>>>0).toString(16);}
 export function parseSave(raw){

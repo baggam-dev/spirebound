@@ -1,0 +1,24 @@
+✔ summoning commits one fixed, safe point and allocates a new non-rewarding stone actor (2.8997ms)
+✔ live owner/room caps, lifetime summon budget and total enemy cap prevent unbounded spawning (0.505ms)
+✔ blocked or occupied fixed spawn point fails without moving it or charging the lifetime budget (0.65ms)
+✔ cast damage threshold, freeze and opening interrupt both support warnings before release (0.6191ms)
+✔ same-step legacy burn interrupts a finishing cast before it can summon or heal (121.253ms)
+✔ healer selects the most injured eligible ally, excluding bosses, pursuers, summons, self and walls (0.6703ms)
+✔ heals are capped by eight percent, 24HP, missing health and three lifetime uses (1.1699ms)
+✔ a lost target or broken healing sightline interrupts rather than silently retargeting (0.4163ms)
+✔ fallback bolt keeps its warned direction and remains a normal blockable enemy projectile (0.3173ms)
+✔ stone fist uses a distinct warning, one strike and no passive contact damage (0.6067ms)
+✔ lifetime expiry never generates XP, potions, essence, ranking kills or player DPS (32.3778ms)
+✔ owner defeat removes its army in the same step without farming damage or death shards (29.3882ms)
+✔ room planning respects the shared support budget and excludes special threats across seeded maps (392.137ms)
+✔ reentry preserves lifetime budgets and return regeneration retires ascent support records (104.0434ms)
+✔ active cast and owner-linked minions roundtrip while malformed budgets and links reject (88.7547ms)
+✔ phase poses, detached effects and asset packs cover both casters and their minion without mutating gameplay (1.7409ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1828.452

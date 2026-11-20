@@ -1,3 +1,6 @@
+import {planSupportEncounters,activateSupportEncounter,recordSupportDefeat} from '../world/support-encounters.js';
+import {tickSupportState,interruptSupportIfNeeded,resetSupportAttack,supportTypes} from '../combat/support-profile.js';
+import {updateSupportCaster,updateSupportMinion,cleanupSupportMinions} from '../combat/support-casters.js';
 import {planPursuerEncounters,activatePursuerEncounter,rewardPursuer} from '../world/pursuer-encounters.js';
 import {updatePursuer,resetPursuerAttack,PURSUER} from '../combat/pursuer.js';
 import {planSpecialEncounters,activateSpecialEncounter,rewardSpecialEncounter} from '../world/special-encounters.js';
@@ -64,14 +67,14 @@ export function collisionTime(a,b,c,radius){
  const dx=b.x-a.x,dy=b.y-a.y,ox=a.x-c.x,oy=a.y-c.y,A=dx*dx+dy*dy,C=ox*ox+oy*oy-radius*radius;
  if(C<=0)return 0;if(A===0)return Infinity;const B=2*(ox*dx+oy*dy),discriminant=B*B-4*A*C;if(discriminant<0)return Infinity;const t=(-B-Math.sqrt(discriminant))/(2*A);return t>=0&&t<=1?t:Infinity;
 }
-export function enemyRadius(e){return e.type==='pursuer'?PURSUER.radius:e.variant==='slime'||e.type==='minislime'?slimeRadius(e):(e.type==='boss'?32:e.type==='brute'||e.type==='demonCaptain'?24:e.type==='demonBat'?14:19)*(e.scale??1);}
+export function enemyRadius(e){return e.type==='ossuaryMinion'?15:e.type==='pursuer'?PURSUER.radius:e.variant==='slime'||e.type==='minislime'?slimeRadius(e):(e.type==='boss'?32:e.type==='brute'||e.type==='demonCaptain'?24:e.type==='demonBat'?14:19)*(e.scale??1);}
 export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||e.attackPhase==='leap';}
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
 export function enterRoom(s){clearDamageResults(s);beginWardenArrival(s,currentRoom(s),!currentRoom(s).seen);resetSpectralBlade(s);delete s.roll;s.bloodBossHealth={};
- recoverPlayerPosition(s.player,currentRoom(s).obstacles);trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);planSpecialEncounters(s);activateSpecialEncounter(s,r);planPursuerEncounters(s);activatePursuerEncounter(s,r);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.rollMines=[];r.fairyBeam=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
+ recoverPlayerPosition(s.player,currentRoom(s).obstacles);trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);planSpecialEncounters(s);activateSpecialEncounter(s,r);planPursuerEncounters(s);activatePursuerEncounter(s,r);planSupportEncounters(s);activateSupportEncounter(s,r);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];r.arrowRain=null;r.rollMines=[];r.fairyBeam=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
  s.player.actionStun=0;s.player.electricGrace=0;resetDemonAttack(r);
  // Do not preserve an off-screen attack aimed at the previous visit's position.
- for(const e of r.enemies){resetPursuerAttack(e);if(e.meleeAttack||e.meleeCooldown!==undefined){delete e.meleeAttack;e.meleeCooldown=Math.max(.5,e.meleeCooldown||0);}delete e.highAttack;delete e.highFlash;delete e.chargeHit;resetCommanderAttack(e);if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}if(e.type==='chaser'){e.chaserWindup=0;e.chaserStrike=0;e.chaserCooldown=0;delete e.chaserAim;}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
+ for(const e of r.enemies){resetPursuerAttack(e);resetSupportAttack(e);if(e.meleeAttack||e.meleeCooldown!==undefined){delete e.meleeAttack;e.meleeCooldown=Math.max(.5,e.meleeCooldown||0);}delete e.highAttack;delete e.highFlash;delete e.chargeHit;resetCommanderAttack(e);if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}if(e.type==='chaser'){e.chaserWindup=0;e.chaserStrike=0;e.chaserCooldown=0;delete e.chaserAim;}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
 }
 export function fireArrow(s,target){
  const p=s.player,side=s.volleySide??1;s.volleySide=-side;emitWeaponVolley(s.projectiles,p,p,target,side);
@@ -118,12 +121,14 @@ export function stepRun(s,dt,input={x:0,y:0}){
  if(target&&target.hp>0&&s.attack<=0&&!rolling&&!(p.actionStun>0)){fireArrow(s,target);events.push('shot');}
  prepareEnemyGroup(r,p,dt);
  for(const e of r.enemies){
-  hitOrigin=e;const hpBefore=Math.max(0,e.hp);tickEffects(e,dt);tickHighState(e,dt);metrics.damageDealt+=hpBefore-Math.max(0,e.hp);const upper=e.variant==='king'||upperTypes.includes(e.type);const transitioning=upper&&tickUpperState(e,p,r,s.entryGrace>0?0:dt,s.projectiles);if(e.hp<=0||e.frozen>0||transitioning||r.enemies.some(n=>n.variant==='king'&&n.kingTransition>0)){if(transitioning||r.enemies.some(n=>n.kingTransition>0))cancelHighAttack(e);continue;}
+  hitOrigin=e;tickSupportState(e,dt);const hpBefore=Math.max(0,e.hp);tickEffects(e,dt);interruptSupportIfNeeded(e);tickHighState(e,dt);metrics.damageDealt+=hpBefore-Math.max(0,e.hp);const upper=e.variant==='king'||upperTypes.includes(e.type);const transitioning=upper&&tickUpperState(e,p,r,s.entryGrace>0?0:dt,s.projectiles);if(e.hp<=0||e.frozen>0||transitioning||r.enemies.some(n=>n.variant==='king'&&n.kingTransition>0)){if(transitioning||r.enemies.some(n=>n.kingTransition>0))cancelHighAttack(e);continue;}
   if(e.cd>0)e.cd+=dt*(1-frostAttackRate(e));if(e.jumpCooldown>0)e.jumpCooldown+=dt*(1-frostAttackRate(e));
   if(e.variant==='prism'&&s.entryGrace<=0)updatePrismSummons(e,p,r,dt,()=>runRandom(s));
   if(e.opening>0){e.opening=Math.max(0,e.opening-dt);continue;}if(!coordinateAttack(e,r)){if(s.entryGrace<=0&&!(e.spawnGrace>0))moveWaitingEnemy(e,p,r,dt);continue;}
   e.spawnGrace=Math.max(0,(e.spawnGrace||0)-dt);if(s.entryGrace>0||e.spawnGrace>0)continue;
   if(e.variant==='demon')continue;
+  if(supportTypes.includes(e.type)){updateSupportCaster(e,p,r,dt,s.projectiles);continue;}
+  if(e.type==='ossuaryMinion'){updateSupportMinion(e,p,r,dt,(raw,source,kind,origin)=>hurt(raw,source,kind,origin));continue;}
   if(e.type==='pursuer'){updatePursuer(e,p,r,dt,(raw,source,kind,origin)=>hurt(raw,source,kind,origin));continue;}
   if(updateHighFloorEnemy(e,p,r,dt,s.projectiles,raw=>hurt(raw,enemyName(e)+' 고유 공격',null,e)))continue;
   const melee=updateEnemyMelee(e,p,r.obstacles,dt*frostAttackRate(e));if(melee.handled){hurt(melee.damage,enemyName(e)+' 근접 타격',null,e);continue;}
@@ -164,12 +169,12 @@ export function stepRun(s,dt,input={x:0,y:0}){
  s.projectiles=s.projectiles.filter(b=>b.life>0&&b.x>25&&b.x<935&&b.y>40&&b.y<500);
  if(p.hp<=0){events.push('dead');return {events,effects,damageResults:drainDamageResults(s)};}
  r.nextEnemyId=Math.max(r.nextEnemyId||0,...r.enemies.map(e=>e.id+1));
- resolveFireFields(r);
+ resolveFireFields(r);cleanupSupportMinions(r);
  tickBloodContract(s,r,dt,effects);
  const defeated=r.enemies.filter(e=>e.hp<=0);r.enemies=r.enemies.filter(e=>e.hp>0);
  if(r.demon&&advanceDemonPhase(r,s.projectiles))events.push('demonPhase');
  for(const e of defeated){
-  recordRankingDefeat(s,e);
+  recordRankingDefeat(s,e);recordSupportDefeat(s,r,e);
   effects.push(enemyDeathEffect(e,!!s.key,enemyHealthBefore.get(e)));
   const shardStart=s.projectiles.length;frostShatter(e.frostWeapon||p,e,s.projectiles);if(e.frostWeapon)for(const shard of s.projectiles.slice(shardStart)){shard.weapon=e.frostWeapon;shard.turretShot=true;}if(!e.selfDestruct)recordDefeat(s,e);
   if(e.summoned){eliteDeath(e,r);continue;}

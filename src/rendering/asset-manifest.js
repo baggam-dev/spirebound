@@ -1,5 +1,6 @@
 // Source filenames for explicit on-demand packs. Original PNGs are unchanged.
 export const assetFiles={
+ "support-sprites":["ossuary-summoner-atlas-v1.png","choir-cantor-atlas-v1.png","ossuary-minion-atlas-v1.png"],
  "pursuer-sprite":["pursuer-atlas-v1.png"],
  "resurrected-king" : ["king-resurrection-poses-v1.png"],
  "remnant-sprite" : ["sealed-remnant-parts-v1.png"],
