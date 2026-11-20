@@ -1,0 +1,47 @@
+✔ new runs have bounded critical stats and a separate seeded stream (133.9907ms)
+✔ one target packet shares the critical result across physical and elemental damage (37.4403ms)
+✔ a shield or zero damage cannot roll a critical or count a hit (32.571ms)
+✔ damage snapshots survive DoT reload without rerolling or recounting the same application (62.7153ms)
+✔ mixed continuous components apply defense once and attribute only the critical share (32.0842ms)
+✔ overkill critical accounting uses actual remaining HP (31.3285ms)
+✔ save reload reproduces the next roll and migrates legacy saves without resetting existing critical state (70.0272ms)
+✔ weapon snapshots retain cast-time critical stats and invalid saved critical data is rejected (41.7449ms)
+✔ invalid damage components do not mutate HP, consume a shield or advance RNG (33.9035ms)
+✔ the default five-percent stream stays deterministic across a long sample without touching world RNG (53.0344ms)
+✔ legacy weapon builds receive default critical stats once instead of borrowing later player upgrades (44.5264ms)
+✔ critical accents require a real new damaging hit; ongoing ticks and blocked hits are quiet (1.8737ms)
+✔ weak point and critical use one label and one contact cue only for the matching attack (1.3873ms)
+✔ density limits preserve ordinary effects and bound new and live critical labels (0.6773ms)
+✔ lethal damage keeps its impact coordinates after the enemy is removed (74.7215ms)
+✔ rendering normal and reduced critical contacts leaves the combat state untouched (1.3247ms)
+✔ stat readout uses effective critical caps and legacy defaults (45.5772ms)
+✔ actual frost projectile shares one critical decision between physical and elemental damage (89.1357ms)
+✔ a projectile miss consumes no critical random values (48.2026ms)
+✔ poison application keeps one decision across tick sizes and reload (61.8074ms)
+✔ mixed critical and ordinary burn accrual survives saving before its half-second pulse (48.5969ms)
+✔ rain makes one target decision per real pulse without changing its six-pulse damage snapshot (24.9223ms)
+✔ crossbow projectiles keep installed critical stats after player stats change (40.5333ms)
+✔ solar fairy burn inherits its actual shot result instead of rerolling each tick (28.474ms)
+✔ shared ongoing snapshot aliases are rejoined after serialization and do not recount a victim (48.8108ms)
+✔ a zero-duration update does not reroll legacy poison, burn or passive DOT applications (30.2592ms)
+✔ hostile projectiles never use player critical stats (21.7306ms)
+✔ precision burst and critical feedback identify the same real hit for the visual layer (27.1843ms)
+✔ a legacy continuous exposure blocked by a shield never rolls or counts a hit (19.692ms)
+✔ six supports use existing rarity, gated acquisition and exact level caps (78.6735ms)
+✔ chance and multiplier investment, decisive tradeoff, cap and summon snapshots agree (50.4898ms)
+✔ fracture applies only to later attacks and never stacks or buffs its own components (39.0055ms)
+✔ only successful rolls activate focus, pause freezes it and cooldown prevents refresh (28.5979ms)
+✔ judgment counts throttled new critical contacts, excluding DOT, derived damage and empowered sources (51.5656ms)
+✔ ready judgment survives failed cast and empowers the full rain without self-recharging (28.4627ms)
+✔ empowered crossbow snapshots retain bonus and block charging after future player growth (62.4059ms)
+✔ save restores marks focus and charge; malformed skill levels and proc state are rejected (55.3989ms)
+✔ draft retains main-linked reservation and new skills have distinct medallions and clear descriptions (37.2991ms)
+✔ detached status drawing is deterministic and does not alter saved combat state (51.1558ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1425.3255

@@ -1,3 +1,4 @@
+import {createCriticalProfile} from './critical.js';
 import {ownedRelics} from '../progression/relics.js';
 import {synergyIds} from '../progression/synergies.js';
 export const weaponLevels={fire:3,poison:3,frost:4,chain:3,precision:3,weakpoint:3,finisher:3,split:4,pierce:3,repeat:1,haste:5,power:5,homing:1,...Object.fromEntries(synergyIds.map(id=>[id,3]))};
@@ -5,7 +6,7 @@ export const weaponLevels={fire:3,poison:3,frost:4,chain:3,precision:3,weakpoint
 export function weaponSnapshot(p,origin=p,normal=false){
  const build={x:origin.x,y:origin.y,damage:p.damage,relics:ownedRelics(p),hexes:{...(p.hexes||{})},evolutions:{...(p.evolutions||{})}};
  delete build.evolutions.ultimate;
- if(p.critChance!==undefined)build.critChance=p.critChance;if(p.critMultiplier!==undefined)build.critMultiplier=p.critMultiplier;
+ Object.assign(build,createCriticalProfile(p));
  for(const key of Object.keys(weaponLevels))build[key]=p[key]||0;
  if(normal)for(const key of ['fire','poison','frost','chain','precision','weakpoint','finisher','split','pierce','repeat','homing',...synergyIds])build[key]=0;
  return build;

@@ -1,3 +1,5 @@
+import {criticalStats} from '../combat/critical.js';
+import {criticalSkillInfo} from '../progression/critical-skills.js';
 import {hitEnemy,skills} from '../progression/progression.js';
 import {attackInterval,relicStat} from '../progression/relics.js';
 import {bladeProfile} from '../combat/spectral-blade.js';
@@ -23,6 +25,7 @@ export function skillPreview(player,id){
  else{if(!skill||(next[id]||0)>=skill.max)return [];next[id]=(next[id]||0)+1;}
  const a=previewStats(player),b=previewStats(next),rows=[];
  const row=(label,before,after,unit='',digits=1)=>rows.push({label,before:typeof before==='number'?before.toFixed(digits)+unit:before,after:typeof after==='number'?after.toFixed(digits)+unit:after});
+ if(criticalSkillInfo(id)){const old=criticalStats(player),after=criticalStats(next);if(old.chance!==after.chance)row('치명타 확률',old.chance*100,after.chance*100,'%',0);if(old.multiplier!==after.multiplier)row('치명타 피해 배율',old.multiplier*100,after.multiplier*100,'%',0);if(!rows.length)row('치명타 연계',criticalSkillInfo(id).steps[(player[id]||0)-1]||'미습득',criticalSkillInfo(id).steps[next[id]-1]);}
  if(Math.abs(a.hit-b.hit)>.001)row('첫 적중 피해¹',a.hit,b.hit);
  if(Math.abs(a.rate-b.rate)>.001)row('초당 사격',a.rate,b.rate,'회',2);
  if(id==='fire'){row('폭발 반경',a.radius,b.radius,'',0);if(b.burn!==a.burn)row('화상 1중첩 / 초',a.burn,b.burn);if(next.fire===3)row('3중첩 화상 처치','장판 없음','화염 장판 생성');}

@@ -1,11 +1,12 @@
+import {criticalSkillIds,criticalSkillInfo,criticalSkillAllowed} from './critical-skills.js';
 import {fairyTrio} from './skill-overhaul.js';
 import {synergyIds,synergyAllowed,shardMultiplier} from './synergies.js';
 import {runRandom} from '../game/random.js';
 export const mainSkills=['fire','frost','poison','chain','precision'];
-export const supportSkills=['split','pierce','haste','power','repeat','aura','homing','ultimate','weakpoint','finisher','rollMastery','sunFairy','snowFairy','stormFairy','fairyKing',...synergyIds];
+export const supportSkills=['split','pierce','haste','power','repeat','aura','homing','ultimate','weakpoint','finisher','rollMastery','sunFairy','snowFairy','stormFairy','fairyKing',...synergyIds,...criticalSkillIds];
 export const skillIds=[...mainSkills,...supportSkills];
 export const skillPoints=p=>skillIds.reduce((n,id)=>n+(p[id]||0),0);
-export const allowedSkill=(p,id)=>id==='ultimate'?false:id==='fairyKing'?fairyTrio(p):synergyAllowed(p,id)&&(!mainSkills.includes(id)||!p.mainSkill||p.mainSkill===id);
+export const allowedSkill=(p,id)=>id==='ultimate'?false:id==='fairyKing'?fairyTrio(p):criticalSkillAllowed(p,id)&&synergyAllowed(p,id)&&(!mainSkills.includes(id)||!p.mainSkill||p.mainSkill===id);
 export function mainChoices(s,random=()=>runRandom(s),reroll=false){
  if(s.player.mainSkill)return [];
  if(!reroll&&s.mainChoices?.length===3)return s.mainChoices;
@@ -28,7 +29,7 @@ export function steerArrow(b,enemies,obstacles,dt,blocked){
 }
 
 
-export function skillGrade(id){return mainSkills.includes(id)?'main':['homing','ultimate','aura','repeat','rollMastery','sunFairy','snowFairy','stormFairy','fairyKing'].includes(id)?'unique':['split'].includes(id)?'rare':'normal';}
+export function skillGrade(id){return criticalSkillInfo(id)?.grade||(mainSkills.includes(id)?'main':['homing','ultimate','aura','repeat','rollMastery','sunFairy','snowFairy','stormFairy','fairyKing'].includes(id)?'unique':['split'].includes(id)?'rare':'normal');}
 export const gradeLabels={main:'메인',normal:'일반 보조',rare:'레어 보조',unique:'유니크 보조'};
 export function frostShatter(p,e,projectiles){
  const frozen=e.frozen>0||e.frozenDeath,stacks=frozen?3:e.frostStackTime>0?e.frostStacks||0:0;

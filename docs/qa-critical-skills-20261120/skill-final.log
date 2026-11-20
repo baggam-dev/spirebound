@@ -1,0 +1,18 @@
+✔ six supports use existing rarity, gated acquisition and exact level caps (48.6473ms)
+✔ chance and multiplier investment, decisive tradeoff, cap and summon snapshots agree (37.9696ms)
+✔ fracture applies only to later attacks and never stacks or buffs its own components (23.9328ms)
+✔ only successful rolls activate focus, pause freezes it and cooldown prevents refresh (21.4242ms)
+✔ judgment counts throttled new critical contacts, excluding DOT, derived damage and empowered sources (24.7335ms)
+✔ ready judgment survives failed cast and empowers the full rain without self-recharging (19.6959ms)
+✔ empowered crossbow snapshots retain bonus and block charging after future player growth (48.1519ms)
+✔ save restores marks focus and charge; malformed skill levels and proc state are rejected (52.7251ms)
+✔ draft retains main-linked reservation and new skills have distinct medallions and clear descriptions (31.7402ms)
+✔ detached status drawing is deterministic and does not alter saved combat state (29.109ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 914.0127

@@ -1,3 +1,4 @@
+import {criticalSkillBonuses,criticalSkillHit} from '../progression/critical-skills.js';
 import {enemyDamageFactor} from './enemy-defense.js';
 
 export const CRITICAL_DEFAULTS=Object.freeze({chance:.05,multiplier:1.5,chanceCap:.5,multiplierCap:2.5});
@@ -35,9 +36,9 @@ export function migrateCriticalCombat(s){
 export function criticalStats(p={}){
  const chance=Number.isFinite(p.critChance)?p.critChance:CRITICAL_DEFAULTS.chance;
  const multiplier=Number.isFinite(p.critMultiplier)?p.critMultiplier:CRITICAL_DEFAULTS.multiplier;
- return {chance:clamp(chance,0,CRITICAL_DEFAULTS.chanceCap),multiplier:clamp(multiplier,1,CRITICAL_DEFAULTS.multiplierCap)};
+ const bonus=criticalSkillBonuses(p);return {chance:clamp(chance+bonus.chance,0,CRITICAL_DEFAULTS.chanceCap),multiplier:clamp(multiplier+bonus.multiplier,1,CRITICAL_DEFAULTS.multiplierCap)};
 }
-export function createCriticalProfile(p){const stats=criticalStats(p);return {critChance:stats.chance,critMultiplier:stats.multiplier};}
+export function createCriticalProfile(p){const stats=criticalStats(p);return {critChance:stats.chance,critMultiplier:stats.multiplier,...(p?.judgmentEmpowered?{judgmentEmpowered:true}:{})};}
 export function nextCriticalRandom(s){
  migrateCriticalCombat(s);const state=s.critical;
  state.randomState=(Math.imul(state.randomState>>>0,1664525)+1013904223)>>>0;
@@ -46,7 +47,7 @@ export function nextCriticalRandom(s){
 // Serializable application/cast snapshot. Reuse it for DoT ticks, not a new roll.
 export function createCriticalSnapshot(s,player=s.player){
  migrateCriticalCombat(s);if(s.critical.sequence>=UINT_MAX)throw Error('Critical sequence limit');
- const stats=criticalStats({critChance:player?.critChance??s.player.critChance,critMultiplier:player?.critMultiplier??s.player.critMultiplier}),critical=stats.chance>0&&nextCriticalRandom(s)<stats.chance;
+ const stats=criticalStats({...player,critChance:player?.critChance??s.player.critChance,critMultiplier:player?.critMultiplier??s.player.critMultiplier}),critical=stats.chance>0&&nextCriticalRandom(s)<stats.chance;
  s.critical.sequence++;
  return {version:1,id:s.critical.sequence,critical,multiplier:critical?stats.multiplier:1,countedTargets:[]};
 }
@@ -80,7 +81,8 @@ export function applyPlayerDamage(s,enemy,amount,{player=s.player,source='direct
  for(const part of resolved){
   const hit=part.snapshot;
   if(!validCriticalSnapshot(hit))throw Error('Invalid critical snapshot');
-  const value=part.amount*hit.multiplier*defense;damage+=value;if(hit.critical){criticalDamage+=value;critical=true;}
+  const mark=enemy.critMarkTime>0&&enemy.critMarkAttack!==hit.id?1+(enemy.critMarkPower||0):1;
+  const value=part.amount*hit.multiplier*defense*mark;damage+=value;if(hit.critical){criticalDamage+=value;critical=true;}
   if(!hit.countedTargets.includes(id)){
    if(hit.countedTargets.length>=128)throw Error('Critical snapshot target limit');
    hit.countedTargets.push(id);s.critical.hits++;if(hit.critical)s.critical.criticalHits++;newHit=true;
@@ -90,6 +92,7 @@ export function applyPlayerDamage(s,enemy,amount,{player=s.player,source='direct
  enemy.hp=before-damage;s.critical.damage+=actual;s.critical.criticalDamage+=actualCritical;
  const attackIds=[...new Set(resolved.map(part=>part.snapshot.id))];
  Object.assign(result,{applied:true,attackId:attackIds.length===1?attackIds[0]:null,attackIds,procDepth,procEligible:procDepth===0&&newHit,damage:actual,criticalDamage:actualCritical,critical,newHit,before,after:enemy.hp,multiplier:damage/(base*defense)});
+ criticalSkillHit(s,enemy,result,player);
  const queue=queues.get(s)||[];queue.push({...result});if(queue.length>256)queue.splice(0,queue.length-256);queues.set(s,queue);
  return {...result,snapshot:resolved.length===1?resolved[0].snapshot:null};
 }

@@ -1,0 +1,63 @@
+✔ new runs have bounded critical stats and a separate seeded stream (117.1388ms)
+✔ one target packet shares the critical result across physical and elemental damage (35.4177ms)
+✔ a shield or zero damage cannot roll a critical or count a hit (26.1696ms)
+✔ damage snapshots survive DoT reload without rerolling or recounting the same application (63.002ms)
+✔ mixed continuous components apply defense once and attribute only the critical share (27.7918ms)
+✔ overkill critical accounting uses actual remaining HP (33.2102ms)
+✔ save reload reproduces the next roll and migrates legacy saves without resetting existing critical state (71.311ms)
+✔ weapon snapshots retain cast-time critical stats and invalid saved critical data is rejected (40.8968ms)
+✔ invalid damage components do not mutate HP, consume a shield or advance RNG (43.4116ms)
+✔ the default five-percent stream stays deterministic across a long sample without touching world RNG (53.8128ms)
+✔ legacy weapon builds receive default critical stats once instead of borrowing later player upgrades (45.4058ms)
+✔ critical accents require a real new damaging hit; ongoing ticks and blocked hits are quiet (1.4475ms)
+✔ weak point and critical use one label and one contact cue only for the matching attack (1.063ms)
+✔ density limits preserve ordinary effects and bound new and live critical labels (0.6909ms)
+✔ lethal damage keeps its impact coordinates after the enemy is removed (68.9376ms)
+✔ rendering normal and reduced critical contacts leaves the combat state untouched (1.1602ms)
+✔ stat readout uses effective critical caps and legacy defaults (44.4855ms)
+✔ actual frost projectile shares one critical decision between physical and elemental damage (83.9737ms)
+✔ a projectile miss consumes no critical random values (41.5439ms)
+✔ poison application keeps one decision across tick sizes and reload (69.9734ms)
+✔ mixed critical and ordinary burn accrual survives saving before its half-second pulse (51.0016ms)
+✔ rain makes one target decision per real pulse without changing its six-pulse damage snapshot (25.0717ms)
+✔ crossbow projectiles keep installed critical stats after player stats change (39.0024ms)
+✔ solar fairy burn inherits its actual shot result instead of rerolling each tick (31.2043ms)
+✔ shared ongoing snapshot aliases are rejoined after serialization and do not recount a victim (41.6177ms)
+✔ a zero-duration update does not reroll legacy poison, burn or passive DOT applications (24.3863ms)
+✔ hostile projectiles never use player critical stats (21.6953ms)
+✔ precision burst and critical feedback identify the same real hit for the visual layer (24.2416ms)
+✔ a legacy continuous exposure blocked by a shield never rolls or counts a hit (20.8011ms)
+✔ six supports use existing rarity, gated acquisition and exact level caps (73.2072ms)
+✔ chance and multiplier investment, decisive tradeoff, cap and summon snapshots agree (57.7745ms)
+✔ fracture applies only to later attacks and never stacks or buffs its own components (40.6974ms)
+✔ only successful rolls activate focus, pause freezes it and cooldown prevents refresh (40.8443ms)
+✔ judgment counts throttled new critical contacts, excluding DOT, derived damage and empowered sources (35.1904ms)
+✔ ready judgment survives failed cast and empowers the full rain without self-recharging (25.5751ms)
+✔ empowered crossbow snapshots retain bonus and block charging after future player growth (50.9486ms)
+✖ save restores marks focus and charge; malformed skill levels and proc state are rejected (45.0591ms)
+✔ draft retains main-linked reservation and new skills have distinct medallions and clear descriptions (46.6473ms)
+✔ detached status drawing is deterministic and does not alter saved combat state (49.243ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 38
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1373.521
+
+✖ failing tests:
+
+test at tests\unit\critical-skills.test.js:64:1
+✖ save restores marks focus and charge; malformed skill levels and proc state are rejected (45.0591ms)
+  Error: 저장 데이터 형식이 올바르지 않습니다.
+      at check (file:///C:/baggam-dev/spirebound/src/persistence/storage.js:34:47)
+      at validateCriticalSave (file:///C:/baggam-dev/spirebound/src/persistence/critical-save.js:11:62)
+      at validateRun (file:///C:/baggam-dev/spirebound/src/persistence/storage.js:133:35)
+      at encodeSave (file:///C:/baggam-dev/spirebound/src/persistence/storage.js:140:31)
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/critical-skills.test.js:67:222)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)

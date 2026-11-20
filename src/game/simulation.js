@@ -1,3 +1,4 @@
+import {tickCriticalSkills} from '../progression/critical-skills.js';
 import {bindCriticalRun,applyBoundDamage,criticalInstance,drainDamageResults,clearDamageResults} from '../combat/critical.js';
 import {updateEnemyMelee,weaponContactReplaced} from '../combat/enemy-melee.js';
 import {prepareEnemyGroup,moveWaitingEnemy} from '../combat/enemy-group.js';
@@ -100,7 +101,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  r.gateBanner=Math.max(0,(r.gateBanner||0)-dt);observeRoom(s,r);bindCriticalRun(s,r.enemies);bindDefenses(r.enemies);if(r.enemies.some(e=>e.type==='boss'))bossHealth(r);
  for(const item of collectEssences(s,r))effects.push({x:p.x,y:p.y-45,t:1.2,color:essenceInfo(item.id).color,text:essenceInfo(item.id).label,essencePickup:true,fromX:item.x,fromY:item.y});
  const collectedXp=collectXp(s,r,dt);if(collectedXp)effects.push({xpPickup:true,x:p.x,y:p.y-12,t:.16,xp:collectedXp});
- const enemyHealthBefore=new Map(r.enemies.map(e=>[e,e.hp]));
+ tickCriticalSkills(s,r,dt);const enemyHealthBefore=new Map(r.enemies.map(e=>[e,e.hp]));
  tickRollMines(s,r,dt,effects);tickRain(s,dt);tickPassives(s,dt);effects.push(...tickThunder(s,dt));
  const elementBefore=r.enemies.reduce((n,e)=>n+Math.max(0,e.hp),0);effects.push(...tickElements(r,dt,p.poison||0));metrics.damageDealt+=elementBefore-r.enemies.reduce((n,e)=>n+Math.max(0,e.hp),0);
  tickBlasts(r,dt,p,raw=>hurt(raw,'정예 지연 폭발'),effects);

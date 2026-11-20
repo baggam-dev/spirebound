@@ -33,6 +33,8 @@ export function createHUD(){
   const stats=displayedStats(p),dps=meter(s);el('statReadout').innerHTML=`<b>LV ${p.level}</b><span>공격력 ${stats.attack.toFixed(1)}</span><span>공속 ${stats.rate.toFixed(2)}/초</span><span>이속 ${stats.speed.toFixed(0)}</span><span title="평타·스킬의 유효 치명타 확률과 피해 배율. 지속 피해는 적용 시 판정을 유지합니다.">치명 ${(stats.criticalChance*100).toFixed(0)}% · ${(stats.criticalMultiplier*100).toFixed(0)}%</span><span title="최근 5초간 실제로 준 피해 ÷ 5. 범위 피해 포함. 조건부 유물 효과는 공격력 숫자에 미포함.">DPS ${dps.toFixed(1)}</span>`;
   const required=xpRequired(p.level);el('xpFill').style.width=Math.min(100,p.xp/required*100)+'%';el('xpTrack').setAttribute('aria-valuemax',required);el('xpTrack').setAttribute('aria-valuenow',p.xp);el('xpLabel').textContent=`LV ${p.level} · ${p.xp} / ${required}`;
   const charge=el('skillStrip').querySelector('[aria-label^="축전"]');if(charge)charge.dataset.cooldown=p.chargeReady?'방전 준비':(p.chargeHits||0)+'/'+(p.chargeCell>=3?3:4);
+  const judgment=el('skillStrip').querySelector('[aria-label^="왕의 선고"]');if(judgment)judgment.dataset.cooldown=(s.critical?.royalCharges||0)>=8?'선고 준비':(s.critical?.royalCharges||0)+'/8';
+  const focus=el('skillStrip').querySelector('[aria-label^="회피의 집중"]');if(focus)focus.dataset.cooldown=p.critFocusTime>0?p.critFocusTime.toFixed(1)+'s':p.critFocusCooldown>0?p.critFocusCooldown.toFixed(1)+'s':'집중 준비';
   const aura=el('skillStrip').querySelector('[aria-label^="망령검: 베르가스"]');if(aura)aura.dataset.cooldown=s.bladeCooldown>0?s.bladeCooldown.toFixed(1)+'s':'요격 준비';
   el('hexStatus').textContent=(p.incantations||[]).map(id=>incantationInfo(id).name).join(' · ');el('hexStatus').title=(p.incantations||[]).map(id=>incantationInfo(id).description).join('\n');
  };
