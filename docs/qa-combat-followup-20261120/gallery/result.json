@@ -1,0 +1,38 @@
+{
+  "base": "http://127.0.0.1:5173",
+  "reports": [
+    {
+      "width": 1280,
+      "reduced": false,
+      "probes": 15,
+      "visible": 72,
+      "fixtureOnly": true,
+      "actualDevice": false
+    },
+    {
+      "width": 1280,
+      "reduced": true,
+      "probes": 15,
+      "visible": 17,
+      "fixtureOnly": true,
+      "actualDevice": false
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "probes": 15,
+      "visible": 17,
+      "fixtureOnly": true,
+      "actualDevice": false
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "probes": 15,
+      "visible": 17,
+      "fixtureOnly": true,
+      "actualDevice": false
+    }
+  ],
+  "errors": []
+}

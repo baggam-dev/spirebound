@@ -1,0 +1,46 @@
+{
+  "base": "http://127.0.0.1:5173",
+  "results": [
+    {
+      "width": 1280,
+      "reduced": false,
+      "resume": true,
+      "timing": {
+        "mean": 17.84833333412806,
+        "p95": 18.599999999999454
+      }
+    },
+    {
+      "width": 1280,
+      "reduced": true,
+      "resume": true,
+      "timing": {
+        "mean": 17.2,
+        "p95": 18.300000000000182
+      }
+    },
+    {
+      "width": 844,
+      "reduced": false,
+      "resume": true,
+      "timing": {
+        "mean": 17.430000000000003,
+        "p95": 18.399999999999636
+      }
+    },
+    {
+      "width": 844,
+      "reduced": true,
+      "resume": true,
+      "timing": {
+        "mean": 18.1483333337307,
+        "p95": 18.599999999999454
+      }
+    },
+    {
+      "fallback": "preserved retry screen"
+    }
+  ],
+  "errors": [],
+  "records": 0
+}
