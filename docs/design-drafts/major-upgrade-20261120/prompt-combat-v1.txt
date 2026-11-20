@@ -1,0 +1,22 @@
+Create the SECOND cohesive SPIREBOUND production art-direction concept board, landscape 1536x1024. NEW concept reference board, NOT a usable sprite atlas or implemented screenshot. Heading exactly "SPIREBOUND • VISUAL II"; subtitle "COMBAT / GROWTH". Fine ivory dividers, dark slate-blue background, restrained gold typography. Match a polished Ragnarok Online-inspired hand-painted 2.5D fantasy sprite aesthetic: readable small-scale sprites, compact crisp effects, warm material shading, not 8-bit and not realistic/grotesque.
+
+REFERENCE ROLES: hero atlas preserves the already approved blond young archer, red scarf, steel shoulders, brown leather and cape; companions atlas preserves orange sun fairy, icy silver-haired snow fairy, purple storm fairy and silver-purple crowned fairy king identities; crossbow atlas preserves brass/wood mechanical crossbow silhouette and fixed deployed tripod base. Do not reinvent these characters or replace them with generic photorealistic humans.
+
+LAYOUT:
+TOP ROW, four equally sized COMBAT CONTACT vignettes on identical quiet slate-stone floor swatches. Same blond archer shooting same small armored target, no changes to characters between cells. Labels "NORMAL", "WEAK POINT", "CRITICAL", "COMBINED".
+NORMAL: tiny pale directional chip/spark at actual impact.
+WEAK POINT: precise ivory focal strike with a thin cool-silver broken target mark, compact and controlled.
+CRITICAL: stronger amber-gold four-point fractured impact, narrow directional shards, very short-looking white-hot center with a restrained violet contour; premium sharp impact rather than a round explosion.
+COMBINED: a SINGLE merged white-gold fractured mark with fine violet edges and a narrow gold directional slash, clearly stronger but never two overlapping giant effects. No blood, no comic bubble, no opaque disk, no screen shake drawing. Include two tiny key moment swatches per strong contact, ignition then dissipating tail, showing the effect separate from the target.
+
+MIDDLE ROW: wide battle strip labeled "ULTIMATES / SUMMONS" with empty readable space between three subgroups on the same stone floor. Left: archer's rain of arrows has three strong downward shafts/focal ivory-gold landings and thinner supporting arrows, low ground dust, no glowing blanket over arena. Center: reference brass crossbow installed on its fixed tripod, upper bow recoils separately, a short narrow ivory muzzle streak, small casing/wood dust; two small deploy/recoil thumbnails. Right: faithful sun/snow/storm fairies and crowned fairy king at consistent small summon scale, individual orange / pale blue / violet attack trails plus thin matching detached magic swatches. Wings and faces readable, detached restrained aura, no permanent giant spell rings blocking enemies. Show a small "REDUCED" inset with one gold contact spark, one simple snow shard and a minimal summon trail, same visual identity with fewer particles.
+
+BOTTOM ROW: actual attractive detailed icon candidates, NOT generic diagram symbols, clearly grouped rather than too much text.
+Six small skill medallions, labels "NORMAL" under two, "RARE" under two, "UNIQUE" under two:
+normal keen eye and honed arrowhead;
+rare fractured target seal and agile dodging boot;
+unique a faceted decisive-strike gem and a crowned arrow/sword judgment crest.
+Use richer ornamental frame hierarchy from normal iron to rare silver-blue to unique muted gold-violet; never rely on color alone.
+Beside them four large relic icons labeled "HAWK CHARM", "CRACKED CROWN", "HUNTER SEAL", "RESOLVE": feather-and-lens pendant, physically cracked small gold crown with a dark red inset, engraved hunter signet, sturdy ivory shield/heart medallion. Believable fantasy objects, leather/metal/stone materials, restrained glow, clear silhouettes.
+Do not put percentages, drop rates or unverifiable balance claims on the image. Avoid Chinese/Korean pseudo-text. The whole board should be a single coherent proposal for the existing game, not a mobile gacha storefront.
+REFERENCE 4 is the companion WORLD/ENCOUNTERS concept board from this same proposal. Match its slate/ivory/gold palette, elegant panel dividers and compact sprite painting, while following the new COMBAT/GROWTH layout. It is a style reference, not an edit target.
