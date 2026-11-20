@@ -44,8 +44,8 @@ export function deployRoom(room,player,version=29){
  const dx=480-player.x,dy=270-player.y,len=Math.hypot(dx,dy)||1,fx=dx/len,fy=dy/len,placed=[];
  for(const e of room.enemies){
   const {depth,side}=deploymentOffset(e,version),target={x:player.x+fx*depth-fy*side,y:player.y+fy*depth+fx*side};
-  const spots=[];for(let y=95;y<=445;y+=35)for(let x=90;x<=880;x+=35)if(!blocked(x,y,24,room.obstacles)&&Math.hypot(x-player.x,y-player.y)>=155&&placed.every(n=>Math.hypot(x-n.x,y-n.y)>=48))spots.push({x,y});
-  spots.sort((a,b)=>Math.hypot(a.x-target.x,a.y-target.y)-Math.hypot(b.x-target.x,b.y-target.y));const point=spots[0];if(point){e.x=point.x;e.y=point.y;placed.push(point);}
+  const spots=[];for(let y=95;y<=445;y+=35)for(let x=90;x<=880;x+=35)if(!blocked(x,y,e.type==='pursuer'?30:24,room.obstacles)&&Math.hypot(x-player.x,y-player.y)>=155&&placed.every(n=>Math.hypot(x-n.x,y-n.y)>=Math.max(48,(e.type==='pursuer'?30:19)+(n.radius??19)+8)))spots.push({x,y});
+  spots.sort((a,b)=>Math.hypot(a.x-target.x,a.y-target.y)-Math.hypot(b.x-target.x,b.y-target.y));const point=spots[0];if(point){e.x=point.x;e.y=point.y;placed.push({...point,radius:e.type==='pursuer'?30:19});}
  }
  room.deployed=true;
 }

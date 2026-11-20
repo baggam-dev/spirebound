@@ -5,7 +5,7 @@ import {isOrdinary,resetOrdinaryPresentation,clearOrdinaryActors,tickOrdinaryPre
 import {enemyDeathEffect} from '../../src/rendering/enemy-feedback.js';
 import {newRun,currentRoom} from '../../src/game/engine.js';
 import {stepRun} from '../../src/game/simulation.js';
-const excluded=new Set(['kald','vera','warden','prism','slime','king','commander','demon','roamingElite']);
+const excluded=new Set(['kald','vera','warden','prism','slime','king','commander','demon','roamingElite','pursuer']);
 const types=Object.keys(enemyGuide).filter(type=>!excluded.has(type));
 const actor=type=>({id:3,type,hp:100,max:100,x:240,y:200});
 const hit=(loss=.04)=>[{enemyFeedback:'hit',enemyId:3,beforeRatio:1,afterRatio:1-loss}];

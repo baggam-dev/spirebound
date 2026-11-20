@@ -7,7 +7,7 @@ export const meleeProfiles=Object.freeze({
  demonCaptain:{kind:'cleave',warning:.3,radius:70,halfAngle:1.15,damage:12,recover:.8},
  ambusher:{kind:'thrust',warning:.18,radius:63,halfAngle:.48,damage:9,recover:.7}
 });
-export const weaponContactReplaced=e=>!!meleeProfiles[e.type]||['chaser','starKnight','royalGuard','riftHunter'].includes(e.type)||e.type==='boss'&&(!e.variant||e.variant==='king');
+export const weaponContactReplaced=e=>!!meleeProfiles[e.type]||['pursuer','chaser','starKnight','royalGuard','riftHunter'].includes(e.type)||e.type==='boss'&&(!e.variant||e.variant==='king');
 export function meleeIntersects(e,p,aim,radius,halfAngle,playerRadius=14){
  const x=p.x-e.x,y=p.y-e.y,d=Math.hypot(x,y),delta=Math.atan2(Math.sin(Math.atan2(y,x)-aim),Math.cos(Math.atan2(y,x)-aim));
  const ray=angle=>{const dx=Math.cos(angle),dy=Math.sin(angle),t=Math.max(0,Math.min(radius,x*dx+y*dy));return Math.hypot(x-dx*t,y-dy*t);};

@@ -32,6 +32,7 @@ export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
  if(floor===7||floor===9){modules.push('mordo-phase1-sprite','mordo-phase2-sprite','mordo-phase3-sprite','resurrected-king','mordo-presentation-art');feedback.push('bosses');}
  if(floor>=8){modules.push('commander-phase1-sprite','commander-phase2-sprite','velkar-presentation-art',...infernal);feedback.push('demons','bosses');}
  if(floor===7||floor===9)modules.push('demon-sprite','remnant-sprite','demon-core-sprite','demon-presentation-art');
+ if(returning&&floor>=1&&floor<=7)modules.push('pursuer-sprite');
  if(returning){modules.push('shadow-aura','ambusher-sprite','ringcaster-sprite','strafer-sprite');feedback.push('demons');}
  // The final escape can create these actors after entry. Rare expeditions and
  // chest bosses are taken from the real floor/room roster rather than floor number.
@@ -40,6 +41,7 @@ export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
  return {modules:[...new Set(modules)],feedback:[...new Set(feedback)],extra:['environment-hall-atlas-v1.png','environment-stone-reference-v1.png',halls[floor],...(floor>=6?['high-hall-atlas-v2.png']:[])].filter(Boolean)};
 }
 export function portraitAssetPlan(key){
+ if(key==='pursuer')return {modules:['pursuer-sprite'],feedback:[],extra:[]};
  if(key==='roamingElite')key='chaser';
  if(key==='warden')return {modules:warden,feedback:[],extra:[]};
  if(key==='vera')return {modules:['vera-sprite'],feedback:[],extra:[]};

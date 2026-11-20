@@ -11,7 +11,7 @@ export function takeDamage(s,raw,kind=null){
  s.invulnerable=.65;
  if(s.player.legacyAuraGuard&&!(s.auraShield>0)){s.auraShield=60-relicStat(s.player,'auraShield');return 'blocked';}
  if(s.player.armor>0&&!(s.shield>0)){s.shield=shieldCooldown(s.player);return 'blocked';}
- s.player.hp=Math.max(0,s.player.hp-(['laser','bruteJump'].includes(kind)?2:s.key?1:damageHearts(raw)));return 'hurt';
+ s.player.hp=Math.max(0,s.player.hp-(['laser','bruteJump','pursuerHeavy'].includes(kind)?2:s.key?1:damageHearts(raw)));return 'hurt';
 }
 export function killRecovery(s,room,boss,random=Math.random,position=s.player){
  const p=s.player;

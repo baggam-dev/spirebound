@@ -1,0 +1,25 @@
+✔ all ordinary bestiary types receive bounded view reactions, with no boss overlap or actor writes (8.2668ms)
+✔ seen-room load and room reentry do not replay arrival, while new summons do (1.0922ms)
+✔ melee, charge, ranged, aerial, elite and hazard threats take priority without cancellation (2.1767ms)
+✔ ordinary death snapshots keep style/timing and root anchors, self-destruct stays distinct (2.2399ms)
+✔ hero reaction is visual only, reduced mode quiet, defeat immediate with no result delay (0.7273ms)
+✔ ordinary removals and rewards remain immediate with one detached death effect (140.4476ms)
+✔ descent plans are independent, capped and exclude entrances, services, bosses and already deployed/current rooms (226.247ms)
+✔ activation replaces one actor, keeps stable ID and respects the larger body clearance on deployment (64.3678ms)
+✔ charge locks its direction, gives a separate finishing warning, and hits at most once per stage (1.3963ms)
+✔ walls stop charging with a long recovery, no through-wall damage or immediate finishing attack (0.4751ms)
+✔ cleave respects facing and walls, recovery is quiet, and idle contact never hurts (0.5151ms)
+✔ descent heavy strike causes two hearts but respects ordinary shields and invulnerability (33.0553ms)
+✔ actual defeat grants 90XP, guaranteed essence and one recovery reward only once (115.6463ms)
+✔ full potion inventory substitutes a health essence, never exceeds the potion cap (82.4237ms)
+✔ AI phase and encounter save roundtrip, malformed combat and reward state reject (123.2056ms)
+✔ real poses are phase-driven, walk strides vary, no hurt twitch, and death uses dedicated frames (1.5451ms)
+✔ asset gate includes the real sheet for descent and portraits; warning geometry survives reduced mode without writes (1.2633ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1862.8738

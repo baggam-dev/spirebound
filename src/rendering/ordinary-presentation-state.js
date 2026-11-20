@@ -10,7 +10,7 @@ export function ordinaryThreat(e,room){
 }
 export function notifyOrdinaryHits(room,effects=[]){
  for(const e of room?.enemies||[]){
-  if(!isOrdinary(e)||e.hp<=0)continue;
+  if(!isOrdinary(e)||e.type==='pursuer'||e.hp<=0)continue;
   const f=effects.find(f=>f.enemyFeedback==='hit'&&f.enemyId===e.id);if(!f)continue;
   let v=actors.get(e);if(!v){v={intro:null,hit:null,cooldown:0,x:e.x,face:1,blocked:false};actors.set(e,v);}
   v.blocked=ordinaryThreat(e,room);if(v.cooldown>0)continue;

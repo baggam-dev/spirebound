@@ -2,8 +2,9 @@ import {enemyGuide} from '../world/expedition.js';
 import {renderJournalPortraits} from '../rendering/journal-portraits.js';
 import {escapeHtml} from './ui.js';
 
-const groups={일반:['chaser','charger','archer','scatter','brute','laser','ricochet','flower','minislime'],네임드:['roamingElite','kald','vera'],상층:['astralSniper','gravityMage','starKnight','starBearer','royalGuard','pulseTurret','riftHunter'],악마:['demonBat','spikeNest','demonSoldier','demonArcher','demonCaptain'],귀환:['strafer','ringcaster','ambusher'],보스:['warden','prism','slime','king','commander','demon']};
+const groups={일반:['chaser','charger','archer','scatter','brute','laser','ricochet','flower','minislime'],네임드:['roamingElite','kald','vera'],상층:['astralSniper','gravityMage','starKnight','starBearer','royalGuard','pulseTurret','riftHunter'],악마:['demonBat','spikeNest','demonSoldier','demonArcher','demonCaptain'],귀환:['pursuer','strafer','ringcaster','ambusher'],보스:['warden','prism','slime','king','commander','demon']};
 const advice={
+ pursuer:'돌진 방향이 고정되면 옆으로 피하세요. 벽에 막히면 빈틈이 길어집니다. 돌진 뒤 별도 부채꼴 !! 2♥ 예고를 확인하고 베기가 끝난 뒤 반격하세요.',
  roamingElite:'주변 적을 보호하는 수호 정예입니다. 짧은 준비 뒤 전방 베기를 피하고 측면에서 우선 제압하세요. 처치 보상은 같은 조우에서 한 번만 지급됩니다.',
  kald:'방패 정면을 피해 돌아가고, 돌진을 장애물로 유도한 뒤 빈틈을 노리세요.',vera:'이동 후 조준이 고정될 때 옆으로 빠지고 고리의 틈으로 이동하세요.',
  chaser:'준비 동작을 보면 뒤나 측면으로 이동하세요. 장애물로 베기를 막을 수 있습니다.',charger:'돌진 방향이 고정되면 옆으로 이동하세요.',archer:'조준이 고정된 뒤 같은 방향으로 계속 움직이세요.',scatter:'거리를 벌려 탄 사이의 공간을 확보하세요.',brute:'착지 예고 원을 벗어나고 공격 후 빈틈을 노리세요.',laser:'굵은 예고선에서 벗어나거나 장애물 뒤로 숨으세요.',ricochet:'벽에 닿은 탄이 등 뒤로 돌아오는 경로도 확인하세요.',flower:'착탄 예고를 피하고 독 장판 밖에서 공격하세요.',minislime:'분열체에 둘러싸이지 않도록 공간을 확보하세요. 소환체 처치는 성장 보상을 주지 않습니다.',

@@ -1,0 +1,63 @@
+✔ descent plans are independent, capped and exclude entrances, services, bosses and already deployed/current rooms (171.636ms)
+✔ activation replaces one actor, keeps stable ID and respects the larger body clearance on deployment (75.1369ms)
+✖ charge locks its direction, gives a separate finishing warning, and hits at most once per stage (2.1386ms)
+✔ walls stop charging with a long recovery, no through-wall damage or immediate finishing attack (0.3757ms)
+✔ cleave respects facing and walls, recovery is quiet, and idle contact never hurts (0.4327ms)
+✔ descent heavy strike causes two hearts but respects ordinary shields and invulnerability (29.2624ms)
+✔ actual defeat grants 90XP, guaranteed essence and one recovery reward only once (126.7752ms)
+✔ full potion inventory substitutes a health essence, never exceeds the potion cap (82.3884ms)
+✖ AI phase and encounter save roundtrip, malformed combat and reward state reject (85.3489ms)
+✔ real poses are phase-driven, walk strides vary, no hurt twitch, and death uses dedicated frames (1.7507ms)
+✔ asset gate includes the real sheet for descent and portraits; warning geometry survives reduced mode without writes (2.2968ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 9
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1552.6603
+
+✖ failing tests:
+
+test at tests\unit\pursuer.test.js:29:1
+✖ charge locks its direction, gives a separate finishing warning, and hits at most once per stage (2.1386ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/pursuer.test.js:32:220)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\unit\pursuer.test.js:49:1
+✖ AI phase and encounter save roundtrip, malformed combat and reward state reject (85.3489ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 'warning'
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/pursuer.test.js:50:120)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'warning',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

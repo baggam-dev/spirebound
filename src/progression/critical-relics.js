@@ -19,7 +19,7 @@ export function criticalRelicHit(s,e,result,addDamage){
   if(result.critical)p.resolveStacks=0;
   else if(now>=(p.resolveNextAt??0)){p.resolveStacks=Math.min(5,(p.resolveStacks||0)+1);p.resolveNextAt=now+.25;}
  }
- if(result.critical&&e.hp>0&&(e.type==='boss'||e.elite)&&ownsCriticalRelic(p,'hunterSeal')&&now>=(s.critical.hunterNextAt??0)){
+ if(result.critical&&e.hp>0&&(e.type==='boss'||e.type==='pursuer'||e.elite)&&ownsCriticalRelic(p,'hunterSeal')&&now>=(s.critical.hunterNextAt??0)){
   s.critical.hunterNextAt=now+1;
   addDamage(Math.min(result.criticalDamage*.2,p.damage*.4));
  }

@@ -1,0 +1,12 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Error: Image unavailable: pursuer-sprite {"ready":false,"frames":0,"height":88,"error":"Atlas request failed"}
+    at eval (eval at evaluate (:311:30), <anonymous>:3:84)
+    at async <anonymous>:337:30
+    at C:\baggam-dev\spirebound\tools\qa\pursuer-qa.mjs:11:20 {
+  log: []
+}
+
+Node.js v24.14.0
