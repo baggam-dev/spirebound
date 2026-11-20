@@ -15,8 +15,8 @@ class Audio{
  createOscillator(){const o={frequency:new Param(),stops:[],connect(to){this.to=to;},disconnect(){},start(t){this.startAt=t;},stop(t){this.stops.push(t);}};this.oscs.push(o);return o;}
 }
 function setup(){const sound=createSoundSystem({getItem:()=>null,setItem(){}},Audio);sound.unlock();return {sound,a:Audio.last};}
-test('precision sound and its legacy name share cooldown; the real rain finale survives busy contact audio',()=>{
- const {sound,a}=setup();assert.equal(sound.play('precisionHit'),true);assert.equal(sound.play('criticalHit'),false);
+test('critical contact can override precision once; the real rain finale survives busy contact audio',()=>{
+ const {sound,a}=setup();assert.equal(sound.play('precisionHit'),true);assert.equal(sound.play('criticalHit'),true);assert.equal(sound.play('criticalHit'),false);assert.equal(a.oscs[4].frequency.events[0][1],1450);
  assert.equal(sound.play('rainCast'),true);assert.equal(sound.play('crossbowShot'),true);assert.equal(sound.play('rainFinal'),true);assert.equal(sound.play('rainFinal'),false);
  a.currentTime+=.2;assert.equal(sound.play('criticalHit'),true);assert.equal(sound.play('precisionHit'),false);
 });
@@ -28,7 +28,7 @@ test('repeat shot cues survive the primary shot gap and still suppress duplicate
 });
 test('distinct contact weights can supersede weaker sounds and danger ducks only the combat bus',()=>{
  const {sound,a}=setup();assert.equal(sound.play('hit'),true);assert.equal(sound.play('slashHit'),true);assert.equal(sound.play('criticalHit'),true);assert.equal(sound.play('hit'),false);assert.equal(sound.play('criticalHit'),false);
- const frequencies=a.oscs.map(o=>o.frequency.events.find(e=>e[0]==='set')?.[1]);assert.ok(frequencies.includes(210)&&frequencies.includes(230)&&frequencies.includes(145));
+ const frequencies=a.oscs.map(o=>o.frequency.events.find(e=>e[0]==='set')?.[1]);assert.ok(frequencies.includes(210)&&frequencies.includes(230)&&frequencies.includes(125));
  assert.equal(sound.play('warning'),true);assert.ok(a.gains[1].gain.events.some(e=>e[0]==='linear'&&e[1]===.28));assert.equal(a.oscs.at(-1).to.to,a.gains[3]);assert.equal(a.oscs[0].to.to,a.gains[1]);assert.equal(sound.play('pickup'),true);assert.equal(a.oscs.at(-1).to.to,a.gains[2]);
  sound.update({muted:true});assert.equal(a.gains[0].gain.value,0);assert.equal(sound.play('rainCast'),false);sound.update({muted:false,volume:.25});assert.equal(a.gains[0].gain.value,.25);a.currentTime++;assert.equal(sound.play('hit'),true);
 });

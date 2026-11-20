@@ -1,0 +1,47 @@
+✔ a real rain finale remains audible when its final damage step also removes the rain (3.7535ms)
+✔ rain cancellation, loaded completed rain and room replacement never invent a finale (0.4898ms)
+✔ contact audio selects the strongest real contact and ignores periodic health feedback (0.3609ms)
+✔ rain cast includes the immediate landing, then five falls and five real remaining impacts without duplicates (0.6739ms)
+✔ load, room change and reset seed existing clocks without replay; catch-up coalesces to the latest landing (0.6331ms)
+✔ turret shots and reloads follow real clocks, replacements retract once and final roll contacts survive roll deletion (0.6617ms)
+✔ new runs have bounded critical stats and a separate seeded stream (127.5514ms)
+✔ one target packet shares the critical result across physical and elemental damage (38.1378ms)
+✔ a shield or zero damage cannot roll a critical or count a hit (29.8216ms)
+✔ damage snapshots survive DoT reload without rerolling or recounting the same application (60.2764ms)
+✔ mixed continuous components apply defense once and attribute only the critical share (30.3989ms)
+✔ overkill critical accounting uses actual remaining HP (27.0988ms)
+✔ save reload reproduces the next roll and migrates legacy saves without resetting existing critical state (60.3123ms)
+✔ weapon snapshots retain cast-time critical stats and invalid saved critical data is rejected (40.2056ms)
+✔ invalid damage components do not mutate HP, consume a shield or advance RNG (39.44ms)
+✔ the default five-percent stream stays deterministic across a long sample without touching world RNG (45.9683ms)
+✔ legacy weapon builds receive default critical stats once instead of borrowing later player upgrades (34.9079ms)
+✔ critical accents require a real new damaging hit; ongoing ticks and blocked hits are quiet (2.2133ms)
+✔ weak point and critical use one label and one contact cue only for the matching attack (1.4044ms)
+✔ density limits preserve ordinary effects and bound new and live critical labels (0.6273ms)
+✔ lethal damage keeps its impact coordinates after the enemy is removed (69.9225ms)
+✔ rendering normal and reduced critical contacts leaves the combat state untouched (1.3211ms)
+✔ stat readout uses effective critical caps and legacy defaults (46.8008ms)
+✔ actual frost projectile shares one critical decision between physical and elemental damage (68.6447ms)
+✔ a projectile miss consumes no critical random values (45.6579ms)
+✔ poison application keeps one decision across tick sizes and reload (56.6433ms)
+✔ mixed critical and ordinary burn accrual survives saving before its half-second pulse (36.1291ms)
+✔ rain makes one target decision per real pulse without changing its six-pulse damage snapshot (22.8794ms)
+✔ crossbow projectiles keep installed critical stats after player stats change (37.6422ms)
+✔ solar fairy burn inherits its actual shot result instead of rerolling each tick (23.1405ms)
+✔ shared ongoing snapshot aliases are rejoined after serialization and do not recount a victim (38.8527ms)
+✔ a zero-duration update does not reroll legacy poison, burn or passive DOT applications (25.6632ms)
+✔ hostile projectiles never use player critical stats (20.8534ms)
+✔ precision burst and critical feedback identify the same real hit for the visual layer (19.9276ms)
+✔ a legacy continuous exposure blocked by a shield never rolls or counts a hit (19.8452ms)
+✔ entrance gate cues respect mute, user unlock and individual cue throttles (2.7997ms)
+✔ sound settings persist separately from run saves and reject malformed values (1.3407ms)
+✔ cues need a user gesture, obey mute and throttle repeated attacks (1.7908ms)
+✔ reward family cannot stack, pickup and danger cues stay independent (0.6733ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1414.8918

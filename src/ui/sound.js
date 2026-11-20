@@ -10,6 +10,7 @@ const CUES={
  shot:{gap:.17,notes:[[0,360,.055,'triangle',.011],[.025,240,.055,'triangle',.008]]},
  repeatShot:{gap:.09,group:'repeatShot',priority:1,notes:[[0,360,.055,'triangle',.011],[.025,240,.055,'triangle',.008]]},
  hit:{gap:.09,group:'contact',priority:1,notes:[[0,210,.055,'triangle',.018,90],[.006,950,.024,'square',.004,520]]},
+ criticalHit:{gap:.18,group:'contact',priority:4,notes:[[0,125,.085,'triangle',.024,55],[.004,1450,.035,'square',.005,700],[.025,1046,.1,'sine',.01,784]]},
  precisionHit:{gap:.18,group:'contact',priority:3,notes:[[0,145,.075,'triangle',.023,65],[.004,1250,.035,'square',.005,680],[.025,880,.09,'sine',.009,660]]},
  slashHit:{gap:.17,group:'contact',priority:2,notes:[[0,230,.09,'sawtooth',.009,80],[.006,820,.035,'triangle',.015,300]]},
  rainCast:{gap:.5,group:'rain',priority:2,notes:[[0,165,.12,'triangle',.023,65],[.008,1100,.055,'triangle',.008,420]]},
@@ -52,7 +53,7 @@ export function createSoundSystem(storage,AudioCtor=globalThis.AudioContext||glo
   }catch{}},
   stopCombat(){clear(v=>v.bus==='combat'||v.bus==='alert');if(buses){buses.combat.gain.cancelScheduledValues?.(context.currentTime);buses.combat.gain.setValueAtTime(1,context.currentTime);}duckUntil=0;},
   stop(){clear(()=>true);last.clear();if(buses){buses.combat.gain.cancelScheduledValues?.(context.currentTime);buses.combat.gain.setValueAtTime(1,context.currentTime);}duckUntil=0;},
-  play(name){if(name==='criticalHit')name='precisionHit'; // Legacy callers share the same cooldown and voice budget.
+  play(name){
    const cue=CUES[name];if(!cue||settings.muted||settings.volume===0||!context||context.state!=='running')return false;
    const now=context.currentTime,reward=['reward','xpElite','xpBoss','growth'].includes(name),bus=busOf(name),group=cue.group,priority=cue.priority||1;
    if(now-(last.get(name)??-Infinity)<cue.gap||reward&&now-(last.get('rewardFeedback')??-Infinity)<.2||group&&now-(last.get('group:'+group)??-Infinity)<(group==='contact'?.075:.045)&&priority<=(last.get('priority:'+group)??0))return false;

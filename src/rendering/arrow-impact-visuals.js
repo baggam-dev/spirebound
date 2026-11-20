@@ -49,7 +49,7 @@ export function drawArrowImpact(c,f,reduced=false){
 
 // Attached to the existing precision burst label, never a new damage roll.
 export function drawPrecisionBurst(c,f,reduced=false){
- if(!f.precisionBurst)return;
+ if(!f.precisionBurst||f.criticalBurst)return;
  drawImpactAccent(c,{x:f.x,y:f.y+28,age:.65-f.t,angle:f.hitAngle||0,strength:1,reduced,color:'#fff3ce'});
 }
 

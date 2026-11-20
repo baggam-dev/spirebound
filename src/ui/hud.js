@@ -1,3 +1,4 @@
+import {criticalStats} from '../combat/critical.js';
 import {relicIconMarkup} from '../rendering/relic-icons.js';
 import {relicGrade,relicGradeName} from '../progression/relics.js';
 import {skillIconMarkup} from '../rendering/skill-icons.js';
@@ -8,7 +9,7 @@ import {skills,xpRequired} from '../progression/progression.js';
 import {relicInfo,ownedRelics,relicStat,hexFactor,movementSpeed,attackInterval} from '../progression/relics.js';
 import {incantationInfo} from '../world/shrine.js';
 
-export function displayedStats(p){return {attack:p.damage*(1+.12*(p.power||0)+relicStat(p,'damage'))*hexFactor(p,'damage')*(1+relicStat(p,'direct')),speed:movementSpeed(p),rate:1/attackInterval(p)};}
+export function displayedStats(p){return {criticalChance:criticalStats(p).chance,criticalMultiplier:criticalStats(p).multiplier,attack:p.damage*(1+.12*(p.power||0)+relicStat(p,'damage'))*hexFactor(p,'damage')*(1+relicStat(p,'direct')),speed:movementSpeed(p),rate:1/attackInterval(p)};}
 export function createDamageMeter(){let id=null,samples=[],lastTime=-1;return s=>{if(id!==s.runId||s.elapsed<lastTime){id=s.runId;samples=[];lastTime=-1;}if(s.elapsed!==lastTime){samples.push({time:s.elapsed,damage:s.metrics?.damageDealt||0});lastTime=s.elapsed;}while(samples.length>1&&samples[1].time<=s.elapsed-5)samples.shift();return Math.max(0,((s.metrics?.damageDealt||0)-(samples[0]?.damage||0))/5);};}
 const tip=(title,description)=>`<span class="hud-tooltip"><strong>${title}</strong><span>${description}</span></span>`;
 export function relicMarkup(p,key=false,capacity=24,spent=false){
@@ -29,7 +30,7 @@ export function createHUD(){
   if(hs!==healthKey){el('heartStrip').innerHTML=healthMarkup(p);healthKey=hs;el('heartStrip').setAttribute('aria-label',`체력 ${p.hp}/${p.max}`);}
   const essenceKey=JSON.stringify(p.essenceCounts||{});if(el('essenceStrip').dataset.counts!==essenceKey){el('essenceStrip').innerHTML=essenceMarkup(p);el('essenceStrip').dataset.counts=essenceKey;}
   el('shieldStatus').innerHTML=shieldStatusMarkup(s);
-  const stats=displayedStats(p),dps=meter(s);el('statReadout').innerHTML=`<b>LV ${p.level}</b><span>공격력 ${stats.attack.toFixed(1)}</span><span>공속 ${stats.rate.toFixed(2)}/초</span><span>이속 ${stats.speed.toFixed(0)}</span><span title="최근 5초간 실제로 준 피해 ÷ 5. 범위 피해 포함. 조건부 유물 효과는 공격력 숫자에 미포함.">DPS ${dps.toFixed(1)}</span>`;
+  const stats=displayedStats(p),dps=meter(s);el('statReadout').innerHTML=`<b>LV ${p.level}</b><span>공격력 ${stats.attack.toFixed(1)}</span><span>공속 ${stats.rate.toFixed(2)}/초</span><span>이속 ${stats.speed.toFixed(0)}</span><span title="평타·스킬의 유효 치명타 확률과 피해 배율. 지속 피해는 적용 시 판정을 유지합니다.">치명 ${(stats.criticalChance*100).toFixed(0)}% · ${(stats.criticalMultiplier*100).toFixed(0)}%</span><span title="최근 5초간 실제로 준 피해 ÷ 5. 범위 피해 포함. 조건부 유물 효과는 공격력 숫자에 미포함.">DPS ${dps.toFixed(1)}</span>`;
   const required=xpRequired(p.level);el('xpFill').style.width=Math.min(100,p.xp/required*100)+'%';el('xpTrack').setAttribute('aria-valuemax',required);el('xpTrack').setAttribute('aria-valuenow',p.xp);el('xpLabel').textContent=`LV ${p.level} · ${p.xp} / ${required}`;
   const charge=el('skillStrip').querySelector('[aria-label^="축전"]');if(charge)charge.dataset.cooldown=p.chargeReady?'방전 준비':(p.chargeHits||0)+'/'+(p.chargeCell>=3?3:4);
   const aura=el('skillStrip').querySelector('[aria-label^="망령검: 베르가스"]');if(aura)aura.dataset.cooldown=s.bladeCooldown>0?s.bladeCooldown.toFixed(1)+'s':'요격 준비';

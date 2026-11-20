@@ -1,5 +1,6 @@
 // Observe real simulation state only. No timers, RNG, run fields or saved audio state.
 export function combatHitCue(effects=[],slashContact=false){
+ if(effects.some(f=>f.criticalBurst))return 'criticalHit';
  if(effects.some(f=>f.precisionBurst))return 'precisionHit';
  if(slashContact||effects.some(f=>f.slash))return 'slashHit';
  return effects.some(f=>f.arrowImpact||f.hitElement)?'hit':null;

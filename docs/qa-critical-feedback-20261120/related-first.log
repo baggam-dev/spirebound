@@ -1,0 +1,96 @@
+✔ global arrow cap preserves precision before ordinary contacts without changing order or other effects (3.0377ms)
+✔ plain and precision arrows mark actual contact, even on a lethal hit (263.569ms)
+✔ elemental contacts keep their own visuals without a duplicate plain spark (181.6457ms)
+✔ dense contact effects keep newest sparks and unrelated cues (0.4639ms)
+✔ a real rain finale remains audible when its final damage step also removes the rain (3.8503ms)
+✔ rain cancellation, loaded completed rain and room replacement never invent a finale (0.4521ms)
+✔ contact audio selects the strongest real contact and ignores periodic health feedback (0.3625ms)
+✔ rain cast includes the immediate landing, then five falls and five real remaining impacts without duplicates (0.701ms)
+✔ load, room change and reset seed existing clocks without replay; catch-up coalesces to the latest landing (0.6292ms)
+✔ turret shots and reloads follow real clocks, replacements retract once and final roll contacts survive roll deletion (0.695ms)
+✔ pickup space is reserved before combat labels regardless of effect drawing order (5.215ms)
+✔ mobile and reduced budgets retain direct elemental contacts before newer secondary shards (1.0961ms)
+✔ hidden reduced decorations do not consume contact slots on desktop or mobile (0.7189ms)
+✔ reduced visibility retains pickups and essential contacts and leaves muzzle rendering to structures (0.4291ms)
+✔ mobile blasts and elemental contacts survive newer ordinary hits without increasing the budget (0.9439ms)
+✔ mobile priority selection deduplicates within each contact family and retains mixed important effects (0.441ms)
+✔ compact multishot contacts share the accent budget while precision and warnings survive (0.6789ms)
+✔ compact rendering keeps critical feedback while bounding crowded accents (0.6663ms)
+✔ mobile pickup labels stay separated at the lower screen edge without moving inputs (0.7134ms)
+✔ mobile overlapping weakness and damage labels use bounded nearby rows without changing effects (0.9696ms)
+✔ non-overlapping mobile labels and desktop label positions keep their existing anchors (0.4757ms)
+✔ new runs have bounded critical stats and a separate seeded stream (158.2735ms)
+✔ one target packet shares the critical result across physical and elemental damage (36.1396ms)
+✔ a shield or zero damage cannot roll a critical or count a hit (36.7533ms)
+✔ damage snapshots survive DoT reload without rerolling or recounting the same application (79.2797ms)
+✔ mixed continuous components apply defense once and attribute only the critical share (37.5675ms)
+✔ overkill critical accounting uses actual remaining HP (38.8506ms)
+✔ save reload reproduces the next roll and migrates legacy saves without resetting existing critical state (94.7532ms)
+✔ weapon snapshots retain cast-time critical stats and invalid saved critical data is rejected (52.4594ms)
+✔ invalid damage components do not mutate HP, consume a shield or advance RNG (48.8524ms)
+✔ the default five-percent stream stays deterministic across a long sample without touching world RNG (67.5252ms)
+✔ legacy weapon builds receive default critical stats once instead of borrowing later player upgrades (55.5511ms)
+✔ critical accents require a real new damaging hit; ongoing ticks and blocked hits are quiet (1.7235ms)
+✔ weak point and critical use one label and one contact cue only for the matching attack (1.5207ms)
+✔ density limits preserve ordinary effects and bound new and live critical labels (0.7186ms)
+✔ lethal damage keeps its impact coordinates after the enemy is removed (80.7871ms)
+✔ rendering normal and reduced critical contacts leaves the combat state untouched (1.2554ms)
+✔ stat readout uses effective critical caps and legacy defaults (48.2585ms)
+✔ actual frost projectile shares one critical decision between physical and elemental damage (104.7661ms)
+✔ a projectile miss consumes no critical random values (73.3015ms)
+✔ poison application keeps one decision across tick sizes and reload (90.1247ms)
+✔ mixed critical and ordinary burn accrual survives saving before its half-second pulse (58.4334ms)
+✔ rain makes one target decision per real pulse without changing its six-pulse damage snapshot (38.6646ms)
+✔ crossbow projectiles keep installed critical stats after player stats change (48.1206ms)
+✔ solar fairy burn inherits its actual shot result instead of rerolling each tick (33.4665ms)
+✔ shared ongoing snapshot aliases are rejoined after serialization and do not recount a victim (56.5161ms)
+✔ a zero-duration update does not reroll legacy poison, burn or passive DOT applications (38.4651ms)
+✔ hostile projectiles never use player critical stats (32.6008ms)
+✔ precision burst and critical feedback identify the same real hit for the visual layer (35.0716ms)
+✔ a legacy continuous exposure blocked by a shield never rolls or counts a hit (35.6501ms)
+✔ all live field contours keep their real radii and warning/active styles without mutating hazards (8.1119ms)
+✔ reduced ally ground rendering is static while normal ground continues to animate (2.5511ms)
+✔ late high-floor contours reuse thrust and gravity geometry without another fill or particles (1.7194ms)
+✔ late Kald slash and dash contours neither replay hits nor paint a second filled area (0.8959ms)
+✔ normal and crossbow repeat cues occur once when real delayed projectiles depart (133.1088ms)
+✔ existing delayed projectiles do not replay a cue merely on load or observer reset (0.5642ms)
+✔ critical contact can override precision once; the real rain finale survives busy contact audio (6.2886ms)
+✔ repeat shot cues survive the primary shot gap and still suppress duplicate calls (0.4862ms)
+✖ distinct contact weights can supersede weaker sounds and danger ducks only the combat bus (9.9617ms)
+✔ combat polyphony is bounded while a strong impact can replace weaker voices and warnings retain reserved capacity (0.756ms)
+✔ pause cancels current and future combat/alert notes but preserves UI cues; reset cancels everything (0.8794ms)
+✔ entrance gate cues respect mute, user unlock and individual cue throttles (3.7729ms)
+✔ sound settings persist separately from run saves and reject malformed values (2.0605ms)
+✔ cues need a user gesture, obey mute and throttle repeated attacks (2.0209ms)
+✔ reward family cannot stack, pickup and danger cues stay independent (0.5715ms)
+ℹ tests 65
+ℹ suites 0
+ℹ pass 64
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1990.1293
+
+✖ failing tests:
+
+test at tests\unit\sound-mix.test.js:29:1
+✖ distinct contact weights can supersede weaker sounds and danger ducks only the combat bus (9.9617ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(frequencies.includes(210)&&frequencies.includes(230)&&frequencies.includes(145))
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/sound-mix.test.js:31:88)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

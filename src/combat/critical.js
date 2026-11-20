@@ -57,7 +57,7 @@ export function snapshotForTarget(s,enemy,{player=s.player,packet=null}={}){
  if(packet?.has(enemy))return packet.get(enemy);
  const snapshot=createCriticalSnapshot(s,player);packet?.set(enemy,snapshot);return snapshot;
 }
-function emptyResult(enemy,source){return {applied:false,enemyId:enemy?.id??null,source,attackId:null,attackIds:[],procDepth:0,procEligible:false,damage:0,criticalDamage:0,critical:false,newHit:false,before:enemy?.hp??0,after:enemy?.hp??0,multiplier:1};}
+function emptyResult(enemy,source){return {applied:false,enemyId:enemy?.id??null,x:enemy?.x,y:enemy?.y,source,attackId:null,attackIds:[],procDepth:0,procEligible:false,damage:0,criticalDamage:0,critical:false,newHit:false,before:enemy?.hp??0,after:enemy?.hp??0,multiplier:1};}
 
 // Callers own range/collision checks. This gateway owns defense once, critical
 // resolution, HP mutation and critical-only accounting. Existing total-DPS
