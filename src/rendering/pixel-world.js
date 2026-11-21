@@ -95,7 +95,7 @@ export function drawPixelActor(c,e,time=0,run=null,reduced=false){
   c.save();c.translate(-34,-5-(attack.stage==='air'?30:attack.charge*24));c.rotate(attack.weapon);box(c,-3,-10,5,39,'#8d704a');box(c,-11,-23,22,17,ink);box(c,-9,-21,18,12,'#a6a397');box(c,-7,-21,14,3,'#dad4b0');c.restore();if(attack.stage==='windup'){diamond(c,0,-7,3+Math.round(attack.charge*2),'#fff0b9');}
 
   }
- }else if(drawGruntSprite(c,e,p,run)){
+ }else if(drawGruntSprite(c,e,p,run,{reduced})){
   // The approved raster includes its own clothing and weapon.
  }else{
   c.scale(p.face,1);const cloth=red?'#9b4654':({archer:'#675981',charger:'#8d7152',scatter:'#977052',chaser:'#607b6d',ringcaster:'#854b72',ambusher:'#894b59',strafer:'#865569'})[e.type]||'#516175';

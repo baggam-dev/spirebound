@@ -1,10 +1,12 @@
+import {clearGruntActions} from './grunt-actions.js';
 // Reactions are view-only. Neither actor fields nor saved state are modified.
 let actors=new WeakMap(),known=new WeakSet(),heroes=new WeakMap();
 export const isOrdinary=e=>!!e&&typeof e.type==='string'&&!['boss','player'].includes(e.type)&&!e.gateTitle&&e.variant!=='demon';
 export function resetOrdinaryPresentation(rooms=[]){
+ clearGruntActions();
  actors=new WeakMap();heroes=new WeakMap();known=new WeakSet(rooms.filter(r=>r.seen).flatMap(r=>r.enemies||[]));
 }
-export const clearOrdinaryActors=()=>{actors=new WeakMap();heroes=new WeakMap();};
+export const clearOrdinaryActors=()=>{actors=new WeakMap();heroes=new WeakMap();clearGruntActions();};
 export function ordinaryThreat(e,room){
  return !!(e.hp<=0||e.frozen>0||e.opening>0||e.kneel>0||e.highAttack||e.meleeAttack||e.attackPhase||e.darkAttack||e.darkFlash?.time>0||e.chaserWindup>0||e.chaserStrike>0||Number.isFinite(e.chargeAngle)||e.gravity||e.guardPortal||e.eliteWarning>0||['windup','swing','recover','aim','beam','air','warning','dash','firing','strike','splitJump','leap'].includes(e.phase)||(room?.hazards||[]).some(h=>h.owner===e.id&&h.phase!=='expired'));
 }
