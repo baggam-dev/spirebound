@@ -1,0 +1,39 @@
+{
+  "base": "https://168.107.21.43",
+  "reports": [
+    {
+      "width": 1280,
+      "height": 800,
+      "decals": 17609,
+      "kinds": [
+        "damp",
+        "puddle",
+        "moss",
+        "scuff",
+        "blood",
+        "ritual"
+      ],
+      "deviceSave": true,
+      "actionTransitions": true,
+      "rendererStateUnchanged": true
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "decals": 17609,
+      "kinds": [
+        "damp",
+        "puddle",
+        "moss",
+        "scuff",
+        "blood",
+        "ritual"
+      ],
+      "deviceSave": true,
+      "actionTransitions": true,
+      "rendererStateUnchanged": true
+    }
+  ],
+  "errors": [],
+  "physicalDevice": false
+}
