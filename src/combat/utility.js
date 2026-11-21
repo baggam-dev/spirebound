@@ -8,7 +8,7 @@ export const utilitySkills=[
  {id:'guardian',name:'성역의 구체',description:'10초 동안 구체 쉴드가 피격 1회 방어 · 재사용 25초'},
  ...expandedUtilities
 ];
-export function chooseUtility(s,id){if(s.status!=='playing'||s.player.actionStun>0||!utilityAvailable(s)||s.player.utility||!utilitySkills.some(k=>k.id===id))return false;s.player.utility=id;s.utilityCooldown=0;return true;}
+export function chooseUtility(s,id,{reward=false}={}){if(s.status!=='playing'||s.player.actionStun>0&&!reward||!utilityAvailable(s)||s.player.utility||!utilitySkills.some(k=>k.id===id))return false;s.player.utility=id;s.utilityCooldown=0;return true;}
 export function canCastUtility(s){return !wardenArriving(s)&&s.status==='playing'&&s.player.hp>0&&!(s.player.actionStun>0)&&utilitySkills.some(k=>k.id===s.player.utility)&&!(s.utilityCooldown>0)&&!s.utilityCast&&(s.player.utility!=='focus'||s.player.hp>1)&&canStartExpandedUtility(s,s.player.utility);}
 export function castUtility(s){
  const id=s.player.utility;if(!canCastUtility(s))return false;

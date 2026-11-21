@@ -1,5 +1,14 @@
+import {utilitySkills} from '../combat/utility.js';
+import {utilityAvailable} from '../progression/skill-overhaul.js';
 export function validateUtilityExpansion(s,check,number){
  const p=s.player;
+ const d=s.utilityDraft;
+ if(d!==undefined){
+  check(!s.practice&&d&&typeof d==='object'&&!Array.isArray(d)&&d.version===1&&utilityAvailable(s));
+  check(Array.isArray(d.offers)&&d.offers.length===3&&new Set(d.offers).size===3&&d.offers.every(id=>utilitySkills.some(k=>k.id===id)));
+  check(d.offers.includes(d.winner)&&['prepared','revealed','claimed'].includes(d.status));
+  check(d.status==='claimed'?p.utility===d.winner:p.utility===undefined);
+ }
  if(p.galeTime!==undefined)check(number(p.galeTime,0,3));
  if(p.galeCharges!==undefined)check(Number.isInteger(p.galeCharges)&&number(p.galeCharges,0,2));
  if(p.galeTime>0)check(p.utility==='galeVeil'&&p.galeCharges!==undefined);

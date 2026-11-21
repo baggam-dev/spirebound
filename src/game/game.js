@@ -1,3 +1,5 @@
+import {prepareUtilityDraft,revealUtilityDraft,claimUtilityDraft} from '../progression/utility-draft.js';
+import {utilityRouletteMarkup,createUtilityRoulette} from '../ui/utility-roulette.js';
 import {drawExpandedUtilityStates,drawUtilityEffect} from '../rendering/utility-effects.js';
 import {createTrialSceneState} from '../ui/trial-scene-state.js';
 import {drawTrialSeal} from '../rendering/trial-seal.js';
@@ -23,7 +25,7 @@ import {wardenArriving} from '../combat/warden-arrival.js';
 import {floorAssetsLoaded,prepareFloorAssets} from '../rendering/floor-assets.js';
 import {createBossDialogue} from '../rendering/boss-dialogue.js';
 import {createTitleScene,titleSceneMarkup} from '../ui/title-scene.js';
-import {utilityCooldown} from '../progression/relics.js';
+
 import {rollAction} from '../combat/roll.js';
 import {relicIconMarkup} from '../rendering/relic-icons.js';
 import {relicSelectionMarkup,ownedRelicMarkup,createRelicBanner} from '../ui/relic-ui.js';
@@ -144,7 +146,7 @@ import {openChest,prepareChest,prepareTrialLoot,claimTrialLoot,lootLabel} from '
 import {xpRequired,skills,combinations,skillChoices,applySkill,rerollSkills,levelChoices,consumeLevelChoice} from '../progression/progression.js';
 import {newRun,currentRoom,neighbor,travel,useShrine,canEscape,timeString,roomLocked} from './engine.js';
 import {runRandom} from './random.js';
-import {utilitySkills,chooseUtility,castUtility,canCastUtility} from '../combat/utility.js';
+import {utilitySkills,castUtility,canCastUtility} from '../combat/utility.js';
 
 const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d');
 let storage;try{storage=localStorage;}catch{storage={getItem(){throw Error();},setItem(){throw Error();}};}
@@ -163,7 +165,7 @@ const journey=createJourneyState();const trialScene=createTrialSceneState();cons
 let descentFrame=null,journeyArmed=0;
 let renderEntrance=null,entranceAssets=null,entranceArmed=0;
 let bossDialogue=null,enemyChatter=null;
-let practiceDraft=null;
+let practiceDraft=null,utilityRoulette=null,utilitySavePending=false;
 let s=null,paused=true,mode='title',fx=[],bullets=[],last=performance.now(),accumulator=0,saveTick=0,toastTime=0,saveFailed=false,saveError='';
 const room=()=>currentRoom(s),distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 const touchControls=window.matchMedia('(pointer:coarse)');
@@ -187,7 +189,7 @@ $('overlay').addEventListener('keydown',event=>{
  else if(!event.shiftKey&&document.activeElement===items.at(-1)){event.preventDefault();items[0].focus();}
 });
 function button(id,fn){$(id)?.addEventListener('click',fn);}
-function stop(nextMode){sound.stopCombat();if(mode.startsWith('trial-')&&nextMode!==mode)trialScene.cancel();if(mode.startsWith('escape')&&!nextMode.startsWith('escape')){escapeScene.cancel();renderEscape=null;}if(['floor-loading','journey-descent'].includes(mode)&&nextMode!==mode)floorLoading=null;if(mode.startsWith('entrance')&&!nextMode.startsWith('entrance')){entrance.cancel();renderEntrance=null;}if(mode.startsWith('journey')&&!nextMode.startsWith('journey')){journey.cancel();descentFrame=null;}paused=true;mode=nextMode;input.setEnabled(false);accumulator=0;}
+function stop(nextMode){sound.stopCombat();if(mode==='utility')utilityRoulette=null;if(mode.startsWith('trial-')&&nextMode!==mode)trialScene.cancel();if(mode.startsWith('escape')&&!nextMode.startsWith('escape')){escapeScene.cancel();renderEscape=null;}if(['floor-loading','journey-descent'].includes(mode)&&nextMode!==mode)floorLoading=null;if(mode.startsWith('entrance')&&!nextMode.startsWith('entrance')){entrance.cancel();renderEntrance=null;}if(mode.startsWith('journey')&&!nextMode.startsWith('journey')){journey.cancel();descentFrame=null;}paused=true;mode=nextMode;input.setEnabled(false);accumulator=0;}
 function finishEscape(){if(!mode.startsWith('escape'))return;escapeScene.cancel();renderEscape=null;input.reset();accumulator=0;last=performance.now();resultPanel();}
 function bindEscapeSkip(){button('escapeSkip',event=>{event.preventDefault();event.stopImmediatePropagation();finishEscape();});}
 async function showEscape(){
@@ -291,7 +293,7 @@ async function loadCurrentFloor(){
   $('overlay').firstElementChild.classList.add('floor-loading-panel');button('loadingReload',()=>location.reload());button('loadingBack',title);
  }finally{if(floorLoading===task)floorLoading=null;}
 }
-function resetTransient({loaded=false}={}){combatAudio.reset();sound.stop();resetBossClear(s);trialScene.cancel();escapeScene.cancel();renderEscape=null;escapeAssets=null;floorLoading=null;journey.cancel();descentFrame=null;clearEncounterTransitions();entrance.cancel();renderEntrance=null;entranceAssets=null;bossDialogue=s?createBossDialogue(s,{loaded}):null;enemyChatter=s?createEnemyChatter(s):null;relicBanner.clear();resetWardenPresentation(s?.floors?.flat()||[]);resetPrismPresentation(s?.floors?.flat()||[]);resetRemainingBossPresentation(s?.floors?.flat()||[]);resetOrdinaryPresentation(s?.floors?.flat()||[]);clearMordoPresentation();clearHeroShots(s?.player);clearKingResurrection();clearVelkarPresentation();clearDemonPresentation();fx=[];bullets=s?.projectiles||[];saveTick=0;accumulator=0;last=performance.now();}
+function resetTransient({loaded=false}={}){utilityRoulette=null;utilitySavePending=false;combatAudio.reset();sound.stop();resetBossClear(s);trialScene.cancel();escapeScene.cancel();renderEscape=null;escapeAssets=null;floorLoading=null;journey.cancel();descentFrame=null;clearEncounterTransitions();entrance.cancel();renderEntrance=null;entranceAssets=null;bossDialogue=s?createBossDialogue(s,{loaded}):null;enemyChatter=s?createEnemyChatter(s):null;relicBanner.clear();resetWardenPresentation(s?.floors?.flat()||[]);resetPrismPresentation(s?.floors?.flat()||[]);resetRemainingBossPresentation(s?.floors?.flat()||[]);resetOrdinaryPresentation(s?.floors?.flat()||[]);clearMordoPresentation();clearHeroShots(s?.player);clearKingResurrection();clearVelkarPresentation();clearDemonPresentation();fx=[];bullets=s?.projectiles||[];saveTick=0;accumulator=0;last=performance.now();}
 function title(){
  stop('title');lease.release();s=null;resetTransient();$('route').hidden=true;$('skill').hidden=true;$('utility').hidden=true;$('interact').hidden=true;
  $('floor').textContent='잊힌 탑의 입구';$('phase').textContent='THE FORSAKEN SPIRE';$('health').textContent='♥♥♥♥♥';$('level').textContent='LV 1';$('timer').textContent='00:00';$('objective').textContent='탑에 들어가 탈출 열쇠를 찾으세요.';
@@ -339,7 +341,7 @@ function escapeNotice({fresh=false,origin}={}){
  if(!journey.beginReturn(s,{fresh,origin})){pause();return;}
  journeyPanel('return');$('journeySkip').focus();
 }
-function resume(){if(!s||s.status!=='playing'||!s.practice&&!lease.active)return;if(!s.practice&&s.key&&s.floor===0&&room().type==='exit')escapeAssets=prepareEscapeArt();if(!floorAssetsLoaded(s.floor,floorAssetOptions(s))){loadCurrentFloor();return;}if(mobilePortrait()){mode='play';pause('가로로 돌려주세요. 가로 화면에서 계속 탐험을 눌러 재개하세요.');return;}if(s.returnNoticePending){escapeNotice();return;}if(shrineLocked(room())){shrine();return;}if(!s.player.mainSkill&&(s.pendingLevels||mainSkills.some(id=>s.player[id]>0))){mainPanel();return;}if(!s.practice&&utilityAvailable(s)&&!s.player.utility){utilityPanel();return;}syncUnlocks(s);if(pendingEvolution(s.player)){evolutionPanel();return;}if(entrance.queued(s)){showEntrance();return;}if(s.pendingHeal){s.player.hp=Math.min(s.player.max,s.player.hp+1);s.pendingHeal=false;}bossDialogue?.observe();mode='play';paused=false;$('overlay').innerHTML='';canvas.focus();input.setEnabled(true);accumulator=0;last=performance.now();if(s.pendingLevels)levelUp();else if(room().trialState==='reward'&&!trialRewardPrompted.has(room()))rewardPanel();}
+function resume(){if(!s||s.status!=='playing'||!s.practice&&!lease.active)return;if(!s.practice&&s.key&&s.floor===0&&room().type==='exit')escapeAssets=prepareEscapeArt();if(!floorAssetsLoaded(s.floor,floorAssetOptions(s))){loadCurrentFloor();return;}if(mobilePortrait()){mode='play';pause('가로로 돌려주세요. 가로 화면에서 계속 탐험을 눌러 재개하세요.');return;}if(s.returnNoticePending){escapeNotice();return;}if(shrineLocked(room())){shrine();return;}if(!s.player.mainSkill&&(s.pendingLevels||mainSkills.some(id=>s.player[id]>0))){mainPanel();return;}if(!s.practice&&(utilitySavePending||utilityAvailable(s)&&!s.player.utility)){utilityPanel();return;}syncUnlocks(s);if(pendingEvolution(s.player)){evolutionPanel();return;}if(entrance.queued(s)){showEntrance();return;}if(s.pendingHeal){s.player.hp=Math.min(s.player.max,s.player.hp+1);s.pendingHeal=false;}bossDialogue?.observe();mode='play';paused=false;$('overlay').innerHTML='';canvas.focus();input.setEnabled(true);accumulator=0;last=performance.now();if(s.pendingLevels)levelUp();else if(room().trialState==='reward'&&!trialRewardPrompted.has(room()))rewardPanel();}
 function pause(reason=''){if(!s||s.status!=='playing'||['title','result','level'].includes(mode))return;stop('pause');const ok=save();if(s.practice){practicePause();return;}panel(`<small>TAKE A BREATH</small><h2>잠시 쉬어가기</h2><p>${reason||'게임과 기록 시간이 멈췄습니다.'}<br>${ok?'진행 상황이 저장되었습니다.':escapeHtml(saveError||'저장하지 못했습니다.')+' 진단 기록을 내려받아 보관할 수 있습니다.'}</p><button class="primary" id="resume">계속 탐험</button><button id="quit">저장 후 입구로</button><button id="guide">조작 안내</button><button id="pauseSettings">소리·화면 설정</button><button id="journal">원정 기록 · 도감</button><button id="export">진단 기록 받기</button>`);button('resume',resume);button('quit',()=>{if(save())title();});button('guide',()=>showInfo('help'));button('pauseSettings',settingsPanel);button('export',exportReport);button('journal',journalPanel);}
 function settingsPanel(){
  if(mode==='play')pause();if(!['title','pause','result'].includes(mode)){toast('설정은 입구나 일시정지에서 열 수 있습니다.');return;}
@@ -458,7 +460,7 @@ function dispatch(action){
  if(mode.startsWith('escape')){if(action==='pause')finishEscape();return;}
  if(mode.startsWith('journey')){if(action==='pause')pause();return;}
  if(wardenArriving(s)&&['dodge','skill','utility','potion','interact'].includes(action))return;
- if(mode.startsWith('trial-')){if(action==='pause')finishTrialScene(true);return;}if(mode==='floor-loading')return;
+ if(mode==='utility'&&utilityRoulette?.spinning){if(action==='pause')utilityRoulette.skip();return;}if(mode.startsWith('trial-')){if(action==='pause')finishTrialScene(true);return;}if(mode==='floor-loading')return;
  if(mode==='rank-start'||['main','level','evolution'].includes(mode))return;
  if(action==='pause'){if(['pause','bag','shrine','relic-details'].includes(mode))resume();else pause();return;}
  if(action==='help'){showInfo('help');return;}
@@ -469,22 +471,23 @@ for(const id of ['bag','pause'])button(id,()=>dispatch(id));
 for(const id of ['potion','skill','utility','dodge','interact'])bindCombatAction($(id),()=>dispatch(id));
 button('help',()=>showInfo('help'));
 button('settings',settingsPanel);
-function backgroundPause(){if(mode.startsWith('escape')){finishEscape();return;}if(!s||s.status!=='playing')return;if(!paused||mode.startsWith('entrance')||mode.startsWith('journey')||mode.startsWith('trial-'))pause('다른 화면으로 전환되어 자동으로 멈췄습니다.');else save();input.reset();}
+function backgroundPause(){if(mode.startsWith('escape')){finishEscape();return;}if(!s||s.status!=='playing')return;if(!paused||mode.startsWith('entrance')||mode.startsWith('journey')||mode.startsWith('trial-')||mode==='utility')pause('다른 화면으로 전환되어 자동으로 멈췄습니다.');else save();input.reset();}
 window.addEventListener('blur',backgroundPause);document.addEventListener('visibilitychange',()=>{if(document.hidden)backgroundPause();});
 window.addEventListener('pagehide',()=>{if(mode.startsWith('escape'))finishEscape();journey.cancel();trialScene.cancel();descentFrame=null;entrance.cancel();renderEntrance=null;save();lease.release();});
 window.addEventListener('pageshow',e=>{if(e.persisted){stop('pause');title();}});
-document.addEventListener('spirebound:orientation',e=>{if(!e.detail.blocked)return;if(mode.startsWith('escape')){finishEscape();return;}input.reset();if(!paused||mode.startsWith('entrance')||mode.startsWith('journey')||mode.startsWith('trial-'))pause('가로로 돌려주세요. 전투와 기록 시간이 멈췄습니다.');});
+document.addEventListener('spirebound:orientation',e=>{if(!e.detail.blocked)return;if(mode.startsWith('escape')){finishEscape();return;}input.reset();if(!paused||mode.startsWith('entrance')||mode.startsWith('journey')||mode.startsWith('trial-')||mode==='utility')pause('가로로 돌려주세요. 전투와 기록 시간이 멈췄습니다.');});
 document.addEventListener('spirebound:menu',e=>{
  if(mode.startsWith('escape')){e.preventDefault();finishEscape();return;}
- if(!s||s.status!=='playing')return;e.preventDefault();if(mode==='play'||mode.startsWith('entrance')||mode.startsWith('journey')||mode.startsWith('trial-'))pause();
+ if(!s||s.status!=='playing')return;e.preventDefault();if(mode==='play'||mode==='utility'||mode.startsWith('entrance')||mode.startsWith('journey')||mode.startsWith('trial-'))pause();
  if(mode!=='pause'||$('mobileMenuBag'))return;
  const extra=document.createElement('div');extra.className='mobile-menu-tools';extra.innerHTML='<button id="mobileMenuBag">가방</button>'+(document.fullscreenEnabled?'<button id="mobileMenuFullscreen">전체 화면 전환</button>':'')+(!$('route').hidden?'<button id="mobileMenuRoute">귀환 경로 전환</button>':'');
  $('overlay').querySelector('.panel')?.append(extra);button('mobileMenuBag',bag);button('mobileMenuFullscreen',()=>$('fullscreen').click());button('mobileMenuRoute',()=>$('route').click());
 });
-window.addEventListener('resize',()=>{if(mode.startsWith('escape')){finishEscape();return;}if(!paused||mode.startsWith('entrance')||mode.startsWith('journey')||mode.startsWith('trial-'))pause(mobilePortrait()?'가로로 돌려주세요. 전투와 기록 시간이 멈췄습니다.':'화면 크기가 변경되어 멈췄습니다.');});
+window.addEventListener('resize',()=>{if(mode.startsWith('escape')){finishEscape();return;}if(!paused||mode.startsWith('entrance')||mode.startsWith('journey')||mode.startsWith('trial-')||mode==='utility')pause(mobilePortrait()?'가로로 돌려주세요. 전투와 기록 시간이 멈췄습니다.':'화면 크기가 변경되어 멈췄습니다.');});
 setInterval(()=>lease.heartbeat(),3000);
 window.addEventListener('error',()=>{if(s&&s.status==='playing'){stop('error');save();panel('<h2>문제가 발생했습니다</h2><p>진행을 멈췄습니다. 진단 기록을 받은 뒤 새로고침해 이어갈 수 있습니다.</p><button id="export">진단 기록 받기</button>');button('export',exportReport);}});
 function frame(now){const elapsed=(now-last)/1000,presentation=mode.startsWith('journey')||mode.startsWith('entrance')||mode.startsWith('escape')||mode.startsWith('trial-');last=now;
+ if(mode==='utility'&&utilityRoulette?.spinning){if(document.hidden||elapsed>1)pause('추첨 연출이 중단되었습니다. 저장된 결과로 이어집니다.');else utilityRoulette.tick(elapsed);}
  if(mode.startsWith('escape')){if(document.hidden||elapsed>1||mode==='escape-loading'&&now-escapeArmed>=800)finishEscape();else{const before=escapeScene.time(s),done=escapeScene.advance(s,elapsed),after=escapeScene.time(s);if(done)finishEscape();else if(mode==='escape'){for(const at of [1.1,1.75])if(before<at&&after>=at)sound.play('gateStep');renderEscape?.(after);}}}
  if(mode.startsWith('trial-')){if(document.hidden||elapsed>1)pause('시련 연출이 중단되었습니다. 계속 탐험으로 돌아가세요.');else{fx=fx.filter(f=>{if(f.enemyFeedback==='death')f.t-=Math.min(elapsed,.1);return f.t>0;});if(trialScene.advance(s,elapsed))finishTrialScene();}}
  if(mode.startsWith('journey')&&journey.current(s)&&!document.hidden){if(elapsed>1)pause('화면 응답이 지연되어 멈췄습니다.');else{const token=journey.current(s),done=journey.advance(s,elapsed);if(token.kind==='return')fx=fx.filter(f=>{if(f.enemyFeedback==='death')f.t-=Math.max(0,Math.min(elapsed,.1));return f.t>0;});if(done)finishJourney();}}
@@ -497,7 +500,38 @@ function frame(now){const elapsed=(now-last)/1000,presentation=mode.startsWith('
 title();requestAnimationFrame(frame);
 
 function evolutionPanel(){const key=pendingEvolution(s.player);if(!key)return;stop('evolution');save();panel('<small>EVOLUTION</small><h2>'+ (skills.find(k=>k.id===key)?.name||'화살비')+' · 분기 선택</h2><p>이번 도전 동안 한 가지 방식을 선택합니다. 추가 스킬 포인트는 소모하지 않습니다.</p><div class="cards">'+evolutions[key].map((e,i)=>'<button class="skill-'+skillGrade(key)+'" id="evolve'+i+'">'+skillIconMarkup(key+':'+e.id)+'<b>'+e.name+'</b><span>'+e.description+'</span></button>').join('')+'</div>');evolutions[key].forEach((e,i)=>button('evolve'+i,()=>{if(chooseEvolution(s.player,key,e.id)){save();resume();}}));}
-function utilityPanel(){stop('utility');save();panel('<small>ACTIVE · LEVEL 5</small><h2>유틸 기술 선택</h2><p>이번 도전에서 사용할 액티브 한 가지를 선택하세요. G 키 또는 오른쪽 버튼으로 사용합니다.</p><div class="cards">'+utilitySkills.map((k,i)=>'<button id="utilityChoice'+i+'">'+skillIconMarkup(k.id)+'<b>'+k.name+'</b><span>'+k.description.replace(/재사용 \d+초/,'재사용 '+Number(utilityCooldown(s.player,k.id).toFixed(2))+'초')+'</span></button>').join('')+'</div>');utilitySkills.forEach((k,i)=>button('utilityChoice'+i,()=>{if(chooseUtility(s,k.id)){save();resume();}}));}
+function utilitySaveError(){
+ panel('<small>ACTIVE DRAW</small><h2>추첨 저장을 완료하지 못했습니다</h2><p>'+escapeHtml(saveError||'저장 공간 상태를 확인하세요.')+'</p><p>같은 후보와 결과를 유지합니다. 저장을 다시 시도해 주세요.</p><button id="utilitySaveRetry" class="primary">저장 다시 시도</button><button id="utilitySaveReport">진단 기록 받기</button>');
+ button('utilitySaveRetry',utilityPanel);button('utilitySaveReport',exportReport);
+}
+function utilityPanel(){
+ stop('utility');const draft=prepareUtilityDraft(s);
+ if(!draft){utilitySavePending=false;resume();return;}
+ utilitySavePending=draft.status==='claimed';
+ if(!save()){utilitySaveError();return;}
+ if(draft.status==='claimed'){utilitySavePending=false;resume();return;}
+ panel(utilityRouletteMarkup(s,{reduced:sound.settings.reducedEffects}));
+ const host=$('overlay').querySelector('.utility-roulette');
+ utilityRoulette=createUtilityRoulette(host,{draft,reduced:sound.settings.reducedEffects,onFinish:()=>{
+  if(mode==='utility'&&s.utilityDraft===draft&&host.isConnected){sound.play('growth');utilityPanel();}
+ }});
+ button('utilityDrawStart',()=>{
+  if(mode!=='utility'||s.utilityDraft!==draft||draft.status!=='prepared'||!revealUtilityDraft(s))return;
+  if(!save()){draft.status='prepared';utilityRoulette=null;utilitySaveError();return;}
+  utilityRoulette.start();
+ });
+ button('utilityDrawSkip',()=>utilityRoulette?.skip());
+ button('utilityDrawClaim',()=>{
+  if(mode!=='utility'||s.utilityDraft!==draft||!claimUtilityDraft(s))return;
+  utilitySavePending=true;
+  if(!save()){utilityRoulette=null;utilitySaveError();return;}
+  utilitySavePending=false;sound.play('reward');resume();
+ });
+}
+document.addEventListener('keydown',event=>{
+ if(mode!=='utility'||!utilityRoulette?.spinning||!['Escape',' '].includes(event.key))return;
+ event.preventDefault();event.stopImmediatePropagation();if(!event.repeat)utilityRoulette.skip();
+},true);
 function rewardPanel(){trialRewardPrompted.add(room());const offers=prepareTrialLoot(s);stop('reward');save();panel('<small>TRIAL REWARD</small><h2>시련 완료</h2><p>무작위 긍정 보상 세 가지 중 하나를 선택하세요.</p><div class="cards">'+offers.map((r,i)=>'<button id="reward'+i+'"><b>'+lootLabel(r)+'</b><span>선택 즉시 지급</span></button>').join('')+'</div><button id="laterReward">나중에 선택</button>');offers.forEach((r,i)=>button('reward'+i,()=>{if(claimTrialLoot(s,i)){notifyRelicLoot();save();resume();}}));button('laterReward',resume);}
 function eventPanel(){stop('event');save();panel('<small>RISK AND REWARD</small><h2>수상한 제단</h2><p>대가와 보상을 확인하세요. 한 번만 계약할 수 있습니다.</p><div class="cards">'+eventOptions.map((e,i)=>'<button id="event'+i+'" '+(canChooseEvent(s,e.id)?'':'disabled')+'><b>'+e.name+'</b><span>'+e.description+'</span></button>').join('')+'</div><button id="leaveEvent">그냥 지나간다</button>');eventOptions.forEach((e,i)=>button('event'+i,()=>{if(e.id==='supply'){supplyPanel();return;}if(chooseEvent(s,e.id)){emitInteraction(s,'pact',room(),{x:s.player.x,y:s.player.y,choice:e.id});if(e.id==='trial'){showTrialScene('entry');return;}save();resume();}}));button('leaveEvent',resume);}
 function routePanel(){if(!s?.key||s.status!=='playing')return;stop('route');save();const paths=returnRoutes(s),rs=s.floors[s.floor];panel('<small>RETURN ROUTES</small><h2>귀환 경로</h2><p>방문한 방만 계산합니다. 붉은 방은 위험, 초록 방은 적이 적은 우회로입니다.<br>미사용 샘물은 ~ 기호로 확인하세요. 이동은 직접 조작합니다.</p>'+['short','safe'].map((k,i)=>'<button id="path'+i+'" '+(paths[k].length?'':'disabled')+'><b>'+(k==='short'?'최단 경로':'위험 회피 경로')+'</b><br>'+(paths[k].length?Math.max(0,paths[k].length-1)+'번 이동 · 위험 방 '+paths[k].filter(n=>rs[n].returnRisk==='high').length+'개':'탐색한 방만으로 연결되지 않음')+'</button>').join('')+'<button id="leaveRoute">돌아가기</button>');['short','safe'].forEach((k,i)=>button('path'+i,()=>{s.routePreference=k;save();resume();}));button('leaveRoute',resume);}
