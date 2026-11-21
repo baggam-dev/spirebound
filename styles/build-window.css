@@ -1,0 +1,25 @@
+/* Approved build window, independent of the later combat viewport expansion. */
+.arena:has(.build-window){overflow:visible}
+#overlay:has(.build-window){position:fixed;inset:0;z-index:100;padding:max(10px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));box-sizing:border-box}
+#overlay .panel.build-panel{width:min(1040px,100%);height:min(760px,100%);max-width:1040px;max-height:100%;padding:12px;box-sizing:border-box;background:#13191df5;border:1px solid #aa9361;border-radius:12px;text-align:left;overflow:hidden}
+.build-window{height:100%;min-height:0;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto auto;gap:8px;color:#eee5ce;font-size:14px}
+.build-window .build-heading{position:static;display:flex;justify-content:space-between;align-items:center;height:auto;padding:0;gap:12px;border:0;margin:0}
+#overlay .build-window h2{font-size:22px;letter-spacing:0;margin:0;line-height:1.25}.build-window h3{font-size:21px;margin:8px 0}.build-window small{font-size:12px;color:#c9b785}
+#overlay .build-window button{min-height:44px;margin:0;padding:8px 12px;font-size:14px;line-height:1.3;border:1px solid #80735b;background:#20272c;color:#eee5ce;border-radius:6px;cursor:pointer;touch-action:manipulation}
+#overlay .build-window button:focus-visible{outline:3px solid #f4d681;outline-offset:-3px}
+#overlay .build-window button:disabled{cursor:default;opacity:.45}
+#overlay .build-window #buildClose{font-size:25px;min-width:44px}
+.build-window [role=tablist]{display:flex;gap:8px}.build-window [role=tab]{flex:1}
+#overlay .build-window [aria-selected=true],#overlay .build-window .primary{background:#dec38b;color:#201b13;border-color:#f6dd9b;font-weight:700}
+.build-body{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);min-height:0;border-top:1px solid #766344;padding-top:8px;gap:14px}
+.build-list,.build-detail{min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;padding:3px}
+.build-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-content:start}
+#overlay .build-window .build-list button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:0;min-height:96px;padding:10px 5px}
+#overlay .build-window .build-list [aria-pressed=true]{border-color:#f0cd79;box-shadow:inset 0 0 0 1px #f0cd79;background:#332f25}
+.build-window .pixel-icon{width:36px;height:36px;flex-shrink:0;image-rendering:pixelated}.build-window .build-detail>.pixel-icon{width:48px;height:48px}.build-window .build-crystal{font-size:34px;line-height:1.2}
+.build-list strong{font-size:14px;overflow-wrap:anywhere}.build-list small{font-size:12px}.build-detail{border-left:1px solid #766344;padding-left:16px;overflow-wrap:anywhere}
+#overlay .build-window p{font-size:14px;line-height:1.6;margin:10px 0;color:#ded9ca}.build-window .build-empty{grid-column:1/-1}
+#overlay .build-window .build-food-note{font-size:12px;margin:0;color:#c9b785;line-height:1.3}
+.build-window .build-footer{display:grid;grid-template-columns:1fr 1fr 1fr 1.4fr;gap:8px;padding:0;margin:0}
+@media(max-height:500px){#overlay .panel.build-panel{padding:8px}.build-window{gap:5px}#overlay .build-window h2{font-size:18px}.build-window .build-heading small{font-size:11px}.build-list{grid-template-columns:repeat(3,minmax(0,1fr))}#overlay .build-window .build-list button{min-height:88px}.build-window .pixel-icon{width:28px;height:28px}.build-body{padding-top:4px;gap:8px}.build-detail{padding-left:10px}}
+@media(max-width:620px){.build-list{grid-template-columns:repeat(2,minmax(0,1fr))}.build-window .build-footer{grid-template-columns:1fr 1fr}.build-body{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}

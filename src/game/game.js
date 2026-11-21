@@ -1,3 +1,4 @@
+import {createBuildView,buildWindowMarkup,mountBuildWindow} from '../ui/build-window.js';
 import {prepareUtilityDraft,revealUtilityDraft,claimUtilityDraft} from '../progression/utility-draft.js';
 import {utilityRouletteMarkup,createUtilityRoulette} from '../ui/utility-roulette.js';
 import {captureUtilityVisuals,utilityTransitionEffects,utilityCastEffect,limitUtilityEffects,drawExpandedUtilityStates,drawUtilityEffect} from '../rendering/utility-effects.js';
@@ -166,6 +167,7 @@ let descentFrame=null,journeyArmed=0;
 let renderEntrance=null,entranceAssets=null,entranceArmed=0;
 let bossDialogue=null,enemyChatter=null;
 let practiceDraft=null,utilityRoulette=null,utilitySavePending=false;
+let buildView=createBuildView(),buildWindow=null;
 let s=null,paused=true,mode='title',fx=[],bullets=[],last=performance.now(),accumulator=0,saveTick=0,toastTime=0,saveFailed=false,saveError='';
 const room=()=>currentRoom(s),distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 const touchControls=window.matchMedia('(pointer:coarse)');
@@ -180,7 +182,7 @@ function panel(html){renderTitleScene=null;$('overlay').innerHTML=`<div class="p
 const modalFocusables='button:not([disabled]):not([hidden]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 $('overlay').addEventListener('keydown',event=>{
  if(event.key==='Escape'){
-  const back=['closeBestiary','settingsBack','closeInfo','rankBack','closeJournal','closeBag','leaveRoute','practiceBack','choosePractice','endPractice','titleBack','cancelNewRun'].map($).find(item=>item?.getClientRects().length);
+  const back=['buildClose','closeBestiary','settingsBack','closeInfo','rankBack','closeJournal','closeBag','leaveRoute','practiceBack','choosePractice','endPractice','titleBack','cancelNewRun'].map($).find(item=>item?.getClientRects().length);
   if(back){event.preventDefault();event.stopPropagation();back.click();return;}
  }
  if(event.key!=='Tab')return;const dialog=$('overlay').firstElementChild;if(!dialog)return;
@@ -293,7 +295,7 @@ async function loadCurrentFloor(){
   $('overlay').firstElementChild.classList.add('floor-loading-panel');button('loadingReload',()=>location.reload());button('loadingBack',title);
  }finally{if(floorLoading===task)floorLoading=null;}
 }
-function resetTransient({loaded=false}={}){utilityRoulette=null;utilitySavePending=false;combatAudio.reset();sound.stop();resetBossClear(s);trialScene.cancel();escapeScene.cancel();renderEscape=null;escapeAssets=null;floorLoading=null;journey.cancel();descentFrame=null;clearEncounterTransitions();entrance.cancel();renderEntrance=null;entranceAssets=null;bossDialogue=s?createBossDialogue(s,{loaded}):null;enemyChatter=s?createEnemyChatter(s):null;relicBanner.clear();resetWardenPresentation(s?.floors?.flat()||[]);resetPrismPresentation(s?.floors?.flat()||[]);resetRemainingBossPresentation(s?.floors?.flat()||[]);resetOrdinaryPresentation(s?.floors?.flat()||[]);clearMordoPresentation();clearHeroShots(s?.player);clearKingResurrection();clearVelkarPresentation();clearDemonPresentation();fx=[];bullets=s?.projectiles||[];saveTick=0;accumulator=0;last=performance.now();}
+function resetTransient({loaded=false}={}){buildView=createBuildView();buildWindow=null;utilityRoulette=null;utilitySavePending=false;combatAudio.reset();sound.stop();resetBossClear(s);trialScene.cancel();escapeScene.cancel();renderEscape=null;escapeAssets=null;floorLoading=null;journey.cancel();descentFrame=null;clearEncounterTransitions();entrance.cancel();renderEntrance=null;entranceAssets=null;bossDialogue=s?createBossDialogue(s,{loaded}):null;enemyChatter=s?createEnemyChatter(s):null;relicBanner.clear();resetWardenPresentation(s?.floors?.flat()||[]);resetPrismPresentation(s?.floors?.flat()||[]);resetRemainingBossPresentation(s?.floors?.flat()||[]);resetOrdinaryPresentation(s?.floors?.flat()||[]);clearMordoPresentation();clearHeroShots(s?.player);clearKingResurrection();clearVelkarPresentation();clearDemonPresentation();fx=[];bullets=s?.projectiles||[];saveTick=0;accumulator=0;last=performance.now();}
 function title(){
  stop('title');lease.release();s=null;resetTransient();$('route').hidden=true;$('skill').hidden=true;$('utility').hidden=true;$('interact').hidden=true;
  $('floor').textContent='잊힌 탑의 입구';$('phase').textContent='THE FORSAKEN SPIRE';$('health').textContent='♥♥♥♥♥';$('level').textContent='LV 1';$('timer').textContent='00:00';$('objective').textContent='탑에 들어가 탈출 열쇠를 찾으세요.';
@@ -354,9 +356,23 @@ function settingsPanel(){
 }
 function showInfo(kind){if(mode==='rank-start')return;const from=mode,during=!!s&&s.status==='playing';if(mode==='level')return;stop('info');if(during)save();panel(kind==='history'?historyMarkup(storage):helpMarkup(s));button('closeInfo',()=>during?pause():from==='title-records'?titleRecords():title());if(kind==='history')button('dataBackup',()=>location.assign('upgrade.html'));}
 function exportReport(){downloadJSON('spirebound-report.json',diagnostic(s,saveFailed?'저장 오류 있음':''));}
-function bag(){if(!s||s.status!=='playing'||mode==='level')return;stop('bag');save();const p=s.player;
- panel(`<small>ROYAL SCOUT / INVENTORY</small><h2>여행자의 가방</h2><div class="guide"><p>무기 · ${p.weapon?'강화 장궁':'정찰병의 활'} / 공격력 ${p.damage}<br>유물 · ${ownedRelics(p).map(id=>relicIconMarkup(id)+' '+relicInfo(id).name+' — '+relicInfo(id).description).join('<br>')||'없음'}<br>방어구 · ${p.armor?'보호막 재충전 '+shieldCooldown(p)+'초':'보호막 없음'}<br>바람의 인장 · ${ownedRelics(p).includes('windSeal')?'20회 처치당 1하트 ('+(p.leechKills||0)+'/20)':'없음'}</p><p>메인 · ${skills.find(k=>k.id===p.mainSkill)?.name||'미선택'}<br>익힌 기술 · ${skills.filter(k=>p[k.id]>0).map(k=>k.name+' '+p[k.id]).join(' / ')||'없음'}<br>선택 분기 · ${evolutionSummary(p)}<br>활성 조합 · ${combinations(p).map(c=>c.name).join(' / ')||'없음'}<br>궁극기 · ${ultimateUnlocked(p)?'해금됨':'8레벨+둘째 보스 처치 후 무료 해금'}</p><p>물약 ${p.potions}개 · 음식 ${p.food}개<br>${s.pendingHeal?'음식 회복이 예약되었습니다. 재개할 때 1하트 회복합니다.':'음식은 안전한 방에서 사용합니다.'}</p></div><button id="eat" ${room().enemies.length||!p.food||s.pendingHeal||p.hp>=p.max?'disabled':''}>음식 먹기 · 1하트</button><button id="journal">원정 기록 · 도감</button><button class="primary" id="closeBag">탐험 재개</button>`);
- button('journal',journalPanel);button('eat',()=>{p.food--;s.pendingHeal=true;save();bag();});button('closeBag',()=>{resume();save();});
+function closeBuild(){
+ if(mode!=='bag'||!s||s.status!=='playing'||!s.practice&&!lease.active)return;
+ buildWindow?.remember();input.reset();
+ if(!save()){if(mode!=='lease-lost')pause('저장을 완료하지 못했습니다. 다시 저장한 뒤 계속 탐험하세요.');return;}
+ if(document.hidden||mobilePortrait()){pause('화면으로 돌아온 뒤 계속 탐험을 눌러주세요.');return;}
+ resume();
+}
+function bag(){
+ if(!s||s.status!=='playing'||!['play','pause','bag'].includes(mode)||!s.practice&&!lease.active)return;
+ stop('bag');save();if(mode!=='bag')return;
+ panel(buildWindowMarkup(s,buildView));const dialog=$('overlay').firstElementChild;dialog.classList.add('build-panel');dialog.setAttribute('aria-labelledby','buildTitle');
+ buildWindow=mountBuildWindow(dialog.querySelector('.build-window'),s,buildView,{
+  buildClose:closeBuild,closeBag:closeBuild,
+  eat:()=>{if(mode!=='bag'||room().enemies.length||!s.player.food||s.pendingHeal||s.player.hp>=s.player.max)return;s.player.food--;s.pendingHeal=true;save();bag();},
+  journal:journalPanel,buildBestiary:bestiaryPanel
+ });
+ dialog.querySelector('[aria-selected="true"]')?.focus();
 }
 function levelUp(){
  if(!s.player.mainSkill){mainPanel();return;}
@@ -462,9 +478,9 @@ function dispatch(action){
  if(wardenArriving(s)&&['dodge','skill','utility','potion','interact'].includes(action))return;
  if(mode==='utility'&&utilityRoulette?.spinning){if(action==='pause')utilityRoulette.skip();return;}if(mode.startsWith('trial-')){if(action==='pause')finishTrialScene(true);return;}if(mode==='floor-loading')return;
  if(mode==='rank-start'||['main','level','evolution'].includes(mode))return;
- if(action==='pause'){if(['pause','bag','shrine','relic-details'].includes(mode))resume();else pause();return;}
+ if(action==='pause'){if(mode==='bag')closeBuild();else if(['pause','shrine','relic-details'].includes(mode))resume();else pause();return;}
  if(action==='help'){showInfo('help');return;}
- if(action==='bag'){if(mode==='bag')resume();else bag();return;}
+ if(action==='bag'){if(mode==='bag')closeBuild();else bag();return;}
  if(paused||!s)return;({potion,skill,utility,dodge,interact})[action]?.();
 }
 for(const id of ['bag','pause'])button(id,()=>dispatch(id));
@@ -540,10 +556,10 @@ button('route',routePanel);
 function relicPanel(){const r=room();stop('relic');save();panel(relicSelectionMarkup(s,r));$('overlay').firstElementChild.classList.add('relic-panel');let consumed=false;r.relicOffers.forEach((id,i)=>button('relic'+i,()=>{if(consumed)return;if(claimRelic(s,id)){consumed=true;relicBanner.show(s,r,id);sound.play('reward');save();resume();}}));button('skipRelic',()=>{if(consumed)return;if(claimRelic(s,'skip')){consumed=true;save();resume();}});}
 function relicDetails(){if(!s||s.status!=='playing'||paused)return;stop('relic-details');save();panel('<small>RELIC COLLECTION</small><h2>보유 유물 '+ownedRelics(s.player).length+'</h2>'+ownedRelicMarkup(s)+(s.key?'<p>1층 탈출 열쇠 · 1층 입구로 돌아가세요.</p>':'')+'<button id="closeRelics">탐험 재개</button>');button('closeRelics',resume);}
 function bestiaryPanel(){
- const back=mode==='title-records'?titleRecords:mode==='title'?title:mode==='result'?resultPanel:pause;
+ const fromBuild=mode==='bag';if(fromBuild)buildWindow?.remember();const back=fromBuild?()=>{stop('bag');bag();}:mode==='title-records'?titleRecords:mode==='title'?title:mode==='result'?resultPanel:pause;
  stop('bestiary');panel(bestiaryMarkup());const dialog=$('overlay').firstElementChild;dialog.classList.add('bestiary-panel');mountBestiary(dialog,back);
 }
-function journalPanel(){if(!s||mode==='level')return;stop('journal');if(s.status==='playing')save();panel(journalMarkup(s));renderJournalPortraits($('overlay'));button('closeJournal',()=>s.status==='playing'?pause():resultPanel());}
+function journalPanel(){if(!s||mode==='level')return;const fromBuild=mode==='bag';if(fromBuild)buildWindow?.remember();stop('journal');if(s.status==='playing')save();panel(journalMarkup(s));renderJournalPortraits($('overlay'));button('closeJournal',()=>{if(fromBuild){stop('bag');bag();}else if(s.status==='playing')pause();else resultPanel();});}
 
 function mainPanel(){
  stop('main');const offers=mainChoices(s);save();const choices=offers.map(id=>skills.find(k=>k.id===id));

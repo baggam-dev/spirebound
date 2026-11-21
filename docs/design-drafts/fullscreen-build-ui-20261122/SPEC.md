@@ -41,3 +41,6 @@
 imagegen 스킬 내장 도구. 실제 모바일 HUD `docs/qa-package-20261121/entrance/after-auto-844.png`와 실제 Canvas `docs/qa-story-release-20261121/story-verified/integrated-chatter-frame-844.png`를 직접 보고 참조했다. 원본은 `C:/Users/SDSPRO/.codex/generated_images/01a1bb35-6f0c-7421-914b-8beb67028949/exec-3654d06c-b405-4adc-a54d-4397a6ba3934.png`. `package-v1.png`로 무변환 복사했고 정확한 프롬프트는 [prompt-v1.txt](prompt-v1.txt)에 보존했다. 직접 검토 결과 4화면/3탭·상시 목록 제거·정수 즉시 적용 표기는 읽히며, 위 예시/한계는 구현 때 보완해야 한다. 실제 기기/게임 크기/접촉 영역 합격 판정은 아니다.
 
 복사본 SHA256: F90A2B4E82A48ECB7D54CAFEEFDA219B97E1BDC7DED0F91E2AD604FC5961F265.
+
+## 2026-11-22 승인 후 1단계 로컬 반영
+사용자가 시안 이미지를 확인하고 ‘ㅇㅋ 진행’으로 승인했다. build-window.js/css 및 game의 기존 bag 연결 완료. 탭/상세/실제데이터·공통 음식/기록/도감/재개·키보드·중단/저장 보호 구현. 정수 궁극기 기여는 1−0.9^n로 표시하고 최종쿨다운과 구분한다. 읽기전용 뷰2회귀 작성/미실행. 현재 HUD 제거·화면확장·방크기변주는 아직 적용하지 않았다. 다음 명시배포 때 새CSS/실제UI·부모overlay의 fixed/모바일 clipping·긴목록/이벤트위임·lease/저장실패·회전·키보드·음식/기록도감복귀를 검증해야 한다. 모양/접촉영역/실제기기 통과로 기록하지 않는다.
