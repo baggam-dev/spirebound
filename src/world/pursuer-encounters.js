@@ -6,7 +6,7 @@ export function planPursuerEncounters(s){
  if(!s.key||s.pursuerVersion===1)return;s.pursuerVersion=1;if(s.practice||(s.generationVersion||0)<25)return;
  for(let floor=1;floor<=Math.min(7,s.floors.length-1);floor++){
   const random=seededRandom(((s.seed??1)^Math.imul(floor+1,0x41b5a135)^0x76c9d21)>>>0);
-  const candidates=s.floors[floor].filter((r,index)=>r.type==='normal'&&!r.gate&&!r.hasChest&&!r.tutorial&&!r.deployed&&!r.pursuerEncounter&&r.enemies.length>=3&&r.enemies.length<128&&!(floor===s.floor&&index===s.room));
+  const candidates=s.floors[floor].filter((r,index)=>r.type==='normal'&&!r.sealEngine&&!r.gate&&!r.hasChest&&!r.tutorial&&!r.deployed&&!r.pursuerEncounter&&r.enemies.length>=3&&r.enemies.length<128&&!(floor===s.floor&&index===s.room));
   if(!candidates.length||random()>=.55)continue;
   candidates[Math.floor(random()*candidates.length)].pursuerEncounter={version:1,state:'planned',enemyId:null,rewarded:false};
  }
