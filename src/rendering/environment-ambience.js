@@ -1,3 +1,4 @@
+import {drawFloorDecals} from './floor-decals.js';
 import {isUpperHallFloor,upperHallLoaded,drawUpperHallProp} from './upper-hall-art.js';
 import {isInfestedFloor,infestedHallLoaded,drawInfestedHallProp} from './infested-hall-art.js';
 import {drawPrismHallLamp} from './prism-hall-art.js';
@@ -11,6 +12,7 @@ const plans=new WeakMap();
 const mix=n=>{n=Math.imul(n^(n>>>16),0x45d9f3b);n=Math.imul(n^(n>>>16),0x45d9f3b);return (n^(n>>>16))>>>0;};
 const torches=[{x:85,y:82},{x:875,y:82},{x:85,y:455},{x:875,y:455}];
 const overlaps=(x,y,rx,ry,o)=>x+rx>o.x-8&&x-rx<o.x+o.w+8&&y+ry>o.y-8&&y-ry<o.y+o.h+8;
+// Legacy placement diagnostics for older QA imports; active decals use floorDecalPlan.
 export function environmentPlan(s,r){
  const key=[s.seed,s.floor,r.x,r.y,r.objectPosition?.x,r.objectPosition?.y,r.chestPosition?.x,r.chestPosition?.y,...(r.obstacles||[]).flatMap(o=>[o.x,o.y,o.w,o.h])].join(':');const cached=plans.get(r);if(cached?.key===key)return cached.plan;
  const seed=mix((s.seed||1)^Math.imul(s.floor+1,73471)^Math.imul((r.x||0)+17,99173)^Math.imul((r.y||0)+31,51787)),puddles=[],chips=[],doors=[0,1,2,3].map(d=>doorArrival(r,d)),facilities=[];
@@ -24,12 +26,8 @@ export function environmentPlan(s,r){
  if(s.floor===0)for(let i=0;i<14;i++){const h=mix(seed+i*389),x=70+h%820,y=(i%2?390:95)+(h>>>16)%45;if(!(r.obstacles||[]).some(o=>overlaps(x,y,7,4,o))&&!doors.some(q=>Math.hypot(q.x-x,q.y-y)<70))chips.push(Object.freeze({x,y,phase:h%628/100}));}
  const plan=Object.freeze({puddles:Object.freeze(puddles),chips:Object.freeze(chips),seed});plans.set(r,{key,plan});return plan;
 }
-export function drawEnvironmentFloorLife(c,s,r,reduced=false){
- if(s.floor!==0)return;const plan=environmentPlan(s,r),t=reduced?0:s.elapsed;c.save();c.beginPath();c.rect(26,45,908,455);c.clip();
- for(const p of plan.puddles){c.save();c.translate(p.x,p.y);c.fillStyle='#71868a25';c.beginPath();c.moveTo(-p.rx,-p.ry*.3);c.lineTo(-p.rx*.7,-p.ry);c.lineTo(p.rx*.38,-p.ry*.8);c.lineTo(p.rx,-p.ry*.16);c.lineTo(p.rx*.7,p.ry*.7);c.lineTo(-p.rx*.45,p.ry);c.closePath();c.fill();c.strokeStyle='#aab9ad38';c.lineWidth=1;c.beginPath();c.moveTo(-p.rx*.65,-p.ry*.7);c.lineTo(-p.rx*.15,-p.ry*.75);c.moveTo(p.rx*.35,p.ry*.6);c.lineTo(p.rx*.65,p.ry*.45);c.stroke();if(!reduced){const age=((t*.33+p.phase)%1+1)%1;c.globalAlpha=(1-age)*.2;c.strokeStyle='#b3c2bb';c.beginPath();c.ellipse(p.rx*.15,-1,2+age*9,.7+age*3,0,0,Math.PI*1.5);c.stroke();}c.restore();}
- for(const p of plan.chips){c.fillStyle='#59614c55';c.fillRect(p.x,p.y,5,2);c.fillStyle='#9090772b';c.fillRect(p.x+2,p.y-1,3,1);if(!reduced){const phase=((t*.15+p.phase)%1+1)%1;c.fillStyle='#c8c2a0';c.globalAlpha=Math.sin(phase*Math.PI)*.13;c.fillRect(p.x+Math.sin(phase*4)*5,p.y-phase*17,1,1);c.globalAlpha=1;}}
- c.restore();
-}
+// Shared floor-decals replace the old floor-1 puddle/chip pass without stacking budgets.
+export function drawEnvironmentFloorLife(c,s,r,reduced=false){drawFloorDecals(c,s,r);}
 export function drawEnvironmentTorches(c,s,r,reduced=false){
  const candle=s.floor===2&&archiveLoaded(),t=reduced?0:s.elapsed;c.save();c.beginPath();c.rect(25,44,910,464);c.clip();
  for(const [i,p] of torches.entries()){
