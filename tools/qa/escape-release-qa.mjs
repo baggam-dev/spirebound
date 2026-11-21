@@ -31,7 +31,7 @@ async function open(kind,width=844){
 }
 try{
  const core=process.argv.includes('--public-core');
- const cases=core?[['auto',844],['space',844],['held',844]]:[['draft',844],['auto',1280],['auto',844],['space',844],['click',844],['blur',844],['portrait',844],['resize',1280],['pagehide',844],['hidden',844],['gap',844],['reduced',844],['held',844],['fail',844],['queued-skip',844],['queued-blur',844],['save-fail',844]];
+ const cases=core?[['auto',844],['space',844],['held',844]]:[['draft',844],['auto',1280],['auto',844],['space',844],['click',844],['blur',844],['portrait',844],['resize',1280],['pagehide',844],['hidden',844],['gap',844],['reduced',844],['render-fail',844],['held',844],['fail',844],['queued-skip',844],['queued-blur',844],['save-fail',844]];
  const only=process.argv.find(a=>a.startsWith('--only='))?.slice(7).split(',');
  for(const [kind,width] of cases.filter(([kind])=>!only||only.includes(kind))){console.log(kind,width);const {c,p,release,initial}=await open(kind,width),started=Date.now();
   if(kind==='save-fail'){await p.locator('.result-save').waitFor();assert.match(await p.locator('.result-save').innerText(),/기록을 내려받으세요/);assert.equal(await p.locator('#export').isVisible(),true);assert.equal(await p.locator('.escape-scene').count(),0);assert.equal((await record(p)).history.length,0);}
@@ -47,7 +47,8 @@ try{
     if(kind==='auto'||kind==='reduced'){
      await p.waitForFunction(()=>window.__escapeFrames.length===4);
      for(const frame of await p.evaluate(()=>window.__escapeFrames)){assert.equal(frame.subtitle,'살아서 내려왔다.');assert.equal(frame.subtitleVisible,frame.phase===3);await writeFile(join(out,`escape-${kind}-${width}-${frame.phase}.png`),Buffer.from(frame.png.split(',')[1],'base64'));}
-    }else if(kind==='space'){await p.waitForTimeout(190);await p.keyboard.press('Space');}
+    }else if(kind==='render-fail'){await p.evaluate(()=>{const original=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(...args){if(this.canvas.matches('.escape-canvas')&&+this.canvas.closest('.escape-scene').dataset.escapePhase>=1){CanvasRenderingContext2D.prototype.drawImage=original;window.__escapeRenderFailed=true;throw Error('QA later ending frame');}return original.apply(this,args);};});await p.waitForFunction(()=>window.__escapeRenderFailed===true);}
+    else if(kind==='space'){await p.waitForTimeout(190);await p.keyboard.press('Space');}
     else if(kind==='draft'){await p.locator('#escapeSkip').click();}
     else if(kind==='click')await p.locator('#escapeSkip').click();
     else if(kind==='portrait')await p.setViewportSize({width:390,height:844});
