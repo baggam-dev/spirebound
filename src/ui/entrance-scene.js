@@ -12,7 +12,7 @@ export function prepareGateDoors(){
  if(!gatePreparation)gatePreparation=load('entrance-doors-v1.png').then(doors=>{if(!doors)return null;const leaves=[leafBounds(doors,0),leafBounds(doors,1)];return leaves.every(Boolean)?{doors,leaves}:null;}).catch(()=>null);
  const current=gatePreparation;current.then(value=>{if(!value&&gatePreparation===current)gatePreparation=null;});return current;
 }
-function actorFrames(image,{columns=4,count=8,anchor=200}={}){
+export function actorFrames(image,{columns=4,count=8,anchor=200}={}){
  if(image.naturalWidth!==1536||image.naturalHeight!==1024)return null;
  const frames=[];
  const width=1536/columns;

@@ -16,6 +16,7 @@ const CUES={
  resurrectionBell:{gap:1.5,duck:.85,priority:4,notes:[[0,110,.65,'sine',.025],[.008,220,.55,'sine',.013],[.02,329.6,.43,'sine',.007],[.035,554.4,.32,'sine',.004]]},
  gateOpen:{gap:1,notes:[[0,82,.3,'triangle',.018],[.14,67,.38,'triangle',.015]]},
  gateStep:{gap:.3,notes:[[0,110,.07,'triangle',.017],[.025,55,.09,'sine',.012]]},
+ escapeBreath:{gap:1,notes:[[0,160,.18,'triangle',.005,95],[.12,95,.22,'sine',.004,65]]},
  gateClose:{gap:1,notes:[[0,54,.28,'triangle',.055],[.025,89,.13,'sawtooth',.02],[.12,40,.34,'sine',.025]]},
  shot:{gap:.17,notes:[[0,360,.055,'triangle',.011],[.025,240,.055,'triangle',.008]]},
  repeatShot:{gap:.09,group:'repeatShot',priority:1,notes:[[0,360,.055,'triangle',.011],[.025,240,.055,'triangle',.008]]},

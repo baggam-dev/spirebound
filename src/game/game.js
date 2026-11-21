@@ -12,7 +12,7 @@ import {startBossClear,resetBossClear,advanceBossClear,drawBossClear,bossClearSt
 import {drawHighFloorGround} from '../rendering/high-floor-vfx.js';
 import {drawEnemyMeleeGround,applyEnemyMeleePose,drawMeleeThreatContours} from '../rendering/enemy-melee-art.js';
 import {drawMonsterStatusEffects} from '../rendering/monster-status-effects.js';
-import {createEscapeState} from '../ui/escape-state.js';
+import {createEscapeState,ESCAPE_CUES} from '../ui/escape-state.js';
 import {prepareEscapeArt,escapeMarkup,createEscapeRenderer} from '../ui/escape-scene.js';
 import {createEntranceState,ENTRANCE_CUES} from '../ui/entrance-state.js';
 import {createJourneyState,DESCENT_DARK_AT,DESCENT_REVEAL_AT,DESCENT_SECONDS} from '../ui/journey-state.js';
@@ -488,7 +488,7 @@ setInterval(()=>lease.heartbeat(),3000);
 window.addEventListener('error',()=>{if(s&&s.status==='playing'){stop('error');save();panel('<h2>문제가 발생했습니다</h2><p>진행을 멈췄습니다. 진단 기록을 받은 뒤 새로고침해 이어갈 수 있습니다.</p><button id="export">진단 기록 받기</button>');button('export',exportReport);}});
 function frame(now){const elapsed=(now-last)/1000,presentation=mode.startsWith('journey')||mode.startsWith('entrance')||mode.startsWith('escape')||mode.startsWith('trial-');last=now;
  if(mode==='utility'&&utilityRoulette?.spinning){if(document.hidden||elapsed>1)pause('추첨 연출이 중단되었습니다. 저장된 결과로 이어집니다.');else utilityRoulette.tick(elapsed);}
- if(mode.startsWith('escape')){if(document.hidden||elapsed>1||mode==='escape-loading'&&now-escapeArmed>=800)finishEscape();else{const before=escapeScene.time(s),done=escapeScene.advance(s,elapsed),after=escapeScene.time(s);if(done)finishEscape();else if(mode==='escape'){for(const at of [1.1,1.75])if(before<at&&after>=at)sound.play('gateStep');renderEscape?.(after);}}}
+ if(mode.startsWith('escape')){if(document.hidden||elapsed>1||mode==='escape-loading'&&now-escapeArmed>=800)finishEscape();else{const before=escapeScene.time(s),done=escapeScene.advance(s,elapsed),after=escapeScene.time(s);if(done)finishEscape();else if(mode==='escape'){for(const [at,cue] of ESCAPE_CUES)if(before<at&&after>=at)sound.play(cue);renderEscape?.(after);}}}
  if(mode.startsWith('trial-')){if(document.hidden||elapsed>1)pause('시련 연출이 중단되었습니다. 계속 탐험으로 돌아가세요.');else{fx=fx.filter(f=>{if(f.enemyFeedback==='death')f.t-=Math.min(elapsed,.1);return f.t>0;});if(trialScene.advance(s,elapsed))finishTrialScene();}}
  if(mode.startsWith('journey')&&journey.current(s)&&!document.hidden){if(elapsed>1)pause('화면 응답이 지연되어 멈췄습니다.');else{const token=journey.current(s),done=journey.advance(s,elapsed);if(token.kind==='return')fx=fx.filter(f=>{if(f.enemyFeedback==='death')f.t-=Math.max(0,Math.min(elapsed,.1));return f.t>0;});if(done)finishJourney();}}
  if(mode==='entrance'&&renderEntrance&&!document.hidden){if(elapsed>1)pause('화면 응답이 지연되어 멈췄습니다.');else{const before=entrance.time(s),done=entrance.advance(s,elapsed),after=entrance.time(s);for(const [at,cue] of ENTRANCE_CUES)if(before<at&&after>=at)sound.play(cue);renderEntrance(after);if(done)finishEntrance();}}

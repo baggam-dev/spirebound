@@ -10,10 +10,10 @@ async function open(kind,width=844){
  await c.addInitScript(()=>{window.__recordWrites={history:0,ended:0,draft:0};const set=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(this===localStorage){if(k==='spirebound.history')window.__recordWrites.history++;if(k==='spirebound.run.v1.ended')window.__recordWrites.ended++;if(k==='spirebound.rank-submissions.v1')window.__recordWrites.draft++;}return set.call(this,k,v);};});
  if(kind==='reduced')await c.addInitScript(()=>localStorage.setItem('spirebound.settings.v1',JSON.stringify({muted:true,volume:0,reducedEffects:true})));
  let release;const gate=new Promise(r=>release=r);
- if(['held','fail','queued-skip','queued-blur'].includes(kind))await p.route('**/escape-dawn-v1.png',async r=>{if(kind==='fail')await r.abort();else{await gate;await r.continue().catch(()=>{});}});
+ if(['held','fail','queued-skip','queued-blur'].includes(kind))await p.route('**/escape-dawn-v2.png',async r=>{if(kind==='fail')await r.abort();else{await gate;await r.continue().catch(()=>{});}});
  await p.goto(base,{waitUntil:'domcontentloaded'});await p.locator('#continue,#start').first().waitFor();
  const initial=await p.evaluate(()=>performance.getEntriesByType('resource').filter(e=>e.name.endsWith('.png')).map(e=>new URL(e.name).pathname.split('/').at(-1)));
- assert.equal(initial.includes('escape-dawn-v1.png'),false);assert.equal(initial.includes('entrance-doors-v1.png'),false);
+ assert.equal(initial.includes('escape-dawn-v2.png'),false);assert.equal(initial.includes('entrance-doors-v1.png'),false);
  await p.evaluate(async(kind)=>{
   const {newRun,enrage,currentRoom}=await import('/src/game/engine.js'),{RunStore}=await import('/src/persistence/storage.js'),{startFinalEscape,tickFinalEscape}=await import('/src/world/final-escape.js'),{objectPoint}=await import('/src/world/object-positions.js'),{challengeDemon,advanceDemonPhase}=await import('/src/combat/demon.js');
   const s=newRun(77,{campaign:'expanded'});s.floor=9;s.room=1;challengeDemon(s);const boss=currentRoom(s);while(boss.demon.phase<3){boss.enemies.forEach(e=>e.hp=0);advanceDemonPhase(boss,s.projectiles);}boss.enemies=[];boss.used=true;enrage(s);s.returnNoticePending=false;s.floor=0;s.room=s.floors[0].findIndex(r=>r.type==='exit');s.floors[9][1].used=true;s.floors[9][1].demonPending=false;
@@ -25,8 +25,8 @@ async function open(kind,width=844){
  if(!['held','fail','queued-skip','queued-blur'].includes(kind))await p.evaluate(async()=>{await (await import('/src/ui/escape-scene.js')).prepareEscapeArt();});
  if(kind==='save-fail')await p.evaluate(()=>{const set=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='spirebound.history')throw new DOMException('QA quota','QuotaExceededError');return set.call(this,k,v);};});
  // Capture short phases on animation frames, rather than awaiting slow screenshot
- // encoding between phases of a three-second cinematic.
- await p.evaluate(()=>{window.__escapeFrames=[];const targets=[[0,.24],[1,1.2],[2,2.5]];const sample=()=>{const el=document.querySelector('.escape-scene'),target=targets[window.__escapeFrames.length];if(el&&target&&+el.dataset.escapePhase===target[0]&&+el.dataset.escapeTime>=target[1])window.__escapeFrames.push({phase:target[0],subtitle:document.querySelector('#escapeSubtitle')?.textContent,png:el.querySelector('canvas').toDataURL()});if(window.__escapeFrames.length<3)requestAnimationFrame(sample);};requestAnimationFrame(sample);});
+ // encoding between phases of a seven-second cinematic.
+ await p.evaluate(()=>{window.__escapeFrames=[];const targets=[[0,.6],[1,2],[2,3.9],[3,5.5]];const sample=()=>{const el=document.querySelector('.escape-scene'),target=targets[window.__escapeFrames.length];if(el&&target&&+el.dataset.escapePhase===target[0]&&+el.dataset.escapeTime>=target[1])window.__escapeFrames.push({phase:target[0],subtitle:document.querySelector('#escapeSubtitle')?.textContent,subtitleVisible:!document.querySelector('#escapeSubtitle')?.hidden,png:el.querySelector('canvas').toDataURL()});if(window.__escapeFrames.length<4)requestAnimationFrame(sample);};requestAnimationFrame(sample);});
  await p.locator('#interact').click();return {c,p,release,initial};
 }
 try{
@@ -45,8 +45,8 @@ try{
     await p.locator('.escape-scene').waitFor();const before=await record(p);assert.equal(before.history.length,1);assert.equal(before.saved,false);
     assert.ok((await p.locator('#escapeSkip').boundingBox()).height>=44);
     if(kind==='auto'||kind==='reduced'){
-     await p.waitForFunction(()=>window.__escapeFrames.length===3);
-     for(const frame of await p.evaluate(()=>window.__escapeFrames)){assert.equal(frame.subtitle,'살아서 내려왔다.');await writeFile(join(out,`escape-${kind}-${width}-${frame.phase}.png`),Buffer.from(frame.png.split(',')[1],'base64'));}
+     await p.waitForFunction(()=>window.__escapeFrames.length===4);
+     for(const frame of await p.evaluate(()=>window.__escapeFrames)){assert.equal(frame.subtitle,'살아서 내려왔다.');assert.equal(frame.subtitleVisible,frame.phase===3);await writeFile(join(out,`escape-${kind}-${width}-${frame.phase}.png`),Buffer.from(frame.png.split(',')[1],'base64'));}
     }else if(kind==='space'){await p.waitForTimeout(190);await p.keyboard.press('Space');}
     else if(kind==='draft'){await p.locator('#escapeSkip').click();}
     else if(kind==='click')await p.locator('#escapeSkip').click();
