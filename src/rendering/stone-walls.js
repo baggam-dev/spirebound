@@ -33,7 +33,7 @@ function stamp(obstacles){return obstacles.filter(o=>o.type==='wall').map(o=>[o.
 function cellHash(x,y){let n=Math.imul(x/48+31,73856093)^Math.imul(y/40+17,19349663);n=Math.imul(n^(n>>>13),1274126177);return (n^(n>>>16))>>>0;}
 // Muted stone families follow the floor backdrops; outer and inner walls share one surface.
 const stone=[
- ['#3c4742','#11191b'],['#3c4742','#11191b'],
+ ['#605e56','#202631'],['#3c4742','#11191b'],
  ['#414650','#171b23'],['#404252','#171823'],
  ['#3a4940','#141e19'],['#3e4038','#1b1b15'],
  ['#3a434e','#151a24'],['#4b3d43','#1d171c'],

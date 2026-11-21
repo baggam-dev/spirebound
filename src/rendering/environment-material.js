@@ -1,4 +1,5 @@
 import {DeferredImage} from './asset-requests.js';
+import {sanctumTone} from './sanctum-finish.js';
 // Approved environment v2: material-only caches; never applied to actors, HUD or telegraphs.
 export const ENVIRONMENT_PIXEL=2;
 let reference=null;
@@ -26,7 +27,7 @@ function palette(c,prop){
  }
  g.putImageData(pixels,0,0);
 }
-export function environmentMaterial(source,prop=false,wall=false,{preserve=false}={}){
+export function environmentMaterial(source,prop=false,wall=false,{preserve=false,sanctum=false}={}){
  // Keep aspect ratios, including narrow flags and tall gates. Original PNGs stay intact.
  const scale=Math.min(1,(prop?64:96)/Math.max(source.width,source.height)),c=surface(Math.max(1,Math.round(source.width*scale)),Math.max(1,Math.round(source.height*scale)));
  if(!c)return source;const g=c.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(source,0,0,c.width,c.height);
@@ -41,7 +42,9 @@ export function environmentMaterial(source,prop=false,wall=false,{preserve=false
   for(let i=0;i<d.length;i+=4){const l=d[i]*.2126+d[i+1]*.7152+d[i+2]*.0722;for(let k=0;k<3;k++)d[i+k]=l+(mean[k]-grey)*.5;}
   g.putImageData(pixels,0,0);
  }
- palette(c,prop);return c;
+ palette(c,prop);
+ if(sanctum&&!prop){const pixels=g.getImageData(0,0,c.width,c.height),d=pixels.data;for(let i=0;i<d.length;i+=4){if(!d[i+3])continue;const tone=sanctumTone(d[i],d[i+1],d[i+2],wall);for(let k=0;k<3;k++)d[i+k]=tone[k];}g.putImageData(pixels,0,0);}
+ return c;
 }
 export function environmentSurface(source){
  // Run once when a static floor/wall cache is built, not per frame. World-aligned 2px grid.
