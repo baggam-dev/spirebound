@@ -10,8 +10,12 @@ export const BOSS_LINES=Object.freeze({
  demon:{intro:['이 탑에서…','나갈 수 있을 것 같으냐.']}
 });
 export const REVISED_BOSS_LINES=Object.freeze({
- king:{intro:['이 왕좌는… 아직 나의 것이다.'],phase2:['봉인의 힘도… 내 것으로 삼겠다.'],phase3:['죽음조차… 나를 꺾지 못한다.'],death:['이것이… 마지막이란 말이냐…']},
- commander:{intro:['잔해는 무너졌어도,','왕은 아직 기다린다.'],phase2:['여기서 멈춰라.']},
+ prism:{intro:['미등록 개체 감지.','귀환 허가 없음.']},
+ slime:{death:['전하… 문을…','열어… 주…']},
+ kald:{intro:['왕명을 거역할 수는 없다.','그대도 이 문을 넘을 수 없다.']},
+ vera:{last:['위로 가져가지 마.','네가 얻은 그 힘을.']},
+ king:{intro:['밖에서는 아직도,','아침을 기다리느냐.'],phase2:['그 힘은 본래,','이 왕좌의 것이다.'],phase3:['보아라. 죽음마저','내 앞에 무릎 꿇는다.'],death:['아직… 끝나서는…']},
+ commander:{intro:['왕이 남으면,','나라도 다시 세울 수 있다.'],phase2:['돌아갈 곳 따위…','내게는 없다.']},
  demon:{intro:['봉인 유지…','침입자를 배제한다.'],death:['봉인 잔해… 정지…']}
 });
 export function validBossDialogueSeen(value){

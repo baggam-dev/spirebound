@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createBossDialogue} from '../../src/rendering/boss-dialogue.js';
-import {BOSS_LINES,validBossDialogueSeen} from '../../src/ui/boss-dialogue-data.js';
+import {BOSS_LINES,REVISED_BOSS_LINES,validBossDialogueSeen} from '../../src/ui/boss-dialogue-data.js';
 import {newRun} from '../../src/game/engine.js';
 import {encodeSave,parseSave,validateRun} from '../../src/persistence/storage.js';
 
@@ -76,4 +76,25 @@ test('optional bounded event history round trips; corrupt dialogue IDs cannot po
  for(const value of [null,['1:0:warden:intro','1:0:warden:intro'],['10:0:king:intro'],['1:0:unknown:intro'],Array(129).fill('1:0:warden:intro')]){
   assert.equal(validBossDialogueSeen(value),false);assert.throws(()=>validateRun({...run,bossDialogueSeen:value}));
  }
+});
+
+test('revised collective deaths use the revised story while legacy deaths retain their own lines',()=>{
+ for(const revised of [false,true])for(const variant of ['king','slime','demon']){
+  const e=enemy(variant);if(variant==='demon')e.part='core';const run=fixture([e]);if(revised)run.bossLayoutVersion=1;
+  const d=createBossDialogue(run);d.observe();d.skip();const before=d.capture();run.floors[0][0].enemies=[];d.after(before,result(e.id));
+  assert.deepEqual(d.lines,revised?(REVISED_BOSS_LINES[variant]?.death||BOSS_LINES[variant].death||[]):BOSS_LINES[variant].death||[]);
+  d.next();d.after(before,result(e.id));assert.deepEqual(d.lines,[]);
+ }
+});
+test('revised Vera keeps the companion death line and speaks her new warning only when last',()=>{
+ for(const companionAlive of [false,true]){
+  const vera=enemy('vera',2),kald=enemy('kald',1),run=fixture([vera,kald]);run.bossLayoutVersion=1;const d=createBossDialogue(run);d.observe();d.skip();const before=d.capture();run.floors[0][0].enemies=companionAlive?[kald]:[];
+  d.after(before,result(vera.id));assert.deepEqual(d.lines,companionAlive?BOSS_LINES.vera.death:REVISED_BOSS_LINES.vera.last);assert.equal(d.blocking,false);
+ }
+});
+
+test('revised final death remains nonblocking on the exact key transition but return fights stay silent',()=>{
+ const e=enemy('king'),run=fixture([e]);run.bossLayoutVersion=1;const d=createBossDialogue(run);d.observe();d.skip();const before=d.capture();run.floors[0][0].enemies=[];run.key=true;
+ d.after(before,{events:['key'],effects:result(e.id).effects});assert.deepEqual(d.lines,REVISED_BOSS_LINES.king.death);assert.equal(d.blocking,false);d.skip();
+ run.floors[0][0].enemies=[enemy('prism',3)];const returning=d.capture();run.floors[0][0].enemies=[];d.after(returning,result(3));assert.deepEqual(d.lines,[]);
 });

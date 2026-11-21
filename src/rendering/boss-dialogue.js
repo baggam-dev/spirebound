@@ -55,9 +55,10 @@ export function createBossDialogue(run,{loaded=false}={}){
   next(){queue.shift();},
   skip(){queue=[];},
   // Skills can kill between simulation ticks; retain those actors until death effects arrive.
-  capture(){const r=roomOf(run);return {room:r,enemies:(r.enemies||[]).filter(e=>kind(e)).map(e=>({...e,dialoguePhase:phase(e)}))};},
+  capture(){const r=roomOf(run);return {room:r,key:!!run.key,enemies:(r.enemies||[]).filter(e=>kind(e)).map(e=>({...e,dialoguePhase:phase(e)}))};},
   after(before,result){
-   observe();const r=roomOf(run);if(before.room!==r||!eligible(run,r)||result.events.includes('dead'))return;
+   observe();const r=roomOf(run),finalDeath=run.bossLayoutVersion===1&&!run.practice&&before.key===false&&run.key&&r.type==='boss'&&result.events.includes('key');
+   if(before.room!==r||(!eligible(run,r)&&!finalDeath)||result.events.includes('dead'))return;
    queue=queue.filter(q=>!q.actor||q.actor.hp>0);
    const alive=(r.enemies||[]).filter(e=>e.hp>0),deaths=new Set(result.effects.filter(f=>f.enemyFeedback==='death').map(f=>f.enemyId));
    for(const old of before.enemies){
@@ -66,9 +67,10 @@ export function createBossDialogue(run,{loaded=false}={}){
     if(!deaths.has(old.id))continue;
     // Splits are not the death of the collective; wait for the last boss fragment.
     if(k==='slime'&&alive.some(e=>kind(e)==='slime'))continue;
-    let lines=BOSS_LINES[k].death;
+    const revised=run.bossLayoutVersion===1?REVISED_BOSS_LINES[k]:undefined;
+    let lines=revised?.death||BOSS_LINES[k].death;
     if(k==='kald'&&!alive.some(e=>kind(e)==='vera'))lines=null;
-    if(k==='vera')lines=alive.some(e=>kind(e)==='kald')?BOSS_LINES.vera.death:BOSS_LINES.vera.last;
+    if(k==='vera')lines=alive.some(e=>kind(e)==='kald')?(revised?.death||BOSS_LINES.vera.death):(revised?.last||BOSS_LINES.vera.last);
     if(lines)add(r,old,'death',{lines});
    }
   },

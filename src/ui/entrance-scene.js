@@ -1,4 +1,5 @@
 import {ENTRANCE_DURATION,entranceMotion} from './entrance-state.js';
+import {STORY_COPY} from './story-copy.js';
 import {createCachedPreparation} from '../rendering/asset-wait.js';
 let gatePreparation=null;
 const load=name=>new Promise(resolve=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=()=>resolve(null);image.src=new URL('../../assets/images/'+name,import.meta.url).href;});
@@ -54,7 +55,8 @@ export function createEntranceRenderer(host,art,{reduced=false}={}){
   if(!canvas.isConnected)return;
   const t=Math.max(0,Math.min(ENTRANCE_DURATION,time)),p=entranceMotion(t,reduced),half=art.plates.naturalHeight/2;
   c.setTransform(1,0,0,1,0,0);c.fillStyle='#08090e';c.fillRect(0,0,canvas.width,canvas.height);const scale=Math.min(canvas.width/W,canvas.height/H);c.setTransform(scale,0,0,scale,(canvas.width-W*scale)/2,(canvas.height-H*scale)/2);c.imageSmoothingEnabled=false;
-  host.dataset.entrancePhase=String(p.phase);host.dataset.entranceFrame=String(p.frame);subtitle.hidden=t<4.9;
+  host.dataset.entrancePhase=String(p.phase);host.dataset.entranceFrame=String(p.frame);
+  const words=t<2.5?STORY_COPY.opening:STORY_COPY.closed;if(subtitle.textContent!==words)subtitle.textContent=words;subtitle.hidden=t<.2||t>=2.5&&t<4.9;
   c.save();c.beginPath();c.rect(0,0,W,H);c.clip();
   if(p.phase===0){c.drawImage(art.plates,0,0,art.plates.naturalWidth,half,0,0,W,H);exteriorLife(c,t,0,reduced);hero(p);}
   else if(p.phase===1){c.drawImage(art.plates,art.plates.naturalWidth*.14,half*.18,art.plates.naturalWidth*.72,half*.72,0,0,W,H);exteriorLife(c,t,1,reduced);hero(p);}
