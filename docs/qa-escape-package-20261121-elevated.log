@@ -1,0 +1,18 @@
+draft 844
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.goto: net::ERR_CONNECTION_TIMED_OUT at http://localhost:4631/
+Call log:
+  - navigating to "http://localhost:4631/", waiting until "domcontentloaded"
+
+    at open (C:\baggam-dev\spirebound\tools\qa\escape-release-qa.mjs:14:10)
+    at async file:///C:/baggam-dev/spirebound/tools/qa/escape-release-qa.mjs:36:132 {
+  log: [
+    '  - navigating to "http://localhost:4631/", waiting until "domcontentloaded"'
+  ],
+  name: 'Error'
+}
+
+Node.js v24.14.0

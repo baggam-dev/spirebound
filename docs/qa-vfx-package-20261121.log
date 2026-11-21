@@ -1,0 +1,26 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   "Cannot set properties of null (setting 'hidden')",
++   "Cannot set properties of null (setting 'hidden')"
++ ]
+- []
+
+    at file:///C:/baggam-dev/spirebound/tools/qa/package-vfx-qa.mjs:20:201 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    "Cannot set properties of null (setting 'hidden')",
+    "Cannot set properties of null (setting 'hidden')"
+  ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

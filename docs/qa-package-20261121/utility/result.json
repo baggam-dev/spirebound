@@ -1,0 +1,42 @@
+{
+  "base": "http://127.0.0.1:4632",
+  "results": [
+    {
+      "kind": "auto",
+      "winner": "firstAid",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "reduced",
+      "winner": "firstAid",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "reload-prepared",
+      "winner": "focus",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "reload-revealed",
+      "winner": "firstAid",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "start-save-fail",
+      "winner": "guardian",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "claim-save-fail",
+      "winner": "firstAid",
+      "stableResult": true,
+      "singleGrant": true
+    }
+  ],
+  "errors": []
+}

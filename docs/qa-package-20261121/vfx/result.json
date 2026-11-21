@@ -1,0 +1,13 @@
+{
+  "results": [
+    {
+      "reduced": false,
+      "immutable": true
+    },
+    {
+      "reduced": true,
+      "immutable": true
+    }
+  ],
+  "errors": []
+}

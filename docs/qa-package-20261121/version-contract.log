@@ -1,0 +1,11 @@
+✔ actual generated classic and expanded maps satisfy Python online-start validation (1406.3794ms)
+✔ development API proxy forwards cookies and overrides claimed client IP (151.4109ms)
+✔ server serves game modules and refuses repository files and unsupported methods (209.8542ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2027.7586

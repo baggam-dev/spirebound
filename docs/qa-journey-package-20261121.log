@@ -1,0 +1,20 @@
+approach 1280 7
+approach 1280 8
+approach 1280 9
+approach 844 7
+approach 844 8
+approach 844 9
+key auto 1280
+key auto 844
+key space 844
+key loaded 844
+key blur 844
+key portrait 844
+key lease 844
+key save-fail 844
+key reduced 844
+descent descent 1280
+descent cold 844
+descent loading-blur 844
+descent load-fail 844
+{"cases":19,"errors":[],"scores":0}
