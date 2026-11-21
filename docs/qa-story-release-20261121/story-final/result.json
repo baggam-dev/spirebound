@@ -1,0 +1,30 @@
+{
+  "results": [
+    {
+      "width": 1280,
+      "futureHidden": true,
+      "remnant": true,
+      "relic": true,
+      "chatter": {
+        "visible": "마지막 명령을 집행한다.",
+        "warningHidden": true,
+        "recovered": true,
+        "stateUnchanged": true
+      }
+    },
+    {
+      "width": 844,
+      "futureHidden": true,
+      "remnant": true,
+      "relic": true,
+      "chatter": {
+        "visible": "마지막 명령을 집행한다.",
+        "warningHidden": true,
+        "recovered": true,
+        "stateUnchanged": true
+      }
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

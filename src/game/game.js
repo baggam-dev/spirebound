@@ -3,7 +3,7 @@ import {STORY_COPY,returnStoryCopy} from '../ui/story-copy.js';
 import {drawSealEngine,drawSealEngineWarning} from '../rendering/seal-engine.js';
 import {floorLoadMatches} from '../ui/floor-loading-state.js';
 import {clearKingResurrection,tickKingResurrection,drawKingResurrection} from '../rendering/king-resurrection.js';
-import {startBossClear,resetBossClear,advanceBossClear,drawBossClear} from '../rendering/boss-clear.js';
+import {startBossClear,resetBossClear,advanceBossClear,drawBossClear,bossClearState} from '../rendering/boss-clear.js';
 import {drawHighFloorGround} from '../rendering/high-floor-vfx.js';
 import {drawEnemyMeleeGround,applyEnemyMeleePose,drawMeleeThreatContours} from '../rendering/enemy-melee-art.js';
 import {drawMonsterStatusEffects} from '../rendering/monster-status-effects.js';
@@ -468,7 +468,7 @@ function frame(now){const elapsed=(now-last)/1000,presentation=mode.startsWith('
  if(toastTime>0){toastTime-=Math.min(elapsed,.25);if(toastTime<=0)$('notice').textContent='';}
  if(!paused&&!presentation){if(elapsed>1){pause('화면 응답이 지연되어 자동으로 멈췄습니다.');}else{accumulator+=elapsed;while(accumulator>=1/60&&!paused){update(1/60);accumulator=Math.max(0,accumulator-1/60);}}}
  const clearActive=!document.hidden&&elapsed<=1&&(['play','level','main','evolution','utility','relic','journey-return'].includes(mode)||mode==='result'&&!!s?.practice);advanceBossClear(s,s?room():null,elapsed,clearActive);
- draw();drawJourney();if(s?.status==='playing'&&mode==='play')drawKingResurrection(ctx,room().enemies,{reduced:sound.settings.reducedEffects});if(clearActive)drawBossClear(ctx,s,s?room():null,{reduced:sound.settings.reducedEffects});if(s?.status==='playing'&&mode==='play'){enemyChatter?.draw(ctx,{compact:touchControls.matches,scripted:!!bossDialogue?.lines.length||clearActive});bossDialogue?.draw(ctx,{compact:touchControls.matches});}renderTitleScene?.(now);requestAnimationFrame(frame);
+ draw();drawJourney();if(s?.status==='playing'&&mode==='play')drawKingResurrection(ctx,room().enemies,{reduced:sound.settings.reducedEffects});if(clearActive)drawBossClear(ctx,s,s?room():null,{reduced:sound.settings.reducedEffects});if(s?.status==='playing'&&mode==='play'){enemyChatter?.draw(ctx,{compact:touchControls.matches,scripted:!!bossDialogue?.lines.length||bossClearState(s)?.age<1.5});bossDialogue?.draw(ctx,{compact:touchControls.matches});}renderTitleScene?.(now);requestAnimationFrame(frame);
 }
 title();requestAnimationFrame(frame);
 

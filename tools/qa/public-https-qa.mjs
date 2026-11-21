@@ -4,10 +4,16 @@ import {pathToFileURL} from 'node:url';
 const {chromium}=await import(pathToFileURL(join(process.env.PLAYWRIGHT_PATH,'index.mjs')).href);
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
 const base='https://168.107.21.43',old='http://168.107.21.43';
 const browser=await chromium.launch({channel:'msedge',headless:true,args:['--disable-features=HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,HttpsFirstModeV2']}); const errors=[];
 try {
  const context=await browser.newContext(); const page=await context.newPage(); page.on('pageerror',e=>errors.push(e.message));
+ // Compare every runtime change since the previous production release, including
+ // the new story modules and four prologue PNGs, against exact local bytes.
+ const storyFiles=execFileSync('git',['diff','--name-only','594f41d','--','src','styles','assets','index.html'],{encoding:'utf8'}).trim().split(/\r?\n/).filter(Boolean);
+ for(const file of storyFiles){const r=await context.request.get(base+'/'+file);assert.equal(r.status(),200,file);assert.ok((await r.body()).equals(await readFile(file)),'story release content '+file);}
+ console.log('Story runtime files matched: '+storyFiles.length);
  await page.goto(base,{waitUntil:'domcontentloaded',timeout:120000}); await page.locator('#rank').waitFor();
  const image=page.locator('.title-logo img');await page.waitForFunction(()=>{const img=document.querySelector('.title-logo img');return img?.complete&&img.naturalWidth>0;},{},{timeout:120000});assert.equal(await image.evaluate(img=>img.complete&&img.naturalWidth>0),true);await page.evaluate(()=>document.fonts.ready);
  if(process.argv[2])await page.screenshot({path:process.argv[2],fullPage:true});

@@ -1,0 +1,14 @@
+✔ incidental speech respects encounter budget without mutating the run and renews on return (14.5339ms)
+✔ ordinary enemies, summons and practice never speak; trial champions use trial lines (5.3121ms)
+✔ scripted dialogue and windups hide chatter but recovery allows it; removed actors disappear (1.3838ms)
+✔ returning to the same room preserves the chatter budget and multiple actors alternate (4.6405ms)
+✔ optional lore hides unseen floors and enemies, and legacy saves keep their original story (1.5545ms)
+✔ epilogue follows the actual campaign and is absent on failed, practice and legacy runs (0.3892ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1125.2508

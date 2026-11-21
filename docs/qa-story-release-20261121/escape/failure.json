@@ -1,0 +1,40 @@
+{
+  "error": "TimeoutError: page.waitForFunction: Timeout 90000ms exceeded.",
+  "results": [
+    {
+      "kind": "draft",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    }
+  ],
+  "overlay": "THE WAY HOME\n탑에서 탈출했습니다\n\n열쇠를 가지고 1층 출구로 돌아왔습니다.\n\n도전 시간\n00:00\n도달 층\n1/10층\n성장\nLV 1\n처치\n0체\n탈출 점수 · 16,025점\n\n탈출 10,000 · 처치 0\n탐험 25 · 시간 6,000\n\n유효 처치 0 · 방문 1/78방\n\n로컬 도전 · 온라인 시작 정보가 없어 순위에 등록되지 않습니다.\n\n개인 기록을 저장했습니다.\n\n입구로 돌아가기\n원정 기록 · 도감\n같은 지도에서 새 도전\n진단 기록 받기\n마지막 빌드와 생존 기록\n최종 기술\n정밀 사격 1\n유물\n없음\n탈출 열쇠\n획득\n받은 피해\n0하트 · 보호막 방어 0회\n최대 피해 층\n없음\n마지막 피격\n피격 기록 없음",
+  "record": {
+    "history": [
+      {
+        "id": "5028a2c6-e57c-4366-8259-f45b1a5cd6a0",
+        "time": 0.2333333333333333,
+        "won": true,
+        "ranking": {
+          "rulesVersion": "ranking-v13",
+          "seasonId": "SPIREBOUND",
+          "gameVersion": "0.59.0-prebeta",
+          "elapsedMs": 233,
+          "kills": 0,
+          "visited": 1,
+          "totalRooms": 78,
+          "escape": 10000,
+          "combat": 0,
+          "exploration": 25,
+          "time": 6000,
+          "total": 16025
+        }
+      }
+    ],
+    "ended": "5028a2c6-e57c-4366-8259-f45b1a5cd6a0",
+    "saved": false
+  },
+  "errors": [],
+  "scores": 0
+}

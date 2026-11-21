@@ -1,0 +1,132 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "approach",
+      "width": 1280,
+      "floor": 8,
+      "once": true,
+      "saveResume": true,
+      "bosses": 1
+    },
+    {
+      "kind": "approach",
+      "width": 1280,
+      "floor": 9,
+      "once": true,
+      "saveResume": true,
+      "bosses": 1
+    },
+    {
+      "kind": "approach",
+      "width": 1280,
+      "floor": 10,
+      "once": true,
+      "saveResume": true,
+      "bosses": 2
+    },
+    {
+      "kind": "approach",
+      "width": 844,
+      "floor": 8,
+      "once": true,
+      "saveResume": true,
+      "bosses": 1
+    },
+    {
+      "kind": "approach",
+      "width": 844,
+      "floor": 9,
+      "once": true,
+      "saveResume": true,
+      "bosses": 1
+    },
+    {
+      "kind": "approach",
+      "width": 844,
+      "floor": 10,
+      "once": true,
+      "saveResume": true,
+      "bosses": 2
+    },
+    {
+      "kind": "key-auto",
+      "width": 1280,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-auto",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-space",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-loaded",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-blur",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-portrait",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-lease",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-save-fail",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "key-reduced",
+      "width": 844,
+      "clockFrozen": true,
+      "keySaved": true
+    },
+    {
+      "kind": "descent-descent",
+      "width": 1280,
+      "clockFrozenDuringHold": true,
+      "floorChangedOnce": true
+    },
+    {
+      "kind": "descent-cold",
+      "width": 844,
+      "clockFrozenDuringHold": true,
+      "floorChangedOnce": true
+    },
+    {
+      "kind": "descent-loading-blur",
+      "width": 844,
+      "clockFrozenDuringHold": true,
+      "floorChangedOnce": true
+    },
+    {
+      "kind": "descent-failure",
+      "width": 844,
+      "recovery": true
+    }
+  ],
+  "errors": [],
+  "productionRecordsSubmitted": 0
+}

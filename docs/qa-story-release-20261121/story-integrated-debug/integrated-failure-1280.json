@@ -1,0 +1,80 @@
+{
+  "words": [
+    "출구 봉쇄 · 남은 적 1",
+    "축복·저주 · 입장 시 선택",
+    "수호 정예",
+    "탐색 지도 · 문 위치"
+  ],
+  "overlay": "",
+  "run": {
+    "elapsed": 24.199999999999907,
+    "key": false,
+    "room": {
+      "x": -1,
+      "y": 0,
+      "type": "normal",
+      "seen": true,
+      "used": false,
+      "enemies": [
+        {
+          "id": 9001,
+          "type": "chaser",
+          "elite": "guardian",
+          "hp": 625,
+          "max": 625,
+          "x": 700.8069804792649,
+          "y": 420.3414148181506,
+          "cd": 5.800000000000406,
+          "tier": 0,
+          "eliteCooldown": 5.800000000000406,
+          "balanceVersion": 1,
+          "rankingId": 0,
+          "orbitHit": 0,
+          "emberCooldown": 0,
+          "venomCooldown": 0,
+          "sporeCooldown": 0,
+          "protected": false,
+          "burn": 0,
+          "slow": 0,
+          "blastCooldown": 0,
+          "frozen": 0,
+          "freezeImmune": 0,
+          "frostStackTime": 0,
+          "frostStacks": 0,
+          "spawnGrace": 0,
+          "chaserStrike": 0,
+          "chaserCooldown": 0.29999999999999966,
+          "chaserWindup": 0,
+          "chaserAim": -2.7413519965557365
+        }
+      ],
+      "obstacles": [],
+      "shape": "cross",
+      "doorPositions": [
+        389,
+        369,
+        null,
+        230
+      ],
+      "supportEncounter": {
+        "version": 1,
+        "ascent": {
+          "state": "planned",
+          "type": "choirCantor",
+          "enemyId": null
+        }
+      },
+      "deployed": true,
+      "hazards": [],
+      "blasts": [],
+      "fireZones": [],
+      "gateBanner": 0,
+      "essences": [],
+      "rollMines": [],
+      "turrets": [],
+      "passiveArcs": [],
+      "poisonPulse": 0,
+      "nextEnemyId": 9002
+    }
+  }
+}

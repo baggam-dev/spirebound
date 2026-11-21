@@ -1,0 +1,126 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "draft",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "auto",
+      "width": 1280,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "auto",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "space",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "click",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "blur",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "portrait",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "resize",
+      "width": 1280,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "pagehide",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "hidden",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "gap",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "reduced",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "held",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "fail",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "queued-skip",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "queued-blur",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    },
+    {
+      "kind": "save-fail",
+      "width": 844,
+      "recordOnce": true,
+      "titleEndingAssets": false,
+      "initialPng": []
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

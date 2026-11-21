@@ -24,6 +24,9 @@ async function open(kind,width=844){
  await p.reload({waitUntil:'domcontentloaded'});await p.locator('#continue').click();await p.waitForFunction(()=>!document.querySelector('#overlay').children.length);
  if(!['held','fail','queued-skip','queued-blur'].includes(kind))await p.evaluate(async()=>{await (await import('/src/ui/escape-scene.js')).prepareEscapeArt();});
  if(kind==='save-fail')await p.evaluate(()=>{const set=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='spirebound.history')throw new DOMException('QA quota','QuotaExceededError');return set.call(this,k,v);};});
+ // Capture short phases on animation frames, rather than awaiting slow screenshot
+ // encoding between phases of a three-second cinematic.
+ await p.evaluate(()=>{window.__escapeFrames=[];const targets=[[0,.24],[1,1.2],[2,2.5]];const sample=()=>{const el=document.querySelector('.escape-scene'),target=targets[window.__escapeFrames.length];if(el&&target&&+el.dataset.escapePhase===target[0]&&+el.dataset.escapeTime>=target[1])window.__escapeFrames.push({phase:target[0],subtitle:document.querySelector('#escapeSubtitle')?.textContent,png:el.querySelector('canvas').toDataURL()});if(window.__escapeFrames.length<3)requestAnimationFrame(sample);};requestAnimationFrame(sample);});
  await p.locator('#interact').click();return {c,p,release,initial};
 }
 try{
@@ -42,7 +45,8 @@ try{
     await p.locator('.escape-scene').waitFor();const before=await record(p);assert.equal(before.history.length,1);assert.equal(before.saved,false);
     assert.ok((await p.locator('#escapeSkip').boundingBox()).height>=44);
     if(kind==='auto'||kind==='reduced'){
-     for(const [phase,at] of [[0,.24],[1,1.2],[2,2.5]]){await p.waitForFunction(({phase,at})=>{const e=document.querySelector('.escape-scene');return e&&+e.dataset.escapePhase===phase&&+e.dataset.escapeTime>=at;},{phase,at});await p.screenshot({path:join(out,`escape-${kind}-${width}-${phase}.png`)});}
+     await p.waitForFunction(()=>window.__escapeFrames.length===3);
+     for(const frame of await p.evaluate(()=>window.__escapeFrames)){assert.equal(frame.subtitle,'살아서 내려왔다.');await writeFile(join(out,`escape-${kind}-${width}-${frame.phase}.png`),Buffer.from(frame.png.split(',')[1],'base64'));}
     }else if(kind==='space'){await p.waitForTimeout(190);await p.keyboard.press('Space');}
     else if(kind==='draft'){await p.locator('#escapeSkip').click();}
     else if(kind==='click')await p.locator('#escapeSkip').click();
