@@ -1,3 +1,4 @@
+import {remnantPartName} from './remnant-labels.js';
 import {enemyGuide} from '../world/expedition.js';
 import {renderJournalPortraits} from '../rendering/journal-portraits.js';
 import {escapeHtml} from './ui.js';
@@ -14,8 +15,8 @@ const advice={
  strafer:'측면 이동을 따라 조준하고 평행 탄막의 옆으로 벗어나세요.',ringcaster:'넓게 비어 있는 고리의 틈으로 통과하세요.',ambusher:'긴 준비 동안 돌진 방향을 확인하고 옆으로 피하세요. 제동 중 반격하세요.',
  warden:'탄막의 빈 공간을 확보하고 내려찍기 목표가 고정되면 이동하세요.',prism:'광선 예고를 피하면서 반사탄이 돌아오는 길을 확인하세요.',slime:'분열할 때 포위되지 않도록 공간을 확보하고 남은 분열체를 모두 처치하세요.',king:'단계가 바뀌면 공격이 달라집니다. 전조를 피하고 연속 공격이 끝난 빈틈을 노리세요.',commander:'저격선·화살비 착탄 예고를 피하고 점멸 후 위치를 다시 확인하세요.',demon:'부위를 차례로 파괴하세요. 본체 가까이에서는 양팔 휘두르기 예고 밖으로 피하세요.'
 };
-const parts=[['core','본체'],['hand','손'],['foot','발'],['eye','눈'],['nose','코'],['mouth','입']];
-const portrait=(key,large=false,part='')=>`<canvas class="bestiary-portrait ${large?'bestiary-portrait-large':''}" width="${large?320:160}" height="${large?320:160}" data-enemy="${key}" ${part?`data-part="${part}"`:''} role="img" aria-label="${escapeHtml(enemyGuide[key].name+(part?' '+parts.find(p=>p[0]===part)?.[1]:''))} 모습"></canvas>`;
+const parts=['core','hand','foot','eye','nose','mouth'].map(id=>[id,remnantPartName(id)]);
+const portrait=(key,large=false,part='')=>`<canvas class="bestiary-portrait ${large?'bestiary-portrait-large':''}" width="${large?320:160}" height="${large?320:160}" data-enemy="${key}" ${part?`data-part="${part}"`:''} role="img" aria-label="${escapeHtml(part?remnantPartName(part):enemyGuide[key].name)} 모습"></canvas>`;
 
 export function bestiaryMarkup(){return `<section class="bestiary"><div class="bestiary-header"><div><small>FIELD BESTIARY</small><h2>몬스터 도감</h2><p>탑의 적을 살펴보고 공격에 대비하세요.</p></div><button id="closeBestiary">돌아가기</button></div><nav class="bestiary-filters" aria-label="몬스터 분류">${['전체',...Object.keys(groups)].map((g,i)=>`<button data-category="${g}" aria-pressed="${i===0}">${g}${i===0?' '+Object.keys(enemyGuide).length:''}</button>`).join('')}</nav><div class="bestiary-layout"><section class="bestiary-list"><label for="bestiarySearch">이름으로 찾기</label><input id="bestiarySearch" type="search" placeholder="몬스터 이름" autocomplete="off"><p id="bestiaryCount" aria-live="polite"></p><div id="bestiaryCards" class="bestiary-cards" aria-label="몬스터 목록"></div></section><section id="bestiaryDetail" class="bestiary-detail" aria-label="몬스터 상세"></section></div><p class="bestiary-note">${Object.keys(enemyGuide).length}종의 외형과 설명을 자유롭게 볼 수 있습니다.</p></section>`;}
 
@@ -24,7 +25,7 @@ export function mountBestiary(root,onClose){
  const cards=root.querySelector('#bestiaryCards'),detail=root.querySelector('#bestiaryDetail'),search=root.querySelector('#bestiarySearch');
  function showDetail(){
   const entry=enemyGuide[selected],group=Object.keys(groups).find(g=>groups[g].includes(selected));
-  detail.innerHTML=`<h3>${escapeHtml(entry.name)}</h3><p class="bestiary-category">${group}</p><div class="bestiary-stage">${portrait(selected,true,selected==='demon'?part:'')}</div>${selected==='demon'?`<div class="bestiary-parts" aria-label="대악마 부위">${parts.map(([id,name])=>`<button data-demon-part="${id}" aria-pressed="${id===part}">${name}</button>`).join('')}</div>`:''}<article><h4>공격 특징</h4><p>${escapeHtml(entry.tip)}</p></article><article><h4>대응법</h4><p>${escapeHtml(advice[selected])}</p></article>`;
+  detail.innerHTML=`<h3>${escapeHtml(entry.name)}</h3><p class="bestiary-category">${group}</p><div class="bestiary-stage">${portrait(selected,true,selected==='demon'?part:'')}</div>${selected==='demon'?`<div class="bestiary-parts" aria-label="봉인의 잔해 부위">${parts.map(([id,name])=>`<button data-demon-part="${id}" aria-pressed="${id===part}">${name}</button>`).join('')}</div>`:''}<article><h4>공격 특징</h4><p>${escapeHtml(entry.tip)}</p></article><article><h4>대응법</h4><p>${escapeHtml(advice[selected])}</p></article>`;
   renderJournalPortraits(root);
  }
  function showList(){
