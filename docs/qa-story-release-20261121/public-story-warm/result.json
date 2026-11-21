@@ -1,0 +1,34 @@
+{
+  "results": [
+    {
+      "width": 1280,
+      "integratedChatter": true,
+      "futureHidden": true,
+      "remnant": true,
+      "relic": true,
+      "chatter": {
+        "visible": "마지막 명령을 집행한다.",
+        "warningHidden": true,
+        "recovered": true,
+        "stateUnchanged": true
+      },
+      "entrancePreparationAttempts": 1
+    },
+    {
+      "width": 844,
+      "integratedChatter": true,
+      "futureHidden": true,
+      "remnant": true,
+      "relic": true,
+      "chatter": {
+        "visible": "마지막 명령을 집행한다.",
+        "warningHidden": true,
+        "recovered": true,
+        "stateUnchanged": true
+      },
+      "entrancePreparationAttempts": 1
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

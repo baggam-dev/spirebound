@@ -1,0 +1,24 @@
+{
+  "base": "https://168.107.21.43",
+  "results": [
+    {
+      "kind": "auto",
+      "width": 1280,
+      "duration": 6608,
+      "noReplayOnReload": true
+    },
+    {
+      "kind": "auto",
+      "width": 844,
+      "duration": 6676,
+      "noReplayOnReload": true
+    },
+    {
+      "kind": "reduced",
+      "width": 844,
+      "reducedMutedSkip": true
+    }
+  ],
+  "errors": [],
+  "scoreSubmissions": 0
+}

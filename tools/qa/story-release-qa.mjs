@@ -39,7 +39,7 @@ try{for(const width of [1280,844]){
  await p.screenshot({path:join(out,`journal-${width}.png`)});
  await p.evaluate(async()=>{const {newRun}=await import('/src/game/engine.js'),{resultOverviewMarkup}=await import('/src/ui/ui.js');const s=newRun(45,{campaign:'expanded',bossLayoutVersion:1});s.status='won';document.getElementById('overlay').innerHTML='<div class="panel"><div class="result-screen result-win">'+resultOverviewMarkup(s)+'</div></div>';});
  await p.getByText('문밖의 아침',{exact:true}).click();assert.match(await p.locator('#overlay').innerText(),/왕이 붙잡던 마지막 밤/);await p.screenshot({path:join(out,`epilogue-${width}.png`)});
- await p.evaluate(async()=>{const {prepareEntranceArt,entranceMarkup,createEntranceRenderer}=await import('/src/ui/entrance-scene.js');const art=await prepareEntranceArt();if(!art)throw Error('Entrance art unavailable');document.getElementById('overlay').innerHTML='<div class="panel">'+entranceMarkup()+'</div>';window.qaEntrance=createEntranceRenderer(document.querySelector('.entrance-scene'),art);window.qaEntrance(6.65);});
+ const entrancePreparationAttempts=await p.evaluate(async warm=>{const {prepareEntranceArt,entranceMarkup,createEntranceRenderer}=await import('/src/ui/entrance-scene.js');let art=null,attempts=0;while(!art&&attempts<(warm?3:1)){attempts++;art=await prepareEntranceArt();}if(!art)throw Error('Entrance art unavailable');document.getElementById('overlay').innerHTML='<div class="panel">'+entranceMarkup()+'</div>';window.qaEntrance=createEntranceRenderer(document.querySelector('.entrance-scene'),art);window.qaEntrance(6.65);return attempts;},process.argv.includes('--warm-entrance'));
  await p.screenshot({path:join(out,`gate-closed-${width}.png`)});
  const chatter=await p.evaluate(async width=>{
   const {createEnemyChatter}=await import('/src/rendering/enemy-chatter.js'),{drawPursuerSprite,pursuerSpriteReady}=await import('/src/rendering/pursuer-sprite.js');
@@ -52,6 +52,6 @@ try{for(const width of [1280,844]){
   actor.attackPhase='recover';ch.tick(.1);c.clearRect(0,0,960,540);drawPursuerSprite(c,actor,0,true,true);lines=[];ch.draw(c,{compact:width===844});const recovered=lines.length>0;delete actor.attackPhase;
   if(JSON.stringify(s)!==before)throw Error('Chatter mutated combat state');return {visible,warningHidden,recovered,stateUnchanged:true};
  },width);assert.ok(chatter.warningHidden&&chatter.recovered);await p.screenshot({path:join(out,`chatter-${width}.png`)});
- results.push({width,integratedChatter:true,...story,chatter});await context.close();
+ results.push({width,integratedChatter:true,...story,chatter,entrancePreparationAttempts});await context.close();
 }assert.deepEqual(errors,[]);assert.equal(scores,0);await writeFile(join(out,'result.json'),JSON.stringify({results,errors,scoreSubmissions:scores},null,2));console.log(JSON.stringify({cases:results.length,errors,scoreSubmissions:scores}));
 }finally{await browser.close();}
