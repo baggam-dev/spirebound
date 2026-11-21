@@ -2,6 +2,8 @@
 export const SETTINGS_KEY='spirebound.settings.v1';
 export const DEFAULT_SETTINGS=Object.freeze({muted:false,volume:.5,reducedEffects:false});
 const CUES={
+ trialOpen:{gap:1,priority:2,notes:[[0,164,.18,'triangle',.014],[.16,246,.22,'sine',.01],[.3,329.6,.24,'sine',.008]]},
+ trialClear:{gap:1,priority:3,notes:[[0,329.6,.25,'sine',.014],[.06,493.9,.3,'sine',.01],[.15,659.3,.36,'sine',.008]]},
  resurrectionRise:{gap:1.5,duck:.55,priority:4,notes:[[0,82,.28,'sine',.018],[.04,164,.3,'triangle',.009]]},
  resurrectionBell:{gap:1.5,duck:.85,priority:4,notes:[[0,110,.65,'sine',.025],[.008,220,.55,'sine',.013],[.02,329.6,.43,'sine',.007],[.035,554.4,.32,'sine',.004]]},
  gateOpen:{gap:1,notes:[[0,82,.3,'triangle',.018],[.14,67,.38,'triangle',.015]]},

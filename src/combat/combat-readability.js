@@ -3,7 +3,7 @@ import {characterSizes} from '../rendering/character-sizes.js';
 export function combatEffectVisible(f,reduced=false){
  if(f.turretMuzzle)return false; // Drawn only with the turret structure pass.
  return !reduced||!!(f.xpPickup||f.hunterSeal||f.text||f.arrowImpact||f.hitElement||f.slash||f.playerBlast||f.groundBurst||
-  f.enemyFeedback==='death'&&(f.demonCore||f.warden||f.prism||f.remainingBoss&&!f.split||f.ordinary&&f.style!=='batExplosion'));
+  f.enemyFeedback==='death'&&(f.crest||f.demonCore||f.warden||f.prism||f.remainingBoss&&!f.split||f.ordinary&&f.style!=='batExplosion'));
 }
 export function readableEffects(effects,compact=false,reduced=false){
  if(!compact&&!reduced)return effects;
