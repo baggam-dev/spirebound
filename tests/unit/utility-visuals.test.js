@@ -23,8 +23,8 @@ test('utility visual budget keeps newest effects without dropping damage text or
 });
 test('maintained utility rendering and real-shot accents never mutate combat state in either effects mode',()=>{
  const s=run(),snapshot=JSON.stringify(s),before=captureUtilityVisuals(s),shot=utilityTransitionEffects(before,s,{events:['shot','repeatShot'],effects:[]});assert.equal(shot.filter(f=>f.utilityFx==='focusShot').length,1);
- assert.equal(utilityCastEffect(s,'frostWave'),null);const effect=utilityCastEffect(s,'guardian');
- const stack=[],c=new Proxy({globalAlpha:1,save(){stack.push(this.globalAlpha);},restore(){this.globalAlpha=stack.pop();}},{get:(o,k)=>k in o?o[k]:()=>{}});
- for(const reduced of [false,true]){drawExpandedUtilityStates(c,s,{reduced});drawUtilityEffect(c,effect,{reduced,player:s.player});assert.equal(stack.length,0);assert.equal(c.globalAlpha,1);}
+ assert.equal(utilityCastEffect(s,'frostWave').utilityFx,'frostCast');
+ const stack=[],c=new Proxy({globalAlpha:1,createRadialGradient(){return {addColorStop(){}};},save(){stack.push(this.globalAlpha);},restore(){this.globalAlpha=stack.pop();}},{get:(o,k)=>k in o?o[k]:()=>{}});
+ for(const reduced of [false,true]){drawExpandedUtilityStates(c,s,{reduced});for(const id of ['focus','firstAid','guardian','frostWave','thunderSigil','galeVeil'])for(const life of [1,.7,.25]){const effect=utilityCastEffect(s,id);effect.t=effect.duration*life;drawUtilityEffect(c,effect,{reduced,player:s.player});assert.equal(stack.length,0);assert.equal(c.globalAlpha,1);}}
  assert.equal(JSON.stringify(s),snapshot);
 });

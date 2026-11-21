@@ -2,6 +2,14 @@
 export const SETTINGS_KEY='spirebound.settings.v1';
 export const DEFAULT_SETTINGS=Object.freeze({muted:false,volume:.5,reducedEffects:false});
 const CUES={
+ utilityFocus:{gap:.35,group:'utility',priority:3,notes:[[0,95,.16,'triangle',.024,45],[.025,660,.1,'sine',.009,330]]},
+ utilityBlood:{gap:.35,group:'utility',priority:3,notes:[[0,165,.16,'triangle',.016,110],[.05,330,.18,'sine',.009]]},
+ utilityGuardian:{gap:.35,group:'utility',priority:3,notes:[[0,196,.15,'triangle',.018],[.025,784,.22,'sine',.011]]},
+ utilityFrost:{gap:.35,group:'utility',priority:3,notes:[[0,220,.13,'triangle',.015,440],[.01,1150,.045,'square',.003,600]]},
+ utilitySigil:{gap:.35,group:'utility',priority:2,notes:[[0,440,.15,'triangle',.012,880],[.05,1100,.06,'sine',.005]]},
+ utilityGale:{gap:.35,group:'utility',priority:3,notes:[[0,550,.15,'triangle',.016,180],[.035,220,.09,'sine',.009]]},
+ utilityThunderHit:{gap:.25,group:'utility-impact',priority:3,notes:[[0,85,.18,'triangle',.026,42],[.006,650,.055,'sawtooth',.005,220]]},
+ utilityBlock:{gap:.2,group:'utility-impact',priority:3,notes:[[0,196,.09,'triangle',.019],[.008,1046,.12,'sine',.009,523]]},
  trialOpen:{gap:1,priority:2,notes:[[0,164,.18,'triangle',.014],[.16,246,.22,'sine',.01],[.3,329.6,.24,'sine',.008]]},
  trialClear:{gap:1,priority:3,notes:[[0,329.6,.25,'sine',.014],[.06,493.9,.3,'sine',.01],[.15,659.3,.36,'sine',.008]]},
  resurrectionRise:{gap:1.5,duck:.55,priority:4,notes:[[0,82,.28,'sine',.018],[.04,164,.3,'triangle',.009]]},

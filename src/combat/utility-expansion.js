@@ -28,7 +28,7 @@ export function tickUtilityCast(s,r,dt,effects){
  q.remaining=Math.max(0,q.remaining-dt);if(q.remaining>0)return;
  delete s.utilityCast;bindDefenses(r.enemies);
  const frost=q.id==='frostWave',radius=frost?120:80;
- effects.push({utilityFx:q.id,x:q.x,y:q.y,r:radius,t:.32,duration:.32});
+ effects.push({utilityFx:q.id,x:q.x,y:q.y,r:radius,t:.45,duration:.45});
  for(const e of r.enemies){
   if(e.hp<=0||airborne(e)||Math.hypot(e.x-q.x,e.y-q.y)>radius||segmentBlocked(q,e,r.obstacles,0))continue;
   const before=Math.max(0,e.hp),hit=applyPlayerDamage(s,e,q.damage,{player:q.criticalProfile,origin:q.origin,source:q.id});
