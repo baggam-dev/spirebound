@@ -1,9 +1,12 @@
 import {ENEMY_CHATTER} from '../ui/enemy-chatter-data.js';
 import {enemyKey} from '../world/expedition.js';
 import {anchor,drawBubble} from './boss-dialogue.js';
+import {PURSUER} from '../combat/pursuer.js';
 
 const strong=e=>e.hp>0&&!e.summoned&&(e.elite||e.trialChampion||e.roamingElite||e.gateTitle||e.type==='boss'||e.type==='pursuer');
-const danger=r=>r.wardenArrival>0||(r.enemies||[]).some(e=>e.hp>0&&(e.highAttack||e.meleeAttack||e.darkAttack||e.gravity||e.eliteWarning>0||e.kingTransition>0||e.prismPhase||e.chaserWindup>0||e.chaserStrike>0||e.attackPhase||e.phase||Number.isFinite(e.chargeAngle)));
+const activePhase=phase=>!!phase&&phase!=='recover';
+const danger=r=>r.wardenArrival>0||(r.enemies||[]).some(e=>e.hp>0&&(e.highAttack||e.meleeAttack||e.darkAttack||e.gravity||e.eliteWarning>0||e.kingTransition>0||activePhase(e.prismPhase)||e.chaserWindup>0||e.chaserStrike>0||activePhase(e.attackPhase)||activePhase(e.phase)||Number.isFinite(e.chargeAngle)));
+const head=e=>e.type==='pursuer'?{x:e.x,y:e.y-PURSUER.height-7}:anchor(e);
 // Presentation-only PRNG and clocks. Never consume run RNG or write expedition state.
 export function createEnemyChatter(run){
  const rooms=new WeakMap();let current=null,speech=null;
@@ -22,8 +25,11 @@ export function createEnemyChatter(run){
    if(run.practice||run.status!=='playing'){speech=null;return;}
    let state=rooms.get(r);if(!state){state={time:0,next:7+random()*5,count:0,used:new Set()};rooms.set(r,state);}
    if(Number.isFinite(dt)&&dt>0)state.time+=dt;
-   if(scripted||danger(r)){speech=null;state.next=Math.max(state.next,state.time+(scripted?4:.5));return;}
-   if(speech&&(speech.actor.hp<=0||state.time>=speech.until))speech=null;
+   if(speech&&(speech.actor.hp<=0||!r.enemies.includes(speech.actor)||state.time>=speech.expires))speech=null;
+   if(scripted){speech=null;state.next=Math.max(state.next,state.time+4);return;}
+   if(danger(r)){state.next=Math.max(state.next,state.time+.5);return;}
+   // Brief warnings hide speech without spending its readable duration.
+   if(speech){if(Number.isFinite(dt)&&dt>0)speech.remaining-=dt;if(speech.remaining<=0)speech=null;}
    if(speech||state.count>=2||state.time<state.next)return;
    const actors=(r.enemies||[]).filter(e=>strong(e)&&(e.variant!=='demon'||e.part==='core'));
    if(!actors.length){state.next=state.time+3;return;}
@@ -31,11 +37,11 @@ export function createEnemyChatter(run){
    state.next=state.time+16+random()*9;
    if(!words.length)return;
    const line=words[Math.floor(random()*words.length)];state.used.add(line);state.count++;
-   speech={actor,lines:[line],until:state.time+2.6};
+   speech={actor,lines:[line],remaining:2.6,expires:state.time+6};
   },
   draw(ctx,{compact=false,scripted=false}={}){
-   if(!speech||scripted||room()!==current||speech.actor.hp<=0||danger(current))return;
-   drawBubble(ctx,{point:anchor(speech.actor),lines:speech.lines},run.player,compact);
+   if(!speech||scripted||room()!==current||speech.actor.hp<=0||!current.enemies.includes(speech.actor)||danger(current))return;
+   drawBubble(ctx,{point:head(speech.actor),lines:speech.lines},run.player,compact);
   }
  };
 }
