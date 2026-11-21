@@ -17,13 +17,18 @@ export function createEnemyChatter(run){
   const key=enemyKey(e);
   // Old-layout demon dialogue has a different identity; retain neutral battle lines.
   if(key==='demon'&&run.bossLayoutVersion!==1)return ENEMY_CHATTER.elite;
-  return ENEMY_CHATTER[key]||(e.trialChampion?ENEMY_CHATTER.trial:ENEMY_CHATTER.elite);
+  if(e.trialChampion)return ENEMY_CHATTER.trial;
+  return ENEMY_CHATTER[key]||ENEMY_CHATTER[e.elite]||ENEMY_CHATTER.elite;
  };
  return {
   tick(dt,{scripted=false}={}){
    const r=room();if(r!==current){current=r;speech=null;}
    if(run.practice||run.status!=='playing'){speech=null;return;}
-   let state=rooms.get(r);if(!state){state={time:0,next:7+random()*5,count:0,used:new Set()};rooms.set(r,state);}
+   // New ascent/return or altar trial encounter gets its own budget, not each visit.
+   const epoch=(run.key?'return':'ascent')+(r.trialState==='active'?':trial':'');
+   let histories=rooms.get(r);if(!histories){histories=new Map();rooms.set(r,histories);}
+   let state=histories.get(epoch);if(!state){state={time:0,next:7+random()*5,count:0,used:new Set(),lastActor:null};histories.set(epoch,state);}
+   if(speech&&speech.epoch!==epoch)speech=null;
    if(Number.isFinite(dt)&&dt>0)state.time+=dt;
    if(speech&&(speech.actor.hp<=0||!r.enemies.includes(speech.actor)||state.time>=speech.expires))speech=null;
    if(scripted){speech=null;state.next=Math.max(state.next,state.time+4);return;}
@@ -31,13 +36,15 @@ export function createEnemyChatter(run){
    // Brief warnings hide speech without spending its readable duration.
    if(speech){if(Number.isFinite(dt)&&dt>0)speech.remaining-=dt;if(speech.remaining<=0)speech=null;}
    if(speech||state.count>=2||state.time<state.next)return;
-   const actors=(r.enemies||[]).filter(e=>strong(e)&&(e.variant!=='demon'||e.part==='core'));
+   let actors=(r.enemies||[]).filter(e=>strong(e)&&(e.variant!=='demon'||e.part==='core')&&pool(e).some(line=>!state.used.has(line)));
    if(!actors.length){state.next=state.time+3;return;}
+   if(actors.length>1)actors=actors.filter(e=>e!==state.lastActor);
    const actor=actors[Math.floor(random()*actors.length)],words=pool(actor).filter(line=>!state.used.has(line));
    state.next=state.time+16+random()*9;
    if(!words.length)return;
    const line=words[Math.floor(random()*words.length)];state.used.add(line);state.count++;
-   speech={actor,lines:[line],remaining:2.6,expires:state.time+6};
+   state.lastActor=actor;
+   speech={actor,epoch,lines:[line],remaining:2.6,expires:state.time+6};
   },
   draw(ctx,{compact=false,scripted=false}={}){
    if(!speech||scripted||room()!==current||speech.actor.hp<=0||!current.enemies.includes(speech.actor)||danger(current))return;
