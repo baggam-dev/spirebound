@@ -1,0 +1,44 @@
+/* Compact HUD; fixed world and aspect ratio are preserved. */
+#runHUD #collectionHUD,#runHUD .build-status,#runHUD #statReadout,#mobileLeftRail,#mobileRightRail{display:none!important}
+#runHUD .hud-bottom{position:absolute;inset:0;display:block;height:auto;padding:0;border:0;background:none;pointer-events:none}
+#runHUD .vitals{position:absolute;left:12px;top:12px;bottom:auto;max-width:210px;padding:5px 8px;background:#11181dd9;border:1px solid #8b795b80;border-radius:6px;pointer-events:none}
+#runHUD #heartStrip{display:flex;flex-wrap:wrap;align-items:center;gap:2px;max-height:44px;overflow:hidden}
+#heartStrip .pixel-icon{width:17px;height:17px}#heartStrip .heart-count{font-size:13px;font-weight:bold}
+#shieldStatus{font-size:11px;line-height:1.3}
+#runHUD #xpTrack{position:absolute;left:12px;top:83px;right:auto;bottom:auto;width:210px;height:9px;overflow:visible;border:1px solid #96856580;background:#13191f;border-radius:3px}
+#runHUD #xpLabel{position:absolute;left:0;right:0;top:10px;bottom:auto;font-size:11px;line-height:15px;color:#eee4ce;text-shadow:1px 1px #000}
+#runHUD #xpFill{height:100%;background:#9998e2;border-radius:2px}
+#combatStatus{position:absolute;left:12px;top:113px;width:215px;font-size:11px;line-height:1.4;color:#e8dbaa;text-shadow:1px 1px #000;pointer-events:none}
+#mobileMinimap{position:absolute;right:12px;top:12px;width:136px;height:auto;max-width:none;aspect-ratio:166/160;pointer-events:none}
+.build-stats{border-top:1px solid #736348;padding-top:8px;margin-top:12px}.build-stats summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:#e9ce93}
+body:has(#runHUD:not([hidden])) .arena{padding-bottom:0}
+body:has(#runHUD:not([hidden])) main{width:min(1440px,calc((100dvh - 170px)*16/9 + 32px))}
+@media(pointer:coarse) and (orientation:landscape){
+ body:has(#runHUD:not([hidden])) main{inset:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);width:auto}
+ body:has(#runHUD:not([hidden])) .arena{width:min(100%,calc((100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom))*16/9));padding:0;margin:0;aspect-ratio:16/9}
+ body:has(#runHUD:not([hidden])) #game{display:block;width:100%;height:auto;aspect-ratio:16/9}
+ body:has(#runHUD:not([hidden]))>header:not(.mobile-open){inset:calc(6px + env(safe-area-inset-top)) calc(10px + env(safe-area-inset-right)) auto auto;width:auto;height:44px!important;display:flex;flex-wrap:nowrap;background:none;gap:6px;padding:0}
+ body:has(#runHUD:not([hidden]))>header:not(.mobile-open)>:not(#bag):not(#pause):not(#mobileMenu){display:none!important}
+ body:has(#runHUD:not([hidden]))>header:not(.mobile-open)>button:is(#bag,#pause,#mobileMenu){display:block;width:44px;min-height:44px;padding:4px;font-size:11px}
+ body:has(#runHUD:not([hidden]))>header:not(.mobile-open) #bag kbd{display:none}
+ #runHUD .vitals{position:fixed;left:calc(10px + env(safe-area-inset-left));top:calc(8px + env(safe-area-inset-top));max-width:176px;padding:4px 7px}
+ #runHUD #heartStrip{max-height:36px}#heartStrip .pixel-icon{width:14px;height:14px}
+ #runHUD #xpTrack{position:fixed;left:calc(10px + env(safe-area-inset-left));top:calc(75px + env(safe-area-inset-top));width:176px;height:7px}
+ #combatStatus{position:fixed;left:calc(10px + env(safe-area-inset-left));top:calc(99px + env(safe-area-inset-top));width:190px;font-size:10px}
+ #mobileMinimap{position:fixed;right:calc(10px + env(safe-area-inset-right));top:calc(58px + env(safe-area-inset-top));width:min(16vw,120px);height:auto;max-height:116px;z-index:10}
+ .actions{position:relative;width:178px;height:154px;display:block;margin-left:auto}
+ .actions button:is(#potion,#utility,#skill,#dodge){position:absolute;min-height:52px;width:62px;height:62px;padding:4px;border-radius:50%;border:1px solid #b29c6e;background:#15202599}
+ .actions #dodge{right:0;bottom:0;width:76px;height:76px;min-height:76px;border-width:2px}
+ .actions #skill{right:0;bottom:84px}.actions #utility{right:84px;bottom:0}.actions #potion{right:78px;bottom:76px;width:52px;height:52px;min-height:52px}
+ .actions .action-icon .pixel-icon{width:29px;height:29px}.actions .action-label{font-size:10px}.actions .action-value{font-size:11px}
+ #interact{position:fixed;right:auto;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(-50%);min-height:44px;max-width:35vw}
+ #notice{top:8px;max-width:48%;font-size:11px}
+}
+body:has(#overlay:not(:empty)) #runHUD{visibility:hidden}
+@media(pointer:coarse) and (orientation:landscape){
+ body:has(#runHUD:not([hidden]))>header.has-mobile-menu-art:not(.mobile-open) :is(#pause,#mobileMenu){font-size:0}
+ #runHUD #shieldStatus{display:flex;flex-direction:column;line-height:1.2;font-size:10px}
+}
+/* Numeric health remains visible even for very large maximum health. */
+#runHUD #heartStrip .pixel-heart:nth-child(n+9){display:none}
+#runHUD #heartStrip .heart-count{white-space:nowrap}
