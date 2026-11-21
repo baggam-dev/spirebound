@@ -1,3 +1,4 @@
+import {movementSlowFactor} from './frost.js';
 import {blocked,segmentBlocked,steering,moveBody} from '../world/terrain.js';
 import {replaceEnemyMovementGoals,enemyMovementGoal,enemyMovementLocked} from '../world/enemy-movement-goals.js';
 const melee=new Set(['chaser','charger','brute','starKnight','royalGuard','riftHunter','ambusher','demonSoldier','demonCaptain']);
@@ -34,6 +35,6 @@ export function prepareEnemyGroup(room,player,dt){
 // Only deferred, idle actors use this. No clock, aim, damage or player mutation.
 export function moveWaitingEnemy(e,player,room,dt){
  const goal=enemyMovementGoal(e,player);if(!goal||distance(e,goal.target)<18)return;
- const a=steering(e,player,room.obstacles,radius(e)),speed=(e.type==='brute'?40:25)*(e.slow>0?(e.slowFactor??1):1),step=Math.min(3,Math.max(0,dt)*speed,distance(e,goal.target));
+ const a=steering(e,player,room.obstacles,radius(e)),speed=(e.type==='brute'?40:25)*(movementSlowFactor(e)),step=Math.min(3,Math.max(0,dt)*speed,distance(e,goal.target));
  moveBody(e,Math.cos(a)*step,Math.sin(a)*step,room.obstacles,radius(e),{minX:45,maxX:915,minY:60,maxY:480});
 }

@@ -4,3 +4,5 @@ export function applyFrost(p,e){if(!p.frost||e.hp<=0)return;const before=e.frost
 }
 export function finishFrost(e,wasFrozen){if(wasFrozen&&!(e.frozen>0)&&e.thawBond){delete e.thawBond;e.slowFactor=Math.min(e.slow>0?e.slowFactor??1:1,e.type==='boss'?.925:.85);e.slow=Math.max(e.slow||0,1);}}
 export function frostAttackRate(e){return e.slow>0?(e.frostAttackFactor??1):1;}
+// Independent timers: a utility wave cannot extend or weaken an existing frost slow.
+export const movementSlowFactor=e=>Math.min(e.slow>0?(e.slowFactor??1):1,e.utilityFrostTime>0?(e.type==='boss'?.8:.6):1);

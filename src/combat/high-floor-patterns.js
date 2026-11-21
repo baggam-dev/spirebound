@@ -1,3 +1,4 @@
+import {movementSlowFactor} from './frost.js';
 import {highFloorEnemy,highFloorKinds,highShapes,highRecovery,highAttackStartAllowed} from './high-floor-profile.js';
 import {blocked,segmentBlocked,moveBody,steering} from '../world/terrain.js';
 import {seekEnemyShot,clearEnemyShot} from './enemy-sightline.js';
@@ -11,7 +12,7 @@ const point=(x,y)=>({x:clamp(x,62,898),y:clamp(y,78,462)});
 const bodyRadius=e=>e.type==='demonSoldier'?19:e.type==='demonCaptain'?24:22;
 const boundsFor=e=>e.type==='demonCaptain'?{minX:50,maxX:910,minY:65,maxY:475}:e.type==='demonSoldier'?{minX:45,maxX:915,minY:60,maxY:480}:{minX:55,maxX:905,minY:75,maxY:465};
 export function highStepEnd(e,aim,length,obstacles){const b=boundsFor(e);let last={x:e.x,y:e.y};for(let d=0;d<length;){d=Math.min(length,d+4);const next={x:e.x+Math.cos(aim)*d,y:e.y+Math.sin(aim)*d};if(next.x<b.minX||next.x>b.maxX||next.y<b.minY||next.y>b.maxY||segmentBlocked(last,next,obstacles,bodyRadius(e)))break;last=next;}return last;}
-function walk(e,target,room,dt,speed){const radius=bodyRadius(e),a=steering(e,target,room.obstacles,radius),step=Math.min(dist(e,target),speed*dt*(e.slow>0?(e.slowFactor??1):1));moveBody(e,Math.cos(a)*step,Math.sin(a)*step,room.obstacles,radius,boundsFor(e));e.facing=a;}
+function walk(e,target,room,dt,speed){const radius=bodyRadius(e),a=steering(e,target,room.obstacles,radius),step=Math.min(dist(e,target),speed*dt*(movementSlowFactor(e)));moveBody(e,Math.cos(a)*step,Math.sin(a)*step,room.obstacles,radius,boundsFor(e));e.facing=a;}
 function phase(a,stage,time){a.stage=stage;a.time=time;a.duration=time;}
 function flash(e,a){e.highFlash={...a,time:.18};}
 function recover(e,a,time=highRecovery[a.kind]??.7){if(['twoShot','cross','resonate'].includes(a.kind))flash(e,a);phase(a,'recover',time);}

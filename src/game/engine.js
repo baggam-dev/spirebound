@@ -63,7 +63,7 @@ export function newRun(seed=Math.floor(Math.random()*4294967296),{campaign='clas
 export function currentRoom(s){return s.floors[s.floor][s.room];}
 export function neighbor(s,d,roomIndex=s.room){if(s.practice)return -1;const r=s.floors[s.floor][roomIndex];if(s.floor===0&&r.type==='exit'&&r.finalEscape)return -1;const next=s.floors[s.floor].findIndex(n=>n.x===r.x+dirs[d][0]&&n.y===r.y+dirs[d][1]);return s.floor===0&&roomIndex===0&&!s.key&&s.tutorialComplete===false&&next!==1?-1:next;}
 export function enrage(s){if(s.key)return;s.key=true;const random=seededRandom((s.seed??1)^0x9e3779b9);s.floors.forEach((rooms,f)=>{prepareReturn(rooms);rooms.forEach(r=>{if(r.trialState==='active'||shrineLocked(r))return;if(r.type!=='boss'&&r.trialState!=='active'){r.enemies=encounter(f,random,r.obstacles,s.floors.length-f);r.deployed=false;r.battlePotions=0;r.collectedEssences=0;}if(r.returnRisk==='low')r.enemies=r.enemies.slice(0,Math.max(4,Math.ceil(r.enemies.length*.6)));if(r.returnRisk==='high'&&r.enemies.length)promoteElite(r.enemies[0],'volley');r.hazards=[];r.blasts=[];r.fireZones=[];});});retireSpecialEncounters(s);prepareReturnSeals(s);planPursuerEncounters(s);retireSupportForReturn(s);planSupportEncounters(s);}
-export function advanceClock(s,dt,paused){if(!paused&&s.status==='playing'){s.elapsed+=dt;for(const k of ['attack','skill','dodge','invulnerable','shield','auraShield','potionCooldown','utilityCooldown','guardianTime'])s[k]=Math.max(0,(s[k]||0)-dt);for(const k of ['actionStun','electricGrace','critFocusTime','critFocusCooldown'])s.player[k]=Math.max(0,(s.player[k]||0)-dt);s.player.focusTime=Math.max(0,(s.player.focusTime||0)-dt);}}
+export function advanceClock(s,dt,paused){if(!paused&&s.status==='playing'){s.elapsed+=dt;for(const k of ['attack','skill','dodge','invulnerable','shield','auraShield','potionCooldown','utilityCooldown','guardianTime'])s[k]=Math.max(0,(s[k]||0)-dt);for(const k of ['actionStun','electricGrace','critFocusTime','critFocusCooldown','galeTime'])s.player[k]=Math.max(0,(s.player[k]||0)-dt);s.player.focusTime=Math.max(0,(s.player.focusTime||0)-dt);if(s.player.galeTime!==undefined&&!(s.player.galeTime>0))s.player.galeCharges=0;}}
 export function canEscape(s){const room=currentRoom(s);return s.key&&s.floor===0&&room.type==='exit'&&!roomLocked(s)&&(!finalEscapeRequired(s)||room.finalEscape?.ready===true);}
 export function timeString(t){return `${Math.floor(t/60).toString().padStart(2,'0')}:${Math.floor(t%60).toString().padStart(2,'0')}`;}
 
@@ -75,7 +75,7 @@ export function travel(s,direction){
  if(direction===1&&s.campaign==='expanded'&&s.floor===8&&!s.floors[8].some(room=>room.type==='boss'&&room.commanderPending===false&&room.used))return false;
  if(direction===-1&&(r.type!=='down'||s.key&&returnStairsLocked(r)))return false;
  const rooms=s.floors[next],destination=direction===1?0:(rooms.findIndex(r=>r.type==='boss'&&r.used)>=0?rooms.findIndex(r=>r.type==='boss'&&r.used):rooms.findIndex(r=>r.type==='up'||r.type==='boss'));if(destination<0)return false;
- s.floor=next;s.room=destination;s.player.x=480;s.player.y=220;currentRoom(s).seen=true;return true;
+ delete s.utilityCast;s.floor=next;s.room=destination;s.player.x=480;s.player.y=220;currentRoom(s).seen=true;return true;
 }
 export function bossDefeated(s){if(s.practice){currentRoom(s).used=true;return 'practiceWon';}const r=currentRoom(s);r.used=true;offerRelics(s,r);if(s.floor===s.floors.length-1){enrage(s);s.returnNoticePending=true;return 'key';}offerRelics(s,r);return 'stairs';}
 export const useShrine=claimIncantation;

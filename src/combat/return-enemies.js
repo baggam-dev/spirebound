@@ -1,3 +1,4 @@
+import {movementSlowFactor} from './frost.js';
 import {seekEnemyShot,enemyShotLane,clearEnemyShot} from './enemy-sightline.js';
 import {ambusherSpriteState} from '../rendering/ambusher-sprite.js';
 import {ringcasterSpriteState} from '../rendering/ringcaster-sprite.js';
@@ -9,7 +10,7 @@ import {attackProfile} from './balance.js';
 export const returnEnemyTypes=['strafer','ringcaster','ambusher'];
 function shot(e,a,speed,bullets){const p=attackProfile(e);bullets.push({x:e.x,y:e.y,vx:Math.cos(a)*speed*p.speed,vy:Math.sin(a)*speed*p.speed,enemy:true,damage:e.escapeDepth>=4?12:10,source:e.type==='strafer'?'횡단 사수 평행탄':'고리술사 고리탄',life:4,hit:[]});}
 export function updateReturnEnemy(e,p,obstacles,dt,bullets){
- const factor=e.slow>0?e.slowFactor:1;
+ const factor=movementSlowFactor(e);
  if(e.type==='strafer'&&e.attackPhase==='warning'&&!enemyShotLane(e,e.aim,p,obstacles)){e.attackPhase=null;e.attackTime=0;e.cd=.2;}
  if(e.attackPhase){e.attackTime-=dt;
   if(e.attackPhase==='warning'&&e.attackTime<=0){

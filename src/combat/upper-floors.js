@@ -1,3 +1,4 @@
+import {movementSlowFactor} from './frost.js';
 import {kingFloor,revisedBosses} from '../game/boss-layout.js';
 import {seekEnemyShot,enemyShotLane,clearEnemyShot} from './enemy-sightline.js';
 import {meleeIntersects} from './enemy-melee.js';
@@ -57,19 +58,19 @@ export function tickUpperState(e,p,r,dt,bullets){
 export function chooseKingAttack(e,p){const phase=kingPhase(e),near=dist(e,p)<155;let options=near?['slash','mark','dash']:['fan','dash','mark'];if(phase>=2)options.push(near?'ring':'blink');if(phase===3&&(e.darkTurn??0)%3===0&&e.lastDarkAttack!=='judgment')return 'judgment';options=options.filter(k=>k!==e.lastDarkAttack);return options[(e.darkTurn??0)%options.length];}
 export function updateUpper(e,p,r,dt,bullets,hurt){
  const seeking=e.type==='astralSniper'&&e.gateTitle&&!clearEnemyShot(e,p,r.obstacles);
- if(seeking){if(!e.darkAttack)seekEnemyShot(e,p,r.obstacles,dt,{radius:22,speed:60*(e.slow>0?(e.slowFactor??1):1),preferred:280});}
+ if(seeking){if(!e.darkAttack)seekEnemyShot(e,p,r.obstacles,dt,{radius:22,speed:60*(movementSlowFactor(e)),preferred:280});}
  if(e.type==='astralSniper'&&e.gateTitle&&!seeking){
   const a=e.darkAttack,movingTime=a?Math.min(dt,Math.max(0,a.time-.3)):dt;
   if(movingTime>0&&e.hp>0&&!(e.frozen>0)&&!(e.opening>0)){
    const distance=dist(e,p),theta=angle(p,e),side=(e.id||0)%2?1:-1;
    const target=distance>340?p:{x:Math.max(70,Math.min(890,p.x+Math.cos(theta+side*.3)*280)),y:Math.max(90,Math.min(450,p.y+Math.sin(theta+side*.3)*280))};
-   walk(e,target,r,movingTime,60*(e.slow>0?(e.slowFactor??1):1));
+   walk(e,target,r,movingTime,60*(movementSlowFactor(e)));
    if(a){a.x=e.x;a.y=e.y;a.aim=angle(e,p);e.facing=a.aim;}
   }
  }
  if(e.type==='astralSniper'&&e.darkAttack?.kind==='fan'&&!enemyShotLane(e,e.darkAttack.aim,p,r.obstacles)){delete e.darkAttack;e.cd=.2;}
  if(resolve(e,p,r,dt,bullets,hurt))return;
- e.cd=Math.max(0,(e.cd??1)-dt*(e.gateFury?1.3:1));const slowed=e.slow>0?(e.slowFactor??1):1,ready=e.cd<=0&&warningCount(r,e)<2;
+ e.cd=Math.max(0,(e.cd??1)-dt*(e.gateFury?1.3:1));const slowed=movementSlowFactor(e),ready=e.cd<=0&&warningCount(r,e)<2;
  if(e.variant==='king'){const phase=kingPhase(e);if(dist(e,p)>95)walk(e,p,r,dt,[0,60,90,110][phase]*slowed);if(ready)startUpperAttack(e,chooseKingAttack(e,p),p,r);return;}
  if(e.type==='starBearer'){walk(e,p,r,dt,20*slowed);if(ready)startUpperAttack(e,'ring',p,r);return;}
  if(e.type==='astralSniper'&&!e.gateTitle||e.type==='gravityMage'&&!e.gravity)moveRangedUpper(e,p,r,dt,slowed);

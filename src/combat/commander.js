@@ -1,3 +1,4 @@
+import {movementSlowFactor} from './frost.js';
 import {seekEnemyShot,clearEnemyShot,enemyShotLane} from './enemy-sightline.js';
 import {pressureBoss,commanderProfile,commanderOffsets} from './boss-pressure.js';
 import {moveBody,safeSpawn,steering} from '../world/terrain.js';
@@ -62,7 +63,7 @@ export function updateCommander(e,p,r,dt,bullets,hurt){
  }
  if(!c.blinkClock){const point=blinkDestination(e,p,r);if(point){c.blink={...point,time:.4};c.volleyClock=Math.max(c.volleyClock,.5);}return;}
  const direct=clearEnemyShot(e,p,r.obstacles,650);
- if(!direct){seekEnemyShot(e,p,r.obstacles,dt,{radius:32,speed:q.move*(e.slow>0?e.slowFactor??1:1),range:650,preferred:300});return;}
+ if(!direct){seekEnemyShot(e,p,r.obstacles,dt,{radius:32,speed:q.move*(movementSlowFactor(e)),range:650,preferred:300});return;}
  if(pressureBoss(e)&&!c.ricochetClock){c.ricochet={aim:Math.atan2(p.y-e.y,p.x-e.x),count:q.reflectCount,time:q.reflectWindup};c.ricochetClock=q.reflect;return;}
  if(!c.snipeClock){c.snipe={aim:Math.atan2(p.y-e.y,p.x-e.x),time:q.snipeWindup};c.snipeClock=q.snipe;return;}
  if(!pressureBoss(e))moveCommander(e,p,r,dt);
@@ -74,7 +75,7 @@ function moveCommander(e,p,r,dt){if(!clearEnemyShot(e,p,r.obstacles,650))return;
  c.strafeClock-=dt;if(c.strafeClock<=0){c.strafeDirection*=-1;c.strafeClock=phase===2?2.5:3.5;}
  const radial=distance<190?-1:distance>330?1:0,side=c.strafeDirection;
  const dx=Math.cos(angle)*radial+Math.sin(angle)*side*.9,dy=Math.sin(angle)*radial-Math.cos(angle)*side*.9;
- const speed=commanderProfile(e).move*dt*(e.slow>0?e.slowFactor??1:1);
+ const speed=commanderProfile(e).move*dt*(movementSlowFactor(e));
  moveBody(e,dx*speed,dy*speed,r.obstacles,32);
  if(e.x<75||e.x>885||e.y<95||e.y>445)c.strafeDirection*=-1;
  e.x=clamp(e.x,55,905);e.y=clamp(e.y,75,465);

@@ -1,3 +1,4 @@
+import {movementSlowFactor} from './frost.js';
 import {blocked,segmentBlocked,moveBody,steering} from '../world/terrain.js';
 import {meleeIntersects} from './enemy-melee.js';
 import {SUPPORT,supportTypes,interruptSupportCast} from './support-profile.js';
@@ -22,7 +23,7 @@ function phase(e,name,time){e.attackPhase=name;e.attackTime=time;}
 function move(e,p,room,dt){
  const d=distance(e,p);if(d>=180&&d<=300)return;
  const target=d<180?{x:Math.max(65,Math.min(895,e.x+(e.x-p.x))),y:Math.max(85,Math.min(455,e.y+(e.y-p.y)))}:p;
- const aim=steering(e,target,room.obstacles,19),speed=35*(e.slow>0?(e.slowFactor??1):1);moveBody(e,Math.cos(aim)*speed*dt,Math.sin(aim)*speed*dt,room.obstacles,19,bounds);e.facing=aim;
+ const aim=steering(e,target,room.obstacles,19),speed=35*(movementSlowFactor(e));moveBody(e,Math.cos(aim)*speed*dt,Math.sin(aim)*speed*dt,room.obstacles,19,bounds);e.facing=aim;
 }
 export function updateSupportCaster(e,p,room,dt,bullets){
  if(!supportTypes.includes(e.type)||e.hp<=0||!(dt>0))return;
@@ -50,6 +51,6 @@ export function updateSupportMinion(e,p,room,dt,hurt){
   if(e.attackPhase==='minionWarning')phase(e,'minionStrike',.18);else if(e.attackPhase==='minionStrike')phase(e,'minionRecover',.7);else{delete e.attackPhase;delete e.attackTime;e.cd=.9;}return;
  }
  e.cd=Math.max(0,(e.cd??.9)-dt);if(e.cd===0&&distance(e,p)<=60&&!segmentBlocked(e,p,room.obstacles,1)){e.aim=Math.atan2(p.y-e.y,p.x-e.x);e.minionHit=false;phase(e,'minionWarning',.35);return;}
- const aim=steering(e,p,room.obstacles,15);moveBody(e,Math.cos(aim)*55*dt*(e.slow>0?(e.slowFactor??1):1),Math.sin(aim)*55*dt*(e.slow>0?(e.slowFactor??1):1),room.obstacles,15,bounds);e.facing=aim;
+ const aim=steering(e,p,room.obstacles,15);moveBody(e,Math.cos(aim)*55*dt*(movementSlowFactor(e)),Math.sin(aim)*55*dt*(movementSlowFactor(e)),room.obstacles,15,bounds);e.facing=aim;
 }
 export function cleanupSupportMinions(room){for(const e of room.enemies)if(e.type==='ossuaryMinion'&&e.hp>0&&!room.enemies.some(owner=>owner.id===e.summonOwner&&owner.type==='ossuarySummoner'&&owner.hp>0)){e.hp=0;e.selfDestruct=true;e.frostShattered=true;}}

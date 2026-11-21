@@ -222,10 +222,10 @@ export function grantRelic(p,id){if(!canGrantRelic(p,id))return false;p.relics=[
 export function offerRelics(s,room){if(room.relicOffers)return;const random=seededRandom((s.seed??1)^((s.floor+1)*73471)^(s.room*1877)),pool=relics.filter(r=>!['sunFairy','snowFairy','stormFairy'].includes(r.id)&&canGrantRelic(s.player,r.id));room.relicOffers=[];while(pool.length&&room.relicOffers.length<3){const chosen=weightedRelic(pool,random);room.relicOffers.push(chosen.id);pool.splice(pool.indexOf(chosen),1);}room.relicClaimed=false;}
 export function claimRelic(s,id){const r=s.floors[s.floor][s.room];if(s.status!=='playing'||!r.used||r.enemies.length||r.relicClaimed||!r.relicOffers||id!=='skip'&&!r.relicOffers.includes(id))return false;if(id!=='skip'&&!grantRelic(s.player,id))return false;r.relicClaimed=true;return true;}
 export function directRelicFactor(p,e,arrow=false){let factor=1+relicStat(p,'direct');if(hasRelic(p,'lens')&&Math.hypot(p.x-e.x,p.y-e.y)>=280)factor*=1.2;if(hasRelic(p,'hunter')&&e.type==='boss')factor*=1.25;if(hasRelic(p,'execution')&&e.hp<=e.max*.3)factor*=1.3;if(arrow&&hasRelic(p,'openingWhetstone')&&e.hp>=e.max)factor*=1.2;return factor;}
-export const utilityCooldown=(p,id=p.utility)=>({focus:25,firstAid:30,guardian:25}[id]??25)*(1-relicStat(p,'utilityCooldown'));
+export const utilityCooldown=(p,id=p.utility)=>({focus:25,firstAid:30,guardian:25,frostWave:22,thunderSigil:28,galeVeil:26}[id]??25)*(1-relicStat(p,'utilityCooldown'));
 export const relicGrade=id=>relicInfo(id)?.grade||'normal';
 export const relicGradeName=id=>({normal:'일반',rare:'레어',unique:'유니크'})[relicGrade(id)];
-export function movementSpeed(p){return p.speed*hexFactor(p,'move')*(1+(p.bonusMove||0)+relicStat(p,'move')+(hasFairy(p,'snowFairy')?.05:0)+(p.fairyKing?.1:0)+(p.focusTime>0?.25:0))*(p.evolutions?.haste==='stride'?1.12:1);}
+export function movementSpeed(p){return p.speed*hexFactor(p,'move')*(1+(p.bonusMove||0)+relicStat(p,'move')+(hasFairy(p,'snowFairy')?.05:0)+(p.fairyKing?.1:0)+(p.focusTime>0?.25:0)+(p.galeTime>0?.35:0))*(p.evolutions?.haste==='stride'?1.12:1);}
 export const hexFactor=(p,key)=>p.hexes?.[key]??1;
 export const dodgeCooldown=p=>Math.max(2.5,4*(1-relicStat(p,'blinkCooldown'))*hexFactor(p,'blink'));
 export const blinkDistance=p=>140*(1+relicStat(p,'blinkRange'))*hexFactor(p,'reach');

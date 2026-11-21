@@ -1,3 +1,4 @@
+import {movementSlowFactor} from './frost.js';
 import {seekEnemyShot,enemyShotLane} from './enemy-sightline.js';
 import {drawEnemyBeam,drawEnemyBeamEnding} from '../rendering/enemy-attack-vfx.js';
 import {hasGruntSprite} from '../rendering/grunt-sprite.js';
@@ -33,7 +34,7 @@ export function updateRanged(e,p,obstacles,dt,bullets,enraged=false){
   return 0;
  }
  e.cd=Math.max(0,(e.cd??2)-dt);
- if(!seekEnemyShot(e,p,obstacles,dt,{speed:30*(e.slow>0?e.slowFactor:1),range:e.type==='laser'?650:480,preferred:290}))return 0;
+ if(!seekEnemyShot(e,p,obstacles,dt,{speed:30*(movementSlowFactor(e)),range:e.type==='laser'?650:480,preferred:290}))return 0;
  if(e.cd<=0){e.phase='aim';e.phaseTime=e.type==='laser'?1.2:.8;e.aim=Math.atan2(p.y-e.y,p.x-e.x);e.beamHit=false;return 0;}
 
  return 0;

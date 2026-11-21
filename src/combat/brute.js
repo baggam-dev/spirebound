@@ -1,3 +1,4 @@
+import {movementSlowFactor} from './frost.js';
 import {meleeIntersects} from './enemy-melee.js';
 import {drawEnemyField,drawEnemyLanding} from '../rendering/enemy-attack-vfx.js';
 import {drawGruntSprite} from '../rendering/grunt-sprite.js';
@@ -18,7 +19,7 @@ export function updateBrute(e,p,obstacles,dt,enraged=false){
  const distance=Math.hypot(p.x-e.x,p.y-e.y);
  if(distance<57&&!segmentBlocked(e,p,obstacles,0)){e.phase='swing';e.phaseTime=.3;e.meleeAim=Math.atan2(p.y-e.y,p.x-e.x);return 0;}
  if(e.jumpCooldown<=0&&distance>90){const length=Math.min(distance,240),target={x:e.x+(p.x-e.x)*length/distance,y:e.y+(p.y-e.y)*length/distance};target.x=Math.max(60,Math.min(900,target.x));target.y=Math.max(80,Math.min(460,target.y));safeSpawn(target,obstacles,22);e.landX=target.x;e.landY=target.y;e.phase='windup';e.phaseTime=1;return 0;}
- const a=steering(e,p,obstacles,22),speed=(enraged?41.6:40)*(e.slow>0?e.slowFactor:1);moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,obstacles,22);return 0;
+ const a=steering(e,p,obstacles,22),speed=(enraged?41.6:40)*(movementSlowFactor(e));moveBody(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,obstacles,22);return 0;
 }
 const visualMotion=new WeakMap();
 export const bruteLift=e=>e.phase==='air'?Math.sin(Math.PI*(1-Math.max(0,e.phaseTime)/.55))*45:0;

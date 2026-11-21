@@ -1,3 +1,4 @@
+import {movementSlowFactor} from './frost.js';
 import {moveBody,steering,segmentBlocked} from '../world/terrain.js';
 import {meleeIntersects} from './enemy-melee.js';
 
@@ -15,14 +16,14 @@ export function updatePursuer(e,p,room,dt,hurt){
    if(distance<=105){prepareCleave(e,p);return;}
    e.aim=Math.atan2(p.y-e.y,p.x-e.x);e.dashHit=false;phase(e,'warning',PURSUER.warning);return;
   }
-  const aim=steering(e,p,room.obstacles,PURSUER.radius),speed=PURSUER.walk*(e.slow>0?(e.slowFactor??1):1);
+  const aim=steering(e,p,room.obstacles,PURSUER.radius),speed=PURSUER.walk*(movementSlowFactor(e));
   moveBody(e,Math.cos(aim)*speed*dt,Math.sin(aim)*speed*dt,room.obstacles,PURSUER.radius,bounds);e.facing=aim;return;
  }
  let remaining=dt;
  for(let transitions=0;remaining>1e-9&&e.attackPhase&&transitions<8;transitions++){
   const step=Math.min(remaining,e.attackTime),current=e.attackPhase;e.attackTime=Math.max(0,e.attackTime-step);remaining-=step;
   if(current==='dash'){
-   const before={x:e.x,y:e.y},distance=PURSUER.distance/PURSUER.dash*step*(e.slow>0?(e.slowFactor??1):1),next={x:e.x+Math.cos(e.aim)*distance,y:e.y+Math.sin(e.aim)*distance};
+   const before={x:e.x,y:e.y},distance=PURSUER.distance/PURSUER.dash*step*(movementSlowFactor(e)),next={x:e.x+Math.cos(e.aim)*distance,y:e.y+Math.sin(e.aim)*distance};
    if(segmentBlocked(before,next,room.obstacles,PURSUER.radius)||next.x<bounds.minX||next.x>bounds.maxX||next.y<bounds.minY||next.y>bounds.maxY){phase(e,'recover',2.1);break;}
    moveBody(e,next.x-e.x,next.y-e.y,room.obstacles,PURSUER.radius,bounds);
    if(!e.dashHit&&swept(before,e,p)&&!segmentBlocked(before,p,room.obstacles,1)){e.dashHit=true;hurt(9,'봉인 추적자 돌진',null,e);}

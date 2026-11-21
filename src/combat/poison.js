@@ -1,3 +1,4 @@
+import {movementSlowFactor} from './frost.js';
 import {drawSoftField} from '../rendering/ground-visuals.js';
 import {drawGroundField} from '../rendering/ground-visuals.js';
 import {drawOrganicBody} from '../rendering/pixel-world.js';
@@ -36,7 +37,7 @@ export function updatePoisonEnemy(e,p,room,dt,bullets=[]){
  const stage=e.stage||0;
  if(stage<2){e.slimeShotClock=Math.max(0,(e.slimeShotClock??(stage===0?2:3))-dt);if(e.slimeShotClock===0){const aim=Math.atan2(p.y-e.y,p.x-e.x),offsets=stage===0?[-.48,-.24,0,.24,.48]:[-.12,.12];for(const offset of offsets){emitShot(e,aim+offset,stage===0?180:165,bullets);Object.assign(bullets.at(-1),{damage:9,source:'독성 군체 일반탄'});}e.slimeShotClock=stage===0?2.8:4;}}
 
- if(e.cd>0){const a=steering(e,p,room.obstacles,slimeRadius(e));moveBody(e,Math.cos(a)*(22+stage*10)*1.2*(e.slow>0?e.slowFactor:1)*dt,Math.sin(a)*(22+stage*10)*1.2*(e.slow>0?e.slowFactor:1)*dt,room.obstacles,slimeRadius(e));e.x=Math.max(75,Math.min(885,e.x));e.y=Math.max(90,Math.min(450,e.y));return;}
+ if(e.cd>0){const a=steering(e,p,room.obstacles,slimeRadius(e));moveBody(e,Math.cos(a)*(22+stage*10)*1.2*(movementSlowFactor(e))*dt,Math.sin(a)*(22+stage*10)*1.2*(movementSlowFactor(e))*dt,room.obstacles,slimeRadius(e));e.x=Math.max(75,Math.min(885,e.x));e.y=Math.max(90,Math.min(450,e.y));return;}
  if(warningCount(room,e)>=2||hazards.length>=12){e.cd=.15;return;}
  const turn=e.poisonTurn||0,pattern=turn%(stage<2?6:5);e.poisonTurn=turn+1;
  if(stage===0&&pattern===0)puddles(e,p,room,3,true);

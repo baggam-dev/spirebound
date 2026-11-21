@@ -1,3 +1,4 @@
+import {movementSlowFactor} from './frost.js';
 import {blocked,moveBody,safeSpawn,segmentBlocked,steering} from '../world/terrain.js';
 import {emitShot} from './patterns.js';
 import {updateDemonSpecials,clearDemonSpecials} from './demon-specials.js';
@@ -136,7 +137,7 @@ function updatePressureDemon(s,r,p,dt,bullets,hurt){
  for(const e of r.enemies.filter(e=>e.variant==='demon'&&e.hp>0)){
   if(e.part==='foot'){e.demonShieldClock=Math.max(0,(e.demonShieldClock??5)-dt);if(!e.demonShieldClock){e.demonShield=true;e.demonShieldClock=5;}}
   if(e.frozen>0)continue;
-  const active=d.attacks.find(a=>a.owner===e.part),slow=e.slow>0?e.slowFactor??1:1;
+  const active=d.attacks.find(a=>a.owner===e.part),slow=movementSlowFactor(e);
   if(!active||active.time>.2){let target=p,speed=0,side=0;
    if(e.part==='hand'&&dist(e,p)>85)speed=85;
    if(e.part==='foot'){speed=dist(e,p)>220?85:55;side=d.turn%2?1:-1;}

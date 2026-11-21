@@ -33,6 +33,7 @@ export function validateCriticalSave(s,check,number){
   if(value?.criticalProfile)validateCriticalPlayer(value.criticalProfile,check,number);
  };
  inspect(s.roll);
+ inspect(s.utilityCast);
  for(const b of s.projectiles||[]){inspect(b);if(b.build)validateCriticalPlayer(b.build,check,number);if(b.weapon)validateCriticalPlayer(b.weapon,check,number);}
  for(const room of s.floors.flat()){
   for(const value of [room.arrowRain,room.fairyBeam,room.allyZone,...(room.fireZones||[]),...(room.rollMines||[])])inspect(value);
