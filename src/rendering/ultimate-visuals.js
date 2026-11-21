@@ -5,6 +5,10 @@ const clamp=n=>Math.max(0,Math.min(1,n));
 const box=(c,x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h);};
 function line(c,points,color,width=2){c.strokeStyle=color;c.lineWidth=width;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(Math.round(x),Math.round(y)):c.moveTo(Math.round(x),Math.round(y)));c.stroke();}
 function clipArena(c){prepareContactStyle(c);c.beginPath();c.rect(25,45,910,455);c.clip();}
+function rainDust(c,x,y,age,reduced,finishing){
+ if(age<0||age>.22)return;const progress=age/.22;c.save();c.globalAlpha*=Math.pow(1-progress,2)*(finishing?.5:.28);c.fillStyle='#b6a58a';
+ for(let i=0;i<(reduced?2:5);i++){const side=i%2?1:-1,spread=5+progress*(finishing?31:18);box(c,x+side*(spread+i*2),y+3+(i%3)*2-progress*4,finishing?5:3,2);}c.restore();
+}
 export function rainVisualState(z){
  const pulse=Math.max(0,Math.min(5,z.pulses-1)),age=Math.max(0,z.elapsed-pulse*.3);
  return {pulse,impact:z.pulses>0?clamp(1-age/.28):0,fall:z.pulses<6?clamp((z.elapsed-(z.pulses*.3-.18))/.18):0,opacity:clamp((1.8-z.elapsed)/.3)};
@@ -22,9 +26,9 @@ export function drawArrowRain(c,z,reduced=false){
  for(let j=0;j<count;j++){
   const i=reduced?j*2:j,a=i*2.3999632297,r=z.r*Math.sqrt((i+.5)/24)*.95,x=z.x+Math.cos(a)*r,y=z.y+Math.sin(a)*r,major=i%8===0,scale=major?1.6:.7;
   if(z.pulses>0&&age<.26){const fade=1-age/.26;
-   if(major){c.globalAlpha=alpha*v.opacity;drawGroundContact(c,{x,y,age,reduced,finishing:v.pulse===5});drawImpactAccent(c,{x,y,age,angle:-Math.PI/2,strength:2,reduced,duration:.2});}
+   if(major){const emphasis=v.pulse===0||v.pulse===2||v.pulse===5;c.globalAlpha=alpha*v.opacity*(emphasis?1:.55);drawGroundContact(c,{x,y,age,reduced,finishing:v.pulse===5});drawImpactAccent(c,{x,y,age,angle:-Math.PI/2,strength:emphasis?2:1,reduced,duration:.2});rainDust(c,x,y,age,reduced,v.pulse===5);}
    else if(age<.045){c.globalAlpha=alpha*v.opacity*(1-age/.045)*.55;box(c,x-3,y-1,6,2,'#fff0c7');}
-   c.globalAlpha=alpha*v.opacity*fade*(major?1:.5);line(c,[[x-6*scale,y-24*scale],[x,y]],major?'#dfc58b':'#9d8b69',major?3:1);box(c,x-9*scale,y-27*scale,major?7:4,major?3:2,'#e6e5d5');
+   c.globalAlpha=alpha*v.opacity*fade*(major?1:.32);line(c,[[x-6*scale,y-24*scale],[x,y]],major?'#dfc58b':'#9d8b69',major?3:1);box(c,x-9*scale,y-27*scale,major?7:4,major?3:2,'#e6e5d5');
   }
   // Preview only the next pulse; never show a seventh volley after the last hit.
   if(z.pulses<6&&v.fall>0){const lift=(1-v.fall)*190,ax=x-lift*.3,ay=y-lift;c.globalAlpha=alpha*v.opacity*(major?.95:.5);
@@ -44,6 +48,9 @@ export function drawCrossbowRelease(c,v,{reduced=false,tint='#e4cf9d'}={}){
  c.restore();
 }
 // Ephemeral release effects come from the actual delayed projectile boundary.
+export function crossbowReleaseEffects(effects,reduced=false){
+ const chosen=[],cells=new Set();for(const f of effects){if(!f.turretMuzzle||!(f.t>0))continue;const key=Math.round(f.x/12)+':'+Math.round(f.y/12);if(cells.has(key))continue;cells.add(key);chosen.push(f);if(chosen.length>=(reduced?2:4))break;}return chosen;
+}
 export function drawRepeatedCrossbowRelease(c,f,reduced=false){
  if(!f.turretMuzzle||!(f.t>0))return false;
  const recoil=clamp(f.t/f.duration);
