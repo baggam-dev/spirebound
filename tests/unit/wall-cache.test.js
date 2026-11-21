@@ -26,7 +26,7 @@ test('wall image is reused, invalidated on edits and bounded across room changes
 });
 test('outer and inner wall faces use the same world-aligned block palette',()=>{
  const colors=new Set(),rects=[];const c={save(){},restore(){},beginPath(){},rect(){},clip(){},set fillStyle(v){colors.add(v);},fillRect(x,y,w,h){rects.push([x,y,w,h]);}};
- paintStoneWalls(c,outerWalls);paintStoneWalls(c,[{x:25,y:40,w:155,h:185,type:'wall'}]);assert.ok(colors.has('#11191b')&&colors.has('#3c4742'));assert.ok(rects.filter(r=>r[2]===46&&r[3]===38).every(([x,y])=>x%48===0&&y%40===0));
+ paintStoneWalls(c,outerWalls);paintStoneWalls(c,[{x:25,y:40,w:155,h:185,type:'wall'}]);assert.ok(colors.has('#202631')&&colors.has('#605e56'));assert.ok(rects.filter(r=>r[2]===46&&r[3]===38).every(([x,y])=>x%48===0&&y%40===0));
 });
 test('infernal masonry uses one palette for inner and outer walls and refreshes cached floor themes',()=>{
  const previous=globalThis.OffscreenCanvas,colors=new Set();let created=0;

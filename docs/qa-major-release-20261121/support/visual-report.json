@@ -1,0 +1,20 @@
+{
+  "state": {
+    "ready": true,
+    "frames": {
+      "ossuarySummoner": 9,
+      "choirCantor": 9,
+      "ossuaryMinion": 8
+    },
+    "errors": {}
+  },
+  "painted": {
+    "ossuarySummoner": 1968,
+    "choirCantor": 2154,
+    "ossuaryMinion": 1444
+  },
+  "poseTiles": 26,
+  "stateUnchanged": true,
+  "errors": [],
+  "device": "headless Edge desktop and 844x390 viewport, not physical device"
+}

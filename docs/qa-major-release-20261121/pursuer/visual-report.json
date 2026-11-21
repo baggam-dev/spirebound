@@ -1,0 +1,14 @@
+{
+  "state": {
+    "ready": true,
+    "frames": 12,
+    "height": 88,
+    "error": null
+  },
+  "painted": 5557,
+  "bodyHeight": 88,
+  "atlasWidth": 1536,
+  "atlasHeight": 1024,
+  "errors": [],
+  "device": "headless Edge desktop and 844x390 viewport; not physical iPhone"
+}

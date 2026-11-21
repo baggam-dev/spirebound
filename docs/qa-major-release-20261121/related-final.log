@@ -1,0 +1,22 @@
+✔ independent device plans preserve combat RNG and exclude services, visited rooms and other encounters (837.4966ms)
+✔ fixed lane is clipped by obstacles in either direction (0.6536ms)
+✔ full warning precedes exactly one fixed nonhoming bolt and bounded recovery (0.532ms)
+✔ entry grace suppresses firing and reentry discards old warnings (0.2679ms)
+✔ nearby stationary disarm awards 18 XP once, cancels bolts and stays disabled on reentry (0.8716ms)
+✔ movement, rolling, action stun and walls prevent accumulating disarm progress (0.7246ms)
+✔ empty rooms are silent but allow deliberate cleanup rewards (0.3769ms)
+✔ device state survives return regeneration and malformed state is rejected (270.7956ms)
+✔ body and reduced warning rendering preserve simulation state and readable contours (1.9648ms)
+✔ cached navigation preserves original direction across shapes, radii and geometry edits (101.2625ms)
+✔ wall image is reused, invalidated on edits and bounded across room changes (17.8714ms)
+✔ outer and inner wall faces use the same world-aligned block palette (1.9281ms)
+✔ infernal masonry uses one palette for inner and outer walls and refreshes cached floor themes (7.9141ms)
+✔ middle-floor masonry shares each themed palette across inner and outer walls (4.9821ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1924.8051
