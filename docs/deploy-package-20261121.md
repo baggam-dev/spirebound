@@ -20,3 +20,10 @@
 
 
 귀환·하강19/19 최종통과. 모든로컬QA페이지오류·운영점수제출0. 이제코드/증거푸시·공식배포진행.
+
+## 운영·공개 최종 완료
+0.60.0-prebeta / runtime e2e18e8 / release-20261121-202948-43b8f3, https://168.107.21.43/ . 공식 스크립트 exit0, 서버Python28·Nginx/인증서·공개index/health 통과. 이전174423-1a09b2 릴리스 보존, DB삭제 없음. GitHub main 푸시 성공.
+
+public-files/result.json: 411 runtime 전체 SHA256 일치·health ok. public-utility/result.json: 6흐름 당첨 유지/재로드/저장실패 복구/지급유지 통과·오류0. public-escape/result.json: core3 자동/스킵/held·기록1회/늦은자산재생없음 통과·페이지오류/점수제출0. 공개 모바일 엔딩 마지막컷·룰렛화면 직접검토. 새 PNG와 모든 변경 모듈도 전체해시 확인에 포함된다.
+
+증거·작업기록 커밋을 추가로 푸시한다. 런타임 변경이 없어 재배포하지 않는다. 로컬 서버 종료/실행 중 QA 없음. 물리기기·사람청취·장시간 원정 체감 제한 유지.

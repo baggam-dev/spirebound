@@ -1,0 +1,42 @@
+{
+  "base": "https://168.107.21.43",
+  "results": [
+    {
+      "kind": "auto",
+      "winner": "frostWave",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "reduced",
+      "winner": "focus",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "reload-prepared",
+      "winner": "firstAid",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "reload-revealed",
+      "winner": "frostWave",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "start-save-fail",
+      "winner": "focus",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "claim-save-fail",
+      "winner": "frostWave",
+      "stableResult": true,
+      "singleGrant": true
+    }
+  ],
+  "errors": []
+}
