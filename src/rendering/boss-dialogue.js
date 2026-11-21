@@ -14,7 +14,7 @@ function kind(e){
  return !e.variant||e.variant==='warden'?'warden':Object.hasOwn(BOSS_LINES,e.variant)?e.variant:null;
 }
 const phase=e=>e.variant==='king'?kingPhase(e):e.variant==='commander'?commanderPhase(e):1;
-function anchor(e){
+export function anchor(e){
  const scale=e.scale??1;
  const offset=e.variant==='demon'?demonHealthOffset(e):e.variant==='king'?83:e.variant==='commander'?70:kind(e)==='warden'?wardenHealthOffset()*scale:e.variant==='slime'?Math.max(52,([76,56,40][e.stage||0]*832/1330-21)*1.3*scale+9):e.variant==='prism'?12+350*84/675*scale+5:e.gateTitle?64:52;
  const lift=e.attackPhase==='leap'?bossPose(e).lift:0;
@@ -86,7 +86,7 @@ export function createBossDialogue(run,{loaded=false}={}){
  };
 }
 
-function drawBubble(ctx,q,player,compact){
+export function drawBubble(ctx,q,player,compact){
  const size=compact?16:14,pad=10,lineHeight=size+5,head=q.point;
  ctx.save();ctx.font=`${size}px Galmuri, monospace`;ctx.textAlign='center';ctx.textBaseline='middle';
  const w=Math.min(330,Math.ceil(Math.max(...q.lines.map(s=>ctx.measureText(s).width)))+pad*2),h=q.lines.length*lineHeight+pad*2;
