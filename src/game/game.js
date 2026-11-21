@@ -1,4 +1,4 @@
-import {STORY_COPY} from '../ui/story-copy.js';
+import {STORY_COPY,returnStoryCopy} from '../ui/story-copy.js';
 import {drawSealEngine,drawSealEngineWarning} from '../rendering/seal-engine.js';
 import {floorLoadMatches} from '../ui/floor-loading-state.js';
 import {clearKingResurrection,tickKingResurrection,drawKingResurrection} from '../rendering/king-resurrection.js';
@@ -202,7 +202,8 @@ function bindEntranceSkip(){button('entranceSkip',event=>{event.preventDefault()
 document.addEventListener('keydown',event=>{if(!mode.startsWith('entrance')||!['Escape',' '].includes(event.key))return;event.preventDefault();event.stopImmediatePropagation();if(!event.repeat&&performance.now()-entranceArmed>=150)finishEntrance();},true);
 document.addEventListener('keydown',event=>{if(mode!=='journey-return'||!['Escape',' '].includes(event.key))return;event.preventDefault();event.stopImmediatePropagation();if(!event.repeat&&performance.now()-journeyArmed>=150)finishJourney(true);},true);
 function journeyPanel(kind){
- panel('<div class="journey-scene journey-'+kind+'"><p id="journeyStatus" role="status">'+(kind==='return'?'탈출 열쇠 획득':'아래층으로 · '+(s.floor+1)+'층')+'</p><p id="journeyHint">'+(kind==='return'?'1층 입구로 돌아가세요. 내려가는 계단은 적을 전멸해야 열립니다.':'탑의 길을 여는 중…')+'</p>'+(kind==='return'?'<button id="journeySkip">건너뛰기 ▸</button>':'<button id="journeyBack">저장 후 입구로</button>')+'</div>');
+ const returnCopy=returnStoryCopy(s);
+ panel('<div class="journey-scene journey-'+kind+'"><p id="journeyStatus" role="status">'+(kind==='return'?returnCopy.title:'아래층으로 · '+(s.floor+1)+'층')+'</p><p id="journeyHint">'+(kind==='return'?returnCopy.hint:'탑의 길을 여는 중…')+'</p>'+(kind==='return'?'<button id="journeySkip">건너뛰기 ▸</button>':'<button id="journeyBack">저장 후 입구로</button>')+'</div>');
  journeyArmed=performance.now();button('journeySkip',event=>{event.preventDefault();event.stopImmediatePropagation();finishJourney(true);});button('journeyBack',()=>{if(save())title();});input.reset();last=performance.now();
 }
 function finishJourney(skip=false){

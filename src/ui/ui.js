@@ -1,5 +1,5 @@
 import {storyTracesMarkup,enemyLoreMarkup} from './story-lore.js';
-import {storyGuideMarkup,storyGoalText} from './story-copy.js';
+import {storyGuideMarkup,storyGoalText,returnResultText,returnEpilogueMarkup} from './story-copy.js';
 import {ARROW_RAIN_DAMAGE} from '../combat/combat-tuning.js';
 import {growthRecordMarkup} from '../progression/growth-records.js';
 import {enemyGuide} from '../world/expedition.js';
@@ -29,7 +29,7 @@ export function deathSummaryMarkup(s){
 export function resultOverviewMarkup(s,scene=''){
  const won=s.status==='won';
  const stats=[['도전 시간',timeString(s.elapsed)],['도달 층',`${s.floor+1}/${s.floors.length}층`],['성장',`LV ${s.player.level}`],['처치',`${s.kills}체`]];
- return `<div class="result-head"><div class="result-head-copy"><small>${won?'THE WAY HOME':'THE SPIRE REMEMBERS'}</small><h2>${won?'탑에서 탈출했습니다':'도전이 끝났습니다'}</h2><p>${won?'열쇠를 가지고 1층 출구로 돌아왔습니다.':'이번 원정은 끝났지만 기록은 남았습니다.'}</p></div>${scene?`<div class="result-scene">${scene}</div>`:''}</div><div class="result-metrics">${stats.map(([label,value])=>`<div><span>${label}</span><strong>${value}</strong></div>`).join('')}</div>`;
+ return `<div class="result-head"><div class="result-head-copy"><small>${won?'THE WAY HOME':'THE SPIRE REMEMBERS'}</small><h2>${won?'탑에서 탈출했습니다':'도전이 끝났습니다'}</h2><p>${won?escapeHtml(returnResultText(s)):'이번 원정은 끝났지만 기록은 남았습니다.'}</p>${returnEpilogueMarkup(s)}</div>${scene?`<div class="result-scene">${scene}</div>`:''}</div><div class="result-metrics">${stats.map(([label,value])=>`<div><span>${label}</span><strong>${value}</strong></div>`).join('')}</div>`;
 }
 
 export function resultBuildMarkup(s){
