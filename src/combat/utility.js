@@ -9,7 +9,19 @@ export const utilitySkills=[
  ...expandedUtilities
 ];
 export function chooseUtility(s,id,{reward=false}={}){if(s.status!=='playing'||s.player.actionStun>0&&!reward||!utilityAvailable(s)||s.player.utility||!utilitySkills.some(k=>k.id===id))return false;s.player.utility=id;s.utilityCooldown=0;return true;}
-export function canCastUtility(s){return !wardenArriving(s)&&s.status==='playing'&&s.player.hp>0&&!(s.player.actionStun>0)&&utilitySkills.some(k=>k.id===s.player.utility)&&!(s.utilityCooldown>0)&&!s.utilityCast&&(s.player.utility!=='focus'||s.player.hp>1)&&canStartExpandedUtility(s,s.player.utility);}
+export function utilityUseState(s){
+ const blocked=(code,short,reason)=>({ready:false,code,short,reason});
+ if(!s?.player||!utilitySkills.some(k=>k.id===s.player.utility))return blocked('unowned','미보유','액티브 기술을 아직 획득하지 않았습니다.');
+ if(s.status!=='playing'||!(s.player.hp>0))return blocked('inactive','사용 불가','탐험 중 살아 있을 때 사용할 수 있습니다.');
+ if(wardenArriving(s))return blocked('arrival','등장 중','보스 등장 연출이 끝난 뒤 사용할 수 있습니다.');
+ if(s.player.actionStun>0)return blocked('stunned','경직 중','경직이 끝난 뒤 사용할 수 있습니다.');
+ if(s.utilityCast)return blocked('casting','발동 대기','이미 사용한 기술이 발동 대기 중입니다.');
+ if(s.utilityCooldown>0){const remaining=(Math.ceil(s.utilityCooldown*10)/10).toFixed(1);return blocked('cooldown',remaining+'초','재사용까지 '+remaining+'초 남았습니다.');}
+ if(s.player.utility==='focus'&&!(s.player.hp>1))return blocked('health','체력 부족','마혈 각성은 소모할 체력 1하트가 필요합니다. 현재 체력이 1하트보다 많아야 합니다.');
+ if(!canStartExpandedUtility(s,s.player.utility))return blocked('target','대상 없음','뇌격인장은 500 범위 안에 벽에 가리지 않은 지상 적이 필요합니다.');
+ return {ready:true,code:'ready',short:'준비',reason:'지금 사용할 수 있습니다.'};
+}
+export const canCastUtility=s=>utilityUseState(s).ready;
 export function castUtility(s){
  const id=s.player.utility;if(!canCastUtility(s))return false;
  if(id==='firstAid'){

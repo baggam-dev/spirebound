@@ -2,7 +2,8 @@ import {skills} from '../progression/progression.js';
 import {mainSkills} from '../progression/skill-tree.js';
 import {evolutions} from '../progression/evolutions.js';
 import {utilitySkills} from '../combat/utility.js';
-import {ownedRelics,relicInfo,relicGradeName,utilityCooldown,ultimateCooldown} from '../progression/relics.js';
+import {utilityGuide} from './utility-guide.js';
+import {ownedRelics,relicInfo,relicGradeName,ultimateCooldown} from '../progression/relics.js';
 import {essences} from '../progression/essences.js';
 import {relicStateText} from './relic-ui.js';
 import {shieldCooldown} from '../combat/survival.js';
@@ -26,7 +27,7 @@ export function buildEntries(s,tab){
   return {id:k.id,name:ultimate?(evolution?.name||'궁극기'):k.name,icon:skillIconMarkup(ultimate?'ultimate:'+p.evolutions?.ultimate:k.id),tag:ultimate?'궁극기':(mainSkills.includes(k.id)?'평타 계열':'일반 스킬')+' · LV '+p[k.id],description:ultimate?(evolution?.description||k.description):k.description+(evolution?' · '+evolution.description:''),note:(evolution?'진화 · '+evolution.name:'')+(ultimate?' · 현재 재사용 '+seconds(ultimateCooldown(p)):'')};
  });
  const active=utilitySkills.find(k=>k.id===p.utility);
- if(active)entries.push({id:'active:'+active.id,name:active.name,icon:skillIconMarkup(active.id),tag:'액티브',description:active.description.replace(/재사용 \d+초/,'재사용 '+seconds(utilityCooldown(p,active.id))),note:'G 키 / 액티브 버튼 · 남은 재사용 '+seconds(Math.max(0,s.utilityCooldown||0))});
+ if(active){const guide=utilityGuide(s,{paused:true});entries.push({id:'active:'+active.id,name:active.name,icon:skillIconMarkup(active.id),tag:'액티브',description:guide.description,note:'G 키 / 액티브 버튼 · '+guide.status+' · '+guide.tip});}
  return entries;
 }
 function statsMarkup(s){

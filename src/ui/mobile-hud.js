@@ -1,4 +1,4 @@
-import {utilitySkills} from '../combat/utility.js';
+import {utilityGuide} from './utility-guide.js';
 import {skillIconMarkup} from '../rendering/skill-icons.js';
 import {iconSVG} from '../rendering/pixel-icons.js';
 import {rollAction} from '../combat/roll.js';
@@ -15,14 +15,14 @@ function prepareMobileMenuArt(){
  // Preserve the existing text symbols if the approved PNG cannot load.
  art.src=url;
 }
-export function updateMobileActions(s){
+export function updateMobileActions(s,{paused=false,utilityStatus=null}={}){
  if(!coarse.matches||!s)return;
  prepareMobileMenuArt();
- const p=s.player,turret=p.evolutions?.ultimate==='turret',roll=rollAction(p);
- const actions=[['potion','potion','물약',s.potionCooldown,p.potions],['utility',p.utility||'focus',utilitySkills.find(k=>k.id===p.utility)?.name||'액티브',s.utilityCooldown],['skill',turret?'turret':'ultimate',turret?'석궁':'화살비',s.skill],['dodge',roll.icon,roll.name,s.dodge]];
+ const p=s.player,turret=p.evolutions?.ultimate==='turret',roll=rollAction(p),guide=utilityStatus||utilityGuide(s,{paused});
+ const actions=[['potion','potion','물약',s.potionCooldown,p.potions],['utility',p.utility||'focus',guide.name,s.utilityCooldown],['skill',turret?'turret':'ultimate',turret?'석궁':'화살비',s.skill],['dodge',roll.icon,roll.name,s.dodge]];
  for(const [id,icon,name,cooldown,count] of actions){
-  const button=document.getElementById(id),time=cooldown>0?cooldown.toFixed(1)+'초':'',key=[icon,name,time,count].join('|');
+  const button=document.getElementById(id),time=id==='utility'?guide.short:cooldown>0?cooldown.toFixed(1)+'초':'',key=[icon,name,time,count].join('|');
   if(button.dataset.mobileAction!==key||!button.querySelector('.action-icon')){button.innerHTML='<span class="action-icon" aria-hidden="true">'+(['potion'].includes(id)?iconSVG(icon):skillIconMarkup(id==='skill'?'ultimate:'+(turret?'turret':'burst'):icon))+'</span><span class="action-label">'+name+'</span><span class="action-value">'+(time||(count===undefined?'':count))+'</span>';button.dataset.mobileAction=key;}
-  button.setAttribute('aria-label',name+(time?' · 재사용 '+time:count===undefined?'':' · '+count+'개'));button.title=name+(time?' · '+time:'');
+  button.setAttribute('aria-label',id==='utility'?guide.label:name+(time?' · 재사용 '+time:count===undefined?'':' · '+count+'개'));button.title=id==='utility'?guide.label:name+(time?' · '+time:'');
  }
 }

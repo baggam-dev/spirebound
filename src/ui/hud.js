@@ -33,9 +33,9 @@ export function createHUD(){
   const required=xpRequired(p.level);el('xpFill').style.width=Math.min(100,p.xp/required*100)+'%';el('xpTrack').setAttribute('aria-valuemax',required);el('xpTrack').setAttribute('aria-valuenow',p.xp);el('xpLabel').textContent=`LV ${p.level} · ${p.xp} / ${required}`;
   const statuses=[];
   if(p.focusTime>0)statuses.push('각성 '+p.focusTime.toFixed(1)+'초');
-  if(s.bloodTime>0)statuses.push('혈월 '+s.bloodTime.toFixed(1)+'초');
+  if(s.bloodTime>0)statuses.push('혈월 '+s.bloodTime.toFixed(1)+'초 · 회복 '+Math.min(2,s.bloodHeals||0)+'/2회');
   if(s.guardianTime>0&&s.guardianCharges>0)statuses.push('성역 '+s.guardianTime.toFixed(1)+'초 · 1회');
-  if(p.galeTime>0)statuses.push('질풍 '+p.galeTime.toFixed(1)+'초 · '+(p.galeCharges||0)+'회');
+  if(p.galeTime>0)statuses.push('질풍 '+p.galeTime.toFixed(1)+'초 · '+(p.galeCharges>0?'탄 소거 '+p.galeCharges+'회':'이속 유지'));
   if(p.actionStun>0)statuses.push('행동 불가 '+p.actionStun.toFixed(1)+'초');
   if(s.key)statuses.push('탈출 열쇠');
   el('combatStatus').textContent=statuses.join(' · ');
