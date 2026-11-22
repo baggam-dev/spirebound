@@ -16,6 +16,11 @@ export const heroSpriteReady=typeof Image==='undefined'?Promise.resolve(false):n
  }catch{resolve(false);}};atlas.onerror=()=>resolve(false);atlas.src=new URL('../../assets/images/hero-reference-atlas.png',import.meta.url).href;
 });
 export const heroFrameIndex=p=>p.recoil>.45?3:p.moving?(Math.sin(p.walk)>=0?1:2):0;
+// A deliberate belt seam and leg-only window, paired with authored cast upper layers.
+export function drawHeroWalkLower(c,p){
+ if(frames.length!==4)return false;const f=frames[p.moving?(Math.sin(p.walk)>=0?1:2):0];
+ c.save();c.beginPath();c.rect(-14,-4,32,27);c.clip();c.imageSmoothingEnabled=false;c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));c.restore();return true;
+}
 export function drawHeroSprite(c,p){
  if(frames.length!==4)return false;const f=frames[heroFrameIndex(p)];
  c.save();c.imageSmoothingEnabled=false;c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));c.restore();return true;

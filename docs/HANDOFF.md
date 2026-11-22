@@ -1,3 +1,11 @@
+## 최신 인계 — 액티브6종 시전 모션 로컬 연결·미검증
+~~~text
+## 액티브6종 시전 모션 로컬 연결 완료·미검증 (2026-11-22)
+사용자 다음진행·시작clean a730a71. 기존6종시안 본제작 진행 승인으로 해석, 내장imagegen 전신24/이동상체24 각1024x1536 투명PNG 제작·원본무변환복사/직접육안·alpha여백확인. hero-cast-state WeakMap 성공id만0.38초4포즈/완화0.24초; roll·사망·actionStun·방층·pause/모달·로드취소. game utility성공/stepRun/stop/reset 및 pixel-world 본체렌더 연결. 이동은 원래 걷기다리+별도상체/망토/활/치마, 기존오라·발동FX/자동사격·판정·저장/난수 유지. optional 층팩 요청·캐시 실패 기존sprite fallback·공식배포허용목록 준비.
+수정 game/pixel-world/hero-sprite/asset-packs/deploy허용목록, 신규hero-cast-state/art·PNG2/회귀4·시안README/정확프롬프트. 정적 import/호출순서·성공전용연결/뷰수명·git diff --check 확인. 회귀4 작성만·테스트/구문실행/서버브라우저/공개조회/푸시배포 없음. 기존912통과는 운영0.61의 이전검증이지 이번변경 검증 아님. 운영0.61 runtimebf276cd/release20261122-101459-1c7dba 유지.
+다음 명시배포 시 전체/상태4 및 실제6종 성공실패·정지/보행·좌우/사격회피동시·pause/방층/로드·완화·cold/fail·모바일58px 허리이음/발앵커/농도·캐시부하 검증. 두atlas 크기/몸통비율·걷기허리이음과 프레임안정은 실게임 미검증으로 명시. 후속2적피격/3타격감/4사용안내는 아직미착수. 실행중명령/차단없음·관련기능은로컬커밋까지. 상세 docs/design-drafts/utility-cast-motion-20261122/README.md.
+~~~
+
 ## 최신 인계 — 0.61 운영 배포·공개 확인 완료
 ~~~text
 ## 0.61 UI/방 누적 배포 완료 (2026-11-22)
