@@ -44,3 +44,8 @@ body:has(#overlay:not(:empty)) #runHUD{visibility:hidden}
 #runHUD #heartStrip .heart-count{white-space:nowrap}
 /* Outside the unchanged 16:9 room, use the approved near-black void. */
 body:has(#runHUD:not([hidden])),body:has(#runHUD:not([hidden])) .arena{background:#050608}
+/* Display surface follows the landscape viewport; logical room geometry stays fixed. */
+@media(pointer:coarse) and (orientation:landscape){
+ body:has(#runHUD:not([hidden])) .arena{width:100%;height:100%;aspect-ratio:auto}
+ body:has(#runHUD:not([hidden])) #game{width:100%;height:100%;aspect-ratio:auto;object-fit:contain}
+}
