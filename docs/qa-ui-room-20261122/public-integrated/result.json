@@ -1,0 +1,71 @@
+{
+  "base": "https://168.107.21.43",
+  "results": [
+    {
+      "kind": "build",
+      "width": 1280,
+      "height": 720,
+      "touch": false,
+      "reduced": false,
+      "frozen": true,
+      "tabs": true,
+      "subpanels": true,
+      "foodOnce": true,
+      "saveFailureStops": true
+    },
+    {
+      "kind": "build",
+      "width": 844,
+      "height": 390,
+      "touch": true,
+      "reduced": false,
+      "frozen": true,
+      "tabs": true,
+      "subpanels": true,
+      "foodOnce": true,
+      "saveFailureStops": true
+    },
+    {
+      "kind": "build",
+      "width": 740,
+      "height": 360,
+      "touch": true,
+      "reduced": true,
+      "frozen": true,
+      "tabs": true,
+      "subpanels": true,
+      "foodOnce": true,
+      "saveFailureStops": true
+    },
+    {
+      "kind": "room",
+      "floor": 1,
+      "index": 4,
+      "d": 0,
+      "next": 1,
+      "footprint": "small",
+      "width": 1280,
+      "height": 720,
+      "blackVoid": true,
+      "doorRoundtrip": true,
+      "reload": true,
+      "returnBounds": true
+    },
+    {
+      "kind": "room",
+      "floor": 1,
+      "index": 4,
+      "d": 0,
+      "next": 1,
+      "footprint": "small",
+      "width": 844,
+      "height": 390,
+      "blackVoid": true,
+      "doorRoundtrip": true,
+      "reload": true,
+      "returnBounds": true
+    }
+  ],
+  "errors": [],
+  "apiPosts": 0
+}
