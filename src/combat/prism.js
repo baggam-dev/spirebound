@@ -41,7 +41,7 @@ export function drawPrism(ctx,e,obstacles,enemies=[],time=0,options={}){
 }
 
 export function updatePrismSummons(e,p,room,dt,random){
- if(e.hp<=0)return;e.summonClock=Math.max(0,(e.summonClock??PRISM_SUMMON.first)-dt);
+ if(e.hp<=0||e.shadowBoss===1)return;e.summonClock=Math.max(0,(e.summonClock??PRISM_SUMMON.first)-dt);
  if(e.summonClock>0||room.enemies.filter(n=>n.hp>0&&n.summoned&&n.summoner===e.id).length>=3)return;
  const type=['charger','archer','brute'][Math.floor(random()*3)],max=type==='brute'?240:150;let point;
  for(let i=0;i<60;i++){point={x:110+random()*740,y:120+random()*310};safeSpawn(point,room.obstacles,22);if(Math.hypot(point.x-p.x,point.y-p.y)>150)break;}

@@ -185,8 +185,8 @@ export function stepRun(s,dt,input={x:0,y:0}){
  for(const e of defeated){
   recordRankingDefeat(s,e);recordSupportDefeat(s,r,e);
   effects.push(enemyDeathEffect(e,!!s.key,enemyHealthBefore.get(e)));
-  const shardStart=s.projectiles.length;frostShatter(e.frostWeapon||p,e,s.projectiles);if(e.frostWeapon)for(const shard of s.projectiles.slice(shardStart)){shard.weapon=e.frostWeapon;shard.turretShot=true;}if(!e.selfDestruct)recordDefeat(s,e);
-  if(e.summoned){eliteDeath(e,r);continue;}
+  const shardStart=s.projectiles.length;frostShatter(e.frostWeapon||p,e,s.projectiles);if(e.frostWeapon)for(const shard of s.projectiles.slice(shardStart)){shard.weapon=e.frostWeapon;shard.turretShot=true;}if(!e.selfDestruct&&e.shadowBoss!==1&&!e.shadowEscort)recordDefeat(s,e);
+  if(e.shadowBoss===1&&splitSlime(e,r,p,()=>runRandom(s)))continue;if(e.summoned){eliteDeath(e,r);continue;}
   if(rewardPursuer(s,r,e,effects))events.push('pursuerReward');
   const specialReward=rewardSpecialEncounter(s,r,e,effects);if(specialReward)events.push(specialReward);
   if(splitSlime(e,r,p,()=>runRandom(s)))continue;

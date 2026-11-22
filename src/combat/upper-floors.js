@@ -10,7 +10,7 @@ import {emitShot} from './patterns.js';
 import {warningCount} from './tactics.js';
 export {drawUpper,drawUpperGround,drawUpperLinks} from '../rendering/upper-visuals.js';
 export const upperTypes=['astralSniper','gravityMage','starKnight','starBearer','royalGuard','pulseTurret','riftHunter'];
-export const kingPhase=e=>e.hp/e.max>.65?1:e.hp/e.max>.3?2:3;
+export const kingPhase=e=>e.shadowBoss===1?3:e.hp/e.max>.65?1:e.hp/e.max>.3?2:3;
 export const angle=(a,b)=>Math.atan2(b.y-a.y,b.x-a.x);
 const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 export const slashReach=e=>e.variant==='king'?(kingPhase(e)>=2?165:145):155;
@@ -56,7 +56,7 @@ export function tickUpperState(e,p,r,dt,bullets){
  const phase=kingPhase(e);e.kingStage??=phase;
  if(phase>e.kingStage){e.kingStage=phase;e.kingTransition=1.4;e.cd=1;delete e.darkAttack;delete e.darkFlash;delete e.guardPortal;e.opening=0;delete e.counterReason;e.kneel=0;e.frozen=0;for(const n of r.enemies){delete n.darkAttack;delete n.darkFlash;n.cd=Math.max(1,n.cd||0);}for(const b of bullets)if(b.enemy)b.life=0;}
  if(e.kingTransition>0){for(const b of bullets)if(b.enemy)b.life=0;e.kingTransition=Math.max(0,e.kingTransition-dt);return true;}
- if(phase>=2){e.guardClock=Math.max(0,(e.guardClock??1.5)-dt);if(e.guardPortal){e.guardPortal.time=Math.max(0,e.guardPortal.time-dt);if(!e.guardPortal.time){const living=r.enemies.filter(n=>n.summoned&&n.summoner===e.id&&n.hp>0).length;if(living<2){const id=Math.max(r.nextEnemyId||0,...r.enemies.map(n=>n.id+1));r.nextEnemyId=id+1;const child={id,type:id%2?'astralSniper':'pulseTurret',x:e.guardPortal.x,y:e.guardPortal.y,hp:180,max:180,cd:1.2,tier:7,balanceVersion:1,summoned:true,summoner:e.id,spawnGrace:1};safeSpawn(child,r.obstacles,22);r.enemies.push(child);}delete e.guardPortal;}}
+ if(phase>=2&&e.shadowBoss!==1){e.guardClock=Math.max(0,(e.guardClock??1.5)-dt);if(e.guardPortal){e.guardPortal.time=Math.max(0,e.guardPortal.time-dt);if(!e.guardPortal.time){const living=r.enemies.filter(n=>n.summoned&&n.summoner===e.id&&n.hp>0).length;if(living<2){const id=Math.max(r.nextEnemyId||0,...r.enemies.map(n=>n.id+1));r.nextEnemyId=id+1;const child={id,type:id%2?'astralSniper':'pulseTurret',x:e.guardPortal.x,y:e.guardPortal.y,hp:180,max:180,cd:1.2,tier:7,balanceVersion:1,summoned:true,summoner:e.id,spawnGrace:1};safeSpawn(child,r.obstacles,22);r.enemies.push(child);}delete e.guardPortal;}}
  if(!e.guardClock&&!e.guardPortal&&r.enemies.filter(n=>n.summoned&&n.summoner===e.id&&n.hp>0).length<2){const point={x:p.x<480?780:180,y:p.y<270?390:140};safeSpawn(point,r.obstacles,22);e.guardPortal={...point,time:1};e.guardClock=6;}}
  return false;
 }

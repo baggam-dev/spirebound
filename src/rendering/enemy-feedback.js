@@ -31,7 +31,7 @@ export function enemyHitEffects(before,enemies){return enemies.filter(e=>e.hp>0&
 }));}
 export function enemyDeathEffect(e,returning=false,previousHp){const split=e.variant==='slime'&&!e.summoned&&(e.stage||0)<2;
  const ordinary=isOrdinary(e),remainingBoss=remainingBossKey(e),demonCore=e.variant==='demon'&&e.part==='core',warden=isWarden(e),prism=e.variant==='prism',duration=['ossuarySummoner','choirCantor'].includes(e.type)?.65:e.type==='ossuaryMinion'?.45:e.type==='pursuer'?.75:split?.38:e.variant==='king'?1.1:e.variant==='commander'||demonCore||warden||prism||remainingBoss?1:.55;
- return {enemyFeedback:'death',enemyId:e.id,x:e.x,y:e.y,style:style(e),crest:eliteCrest(e),boss:e.type==='boss',king:e.variant==='king',resurrection:e.resurrectionVersion===1,remnant:e.remnantVersion===1,remnantHuntVersion:e.remnantHuntVersion,demonCore,warden,prism,split,returning,
+ return {enemyFeedback:'death',shadowBoss:e.shadowBoss,enemyId:e.id,x:e.x,y:e.y,style:style(e),crest:eliteCrest(e),boss:e.type==='boss',king:e.variant==='king',resurrection:e.resurrectionVersion===1,remnant:e.remnantVersion===1,remnantHuntVersion:e.remnantHuntVersion,demonCore,warden,prism,split,returning,
   prismScale:prism&&Number.isFinite(e.scale)?e.scale:1,
   ordinary,bodyEscapeDepth:ordinary?e.escapeDepth:undefined,
   remainingBoss,bodyType:remainingBoss||ordinary?e.type:undefined,bodyVariant:remainingBoss?e.variant:undefined,bodyPart:remainingBoss||e.remnantVersion===1?e.part:undefined,bodyTitle:remainingBoss?e.gateTitle:undefined,bodyStage:remainingBoss?e.stage:undefined,bodyScale:remainingBoss||ordinary?e.scale:undefined,
@@ -80,6 +80,7 @@ function line(c,points,color,width=2){c.strokeStyle=color;c.lineWidth=width;c.be
 function crystal(c,x,y,r,color){line(c,[[x-r,y],[x,y-r*1.7],[x+r,y],[x,y+r],[x-r,y]],color,2);}
 export function drawEnemyFeedback(c,f,options={}){
  if(!f.enemyFeedback)return false;if(f.t<=0)return true;const age=1-Math.min(1,f.t/f.duration);
+ if(f.enemyFeedback==='death'&&f.shadowBoss===1){c.save();c.globalAlpha*=1-age;c.fillStyle='#191222';c.beginPath();c.ellipse(f.x,f.y,24*(1-age),34*(1-age),0,0,Math.PI*2);c.fill();c.restore();return true;}
  if(f.enemyFeedback==='death')drawEliteCrest(c,f,options);
  if(f.enemyFeedback==='death'&&drawSupportDeath(c,f,options))return true;
  if(f.enemyFeedback==='death'&&drawPursuerDeath(c,f,options))return true;

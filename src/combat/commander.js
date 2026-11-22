@@ -5,7 +5,7 @@ import {moveBody,safeSpawn,steering} from '../world/terrain.js';
 import {emitShot} from './patterns.js';
 
 const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
-export const commanderPhase=e=>e.hp/e.max>.5?1:2;
+export const commanderPhase=e=>e.shadowBoss===1?1:e.hp/e.max>.5?1:2;
 export function challengeCommander(s){
  const r=s.floors[s.floor][s.room];
  if(s.campaign!=='expanded'||s.floor!==8||s.key||!r.commanderPending||r.enemies.length)return false;

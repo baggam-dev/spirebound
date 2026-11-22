@@ -33,6 +33,7 @@ export function drawCommanderGround(c,e,time=0,reduced=false){
 }
 export function drawCommander(c,e,time=0,reduced=false,staticPose=false){
  if(e.variant!=='commander')return;
+ if(e.shadowBoss===1)e={...e,hp:e.max};
  if(e.commander?.phase===2||e.hp/e.max<=.5)drawFrostAura(c,e,time,{reduced,staticPose});
  if(drawVelkarPresentation(c,e,time,{reduced,staticPose}))return;
  if(drawFeedbackSprite(c,e,time,{reduced,staticPose}))return;

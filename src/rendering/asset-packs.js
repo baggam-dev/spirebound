@@ -8,7 +8,8 @@ const infernal=['demon-captain-sprite','demon-archer-sprite','demon-soldier-spri
 const halls=[null,'guard-hall-atlas-v1.png','archive-atlas-v1.png','prism-hall-atlas-v1.png','infested-hall-atlas-v1.png','infested-hall-atlas-v1.png','royal-hall-atlas-v1.png','royal-hall-atlas-v1.png','infernal-hall-atlas-v1.png','infernal-hall-atlas-v1.png'];
 export function floorAssetOptions(run,allRooms=true){
  const rooms=allRooms?run.floors[run.floor]:[run.floors[run.floor][run.room]];
- return {returning:!!run.key,enemies:[...new Set(rooms.flatMap(r=>r.enemies||[]).map(e=>e.type==='boss'?e.variant||'warden':e.gateTitle?(e.type==='starKnight'?'kald':'vera'):e.type))]};
+ const shadow=run.key&&run.floor===0&&(run.finalEscapeVersion===2||rooms.some(r=>r.finalEscape?.shadowVersion===1))?['warden','prism','slime','commander','king','astralSniper','gravityMage','starKnight','starBearer','royalGuard','pulseTurret','riftHunter']:[];
+ return {returning:!!run.key,enemies:[...shadow,...new Set(rooms.flatMap(r=>r.enemies||[]).map(e=>e.type==='boss'?e.variant||'warden':e.gateTitle?(e.type==='starKnight'?'kald':'vera'):e.type))]};
 }
 function actorPlan(key){
  if(key==='brute')return {modules:[],feedback:['named-brute']};

@@ -46,7 +46,7 @@ export function updatePoisonEnemy(e,p,room,dt,bullets=[]){
  else if(pattern===(stage<2?3:2)){puddles(e,p,room,4,true);}
  else if(stage<2&&pattern===4){const aim=Math.atan2(p.y-e.y,p.x-e.x);for(let i=-2;i<=2;i++){emitShot(e,aim+i*.13,200,bullets);Object.assign(bullets.at(-1),{x:e.x+Math.cos(aim+i*.13)*(slimeRadius(e)+5),y:e.y+Math.sin(aim+i*.13)*(slimeRadius(e)+5),poisonShot:'needle',source:'독성 군체 독침'});}}
  else if(stage<2&&pattern===5){const aim=Math.atan2(p.y-e.y,p.x-e.x);for(let i=0;i<10;i++){emitShot(e,aim+i*Math.PI/5,90,bullets);Object.assign(bullets.at(-1),{x:e.x+Math.cos(aim+i*Math.PI/5)*(slimeRadius(e)+5),y:e.y+Math.sin(aim+i*Math.PI/5)*(slimeRadius(e)+5),poisonShot:'orb',source:'독성 군체 확산 독구슬'});}}
- else if(pattern===2&&room.enemies.filter(n=>n.type==='minislime').length<8){
+ else if(pattern===2&&e.shadowBoss!==1&&room.enemies.filter(n=>n.type==='minislime').length<8){
   if(stage===0)puddles(e,p,room,3,true);
   for(let i=0;i<2;i++){
    if(room.enemies.filter(n=>n.type==='minislime').length>=8)break;
@@ -57,12 +57,12 @@ export function updatePoisonEnemy(e,p,room,dt,bullets=[]){
  room.hazards=hazards;e.cd=[1.95,3.3,3.6][stage];
 }
 export function splitSlime(e,room,player={x:480,y:270},random=seededRandom((e.id+1)*7717+(e.stage||0))){
- if(e.variant!=='slime'||e.stage>=2)return false;
+ if(e.variant!=='slime'||e.stage>=2||e.shadowBoss===1&&e.shadowSplit>=1)return false;
  room.hazards=(room.hazards||[]).filter(h=>h.owner!==e.id||h.kind!=='aura');if(room.hazards.length<12)room.hazards.push({owner:e.id,kind:'puddle',x:e.x,y:e.y,fromX:e.x,fromY:e.y,r:65,phase:'warning',time:.6,flight:0,duration:4,damage:12});
  const landings=[];
  for(let i=0;i<2;i++){
   const max=Math.ceil(e.max/2),child={id:allocateEnemyId(room),type:'boss',variant:'slime',stage:(e.stage||0)+1,tier:e.tier||5,x:Math.max(75,Math.min(885,e.x+(i?36:-36))),y:Math.max(90,Math.min(450,e.y+(i?15:-15))),hp:max,max,cd:1.2+i*.8,poisonTurn:i,balanceVersion:1,bossHealthVersion:1,bossPowerVersion:18,spawnGrace:.8};
-  if(e.chestBoss){child.chestBoss=true;child.scale=e.scale;}let landing;for(let attempt=0;attempt<80;attempt++){landing={x:100+random()*760,y:100+random()*350};safeSpawn(landing,room.obstacles,slimeRadius(child));if(Math.hypot(landing.x-player.x,landing.y-player.y)>=145&&landings.every(q=>Math.hypot(q.x-landing.x,q.y-landing.y)>=180))break;}landings.push(landing);Object.assign(child,{x:e.x,y:e.y,phase:'splitJump',phaseTime:1.1,launchX:e.x,launchY:e.y,landX:landing.x,landY:landing.y,spawnGrace:0});room.enemies.push(child);
+  if(e.shadowBoss===1)Object.assign(child,{shadowBoss:1,shadowRootMax:e.shadowRootMax,shadowSplit:1,summoned:true});if(e.chestBoss){child.chestBoss=true;child.scale=e.scale;}let landing;for(let attempt=0;attempt<80;attempt++){landing={x:100+random()*760,y:100+random()*350};safeSpawn(landing,room.obstacles,slimeRadius(child));if(Math.hypot(landing.x-player.x,landing.y-player.y)>=145&&landings.every(q=>Math.hypot(q.x-landing.x,q.y-landing.y)>=180))break;}landings.push(landing);Object.assign(child,{x:e.x,y:e.y,phase:'splitJump',phaseTime:1.1,launchX:e.x,launchY:e.y,landX:landing.x,landY:landing.y,spawnGrace:0});room.enemies.push(child);
  }return true;
 }
 export function updateHazards(room,dt,p,hurt){

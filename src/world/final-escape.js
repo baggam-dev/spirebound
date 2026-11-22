@@ -1,3 +1,5 @@
+import {startShadowEscape,tickShadowEscape,SHADOW_ESCAPE_DURATION} from './shadow-escape.js';
+export const finalEscapeDuration=state=>state?.shadowVersion===1?SHADOW_ESCAPE_DURATION:36;
 import {blocked} from './terrain.js';
 export const FINAL_ESCAPE_DURATION=36;
 export const FINAL_ESCAPE_CAP=24;
@@ -51,6 +53,7 @@ function spawnPressurePending(run,room){
 
 export function startFinalEscape(run,room){
  if(!finalEscapeRequired(run)||!run.key||run.floor!==0||room.type!=='exit'||room.finalEscape||room.enemies.some(e=>e.hp>0))return false;
+ if(run.finalEscapeVersion===2){startShadowEscape(run,room);return true;}
  room.finalEscape={elapsed:0,wave:1,ready:false};
  if(run.generationVersion>=34){room.enemies=[];room.finalEscape.pressureVersion=1;room.finalEscape.pending=[];planPressureWave(run,room,0);}else spawnWave(room,0);
  return true;
@@ -58,6 +61,7 @@ export function startFinalEscape(run,room){
 
 export function tickFinalEscape(run,room,dt){
  const state=room.finalEscape;if(!state||state.ready||run.floor!==0||room.type!=='exit')return [];
+ if(state.shadowVersion===1)return tickShadowEscape(run,room,dt);
  state.elapsed=Math.min(FINAL_ESCAPE_DURATION,state.elapsed+dt);
  const events=[];
  if(state.pressureVersion===1){

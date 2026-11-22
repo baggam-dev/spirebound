@@ -1,12 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {newRun,currentRoom,canEscape,roomLocked} from '../../src/game/engine.js';
+import {newRun as createRun,currentRoom,canEscape,roomLocked} from '../../src/game/engine.js';
 import {startFinalEscape,tickFinalEscape,FINAL_ESCAPE_DURATION,FINAL_ESCAPE_CAP} from '../../src/world/final-escape.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 import {finishRanking} from '../../src/ranking/ranking.js';
+// Keep coverage for previously saved three-wave and pressure-wave escapes.
+function newRun(...args){const s=createRun(...args);delete s.finalEscapeVersion;return s;}
 
 test('final seal needs the key, takes three timed waves and survives reload',()=>{
- const run=newRun(47),room=currentRoom(run);run.generationVersion=33;
+ const run=newRun(47),room=currentRoom(run);delete run.finalEscapeVersion;run.generationVersion=33;
  assert.equal(startFinalEscape(run,room),false);
  run.key=true;assert.equal(canEscape(run),false);
  assert.equal(startFinalEscape(run,room),true);

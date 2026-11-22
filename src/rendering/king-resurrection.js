@@ -4,7 +4,7 @@ export const clearKingResurrection=()=>{actors=new WeakMap();};
 export function tickKingResurrection(enemies,dt){
  const events=[];
  for(const e of enemies){
-  if(e.variant!=='king'||e.resurrectionVersion!==1)continue;
+  if(e.variant!=='king'||e.resurrectionVersion!==1||e.shadowBoss===1)continue;
   let v=actors.get(e);if(!v){actors.set(e,{stage:e.kingStage??1,age:null,bell:false,waiting:false,first:null,step:0});continue;}
   const stage=e.kingStage??1;
   if(e.hp>0&&v.stage<3&&stage===3&&e.kingTransition>0){v.age=0;v.bell=false;v.waiting=true;v.first=null;events.push('kingResurrection');}
