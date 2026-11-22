@@ -1,0 +1,1729 @@
+{
+  "base": "https://168.107.21.43",
+  "files": 430,
+  "health": {
+    "ok": true
+  },
+  "results": [
+    {
+      "path": "assets/fonts/FONT-LICENSE.txt",
+      "sha256": "86a3ee9495f942f0243f18c103da9faca27adb88142613edb8bb852e56c892c1"
+    },
+    {
+      "path": "assets/images/archer-masked-atlas.png",
+      "sha256": "92feaaba4a35eb69203debb79b110537b487d0a3ac1326e8a702c8ee4d655e9b"
+    },
+    {
+      "path": "assets/fonts/pixel-font.woff2",
+      "sha256": "8bad9322b3340bfb5cb26cb00f4752bf4c8e7d1b526bb07205f4af458eebed31"
+    },
+    {
+      "path": "assets/images/ambusher-reference-atlas.png",
+      "sha256": "ad0e4b5a68f3b3400229440f4dc6870c69a015642f1b85f84eeba94e6c2923d3"
+    },
+    {
+      "path": "assets/images/archer-walk-atlas.png",
+      "sha256": "d6c5941d31f8da0bba98f180df68b7fa9ef26d7cb9b5d5282b2e690dfcb7beef"
+    },
+    {
+      "path": "assets/images/archive-atlas-v1.png",
+      "sha256": "c87fda1812fe338e0c88e599f78de72f0c2b2de02a3dbd54f9b7a83f93e8d58a"
+    },
+    {
+      "path": "assets/images/astral-sniper-reference-atlas.png",
+      "sha256": "d50debac1167591f5b9ac69fb637cbf6a6ae5d081a10c741c0ace1d1ffbab08f"
+    },
+    {
+      "path": "assets/images/charger-walk-atlas.png",
+      "sha256": "29f6551c3acaec547f9e1acf79c5c81ecf1fe7d60d4a6444b8f23c8644275d25"
+    },
+    {
+      "path": "assets/images/brute-masked-atlas.png",
+      "sha256": "ab851d3d01f219201f37bb32ca6040c1ce7b35b77a072c6f819fc8d07837d50d"
+    },
+    {
+      "path": "assets/images/charger-masked-atlas.png",
+      "sha256": "ad2942418045527aef0db4035367ae12e9e72098a02c019992f436c3dfce5e0d"
+    },
+    {
+      "path": "assets/images/brute-walk-atlas.png",
+      "sha256": "123e04de1c0419d6b0d8d7d70fd1d2b09d2488a629dc3aa8121fdc6f0147b676"
+    },
+    {
+      "path": "assets/images/chaser-slash-atlas.png",
+      "sha256": "b3253aa124bf639d716026a5c617343008e977f2f09934575b8fc9ce4c10e376"
+    },
+    {
+      "path": "assets/images/chaser-walk-legs-atlas.png",
+      "sha256": "472222578e865af1f4b7148f380a0b1de78a1eac0798c8842a213a5878c20d72"
+    },
+    {
+      "path": "assets/images/chaser-masked-atlas.png",
+      "sha256": "202f34ab7f7e443a882fd3a9fbe800817b7c15f24eb7251e23e53a340f233616"
+    },
+    {
+      "path": "assets/images/chaser-walk-atlas.png",
+      "sha256": "a73b5cb0d7f654dbbc7590c395b718432d86e91b0b2ec7143d6bc1dc61af3501"
+    },
+    {
+      "path": "assets/images/commander-phase1-reference-atlas.png",
+      "sha256": "cedd32dd55f2993bf9f85f0d96b12e26936ad545520ddca3305c7eaefbc60d59"
+    },
+    {
+      "path": "assets/images/commander-phase2-reference-atlas.png",
+      "sha256": "b33c09673a82eb779259f056fda86398ac3ffd030d8f307ad1c97a99991b8d57"
+    },
+    {
+      "path": "assets/images/choir-cantor-atlas-v1.png",
+      "sha256": "ff46990790c2ff3e38653f924c22b4e9976a1d3dfab9e7393d08959fadae922c"
+    },
+    {
+      "path": "assets/images/companions-roll-v1.png",
+      "sha256": "6c77650f78abc97fe391e0356a2a12a277d8ebf67cd25a6019956082fa800c19"
+    },
+    {
+      "path": "assets/images/crossbow-poses-v2.png",
+      "sha256": "a295c74cf020ab62be187f174e8099542bbf1d51e391bd7b5ba6564c6a4cd67b"
+    },
+    {
+      "path": "assets/images/demon-bat-reference-atlas.png",
+      "sha256": "163be10e8ede9ea1882561322ef2ea672aa647487a676a517e019c89989c377f"
+    },
+    {
+      "path": "assets/images/demon-core-arm-atlas.png",
+      "sha256": "4d9a8b27a6b058f295dc06dd8375f1fb3ae231cf6dc6e6dad1026008af5fda58"
+    },
+    {
+      "path": "assets/images/demon-archer-reference-atlas.png",
+      "sha256": "61030682ca3aae044e74d5da116d167889195a29fe490bf7e5f5638792a1b004"
+    },
+    {
+      "path": "assets/images/demon-captain-reference-atlas.png",
+      "sha256": "7a96f66b54f7379aa1a97e29abbe2a50c9ab44d8246fa1068556454cf9c3909b"
+    },
+    {
+      "path": "assets/images/demon-core-foot-atlas.png",
+      "sha256": "49dd796707bc3d3d0b20eebee581381ff4611f80402452ae7f437a548ebafffd"
+    },
+    {
+      "path": "assets/images/demon-core-wall-atlas.png",
+      "sha256": "76a3685830553ed00f6bdf5ed0a1976866ad53d07147c789f38475fe446c9b58"
+    },
+    {
+      "path": "assets/images/demon-eye-reference-atlas.png",
+      "sha256": "9dd20e47120cd27553460e1fb008e6e0672c34f56b2adf59fe7bf8325255c933"
+    },
+    {
+      "path": "assets/images/demon-core-body-atlas.png",
+      "sha256": "9e0286eb5c312b80c103e2fd75208e3a271b1df30ed74ec767a8a7fe68ef0256"
+    },
+    {
+      "path": "assets/images/demon-hand-reference-atlas.png",
+      "sha256": "1ec66fe6d225a8c281fe293cae0b18f1ec8fcf74e93ce407281a452e252d987d"
+    },
+    {
+      "path": "assets/images/demon-foot-reference-atlas.png",
+      "sha256": "9269a4f6ad779597c0845c1019c6977636dfe04a87a6a036f3b388010a126b81"
+    },
+    {
+      "path": "assets/images/demon-nose-reference-atlas.png",
+      "sha256": "376429823707b94ed0d80f5260d788fe42e0f668fe84d025e9854ba3b506017b"
+    },
+    {
+      "path": "assets/images/demon-mouth-reference-atlas.png",
+      "sha256": "075555308999c67320013660750fd583aa094e46102753c13fc4a86b4c8ab17a"
+    },
+    {
+      "path": "assets/images/demon-core-reference-atlas.png",
+      "sha256": "2aad9171a2422d51a5271ca1adb19bee87a8e00051467ca55f043e6f92397bf1"
+    },
+    {
+      "path": "assets/images/demon-soldier-reference-atlas.png",
+      "sha256": "cd10e2aea0cdd3b347f680ac9a02ba03317e7bed3f1b6ec9166b37b5fbed3dfe"
+    },
+    {
+      "path": "assets/images/demon-presentation-body-v1.png",
+      "sha256": "d12ee79b451dac3767c24f81f258c4d36c6da1dbe4c7fc4e09d01bc7d1f4538f"
+    },
+    {
+      "path": "assets/images/enemy-melee-poses-v1.png",
+      "sha256": "7c7b0526aead8c4cfc2d2c6eaf95daa26464b1bb9e519469047111335ec45738"
+    },
+    {
+      "path": "assets/images/enemy-hit-reactions-v1.png",
+      "sha256": "cd18e52eb89ee4543d6ea6a78370e2b00d6ca30f49d7141f0f9fc96ce1676c49"
+    },
+    {
+      "path": "assets/images/entrance-doors-v1.png",
+      "sha256": "c9cf20e51852a8d12480c62cba7ae63be251c6972392cc98fe16771721526769"
+    },
+    {
+      "path": "assets/images/entrance-hero-frontwalk-v3.png",
+      "sha256": "e3c1aa27946f97093a176480451e73071f7c1b9d3f68ca6f26e86210f3ecb696"
+    },
+    {
+      "path": "assets/images/entrance-hero-actions-v2.png",
+      "sha256": "c547cc07e940f0c5725793e9948183b343ffe32318e63295c47fa937207b0612"
+    },
+    {
+      "path": "assets/images/entrance-hero-walk-v2.png",
+      "sha256": "cd814a445bde5490f30af9c7acc6c53fa1e6219153b9fd89e480dc9b589a73a4"
+    },
+    {
+      "path": "assets/images/entrance-hero-actions-v3.png",
+      "sha256": "746d8309494ad79954463cbb2bab5f123612d17b0c659704d590a29fae5b3bcb"
+    },
+    {
+      "path": "assets/images/environment-hall-atlas-v1.png",
+      "sha256": "e743a0eb726d1a8dac609e366eb5c903ad99fee2ade247fe3f5d18c1e6df5e3b"
+    },
+    {
+      "path": "assets/images/entrance-interior-v3.png",
+      "sha256": "17a3694552e22cca09059a6d7f392c2c84ec25fdf9607d8fae2926de4417df29"
+    },
+    {
+      "path": "assets/images/entrance-plates-v1.png",
+      "sha256": "d87ee87e4fc2dea518370cb09c492b1f3abc17e6f5ceb5c7160e0d42fa7aa01f"
+    },
+    {
+      "path": "assets/images/environment-stone-reference-v1.png",
+      "sha256": "4a393d2e9be4d0efb4bf24cf42afddbc6dba56c8d1c1f2e5345ec43584488b11"
+    },
+    {
+      "path": "assets/images/entrance-threshold-v3.png",
+      "sha256": "2fdf13c617cbc37aa81f80debebe921f2cd40478189d6913df10229c1c99fae4"
+    },
+    {
+      "path": "assets/images/escape-hero-actions-v2.png",
+      "sha256": "9d254956c1dfa58be3debfe1d62d6eb36ac075d551354b26a33584f101f6f4ca"
+    },
+    {
+      "path": "assets/images/escape-dawn-v1.png",
+      "sha256": "b6e9e6a64d884e13572fd2b7b8fcc830502ec3cda9789504851e3e1013ab07a8"
+    },
+    {
+      "path": "assets/images/escape-hero-rearwalk-v2.png",
+      "sha256": "7a9822bdbe8b2e65ecc2d68c3b0eae2077b5ef2015e61643ece8b8a51ed631a0"
+    },
+    {
+      "path": "assets/images/escape-dawn-v2.png",
+      "sha256": "8c09db388e88566b9a5f9dd9cf352744dd38422db17f5b7a1c05c7a036194361"
+    },
+    {
+      "path": "assets/images/escape-threshold-v2.png",
+      "sha256": "554cf8ab4f8e932e025ebdb73135a41aeabb6ae71c0f2ecb2eece1f635a694b5"
+    },
+    {
+      "path": "assets/images/feedback-named-brute-v1.png",
+      "sha256": "f4abaa21970d14ab1532116c957adbcde7743ab4d1997d787280fc5b7a5481b5"
+    },
+    {
+      "path": "assets/images/feedback-bosses-v1.png",
+      "sha256": "d3666f2607ad1b8026699ee2219ad759ddbadbed8e0f95b509492ec3d10e1cf3"
+    },
+    {
+      "path": "assets/images/feedback-demons-v1.png",
+      "sha256": "cdfe9147deb4b282251a439d30858eb5f79b1323ee8e7b517a952005e02995b6"
+    },
+    {
+      "path": "assets/images/flower-reference-atlas.png",
+      "sha256": "bbe20ccf069cc064e52a771f8fc9a5550d0ee808fb497783ab85893b28c5f8b7"
+    },
+    {
+      "path": "assets/images/feedback-upper-v1.png",
+      "sha256": "90c65a5cb62b0e0b7d879da5f6ab5589f27fc4ef038fe0ee3290ed2a736f910d"
+    },
+    {
+      "path": "assets/images/gravity-mage-reference-atlas.png",
+      "sha256": "21d54a28734cab8043413ed11227cf5c3898912858b33062ac04a1c731d09f30"
+    },
+    {
+      "path": "assets/images/hero-reference-atlas.png",
+      "sha256": "2dd91d943daf6941cad20a9ede0d38c79f26f3b1deede9ee1fdb133667f76bbb"
+    },
+    {
+      "path": "assets/images/guard-hall-atlas-v1.png",
+      "sha256": "c4efbc408137b8448a37ae73ea1247ecb42b54e5f0ce5e8e37c00622d8ca901a"
+    },
+    {
+      "path": "assets/images/hero-draw-dash-v2.png",
+      "sha256": "31e13371e7cc9027bb9e8b5660a754d51cff52142a3633bc4dbfd950ce32eea6"
+    },
+    {
+      "path": "assets/images/hero-utility-upper-v1.png",
+      "sha256": "f37200755fb6f3846988fad9f3aa9a97c7525d9471de44890b64bf1d08b23e32"
+    },
+    {
+      "path": "assets/images/high-hall-atlas-v2.png",
+      "sha256": "c04f089ee73b01d09ce70bec900d55f1e8de209d629ff2d07ee488419e6716ea"
+    },
+    {
+      "path": "assets/images/infernal-hall-atlas-v1.png",
+      "sha256": "8c9f327f8c984ead0eeeaea3a434ec1d7ba08575d5c1c632eb0846464f64a9cf"
+    },
+    {
+      "path": "assets/images/hero-utility-casts-v1.png",
+      "sha256": "35d0191c6db8e7ab6012f03863901e317ee90c920141fa9d56fa36df8217afa3"
+    },
+    {
+      "path": "assets/images/infested-hall-atlas-v1.png",
+      "sha256": "350f15738b8853dc13e8c73c35f4a40dab042614a0fcda006f7b927355e44ed2"
+    },
+    {
+      "path": "assets/images/laser-masked-atlas.png",
+      "sha256": "1b5172b263362f2fd0c27cfe9b9aeff69c3e4d04b50fedadc327e449cc0d58b6"
+    },
+    {
+      "path": "assets/images/mobile-menu-icons-v1.png",
+      "sha256": "0d081cad1007cec46b0151f8f7c2d2c3699e78b9669c6880b4a8d83888270e88"
+    },
+    {
+      "path": "assets/images/mordo-phase1-reference-atlas.png",
+      "sha256": "cc24b070e34e6f50477576956a80e7f67a00f4d931fa639ad51faf5723d34b88"
+    },
+    {
+      "path": "assets/images/laser-walk-atlas.png",
+      "sha256": "750435b70dae6412ef9a3c87e6da0065e8154dbaf92225471de156c4801614f3"
+    },
+    {
+      "path": "assets/images/mordo-phase2-reference-atlas.png",
+      "sha256": "4b5602775081c9a8337f44ab2f7b2e55a92cace5cb02142ff6b77d3ceba32619"
+    },
+    {
+      "path": "assets/images/king-resurrection-poses-v1.png",
+      "sha256": "ffef4e01a06fe266b24ab623350c55eab3b0c7bf5043179622313235a0584746"
+    },
+    {
+      "path": "assets/images/mordo-presentation-poses-v2.png",
+      "sha256": "1f3e299afa6ab46f648ab59f5613b4723a74d703a4d5b37d65b6d457f04f0c6b"
+    },
+    {
+      "path": "assets/images/mordo-phase3-reference-atlas.png",
+      "sha256": "465756c21e211e3343ebfebff1f78a70216707151ee5d9fb43e588069176443b"
+    },
+    {
+      "path": "assets/images/mordo-presentation-phases-v1.png",
+      "sha256": "ca5e5f3b73301cd37aa0d0e59723dbfd5c9ba0073dc39a0b30163d23af43cad1"
+    },
+    {
+      "path": "assets/images/ossuary-minion-atlas-v1.png",
+      "sha256": "389aee898c24a1314306919d445871fca3a84319a22eca872e39c2a42be0ae9b"
+    },
+    {
+      "path": "assets/images/prism-hall-atlas-v1.png",
+      "sha256": "82da9c670329155bbc8b2bfbdd5c840a9b545fa1d61712deda2c0bf664c035dc"
+    },
+    {
+      "path": "assets/images/ossuary-summoner-atlas-v1.png",
+      "sha256": "946dc232d11f7db83127b5e7a56b2771b852179bef058f86778cf5598130e829"
+    },
+    {
+      "path": "assets/images/pulse-turret-reference-atlas.png",
+      "sha256": "90a4a3ff13909679d79bcc51a206307f13ff44310ef177dcc035d61ea98057f3"
+    },
+    {
+      "path": "assets/images/prism-reference-atlas.png",
+      "sha256": "90f281fcadf0dee634dda12d332a957f174da5c0329043615abdb699b62d2891"
+    },
+    {
+      "path": "assets/images/relic-icons-atlas-v1.png",
+      "sha256": "0c8e92344923decd1996a6d8b7785cf1046577ea5c2eb0e0155bd5388e7d835c"
+    },
+    {
+      "path": "assets/images/pursuer-atlas-v1.png",
+      "sha256": "c72c0af01d0ca6f1720fc5a7b483e262ff025b287b33efc7c7c6798a49217b25"
+    },
+    {
+      "path": "assets/images/prism-presentation-poses-v2.png",
+      "sha256": "94286e5e7159490a6f8fe6dead72f4113facd338b0b6a390f27e15cdd34fa864"
+    },
+    {
+      "path": "assets/images/rift-hunter-reference-atlas.png",
+      "sha256": "f92ced470446739c300ee836fe59bb8daf9977783bfbfd59abaebd5043780e43"
+    },
+    {
+      "path": "assets/images/ricochet-walk-atlas.png",
+      "sha256": "d42fc2eeb2e9153cd38b16d0754858a415b37a738c780b42512c413f6a0fae4a"
+    },
+    {
+      "path": "assets/images/ricochet-masked-atlas.png",
+      "sha256": "84f89b0ad9d34c25dddba3886404e3260c1cafa373abfc3e5623bd1ce12801cb"
+    },
+    {
+      "path": "assets/images/ringcaster-reference-atlas.png",
+      "sha256": "6c045777ea0de9dd2c51e2e89f555e14578d92485a584b5ab0da670863a5cfef"
+    },
+    {
+      "path": "assets/images/royal-guard-reference-atlas.png",
+      "sha256": "426b26af6122947ea08f30fb48e3eba0a94e9be92d441c7f30f32120aad8c100"
+    },
+    {
+      "path": "assets/images/royal-hall-atlas-v1.png",
+      "sha256": "f1550bdf55f718c5fe27f375f6477fb02bbccbe100f6a121c58a16369d36c4f0"
+    },
+    {
+      "path": "assets/images/scatter-masked-atlas.png",
+      "sha256": "c0e2120efffb08ed5a53621b3c2835d119cbb6ff05ad8242add6a550b715ce7d"
+    },
+    {
+      "path": "assets/images/scatter-walk-atlas.png",
+      "sha256": "cc785e759eda0a4e6267e39e5fdbecd8a8e326a48f1c9ce50dc0a64bccb90cca"
+    },
+    {
+      "path": "assets/images/sealed-remnant-parts-v1.png",
+      "sha256": "78943b50851a72d069ecebf4ad46e95520b83ccb5874a3a8770da1ed18727952"
+    },
+    {
+      "path": "assets/images/shadow-aura-atlas.png",
+      "sha256": "51bba7f4ada90754d8bdfa71604386c0d26aba3d06349e34ea724f13271e3a45"
+    },
+    {
+      "path": "assets/images/skill-icons-b-v1.png",
+      "sha256": "c7b7113c91623e5b8dcd5b15d03b5ad688361992d43612bb53682fc017a6059a"
+    },
+    {
+      "path": "assets/images/slime-reference-atlas.png",
+      "sha256": "4cfe6c627cfb7d8762818bd40b0d2be03b769af5b97347f91625fdcef447f9c4"
+    },
+    {
+      "path": "assets/images/star-knight-reference-atlas.png",
+      "sha256": "dd8ff31b9be7edfedb0af8736ca797620724070672d7dbf573a76cd09b1c5a3c"
+    },
+    {
+      "path": "assets/images/spike-nest-reference-atlas.png",
+      "sha256": "3c9bac5d4f55cedd69d461169e3050a14afa799f65010d50bc3b54ff00dbf51a"
+    },
+    {
+      "path": "assets/images/skill-icons-a-v1.png",
+      "sha256": "8975d6e07be6418d3cf1ea16485e77ad40526d9476a361ef6ebe445a7baf739e"
+    },
+    {
+      "path": "assets/images/strafer-reference-atlas.png",
+      "sha256": "4eb274f59395bd03f08c3492b4f0922dfb9a7d579414511b64cbc231d0f5305f"
+    },
+    {
+      "path": "assets/images/title-branch-v1.png",
+      "sha256": "f38581e0497cf97c365a0c46ef4e847c2f431a714236ff34c02f9c3739a4afc1"
+    },
+    {
+      "path": "assets/images/title-hero-idle-v1.png",
+      "sha256": "ca634044b30ee82c800ed3ccadf61ded5f9b9067034ddabfd3ccacb9a059805d"
+    },
+    {
+      "path": "assets/images/title-logo-v1.png",
+      "sha256": "2303ccdf609d8825c4362a85ff5727a00b7fb69c9c1f18a42bb6213e02512869"
+    },
+    {
+      "path": "assets/images/star-bearer-reference-atlas.png",
+      "sha256": "42415f6f37a90da40b80e223e34826717071f068be68402c3d41f16297cc217e"
+    },
+    {
+      "path": "assets/images/title-art.png",
+      "sha256": "e7891eb31e9da3c17306484960d7abcc635a0e04c70967b844195049fa8ff79e"
+    },
+    {
+      "path": "assets/images/title-background-v1.png",
+      "sha256": "3621828d33c535ce2c0b5f8e4e143afc4336811057ab035c773f417074349654"
+    },
+    {
+      "path": "assets/images/velkar-presentation-phases-v1.png",
+      "sha256": "64cdc7c73f10a34a938f7afa66dcaffb7ab47075c3329a11ec43f4d17226b313"
+    },
+    {
+      "path": "assets/images/vergas-blade-v1.png",
+      "sha256": "990399ab9e9abf9539d5b8bc9bfa2dd940f40dc141818ee2078c5781e0f22601"
+    },
+    {
+      "path": "assets/images/vera-royal-eye-atlas-v1.png",
+      "sha256": "6ff2f1bfabebd75e7555eed85938a7e535d0866b66cd1dd2dcbfca0a3b689675"
+    },
+    {
+      "path": "assets/images/warden-horns-blood-atlas.png",
+      "sha256": "58470ff2078895c8c586817c9badd892aaa7b3f62ad55a1a9e4f2c147cbba7d4"
+    },
+    {
+      "path": "assets/images/velkar-presentation-poses-v1.png",
+      "sha256": "c45cb9d1916fc1b53dd3ca6fc9d57afe87110abeba57bc5ab1b502f6b1ad91c8"
+    },
+    {
+      "path": "assets/images/warden-recover-atlas.png",
+      "sha256": "a7f34419ee902342e6490d91519ad7e82c75a00b994d0513dbbf096b3cab096c"
+    },
+    {
+      "path": "assets/images/warden-motion-atlas.png",
+      "sha256": "05fe6f05835960752e94e0949a8cef60266ad62519184a56e11d75fdab46e0fe"
+    },
+    {
+      "path": "assets/images/warden-walk-atlas.png",
+      "sha256": "aba0114667a2e244d795f00230e6bcd0753ec255ca72e79f0aafd6ff2c0081ca"
+    },
+    {
+      "path": "assets/images/warden-presentation-poses-v1.png",
+      "sha256": "8bad97d0ed4def47a2c2b904b123e2415c789515b2ec140417d6b9f374cc3a77"
+    },
+    {
+      "path": "index.html",
+      "sha256": "ca7e02ab6f580a2faac8a0e86df89221a591205e133260313c4d4a501816f612"
+    },
+    {
+      "path": "src/combat/abilities.js",
+      "sha256": "8b6942aaed5765b7ae1a002d5f8c6660d34d847acc6097455684112485085598"
+    },
+    {
+      "path": "assets/images/xp-shards-atlas-v1.png",
+      "sha256": "06b57923a3f77ddb26d6bec72a74152db63e26acd57ee404c32b16fda618e54b"
+    },
+    {
+      "path": "src/combat/balance.js",
+      "sha256": "78fbce0d81527b6d62a349e05243dd618e5d48c8483fb14221f9bf5b888cc73d"
+    },
+    {
+      "path": "src/combat/boss-pressure.js",
+      "sha256": "61c66af74cf92f95ed7660e8aa22a547e14b17c8203580125eeeeee8ae24793e"
+    },
+    {
+      "path": "src/combat/brute.js",
+      "sha256": "058f81c3d68f95fe969937f907810b8d1b5e8e13b1bb68a8728bfa25569417f1"
+    },
+    {
+      "path": "assets/images/warden-room-props-v1.png",
+      "sha256": "dc019fedaa740cf08de11427220b7e0916ba8ce32b8dc898d5d2820ea89fa841"
+    },
+    {
+      "path": "assets/images/warden-walk-v2.png",
+      "sha256": "7e4a71724809ffddbab976c205e5b24e7c1c0bcc8eb755c95fa39261cf696260"
+    },
+    {
+      "path": "src/combat/combat-readability.js",
+      "sha256": "c3751be787b0a2709ad6f34dd2771b3a4dc62ff86295476dbe62c0e0e8ea3150"
+    },
+    {
+      "path": "src/combat/chaser.js",
+      "sha256": "c6510c10833bcce6979ceee00e8e3671d4df3bce300237ca46a31b3fa9644971"
+    },
+    {
+      "path": "src/combat/chaser-slash-area.js",
+      "sha256": "31e9c2d44926e773f2cbf3c7db2cb99899a03ce87cd078267e107f739b352c1c"
+    },
+    {
+      "path": "src/combat/combat-tuning.js",
+      "sha256": "4b0da743ced368e9099c36483d647bd29125b30b2cf71683b125f32a4e63e37c"
+    },
+    {
+      "path": "src/combat/commander.js",
+      "sha256": "ce0912e89ce8f240f4090f0bf63d51deeaab7008c8d5e7047d769b2e8fc834b6"
+    },
+    {
+      "path": "src/combat/combat-status.js",
+      "sha256": "88c6643600d0e880013d968360e843e9f5ba7e6c51cf7964d42f89747b0f4473"
+    },
+    {
+      "path": "src/combat/critical.js",
+      "sha256": "0fe1830d1c2fa0384d4f6c8095562133378b3ca3ac1b0a3dbc2db1a9bfe43f71"
+    },
+    {
+      "path": "src/combat/demon-attack-shapes.js",
+      "sha256": "455848c8edae9d14555850da3ee94d048d2072fbc09e9e30ef7503d1424378c3"
+    },
+    {
+      "path": "src/combat/demon-specials.js",
+      "sha256": "2c1764d3417a1d0f83e3b5d2f2672471532e552d563cba9aced645895a998af3"
+    },
+    {
+      "path": "src/combat/demon-core-motion.js",
+      "sha256": "6f0c7a9af770012d23a24f7b4d6e014326b85914d3b8ee05adc3e568e1e92b67"
+    },
+    {
+      "path": "src/combat/demon-sweep.js",
+      "sha256": "de796926ec102ef79e978ae21e5b0b9b0fb77ad4f820744bae26b128b8b43214"
+    },
+    {
+      "path": "src/combat/elites.js",
+      "sha256": "699b6c20b59748acbe94ab6512c29dbdf83bd0364d579d2be131b2a7b30816c1"
+    },
+    {
+      "path": "src/combat/demon.js",
+      "sha256": "d952a081393da3ecc1e617d475f9085c2fd66f0a79bdbb2a21fd967f9222d9f3"
+    },
+    {
+      "path": "src/combat/elements.js",
+      "sha256": "9350b17354d8deb89b4331ac038819b30eaf7b78a6be9c7d77f1ab678420b7e7"
+    },
+    {
+      "path": "src/combat/enemy-defense.js",
+      "sha256": "e6621874da4e7e90dc7d455cf47efc03a6370ecfdcfb0f05eb8f24ae5d4a7c9c"
+    },
+    {
+      "path": "src/combat/fairy-king.js",
+      "sha256": "2aa1ee42ff04162ecb5e6659e483cde80735d6c865ddc303314782b618d3b589"
+    },
+    {
+      "path": "src/combat/enemy-group.js",
+      "sha256": "8855662307a6c04e6e10d5af808f315fc8dcf2e235acf7cbcf97910eafce0a4a"
+    },
+    {
+      "path": "src/combat/enemy-melee.js",
+      "sha256": "8a83c031a33a57eec7133247c4f10d367390902308d13eca722d83fbcb1b749b"
+    },
+    {
+      "path": "src/combat/enemy-sightline.js",
+      "sha256": "f0f7950f9482c4bff193c2a67b57b342fd92c32f5726ef858eb04ee82510cb65"
+    },
+    {
+      "path": "src/combat/health.js",
+      "sha256": "4e2254dfe38be046a0e11850f60e075de1c59ca397507a99edd23cf2cdbba625"
+    },
+    {
+      "path": "src/combat/frost.js",
+      "sha256": "60d86d1dd718265aa666541e313cefcf6ead983e51d7e62a4ff1378cfde92bc4"
+    },
+    {
+      "path": "src/combat/high-floor-patterns.js",
+      "sha256": "537ac21a26d40dd89082660ea450788994b92a7b2a76ba170a44549587dcac3d"
+    },
+    {
+      "path": "src/combat/fairy-position.js",
+      "sha256": "a02f1cea282959bfe30b130527c738c4af24f893310fefd0aef3aa5dec4b297f"
+    },
+    {
+      "path": "src/combat/infernal-enemies.js",
+      "sha256": "f0d7ccf78a4818632208c2066b69ba9b18f693a820f4d39308c7075cc3d0f20e"
+    },
+    {
+      "path": "src/combat/patterns.js",
+      "sha256": "bcb7f0c5f7539e9f2b69250bc14bedfb4d86086947c4aced5c77fa10c2d22754"
+    },
+    {
+      "path": "src/combat/high-floor-profile.js",
+      "sha256": "764b88cb1d120c85977c954ec645f1f47f7a5058449eaa6a1064eba464e734e8"
+    },
+    {
+      "path": "src/combat/lightning.js",
+      "sha256": "55c23e0ae6d7a6ccb5aefa7983b16170bb36f2828d60a75330132f6cc609a353"
+    },
+    {
+      "path": "src/combat/poison.js",
+      "sha256": "9a081e2f90534de239f081ea8a7add6a3053126d0a6e2009692ee6a8dcd912ef"
+    },
+    {
+      "path": "src/combat/precision.js",
+      "sha256": "0e9a98ee746ea5f01b9d4f3b7de107e61877898536da58e1c07bd61408e72870"
+    },
+    {
+      "path": "src/combat/prism.js",
+      "sha256": "e8bc0d9a7850b90cf4a13019b1a2ef98fddde117d8fe4137087ea648519fce3c"
+    },
+    {
+      "path": "src/combat/pursuer.js",
+      "sha256": "e5844a479a5537b4a5bc7b6224da3341943b3ca8a78d0c145a1148d6bcf68630"
+    },
+    {
+      "path": "src/combat/ranged.js",
+      "sha256": "032d2c0a0baf02852a5354e0f22b3bab2095a094f13a46867dff336ea5eeea8b"
+    },
+    {
+      "path": "src/combat/return-enemies.js",
+      "sha256": "ec40abc07a600c4f5004879b7b4a75e985425dfbe675b0e7065b67f202db266e"
+    },
+    {
+      "path": "src/combat/relic-effects.js",
+      "sha256": "181a2589fae248c69f87a28572a833111c5a15a286e748fe1b40a6bfa2e979f9"
+    },
+    {
+      "path": "src/combat/roll.js",
+      "sha256": "9ec0abdd447195be66914dc2aa894761c438deb13df8c42167c7c5315e039419"
+    },
+    {
+      "path": "src/combat/spectral-blade.js",
+      "sha256": "80826c7255bb4395ea5dd6ae5424590cf394bb8eba8d337a2a1dfcc0020b1b4f"
+    },
+    {
+      "path": "src/combat/support-casters.js",
+      "sha256": "0098449fd9811305cf42ad5b88f1c876adb96fc191e5ccd2cd36c4d4ff293019"
+    },
+    {
+      "path": "src/combat/support-profile.js",
+      "sha256": "cc6d120652da87b7d58f14b85e193b75ae477d20c87067913d1844bd2e67cc25"
+    },
+    {
+      "path": "src/combat/survival.js",
+      "sha256": "1d04ffe4286485a60bc07c49dbb324ffcefddec3fa96e8eabeec464dc01589c5"
+    },
+    {
+      "path": "src/combat/tactics.js",
+      "sha256": "ed5db34dc0b5ce0a4c30ce303b80dbb1aab7a9173f50b94a2bf59e3d64766e51"
+    },
+    {
+      "path": "src/combat/utility.js",
+      "sha256": "01505d61544e7bae79bd43f4f7503b61dd118fcf38bf6c09e3b31cac59e4f9bd"
+    },
+    {
+      "path": "src/combat/utility-expansion.js",
+      "sha256": "a5cf3a4522f650c9f9d839b3fc3306588d5b6ed5d0c04c984df39623024d5834"
+    },
+    {
+      "path": "src/combat/upper-floors.js",
+      "sha256": "ede0092bfc6e36f40fe0dc033451c321e1d4ac8d14b6e02b6a9c9a5847d99f15"
+    },
+    {
+      "path": "src/combat/warden-arrival.js",
+      "sha256": "d65a5ea117cf06693b3c183399f6440a05b75688c6f2a9ca4feab87a95feb6b2"
+    },
+    {
+      "path": "src/game/boss-layout.js",
+      "sha256": "71b6172a5e07bbc4f20cdf319baf4ed6212664a6b5062407cc28fe5693bd466c"
+    },
+    {
+      "path": "src/combat/warden-attacks.js",
+      "sha256": "17f292a1fe4f4e578b9eac69bcd68ea92bfa627a58c6f1945f95ac2021ef37ab"
+    },
+    {
+      "path": "src/combat/weapon-projectiles.js",
+      "sha256": "2244b42c83e8ed6ccfb24775f22132f23d86871507d17e013d98932e1ebbdeda"
+    },
+    {
+      "path": "src/game/boss-practice.js",
+      "sha256": "c3dfcacdd2a760bec697133463158d005c98944e4480f7864d124328fc4f49c4"
+    },
+    {
+      "path": "src/game/random.js",
+      "sha256": "578a940899fd0a70fdf42be084d00c593b99b40d7eba2c3368655763272ec6a1"
+    },
+    {
+      "path": "src/game/engine.js",
+      "sha256": "42901ccdedc8194ccd0fb47da9866f2024b5fd29045de99407c8d9c43d0ef16c"
+    },
+    {
+      "path": "src/game/game.js",
+      "sha256": "78dabead6af6fa4e17c685c14faed3f8a8303cd52f1868e46247bcddcddb0b5f"
+    },
+    {
+      "path": "src/persistence/demon-save.js",
+      "sha256": "f317b0a1285b9960c2d286fb6fad9db20c4fd5cc4ff5b56cd40014c7ec3cefeb"
+    },
+    {
+      "path": "src/game/version.js",
+      "sha256": "46ff13dcba6701d81842b72828bd0c09214558a0d065e70aef455ceaa6abfd7a"
+    },
+    {
+      "path": "src/game/simulation.js",
+      "sha256": "3fd3f17a32fbafb18c9e5f952e84ae4e3a89c7b1c136233f21f47232c63b1060"
+    },
+    {
+      "path": "src/persistence/critical-save.js",
+      "sha256": "186c97dcea223aa9769ca4da444ba96a137165f7bc288f71325ad44dba4c45fd"
+    },
+    {
+      "path": "src/persistence/pursuer-save.js",
+      "sha256": "354b4dc420b9137cb729591b785deadfea1547df3d9a092ee9ace2cdeae9d882"
+    },
+    {
+      "path": "src/persistence/session.js",
+      "sha256": "e4bc6f80e728542dde6b4aca1bfd6fb8b720497a9db51c74a34c902157771876"
+    },
+    {
+      "path": "src/persistence/overhaul-save.js",
+      "sha256": "214a75e995e3e0ca5cc9bb8bd5dd35db015c66bc28990ce703cb5533bf3565e6"
+    },
+    {
+      "path": "src/persistence/high-floor-save.js",
+      "sha256": "e484207c85f4110d1c50ef9bab2163f159dea1e0cacbd185f069c74519c350f0"
+    },
+    {
+      "path": "src/persistence/special-encounter-save.js",
+      "sha256": "ef7641b23339dc15ca9f6cd6fe267ab411f4e40c40d1e2d575c0949a220c0cb4"
+    },
+    {
+      "path": "src/persistence/synergy-save.js",
+      "sha256": "3ceeb5b6ac00fb57c2e671ab0a82e251edccb19a33831583a0a1e971a0bd9901"
+    },
+    {
+      "path": "src/persistence/storage.js",
+      "sha256": "31a509784980e0041f1df88a5cd5b440209d160b89b7d2e8e368cb4460e1f6a6"
+    },
+    {
+      "path": "src/persistence/support-save.js",
+      "sha256": "8b53ed1316cb985999fe87b6a76de6a17ccfa13d00bf003c0e86f172cd73bc19"
+    },
+    {
+      "path": "src/persistence/utility-save.js",
+      "sha256": "fdadb9a6949d4113bf29bbe1b850d59a8385bf0aabbb576f29e59a97ff98a014"
+    },
+    {
+      "path": "src/progression/critical-skills.js",
+      "sha256": "9079b44ebaee1017c76d5a79aaf5530547684e2e09a1b7fc3ed6124e828c4b0e"
+    },
+    {
+      "path": "src/progression/enemy-rewards.js",
+      "sha256": "6a94961e5a31ba786a70ea54c3f844cd8bcea1a83fa178f0a26a3607821e4dc5"
+    },
+    {
+      "path": "src/progression/essences.js",
+      "sha256": "e9192c7a83420aa77742400e18fa19ea2127e2a3e263bfa76f025bc990d8316c"
+    },
+    {
+      "path": "src/progression/evolutions.js",
+      "sha256": "76c5c7866a61db19faf5037f2b6e0d6526d68a7e22becf7bf7325d0de7a34dc7"
+    },
+    {
+      "path": "src/persistence/upgrade-transfer.js",
+      "sha256": "c1e27928de6777f96e267999e7f55e6e9c06a038d7b3e3207e4ca44410fcd7d1"
+    },
+    {
+      "path": "src/progression/critical-relics.js",
+      "sha256": "dae49d3a62385f02e79c30351b31ea58b5d72643315615a94d559f3d587e7fb8"
+    },
+    {
+      "path": "src/persistence/upgrade.js",
+      "sha256": "967e773261cb5570e8b4491cb342780d80625ee912f2943b429ecf51bf96a677"
+    },
+    {
+      "path": "src/progression/growth-records.js",
+      "sha256": "746f8ccb6beab77214f9c6663f478861c7b1f43eacc8670282ce5fd29928a2bd"
+    },
+    {
+      "path": "src/progression/passives.js",
+      "sha256": "a65d2e2f6872ceda8750d00433c71090ed0b8f64a6938953788346ee142a611c"
+    },
+    {
+      "path": "src/progression/growth.js",
+      "sha256": "0191f7ff2fb6e29fdc11ea6870fc4f2cb7b731d632a171c8b89cfa89723f9ea1"
+    },
+    {
+      "path": "src/progression/loot.js",
+      "sha256": "3663a61016ce48ac60ee29134a2e92c5154fbea58172b8636f7d3d4cdc0eab48"
+    },
+    {
+      "path": "src/progression/progression.js",
+      "sha256": "89c9bd33ecc910b5b3a0ee16257906551b4e1d5d5a3981ce9518b876e4051cd8"
+    },
+    {
+      "path": "src/progression/relics.js",
+      "sha256": "4436975651a1e39da7b4ee6d7e9d74a122a4d0c610906a60adf8905b0a77117e"
+    },
+    {
+      "path": "src/progression/skill-overhaul.js",
+      "sha256": "1cb108c691136a81c0b6658a6d688db83377be0172408297266420800b5643a7"
+    },
+    {
+      "path": "src/progression/skill-tree.js",
+      "sha256": "ade3a8db5739307137642fb3c3936d7b5fa091fc38507a7c0d350cc830653c45"
+    },
+    {
+      "path": "src/progression/synergies.js",
+      "sha256": "26e1874bb6bf7cae9ebfbef36f7f67d3a461fff52f31ea4bbd7b26274d6b1fc9"
+    },
+    {
+      "path": "src/progression/utility-draft.js",
+      "sha256": "7461f470f5fe1ae754be709733f8b2791d21447fd42d4c0ce63c93ccf3776ba0"
+    },
+    {
+      "path": "src/progression/xp-drops.js",
+      "sha256": "4009f27efc289d544dc8889af6d23c43a6efb67e037ae544c2f09708c626b1c7"
+    },
+    {
+      "path": "src/ranking/ranking-client.js",
+      "sha256": "3c297855e0d53157911632f2af88e52a2eb44ee554b89f7296e20d82c7ed0447"
+    },
+    {
+      "path": "src/ranking/ranking-ui.js",
+      "sha256": "5c676d39b2a563e2e5e65f41ae9308bdd844439abfbcda38016b23246e9b1a71"
+    },
+    {
+      "path": "src/ranking/ranking.js",
+      "sha256": "39d95bfd3c131d01abf86fda9159ee5e8a2d1927ea25d5b049a7a755431327f7"
+    },
+    {
+      "path": "src/rendering/ambusher-sprite.js",
+      "sha256": "a254f35370a537b793866548044dd59c1bcbc3a532e4f229cd4ddc84ddf55c3c"
+    },
+    {
+      "path": "src/rendering/archer-walk.js",
+      "sha256": "5e900a4ce43c0f428f5e5d4d92e0c4b9bd41e0792a93443fc213c17331bf79a2"
+    },
+    {
+      "path": "src/rendering/archive-art.js",
+      "sha256": "1940bb9a22ba066b820463db06220df78fc6f8f14b3be4df14aa3cdd916988ef"
+    },
+    {
+      "path": "src/rendering/arrow-impact-visuals.js",
+      "sha256": "593c1498722b05cd6e6bcac89716afd45a50545a2a7d73422d72076486ebddfa"
+    },
+    {
+      "path": "src/rendering/asset-manifest.js",
+      "sha256": "d7725450d2e3573b2efe6c6532d1dbd0a1f5b4bdbe45785ad2c2aadda047992c"
+    },
+    {
+      "path": "src/rendering/asset-requests.js",
+      "sha256": "b7345e568b3d59c2e5b248f53757cb9182e7de3b44f5741359688b75fec0b167"
+    },
+    {
+      "path": "src/rendering/asset-packs.js",
+      "sha256": "ddd80bd4490da6292f060e07b5541dc02e93abdce3cdf43aea74b788a5f313e4"
+    },
+    {
+      "path": "src/rendering/asset-wait.js",
+      "sha256": "2759c4deb4332ee379d3d2fcfa9873d0bebdc605be89ec2786fa45491e7d980d"
+    },
+    {
+      "path": "src/rendering/atmosphere.js",
+      "sha256": "bfa78c5929f725b0e8844b9b7f76d77d05fa59a343ccf1475b795da1051c16ef"
+    },
+    {
+      "path": "src/rendering/astral-sniper-sprite.js",
+      "sha256": "523434e1f391ae14a5153eb6ff72cd45a6552ec99ba652787dc5c59101ee08cc"
+    },
+    {
+      "path": "src/rendering/blink-visuals.js",
+      "sha256": "924627bd717fc63c13b5d368bd6d0474426e3ac24e84679c964bbe170625343c"
+    },
+    {
+      "path": "src/rendering/boss-atlas.js",
+      "sha256": "76169a46522d46ae5b95bbc2652ba87ea26a55858f8e985fe28b21f269d9fd0e"
+    },
+    {
+      "path": "src/rendering/boss-clear.js",
+      "sha256": "64140fe15d74afbf0e03001265a41d672c60c43b089ef08609994c1220cd92c7"
+    },
+    {
+      "path": "src/rendering/boss-dialogue.js",
+      "sha256": "d9a36b1b7708c730912792b0350ed5f9e9d8073919cce341cdc3d281836bed3f"
+    },
+    {
+      "path": "src/rendering/boss-attack-vfx.js",
+      "sha256": "c4ea3876fdda633a43f73030231d1c134410ccc57318a8efe311c4da933dd1e5"
+    },
+    {
+      "path": "src/rendering/boss-motion.js",
+      "sha256": "be33d526cfd777d009238f842a2900bef33218fd6044f2902a463a136e73366f"
+    },
+    {
+      "path": "src/rendering/boss-poses.js",
+      "sha256": "4982993d8fbf58f6f4e20205827982c82c9d86e359fe4266598340851e38ec3f"
+    },
+    {
+      "path": "src/rendering/boss-threat-contours.js",
+      "sha256": "2c96d6c90536c58b29d94347359af09cd250479c3dd6d43ddc4541441163a2e5"
+    },
+    {
+      "path": "src/rendering/brute-walk.js",
+      "sha256": "3725898fc9cf39e2ecbcfcd353ff47478d567c52f312788eb98324f37b250afe"
+    },
+    {
+      "path": "src/rendering/character-sizes.js",
+      "sha256": "75dcf39c0464452edd3654f5d9a77c1280517ffead453719776c926c7872489c"
+    },
+    {
+      "path": "src/rendering/charger-walk.js",
+      "sha256": "8c169ad12f1098bf267ae9e5e2cdcb759a8a395f0d9b7f96144216331bb707be"
+    },
+    {
+      "path": "src/rendering/chaser-sweep.js",
+      "sha256": "f84c64fa232a39af3a226ed724c109d0dad617d4ad926c76342dcc891c01bbff"
+    },
+    {
+      "path": "src/rendering/chaser-slash.js",
+      "sha256": "2402773dfac484284f9f391553a125cef0bd2e44962982069cf0d1f1daad80d6"
+    },
+    {
+      "path": "src/rendering/chaser-walk.js",
+      "sha256": "037a1d6eecf9ed03c4d61075b0b72074f79f330d89bad22a5ee5547c01057d93"
+    },
+    {
+      "path": "src/rendering/commander-phase1-sprite.js",
+      "sha256": "f8c2c6b364258ee8570ba84897879ca091272f29aaae79f53ab498a02b44f20a"
+    },
+    {
+      "path": "src/rendering/commander-phase2-sprite.js",
+      "sha256": "8ba821dd8dba984f33b02e171cf5c28bb801b1be5472c9865be07260bc5067f9"
+    },
+    {
+      "path": "src/rendering/combat-vfx.js",
+      "sha256": "ea72518e53df30ee074f7394194677cb15d0984d8901e3c935ba2fd995557b31"
+    },
+    {
+      "path": "src/rendering/commander-visuals.js",
+      "sha256": "29f6533e9ccd50daf7134a064bc1c6a3910e3774d23722edc4b60eca3aba3ff9"
+    },
+    {
+      "path": "src/rendering/companion-roll-art.js",
+      "sha256": "90c5b3ab341f273b37d4e6adfaa268df2f1c0bc113513d5f6d455e318be4a183"
+    },
+    {
+      "path": "src/rendering/critical-relic-icons.js",
+      "sha256": "2dbd3dc080c6fc841641a22957065ee9d7337dec3f7c73d7a00dcc4c5f74d84f"
+    },
+    {
+      "path": "src/rendering/critical-feedback.js",
+      "sha256": "8c3ff0c3cd58443dc079174296a388e6d8f7a42ee8946f6b1071f30e8c49b9ba"
+    },
+    {
+      "path": "src/rendering/critical-skill-icons.js",
+      "sha256": "d127478d013e5cb9d4f5b74ff6034abbb14e68eaffbb9a99d3992a3d44de99a7"
+    },
+    {
+      "path": "src/rendering/critical-skill-states.js",
+      "sha256": "082e5a1046471a7301cfef6dce58198ad8807344e7b9e3ce404ae4e243181e14"
+    },
+    {
+      "path": "src/rendering/demon-archer-sprite.js",
+      "sha256": "470598a125064dbd666bcc5b1bab07553f8223247c2499661338ad948789e757"
+    },
+    {
+      "path": "src/rendering/crossbow-art.js",
+      "sha256": "f3d2b8892bb2e16e841bd1fea359d9b92db106eec8e97f31b55bb057b35a09be"
+    },
+    {
+      "path": "src/rendering/demon-core-impact.js",
+      "sha256": "bd1142d7bf32fe91f110fd4dfc6a7c1920131bc606eec4a45243feb354182aa2"
+    },
+    {
+      "path": "src/rendering/demon-core-attack-effects.js",
+      "sha256": "06878f1157b498c704b8fa9bf980cb45dde28f9d967484db365d1adf7b5915cb"
+    },
+    {
+      "path": "src/rendering/demon-bat-sprite.js",
+      "sha256": "bb09bfb42fdc9f05b3cc8de71e4800556446f0ea9ec240ecdf8d301284a155bf"
+    },
+    {
+      "path": "src/rendering/demon-captain-sprite.js",
+      "sha256": "bfb675fb842960f2337f39f19e126bfc935e887d85bb06cb41df403c033a66c4"
+    },
+    {
+      "path": "src/rendering/demon-presentation-state.js",
+      "sha256": "43c449862d8854fcc32b21120cfe3569560a5703cebf272244ed4436707c7d51"
+    },
+    {
+      "path": "src/rendering/demon-core-sprite.js",
+      "sha256": "96d881206bc3071bf11d0d6f44a7f5e1793a6752b372ecb32e0873ebcbaa44bb"
+    },
+    {
+      "path": "src/rendering/demon-presentation-art.js",
+      "sha256": "40f485746831350e2598bfb66da351752450f818f61b12329bc4806c0f980686"
+    },
+    {
+      "path": "src/rendering/demon-pressure-visuals.js",
+      "sha256": "c97ea35f7ceb43f90d6c0a0de086ea9b13de9966bc0cc1eab04449c0d2c1bcf6"
+    },
+    {
+      "path": "src/rendering/demon-soldier-sprite.js",
+      "sha256": "cede2e628fda0353db3003cc5b6bc1459d72e6ae57da071018669d0060324a94"
+    },
+    {
+      "path": "src/rendering/demon-sprite.js",
+      "sha256": "2cd61a9bca77593a6fe2439d65cc26a855d378959f548531da15e2044124c56b"
+    },
+    {
+      "path": "src/rendering/demon-visuals.js",
+      "sha256": "516db8af5f467ba0021b6230462badf442a0739352a1337ecd440770cbbac76d"
+    },
+    {
+      "path": "src/rendering/demon-sweep.js",
+      "sha256": "c21c426af452c0bb33899faa02da429e2f794b672e59086fceac6767c618638e"
+    },
+    {
+      "path": "src/rendering/element-hit-visuals.js",
+      "sha256": "e34afa551232468af30c2c0b5a87d09ee560430831923b19c7f7c1502742b6a7"
+    },
+    {
+      "path": "src/rendering/elite-crest.js",
+      "sha256": "ffdf1d1d30edb5f3a3ff47db6a3cc769ac4008e7e6f2f2aacf0c75db8d0d1332"
+    },
+    {
+      "path": "src/rendering/enemy-chatter.js",
+      "sha256": "4f5879047ce382d81eeb26eb4244dcafe9e83009b82197ce636c3b6de353ef20"
+    },
+    {
+      "path": "src/rendering/enemy-attack-vfx.js",
+      "sha256": "a4e3b51fe1a0446851670f1fa08aa6c72d2d0c5e29b0ec6eec8cc88a3cb5de36"
+    },
+    {
+      "path": "src/rendering/encounter-transitions.js",
+      "sha256": "cdd2e32ac64b02dbdf275043f731b8924034ed1daf657435ee3405accd674533"
+    },
+    {
+      "path": "src/rendering/enemy-hit-art.js",
+      "sha256": "7fa4ac0ddb12a96c81d3bb0a6b909fde05afb542bea120103615f5f3c844d103"
+    },
+    {
+      "path": "src/rendering/enemy-feedback.js",
+      "sha256": "ba8075ad9584dddfb930e33da718b90b11eca24e2e02fa10c4d512726b655227"
+    },
+    {
+      "path": "src/rendering/enemy-hit-profiles.js",
+      "sha256": "f03e5d7621f4314801435d90c8a911e0db387afcb4ada8a1cae79d94874b239e"
+    },
+    {
+      "path": "src/rendering/enemy-hit-timing.js",
+      "sha256": "e2f9192943af11c96a75ded74b7eadcd37c92a3e041dbd264e77b054e7d28c6a"
+    },
+    {
+      "path": "src/rendering/enemy-melee-art.js",
+      "sha256": "7d6699d650954059667dbce9a5df97b1557a85f42aed29bb43cd7d8ac6994ef7"
+    },
+    {
+      "path": "src/rendering/environment-art.js",
+      "sha256": "d0d33211ec48d0edf61f69e6ae15b5bf7d0ce466f50099aa419ddfc965a74f05"
+    },
+    {
+      "path": "src/rendering/environment-ambience.js",
+      "sha256": "08ba195aa81ab9c3ec71606aa92842cf742d1da92da96c89c2e1c3257d757b89"
+    },
+    {
+      "path": "src/rendering/environment-material.js",
+      "sha256": "e694424f1a891bc5a937fbb13049b5956d37110db488260d417463326f1e9843"
+    },
+    {
+      "path": "src/rendering/fairy-feedback.js",
+      "sha256": "617b49b3e8a14386ff4f7f41d8e71e6d4cbd4d591487470cc8434da54d7b32bc"
+    },
+    {
+      "path": "src/rendering/feedback-sprites.js",
+      "sha256": "368a9555b18f2f8d490b6a50025de036c57f509e0e03ba774ea90dde4c3d2218"
+    },
+    {
+      "path": "src/rendering/final-escape.js",
+      "sha256": "1753fb98e339351b8458552d6eed8be5e36390a147cc84d9f1fae8c0750b02bb"
+    },
+    {
+      "path": "src/rendering/floor-assets.js",
+      "sha256": "004a6aa9fe3d68398f98ca4320008e8f60253b73c59c0cb403a443d07a2e9bcc"
+    },
+    {
+      "path": "src/rendering/floor-decals.js",
+      "sha256": "2c0d2597c6a80c1d4d6f38c274f7ebed7ced415e1f3e6dd7df65b3e9b787cd98"
+    },
+    {
+      "path": "src/rendering/gravity-mage-sprite.js",
+      "sha256": "c9b2ecb0aa0f7082cadbbb43764d8807ca474f59d180e529cb733a8b4f98512c"
+    },
+    {
+      "path": "src/rendering/frost-aura.js",
+      "sha256": "d2a0e61fcb15d18d29acb09bda2c0c693167a13e3f8b5ffade2f7a9212e907b8"
+    },
+    {
+      "path": "src/rendering/flower-sprite.js",
+      "sha256": "6e6ab94fd2f9ea9c01c6b19a466635291799e4867f4556cf06b1bf875fc8f06b"
+    },
+    {
+      "path": "src/rendering/ground-visuals.js",
+      "sha256": "6decffcd3f70134ebfbd003f902b3360645633be00f9bc42a35b135c13301c76"
+    },
+    {
+      "path": "src/rendering/grunt-actions.js",
+      "sha256": "4bb95e569e96af332c76fa6efc295703f35540836de9c3ab7aaef4cfa9ccd674"
+    },
+    {
+      "path": "src/rendering/grunt-sprite.js",
+      "sha256": "a4960e4518f46929cb538612ce3d9caf4e48e28c81024055d0216c9286727efb"
+    },
+    {
+      "path": "src/rendering/guard-hall-art.js",
+      "sha256": "0b3135494ccd60bfb3d2946ba9b8f6ca089645e355b5c75a8f0479d428ad6e4e"
+    },
+    {
+      "path": "src/rendering/hero-sprite.js",
+      "sha256": "d527005ac300d00c6c3f3d103e6fbd4360c7a70580a0a2408489ba3d5d01bd8d"
+    },
+    {
+      "path": "src/rendering/hero-cast-state.js",
+      "sha256": "ef7626e16eb66777b0dc63508ff64fd02356c8bc8f2db95b35a9b2fa0b0b8507"
+    },
+    {
+      "path": "src/rendering/hero-cast-art.js",
+      "sha256": "5885d9797f171e3840a408e16f68f7ce2eb8b5ee583e5126dfe633f93eeee5a6"
+    },
+    {
+      "path": "src/rendering/hero.js",
+      "sha256": "41af957f6a826de59f026799f4eb9245235957aca6c2508894073e4cdb030648"
+    },
+    {
+      "path": "src/rendering/high-floor-vfx.js",
+      "sha256": "4b8bf076a59629a09ed5248811848c763bbdfe0b124e80bf40684eeec1897a52"
+    },
+    {
+      "path": "src/rendering/infernal-ambience.js",
+      "sha256": "3e81cc00715d758de764a5b12230018402a8734c848cf86497b81c3b9514f797"
+    },
+    {
+      "path": "src/rendering/hit-feedback.js",
+      "sha256": "2ac8f2870d43ee093908145ad442eb00488bba6de27b9d241a0fbb47dcf14344"
+    },
+    {
+      "path": "src/rendering/infested-hall-art.js",
+      "sha256": "c010b467f95ed56b8c39ad8472066e5c90f1b015326b6d5857e0aee086ce4eaa"
+    },
+    {
+      "path": "src/rendering/interaction-visuals.js",
+      "sha256": "c133231b6d5f4c43d1c258a35c1a535adf0ed43f5a666a546a3aae7a5b508ca1"
+    },
+    {
+      "path": "src/rendering/king-aura.js",
+      "sha256": "2d1903019cc09061fe9c1a8d7698caa8627d41ea3634fd9fd09dff8d2c188b5b"
+    },
+    {
+      "path": "src/rendering/journal-portraits.js",
+      "sha256": "f314dd6c50c9e0690366ee01307dd57a33800e000a36498392fcc0fbed6e28dd"
+    },
+    {
+      "path": "src/rendering/king-resurrection.js",
+      "sha256": "7c223eab8c364677938ea0e61e7f3c73064b55e69c239d6dc28de193d18d2ef9"
+    },
+    {
+      "path": "src/rendering/laser-walk.js",
+      "sha256": "131f81f44a33e3d07ef8d90c6b5edbbfaba1499419d0552d0ea7a9d81c872d0b"
+    },
+    {
+      "path": "src/rendering/monster-status-effects.js",
+      "sha256": "56e17800a9ac2213338d19571f3afc4f6408b767142a628e0ac8be1d78d22b09"
+    },
+    {
+      "path": "src/rendering/locomotion.js",
+      "sha256": "1375207588c9f98024cc883adeb9aef798b997521ed451a53246feb0565fcaec"
+    },
+    {
+      "path": "src/rendering/mordo-phase1-sprite.js",
+      "sha256": "15f05983fd01ef954faa41fff7c207f7fe0fb2c43b737b69b9c3650f8aaaee42"
+    },
+    {
+      "path": "src/rendering/mordo-phase3-sprite.js",
+      "sha256": "c2869e1cd61057b7a8c8111236dce4e76072f6e304542c77ac0efd7ba9c931bf"
+    },
+    {
+      "path": "src/rendering/mordo-phase2-sprite.js",
+      "sha256": "ad26d2250ec9b9578d062e29216cbf1fa5c2f483fb0ebd69d517f4b3a7b7e4ad"
+    },
+    {
+      "path": "src/rendering/mordo-presentation-art.js",
+      "sha256": "93a940edb605f79e59c20c507fe409ed4b158bea0fde34d00b89b1e5677ef4a4"
+    },
+    {
+      "path": "src/rendering/ordinary-presentation-state.js",
+      "sha256": "31f208e64e5bfef8b73ef0cf1c4ed772d1a23016b760b317131c7d9f1cb1f67f"
+    },
+    {
+      "path": "src/rendering/mordo-presentation-state.js",
+      "sha256": "afe04bedd402e105b182642ccba9e492d954368479e2cc04674f8323c153591a"
+    },
+    {
+      "path": "src/rendering/ordinary-death.js",
+      "sha256": "1bc54f81b64f6fb54d99f2b7cb3217dba90c1977a3f4b5dc812dae38d66d6438"
+    },
+    {
+      "path": "src/rendering/pixel-icons.js",
+      "sha256": "fee33eb616efec22d325fd612248352ac600b6ae89ea561b8b2994429edf8c78"
+    },
+    {
+      "path": "src/rendering/pixel-world.js",
+      "sha256": "8715126afd3e381f82f1f54a223b263c07e6f865de186fad842d7457b6a4a68c"
+    },
+    {
+      "path": "src/rendering/prism-hall-art.js",
+      "sha256": "49ee4e0fc4eb39607d97ee99db204311fede2e12750ee71e9ce92c5ba0e4c295"
+    },
+    {
+      "path": "src/rendering/prism-presentation-art.js",
+      "sha256": "ad5b601996f227d69a47084d501d229ec8d782240c61ac2a854a891442cd6b5a"
+    },
+    {
+      "path": "src/rendering/presentation-assets.js",
+      "sha256": "55c354117af22f34dbf044e76a8410e753659d8d3032484692aedf204e89f3a2"
+    },
+    {
+      "path": "src/rendering/prism-presentation-state.js",
+      "sha256": "bd6f69da7559aa717f05f0475a50c763208720595edd5b9af386c7b08ab24a37"
+    },
+    {
+      "path": "src/rendering/prism-sprite.js",
+      "sha256": "f3d9026d07ca8311d1faaf3804e8d226fd164f7a858856a0ba4f688f7b6ad557"
+    },
+    {
+      "path": "src/rendering/pulse-turret-sprite.js",
+      "sha256": "e4b4d63e041de7b4fa3ad3f8b327fb0e29c4cde2f2981b7b9a7105d4c0823192"
+    },
+    {
+      "path": "src/rendering/pursuer-sprite.js",
+      "sha256": "419a91433f117c4e517f8bd419461ba615ff22f88e2b6f64161456bbd1fe7b2a"
+    },
+    {
+      "path": "src/rendering/relic-icons.js",
+      "sha256": "01993794f2a4287f3dd5dda2525a0ffb4105d250aad91bbeb4fdfd60e2308e7f"
+    },
+    {
+      "path": "src/rendering/remaining-boss-death.js",
+      "sha256": "d058cf26596288ae472e3983f24d718ee702bc451c9f9cbf5cdac9da539d8077"
+    },
+    {
+      "path": "src/rendering/remnant-sprite.js",
+      "sha256": "fdd1deba917c8699cd387ed31c742a0acd5cb8fccd219008aa4080d187c20f59"
+    },
+    {
+      "path": "src/rendering/remaining-boss-presentation.js",
+      "sha256": "cb0e3c9fb95753c02b0b125d47c7604b7ddcfa240b0b656f0fef4dc7621c18fc"
+    },
+    {
+      "path": "src/rendering/resurrected-king.js",
+      "sha256": "f1cd95782838fcc0632671c8fb221455bb6ec406f6a78cbd1ddf18cd9908f55d"
+    },
+    {
+      "path": "src/rendering/rift-hunter-sprite.js",
+      "sha256": "83aae8bfe804f26a95ffa2ea158bd01c5c5a288517b1c823107b57fc903fcfc7"
+    },
+    {
+      "path": "src/rendering/ringcaster-sprite.js",
+      "sha256": "d9c0c810a301393e141c01e42d421fe37f3851b286d97cddc4b29e2edd3564a0"
+    },
+    {
+      "path": "src/rendering/ricochet-walk.js",
+      "sha256": "edf428cca360cc433df96b7a051004a221062bea92cd024170b4ca2140ca6f4b"
+    },
+    {
+      "path": "src/rendering/room-camera.js",
+      "sha256": "73ee8d0efa730d01b6736aa4bf06afeab6234511f3d6467cc8430e064272b26d"
+    },
+    {
+      "path": "src/rendering/room-backdrops.js",
+      "sha256": "c39a77492744b8744a4ba7f430f5c153addbc6f0cb25de90e6b36ace163e7174"
+    },
+    {
+      "path": "src/rendering/room-exterior.js",
+      "sha256": "e401ad4e6118466e5f532d2cbdde88d733045f083f111a50b8670dccd26502b8"
+    },
+    {
+      "path": "src/rendering/royal-guard-sprite.js",
+      "sha256": "8bf665f57066f4fb11460537575daf864497a8eb6bb640d741a9a3ece7b0378a"
+    },
+    {
+      "path": "src/rendering/room-stage.js",
+      "sha256": "971582e2449a4f7ae35f3c3c542778b8ac9bdda2b6d8c1c5d0033530279a0b46"
+    },
+    {
+      "path": "src/rendering/sanctum-finish.js",
+      "sha256": "571b4dfc029572dc58817881450d6687763b40499f06c5d76a57e8135204dca8"
+    },
+    {
+      "path": "src/rendering/scatter-walk.js",
+      "sha256": "8ba09f24ce107ff7848d0e6351dc0c299293dc3222973049206d068b1c0a817b"
+    },
+    {
+      "path": "src/rendering/seal-engine.js",
+      "sha256": "83f1f66aa058bd14702301b718a6c0d246884e2890e4647043af54b7efd2f163"
+    },
+    {
+      "path": "src/rendering/skill-burst-art.js",
+      "sha256": "81470740f05ac519dc11393af606a890e58914f279c37ff3767f8ef2cdf02862"
+    },
+    {
+      "path": "src/rendering/skill-icons.js",
+      "sha256": "64a4c1010c895608adef0bd88d6462a9dd98ecd1b083f2f2636b6e33112b929f"
+    },
+    {
+      "path": "src/rendering/shadow-aura.js",
+      "sha256": "02e541e100453d45acfecc7cb89023a549b9628e03e6fea0ce25acd8c93f6654"
+    },
+    {
+      "path": "src/rendering/skill-overhaul-effects.js",
+      "sha256": "381f66b8151ad8b452c636d3a922e45e555f012933efa35fd9221f1824936621"
+    },
+    {
+      "path": "src/rendering/skill-visuals.js",
+      "sha256": "709204daa41c87d1870ac8b577207323f88c44647012b3f2b8d6993d3cefd650"
+    },
+    {
+      "path": "src/rendering/slime-sprite.js",
+      "sha256": "adb2c710777f08f2835db7cb2cd0038e763ce3788890e3174c11f6b0e00b51f5"
+    },
+    {
+      "path": "src/rendering/special-encounter-visuals.js",
+      "sha256": "394a02b20c3e76a9bcd1af63180db16f04a896126e1f6b2ad34c15d8a2ad0190"
+    },
+    {
+      "path": "src/rendering/spike-nest-sprite.js",
+      "sha256": "36d6db3112035f464f6d782d42ba467dbad278a36f733e67107b44b1663ad37b"
+    },
+    {
+      "path": "src/rendering/spectral-blade.js",
+      "sha256": "10d98bcd777dfea6534715685a61760aa6e4889102f5e6939e34eb4a59596903"
+    },
+    {
+      "path": "src/rendering/sprite-crop.js",
+      "sha256": "0440efd09b3b19b02e1cf72e99b8b47add087c30bdb2a538c26a299ef7603f76"
+    },
+    {
+      "path": "src/rendering/star-knight-sprite.js",
+      "sha256": "2adf2e763a1f8e17d5d4bf134e2e5fc4055f76df09fe11858f45a2d93972efbe"
+    },
+    {
+      "path": "src/rendering/star-bearer-sprite.js",
+      "sha256": "55e645eed3d2e7baf1e23e869c9760647af3683e4a5a00a5260c15f44773ce40"
+    },
+    {
+      "path": "src/rendering/stone-walls.js",
+      "sha256": "1d707f9e0408182cc7a9ac4b744b5ad23b4226d79db6b4aec709e943497bc02f"
+    },
+    {
+      "path": "src/rendering/strafer-sprite.js",
+      "sha256": "7a2167365ebc64623de56fdfb68159288507a8648ff2d47176e7ea549b8d6146"
+    },
+    {
+      "path": "src/rendering/support-sprites.js",
+      "sha256": "1ee59ea3a0b593c99b960df88dd5f88546076d9dde69ac93f5e58aa8e3b9d6d5"
+    },
+    {
+      "path": "src/rendering/threat-contours.js",
+      "sha256": "655895aa794d844f171db78aec11b1c8acb5478a579deba2aeb425ea1059ff58"
+    },
+    {
+      "path": "src/rendering/trial-seal.js",
+      "sha256": "1cec5322a35bd76aafa0c7d72e22b2e8a60f588744d29de3b544a1b5d12b2cb5"
+    },
+    {
+      "path": "src/rendering/ultimate-visuals.js",
+      "sha256": "c6df3c3cfdba21425ba57cc7ce36e17894a219516d6e9e5e37ea7648a4b5a7f1"
+    },
+    {
+      "path": "src/rendering/upper-visuals.js",
+      "sha256": "d867a0b54c77dd61aa033e9976dda8ccec029f1088d6d11c92f089cf3ff24b81"
+    },
+    {
+      "path": "src/rendering/utility-effects.js",
+      "sha256": "cdad91b84459a4bca251beddddc46da0c218dc24c6e29808abbe8acdad40076f"
+    },
+    {
+      "path": "src/rendering/upper-hall-art.js",
+      "sha256": "df14dfd35b97dfe04bc90898fdeade96657840a1f17ad9d5adc07e275589fdce"
+    },
+    {
+      "path": "src/rendering/utility-impact-feedback.js",
+      "sha256": "a4ef22fc315b8d686b64f3ba800eba65fde222ed5cbd13c5bd7ad3c8015f7bee"
+    },
+    {
+      "path": "src/rendering/velkar-presentation-art.js",
+      "sha256": "b37f7061414199fcdabe0e4e9c551548042aa8f8ec38378c053afff76c8bc5cb"
+    },
+    {
+      "path": "src/rendering/velkar-presentation-state.js",
+      "sha256": "2606424c13402d3c4954d4d274da6254bc7035109eb8df46c0d473fbe7b20cc0"
+    },
+    {
+      "path": "src/rendering/vera-effects.js",
+      "sha256": "c1f5d8962507368ad045ea4bea9acd4f8427ba8756e083d69c0df92356cdd807"
+    },
+    {
+      "path": "src/rendering/warden-awakening.js",
+      "sha256": "e986ddce70e93d304cab46a8a76a8136efed93b0b24a55eb22cc387b7f6b22d1"
+    },
+    {
+      "path": "src/rendering/warden-motion.js",
+      "sha256": "f0fc85d7b8df7c575d8f2ff93896ac9eb4616555ec2fe0bb1919b48ce8ac97ae"
+    },
+    {
+      "path": "src/rendering/vera-sprite.js",
+      "sha256": "1128d59d8daca1222feb64ea2733b4a36546ea808ae97de2bcddfc64f664527a"
+    },
+    {
+      "path": "src/rendering/warden-presentation-art.js",
+      "sha256": "58e204f7e8402f7e7d795199242d85aeae8342d1875f8fc90e4d27a47ac1958d"
+    },
+    {
+      "path": "src/rendering/warden-presentation-state.js",
+      "sha256": "ae8b7a38c18d678014dd377ba9544f0e4e3072ad1009af0c6d7f5cae8e27c59e"
+    },
+    {
+      "path": "src/rendering/warden-room-art.js",
+      "sha256": "6fd8c9b8350a09eb3a11876d75feae79d57c3f2fbcc16442ee363a3202f21b03"
+    },
+    {
+      "path": "src/rendering/warden-sprite.js",
+      "sha256": "88154228a7c5e99353b56caa475539f1d39e3924e48466229525e83dbf4791f8"
+    },
+    {
+      "path": "src/rendering/warden-recover.js",
+      "sha256": "5b1955dc7537c388b4946f43826f944ab788cf5faa98c120a02e302a7f6e5843"
+    },
+    {
+      "path": "src/rendering/warden-walk.js",
+      "sha256": "59357dac461c0cc2ff19578ea67cb7c86a204aa7acc63f6bea572aad5cef6187"
+    },
+    {
+      "path": "src/ui/boss-dialogue-data.js",
+      "sha256": "40c85f6a7c09229a362ef712e1fa748b05ade0ae35fccca521c8d6418419c861"
+    },
+    {
+      "path": "src/rendering/xp-shards.js",
+      "sha256": "b31e87702bb0f198cbfd2d1377a90a3ee83789172d0ff8c2edb4286c204c4c58"
+    },
+    {
+      "path": "src/ui/bestiary.js",
+      "sha256": "06f82e8f3e285705c0916e34b5b0c6589ed2f9f4e9db17f07a32e77e41bb6d71"
+    },
+    {
+      "path": "src/ui/build-window.js",
+      "sha256": "a4687fdcbad8a4312d3430166ca791e8e22bd17c33bcee375fd109b7e892f934"
+    },
+    {
+      "path": "src/ui/combat-audio.js",
+      "sha256": "c5f1e1361dfbc61a026ae78c5afcdd512537a11e9521c66be210d5ae5acb9ae8"
+    },
+    {
+      "path": "src/ui/enemy-chatter-data.js",
+      "sha256": "7f57a76cd9fb1b95c8d08a0c28b20e3dce7b044de2f0c8411d2461201dd3e2ce"
+    },
+    {
+      "path": "src/ui/entrance-scene.js",
+      "sha256": "3782d2bdac11e1954de78e70aa951c7064e0d3e5af7b7c70914936e2ba05f94d"
+    },
+    {
+      "path": "src/ui/entrance-state.js",
+      "sha256": "02957cb922e3b742a6b1228a326b663139d983255c8a1db5bd3bea9346405a42"
+    },
+    {
+      "path": "src/ui/escape-scene.js",
+      "sha256": "885b284800c3a2acb5524cf9b4521c1c557c0b6675ab0d513d3cb5b5ac37746f"
+    },
+    {
+      "path": "src/ui/escape-state.js",
+      "sha256": "c2ab8cf3b091a7240451fa53dc725298ac4b583b775544160d178caaeecc79ac"
+    },
+    {
+      "path": "src/ui/floor-loading-state.js",
+      "sha256": "4990906797d90584256320a438d996423b0050645da91b3938c3ccd54ba0621d"
+    },
+    {
+      "path": "src/ui/input.js",
+      "sha256": "49eae646f6e04bf9fa435294ef65c37cd267563ca1564d5780cd193d01fd1101"
+    },
+    {
+      "path": "src/ui/journey-state.js",
+      "sha256": "5882ce226b5308cd699262a8a92653dc4cab2167b12dc8e36aa4e184620b666e"
+    },
+    {
+      "path": "src/ui/hud.js",
+      "sha256": "a85d1d5f97c8b356930b8694b688053853f5ba5ee2356235802e22aa99e2fe2a"
+    },
+    {
+      "path": "src/ui/mobile-hud.js",
+      "sha256": "c4085b2175b35d3f733e00069831fb2602b10ab493c049fb5500f3daebf5bfc7"
+    },
+    {
+      "path": "src/ui/recipe-preview.js",
+      "sha256": "0232d0898c7d0d17d4644a58338354f5b5fe813e9c014334fa610dfe12f00052"
+    },
+    {
+      "path": "src/ui/mobile-ui.js",
+      "sha256": "13eb07dfa8abba311d119f90ca39d4f5bc1b2ac507111d4fffc0f4da2b08bdaf"
+    },
+    {
+      "path": "src/ui/relic-preview.js",
+      "sha256": "8e116b3ce7fb046950957efcbabbcb0b937da5a7c56f154e97fb0e2f6a93d341"
+    },
+    {
+      "path": "src/ui/relic-ui.js",
+      "sha256": "d830e9d5524b53e65e5c295e8a12b886c0fb0bad357b68918845a7da9877dbeb"
+    },
+    {
+      "path": "src/ui/remnant-labels.js",
+      "sha256": "584aab569117cb42d1b62d192fcdc60fee7511dcf414776a0f63d432c6450b2d"
+    },
+    {
+      "path": "src/ui/skill-preview.js",
+      "sha256": "4beb6a37fc7200b3500ca67b031548102925c75d7a707e189732cf4600cde798"
+    },
+    {
+      "path": "src/ui/skill-draft.js",
+      "sha256": "5582a156fd66d2d33a2eca4e7a8558604e4a69f908dfb507d7f3af05c3e200ff"
+    },
+    {
+      "path": "src/ui/sound.js",
+      "sha256": "444eee6302e47379124c8aebc0b5485c31ef94fcb29ea5d3a3bef6da429b7d66"
+    },
+    {
+      "path": "src/ui/story-copy.js",
+      "sha256": "6345cd53f242aba923fea00a4a365cf7dd1359a73cca90fe22bccac433213301"
+    },
+    {
+      "path": "src/ui/title-scene.js",
+      "sha256": "868a8a7ad62576e0702788a6d66f791ef0cf85db68700eb17ba93b2b18a3303d"
+    },
+    {
+      "path": "src/ui/story-lore.js",
+      "sha256": "1b5ec6779a9cc86d029d1c2a13587674b87e66ef1b080554065da1e57e2f22a1"
+    },
+    {
+      "path": "src/ui/touch-actions.js",
+      "sha256": "addb42be9ff22b204ca2476fd621bed2e2c120e0a52360474b0d3047afa67c52"
+    },
+    {
+      "path": "src/ui/ui.js",
+      "sha256": "14ae8e3e5b0383c7df9d8cbbd40a2030eefc982c9a4c1dbeb587f6bd06150947"
+    },
+    {
+      "path": "src/ui/utility-guide.js",
+      "sha256": "bf3a4626a598c52193f743a213cbfd398e208bf69b5e9fbc3d2d5fb45c47c0e4"
+    },
+    {
+      "path": "src/world/adventures.js",
+      "sha256": "37188238d27598cca7eaf531272e7bdb8c21b4044922af30f767abb364e32364"
+    },
+    {
+      "path": "src/world/doors.js",
+      "sha256": "b9c16be40412006e6b6c18474e5acb653411a48ec1e0fcc7abf3d4d0cb7b8806"
+    },
+    {
+      "path": "src/world/boss-approach.js",
+      "sha256": "69e734a1895d3ec29e0e35be642899b27c88e31f93e09e0adc6072b8d7effe74"
+    },
+    {
+      "path": "src/ui/utility-roulette.js",
+      "sha256": "6d4fca3d082585ef5708924bcd919dc3d537bc77e8637e0d7e09d086f77b5ae6"
+    },
+    {
+      "path": "src/world/encounters.js",
+      "sha256": "5c53e4929894cf69690a3377456e84ae39979f27e48d79920463df8de30f2d32"
+    },
+    {
+      "path": "src/world/enemy-movement-goals.js",
+      "sha256": "0d1556429122ef033bb9abd74342c2c119bb43f92055c61fde9518f1d7b931ea"
+    },
+    {
+      "path": "src/world/expedition.js",
+      "sha256": "1073dd1fd5bcdab81f79a6ad40d573f27fc7e6cf746601c1ee00d065b7fa95f7"
+    },
+    {
+      "path": "src/world/final-escape.js",
+      "sha256": "29cc568c32a699a29e67971641be2d9df1ac45dee14ef7a4fb1e611318c7e117"
+    },
+    {
+      "path": "src/world/formations.js",
+      "sha256": "794d23c245c3f822c329435a75f15e2af348fa1ffb381268987563016bd8de1c"
+    },
+    {
+      "path": "src/world/fountain.js",
+      "sha256": "4dbb29183d4243b4e1e4912556005b7c33b23cb12a39246f3fb76e81e3d32d5b"
+    },
+    {
+      "path": "src/world/object-positions.js",
+      "sha256": "6d9ea8e283f801abcae089a4a36b377cc5bbadd36c02c3f4ffeeddb20ab3b383"
+    },
+    {
+      "path": "src/world/player-position.js",
+      "sha256": "4cf5b51c91841616fc1f46ae5c92414b38fc9f9921f4e4a4d105ac0177f3aaaf"
+    },
+    {
+      "path": "src/world/pursuer-encounters.js",
+      "sha256": "18717299711b135b33e432974c34ac7567e0172046bf5991a532d9b9c38fb35e"
+    },
+    {
+      "path": "src/world/return-seals.js",
+      "sha256": "4e737a7f02ecafcfe46f8fd89b2f41870472c6ff59d32aff770b2ba7874983c6"
+    },
+    {
+      "path": "src/world/room-geometry.js",
+      "sha256": "66afa4c3caff92f46e71ebbf3c74d75a29d22996ba803a7329a0ad99d38cdea8"
+    },
+    {
+      "path": "src/world/room-footprints.js",
+      "sha256": "c23ba8d035591e6d08ccc51cb3bbd194716a2ae57e9fb085dbacd82d02a56918"
+    },
+    {
+      "path": "src/world/room-layout.js",
+      "sha256": "d386b216e9577fe3766eea4dd6032368c56fb9b086dab43b3a6d95aebd6e7052"
+    },
+    {
+      "path": "src/world/routes.js",
+      "sha256": "9353e0eae873331cd15e5a3d69c9face2e94af0b7e270d4d5d7013f4343f1638"
+    },
+    {
+      "path": "src/world/room-shapes.js",
+      "sha256": "2bce3b9e0a6cf99e4e9fb7d4d9f5a8e0c633d78834372b25a3420562f8ff5e18"
+    },
+    {
+      "path": "src/world/shrine.js",
+      "sha256": "a8a700ae9b10ec74d8e78c977d73ab1d687ef69c3b89799cf849a979e0ce3bb2"
+    },
+    {
+      "path": "src/ui/trial-scene-state.js",
+      "sha256": "e693739f61224b05d168f2533049b4f05d8e5d10c798e939a1590fcea193e12e"
+    },
+    {
+      "path": "src/world/seal-engines.js",
+      "sha256": "87a8942e8fb0f5ee7b57bafbed45fed1ee586a64f3723ec22575174cff0984aa"
+    },
+    {
+      "path": "src/world/special-encounters.js",
+      "sha256": "25d91e0201d0d96af5c00cb574388af5dcc632fd8b95e3bcb345b18fe66b005d"
+    },
+    {
+      "path": "src/world/support-encounters.js",
+      "sha256": "79940d2267dbe20b127806530fce38fd26991d07fa6eac05012a8de53a1c3957"
+    },
+    {
+      "path": "src/world/stone-shape.js",
+      "sha256": "150d984ff3e965ff96b8bfa6ebe6c6a487818d558a33e9ac5aabbeadfdf5e4eb"
+    },
+    {
+      "path": "styles/bestiary.css",
+      "sha256": "0c8636137c3c28670fa5df002797b1f2afb5f664929534e89f24d57c59149cb4"
+    },
+    {
+      "path": "src/world/terrain.js",
+      "sha256": "14286b2177e7947a9531c573f58c63d79152bb920e628c641cd91dc6cd333856"
+    },
+    {
+      "path": "styles/boss-dialogue.css",
+      "sha256": "ee42654d4656e075035cd77220bd4eb8065b77bf1c420eb7dc034dcd0873c6ec"
+    },
+    {
+      "path": "styles/layout.css",
+      "sha256": "7752d36050e3f08e4e26c9a18df7845d09729fe8ca2002679b65676fad239357"
+    },
+    {
+      "path": "styles/build-window.css",
+      "sha256": "ca4be546c3e394944fec6d830993ba2830f988a145a8dfb401adf8bae9388d54"
+    },
+    {
+      "path": "styles/entrance.css",
+      "sha256": "73dd3d8aa2526ae0942d3e842cc4f536d891f6192b9bd6b94205cd999e249911"
+    },
+    {
+      "path": "styles/mobile-hud.css",
+      "sha256": "63dae8e92fa0e83f85ddec661997451c06697d1202643539dee44800bb42fe46"
+    },
+    {
+      "path": "styles/mobile.css",
+      "sha256": "940a5e766c23c81ab48da2e4dcba32a81dc141fe682aaf525e530785105b3488"
+    },
+    {
+      "path": "styles/pixel-theme.css",
+      "sha256": "f95fe84f3774f3559fc1a111bbf3a0e3617d4fa0acb409b62bfba9c15fecf062"
+    },
+    {
+      "path": "styles/combat-hud.css",
+      "sha256": "68a8dab3e4203ffe2a271783963be87ca6a7aeef9d042fc656700e5f2cd049b5"
+    },
+    {
+      "path": "styles/relic-ui.css",
+      "sha256": "dce72a9342227c724a4cc8edc4023db2407cdd701570b09656396b1fe1804349"
+    },
+    {
+      "path": "styles/skill-draft.css",
+      "sha256": "442888de00f49fdfcfd1f2d910bdca685133512b698dea627e65c7d33748df9b"
+    },
+    {
+      "path": "styles/style.css",
+      "sha256": "1a7138b73ce444e48ed67ea593b040c90961594cd56d348d4a77037cc3eb8de4"
+    },
+    {
+      "path": "styles/utility-roulette.css",
+      "sha256": "1910ac498805d56db5a5fa8f0b545f1a785ef0e0e259c792f5c150acbc92bc0c"
+    },
+    {
+      "path": "styles/title-scene.css",
+      "sha256": "7991b19bb0cfe11a24567b372e252e76b4b4d3569e088e13dd4c3df3ed660b67"
+    },
+    {
+      "path": "upgrade.html",
+      "sha256": "9e32d8c8b606fd00886baee31804970ee78eb80a6284d7447fb28f03f250bad3"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "base": "https://168.107.21.43",
+  "results": [
+    {
+      "name": "mobile",
+      "casts": [
+        {
+          "id": "focus",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "firstAid",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "guardian",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "frostWave",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "thunderSigil",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "galeVeil",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "focus",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "firstAid",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "guardian",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "frostWave",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "thunderSigil",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "galeVeil",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        }
+      ],
+      "rollAndPauseCancel": true,
+      "reloadWithoutCastReplay": true,
+      "guideFailuresAndBuild": true,
+      "assetFailure": false
+    }
+  ],
+  "errors": [],
+  "apiPosts": 0
+}
