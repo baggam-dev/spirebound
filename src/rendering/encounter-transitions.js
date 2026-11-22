@@ -9,6 +9,12 @@ export function encounterMoment(s,r,kind){
 export function drawEncounterGround(c,s,r,reduced=false){
  const data=moments.get(r),age=s.elapsed-(data?.approach??-Infinity),visible=pendingBoss(s,r)?1:Math.max(0,1-age/.2);
  c.save();
+ if(age>=0&&age<1.2&&!s.key&&r.enemies.some(e=>e.variant==='king'&&e.hp>0)){
+  c.save();const fade=Math.min(1,age/.15,(1.2-age)/.25);c.globalAlpha=Math.max(0,fade);c.fillStyle='#100d19';c.fillRect(25,45,910,15);c.fillRect(25,482,910,18);
+  c.strokeStyle='#cf98eb';c.lineWidth=reduced?1:3;c.setLineDash([]);c.beginPath();c.ellipse(480,180,45+age*90,12+age*22,0,0,Math.PI*2);c.stroke();
+  if(!reduced){const beam=c.createLinearGradient(440,0,520,0);beam.addColorStop(0,'#b477df00');beam.addColorStop(.5,'#b477df44');beam.addColorStop(1,'#b477df00');c.fillStyle=beam;c.fillRect(440,55,80,145);}
+  c.restore();
+ }
  if(visible>0){
   const {x,y,rx,ry}=BOSS_APPROACH;c.save();c.translate(x,y);c.scale(1,ry/rx);c.globalAlpha=visible;
   const g=c.createRadialGradient(0,0,0,0,0,rx);g.addColorStop(0,'#bd835b28');g.addColorStop(.65,'#a7644818');g.addColorStop(1,'#a7644800');

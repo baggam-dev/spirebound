@@ -28,8 +28,9 @@ export function drawKingResurrection(c,enemies,{reduced=false}={}){
  for(const e of enemies){const age=kingResurrectionAge(e);if(age===null||e.hp<=0)continue;
   const fade=Math.min(1,age/.2,(1.4-age)/.25);c.save();c.beginPath();c.rect(25,45,910,455);c.clip();
   c.fillStyle=`rgba(10,12,25,${Math.max(0,fade)*(reduced?.12:.32)})`;c.fillRect(25,45,910,455);
-  c.translate(e.x,e.y-35);c.globalAlpha*=Math.max(0,fade);
-  if(!reduced){const beam=c.createLinearGradient(-48,0,48,0);beam.addColorStop(0,'#fff5d500');beam.addColorStop(.5,'#fff5d58a');beam.addColorStop(1,'#fff5d500');c.fillStyle=beam;c.fillRect(-48,-450,96,520);}
+  c.fillStyle='#120e1c';c.globalAlpha*=Math.max(0,fade);c.fillRect(25,45,910,reduced?6:18);c.fillRect(25,reduced?494:482,910,reduced?6:18);
+  c.translate(e.x,e.y-35);
+  if(!reduced){const beam=c.createLinearGradient(-48,0,48,0);beam.addColorStop(0,'#b576ea00');beam.addColorStop(.5,'#d9b3f077');beam.addColorStop(1,'#b576ea00');c.fillStyle=beam;c.fillRect(-48,-450,96,520);for(let i=0;i<12;i++){c.fillStyle=i%3?'#b88bdb':'#f1d99c';c.fillRect(-60+(i*31)%120,55-((age*130+i*21)%220),2,5);}}
   if(age>.42){c.strokeStyle='#f5e7b5';c.lineWidth=reduced?1:2;const radius=reduced?65:70+Math.min(1,(age-.42)/.3)*34;c.beginPath();c.arc(0,0,radius,0,Math.PI*2);c.stroke();c.beginPath();c.arc(0,0,radius*.83,0,Math.PI*2);c.stroke();
    for(let i=0;i<8;i++){const a=i*Math.PI/4;c.beginPath();c.moveTo(Math.cos(a)*radius*.75,Math.sin(a)*radius*.75);c.lineTo(Math.cos(a)*radius*1.13,Math.sin(a)*radius*1.13);c.stroke();}
   }

@@ -1,5 +1,7 @@
 // View-only transitions. The existing key/returnNoticePending fields own progress.
 export const RETURN_REVEAL_SECONDS=1.5;
+export const FRESH_RETURN_SECONDS=2.4;
+const returnDuration=t=>t.fresh&&t.mordo?FRESH_RETURN_SECONDS:RETURN_REVEAL_SECONDS;
 export const DESCENT_SECONDS=.8;
 export const DESCENT_DARK_AT=.18;
 export const DESCENT_REVEAL_AT=.58;
@@ -8,9 +10,9 @@ export function createJourneyState(){
  const current=run=>token&&token.run===run&&run?.status==='playing'&&run.floor===token.floor&&run.room===token.room?token:null;
  return {
   current,
-  beginReturn(run,{fresh=false,origin={x:480,y:175}}={}){
+  beginReturn(run,{fresh=false,mordo=false,origin={x:480,y:175}}={}){
    if(token||!run?.key||!run.returnNoticePending||run.practice||run.status!=='playing')return false;
-   token={run,floor:run.floor,room:run.room,kind:'return',elapsed:0,ready:true,fresh,origin:{x:origin.x,y:origin.y}};return true;
+   token={run,floor:run.floor,room:run.room,kind:'return',elapsed:0,ready:true,fresh,mordo,origin:{x:origin.x,y:origin.y}};return true;
   },
   beginDescent(run,fromFloor){
    if(token||run?.status!=='playing'||run.practice||fromFloor-run.floor!==1)return false;
@@ -19,11 +21,11 @@ export function createJourneyState(){
   markReady(run,expected){const t=current(run);if(!t||t!==expected||t.kind!=='descent')return false;t.ready=true;return true;},
   advance(run,dt){
    const t=current(run);if(!t)return false;
-   if(Number.isFinite(dt)&&dt>0){const limit=t.kind==='return'?RETURN_REVEAL_SECONDS:t.ready?DESCENT_SECONDS:DESCENT_DARK_AT;t.elapsed=Math.min(limit,t.elapsed+Math.min(dt,.1));}
-   return t.elapsed>=(t.kind==='return'?RETURN_REVEAL_SECONDS:DESCENT_SECONDS);
+   if(Number.isFinite(dt)&&dt>0){const limit=t.kind==='return'?returnDuration(t):t.ready?DESCENT_SECONDS:DESCENT_DARK_AT;t.elapsed=Math.min(limit,t.elapsed+Math.min(dt,.1));}
+   return t.elapsed>=(t.kind==='return'?returnDuration(t):DESCENT_SECONDS);
   },
   finish(run,{skip=false}={}){
-   const t=current(run);if(!t||(!(skip&&t.kind==='return')&&t.elapsed<(t.kind==='return'?RETURN_REVEAL_SECONDS:DESCENT_SECONDS)))return null;
+   const t=current(run);if(!t||(!(skip&&t.kind==='return')&&t.elapsed<(t.kind==='return'?returnDuration(t):DESCENT_SECONDS)))return null;
    token=null;return t;
   },
   cancel(){token=null;}

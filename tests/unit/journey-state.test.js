@@ -1,12 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createJourneyState,RETURN_REVEAL_SECONDS,DESCENT_DARK_AT,DESCENT_SECONDS} from '../../src/ui/journey-state.js';
+import {createJourneyState,RETURN_REVEAL_SECONDS,FRESH_RETURN_SECONDS,DESCENT_DARK_AT,DESCENT_SECONDS} from '../../src/ui/journey-state.js';
 const run=()=>({status:'playing',runId:'a',floor:9,room:1,key:true,returnNoticePending:true,elapsed:123,skill:4,dodge:2,player:{hp:4}});
 
 test('key reveal auto finishes without mutating rewards, clocks or saved pending state',()=>{
- const s=run(),before=JSON.stringify(s),v=createJourneyState();assert.equal(v.beginReturn(s,{fresh:true,origin:{x:480,y:145}}),true);
- assert.equal(v.beginReturn(s),false);for(let i=0;i<15;i++)v.advance(s,.1);v.advance(s,.01);
- assert.equal(v.current(s).elapsed,RETURN_REVEAL_SECONDS);assert.equal(v.finish(s).fresh,true);assert.equal(v.finish(s),null);assert.equal(JSON.stringify(s),before);
+ const s=run(),before=JSON.stringify(s),v=createJourneyState();assert.equal(v.beginReturn(s,{fresh:true,mordo:true,origin:{x:480,y:145}}),true);
+ assert.equal(v.beginReturn(s),false);for(let i=0;i<25;i++)v.advance(s,.1);v.advance(s,.01);
+ assert.equal(v.current(s).elapsed,FRESH_RETURN_SECONDS);assert.equal(v.finish(s).fresh,true);assert.equal(v.finish(s),null);assert.equal(JSON.stringify(s),before);
 });
 
 test('loaded notice has no fresh particles; skip and cancel cannot duplicate a reveal',()=>{
