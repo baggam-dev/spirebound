@@ -1,9 +1,10 @@
 import {seededRandom} from '../game/random.js';
+import {roomDoorCenter,roomDoorArrival,roomDoorFrame,roomDoorEntryZone} from './room-geometry.js';
 export const doorDirections=[[0,-1],[1,0],[0,1],[-1,0]];
-export const doorCenter=(room,d)=>room.doorPositions?.[d]??(d%2?270:480);
-export function doorArrival(room,d){const n=doorCenter(room,d);return {x:d===1?912:d===3?48:n,y:d===0?63:d===2?477:n};}
-export function doorFramePoint(room,d){const n=doorCenter(room,d);return {x:d===1?931:d===3?0:n-40,y:d===0?0:d===2?505:n-35};}
-function entryZone(room,d){const n=doorCenter(room,d);return d%2?{x:d===1?780:25,y:n-75,w:155,h:150}:{x:n-90,y:d===0?40:383,w:180,h:d===0?129:125};}
+export const doorCenter=roomDoorCenter;
+export const doorArrival=roomDoorArrival;
+export const doorFramePoint=roomDoorFrame;
+const entryZone=roomDoorEntryZone;
 const overlaps=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
 function subtract(o,z){
  if(!overlaps(o,z))return [o];if(o.type!=='wall')return [];

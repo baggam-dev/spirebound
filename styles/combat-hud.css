@@ -42,3 +42,5 @@ body:has(#overlay:not(:empty)) #runHUD{visibility:hidden}
 /* Numeric health remains visible even for very large maximum health. */
 #runHUD #heartStrip .pixel-heart:nth-child(n+9){display:none}
 #runHUD #heartStrip .heart-count{white-space:nowrap}
+/* Outside the unchanged 16:9 room, use the approved near-black void. */
+body:has(#runHUD:not([hidden])),body:has(#runHUD:not([hidden])) .arena{background:#050608}
