@@ -1,4 +1,5 @@
 import {drawFloorDecals} from './floor-decals.js';
+import {roomTorchAnchors} from './room-exterior.js';
 import {isUpperHallFloor,upperHallLoaded,drawUpperHallProp} from './upper-hall-art.js';
 import {isInfestedFloor,infestedHallLoaded,drawInfestedHallProp} from './infested-hall-art.js';
 import {drawPrismHallLamp} from './prism-hall-art.js';
@@ -10,7 +11,6 @@ import {fountainPoint} from '../world/fountain.js';
 import {drawEnvironmentProp,environmentArtLoaded} from './environment-art.js';
 const plans=new WeakMap();
 const mix=n=>{n=Math.imul(n^(n>>>16),0x45d9f3b);n=Math.imul(n^(n>>>16),0x45d9f3b);return (n^(n>>>16))>>>0;};
-const torches=[{x:85,y:82},{x:875,y:82},{x:85,y:455},{x:875,y:455}];
 const overlaps=(x,y,rx,ry,o)=>x+rx>o.x-8&&x-rx<o.x+o.w+8&&y+ry>o.y-8&&y-ry<o.y+o.h+8;
 // Legacy placement diagnostics for older QA imports; active decals use floorDecalPlan.
 export function environmentPlan(s,r){
@@ -30,7 +30,7 @@ export function environmentPlan(s,r){
 export function drawEnvironmentFloorLife(c,s,r,reduced=false){drawFloorDecals(c,s,r);}
 export function drawEnvironmentTorches(c,s,r,reduced=false){
  const candle=s.floor===2&&archiveLoaded(),t=reduced?0:s.elapsed;c.save();c.beginPath();c.rect(25,44,910,464);c.clip();
- for(const [i,p] of torches.entries()){
+ for(const [i,p] of roomTorchAnchors(r).entries()){
   if(s.floor===3&&drawPrismHallLamp(c,p.x,p.y,t,reduced))continue;
   if(s.floor===0&&environmentArtLoaded())drawEnvironmentProp(c,15,p.x,p.y+17,16);
   else if(s.floor===1&&guardHallLoaded())drawGuardProp(c,11,p.x+3,p.y+1,16);

@@ -1,8 +1,9 @@
 import {createRoomCamera,withRoomCamera} from './room-camera.js';
 import {roomGeometry} from '../world/room-geometry.js';
+import {drawRoomRim} from './room-exterior.js';
 function paintWorld(c,world,room){
  c.drawImage(world,0,0);const f=roomGeometry(room).footprint;if(!f)return;
- c.save();try{c.globalAlpha=1;c.fillStyle='#050608';c.fillRect(0,0,f.x,540);c.fillRect(f.x+f.width,0,960-f.x-f.width,540);c.fillRect(f.x,0,f.width,f.y);c.fillRect(f.x,f.y+f.height,f.width,540-f.y-f.height);}finally{c.restore();}
+ c.save();try{c.globalAlpha=1;c.fillStyle='#050608';c.fillRect(0,0,f.x,540);c.fillRect(f.x+f.width,0,960-f.x-f.width,540);c.fillRect(f.x,0,f.width,f.y);c.fillRect(f.x,f.y+f.height,f.width,540-f.y-f.height);drawRoomRim(c,room);}finally{c.restore();}
 }
 // Existing painters keep logical coordinates. Only the final surface is device-shaped.
 export function roomSurfaceSize(width,height,wide){

@@ -3,7 +3,7 @@ import {skillIconMarkup} from '../rendering/skill-icons.js';
 import {iconSVG} from '../rendering/pixel-icons.js';
 import {rollAction} from '../combat/roll.js';
 const coarse=window.matchMedia('(pointer:coarse)'),hud=document.getElementById('runHUD');
-const map=document.createElement('canvas');map.id='mobileMinimap';map.width=166;map.height=160;map.setAttribute('role','img');map.setAttribute('aria-label','탐색 지도 · 방 연결과 현재 위치');hud.append(map);
+const map=document.createElement('canvas');map.id='mobileMinimap';map.width=166;map.height=160;map.setAttribute('role','img');map.setAttribute('aria-label','탐색 지도 · 방 형태·문 연결과 현재 위치');hud.append(map);
 export function renderHUDMinimap(draw,ctx,...args){
  const c=map.getContext('2d');c.clearRect(0,0,166,160);c.save();c.translate(-772,-12);draw(c,...args,{translucent:coarse.matches});c.restore();
 }
