@@ -59,3 +59,13 @@ test('new save flags validate and banner is transient, paused, room-bound and ne
  const {s,r}=setup();s.phoenixSpent='yes';assert.throws(()=>encodeSave(s));s.phoenixSpent=true;s.thornCooldown=3;assert.throws(()=>encodeSave(s));s.thornCooldown=2;assert.doesNotThrow(()=>encodeSave(s));
  const node={hidden:true,innerHTML:'',classList:{toggle(){}}},banner=createRelicBanner(node);banner.update(s,r,false,false);assert.equal(node.hidden,true);banner.show(s,r,'magnet');banner.update(s,r,false,false);assert.equal(node.hidden,false);banner.update(s,r,true,false);assert.equal(node.hidden,true);banner.update(s,{},false,false);assert.equal(node.hidden,true);banner.update(s,r,false,false);assert.equal(node.hidden,true);
 });
+
+test('relic details are sibling scroll regions rather than part of the claim button',()=>{
+ const {s,r}=setup();r.relicOffers=['magnet','ritualKnot','crackedCrown'];const before=JSON.stringify(s),html=relicSelectionMarkup(s,r);
+ const cards=[...html.matchAll(/<article class="relic-card [\s\S]*?<\/article>/g)].map(m=>m[0]);assert.equal(cards.length,3);
+ for(const [i,card] of cards.entries()){
+  const button=card.match(/<button\b[\s\S]*?<\/button>/)?.[0];assert.ok(button?.includes('id="relic'+i+'"'));assert.ok(button.includes('aria-describedby="relicDescription'+i+'"'));
+  assert.ok(!button.includes('class="relic-description"'));assert.ok(card.includes('</button><div id="relicDescription'+i+'" class="relic-description" tabindex="0" role="region"'));
+ }
+ assert.equal(JSON.stringify(s),before);
+});
