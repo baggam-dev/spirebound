@@ -3295,3 +3295,7 @@ utilityUseState로기존실사용조건을공유하고 canCastUtility는같은re
 
 ## 게임 개발 공용 스킬 도입 완료 (2026-11-22)
 사용자 전체 도입 지시로 gamedev-skills/awesome-gamedev-agent-skills commit c6ca6c41c839b68319ffc08430b99ab768debc32의 79개+router 총80개를 C:/Users/SDSPRO/.codex/skills에 번들 skill-installer로 설치·SKILL.md 존재 확인. 다음 턴부터 사용 가능, 관련 스킬만 선택하고 프로젝트 규칙 우선. 기존 스킬 보존. tools/install-gamedev-skills.ps1·docs/gamedev-skills.md 추가. 게임 코드/자산·기존 누적 미검증 상태 불변, 테스트/푸시/배포 없음. 실행 중 명령/차단 없음. 다음은 사용자 작업 지시, 스킬 라우팅 실제 품질은 미확인.
+## 전투 표현4단계 통합 QA 도구 준비 완료·미실행 (2026-11-22)
+사용자 다음진행·공용스킬설치별도작업556eb58보존후clean기준. 신규tools/qa/combat-presentation-release-qa.mjs, docs/combat-presentation-release-checklist-20261122.md. game응답만hook/실update제어·격리원정40seed안전일반궁수방/원래식별자재사용·실저장/재개. PC1280·모바일844·작은740완화·3시트fail4조건×6종×정지/보행48시전준비, PC G/모바일실tap·실서리/낙뢰손실-접점일치·질풍3탄중2소거·회피/정지/재접속취소·마혈/뇌격실패/aria·빌드요령/소거소진캡처. 실제궁수/벨카르뷰시계2조건의1초경계·미연장/예약없음준비. API POST차단/0·공개allow-public필수·조건별실패상태/캡처/JSON.
+운영소스QA전역/게임변경없음·이번도구문서만. 정적source hook진입점/상태초기화·저장id/fixture·입력초점·선택자/실패보존·git diff --check확인. 테스트/구문실행/서버브라우저/실기기/공개조회/푸시배포없음. 신규28unit·새브라우저5그룹·29PCM 전부미실행. 3적아트cache준비는실3종포즈명중검사아님, 벨카르뷰경계는AI분리로전체실전전투아님·수동확인/아트허리이음·cold지연/실기기/장시간성능한계체크리스트명시.
+운영0.61 runtimebf276cd/release20261122-101459-1c7dba 유지. 실행중명령/차단없음·로컬커밋까지. 다음새명시배포시전체/28·새통합도구/관련기존빌드·입장/귀환/엔딩/룰렛·29PCM와실포즈캡처/빠른연사벨카르·모바일문구/저장/부하를검증후수정·버전/푸시/공식배포/공개확인. 현재준비완료이지실게임통과/배포가능판정으로표시하지않음.
