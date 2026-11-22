@@ -21,7 +21,7 @@ test('Warden light and periodic hits keep walking while heavy direct hits respec
  notifyWardenHits([e],hit(.04).map(f=>({...f,wardenDirect:false})));assert.equal(wardenPresentationPose(e),null);
  notifyWardenHits([e],hit(.04));assert.equal(wardenPresentationPose(e),'heavy');assert.equal(wardenPresentationPose(e,{moving:true}),null);
  assert.equal(wardenPresentationPose(e,{reduced:true}),null);assert.equal(wardenPresentationPose(e,{staticPose:true}),null);
- tickWardenPresentation([e],.1);notifyWardenHits([e],hit(.04));assert.equal(wardenPresentationPose(e),null);tickWardenPresentation([e],.51);notifyWardenHits([e],hit(.04));assert.equal(wardenPresentationPose(e),'heavy');tickWardenPresentation([e],.1);assert.equal(wardenPresentationPose(e),null);assert.equal(JSON.stringify(e),saved);
+ tickWardenPresentation([e],.1);notifyWardenHits([e],hit(.04));assert.equal(wardenPresentationPose(e),null);tickWardenPresentation([e],.91);notifyWardenHits([e],hit(.04));assert.equal(wardenPresentationPose(e),'heavy');tickWardenPresentation([e],.1);assert.equal(wardenPresentationPose(e),null);assert.equal(JSON.stringify(e),saved);
  for(const flags of [{attackPhase:'warning'},{attackPhase:'leap'},{attackPhase:'firing'},{attackPhase:'recover'},{opening:1},{frozen:1},{kneel:1}]){
   const r=room(),a=r.enemies[0];resetWardenPresentation();enterWardenPresentation(r);Object.assign(a,flags);const snapshot=JSON.stringify(a);assert.equal(wardenPresentationPose(a),null);tickWardenPresentation([a],.01,hit(.04));assert.equal(JSON.stringify(a),snapshot);for(const key of Object.keys(flags))delete a[key];assert.equal(wardenPresentationPose(a),null);
  }

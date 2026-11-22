@@ -1,4 +1,5 @@
 // View-only clocks and room history. Seed saved seen rooms to avoid load replay.
+import {ENEMY_HIT_REACTION_INTERVAL} from './enemy-hit-timing.js';
 let actors=new WeakMap(),entered=new WeakSet(),facings=new WeakMap();
 export const isWarden=e=>e?.type==='boss'&&(!e.variant||e.variant==='warden');
 export function resetWardenPresentation(rooms=[]){actors=new WeakMap();facings=new WeakMap();entered=new WeakSet(rooms.filter(r=>r.seen));}
@@ -20,7 +21,7 @@ export function notifyWardenHits(enemies,effects=[]){
   if(v.cooldown>0)continue;v.intro=null;
   if(priority(e)){v.hit=null;continue;}
   const heavy=f.beforeRatio-f.afterRatio>=.015;if(!heavy)continue;
-  v.cooldown=.6;v.hit={pose:'heavy',age:0,duration:.09};
+  v.cooldown=ENEMY_HIT_REACTION_INTERVAL;v.hit={pose:'heavy',age:0,duration:.09};
  }
 }
 export function tickWardenPresentation(enemies,dt,effects=[]){

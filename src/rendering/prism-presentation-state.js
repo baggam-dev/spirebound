@@ -1,4 +1,5 @@
 // View-only clocks and room history. Seed saved seen rooms to avoid load replay.
+import {ENEMY_HIT_REACTION_INTERVAL} from './enemy-hit-timing.js';
 let actors=new WeakMap(),entered=new WeakSet();
 export const isPrism=e=>e?.variant==='prism';
 export function resetPrismPresentation(rooms=[]){actors=new WeakMap();entered=new WeakSet(rooms.filter(r=>r.seen));}
@@ -14,8 +15,9 @@ export function notifyPrismHits(enemies,effects=[]){
   if(!isPrism(e)||e.hp<=0)continue;
   const f=effects.find(f=>f.enemyFeedback==='hit'&&f.enemyId===e.id);if(!f)continue;
   let v=actors.get(e);if(!v){v={intro:null,hit:null,cooldown:0};actors.set(e,v);}
-  if(v.cooldown>0)continue;v.cooldown=.24;v.intro=null;
+  if(v.cooldown>0)continue;v.intro=null;
   if(priority(e)){v.hit=null;continue;}
+  v.cooldown=ENEMY_HIT_REACTION_INTERVAL;
   const heavy=f.beforeRatio-f.afterRatio>=.015;
   v.hit={pose:heavy?'heavy':'light',age:0,duration:heavy?.16:.10};
  }

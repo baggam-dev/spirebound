@@ -1,4 +1,5 @@
 // Reuse approved bodies for short presentation transforms; no new designs.
+import {ENEMY_HIT_REACTION_INTERVAL} from './enemy-hit-timing.js';
 let actors=new WeakMap(),entered=new WeakSet();
 export function remainingBossKey(e){
  if(e?.variant==='slime'&&e.type==='boss'&&!e.summoned)return 'slime';
@@ -30,7 +31,8 @@ export function notifyRemainingBossHits(room,effects=[]){
   const f=effects.find(f=>f.enemyFeedback==='hit'&&f.enemyId===e.id);if(!f)continue;
   let v=actors.get(e);if(!v){v={intro:null,hit:null,cooldown:0,blocked:false};actors.set(e,v);}
   v.blocked=priority(e,room);if(v.cooldown>0)continue;
-  v.cooldown=.24;v.intro=null;if(v.blocked){v.hit=null;continue;}
+  v.intro=null;if(v.blocked){v.hit=null;continue;}
+  v.cooldown=ENEMY_HIT_REACTION_INTERVAL;
   const heavy=f.beforeRatio-f.afterRatio>=.015;v.hit={age:0,duration:heavy?.16:.10,heavy};
  }
 }

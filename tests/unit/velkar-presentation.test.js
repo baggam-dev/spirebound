@@ -15,7 +15,7 @@ test('Velkar hit poses respect both phases, cooldown, threat priority and reduce
  for(const phase of [1,2]){
   clearVelkarPresentation();const e=actor(phase),saved=JSON.stringify(e);notifyVelkarHits([e],hits(.01));assert.deepEqual(velkarPresentationPose(e),{phase,pose:'light'});
   notifyVelkarHits([e],hits(.04));assert.equal(velkarPresentationPose(e).pose,'light');tickVelkarPresentation([e],.11);assert.equal(velkarPresentationPose(e),null);
-  tickVelkarPresentation([e],.14);notifyVelkarHits([e],hits(.04));assert.equal(velkarPresentationPose(e).pose,'heavy');
+  tickVelkarPresentation([e],.90);notifyVelkarHits([e],hits(.04));assert.equal(velkarPresentationPose(e).pose,'heavy');
   assert.equal(velkarPresentationPose(e,{reduced:true}),null);assert.equal(velkarPresentationPose(e,{staticPose:true}),null);
   tickVelkarPresentation([e],.17);assert.equal(velkarPresentationPose(e),null);assert.equal(JSON.stringify(e),saved);
   for(const field of ['volley','snipe','ricochet','rain','blink']){

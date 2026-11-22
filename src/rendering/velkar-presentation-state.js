@@ -1,4 +1,5 @@
 // View-only state: no actor/save fields and no draw-time clock updates.
+import {ENEMY_HIT_REACTION_INTERVAL} from './enemy-hit-timing.js';
 let actors=new WeakMap();
 const phase=e=>e.commander?.phase===2?2:e.hp/e.max>.5?1:2;
 export const clearVelkarPresentation=()=>{actors=new WeakMap();};
@@ -12,8 +13,9 @@ export function notifyVelkarHits(enemies,effects=[]){
   let v=actors.get(e);if(!v){v={phase:phase(e),intro:null,hit:null,cooldown:0};actors.set(e,v);}
   const f=effects.find(f=>f.enemyFeedback==='hit'&&f.enemyId===e.id);
   if(!f||v.cooldown>0)continue;
-  v.cooldown=.24;v.intro=null;
+  v.intro=null;
   if(priority(e)){v.hit=null;continue;}
+  v.cooldown=ENEMY_HIT_REACTION_INTERVAL;
   const heavy=f.beforeRatio-f.afterRatio>=.015;
   v.hit={phase:phase(e),pose:heavy?'heavy':'light',age:0,duration:heavy?.16:.10};
  }

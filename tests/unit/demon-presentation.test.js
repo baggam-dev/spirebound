@@ -20,7 +20,7 @@ test('core hits distinguish reused part ids, have a cooldown and preserve actor/
  clearDemonPresentation();const r=room(),e=r.enemies[0],saved=JSON.stringify(r);
  tickDemonPresentation(r,.01,hit(.03,false),['demonPhase']);assert.equal(demonPresentationPose(e,r),'arrival');
  notifyDemonHits(r,hit());assert.equal(demonPresentationPose(e,r),'light');notifyDemonHits(r,hit(.04));assert.equal(demonPresentationPose(e,r),'light');
- tickDemonPresentation(r,.11);assert.equal(demonPresentationPose(e,r),null);tickDemonPresentation(r,.14);notifyDemonHits(r,hit(.04));assert.equal(demonPresentationPose(e,r),'heavy');
+ tickDemonPresentation(r,.11);assert.equal(demonPresentationPose(e,r),null);tickDemonPresentation(r,.90);notifyDemonHits(r,hit(.04));assert.equal(demonPresentationPose(e,r),'heavy');
  assert.equal(demonPresentationPose(e,r,{reduced:true}),null);assert.equal(demonPresentationPose(e,r,{staticPose:true}),null);
  tickDemonPresentation(r,.17);assert.equal(demonPresentationPose(e,r),null);assert.equal(JSON.stringify(r),saved);
  const part=actor('eye');part.hp=90;const effects=enemyHitEffects(new Map([[part,100]]),[part]);assert.equal(effects[0].demonCore,false);

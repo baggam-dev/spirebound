@@ -1,4 +1,5 @@
 import {clearGruntActions} from './grunt-actions.js';
+import {ENEMY_HIT_REACTION_INTERVAL} from './enemy-hit-timing.js';
 import {enemyHitProfile,freshEnemyContact,hasEnemyHitArt} from './enemy-hit-profiles.js';
 // Reactions are view-only. Neither actor fields nor saved state are modified.
 let actors=new WeakMap(),known=new WeakSet(),heroes=new WeakMap();
@@ -16,9 +17,9 @@ export function notifyOrdinaryHits(room,effects=[],damageResults=[]){
   if(!isOrdinary(e)||['pursuer','ossuarySummoner','choirCantor','ossuaryMinion'].includes(e.type)||e.hp<=0)continue;
   const f=effects.find(f=>f.enemyFeedback==='hit'&&f.enemyId===e.id);if(!f)continue;
   let v=actors.get(e);if(!v){v={intro:null,hit:null,cooldown:0,x:e.x,face:1,blocked:false};actors.set(e,v);}
-  v.blocked=ordinaryThreat(e,room);if(v.blocked){v.hit=null;v.intro=null;v.cooldown=Math.max(v.cooldown,.24);continue;}if(v.cooldown>0||v.hit)continue;
+  v.blocked=ordinaryThreat(e,room);if(v.blocked){v.hit=null;v.intro=null;continue;}if(v.cooldown>0||v.hit)continue;
   const contact=freshEnemyContact(e,damageResults);if(!contact)continue;
-  v.cooldown=.24;v.intro=null;
+  v.cooldown=ENEMY_HIT_REACTION_INTERVAL;v.intro=null;
   v.hit={age:0,...enemyHitProfile(e,contact)};
  }
 }

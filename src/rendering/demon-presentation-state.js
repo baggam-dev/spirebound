@@ -1,4 +1,5 @@
 import {tickRemnantMotion,clearRemnantMotion} from './boss-motion.js';
+import {ENEMY_HIT_REACTION_INTERVAL} from './enemy-hit-timing.js';
 // Presentation state belongs to the view, never the enemy or saved room.
 let actors=new WeakMap();
 const core=e=>e?.variant==='demon'&&e.part==='core'&&e.hp>0;
@@ -14,8 +15,9 @@ export function notifyDemonHits(room,effects=[]){
   if(!f)continue;
   let v=actors.get(e);if(!v){v={intro:null,hit:null,cooldown:0};actors.set(e,v);}
   if(v.cooldown>0)continue;
-  v.cooldown=.24;v.intro=null;
+  v.intro=null;
   if(demonPresentationPriority(e,room)){v.hit=null;continue;}
+  v.cooldown=ENEMY_HIT_REACTION_INTERVAL;
   const heavy=f.beforeRatio-f.afterRatio>=.015;
   v.hit={pose:heavy?'heavy':'light',age:0,duration:heavy?.16:.10};
  }
