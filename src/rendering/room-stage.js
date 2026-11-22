@@ -1,4 +1,9 @@
 import {createRoomCamera,withRoomCamera} from './room-camera.js';
+import {roomGeometry} from '../world/room-geometry.js';
+function paintWorld(c,world,room){
+ c.drawImage(world,0,0);const f=roomGeometry(room).footprint;if(!f)return;
+ c.save();try{c.globalAlpha=1;c.fillStyle='#050608';c.fillRect(0,0,f.x,540);c.fillRect(f.x+f.width,0,960-f.x-f.width,540);c.fillRect(f.x,0,f.width,f.y);c.fillRect(f.x,f.y+f.height,f.width,540-f.y-f.height);}finally{c.restore();}
+}
 // Existing painters keep logical coordinates. Only the final surface is device-shaped.
 export function roomSurfaceSize(width,height,wide){
  if(!wide||!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0)return {width:960,height:540};
@@ -15,12 +20,12 @@ export function createRoomStage(canvas,{makeCanvas=()=>document.createElement('c
  return {
   worldContext,hudContext,
   begin(){reset(worldContext);reset(hudContext);},
-  capture(target){const c=target.getContext('2d');target.width=960;target.height=540;c.drawImage(world,0,0);c.drawImage(hud,0,0);},
-  present({wide=false}={}){
+  capture(target,room=null){const c=target.getContext('2d');target.width=960;target.height=540;paintWorld(c,world,room);c.drawImage(hud,0,0);},
+  present({wide=false,room=null}={}){
    const size=roomSurfaceSize(box.width,box.height,wide);
    if(canvas.width!==size.width)canvas.width=size.width;if(canvas.height!==size.height)canvas.height=size.height;
    const camera=createRoomCamera(size.width,size.height);
-   withRoomCamera(display,camera,c=>{c.imageSmoothingEnabled=false;c.drawImage(world,0,0);});
+   withRoomCamera(display,camera,c=>{c.imageSmoothingEnabled=false;paintWorld(c,world,room);});
    // UI has its own fixed common frame, independent of future room footprints.
    const ui=createRoomCamera(size.width,size.height);
    display.save();try{display.setTransform(ui.scale,0,0,ui.scale,ui.x,ui.y);display.globalAlpha=1;display.globalCompositeOperation='source-over';display.imageSmoothingEnabled=false;display.drawImage(hud,0,0);}finally{display.restore();}

@@ -8,7 +8,7 @@ export function planSupportEncounters(s){
  const key=phase(s);s.supportEncounterVersion??=1;s.supportPlannedPhases??=[];if(s.supportPlannedPhases.includes(key))return;s.supportPlannedPhases.push(key);
  if(s.practice||(s.generationVersion||0)<25)return;
  for(let floor=2;floor<=Math.min(7,s.floors.length-1);floor++)for(const [index,r] of s.floors[floor].entries()){
-  if(r.type!=='normal'||r.sealEngine||r.gate||r.tutorial||r.hasChest||r.deployed||(!s.key&&(r.seen||r.used))||r.enemies.length<3||r.enemies.length>=64||occupied(r)||special(r)||(floor===s.floor&&index===s.room)||r.supportEncounter?.[key])continue;
+  if(r.type!=='normal'||r.footprint||r.sealEngine||r.gate||r.tutorial||r.hasChest||r.deployed||(!s.key&&(r.seen||r.used))||r.enemies.length<3||r.enemies.length>=64||occupied(r)||special(r)||(floor===s.floor&&index===s.room)||r.supportEncounter?.[key])continue;
   const random=seededRandom(((s.seed??1)^Math.imul(floor+1,0x1725a4d3)^Math.imul(index+1,0x39a7e113)^(s.key?0x416ab83:0x717eca))>>>0);if(random()>=.3)continue;
   (r.supportEncounter??={version:1})[key]={state:'planned',type:random()<.5?'ossuarySummoner':'choirCantor',enemyId:null};
  }

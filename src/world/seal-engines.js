@@ -24,7 +24,7 @@ export function planSealEngines(s){
  if(s.sealEngineVersion===1)return;s.sealEngineVersion=1;if(s.practice||(s.generationVersion||0)<25)return;
  for(let floor=2;floor<=Math.min(7,s.floors.length-1);floor++){
   const rooms=s.floors[floor],random=seededRandom(((s.seed??1)^Math.imul(floor+1,0x231ac573))>>>0);if(random()>=.55)continue;
-  const candidates=rooms.map((r,index)=>({r,index})).filter(({r,index})=>r.type==='normal'&&!r.gate&&!r.tutorial&&!r.hasChest&&!r.deployed&&!r.seen&&!r.used&&r.enemies.length>=3&&!(floor===s.floor&&index===s.room)&&!r.specialEncounter&&!r.pursuerEncounter&&!r.supportEncounter);
+  const candidates=rooms.map((r,index)=>({r,index})).filter(({r,index})=>r.type==='normal'&&!r.gate&&!r.footprint&&!r.tutorial&&!r.hasChest&&!r.deployed&&!r.seen&&!r.used&&r.enemies.length>=3&&!(floor===s.floor&&index===s.room)&&!r.specialEncounter&&!r.pursuerEncounter&&!r.supportEncounter);
   while(candidates.length){const {r}=candidates.splice(Math.floor(random()*candidates.length),1)[0],at=placement(rooms,r);if(!at)continue;r.sealEngine={version:1,...at,disabled:false,rewarded:false,phase:'rest',time:SEAL_ENGINE.grace,disarm:0};break;}
  }
 }
@@ -55,7 +55,7 @@ export function validateSealEngines(s,check,number){
  for(const [floor,rooms] of s.floors.entries()){
   check(rooms.filter(r=>r.sealEngine).length<=1);
   for(const r of rooms){const d=r.sealEngine;if(d===undefined)continue;
-   check(s.sealEngineVersion===1&&!s.practice&&floor>=2&&floor<=7&&r.type==='normal'&&!r.gate&&!r.hasChest&&!r.tutorial);
+   check(s.sealEngineVersion===1&&!s.practice&&floor>=2&&floor<=7&&r.type==='normal'&&!r.gate&&!r.hasChest&&!r.footprint&&!r.tutorial);
    check(d&&d.version===1&&[1,-1].includes(d.direction)&&d.x===(d.direction===1?70:890)&&[130,410,210,330].includes(d.y));
    check(typeof d.disabled==='boolean'&&typeof d.rewarded==='boolean'&&d.disabled===d.rewarded);
    const max={rest:3,warning:1.2,release:.24,disabled:0}[d.phase];check(max!==undefined&&number(d.time,0,max)&&number(d.disarm,0,SEAL_ENGINE.disarm));

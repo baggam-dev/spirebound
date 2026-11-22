@@ -6,7 +6,7 @@ import {relics,canGrantRelic,weightedRelic,grantRelic,relicInfo} from '../progre
 export const SPECIAL_ENCOUNTER_VERSION=1;
 export const ROAMING_XP=54;
 const legacyFairies=['sunFairy','snowFairy','stormFairy'];
-export const specialRoomEligible=r=>r.type==='normal'&&!r.sealEngine&&!r.seen&&!r.used&&!r.hasChest&&!r.tutorial&&!r.gate&&!r.specialEncounter&&r.enemies.length>=3&&r.enemies.length<128;
+export const specialRoomEligible=r=>r.type==='normal'&&!r.sealEngine&&!r.seen&&!r.used&&!r.hasChest&&!r.footprint&&!r.tutorial&&!r.gate&&!r.specialEncounter&&r.enemies.length>=3&&r.enemies.length<128;
 // One independent plan per floor; no combat-time spawn or world RNG consumption.
 export function planSpecialEncounters(s){
  if(s.specialEncounterVersion===1)return;

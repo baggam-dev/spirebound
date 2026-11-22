@@ -1,4 +1,6 @@
 import {stoneFragments} from './stone-shape.js';
+const obstacleFootprints=new WeakMap();
+export function registerObstacleFootprint(obstacles,footprint){if(!obstacles)return;if(footprint)obstacleFootprints.set(obstacles,footprint);else obstacleFootprints.delete(obstacles);}
 import {enemyNavigationTarget,enemySeparationStep} from './enemy-movement-goals.js';
 import {environmentMaterial} from '../rendering/environment-material.js';
 import {isUpperHallFloor,drawUpperHallObstacle} from '../rendering/upper-hall-art.js';
@@ -16,7 +18,7 @@ export function generateObstacles(floor,type,random=Math.random){
  for(let i=slots.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[slots[i],slots[j]]=[slots[j],slots[i]];}
  return slots.slice(0,1+Math.floor(random()*Math.min(4,2+floor))).map(([x,y])=>({x:x-35+random()*25,y:y-25+random()*15,w:60+Math.floor(random()*25),h:40+Math.floor(random()*20),type:['rock','bookshelf','table','bones'][Math.floor(random()*4)]}));
 }
-export function blocked(x,y,r,obstacles=[]){return obstacles.some(source=>x>source.x-r&&x<source.x+source.w+r&&y>source.y-r&&y<source.y+source.h+r&&stoneFragments(source).some(o=>x>o.x-r&&x<o.x+o.w+r&&y>o.y-r&&y<o.y+o.h+r));}
+export function blocked(x,y,r,obstacles=[]){const f=obstacleFootprints.get(obstacles);if(f&&(x<f.x+r||x>f.x+f.width-r||y<f.y+r||y>f.y+f.height-r))return true;return obstacles.some(source=>x>source.x-r&&x<source.x+source.w+r&&y>source.y-r&&y<source.y+source.h+r&&stoneFragments(source).some(o=>x>o.x-r&&x<o.x+o.w+r&&y>o.y-r&&y<o.y+o.h+r));}
 export function segmentBlocked(a,b,obstacles=[],radius=0){
  const intersects=o=>{let lo=0,hi=1;for(const [start,delta,min,max] of [[a.x,b.x-a.x,o.x-radius,o.x+o.w+radius],[a.y,b.y-a.y,o.y-radius,o.y+o.h+radius]]){if(Math.abs(delta)<1e-9){if(start<min||start>max)return false;}else{const t1=(min-start)/delta,t2=(max-start)/delta;lo=Math.max(lo,Math.min(t1,t2));hi=Math.min(hi,Math.max(t1,t2));if(lo>hi)return false;}}return true;};
  return obstacles.some(source=>{if(!intersects(source))return false;const parts=stoneFragments(source);return parts.length===1||parts.some(intersects);});

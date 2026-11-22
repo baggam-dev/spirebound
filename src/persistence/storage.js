@@ -1,3 +1,4 @@
+import {validRoomFootprint,constrainRoomActors} from '../world/room-footprints.js';
 import {validateUtilityExpansion} from './utility-save.js';
 import {validateSealEngines} from '../world/seal-engines.js';
 import {validateSupportSave} from './support-save.js';
@@ -47,7 +48,7 @@ export function validateRun(s){
  const loot=item=>{check(item&&lootInfo(item.id));if(['main','support','unique'].includes(item.id)){const skill=skills.find(k=>k.id===item.skill);check(skill&&(item.id==='main'?skill.tree==='main':item.id==='unique'?skill.grade==='unique':skill.tree==='support'&&(skill.grade!=='unique'||['aura','repeat'].includes(item.skill))));}else check(item.skill===undefined);if(item.id==='relic')check(!!relicInfo(item.relic));if(item.id==='boss')check(['warden','prism','slime'].includes(item.boss));};
  if(s.combatVersion!==undefined)check(s.combatVersion===17);if(s.tutorialComplete!==undefined)check(typeof s.tutorialComplete==='boolean');
  const expanded=s.campaign==='expanded';check(s.campaign===undefined||expanded);
- check(s&&s.version===1&&s.status==='playing');check(s.healthVersion===undefined||s.healthVersion===1);if(s.generationVersion!==undefined)check([12,13,16,17,19,20,23,25,26,27,28,29,30,31,32,33,34,35].includes(s.generationVersion));if(expanded)check([26,27,28,29,30,31,32,33,34,35].includes(s.generationVersion));if(s.skillSystemVersion!==undefined)check([13,14].includes(s.skillSystemVersion));if(s.volleySide!==undefined)check(s.volleySide===1||s.volleySide===-1);if(s.rerolls!==undefined)check(Number.isInteger(s.rerolls)&&s.rerolls>=0&&s.rerolls<=1);if(s.roomLayoutVersion!==undefined)check(s.roomLayoutVersion===1);if(s.doorLayoutVersion!==undefined)check(s.doorLayoutVersion===1);finiteTree(s);
+ check(s&&s.version===1&&s.status==='playing');check(s.healthVersion===undefined||s.healthVersion===1);if(s.generationVersion!==undefined)check([12,13,16,17,19,20,23,25,26,27,28,29,30,31,32,33,34,35].includes(s.generationVersion));if(expanded)check([26,27,28,29,30,31,32,33,34,35].includes(s.generationVersion));if(s.skillSystemVersion!==undefined)check([13,14].includes(s.skillSystemVersion));if(s.volleySide!==undefined)check(s.volleySide===1||s.volleySide===-1);if(s.rerolls!==undefined)check(Number.isInteger(s.rerolls)&&s.rerolls>=0&&s.rerolls<=1);if(s.roomLayoutVersion!==undefined)check(s.roomLayoutVersion===1);if(s.doorLayoutVersion!==undefined)check(s.doorLayoutVersion===1);if(s.roomGeometryVersion!==undefined)check(s.roomGeometryVersion===1);finiteTree(s);
  if(s.bossLayoutVersion!==undefined)check(s.bossLayoutVersion===1&&s.generationVersion>=35);check(validBossDialogueSeen(s.bossDialogueSeen));
  if(s.skillDraftVersion!==undefined)check(s.skillDraftVersion===1);
  if(s.mainChoices!==undefined)check(Array.isArray(s.mainChoices)&&s.mainChoices.length===3&&new Set(s.mainChoices).size===3&&s.mainChoices.every(id=>mainSkills.includes(id))&&!s.player.mainSkill);
@@ -60,7 +61,7 @@ export function validateRun(s){
  for(const [floorIndex,rooms] of s.floors.entries()){
   if(revisedBosses(s)&&floorIndex===7){const boss=rooms.find(r=>r.type==='boss');check(boss&&typeof boss.demonPending==='boolean'&&boss.kingPending===undefined);if(boss.demonPending===false)check(boss.demon?.remnantVersion===1);}
   check(Array.isArray(rooms)&&rooms.length>=(expanded&&floorIndex===9?2:floorIndex<2?floorIndex===0?5:6:7)&&rooms.length<=(expanded&&floorIndex===9?2:s.generationVersion>=35&&floorIndex<2?floorIndex===0?5:6:11));const coords=new Set();
-  for(const r of rooms){check(Number.isInteger(r.x)&&Number.isInteger(r.y)&&Math.abs(r.x)<12&&Math.abs(r.y)<12&&roomTypes.has(r.type));check(!coords.has(`${r.x},${r.y}`));coords.add(`${r.x},${r.y}`);check(typeof r.seen==='boolean'&&typeof r.used==='boolean');if(r.wardenArrival!==undefined)check(floorIndex===1&&r.type==='boss'&&number(r.wardenArrival,0,1));if(r.wardenRise!==undefined)check(floorIndex===1&&r.type==='boss'&&number(r.wardenRise,0,.4));
+  for(const r of rooms){check(validRoomFootprint(s,r,floorIndex));check(Number.isInteger(r.x)&&Number.isInteger(r.y)&&Math.abs(r.x)<12&&Math.abs(r.y)<12&&roomTypes.has(r.type));check(!coords.has(`${r.x},${r.y}`));coords.add(`${r.x},${r.y}`);check(typeof r.seen==='boolean'&&typeof r.used==='boolean');if(r.wardenArrival!==undefined)check(floorIndex===1&&r.type==='boss'&&number(r.wardenArrival,0,1));if(r.wardenRise!==undefined)check(floorIndex===1&&r.type==='boss'&&number(r.wardenRise,0,.4));
    check(Array.isArray(r.enemies)&&r.enemies.length<=128);const ids=new Set();
    if(r.xpDrops!==undefined){
     check(Array.isArray(r.xpDrops)&&r.xpDrops.length<=XP_TIER_LIMIT*XP_TIERS.length);
@@ -140,7 +141,7 @@ export function validateRun(s){
 function fingerprint(text){let hash=2166136261;for(let i=0;i<text.length;i++)hash=Math.imul(hash^text.charCodeAt(i),16777619);return (hash>>>0).toString(16);}
 export function parseSave(raw){
  check(typeof raw==='string'&&raw.length<5000000);const decoded=JSON.parse(raw);if(decoded?.schema!==undefined)check(decoded.schema===2&&typeof decoded.payload==='string'&&fingerprint(decoded.payload)===decoded.checksum);
- const s=validateRun(decoded.schema===2?JSON.parse(decoded.payload):decoded);s.runId??='legacy-'+fingerprint(raw);migrateRun(s);refreshRoomLayout(s);recoverPlayerPosition(s.player,s.floors[s.floor][s.room].obstacles);s.projectiles??=[];s.floors[s.floor][s.room].seen=true;return s;
+ const s=validateRun(decoded.schema===2?JSON.parse(decoded.payload):decoded);s.runId??='legacy-'+fingerprint(raw);migrateRun(s);refreshRoomLayout(s);constrainRoomActors(s.floors[s.floor][s.room]);recoverPlayerPosition(s.player,s.floors[s.floor][s.room].obstacles,s.floors[s.floor][s.room]);s.projectiles??=[];s.floors[s.floor][s.room].seen=true;return s;
 }
 export function encodeSave(s){validateRun(s);const payload=JSON.stringify(s);return JSON.stringify({schema:2,checksum:fingerprint(payload),savedAt:new Date().toISOString(),release:RELEASE,payload});}
 function saveStorageFailure(error){

@@ -1,3 +1,5 @@
+import {roomGeometry,roomExitDirection,roomProjectileInside} from '../world/room-geometry.js';
+import {constrainRoomActors} from '../world/room-footprints.js';
 import {tickUtilityCast,consumeGaleProjectile} from '../combat/utility-expansion.js';
 import {movementSlowFactor} from '../combat/frost.js';
 import {planSealEngines,resetSealEngine,tickSealEngine,silenceSealEngine} from '../world/seal-engines.js';
@@ -74,10 +76,11 @@ export function enemyRadius(e){return e.type==='ossuaryMinion'?15:e.type==='purs
 export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||e.attackPhase==='leap';}
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
 export function enterRoom(s){clearDamageResults(s);beginWardenArrival(s,currentRoom(s),!currentRoom(s).seen);resetSpectralBlade(s);delete s.roll;s.bloodBossHealth={};
- recoverPlayerPosition(s.player,currentRoom(s).obstacles);trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);planSpecialEncounters(s);activateSpecialEncounter(s,r);planPursuerEncounters(s);activatePursuerEncounter(s,r);planSupportEncounters(s);activateSupportEncounter(s,r);planSealEngines(s);resetSealEngine(r);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];delete s.utilityCast;r.arrowRain=null;r.rollMines=[];r.fairyBeam=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
+ recoverPlayerPosition(s.player,currentRoom(s).obstacles,currentRoom(s));trackRankingRoom(s);observeGrowth(s);const r=currentRoom(s);planSpecialEncounters(s);activateSpecialEncounter(s,r);planPursuerEncounters(s);activatePursuerEncounter(s,r);planSupportEncounters(s);activateSupportEncounter(s,r);planSealEngines(s);resetSealEngine(r);if(s.generationVersion>=25&&!r.gate)deployRoom(r,s.player,s.generationVersion);if(r.gate&&!r.used&&!s.key)r.gateBanner=3;enterShrine(s);prepareChest(s);observeRoom(s,r);r.seen=true;ensureMetrics(s).roomsVisited=s.floors.flat().filter(r=>r.seen).length;s.projectiles=[];delete s.utilityCast;r.arrowRain=null;r.rollMines=[];r.fairyBeam=null;r.turrets=[];clearTurretEndings(r);r.voidPull=null;r.passiveArcs=[];r.hazards=[];r.blasts=[];r.allyZone=null;r.fireZones=[];s.entryGrace=.6;
  s.player.actionStun=0;s.player.electricGrace=0;resetDemonAttack(r);
  // Do not preserve an off-screen attack aimed at the previous visit's position.
  for(const e of r.enemies){resetPursuerAttack(e);resetSupportAttack(e);if(e.meleeAttack||e.meleeCooldown!==undefined){delete e.meleeAttack;e.meleeCooldown=Math.max(.5,e.meleeCooldown||0);}delete e.highAttack;delete e.highFlash;delete e.chargeHit;resetCommanderAttack(e);if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}if(e.type==='chaser'){e.chaserWindup=0;e.chaserStrike=0;e.chaserCooldown=0;delete e.chaserAim;}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
+ constrainRoomActors(r,s.player);
 }
 export function fireArrow(s,target){
  const p=s.player,side=s.volleySide??1;s.volleySide=-side;emitWeaponVolley(s.projectiles,p,p,target,side);
@@ -86,7 +89,8 @@ export function fireArrow(s,target){
 export function stepRun(s,dt,input={x:0,y:0}){
  const events=[],effects=[];if(s.status!=='playing')return {events,effects,damageResults:drainDamageResults(s)};
  if(s.player.hp<=0){events.push('dead');return {events,effects,damageResults:drainDamageResults(s)};}
- recoverPlayerPosition(s.player,currentRoom(s).obstacles);
+ constrainRoomActors(currentRoom(s));
+ recoverPlayerPosition(s.player,currentRoom(s).obstacles,currentRoom(s));
  if(currentRoom(s).shrineState==='choice'&&!currentRoom(s).used)return {events:['incantation'],effects};
  trackRankingRoom(s);const p=s.player,metrics=ensureMetrics(s);observeGrowth(s);tickBossRecord(s,currentRoom(s),dt);s.projectiles??=[];advanceClock(s,dt,false);metrics.floorTimes[s.floor]=(metrics.floorTimes[s.floor]||0)+dt;
  events.push(...tickFinalEscape(s,currentRoom(s),dt));
@@ -97,10 +101,10 @@ export function stepRun(s,dt,input={x:0,y:0}){
  const approachFrom={x:p.x,y:p.y},approachRoom=r;
  bindCriticalRun(s,r.enemies);const rolling=tickRoll(s,r,dt,effects);if(!rolling){const n=Math.max(1,Math.hypot(input.x,input.y)),frostSlow=p.frostSlow>0?.72:1;moveBody(p,input.x/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),input.y/n*movementSpeed(p)*frostSlow*dt*(p.actionStun>0?0:1),r.obstacles);}p.frostSlow=Math.max(0,(p.frostSlow||0)-dt);
 
- const d=p.y<48?0:p.x>930?1:p.y>492?2:p.x<30?3:-1;
+ const d=roomExitDirection(r,p);
  if(d>=0){const next=neighbor(s,d),aligned=Math.abs((d%2?p.y:p.x)-doorCenter(r,d))<(d%2?35:40);
   if(next>=0&&aligned&&!roomLocked(s,r)){s.room=next;r=currentRoom(s);Object.assign(p,doorArrival(r,(d+2)%4));enterRoom(s);events.push('room');}
-  else{p.x=Math.max(31,Math.min(929,p.x));p.y=Math.max(49,Math.min(491,p.y));}
+  else{const b=roomGeometry(r).recovery;p.x=Math.max(b.minX,Math.min(b.maxX,p.x));p.y=Math.max(b.minY,Math.min(b.maxY,p.y));}
  }
  const approached=startApproachedBoss(s,r,r===approachRoom?approachFrom:p,p);
  if(approached)events.push('bossApproach:'+approached);
@@ -169,7 +173,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(segmentBlocked(b,next,r.obstacles,3))b.life=0;b.x=next.x;b.y=next.y;if(p.hp<=0)break;
  }
  effects.push(...enemyHitEffects(enemyHealthBefore,r.enemies));
- s.projectiles=s.projectiles.filter(b=>b.life>0&&b.x>25&&b.x<935&&b.y>40&&b.y<500);
+ s.projectiles=s.projectiles.filter(b=>b.life>0&&roomProjectileInside(r,b));
  if(p.hp<=0){events.push('dead');return {events,effects,damageResults:drainDamageResults(s)};}
  r.nextEnemyId=Math.max(r.nextEnemyId||0,...r.enemies.map(e=>e.id+1));
  resolveFireFields(r);cleanupSupportMinions(r);
