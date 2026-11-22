@@ -1,4 +1,5 @@
 import {drawEnemyMeleeSprite} from './enemy-melee-art.js';
+import {drawEnemyHitSprite} from './enemy-hit-art.js';
 import {gruntActionPose,applyGruntAction} from './grunt-actions.js';
 import {DeferredImage} from './asset-requests.js';
 import {drawFeedbackSprite} from './feedback-sprites.js';
@@ -41,6 +42,8 @@ export function gruntPose(e,p,run){
  return {index:brute||aiming||charging||melee||ranged&&!(e.type==='laser'&&e.phase==='aim')?1:0,face:Number.isFinite(aim)?(Math.cos(aim)<0?-1:1):p.face||1,bob:p.moving?Math.abs(p.step||0)*.35:0};
 }
 export function drawGruntSprite(c,e,p,run,{reduced=false}={}){
+ const recovering=gruntActionPose(e,run?.elapsed,{reduced,fallbackFace:p.face});
+ if(!recovering&&drawEnemyHitSprite(c,e,p,run,{reduced}))return true;
  if(drawEnemyMeleeSprite(c,e,p.face))return true;
  if(e.type==='brute'&&drawFeedbackSprite(c,e,run?.elapsed||0,{local:true,face:p.face,attack:{stage:['windup','air','swing'].includes(e.phase)?'windup':'idle'}}))return true;
  const frames=cached.get(e.type);if(!frames)return false;const base=gruntPose(e,p,run),action=gruntActionPose(e,run?.elapsed,{reduced,fallbackFace:base.face}),pose=action?{...base,index:action.index,face:action.face,bob:0}:base,f=frames[pose.index];

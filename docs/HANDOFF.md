@@ -1,3 +1,11 @@
+## 최신 인계 — 적 피격 승인안 로컬 구현·미검증
+~~~text
+## 적 피격 반응 승인안 로컬 구현 완료·미검증 (2026-11-22)
+사용자 패키지질문ㄱㄱ승인·시작clean c2dad38. 내장imagegen 대표chaser/archer/현재brute 전신12+보행무다리상체12 제작/직접육안·치수·alpha확인. assets/images/enemy-hit-reactions-v1.png·신규enemy-hit-art/profiles, ordinary-state/grunt-sprite/game/critical·progression·팩/배포허용목록연결. 행별crop/기존52·67크기/foot21·24·belt-3/-7로기존보행다리+별도상체. 강한피격은HP8%가아닌실제newHit/critical, 반복틱·2차proc/활성재시작차단/.24쿨다운. 화살visualOrigin은뷰queue hitDirection만·방향없는/수직/후방중립, 실제origin/피해/AI/좌표/RNG·저장불변. 보스·관문·추적자·위협/공중/빙결·공격복귀우선/방전환옛id히트차단. optional아트실패기존sprite/glint유지.
+의미검증 준비5개(피해·난수·저장동일/체급·실치명/연타/예고우선/제외·완화)작성만·기존ordinary강반응입력을실치명사건으로교정. 테스트/구문실행/서버브라우저/공개조회/푸시배포없음. 마지막정적호출·import/메타필드뷰전용·실제자산치수·git diff --check확인. 기존운영912는이번검증아님, 미검증누적시전4+피격5. 실행중명령/차단없음·로컬커밋까지.
+상세 docs/design-drafts/enemy-hit-reaction-20261122/README.md·정확프롬프트/원본보존. 다음사용자지시에후속3스킬별타격감→4사용안내, 새배포지시시누적전체/상태9·실3종/6시전·정지보행·좌우앞뒤/반복틱·치명/예고·보스·방전환·coldfail/모바일이음새·가독성/캐시부하검증. 현재운영0.61 runtimebf276cd/release20261122-101459-1c7dba 유지·로컬시전2b73f1f와이번피격미배포. 대표포즈/실게임크기·연속모션/체감합격으로단정하지않음.
+~~~
+
 ## 최신 인계 — 적 피격 통합 시안 완료
 ~~~text
 ## 2단계 적 피격 반응 통합 시안 완료·방향 확인 대기 (2026-11-22)

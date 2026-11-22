@@ -64,7 +64,7 @@ function emptyResult(enemy,source){return {applied:false,enemyId:enemy?.id??null
 // Callers own range/collision checks. This gateway owns defense once, critical
 // resolution, HP mutation and critical-only accounting. Existing total-DPS
 // accounting is intentionally left to each caller until its migration is done.
-export function applyPlayerDamage(s,enemy,amount,{player=s.player,source='direct',origin=player,snapshot=null,packet=null,components=null,defended=false,procDepth=0}={}){
+export function applyPlayerDamage(s,enemy,amount,{player=s.player,source='direct',origin=player,snapshot=null,packet=null,components=null,defended=false,procDepth=0,visualOrigin=null}={}){
  const result=emptyResult(enemy,source);
  if(!enemy||!Number.isFinite(enemy.hp)||enemy.hp<=0)return result;
  if(!Number.isInteger(procDepth)||procDepth<0||procDepth>4)throw Error('Invalid damage proc depth');
@@ -95,6 +95,11 @@ export function applyPlayerDamage(s,enemy,amount,{player=s.player,source='direct
  Object.assign(result,{applied:true,attackId:attackIds.length===1?attackIds[0]:null,attackIds,procDepth,procEligible:procDepth===0&&newHit,damage:actual,criticalDamage:actualCritical,critical,newHit,before,after:enemy.hp,multiplier:damage/(base*defense)});
  criticalSkillHit(s,enemy,result,player);
  criticalRelicHit(s,enemy,result,value=>applyPlayerDamage(s,enemy,value,{source:'hunterSeal',origin,snapshot:createCriticalSnapshot(s,{critChance:0,critMultiplier:1,criticalResolved:true},false),procDepth:1}));
+ // A transient presentation hint, kept out of weapon snapshots and actor state.
+ if(source==='arrow'&&Number.isFinite(visualOrigin?.x)&&Number.isFinite(visualOrigin?.y)){
+  const dx=enemy.x-visualOrigin.x,dy=enemy.y-visualOrigin.y;
+  if(Math.abs(dx)>Math.abs(dy)*.35&&Math.abs(dx)>.01)result.hitDirection=Math.sign(dx);
+ }
  const queue=queues.get(s)||[];queue.push({...result});if(queue.length>256)queue.splice(0,queue.length-256);queues.set(s,queue);
  return {...result,snapshot:resolved.length===1?resolved[0].snapshot:null};
 }

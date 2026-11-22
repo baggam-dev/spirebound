@@ -1,3 +1,11 @@
+## 적 피격 반응 승인안 로컬 구현 완료·미검증 (2026-11-22)
+사용자 패키지질문ㄱㄱ승인·시작clean c2dad38. 내장imagegen 대표chaser/archer/현재brute 전신12+보행무다리상체12 제작/직접육안·치수·alpha확인. assets/images/enemy-hit-reactions-v1.png·신규enemy-hit-art/profiles, ordinary-state/grunt-sprite/game/critical·progression·팩/배포허용목록연결. 행별crop/기존52·67크기/foot21·24·belt-3/-7로기존보행다리+별도상체. 강한피격은HP8%가아닌실제newHit/critical, 반복틱·2차proc/활성재시작차단/.24쿨다운. 화살visualOrigin은뷰queue hitDirection만·방향없는/수직/후방중립, 실제origin/피해/AI/좌표/RNG·저장불변. 보스·관문·추적자·위협/공중/빙결·공격복귀우선/방전환옛id히트차단. optional아트실패기존sprite/glint유지.
+의미검증 준비5개(피해·난수·저장동일/체급·실치명/연타/예고우선/제외·완화)작성만·기존ordinary강반응입력을실치명사건으로교정. 테스트/구문실행/서버브라우저/공개조회/푸시배포없음. 마지막정적호출·import/메타필드뷰전용·실제자산치수·git diff --check확인. 기존운영912는이번검증아님, 미검증누적시전4+피격5. 실행중명령/차단없음·로컬커밋까지.
+상세 docs/design-drafts/enemy-hit-reaction-20261122/README.md·정확프롬프트/원본보존. 다음사용자지시에후속3스킬별타격감→4사용안내, 새배포지시시누적전체/상태9·실3종/6시전·정지보행·좌우앞뒤/반복틱·치명/예고·보스·방전환·coldfail/모바일이음새·가독성/캐시부하검증. 현재운영0.61 runtimebf276cd/release20261122-101459-1c7dba 유지·로컬시전2b73f1f와이번피격미배포. 대표포즈/실게임크기·연속모션/체감합격으로단정하지않음.
+## 적 피격 반응 구현 체크포인트 (2026-11-22)
+승인3종 전신12/이동상체12 투명atlas 제작·행별crop/고정발·벨트분리연결. enemy-hit-art/profiles·ordinary-state/grunt-sprite/game·critical transient hitDirection/progression visualOrigin·optional팩/배포허용목록 수정. 체급시간.10/.12/.14·연타.24 유지/활성재시작금지·실제newHit/procDepth/critical사용·HP8%치명오인제거. 예고/공중/빙결·공격복귀우선, 보스/관문/추적자제외. 새방전환의이전ID히트전달차단. 실패자산기존sprite/glintfallback. 회귀5개작성·기존회귀큰손실검사를실제critical사건으로교정, 전부미실행. 다음 정적최종검토/상세문서·4기록/로컬커밋. 테스트/구문/서버브라우저/푸시배포없음·운영0.61유지. 실행중명령없음.
+## 적 피격 반응 승인안 구현 진행 중 (2026-11-22)
+사용자 시안질문에ㄱㄱ로명시승인·시작clean c2dad38. 대표chaser/archer/brute 전신·보행상체 본제작과 체급별뷰프로필/연타·예고우선 연결 진행. 실제현재brute는feedback-named-brute 하단행이므로그외형을참조. 보스/관문/추적자움찔없음유지. 테스트/구문실행/푸시배포없음, 다음자산/뷰/실피해메타연결·정적검토/기록로컬커밋.
 ## 2단계 적 피격 반응 통합 시안 완료·방향 확인 대기 (2026-11-22)
 사용자 ㄱㄱ·시작clean2b73f1f. 기존ordinary 반응/위협우선·쿨다운/피해기록·추적자선호/24종회귀 확인. 내장imagegen에chaser/archer/brute 원본3종만참조해 경량0.10·궁수0.12·덩치0.14초의 준비/접점/흡수/복귀 3x4보드제작·직접검토·원본무변환복사. docs/design-drafts/enemy-hit-reaction-20261122/{README.md,package-v1.png,prompt-v1.txt}. SHA256 99F992F734D9BEBD4D1C448DEF4634C7EF0CD4DCF86DC2376E90DB480D7F8625.
 권장방향 고정발·상체반응차등/덩치작은반동·보스/관문/추적자움찔생략유지·공격예고우선·연타재시작금지/현.24쿨다운·완화몸반응생략. 실제피해사건기반과HP손실8%를치명으로혼동하지않기·방향근거없는장판중립반응 설계. imageboard는개념검토용이며productionatlas로잘라쓰지않음. 기존외형보존·후속3타격감/4사용안내미착수.
