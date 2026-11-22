@@ -1,4 +1,5 @@
 // Separate geometric effects; these functions never advance combat timers.
+import {drawImpactAccent} from './arrow-impact-visuals.js';
 export function captureUtilityVisuals(s){return {floor:s.floor,room:s.room,focus:s.player.focusTime||0,blood:s.bloodTime||0,guardian:s.guardianTime||0,charges:s.guardianCharges||0};}
 export function utilityTransitionEffects(before,s,result){
  if(before.floor!==s.floor||before.room!==s.room||s.player.hp<=0)return [];
@@ -15,7 +16,10 @@ export function utilityCastEffect(s,id){
 }
 export function limitUtilityEffects(effects,limit=12){
  let remaining=limit;const keep=new Set();
- for(let i=effects.length-1;i>=0;i--)if(!effects[i].utilityFx||remaining-- > 0)keep.add(i);
+ // Contact chips are optional; they must not evict a cast, absorption or landing.
+ for(let i=effects.length-1;i>=0;i--)if(!effects[i].utilityFx)keep.add(i);else if(!effects[i].utilityContact&&remaining>0){keep.add(i);remaining--;}
+ const contacts=effects.map((f,i)=>({f,i})).filter(v=>v.f.utilityContact).sort((a,b)=>(b.f.contactPower||0)-(a.f.contactPower||0)||b.i-a.i);
+ for(const {i} of contacts.slice(0,Math.max(0,Math.min(4,remaining))))keep.add(i);
  return effects.filter((_,i)=>keep.has(i));
 }
 function groundAura(c,x,y,r,color,clock,reduced){
@@ -66,6 +70,10 @@ export function drawExpandedUtilityStates(c,s,{reduced=false}={}){
 }
 export function drawUtilityEffect(c,f,{reduced=false,player=null}={}){
  if(!f.utilityFx)return false;
+ if(f.utilityContact){
+  drawImpactAccent(c,{x:f.x,y:f.y,age:f.duration-f.t,duration:f.duration,angle:f.angle,strength:f.utilityFx==='sigilContact'?1:0,reduced,color:f.utilityFx==='frostContact'?'#c3eff4':'#e6ffff'});return true;
+ }
+ if(f.utilityFx==='galeBreak')drawImpactAccent(c,{x:f.x,y:f.y,age:f.duration-f.t,duration:f.duration,strength:0,reduced,color:'#c6dfbe'});
  const p=Math.max(0,Math.min(1,1-f.t/f.duration));c.save();c.translate(f.x,f.y);c.globalAlpha*=1-p;c.lineWidth=2;
  if(['frostCast','sigilCast','galeCast'].includes(f.utilityFx)){
   const wind=f.utilityFx==='galeCast',ice=f.utilityFx==='frostCast',color=wind?'#cae8bc':ice?'#c2edf5':'#d5f5f4';

@@ -9,6 +9,8 @@ const CUES={
  utilitySigil:{gap:.35,group:'utility',priority:2,notes:[[0,440,.15,'triangle',.012,880],[.05,1100,.06,'sine',.005]]},
  utilityGale:{gap:.35,group:'utility',priority:3,notes:[[0,550,.15,'triangle',.016,180],[.035,220,.09,'sine',.009]]},
  utilityThunderHit:{gap:.25,group:'utility-impact',priority:3,notes:[[0,85,.18,'triangle',.026,42],[.006,650,.055,'sawtooth',.005,220]]},
+ utilityFrostHit:{gap:.15,group:'utility-impact',priority:2,notes:[[0,1800,.055,'triangle',.009,650],[.006,240,.065,'sine',.008,130]]},
+ utilityGaleBreak:{gap:.12,group:'utility-impact',priority:2,notes:[[0,1150,.065,'triangle',.009,330],[.008,440,.045,'sine',.005,220]]},
  utilityBlock:{gap:.2,group:'utility-impact',priority:3,notes:[[0,196,.09,'triangle',.019],[.008,1046,.12,'sine',.009,523]]},
  trialOpen:{gap:1,priority:2,notes:[[0,164,.18,'triangle',.014],[.16,246,.22,'sine',.01],[.3,329.6,.24,'sine',.008]]},
  trialClear:{gap:1,priority:3,notes:[[0,329.6,.25,'sine',.014],[.06,493.9,.3,'sine',.01],[.15,659.3,.36,'sine',.008]]},
