@@ -1,0 +1,6 @@
+{
+  "error": "Error: page.evaluate: Error: 게임 상태를 저장할 수 없습니다. 현재 도전은 닫지 말고 진단 기록을 내려받아 보관하세요.\n    at Object.load (http://127.0.0.1:4633/src/game/game.js:622:75)\n    at async <anonymous>:337:30",
+  "completed": [],
+  "errors": [],
+  "apiPosts": 0
+}

@@ -39,7 +39,7 @@ export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
  // chest bosses are taken from the real floor/room roster rather than floor number.
  if(returning&&floor===0)modules.push('demon-bat-sprite','demon-soldier-sprite','demon-archer-sprite','demon-captain-sprite');
  for(const key of enemies){const extra=actorPlan(key);modules.push(...extra.modules);feedback.push(...extra.feedback);}
- return {modules:[...new Set(modules)],feedback:[...new Set(feedback)],extra:['enemy-hit-reactions-v1.png','hero-utility-casts-v1.png','hero-utility-upper-v1.png','environment-hall-atlas-v1.png','environment-stone-reference-v1.png',halls[floor],...(floor>=6?['high-hall-atlas-v2.png']:[])].filter(Boolean)};
+ return {modules:[...new Set(modules)],feedback:[...new Set(feedback)],extra:['environment-hall-atlas-v1.png','environment-stone-reference-v1.png',halls[floor],...(floor>=6?['high-hall-atlas-v2.png']:[])].filter(Boolean)};
 }
 export function portraitAssetPlan(key){
  if(['ossuarySummoner','choirCantor','ossuaryMinion'].includes(key))return {modules:['support-sprites'],feedback:[],extra:[]};

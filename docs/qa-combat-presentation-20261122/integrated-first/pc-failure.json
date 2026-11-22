@@ -1,0 +1,5 @@
+{
+  "error": "Error: page.evaluate: Error: No safe fixture room in 40 seeds\n    at Object.load (http://127.0.0.1:4633/src/game/game.js:610:21)\n    at async <anonymous>:337:30",
+  "completed": [],
+  "state": null
+}

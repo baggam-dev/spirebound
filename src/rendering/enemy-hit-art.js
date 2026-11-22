@@ -20,9 +20,11 @@ if(typeof Image!=='undefined'){
    for(const kind of ['body','upper'])for(let col=0;col<4;col++){
     const upper=kind==='upper',y=upper?s.upperRow:s.row,h=upper?s.upperEnd-y:(type==='chaser'?300:type==='archer'?300:246);
     const scale=upper?(height-foot+waist)/(s.belt-s.upperTop):height/(s.feet-s.top);
-    const canvas=document.createElement('canvas');canvas.width=Math.ceil(256*scale);canvas.height=Math.ceil(h*scale);
-    const c=canvas.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(atlas,col*256,y,256,h,0,0,256*scale,h*scale);
-    pair[kind].push({canvas,x:-128*scale,y:upper?waist-(s.belt-y)*scale:foot-(s.feet-y)*scale});
+    // Match the current named-brute body's broad silhouette at the same height.
+    const scaleX=scale*(type==='brute'?1.28:1);
+    const canvas=document.createElement('canvas');canvas.width=Math.ceil(256*scaleX);canvas.height=Math.ceil(h*scale);
+    const c=canvas.getContext('2d');c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(atlas,col*256,y,256,h,0,0,256*scaleX,h*scale);
+    pair[kind].push({canvas,x:-128*scaleX,y:upper?waist-(s.belt-y)*scale:foot-(s.feet-y)*scale});
    }frames.set(type,pair);
   }
  }catch{frames.clear();}};atlas.onerror=()=>frames.clear();atlas.src=new URL('../../assets/images/enemy-hit-reactions-v1.png',import.meta.url).href;

@@ -1,0 +1,15 @@
+presentation pc
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Error: No safe fixture room in 40 seeds
+    at Object.load (http://127.0.0.1:4633/src/game/game.js:610:21)
+    at async <anonymous>:337:30
+    at load (C:\baggam-dev\spirebound\tools\qa\combat-presentation-release-qa.mjs:41:35)
+    at caseRun (C:\baggam-dev\spirebound\tools\qa\combat-presentation-release-qa.mjs:62:10)
+    at async file:///C:/baggam-dev/spirebound/tools/qa/combat-presentation-release-qa.mjs:123:325 {
+  log: []
+}
+
+Node.js v24.14.0

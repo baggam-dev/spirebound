@@ -1,0 +1,351 @@
+{
+  "base": "http://127.0.0.1:4633",
+  "results": [
+    {
+      "name": "pc",
+      "casts": [
+        {
+          "id": "focus",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "firstAid",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "guardian",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "frostWave",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "thunderSigil",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "galeVeil",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "focus",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "firstAid",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "guardian",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "frostWave",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "thunderSigil",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "galeVeil",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        }
+      ],
+      "rollAndPauseCancel": true,
+      "reloadWithoutCastReplay": true,
+      "guideFailuresAndBuild": true,
+      "assetFailure": false
+    },
+    {
+      "name": "mobile",
+      "casts": [
+        {
+          "id": "focus",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "firstAid",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "guardian",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "frostWave",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "thunderSigil",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "galeVeil",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "focus",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "firstAid",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "guardian",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "frostWave",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "thunderSigil",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "galeVeil",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        }
+      ],
+      "rollAndPauseCancel": true,
+      "reloadWithoutCastReplay": true,
+      "guideFailuresAndBuild": true,
+      "assetFailure": false
+    },
+    {
+      "name": "small-reduced",
+      "casts": [
+        {
+          "id": "focus",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "firstAid",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "guardian",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "frostWave",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "thunderSigil",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "galeVeil",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "focus",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "firstAid",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "guardian",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "frostWave",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "thunderSigil",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "galeVeil",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        }
+      ],
+      "rollAndPauseCancel": true,
+      "reloadWithoutCastReplay": true,
+      "guideFailuresAndBuild": true,
+      "assetFailure": false
+    },
+    {
+      "name": "mobile-art-fail",
+      "casts": [
+        {
+          "id": "focus",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "firstAid",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "guardian",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "frostWave",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "thunderSigil",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "galeVeil",
+          "moving": false,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "focus",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "firstAid",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "guardian",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "frostWave",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "thunderSigil",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        },
+        {
+          "id": "galeVeil",
+          "moving": true,
+          "successfulCast": true,
+          "expiredWithoutReplay": true
+        }
+      ],
+      "rollAndPauseCancel": true,
+      "reloadWithoutCastReplay": true,
+      "guideFailuresAndBuild": true,
+      "assetFailure": true
+    },
+    {
+      "name": "reaction-clocks",
+      "report": [
+        {
+          "kind": "archer",
+          "oneSecond": true,
+          "noQueue": true
+        },
+        {
+          "kind": "commander",
+          "oneSecond": true,
+          "noQueue": true
+        }
+      ]
+    },
+    {
+      "name": "native-art",
+      "types": 3,
+      "poses": 6
+    }
+  ],
+  "errors": [],
+  "apiPosts": 0
+}

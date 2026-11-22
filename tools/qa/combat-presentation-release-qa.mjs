@@ -12,24 +12,48 @@ const hook=`
 const castQA=await import('/src/rendering/hero-cast-state.js');
 const castArtQA=await import('/src/rendering/hero-cast-art.js');
 const hitArtQA=await import('/src/rendering/enemy-hit-art.js');
+const hitStateQA=await import('/src/rendering/ordinary-presentation-state.js');
+const damageQA=await import('/src/combat/critical.js');
 globalThis.__presentationHold=true;
 globalThis.__presentationQA={
  async load(id){
   await lease.acquire();stop('pause');renderTitleScene=null;
   const ordinary=e=>e.type==='archer'&&!e.elite&&!e.gateTitle&&!e.roamingElite&&!e.summoned;
-  for(let seed=1;seed<=40;seed++){s=newRun(seed);s.floor=0;s.room=s.floors[0].findIndex(r=>r.type==='normal'&&!r.footprint&&!r.tutorial&&!r.gate&&!r.hasChest&&r.enemies.some(ordinary));if(s.room>=0)break;}
-  if(s.room<0)throw Error('No safe fixture room in 40 seeds');s.tutorialComplete=true;
+  let selected;
+  for(let seed=1;seed<=40;seed++){s=newRun(seed);selected=s.floors.slice(1,4).flatMap((rooms,i)=>rooms.map((r,index)=>({r,floor:i+1,index}))).find(({r})=>r.type==='normal'&&!r.footprint&&!r.tutorial&&!r.gate&&!r.hasChest&&!r.supportEncounter&&r.enemies.some(ordinary));if(selected)break;}
+  if(!selected)throw Error('No safe fixture room in 40 seeds');s.floor=selected.floor;s.room=selected.index;s.tutorialComplete=true;
   const source=room().enemies.find(ordinary);
   if(!source)throw Error('No ordinary archer fixture');
-  const e=structuredClone(source);Object.assign(e,{x:550,y:270,hp:5000,max:5000,cd:999});delete e.attackPhase;
+  let e=structuredClone(source);Object.assign(e,{x:550,y:270,hp:5000,max:5000,cd:999});delete e.attackPhase;const template=structuredClone(e);
   Object.assign(s.player,{utility:id,level:6,mainSkill:'precision',precision:1,max:10,hp:8,critChance:0});
   const r=room();r.obstacles=[];r.enemies=[e];s.invulnerable=999;s.attack=999;
-  resetTransient();enterRoom(s);Object.assign(s.player,{x:480,y:270});Object.assign(e,{x:550,y:270});
+  resetTransient();enterRoom(s);Object.assign(s.player,{x:480,y:270});
+  // Entry planners can replace the original slot with a support actor. Restore
+  // the chosen original archer only inside this isolated presentation fixture.
+  e=structuredClone(template);r.enemies=[e];
   await prepareFloorAssets(s.floor,floorAssetOptions(s));if(!save())throw Error(saveError);resume();
  },
  step(dt,count=1){for(let i=0;i<count;i++){globalThis.__presentationHold=false;try{update(dt);}finally{globalThis.__presentationHold=true;}}},
  focus(){canvas.focus();},
  incoming(){s.projectiles=Array.from({length:3},()=>({x:s.player.x-35,y:s.player.y,vx:500,vy:0,life:1,hit:[],enemy:true,damage:9}));},
+ async previewTarget(type){
+  const source=s.floors.flatMap(r=>r).flatMap(r=>r.enemies||[]).find(e=>e.type===type&&!e.elite&&!e.gateTitle&&!e.summoned);
+  if(!source)throw Error('Missing preview actor '+type);
+  room().enemies=[{...structuredClone(source),x:550,y:270,hp:5000,max:5000,cd:999}];fx=[];resetOrdinaryPresentation([room()]);s.elapsed+=.02;
+  await prepareFloorAssets(s.floor,floorAssetOptions(s));preparePresentationAssets(s);
+ },
+ previewHit(moving){
+  const e=room().enemies[0],before=new Map([[e,e.hp]]);if(moving)e.x+=3;s.elapsed+=.035;
+  damageQA.applyPlayerDamage(s,e,10,{source:'arrow',visualOrigin:{x:e.x+40,y:e.y}});
+  const effects=enemyHitEffects(before,[e]);fx=mergeEnemyFeedback(fx,effects);notifyOrdinaryHits(room(),effects,damageQA.drainDamageResults(s));tickOrdinaryPresentation(room(),.035);
+ },
+ async nativePreview(moving){
+  const {drawGruntSprite}=await import('/src/rendering/grunt-sprite.js'),e=room().enemies[0],c=document.createElement('canvas');c.width=480;c.height=340;const g=c.getContext('2d');
+  g.fillStyle='#20292b';g.fillRect(0,0,c.width,c.height);g.fillStyle='#eee0bb';g.font='12px monospace';g.fillText(e.type+' / native + 3x / '+(moving?'walking':'standing'),12,18);
+  const p={face:1,moving,walk:1,step:1,recoil:0};
+  for(const [x,y,scale,actor] of [[60,92,1,structuredClone(e)],[155,92,1,e],[325,235,3,e]]){g.save();g.translate(x,y);g.scale(scale,scale);drawGruntSprite(g,actor,p,s);g.restore();}
+  return {png:c.toDataURL('image/png'),pose:hitStateQA.ordinaryPose(e)};
+ },
  patch(values){if('hp' in values)s.player.hp=values.hp;if('cooldown' in values)s.utilityCooldown=values.cooldown;if(values.noEnemies)room().enemies=[];},
  state(){if(!s)return {mode,paused,cast:null};return {mode,paused,elapsed:s.elapsed,hp:s.player.hp,cooldown:s.utilityCooldown,galeCharges:s.player.galeCharges,roll:!!s.roll,cast:castQA.heroCastPose(s.player,s.elapsed,{reduced:sound.settings.reducedEffects}),art:castArtQA.heroCastArtState(),hitArt:hitArtQA.enemyHitArtState(),guide:utilityGuide(s,{paused}),fx:fx.map(f=>({kind:f.utilityFx,contact:!!f.utilityContact})),enemies:room().enemies.map(e=>({id:e.id,hp:e.hp}))};}
 };`;
@@ -88,7 +112,8 @@ async function caseRun(cfg){
   await load(p,'galeVeil');await cast(p,cfg);await p.evaluate(()=>__presentationQA.incoming());await step(p,.05);
   const wind=await snap(p);assert.equal(wind.galeCharges,0);assert.equal(wind.fx.filter(f=>f.kind==='galeBreak').length,2);assert.match(wind.guide.active,/탄 소거 소진/);
   await p.locator('#bag').click();await p.locator('.build-window').waitFor();
-  await p.locator('[data-build-entry="active:galeVeil"]').click();assert.match(await p.locator('.build-detail').innerText(),/반사탄/);
+  await p.locator('[data-build-entry="active:galeVeil"]').click();assert.match(await p.locator('.build-detail').innerText(),/반사탄/);assert.match(await p.locator('.build-detail').innerText(),/탄 소거 소진/);
+  await p.locator('.build-detail').evaluate(e=>{e.scrollTop=e.scrollHeight;});
   await p.screenshot({path:join(out,cfg.name+'-guide.png')});
   if(cfg.fail){const v=await snap(p);assert.equal(v.art.body,false);assert.equal(v.art.upper,false);assert.equal(v.hitArt.types.length,0);}
   results.push({name:cfg.name,casts:caseResults,rollAndPauseCancel:true,reloadWithoutCastReplay:true,guideFailuresAndBuild:true,assetFailure:cfg.fail});
@@ -119,9 +144,23 @@ async function reactionCase(){
   });results.push({name:'reaction-clocks',report});
  }finally{await c.close();}
 }
+async function artCase(){
+ const {c,p}=await open({name:'native-art',width:844,height:390,touch:true,reduced:false,fail:false});
+ try{
+  await load(p,'guardian');await p.waitForFunction(()=>__presentationQA.state().hitArt.types.length===3);
+  for(const type of ['chaser','archer','brute'])for(const moving of [false,true]){
+   await p.evaluate(type=>__presentationQA.previewTarget(type),type);await flush(p);await p.evaluate(moving=>__presentationQA.previewHit(moving),moving);await flush(p);
+   const preview=await p.evaluate(moving=>__presentationQA.nativePreview(moving),moving);assert.equal(preview.pose?.kind,'hit');
+   await writeFile(join(out,type+(moving?'-walk':'-stand')+'-native.png'),Buffer.from(preview.png.split(',')[1],'base64'));
+   await p.screenshot({path:join(out,type+(moving?'-walk':'-stand')+'-world.png')});
+  }results.push({name:'native-art',types:3,poses:6});
+ }finally{await c.close();}
+}
 try{
- for(const cfg of [{name:'pc',width:1280,height:720,touch:false,reduced:false,fail:false},{name:'mobile',width:844,height:390,touch:true,reduced:false,fail:false},{name:'small-reduced',width:740,height:360,touch:true,reduced:true,fail:false},{name:'mobile-art-fail',width:844,height:390,touch:true,reduced:false,fail:true}])await caseRun(cfg);
- await reactionCase();assert.deepEqual(errors,[]);assert.equal(posts,0);
+ const only=process.argv.find(a=>a.startsWith('--only='))?.slice(7),cases=[{name:'pc',width:1280,height:720,touch:false,reduced:false,fail:false},{name:'mobile',width:844,height:390,touch:true,reduced:false,fail:false},{name:'small-reduced',width:740,height:360,touch:true,reduced:true,fail:false},{name:'mobile-art-fail',width:844,height:390,touch:true,reduced:false,fail:true}];
+ if(only&&!cases.some(c=>c.name===only)&&!['native-art','reaction-clocks'].includes(only))throw Error('Unknown case '+only);
+ for(const cfg of cases.filter(c=>!only||c.name===only))await caseRun(cfg);
+ if(!only||only==='reaction-clocks')await reactionCase();if(!only||only==='native-art')await artCase();assert.deepEqual(errors,[]);assert.equal(posts,0);
  await writeFile(join(out,'result.json'),JSON.stringify({base,results,errors,apiPosts:posts},null,2));console.log(JSON.stringify({groups:results.length,errors,apiPosts:posts}));
 }catch(error){
  await writeFile(join(out,'failure.json'),JSON.stringify({error:String(error),completed:results,errors,apiPosts:posts},null,2));

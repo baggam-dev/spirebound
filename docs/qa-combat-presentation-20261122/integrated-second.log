@@ -1,0 +1,13 @@
+presentation pc
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 60000ms exceeded.
+    at caseRun (C:\baggam-dev\spirebound\tools\qa\combat-presentation-release-qa.mjs:64:25)
+    at async file:///C:/baggam-dev/spirebound/tools/qa/combat-presentation-release-qa.mjs:124:325 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

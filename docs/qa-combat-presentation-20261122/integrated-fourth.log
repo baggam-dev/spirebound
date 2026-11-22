@@ -1,0 +1,15 @@
+presentation pc
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Error: 게임 상태를 저장할 수 없습니다. 현재 도전은 닫지 말고 진단 기록을 내려받아 보관하세요.
+    at Object.load (http://127.0.0.1:4633/src/game/game.js:622:75)
+    at async <anonymous>:337:30
+    at load (C:\baggam-dev\spirebound\tools\qa\combat-presentation-release-qa.mjs:45:35)
+    at caseRun (C:\baggam-dev\spirebound\tools\qa\combat-presentation-release-qa.mjs:66:10)
+    at async file:///C:/baggam-dev/spirebound/tools/qa/combat-presentation-release-qa.mjs:127:325 {
+  log: []
+}
+
+Node.js v24.14.0

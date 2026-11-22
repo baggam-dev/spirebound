@@ -1,0 +1,16 @@
+✔ imported images do not request a source until their pack is activated (2.9166ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.812ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (219.4088ms)
+✔ selected portraits do not require every monster or any dungeon hall (0.7786ms)
+✔ fresh return saves prepare descent-only enemies without making first ascent download them (1.4713ms)
+✔ rare upper-floor expeditions and chest bosses are loaded from the actual roster (0.311ms)
+✔ floor discovery covers later rooms while a combat check can inspect only its current room (0.3182ms)
+✔ optional cast and reaction sheets are selected only for owned skills and living matching enemies (4.8478ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 532.631

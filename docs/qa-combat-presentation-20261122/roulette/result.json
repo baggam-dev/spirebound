@@ -1,0 +1,42 @@
+{
+  "base": "http://127.0.0.1:4633",
+  "results": [
+    {
+      "kind": "auto",
+      "winner": "thunderSigil",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "reduced",
+      "winner": "galeVeil",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "reload-prepared",
+      "winner": "frostWave",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "reload-revealed",
+      "winner": "firstAid",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "start-save-fail",
+      "winner": "frostWave",
+      "stableResult": true,
+      "singleGrant": true
+    },
+    {
+      "kind": "claim-save-fail",
+      "winner": "thunderSigil",
+      "stableResult": true,
+      "singleGrant": true
+    }
+  ],
+  "errors": []
+}

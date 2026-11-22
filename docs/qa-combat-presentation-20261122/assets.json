@@ -1,0 +1,65 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "assets/images/hero-utility-casts-v1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 2513316,
+      "color_count": ">65535",
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 254,
+      "transparent_pixels": 958415,
+      "content_bounds": [
+        0,
+        19,
+        1006,
+        1536
+      ],
+      "problems": []
+    },
+    {
+      "path": "assets/images/hero-utility-upper-v1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 2648068,
+      "color_count": ">65535",
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 254,
+      "transparent_pixels": 878719,
+      "content_bounds": [
+        0,
+        19,
+        1008,
+        1536
+      ],
+      "problems": []
+    },
+    {
+      "path": "assets/images/enemy-hit-reactions-v1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 2656001,
+      "color_count": ">65535",
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 254,
+      "transparent_pixels": 832253,
+      "content_bounds": [
+        0,
+        18,
+        1024,
+        1536
+      ],
+      "problems": []
+    }
+  ]
+}

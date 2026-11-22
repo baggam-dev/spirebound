@@ -1,0 +1,12 @@
+{
+  "base": "http://127.0.0.1:4633",
+  "results": [
+    {
+      "name": "native-art",
+      "types": 3,
+      "poses": 6
+    }
+  ],
+  "errors": [],
+  "apiPosts": 0
+}

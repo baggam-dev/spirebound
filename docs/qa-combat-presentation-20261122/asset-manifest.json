@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-22",
+  "engine": "JavaScript Canvas2D",
+  "filtering": "high-quality downsample cache, unsmoothed game draw",
+  "approval": "Existing six-cast and three-enemy packages approved in conversation before local implementation",
+  "assets": [
+    {
+      "path": "assets/images/hero-utility-casts-v1.png",
+      "source": {"kind": "generated", "tool": "built-in image_gen", "original": "exec-75b47126-5693-4958-b8c0-87e2b77b3a79.png", "reference": "hero-reference-atlas.png + approved cast board"},
+      "license": {"kind": "project-generated", "note": "Project-specific generation; retain applicable service terms and generation provenance. No external stock pack."},
+      "size": [1024,1536], "alpha": true, "frames": 24, "grid": [4,6],
+      "display_height": 58, "anchor": {"x":128,"feet":249,"world_feet":22}, "collision_role": "none",
+      "technical_checks_passed": true, "report": "assets.json", "in_game_review": "integrated-fifth/pc-frostWave-stand.png"
+    },
+    {
+      "path": "assets/images/hero-utility-upper-v1.png",
+      "source": {"kind": "generated", "tool": "built-in image_gen", "original": "exec-1f06c25b-d071-4662-ab7d-181d88bd3894.png", "reference": "hero-reference-atlas.png + generated cast family"},
+      "license": {"kind": "project-generated", "note": "Project-specific generation; retain applicable service terms and generation provenance. No external stock pack."},
+      "size": [1024,1536], "alpha": true, "frames": 24, "grid": [4,6],
+      "anchor": {"x":128,"belt":180,"world_belt":-4}, "collision_role": "none",
+      "technical_checks_passed": true, "report": "assets.json", "in_game_review": "integrated-fifth/pc-frostWave-walk.png"
+    },
+    {
+      "path": "assets/images/enemy-hit-reactions-v1.png",
+      "source": {"kind": "generated", "tool": "built-in image_gen", "original": "exec-54601c83-6542-4eb1-b27c-44f9224352d6.png", "reference": "original chaser/archer atlases + current named-brute lower row"},
+      "license": {"kind": "project-generated", "note": "Project-specific generation; retain applicable service terms and generation provenance. No external stock pack."},
+      "size": [1024,1536], "alpha": true, "frames": 24,
+      "rows": [0,300,600,846,1060,1310,1536], "columns": 4, "display_heights": [52,52,67],
+      "brute_width_normalization": 1.28, "world_feet": [21,21,24], "world_belts": [-3,-3,-7], "collision_role": "none",
+      "technical_checks_passed": true, "report": "assets.json", "in_game_review": "art-final/*-native.png + *-world.png"
+    }
+  ],
+  "limitations": "Technical and desktop Edge native-size reviews; not physical iPhone or long-session performance approval. Original PNGs preserved without transformation; renderer owns slicing/normalization."
+}

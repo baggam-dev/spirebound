@@ -1,0 +1,39 @@
+{
+  "error": "TimeoutError: page.waitForFunction: Timeout 60000ms exceeded.",
+  "completed": [],
+  "state": {
+    "mode": "play",
+    "paused": false,
+    "elapsed": 0,
+    "hp": 8,
+    "cooldown": 0,
+    "roll": false,
+    "cast": null,
+    "art": {
+      "body": true,
+      "upper": true
+    },
+    "hitArt": {
+      "types": []
+    },
+    "guide": {
+      "ready": true,
+      "code": "ready",
+      "short": "준비",
+      "reason": "지금 사용할 수 있습니다.",
+      "name": "마혈 각성",
+      "active": "",
+      "status": "지금 사용할 수 있습니다.",
+      "tip": "체력이 여유로울 때 사용 · 1하트를 소모하고 7초간 공격·이동 속도가 증가합니다.",
+      "description": "1하트 소모 · 7초 공속 +70% / 이속 +25% · 재사용 25초",
+      "label": "마혈 각성 · 지금 사용할 수 있습니다. · 체력이 여유로울 때 사용 · 1하트를 소모하고 7초간 공격·이동 속도가 증가합니다."
+    },
+    "fx": [],
+    "enemies": [
+      {
+        "id": 1,
+        "hp": 4500
+      }
+    ]
+  }
+}
