@@ -1,3 +1,15 @@
+## 0.61 로컬 배포 검증 완료·배포 진행 중 (2026-11-22)
+진행 중: 사용자 배포 지시에 따라 누적 UI/방 변경을 0.61.0-prebeta로 배포한다. 전체912/912, 집중 위치5/5, seed48/48, 통합 최종5/5, 입장12/12, 귀환19/19, 탈출/엔딩18/18, 오디오27cue·실게임2조건 모두 통과. 브라우저 오류/운영 점수 제출0. 수정 후 모바일 빌드/방 캡처 직접 검토 완료. 근거 docs/qa-ui-room-20261122/ 및 docs/deploy-ui-room-20261122.md.
+다음 구체적 명령: git add/commit → git push origin main → powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools\deploy\deploy.ps1 → 공개 런타임 SHA/API/핵심 UI 검증. 현재 운영은0.60이며 배포 성공으로 표시하지 않음. 서버52669 포트4633 외 QA 종료·차단 없음. 실제 iPhone·장시간 성능/자연 성장 난이도·사람 음향 청취 미검증.
+## 0.61 배포 검증 체크포인트 (2026-11-22)
+전체 node --test 최종 912/912 통과(tests-final.log). 최초 911/912 실패는 기존 blink 검사가 고정 문 좌표와 이전 roll을 재사용한 문제로, 실제 roomDoorArrival 및 독립 roll 초기화로 수정했고 전 방향/전체방 검증 유지(집중5/5). 최초 모바일 빌드 닫기 숨김은 공통 header CSS 충돌을 실제 수정했다. 통합 재검사5/5·입장12/12·새 방 seed48(고전/확장 각24) 이동/저장/귀환 경계 통과. 캡처 검토 후 모바일 XP/상태 겹침 및 층/시간 표시 보강. 버전0.61.0-prebeta 동기화.
+현재 수정: index/game/version/API config/build-window·combat-hud CSS, player-position test, room-seed QA 및 증거/문서. 서버52669:4633; journey73051/escape 로그·integrated-final65408 진행 중(실제 로그 재확인). 다음 최종 QA 결과·캡처 확인→기록/커밋/푸시→공식 배포/공개 해시 및 UI 확인. 운영0.60 유지, 푸시/배포 아직 없음. 실기기/사람 청취/장시간 성능 검증 아님.
+## 0.61 검증 중 모바일 빌드 닫기 수정 (2026-11-22)
+실게임QA첫실행 PC빌드통과/844모바일buildClose boundingBox null 실패·캡처보존 integrated-first/. 기존mobile.css header>button숨김이모달header에도적용됨확인→빌드닫기display/44px을명시. 테스트기준완화없이재검증예정. 전체테스트92178진행중·서버52669/4633 유지. 운영배포아직전.
+
+## 0.61 UI/방 누적 배포 검증 진행 중 (2026-11-22)
+사용자명시배포·시작clean28a8a1e. 전체node --test 세션92178/docs/deploy-ui-room-20261122-tests-first.log 실행중. 다음실패분석수정→실게임빌드/방5·관련컷신/귀환·버전동기→커밋푸시/공식배포/공개확인. 현재운영0.60 유지·배포아직전. 시안재확인필요없음.
+
 ## 누적 UI/방 통합 QA 도구 준비 완료·미실행 (2026-11-22)
 사용자다음진행·시작clean6e0d54c. tools/qa/build-room-release-qa.mjs 신규, docs/ui-room-release-checklist-20261122.md에실행순서/5흐름·한계/잔여검증명시. 실게임응답만hook으로주입하여격리원정·실enterRoom/resume/시뮬/저장/빌드3탭사용, 운영소스QA전역추가없음/API POST차단·0검사. 로컬기본·공개는추가--allow-public플래그필요(이번실행권한아님).
 작성범위 PC1280/모바일844/작은740완화3조건 빌드동결/3탭선택·키보드/기록도감복귀·44px·음식1회/재개회복·저장실패정지, PC/모바일2조건 실제생성프로필선택/검정외부픽셀·화살키문왕복·저장재접속·귀환강화AI범위. 40seed에서인접일반방profile찾기·실패시진단, JSON/주요스크린샷·실패캡처/단계로그준비. fixturelevel4/기존활성보유검증조건·정수기여/실소유유물·무적/긴공격대기설정, 자연성장/전체난이도·실제구저장/장시간안정검증과구분.

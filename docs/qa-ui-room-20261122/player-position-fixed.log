@@ -1,0 +1,13 @@
+✔ diagonal blink at left doorway never wraps outside and clamps into lower wall (114.175ms)
+✔ all doorway directions and campaign rooms remain clear after blink (172.5864ms)
+✔ existing stuck save is repaired without changing build, health, cooldowns or seal (472.7632ms)
+✔ idle and room entry recover invalid player without requiring blink or granting immunity (59.431ms)
+✔ recovery leaves valid positions and open doorway movement untouched (40.51ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1923.8727

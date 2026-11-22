@@ -49,3 +49,9 @@ body:has(#runHUD:not([hidden])),body:has(#runHUD:not([hidden])) .arena{backgroun
  body:has(#runHUD:not([hidden])) .arena{width:100%;height:100%;aspect-ratio:auto}
  body:has(#runHUD:not([hidden])) #game{width:100%;height:100%;aspect-ratio:auto;object-fit:contain}
 }
+#runContext{display:none}
+@media(pointer:coarse) and (orientation:landscape){
+ #combatStatus{top:calc(112px + env(safe-area-inset-top))}
+ #runContext:not([hidden]){display:flex;position:fixed;left:50%;top:calc(8px + env(safe-area-inset-top));transform:translateX(-50%);width:28vw;max-width:280px;gap:8px;align-items:center;color:#e6dcc5;font-size:11px;line-height:18px;text-shadow:1px 1px #000}
+ #runFloor{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#runClock{flex-shrink:0;font-size:10px}
+}

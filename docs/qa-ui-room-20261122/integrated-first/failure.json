@@ -1,0 +1,19 @@
+{
+  "error": "AssertionError [ERR_ASSERTION]: buildClose touch target/viewport",
+  "results": [
+    {
+      "kind": "build",
+      "width": 1280,
+      "height": 720,
+      "touch": false,
+      "reduced": false,
+      "frozen": true,
+      "tabs": true,
+      "subpanels": true,
+      "foodOnce": true,
+      "saveFailureStops": true
+    }
+  ],
+  "errors": [],
+  "apiPosts": 0
+}

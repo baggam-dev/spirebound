@@ -1,0 +1,246 @@
+{
+  "runs": 48,
+  "profiles": 48,
+  "results": [
+    {
+      "campaign": "classic",
+      "seed": 1,
+      "profiles": 2
+    },
+    {
+      "campaign": "classic",
+      "seed": 2,
+      "profiles": 0
+    },
+    {
+      "campaign": "classic",
+      "seed": 3,
+      "profiles": 1
+    },
+    {
+      "campaign": "classic",
+      "seed": 4,
+      "profiles": 1
+    },
+    {
+      "campaign": "classic",
+      "seed": 5,
+      "profiles": 1
+    },
+    {
+      "campaign": "classic",
+      "seed": 6,
+      "profiles": 0
+    },
+    {
+      "campaign": "classic",
+      "seed": 7,
+      "profiles": 1
+    },
+    {
+      "campaign": "classic",
+      "seed": 8,
+      "profiles": 2
+    },
+    {
+      "campaign": "classic",
+      "seed": 9,
+      "profiles": 1
+    },
+    {
+      "campaign": "classic",
+      "seed": 10,
+      "profiles": 2
+    },
+    {
+      "campaign": "classic",
+      "seed": 11,
+      "profiles": 0
+    },
+    {
+      "campaign": "classic",
+      "seed": 12,
+      "profiles": 0
+    },
+    {
+      "campaign": "classic",
+      "seed": 13,
+      "profiles": 1
+    },
+    {
+      "campaign": "classic",
+      "seed": 14,
+      "profiles": 1
+    },
+    {
+      "campaign": "classic",
+      "seed": 15,
+      "profiles": 0
+    },
+    {
+      "campaign": "classic",
+      "seed": 16,
+      "profiles": 0
+    },
+    {
+      "campaign": "classic",
+      "seed": 17,
+      "profiles": 1
+    },
+    {
+      "campaign": "classic",
+      "seed": 18,
+      "profiles": 3
+    },
+    {
+      "campaign": "classic",
+      "seed": 19,
+      "profiles": 1
+    },
+    {
+      "campaign": "classic",
+      "seed": 20,
+      "profiles": 1
+    },
+    {
+      "campaign": "classic",
+      "seed": 21,
+      "profiles": 1
+    },
+    {
+      "campaign": "classic",
+      "seed": 22,
+      "profiles": 0
+    },
+    {
+      "campaign": "classic",
+      "seed": 23,
+      "profiles": 1
+    },
+    {
+      "campaign": "classic",
+      "seed": 24,
+      "profiles": 3
+    },
+    {
+      "campaign": "expanded",
+      "seed": 1,
+      "profiles": 2
+    },
+    {
+      "campaign": "expanded",
+      "seed": 2,
+      "profiles": 0
+    },
+    {
+      "campaign": "expanded",
+      "seed": 3,
+      "profiles": 1
+    },
+    {
+      "campaign": "expanded",
+      "seed": 4,
+      "profiles": 1
+    },
+    {
+      "campaign": "expanded",
+      "seed": 5,
+      "profiles": 1
+    },
+    {
+      "campaign": "expanded",
+      "seed": 6,
+      "profiles": 0
+    },
+    {
+      "campaign": "expanded",
+      "seed": 7,
+      "profiles": 1
+    },
+    {
+      "campaign": "expanded",
+      "seed": 8,
+      "profiles": 2
+    },
+    {
+      "campaign": "expanded",
+      "seed": 9,
+      "profiles": 1
+    },
+    {
+      "campaign": "expanded",
+      "seed": 10,
+      "profiles": 2
+    },
+    {
+      "campaign": "expanded",
+      "seed": 11,
+      "profiles": 0
+    },
+    {
+      "campaign": "expanded",
+      "seed": 12,
+      "profiles": 0
+    },
+    {
+      "campaign": "expanded",
+      "seed": 13,
+      "profiles": 1
+    },
+    {
+      "campaign": "expanded",
+      "seed": 14,
+      "profiles": 1
+    },
+    {
+      "campaign": "expanded",
+      "seed": 15,
+      "profiles": 0
+    },
+    {
+      "campaign": "expanded",
+      "seed": 16,
+      "profiles": 0
+    },
+    {
+      "campaign": "expanded",
+      "seed": 17,
+      "profiles": 1
+    },
+    {
+      "campaign": "expanded",
+      "seed": 18,
+      "profiles": 3
+    },
+    {
+      "campaign": "expanded",
+      "seed": 19,
+      "profiles": 1
+    },
+    {
+      "campaign": "expanded",
+      "seed": 20,
+      "profiles": 1
+    },
+    {
+      "campaign": "expanded",
+      "seed": 21,
+      "profiles": 1
+    },
+    {
+      "campaign": "expanded",
+      "seed": 22,
+      "profiles": 0
+    },
+    {
+      "campaign": "expanded",
+      "seed": 23,
+      "profiles": 1
+    },
+    {
+      "campaign": "expanded",
+      "seed": 24,
+      "profiles": 3
+    }
+  ]
+}

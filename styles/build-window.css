@@ -23,3 +23,5 @@
 .build-window .build-footer{display:grid;grid-template-columns:1fr 1fr 1fr 1.4fr;gap:8px;padding:0;margin:0}
 @media(max-height:500px){#overlay .panel.build-panel{padding:8px}.build-window{gap:5px}#overlay .build-window h2{font-size:18px}.build-window .build-heading small{font-size:11px}.build-list{grid-template-columns:repeat(3,minmax(0,1fr))}#overlay .build-window .build-list button{min-height:88px}.build-window .pixel-icon{width:28px;height:28px}.build-body{padding-top:4px;gap:8px}.build-detail{padding-left:10px}}
 @media(max-width:620px){.build-list{grid-template-columns:repeat(2,minmax(0,1fr))}.build-window .build-footer{grid-template-columns:1fr 1fr}.build-body{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+/* Generic mobile header rules must not hide the modal's close control. */
+#overlay .build-window .build-heading #buildClose{display:block;flex:0 0 44px}

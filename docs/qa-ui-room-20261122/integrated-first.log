@@ -1,0 +1,18 @@
+build 1280 720 false
+build 844 390 false
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: buildClose touch target/viewport
+    at buildCase (file:///C:/baggam-dev/spirebound/tools/qa/build-room-release-qa.mjs:60:189)
+    at async file:///C:/baggam-dev/spirebound/tools/qa/build-room-release-qa.mjs:92:86 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.14.0
