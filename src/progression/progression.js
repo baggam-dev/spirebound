@@ -42,7 +42,7 @@ export const skills = [
  {id:'snowFairy',name:'눈꽃요정: 니베아',description:'유니크 · 1.5초마다 70% 탄 / 2초 25%둔화 · 이속 +5%',max:1},
  {id:'stormFairy',name:'번개요정: 볼티아',description:'유니크 · 1.5초마다 100% 탄 +주변1체 50% 전이 · 공속 +5%',max:1},
  {id:'fairyKing',name:'요정왕: 아스테리온',description:'3요정 완성 · 공속 +15% / 이속 +10% / 직격 +15% · 3초마다 600% 관통 레이저',max:1},
- ...synergySkills,...criticalSkills].map(k=>({...k,tree:mainSkills.includes(k.id)?'main':'support',grade:skillGrade(k.id),weight:criticalSkillInfo(k.id)?.weight??(['aura','homing'].includes(k.id)?.04:['sunFairy','snowFairy','stormFairy'].includes(k.id)?.35:skillGrade(k.id)==='unique'?.12:k.id==='split'?.18:1)}));
+ ...synergySkills,...criticalSkills].map(k=>({...k,tree:mainSkills.includes(k.id)?'main':'support',grade:skillGrade(k.id),weight:criticalSkillInfo(k.id)?.weight??(['aura','homing'].includes(k.id)?.04:['sunFairy','snowFairy','stormFairy'].includes(k.id)?.32:skillGrade(k.id)==='unique'?.12:k.id==='split'?.18:1)}));
 export const recipes = [
  {name:'폭풍 화살',needs:['split','pierce'],description:'모든 화살 피해 +3 · 첫 관통 후 전방 240 내 적에게 한 번 꺾임'},
  {name:'속성 연사',needs:['fire','repeat'],description:'뒤따르는 화살도 작은 화염 폭발 발동'},

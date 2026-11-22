@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {newRun,enrage,currentRoom} from '../../src/game/engine.js';
 import {enterRoom,stepRun} from '../../src/game/simulation.js';
-import {SUPPORT,tickSupportState,supportTypes} from '../../src/combat/support-profile.js';
+import {SUPPORT,tickSupportState,supportTypes,strengthenCantor} from '../../src/combat/support-profile.js';
 import {updateSupportCaster,updateSupportMinion,supportSpawnPoint,supportHealTarget,validSupportHeal,cleanupSupportMinions} from '../../src/combat/support-casters.js';
 import {planSupportEncounters} from '../../src/world/support-encounters.js';
 import {enemyXpReward,enemyEssenceChance} from '../../src/progression/enemy-rewards.js';
@@ -16,7 +16,7 @@ function combat(type='ossuarySummoner'){
  const e={id:0,type,x:500,y:270,hp:200,max:200,cd:99,supportClock:0,supportSummons:0,supportHeals:0,tier:2},p={x:150,y:270};
  const ally={id:1,type:'chaser',x:620,y:270,hp:20,max:100,cd:99},other={id:2,type:'chaser',x:650,y:380,hp:100,max:100,cd:99};return {e,p,ally,other,r:{enemies:[e,ally,other],obstacles:[]}};
 }
-function finish(e,p,r){updateSupportCaster(e,p,r,e.type==='ossuarySummoner'?1.1:.95,[]);}
+function finish(e,p,r){updateSupportCaster(e,p,r,e.type==='ossuarySummoner'?SUPPORT.cast:SUPPORT.healCast,[]);}
 function active(type='ossuarySummoner'){
  const s=newRun(47);let found;s.floors.forEach((f,floor)=>f.forEach((r,index)=>{if(!found&&r.supportEncounter?.ascent)found={r,floor,index};}));assert.ok(found,'seed contains a support plan');
  const r=found.r;r.supportEncounter.ascent.type=type;r.obstacles=[];s.floor=found.floor;s.room=found.index;Object.assign(s.player,{x:65,y:270});enterRoom(s);const e=r.enemies.find(e=>e.type===type);assert.ok(e);return {s,r,e,p:s.player};
@@ -43,9 +43,32 @@ test('healer selects the most injured eligible ally, excluding bosses, pursuers,
  const {e,p,r,ally}=combat('choirCantor');e.hp=1;r.enemies.push({id:3,type:'boss',x:510,y:270,hp:1,max:100},{id:4,type:'pursuer',x:510,y:270,hp:1,max:100},{...child(e,5),hp:1});assert.equal(supportHealTarget(e,r),ally);r.obstacles=[{x:550,y:245,w:20,h:45}];assert.equal(supportHealTarget(e,r),null);
  r.obstacles=[];ally.x=800;assert.equal(validSupportHeal(e,ally,r),false);assert.equal(validSupportHeal(e,e,r),false);
 });
-test('heals are capped by eight percent, 24HP, missing health and three lifetime uses',()=>{
- for(const [max,hp,amount] of [[100,20,8],[1000,100,24],[1000,995,5]]){const {e,p,r,ally}=combat('choirCantor');Object.assign(ally,{max,hp});updateSupportCaster(e,p,r,.01,[]);finish(e,p,r);assert.equal(ally.hp,hp+amount);assert.equal(e.supportHeals,1);assert.equal(e.supportFlash.amount,amount);}
- const {e,p,r}=combat('choirCantor');e.supportHeals=3;updateSupportCaster(e,p,r,.01,[]);assert.notEqual(e.attackPhase,'supportCast');
+test('heals restore twenty percent without a fixed cap or lifetime limit and never overfill',()=>{
+ for(const [max,hp,amount] of [[100,20,20],[1000,100,200],[1000,995,5]]){const {e,p,r,ally}=combat('choirCantor');Object.assign(ally,{max,hp});updateSupportCaster(e,p,r,.01,[]);finish(e,p,r);assert.equal(ally.hp,hp+amount);assert.equal(e.supportHeals,1);assert.equal(e.supportFlash.amount,amount);assert.equal(e.supportClock,4);}
+ const {e,p,r,ally}=combat('choirCantor');e.supportHeals=300;updateSupportCaster(e,p,r,.01,[]);assert.equal(e.attackPhase,'supportCast');finish(e,p,r);assert.equal(e.supportHeals,301);assert.equal(ally.hp,40);
+});
+
+test('cantor health scales once, preserves injury and cast damage, and leaves summoners unchanged',()=>{
+ const {e}=combat('choirCantor');Object.assign(e,{hp:100,supportCastHp:150,attackPhase:'supportCast',attackTime:.95,supportClock:5.5,supportHeals:3});strengthenCantor(e);
+ assert.equal(e.max,280);assert.equal(e.hp,140);assert.equal(e.supportCastHp,210);assert.equal(e.attackTime,.8);assert.equal(e.supportClock,4);assert.equal(e.supportHeals,3);
+ const before=JSON.stringify(e);strengthenCantor(e);assert.equal(JSON.stringify(e),before);
+ const dead={type:'choirCantor',hp:0,max:200};strengthenCantor(dead);assert.equal(dead.hp,0);
+ const other=combat().e,original=JSON.stringify(other);strengthenCantor(other);assert.equal(JSON.stringify(other),original);
+});
+
+test('legacy cantor casts and large heal counters roundtrip without repeating health migration',()=>{
+ const {s,r,e}=active('choirCantor');delete e.cantorBalanceVersion;Object.assign(e,{max:200,hp:100,supportCastHp:150,attackPhase:'supportCast',attackTime:.95,supportTarget:r.enemies.find(n=>n!==e).id,supportClock:5.5,supportHeals:3});
+ const restored=parseSave(encodeSave(s)),actor=currentRoom(restored).enemies.find(n=>n.id===e.id);
+ assert.equal(actor.max,280);assert.equal(actor.hp,140);assert.equal(actor.attackTime,.8);assert.equal(actor.supportCastHp,210);
+ actor.supportHeals=1000;actor.supportFlash={kind:'heal',time:.4,x:actor.x,y:actor.y,amount:200};
+ const again=parseSave(encodeSave(restored)),copy=currentRoom(again).enemies.find(n=>n.id===e.id);assert.equal(copy.supportHeals,1000);assert.equal(copy.max,280);assert.equal(copy.supportFlash.amount,200);
+ for(const value of [-1,1.5,Number.MAX_SAFE_INTEGER+1]){const bad=structuredClone(again);currentRoom(bad).enemies.find(n=>n.id===e.id).supportHeals=value;assert.throws(()=>encodeSave(bad));}
+});
+
+test('cantor movement is faster than summoner movement with the same path and slow status',()=>{
+ const cantor=combat('choirCantor'),summoner=combat();for(const q of [cantor,summoner]){q.e.supportClock=2;q.e.slow=0;q.e.frozen=0;}
+ updateSupportCaster(cantor.e,cantor.p,cantor.r,.1,[]);updateSupportCaster(summoner.e,summoner.p,summoner.r,.1,[]);
+ const moved=q=>Math.hypot(q.e.x-500,q.e.y-270);assert.ok(moved(cantor)>moved(summoner));assert.ok(Math.abs(moved(cantor)/moved(summoner)-50/35)<1e-6);
 });
 test('a lost target or broken healing sightline interrupts rather than silently retargeting',()=>{
  for(const dead of [true,false]){const {e,p,r,ally,other}=combat('choirCantor');other.hp=50;updateSupportCaster(e,p,r,.01,[]);assert.equal(e.supportTarget,ally.id);if(dead)ally.hp=0;else r.obstacles=[{x:550,y:245,w:20,h:45}];finish(e,p,r);assert.equal(other.hp,50);assert.equal(e.supportHeals,0);assert.equal(e.attackPhase,'supportRecover');assert.equal(e.supportTarget,undefined);}

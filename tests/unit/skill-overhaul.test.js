@@ -1,9 +1,9 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {newRun,currentRoom,advanceClock} from '../../src/game/engine.js';
 import {stepRun,enterRoom} from '../../src/game/simulation.js';
-import {castRoll,tickRoll,rollProfile,rollImmune,rollAction} from '../../src/combat/roll.js';
+import {castRoll,tickRoll,tickRollMines,rollProfile,rollImmune,rollAction} from '../../src/combat/roll.js';
 import {syncUnlocks,utilityAvailable,migrateSkillOverhaul} from '../../src/progression/skill-overhaul.js';
-import {levelChoices,applySkill,xpRequired,hitEnemy} from '../../src/progression/progression.js';
+import {levelChoices,applySkill,xpRequired,hitEnemy,skills,skillOfferWeight} from '../../src/progression/progression.js';
 import {chooseUtility,castUtility,tickBloodContract} from '../../src/combat/utility.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 import {tickFairyKing} from '../../src/combat/fairy-king.js';
@@ -11,6 +11,22 @@ import {castUltimate,tickRain} from '../../src/combat/abilities.js';
 import {grantRelic,offerRelics} from '../../src/progression/relics.js';
 const fight=()=>{const s=newRun(85);currentRoom(s).enemies=[];currentRoom(s).obstacles=[];s.attack=99;s.entryGrace=0;return s;};
 const cleared=(s,n)=>{for(const f of s.floors.filter(f=>f.some(r=>r.type==='boss')).slice(0,n))f.find(r=>r.type==='boss').used=true;};
+
+test('mines detonate at one second, keep their damage, and legacy remaining time caps once',()=>{
+ const s=fight(),r=currentRoom(s);s.player.critChance=0;s.player.rollMastery=1;s.player.evolutions={rollMastery:'mines'};castRoll(s,{x:1,y:0});tickRoll(s,r,.01,[]);
+ assert.equal(r.rollMines.length,1);assert.equal(r.rollMines[0].time,1);const mine=r.rollMines[0],damage=mine.damage;
+ const enemy={id:0,type:'archer',x:mine.x,y:mine.y,hp:1000,max:1000,cd:99,balanceVersion:1};r.enemies=[enemy];
+ tickRollMines(s,r,.99,[]);assert.equal(enemy.hp,1000);assert.equal(r.rollMines.length,1);
+ tickRollMines(s,r,.011,[]);assert.equal(r.rollMines.length,0);assert.equal(enemy.hp,1000-damage);
+ r.rollMines=[{...mine,time:2.8},{...mine,time:.25}];migrateSkillOverhaul(s);assert.deepEqual(r.rollMines.map(m=>m.time),[1,.25]);migrateSkillOverhaul(s);assert.deepEqual(r.rollMines.map(m=>m.time),[1,.25]);
+});
+
+test('only fairy acquisition weights decrease slightly while the king and owned blade retain their rules',()=>{
+ const s=fight();for(const id of ['sunFairy','snowFairy','stormFairy'])assert.equal(skillOfferWeight(s.player,skills.find(k=>k.id===id)),.32);
+ assert.equal(skillOfferWeight(s.player,skills.find(k=>k.id==='fairyKing')),.12);
+ s.player.aura=1;assert.equal(skillOfferWeight(s.player,skills.find(k=>k.id==='aura')),1);
+ Object.assign(s.player,{level:15,mainSkill:'fire',fire:1,sunFairy:1,snowFairy:1,stormFairy:1});s.pendingLevels=1;s.levelQueue=[15];assert.ok(levelChoices(s,()=>.5).some(k=>k.id==='fairyKing'));
+});
 test('roll travels continuously, freezes with pause, survives save, ends at140 and does not create post-roll immunity',()=>{let s=fight();assert.ok(castRoll(s,{x:1,y:0}));assert.equal(s.player.x,480);assert.equal(s.dodge,4);tickRoll(s,currentRoom(s),.14,[]);assert.equal(s.player.x,550);assert.ok(rollImmune(s));const paused=JSON.stringify(s.roll);advanceClock(s,1,true);assert.equal(JSON.stringify(s.roll),paused);s=parseSave(encodeSave(s));tickRoll(s,currentRoom(s),.14,[]);assert.equal(s.player.x,620);assert.equal(s.roll,undefined);assert.equal(s.invulnerable,0);assert.equal(castRoll(s,{x:1,y:0}),false);});
 test('roll avoids a live projectile and checks walls for every movement segment',()=>{const s=fight(),r=currentRoom(s);r.obstacles=[{x:540,y:200,w:20,h:200,type:'rock'}];s.projectiles=[{x:490,y:300,vx:0,vy:0,life:1,hit:[],enemy:true}];castRoll(s,{x:1,y:0});for(let i=0;i<20;i++)stepRun(s,1/60);assert.equal(s.player.hp,5);assert.ok(s.player.x<=526);assert.equal(s.roll,undefined);});
 test('roll branches deal once and place timed mines only in their own room',()=>{for(const kind of ['mines','slash','swift']){const s=fight(),r=currentRoom(s);s.player.rollMastery=1;s.player.evolutions={rollMastery:kind};r.enemies=[{id:0,type:'archer',x:540,y:300,hp:1000,max:1000,cd:99,balanceVersion:1}];castRoll(s,{x:1,y:0});for(let i=0;i<20;i++)tickRoll(s,r,1/60,[]);if(kind==='mines'){assert.equal(r.rollMines.length,3);assert.ok(r.rollMines[2].x>r.rollMines[1].x);enterRoom(s);assert.equal(r.rollMines.length,0);}if(kind==='slash')assert.equal(r.enemies[0].hp,949);if(kind==='swift')assert.equal(s.dodge,3.5);assert.doesNotThrow(()=>parseSave(encodeSave(s)));}});

@@ -8,17 +8,18 @@ export function validateSupportSave(s,check,number){
   for(const key of ['ascent','descent']){const plan=data[key];if(!plan)continue;check(s.supportPlannedPhases.includes(key)&&['planned','active','defeated','cancelled'].includes(plan.state)&&supportTypes.includes(plan.type));if(['active','defeated'].includes(plan.state))check(Number.isInteger(plan.enemyId)&&number(plan.enemyId,0,1e6));else check(plan.enemyId===null);if(plan.state==='active'){active++;check(actors.some(e=>e.id===plan.enemyId&&e.type===plan.type));}}
   check(actors.length===active&&active<=1&&minions.length<=SUPPORT.roomCap);
   for(const e of actors){
-   check(!e.summoned&&!e.elite&&e.xpReward===24);check(e.type==='ossuarySummoner'?Number.isInteger(e.supportSummons)&&number(e.supportSummons,0,4):Number.isInteger(e.supportHeals)&&number(e.supportHeals,0,3));
+   check(!e.summoned&&!e.elite&&e.xpReward===24);check(e.type==='ossuarySummoner'?Number.isInteger(e.supportSummons)&&number(e.supportSummons,0,4):Number.isSafeInteger(e.supportHeals)&&e.supportHeals>=0);
+   if(e.cantorBalanceVersion!==undefined)check(e.type==='choirCantor'&&e.cantorBalanceVersion===1);
    if(e.supportSummons!==undefined)check(e.type==='ossuarySummoner'&&Number.isInteger(e.supportSummons)&&number(e.supportSummons,0,SUPPORT.totalSummons));
-   if(e.supportHeals!==undefined)check(e.type==='choirCantor'&&Number.isInteger(e.supportHeals)&&number(e.supportHeals,0,SUPPORT.totalHeals));
+   if(e.supportHeals!==undefined)check(e.type==='choirCantor'&&Number.isSafeInteger(e.supportHeals)&&e.supportHeals>=0);
    if(e.supportClock!==undefined)check(number(e.supportClock,0,6));
-   if(e.attackPhase!=null){const max={supportCast:e.type==='ossuarySummoner'?SUPPORT.cast:SUPPORT.healCast,supportBolt:SUPPORT.boltWarning,supportRelease:.2,supportRecover:.65}[e.attackPhase];check(max!==undefined&&number(e.attackTime,0,max));}
+   if(e.attackPhase!=null){const max={supportCast:e.type==='ossuarySummoner'?SUPPORT.cast:e.cantorBalanceVersion===1?SUPPORT.healCast:.95,supportBolt:SUPPORT.boltWarning,supportRelease:.2,supportRecover:.65}[e.attackPhase];check(max!==undefined&&number(e.attackTime,0,max));}
    if(['supportCast','supportBolt'].includes(e.attackPhase))check(number(e.supportCastHp,0,e.max));
    if(e.attackPhase==='supportBolt')check(number(e.aim,-Math.PI,Math.PI));
    if(e.supportTarget!==undefined)check(e.type==='choirCantor'&&Number.isInteger(e.supportTarget)&&number(e.supportTarget,0,1e6));
    if(e.supportSpawn!==undefined)check(e.type==='ossuarySummoner'&&e.supportSpawn&&number(e.supportSpawn.x,70,890)&&number(e.supportSpawn.y,85,455));
    if(e.attackPhase==='supportCast')check(e.type==='ossuarySummoner'?e.supportSpawn!==undefined:e.supportTarget!==undefined);
-   if(e.supportFlash!==undefined){const f=e.supportFlash;check(f&&['heal','summon','interrupt'].includes(f.kind)&&number(f.time,0,.4)&&number(f.x,-50,1010)&&number(f.y,-50,590));if(f.kind==='heal')check(number(f.amount,0,SUPPORT.healCap));}
+   if(e.supportFlash!==undefined){const f=e.supportFlash;check(f&&['heal','summon','interrupt'].includes(f.kind)&&number(f.time,0,.4)&&number(f.x,-50,1010)&&number(f.y,-50,590));if(f.kind==='heal')check(e.type==='choirCantor'&&number(f.amount,0,100000*SUPPORT.healRate));}
   }
   for(const e of minions){
    check(e.summoned===true&&!e.elite&&Number.isInteger(e.summonOwner)&&number(e.summonOwner,0,1e6)&&number(e.supportLife,0,SUPPORT.minionLife));

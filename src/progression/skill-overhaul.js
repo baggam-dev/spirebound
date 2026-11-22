@@ -7,6 +7,8 @@ export const utilityAvailable=s=>s.player.level>=5&&bossesCleared(s)>=1;
 export const ultimateAvailable=s=>s.player.level>=8&&bossesCleared(s)>=2;
 export function syncUnlocks(s){if(!s.player.ultimate&&ultimateAvailable(s)){s.player.ultimate=1;s.skill=0;}}
 export function migrateSkillOverhaul(s){
+ // Older saves can contain three-second mines; cap remaining time without restarting them.
+ for(const r of s.floors.flat())for(const mine of r.rollMines||[])mine.time=Math.min(1,mine.time);
  if(s.skillOverhaulVersion===1)return s;
  const p=s.player;p.evolutions??={};let refund=0;
  for(const [key,max] of [['pierce',2],['frost',3]])if(p[key]>max){refund+=p[key]-max;p[key]=max;}

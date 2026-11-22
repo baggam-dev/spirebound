@@ -1,6 +1,6 @@
 import {seededRandom} from '../game/random.js';
 import {blocked} from './terrain.js';
-import {supportTypes} from '../combat/support-profile.js';
+import {supportTypes,strengthenCantor} from '../combat/support-profile.js';
 const phase=s=>s.key?'descent':'ascent';
 const occupied=r=>r.enemies.some(e=>['starBearer','gravityMage',...supportTypes].includes(e.type)&&e.hp>0);
 const special=r=>['planned','active'].includes(r.specialEncounter?.state)||['planned','active'].includes(r.pursuerEncounter?.state);
@@ -22,6 +22,7 @@ export function activateSupportEncounter(s,r){
  if(!e||!points.length){plan.state='cancelled';return false;}points.sort((a,b)=>Math.hypot(a.x-650,a.y-270)-Math.hypot(b.x-650,b.y-270));
  const max=Math.ceil(e.max*.9),identity={id:e.id,...(e.rankingId!==undefined?{rankingId:e.rankingId}:{})};for(const key of Object.keys(e))delete e[key];
  Object.assign(e,identity,{type:plan.type,role:'지원',...points[0],hp:max,max,tier:s.floor,escapeDepth:s.key?s.floors.length-s.floor:0,balanceVersion:1,cd:1.8,supportClock:2.5,spawnGrace:.7,xpReward:24,...(plan.type==='ossuarySummoner'?{supportSummons:0}:{supportHeals:0})});
+ strengthenCantor(e);
  plan.state='active';plan.enemyId=e.id;return true;
 }
 export function retireSupportForReturn(s){for(const r of s.floors.flat()){const plan=r.supportEncounter?.ascent;if(plan&&['active','planned'].includes(plan.state)){plan.state='cancelled';plan.enemyId=null;}}}

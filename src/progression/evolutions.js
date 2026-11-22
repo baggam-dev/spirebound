@@ -1,6 +1,6 @@
 import {ARROW_RAIN_DAMAGE} from '../combat/combat-tuning.js';
 export const evolutions={
- rollMastery:[{id:'mines',name:'잔영 지뢰',description:'구르기 거리 +20% · 경로에 3초 후 폭발하는 150% 지뢰 3개'},{id:'swift',name:'질풍 회피',description:'구르기 속도 +25% · 재사용 0.5초 감소'},{id:'slash',name:'일섬',description:'발도 돌진 · 경로의 적을 평타 300%로 한 번 베기'}],
+ rollMastery:[{id:'mines',name:'잔영 지뢰',description:'구르기 거리 +20% · 경로에 1초 후 폭발하는 150% 지뢰 3개'},{id:'swift',name:'질풍 회피',description:'구르기 속도 +25% · 재사용 0.5초 감소'},{id:'slash',name:'일섬',description:'발도 돌진 · 경로의 적을 평타 300%로 한 번 베기'}],
  aura:[{id:'judgment',name:'단죄의 칼날',description:'베르가스 단발 피해 +20% · 사거리 200 · 넓은 베기 · 재사용 25% 증가'},{id:'dance',name:'집요한 검무',description:'베르가스 50% 피해로 2회 베기 · 재사용 동일 · 2타 전 대상 재확인'}],
  split:[{id:'fan',name:'넓은 부채',description:'넓게 퍼지는 추가탄 · 추가탄 피해 50%'},{id:'focus',name:'집중 사격',description:'좁은 탄 간격 · 공격 간격 15% 증가'}],
  fire:[{id:'ember',name:'확산 폭발',description:'폭발/장판 범위 +30% · 폭발 피해 -5%'},{id:'flare',name:'응축 폭발',description:'폭발 피해 +25% · 장판 지속 1초'}],

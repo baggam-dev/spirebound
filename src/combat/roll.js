@@ -26,7 +26,7 @@ export function tickRoll(s,r,dt,effects){
   const vx=p.x-before.x,vy=p.y-before.y,t=Math.max(0,Math.min(1,((e.x-before.x)*vx+(e.y-before.y)*vy)/(vx*vx+vy*vy||1))),near={x:before.x+t*vx,y:before.y+t*vy};
   if(Math.hypot(e.x-near.x,e.y-near.y)<=32&&!segmentBlocked(near,e,r.obstacles,2)){deal(s,e,q.damage*3,near,q.criticalProfile??p);q.hit.push(e.id);}
  }
- if(q.kind==='mines')while(q.mines<3&&q.elapsed+1e-9>=q.mines*q.duration/3){const point=q.mines===0?{...q.origin}:{x:p.x,y:p.y};(r.rollMines??=[]).push({...point,time:3,criticalProfile:q.criticalProfile??createCriticalProfile(p),damage:q.damage*1.5});q.mines++;}
+ if(q.kind==='mines')while(q.mines<3&&q.elapsed+1e-9>=q.mines*q.duration/3){const point=q.mines===0?{...q.origin}:{x:p.x,y:p.y};(r.rollMines??=[]).push({...point,time:1,criticalProfile:q.criticalProfile??createCriticalProfile(p),damage:q.damage*1.5});q.mines++;}
  effects.push({blinkTrail:true,fromX:before.x,fromY:before.y,x:p.x,y:p.y,t:.18,duration:.18});
  if(q.elapsed+1e-9>=q.duration||Math.hypot(p.x-before.x,p.y-before.y)<step*.2)delete s.roll;
  return true;

@@ -18,12 +18,12 @@ function summon(e,p,room){
  room.nextEnemyId=Math.max(room.nextEnemyId||0,0,...room.enemies.map(n=>n.id+1));const max=Math.ceil((35+(e.tier||0)*7)*(e.escapeDepth?1.4:1));
  room.enemies.push({id:room.nextEnemyId++,type:'ossuaryMinion',x:at.x,y:at.y,hp:max,max,tier:e.tier||0,escapeDepth:e.escapeDepth||0,balanceVersion:1,cd:1,spawnGrace:.6,summoned:true,summonOwner:e.id,supportLife:SUPPORT.minionLife});e.supportSummons=(e.supportSummons||0)+1;e.supportFlash={kind:'summon',time:.4,...at};
 }
-function heal(e,room){const target=room.enemies.find(n=>n.id===e.supportTarget);if(!validSupportHeal(e,target,room)||(e.supportHeals||0)>=SUPPORT.totalHeals)return;const amount=Math.min(target.max-target.hp,target.max*SUPPORT.healRate,SUPPORT.healCap);if(!(amount>0))return;target.hp+=amount;e.supportHeals=(e.supportHeals||0)+1;e.supportFlash={kind:'heal',time:.4,x:target.x,y:target.y,amount};}
+function heal(e,room){const target=room.enemies.find(n=>n.id===e.supportTarget);if(!validSupportHeal(e,target,room))return;const amount=Math.min(target.max-target.hp,target.max*SUPPORT.healRate);if(!(amount>0))return;target.hp=Math.min(target.max,target.hp+amount);e.supportHeals=Math.min(Number.MAX_SAFE_INTEGER,(e.supportHeals||0)+1);e.supportFlash={kind:'heal',time:.4,x:target.x,y:target.y,amount};}
 function phase(e,name,time){e.attackPhase=name;e.attackTime=time;}
 function move(e,p,room,dt){
  const d=distance(e,p);if(d>=180&&d<=300)return;
  const target=d<180?{x:Math.max(65,Math.min(895,e.x+(e.x-p.x))),y:Math.max(85,Math.min(455,e.y+(e.y-p.y)))}:p;
- const aim=steering(e,target,room.obstacles,19),speed=35*(movementSlowFactor(e));moveBody(e,Math.cos(aim)*speed*dt,Math.sin(aim)*speed*dt,room.obstacles,19,bounds);e.facing=aim;
+ const aim=steering(e,target,room.obstacles,19),speed=(e.type==='choirCantor'?SUPPORT.cantorSpeed:35)*(movementSlowFactor(e));moveBody(e,Math.cos(aim)*speed*dt,Math.sin(aim)*speed*dt,room.obstacles,19,bounds);e.facing=aim;
 }
 export function updateSupportCaster(e,p,room,dt,bullets){
  if(!supportTypes.includes(e.type)||e.hp<=0||!(dt>0))return;
@@ -31,7 +31,7 @@ export function updateSupportCaster(e,p,room,dt,bullets){
  if(e.type==='choirCantor'&&e.attackPhase==='supportCast'&&!validSupportHeal(e,room.enemies.find(n=>n.id===e.supportTarget),room)){interruptSupportCast(e,1.5);return;}
  if(e.attackPhase){e.attackTime=Math.max(0,e.attackTime-dt);if(e.attackTime>1e-9)return;
   const previous=e.attackPhase;
-  if(previous==='supportCast'){if(e.type==='ossuarySummoner')summon(e,p,room);else heal(e,room);e.supportClock=e.type==='ossuarySummoner'?6:5.5;phase(e,'supportRelease',.2);}
+  if(previous==='supportCast'){if(e.type==='ossuarySummoner')summon(e,p,room);else heal(e,room);e.supportClock=e.type==='ossuarySummoner'?6:SUPPORT.healCooldown;phase(e,'supportRelease',.2);}
   else if(previous==='supportBolt'){bullets.push({x:e.x,y:e.y,vx:Math.cos(e.aim)*165,vy:Math.sin(e.aim)*165,enemy:true,damage:9,life:2.6,hit:[],source:e.type==='ossuarySummoner'?'납골술사 봉인탄':'성가 수도사 종탄'});e.cd=2.8;phase(e,'supportRelease',.2);}
   else if(previous==='supportRelease')phase(e,'supportRecover',.45);
   else {delete e.attackPhase;delete e.attackTime;}
@@ -40,7 +40,7 @@ export function updateSupportCaster(e,p,room,dt,bullets){
  e.cd=Math.max(0,(e.cd??1.4)-dt);
  if(e.supportClock===0){
   if(e.type==='ossuarySummoner'){const at=supportSpawnPoint(e,p,room);if(at){e.aim=Math.atan2(at.y-e.y,at.x-e.x);e.supportSpawn=at;e.supportCastHp=e.hp;phase(e,'supportCast',SUPPORT.cast);return;}}
-  else if((e.supportHeals||0)<SUPPORT.totalHeals){const target=supportHealTarget(e,room);if(target){e.aim=Math.atan2(target.y-e.y,target.x-e.x);e.supportTarget=target.id;e.supportCastHp=e.hp;phase(e,'supportCast',SUPPORT.healCast);return;}}
+  else{const target=supportHealTarget(e,room);if(target){e.aim=Math.atan2(target.y-e.y,target.x-e.x);e.supportTarget=target.id;e.supportCastHp=e.hp;phase(e,'supportCast',SUPPORT.healCast);return;}}
  }
  if(e.cd===0&&distance(e,p)<350&&!segmentBlocked(e,p,room.obstacles,3)){e.aim=Math.atan2(p.y-e.y,p.x-e.x);e.supportCastHp=e.hp;phase(e,'supportBolt',SUPPORT.boltWarning);return;}
  move(e,p,room,dt);
