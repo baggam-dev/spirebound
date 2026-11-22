@@ -1,6 +1,7 @@
 import {seededRandom} from '../game/random.js';
 import {blocked} from './terrain.js';
 import {PURSUER} from '../combat/pursuer.js';
+import {strengthenPursuer} from '../combat/balance.js';
 
 export function planPursuerEncounters(s){
  if(!s.key||s.pursuerVersion===1)return;s.pursuerVersion=1;if(s.practice||(s.generationVersion||0)<25)return;
@@ -20,6 +21,7 @@ export function activatePursuerEncounter(s,r){
  const max=Math.min(2500,Math.ceil(enemy.max*2.4)),identity={id:enemy.id,...(enemy.rankingId!==undefined?{rankingId:enemy.rankingId}:{})};
  for(const key of Object.keys(enemy))delete enemy[key];
  Object.assign(enemy,identity,{type:'pursuer',role:'하강 추격',...points[0],hp:max,max,tier:s.floor,escapeDepth:s.floors.length-s.floor,balanceVersion:1,cd:1.2,spawnGrace:.9,xpReward:PURSUER.xp});
+ strengthenPursuer(enemy);
  plan.state='active';plan.enemyId=enemy.id;return true;
 }
 export function rewardPursuer(s,r,e,effects=[]){

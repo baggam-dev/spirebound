@@ -14,6 +14,14 @@ import {tickOrdinaryPresentation,notifyOrdinaryHits,ordinaryPose,resetOrdinaryPr
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 import {blocked} from '../../src/world/terrain.js';
 import {castRoll} from '../../src/combat/roll.js';
+import {strengthenPursuer} from '../../src/combat/balance.js';
+
+test('pursuer health migration preserves injury once, keeps dead enemies dead and caps old warnings',()=>{
+ const e={type:'pursuer',hp:200,max:800,attackPhase:'warning',attackTime:.9};strengthenPursuer(e);assert.equal(e.max,1600);assert.equal(e.hp,400);assert.equal(e.attackTime,.75);
+ const before=JSON.stringify(e);strengthenPursuer(e);assert.equal(JSON.stringify(e),before);
+ const dead={type:'pursuer',hp:0,max:1000};strengthenPursuer(dead);assert.equal(dead.hp,0);
+ const normal={type:'chaser',hp:100,max:100};strengthenPursuer(normal);assert.deepEqual(normal,{type:'chaser',hp:100,max:100});
+});
 
 function combat(){return {e:{id:0,type:'pursuer',x:200,y:250,hp:800,max:800,cd:0},p:{x:400,y:250},r:{obstacles:[]}};}
 function planned(){const s=newRun(47);enrage(s);let found;s.floors.forEach((f,floor)=>f.forEach((r,index)=>{if(!found&&r.pursuerEncounter)found={r,floor,index};}));assert.ok(found);s.floor=found.floor;s.room=found.index;Object.assign(s.player,{x:65,y:270});return {s,p:s.player,r:found.r};}
@@ -62,5 +70,5 @@ test('real poses are phase-driven, walk strides vary, no hurt twitch, and death 
 });
 test('asset gate includes the real sheet for descent and portraits; warning geometry survives reduced mode without writes',()=>{
  assert.ok(assetPlanFiles(floorAssetPlan(2,{returning:true})).includes('pursuer-atlas-v1.png'));assert.ok(assetPlanFiles(portraitAssetPlan('pursuer')).includes('pursuer-atlas-v1.png'));
- const {e,p,r}=combat();updatePursuer(e,p,r,.01,()=>{});const before=JSON.stringify(e),calls=[],c=new Proxy({},{get:(t,k)=>k in t?t[k]:(...args)=>calls.push([k,...args]),set:(t,k,v)=>(t[k]=v,true)});drawPursuerWarning(c,e,false);assert.ok(warningActive(e));assert.ok(calls.some(c=>c[0]==='lineTo'));calls.length=0;e.attackPhase='cleaveWarning';e.attackTime=.6;drawPursuerWarning(c,e,true);assert.ok(calls.some(c=>c[0]==='arc'&&c[3]===90));assert.ok(calls.some(c=>c[0]==='fillText'&&c[1]==='!! 2♥'));e.attackPhase='warning';e.attackTime=.9;assert.equal(JSON.stringify(e),before);
+ const {e,p,r}=combat();updatePursuer(e,p,r,.01,()=>{});const before=JSON.stringify(e),calls=[],c=new Proxy({},{get:(t,k)=>k in t?t[k]:(...args)=>calls.push([k,...args]),set:(t,k,v)=>(t[k]=v,true)});drawPursuerWarning(c,e,false);assert.ok(warningActive(e));assert.ok(calls.some(c=>c[0]==='lineTo'));calls.length=0;e.attackPhase='cleaveWarning';e.attackTime=.6;drawPursuerWarning(c,e,true);assert.ok(calls.some(c=>c[0]==='arc'&&c[3]===PURSUER.reach));assert.ok(calls.some(c=>c[0]==='fillText'&&c[1]==='!! 2♥'));e.attackPhase='warning';e.attackTime=PURSUER.warning;assert.equal(JSON.stringify(e),before);
 });

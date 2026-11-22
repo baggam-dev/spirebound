@@ -10,8 +10,9 @@ export function validatePursuers(s,check,number){
    if(['active','defeated'].includes(plan.state))check(Number.isInteger(plan.enemyId)&&number(plan.enemyId,0,1000000));else check(plan.enemyId===null);
    if(plan.state==='active')check(actors.length===1&&actors[0].id===plan.enemyId);else check(!actors.length);
    for(const e of actors){
+    if(e.pursuerBalanceVersion!==undefined)check(e.pursuerBalanceVersion===1);
     check(!e.summoned&&!e.elite&&e.xpReward===PURSUER.xp&&e.escapeDepth>0&&e.balanceVersion===1);
-    if(e.attackPhase!=null){check(['warning','dash','cleaveWarning','cleave','recover'].includes(e.attackPhase)&&number(e.attackTime,0,({warning:PURSUER.warning,dash:PURSUER.dash,cleaveWarning:PURSUER.cleaveWarning,cleave:PURSUER.cleave,recover:2.1})[e.attackPhase]));check(number(e.aim,-Math.PI,Math.PI));}
+    if(e.attackPhase!=null){check(['warning','dash','cleaveWarning','cleave','recover'].includes(e.attackPhase)&&number(e.attackTime,0,({warning:e.pursuerBalanceVersion===1?PURSUER.warning:.9,dash:PURSUER.dash,cleaveWarning:PURSUER.cleaveWarning,cleave:PURSUER.cleave,recover:2.1})[e.attackPhase]));check(number(e.aim,-Math.PI,Math.PI));}
     if(e.facing!==undefined)check(number(e.facing,-Math.PI,Math.PI));
     for(const key of ['dashHit','cleaveHit'])if(e[key]!==undefined)check(typeof e[key]==='boolean');
    }

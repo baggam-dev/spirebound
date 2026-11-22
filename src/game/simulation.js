@@ -49,7 +49,7 @@ import {prepareChest,prepareTrialLoot} from '../progression/loot.js';
 import {tickElements,resolveFireFields} from '../combat/elements.js';
 import {dropEssences,collectEssences,essenceInfo} from '../progression/essences.js';
 import {dropXp,collectXp} from '../progression/xp-drops.js';
-import {bossXpReward,enemyXpReward} from '../progression/enemy-rewards.js';
+import {bossXpReward,gateBossXpReward,enemyXpReward} from '../progression/enemy-rewards.js';
 import {movementSpeed,relicStat,offerRelics,attackInterval} from '../progression/relics.js';
 import {observeRoom,recordDefeat,recordHit,enemyName} from '../world/expedition.js';
 import {updateElites,eliteDeath,tickBlasts} from '../combat/elites.js';
@@ -193,10 +193,10 @@ export function stepRun(s,dt,input={x:0,y:0}){
   if(eliteDeath(e,r)&&!r.elitePotionDropped){r.elitePotionDropped=true;r.potionDropped=true;if(monsterPotionReward(s,r,e,()=>runRandom(s))==='potion')events.push('eliteReward');}
   s.kills++;
   if(e.type!=='boss'&&killRecovery(s,r,false,()=>runRandom(s),e))events.push('potion');
-  if(e.type!=='boss'&&dropXp(s,r,e,enemyXpReward(e),e.elite||e.trialChampion||e.gateTitle||e.type==='pursuer'?'elite':'normal')==='elite')events.push('xpElite');
+  if(e.type!=='boss'&&!(r.gate&&e.gateTitle)&&dropXp(s,r,e,enemyXpReward(e),e.elite||e.trialChampion||e.gateTitle||e.type==='pursuer'?'elite':'normal')==='elite')events.push('xpElite');
  }
  if(r.gate&&!s.key&&defeated.length&&r.enemies.length===1){r.enemies[0].cd=Math.min(r.enemies[0].cd,.4);r.enemies[0].gateFury=true;}
- if(r.gate&&!r.used&&defeated.length&&!r.enemies.length){r.used=true;r.gateBanner=3;offerRelics(s,r);events.push('gateReward');}
+ if(r.gate&&!r.used&&defeated.length&&!r.enemies.length){r.used=true;r.gateBanner=3;if(dropXp(s,r,defeated.find(e=>e.gateTitle)||defeated[0],Math.max(0,gateBossXpReward(s.floor)-(r.xpDroppedTotal||0)),'boss')==='boss')events.push('xpBoss');offerRelics(s,r);events.push('gateReward');}
  if(defeated.some(e=>e.type==='boss'&&!e.summoned)&&!r.enemies.some(e=>e.type==='boss')){const boss=defeated.find(e=>e.type==='boss');dropEssences(s,r,boss);if(boss.chestBoss){r.used=true;offerRelics(s,r);}}
  if(r.type==='boss'&&defeated.some(e=>e.type==='boss'&&!e.chestBoss)&&!r.enemies.some(e=>e.type==='boss')&&!r.used){
   r.enemies=r.enemies.filter(e=>!e.summoned);r.hazards=[];r.blasts=[];s.projectiles=[];if(r.demon?.pressureVersion===1){clearDemonSpecials(r);p.actionStun=0;p.electricGrace=0;}

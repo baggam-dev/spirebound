@@ -8,6 +8,8 @@ export const fastKing=e=>pressureBoss(e)&&e.variant==='king'&&e.hp/e.max<=.3;
 // Shared by combat and presentation; values preserve the existing attack clocks.
 export function upperAttackWindup(e,kind,{step=0,finisher=false}={}){
  const fast=fastKing(e),phase=e.hp/e.max>.65?1:e.hp/e.max>.3?2:3;
+ if(e.gateTitle&&e.type==='starKnight'&&kind==='slash')return step>0?.2:.3;
+ if(e.gateTitle&&e.type==='astralSniper'&&kind==='fan')return step>0?.55:.7;
  if(kind==='judgment')return step>0?(fast?.42:.65):(fast?.8:1.1);
  if(kind==='mark'&&finisher)return fast?.75:1.1;
  if(kind==='slash')return e.type==='boss'?(fast?.32:.5):step>0&&e.gateTitle&&e.type==='starKnight'?.2:.25;

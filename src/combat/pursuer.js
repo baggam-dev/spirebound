@@ -2,7 +2,7 @@ import {movementSlowFactor} from './frost.js';
 import {moveBody,steering,segmentBlocked} from '../world/terrain.js';
 import {meleeIntersects} from './enemy-melee.js';
 
-export const PURSUER=Object.freeze({radius:30,height:88,xp:90,walk:42,warning:.9,dash:.5,distance:210,cleaveWarning:.6,cleave:.22,reach:90,halfAngle:1,recover:1.7});
+export const PURSUER=Object.freeze({radius:30,height:88,xp:90,walk:65,warning:.75,dash:.5,distance:250,cleaveWarning:.6,cleave:.22,reach:100,halfAngle:1,recover:1.2});
 const bounds={minX:60,maxX:900,minY:75,maxY:465};
 export function resetPursuerAttack(e){if(e.type!=='pursuer')return;delete e.attackPhase;delete e.attackTime;delete e.pursuerFromX;delete e.pursuerFromY;delete e.pursuerToX;delete e.pursuerToY;delete e.dashHit;delete e.cleaveHit;e.cd=Math.max(1.2,e.cd||0);}
 function phase(e,name,time){e.attackPhase=name;e.attackTime=time;}
@@ -34,6 +34,6 @@ export function updatePursuer(e,p,room,dt,hurt){
   else if(current==='dash'){prepareCleave(e,p);break;} // A new, visible warning before the finishing attack.
   else if(current==='cleaveWarning')phase(e,'cleave',PURSUER.cleave);
   else if(current==='cleave')phase(e,'recover',PURSUER.recover);
-  else {delete e.attackPhase;delete e.attackTime;e.cd=1.1;}
+  else {delete e.attackPhase;delete e.attackTime;e.cd=.85;}
  }
 }

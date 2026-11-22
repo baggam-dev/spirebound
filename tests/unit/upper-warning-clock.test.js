@@ -8,7 +8,7 @@ const king=(ratio=1,pressure=1)=>({id:0,type:'boss',variant:'king',hp:ratio*1000
 test('shared windups retain original first attack clocks across king phases and upper enemies',()=>{
  for(const [e,kind,expected] of [[king(),'dash',.85],[king(.5),'dash',.65],[king(.25),'dash',.45],
   [king(.25),'judgment',.8],[king(.25,0),'judgment',1.1],[king(.25),'slash',.32],[king(.5),'slash',.5],
-  [{type:'astralSniper',hp:100,max:100},'fan',.6],[{type:'starKnight',hp:100,max:100,gateTitle:true},'slash',.25]]){
+  [{type:'astralSniper',hp:100,max:100},'fan',.6],[{type:'starKnight',hp:100,max:100,gateTitle:true},'slash',.3]]){
   const room={obstacles:[],enemies:[e]};startUpperAttack(e,kind,{x:700,y:350},room);
   assert.equal(e.darkAttack.time,expected);assert.equal(upperAttackProgress(e,e.darkAttack),0);
  }
