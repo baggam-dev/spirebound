@@ -16,4 +16,4 @@ export function upperAttackWindup(e,kind,{step=0,finisher=false}={}){
  if(kind==='fan'&&e.variant==='king'&&phase===1&&step===1)return .28;
  return fast?.45:e.type==='astralSniper'?.6:e.variant==='king'&&phase>=2?.65:.85;
 }
-export function upperAttackProgress(e,a){return Math.max(0,Math.min(1,1-a.time/upperAttackWindup(e,a.kind,a)));}
+export function upperAttackProgress(e,a){return Math.max(0,Math.min(1,1-a.time/(a.warningDuration??upperAttackWindup(e,a.kind,a))));}
