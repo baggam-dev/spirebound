@@ -8,6 +8,12 @@ export function drawRemnant(c,e,time=0,{attack=null,reduced=false,staticPose=fal
  if(e.remnantVersion!==1||atlas.frames.length!==6)return false;
  const index=parts.indexOf(e.part),f=atlas.frames[index];if(!f)return false;
  const core=index===5,m=remnantMotion(e,room,attack,{reduced,staticPose}),progress=attack?Math.min(1,1-attack.time/1.1):0;
+ if(core&&e.remnantHuntVersion===1){
+  c.save();c.translate(Math.round(e.x),Math.round(e.y));c.imageSmoothingEnabled=false;
+  // Keep the approved stone bust and existing feet; add articulated stone legs.
+  for(const side of [-1,1]){const x=side*24;c.fillStyle='#62574e';c.fillRect(x-9,0,18,30);c.fillStyle='#b4a477';c.fillRect(x-6,3,12,7);c.fillRect(x-6,17,12,6);const foot=atlas.frames[1];c.drawImage(foot,x-23,20,46,34);}
+  c.drawImage(f,-85,-82,170,110);c.restore();return true;
+ }
  c.save();c.translate(Math.round(e.x),Math.round(e.y));c.imageSmoothingEnabled=false;
  if(core&&!staticPose){c.fillStyle='#505451';c.fillRect(-150,-5,300,24);c.strokeStyle='#242d2d';for(let i=0;i<8;i++)c.strokeRect(-150+i*38,-5,38,24);}
  // Atlas holds a neutral statue; motion belongs to the separate presentation layer.
@@ -34,5 +40,5 @@ export function drawRemnant(c,e,time=0,{attack=null,reduced=false,staticPose=fal
  }c.restore();return true;
 }
 export function drawRemnantDeath(c,f,options={}){
- if(!f.remnant)return false;c.save();const age=1-f.t/f.duration;c.globalAlpha*=1-age;c.translate(0,options.reduced?0:age*14);const ok=drawRemnant(c,{variant:'demon',remnantVersion:1,part:f.bodyPart,x:f.x,y:f.y},0,{...options,staticPose:true});c.restore();return ok;
+ if(!f.remnant)return false;c.save();const age=1-f.t/f.duration;c.globalAlpha*=1-age;c.translate(0,options.reduced?0:age*14);const ok=drawRemnant(c,{variant:'demon',remnantVersion:1,remnantHuntVersion:f.remnantHuntVersion,part:f.bodyPart,x:f.x,y:f.y},0,{...options,staticPose:true});c.restore();return ok;
 }

@@ -1,3 +1,4 @@
+import {prepareRemnantPractice} from '../world/remnant-hunt.js';
 import {newRun,currentRoom} from './engine.js';
 import {skills,applySkill,skillOfferWeight} from '../progression/progression.js';
 import {mainSkills,allowedSkill} from '../progression/skill-tree.js';
@@ -20,6 +21,6 @@ export function createPractice(bossId,main,seed=Math.floor(Math.random()*4294967
  let key;while((key=pendingEvolution(p)))chooseEvolution(p,key,evolutions[key][Math.floor(random()*evolutions[key].length)].id);
  const pool=relics.filter(r=>!["sunFairy","snowFairy","stormFairy"].includes(r.id)),count=3+Math.floor(random()*3);for(let i=0;i<count;i++){const relic=weightedRelic(pool,random);grantRelic(p,relic.id);pool.splice(pool.indexOf(relic),1);}
  const essenceCount=3+Math.floor(random()*3);r.essences=Array.from({length:essenceCount},()=>({id:essences[Math.floor(random()*essences.length)].id,x:p.x,y:p.y}));collectEssences(s,{...r,obstacles:[]});r.essences=[];p.hp=p.max;p.potions=3;p.food=0;s.pendingLevels=0;s.levelQueue=[];s.tutorialComplete=true;r.seen=true;
- if(bossId==='king')challengeKing(s);if(bossId==='commander')challengeCommander(s);if(bossId==='demon')challengeDemon(s);s.entryGrace=1;return s;
+ if(bossId==='king')challengeKing(s);if(bossId==='commander')challengeCommander(s);if(bossId==='demon'){prepareRemnantPractice(s);challengeDemon(s);}s.entryGrace=1;return s;
 }
 export function practiceCleared(s){return !!s.practice&&!currentRoom(s).enemies.some(e=>e.hp>0&&!e.summoned);}

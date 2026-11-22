@@ -4,13 +4,14 @@ import {newRun,currentRoom,bossDefeated,travel} from '../../src/game/engine.js';
 import {challengeDemon,advanceDemonPhase,updateDemon} from '../../src/combat/demon.js';
 import {challengeKing,tickUpperState} from '../../src/combat/upper-floors.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
-import {finalBossDefeated} from '../../src/game/boss-layout.js';
+import {configureBossLayout,finalBossDefeated} from '../../src/game/boss-layout.js';
 import {clearKingResurrection,tickKingResurrection,kingResurrectionAge} from '../../src/rendering/king-resurrection.js';
 import {revivedKing} from '../../src/rendering/resurrected-king.js';
 
-const run=campaign=>newRun(77,{campaign,bossLayoutVersion:1});
+// Reconstruct the previous revised layout to keep legacy-save coverage.
+const run=campaign=>{const s=newRun(77,{campaign});s.bossLayoutVersion=1;configureBossLayout(s);return s;};
 function arena(s,floor){s.floor=floor;s.room=s.floors[floor].findIndex(r=>r.type==='boss');return currentRoom(s);}
-test('both new campaigns fight remnant on eight; legacy save keeps king and final demon',()=>{
+test('both pre-hunt revised campaigns fight remnant on eight; legacy save keeps king and final demon',()=>{
  for(const campaign of ['classic','expanded']){
   const s=run(campaign),r=arena(s,7);assert.equal(r.kingPending,undefined);assert.ok(r.demonPending);assert.ok(challengeDemon(s));
   assert.equal(r.demon.pressureVersion,undefined);assert.ok(r.enemies.every(e=>e.remnantVersion===1&&e.tier===7));

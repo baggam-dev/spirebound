@@ -1,3 +1,4 @@
+import {configureBossLayout} from '../../src/game/boss-layout.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {newRun,currentRoom} from '../../src/game/engine.js';
@@ -6,8 +7,8 @@ import {challengeKing} from '../../src/combat/upper-floors.js';
 import {tickBossRecord,recordBossResource,completeBossRecord,growthRecordMarkup} from '../../src/progression/growth-records.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 
-function encounter(kind){const s=newRun(5,{campaign:'expanded',bossLayoutVersion:1});s.floor=kind==='demon'?7:9;s.room=s.floors[s.floor].findIndex(r=>r.type==='boss');assert.equal(kind==='demon'?challengeDemon(s):challengeKing(s),true);return s;}
-test('remnant stages keep separate resources and resume the same stage after reload',()=>{
+function encounter(kind){const s=newRun(5,{campaign:'expanded'});s.bossLayoutVersion=1;configureBossLayout(s);s.floor=kind==='demon'?7:9;s.room=s.floors[s.floor].findIndex(r=>r.type==='boss');assert.equal(kind==='demon'?challengeDemon(s):challengeKing(s),true);return s;}
+test('pre-hunt remnant stages keep separate resources and resume the same stage after reload',()=>{
  let s=encounter('demon');let room=currentRoom(s);
  for(let stage=1;stage<=3;stage++){
   tickBossRecord(s,room,stage+1);recordBossResource(s,'damageTaken',stage);recordBossResource(s,'potionsUsed',1);

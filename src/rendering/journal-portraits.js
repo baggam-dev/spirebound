@@ -57,7 +57,7 @@ function portrait(key,part){
  if(boss&&key!=='warden')e.variant=key;
  if(key==='kald'){e.type='starKnight';e.gateTitle='왕의 방패, 칼드';}if(key==='vera'){e.type='astralSniper';e.gateTitle='별의 눈, 베라';}
  if(key==='slime')e.stage=0;
- if(key==='king'){e.hp=25;e.resurrectionVersion=1;}if(key==='demon')e.remnantVersion=1; // The final form includes all identifying features.
+ if(key==='king'){e.hp=25;e.resurrectionVersion=1;}if(key==='demon'){e.remnantVersion=1;e.remnantHuntVersion=1;} // The final form includes all identifying features.
  if(key==='commander')e.commander={phase:1};
  if(['ossuarySummoner','choirCantor','ossuaryMinion'].includes(key))drawSupportSprite(c,e,0,true,true);else if(key==='pursuer')drawPursuerSprite(c,e,0,true,true);else if(['kald','vera'].includes(key)&&drawFeedbackSprite(c,e,0,{staticPose:true,reduced:true})){}else if(e.variant==='demon')drawDemon(c,e,0,false,true);
  else if(e.variant==='commander')drawCommander(c,e,0,false,true);

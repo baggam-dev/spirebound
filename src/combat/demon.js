@@ -1,3 +1,5 @@
+import {challengeRemnant} from '../world/remnant-hunt.js';
+import {updateRemnantHunt} from './remnant-hunt.js';
 import {movementSlowFactor} from './frost.js';
 import {blocked,moveBody,safeSpawn,segmentBlocked,steering} from '../world/terrain.js';
 import {emitShot} from './patterns.js';
@@ -21,7 +23,7 @@ const names={hand:'기어가는 손',foot:'뛰는 발',eye:'박쥐의 눈',nose:
 export const demonPartName=part=>names[part]||'대악마';
 const remnantHealth={hand:900,foot:1100,eye:750,nose:850,mouth:900,core:2800};
 function spawn(r,phase){r.enemies=parts[phase].map(([part,x,y,health],id)=>{const hp=r.demon?.remnantVersion===1?remnantHealth[part]:health;return ({id,type:'boss',variant:'demon',part,x,y,hp,max:hp,cd:1,tier:r.demon?.remnantVersion===1?7:9,...(r.demon?.remnantVersion===1?{remnantVersion:1}:{}),balanceVersion:1,bossHealthVersion:1,bossPowerVersion:18,...(r.demon.pressureVersion===1&&part==='foot'?{demonShield:true,demonShieldClock:5}: {})});});for(const e of r.enemies)safeSpawn(e,r.obstacles,32);r.nextEnemyId=r.enemies.length;r.bossTotalHp=r.enemies.reduce((n,e)=>n+e.max,0);}
-export function challengeDemon(s){const r=s.floors[s.floor][s.room];if(s.floor!==demonFloor(s)||s.key||!r.demonPending||r.enemies.length)return false;r.demonPending=false;r.demon={phase:1,turn:0,attackClock:1.8,footPressureClock:3.8,attack:null,recovery:0,handFinger:0,footTurn:1,eyeTurn:0,mouthTurn:0,lastCore:null,trails:[]};if(s.generationVersion>=32&&!revisedBosses(s)){Object.assign(r.demon,{pressureVersion:1,attacks:[],partClocks:{hand:1,foot:1.8},specialClock:3,summonClock:5,fields:[]});}if(revisedBosses(s))r.demon.remnantVersion=1;spawn(r,1);s.entryGrace=1;return true;}
+export function challengeDemon(s){const r=s.floors[s.floor][s.room];if(r.remnantSeal)return challengeRemnant(s,r);if(s.floor!==demonFloor(s)||s.key||!r.demonPending||r.enemies.length)return false;r.demonPending=false;r.demon={phase:1,turn:0,attackClock:1.8,footPressureClock:3.8,attack:null,recovery:0,handFinger:0,footTurn:1,eyeTurn:0,mouthTurn:0,lastCore:null,trails:[]};if(s.generationVersion>=32&&!revisedBosses(s)){Object.assign(r.demon,{pressureVersion:1,attacks:[],partClocks:{hand:1,foot:1.8},specialClock:3,summonClock:5,fields:[]});}if(revisedBosses(s))r.demon.remnantVersion=1;spawn(r,1);s.entryGrace=1;return true;}
 export function resetDemonAttack(r){if(!r.demon)return;r.demon.attack=null;r.demon.force=null;r.demon.sweepFlash=null;r.demon.coreFlash=null;if(r.demon.pressureVersion===1){r.demon.attacks=[];r.demon.partClocks={};r.demon.special=null;r.demon.specialClock=3;r.demon.fields=[];}r.demon.trails=[];r.demon.attackClock=Math.max(1,r.demon.attackClock);r.demon.recovery=0;}
 export function advanceDemonPhase(r,bullets){
  const d=r.demon;if(!d||r.enemies.some(e=>e.variant==='demon'&&e.hp>0)||d.phase>=3)return false;
@@ -108,6 +110,7 @@ function resolve(s,r,p,bullets,hurt){
 }
 function updateCoreFlashes(r,dt){const d=r.demon,e=living(r,'core');for(const key of ['sweepFlash','coreFlash']){const f=d[key];if(!f)continue;if(!e){d[key]=null;continue;}if(!(e.frozen>0))f.time=Math.max(0,f.time-dt*frostAttackRate(e));if(!f.time)d[key]=null;else d.recovery=Math.max(d.recovery,f.time);}}
 export function updateDemon(s,r,p,dt,bullets,hurt){
+ if(r.remnantBattle){updateRemnantHunt(s,r,p,dt,bullets,hurt);return;}
  const d=r.demon;if(!d)return;if(d.remnantVersion===1){const base=hurt;hurt=(damage,source)=>base(damage*2/3,source?.replaceAll('대악마','봉인 잔해'));}if(!r.enemies.some(e=>e.variant==='demon'&&e.hp>0)){d.sweepFlash=null;d.coreFlash=null;if(d.pressureVersion===1&&d.phase===3)clearDemonSpecials(r);return;}if(d.pressureVersion===1){updatePressureDemon(s,r,p,dt,bullets,hurt);return;}updateCoreFlashes(r,dt);
  d.footPressureClock=Math.max(0,(d.footPressureClock??3.8)-dt);
  for(const t of d.trails)t.time=Math.max(0,t.time-dt);d.trails=d.trails.filter(t=>t.time>0);trailHit(d,p,hurt);

@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {clearDemonPresentation,tickDemonPresentation,notifyDemonHits,demonPresentationPose} from '../../src/rendering/demon-presentation-state.js';
 import {enemyHitEffects,enemyDeathEffect} from '../../src/rendering/enemy-feedback.js';
-import {createPractice} from '../../src/game/boss-practice.js';
-import {currentRoom} from '../../src/game/engine.js';
+import {challengeDemon} from '../../src/combat/demon.js';
+import {newRun,currentRoom} from '../../src/game/engine.js';
 import {stepRun} from '../../src/game/simulation.js';
 const actor=part=>({id:0,type:'boss',variant:'demon',part,hp:100,max:100,x:480,y:145});
 const room=()=>({demon:{phase:3,attacks:[]},enemies:[actor('core')]});
@@ -42,7 +42,7 @@ test('core keeps its own detached snapshot while other parts use the shared pres
  assert.equal(enemyDeathEffect({variant:'king',kingStage:3}).duration,1.1);assert.equal(enemyDeathEffect({variant:'commander',commander:{phase:2}}).duration,1);
 });
 test('actual phase spawn and final core removal keep key reward immediate and single',()=>{
- clearDemonPresentation();const s=createPractice('demon','fire',42);delete s.practice;s.attack=100;const r=currentRoom(s);
+ clearDemonPresentation();const s=newRun(42,{campaign:'expanded'});s.generationVersion=31;s.floor=9;s.room=1;challengeDemon(s);s.attack=100;const r=currentRoom(s);
  for(const phase of [2,3]){
   for(const e of r.enemies)e.hp=0;
   const result=stepRun(s,0);assert.ok(result.events.includes('demonPhase'));assert.equal(r.demon.phase,phase);

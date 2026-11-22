@@ -7,7 +7,7 @@ import {bossPose} from './boss-poses.js';
 
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 function kind(e){
- if(!e||e.summoned)return null;
+ if(!e||e.summoned||e.remnantHuntVersion===1)return null;
  if(e.gateTitle)return e.type==='starKnight'?'kald':e.type==='astralSniper'?'vera':null;
  if(e.type!=='boss')return null;
  if(e.variant==='demon')return e.part==='core'?'demon':null;
