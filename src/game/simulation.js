@@ -80,7 +80,7 @@ export function enterRoom(s){clearDamageResults(s);beginWardenArrival(s,currentR
  s.player.actionStun=0;s.player.electricGrace=0;resetDemonAttack(r);
  // Do not preserve an off-screen attack aimed at the previous visit's position.
  for(const e of r.enemies){resetPursuerAttack(e);resetSupportAttack(e);if(e.meleeAttack||e.meleeCooldown!==undefined){delete e.meleeAttack;e.meleeCooldown=Math.max(.5,e.meleeCooldown||0);}delete e.highAttack;delete e.highFlash;delete e.chargeHit;resetCommanderAttack(e);if(enemyAirborne(e)){e.x=e.landX??e.targetX??e.x;e.y=e.landY??e.targetY??e.y;safeSpawn(e,r.obstacles,enemyRadius(e));}if(e.type==='chaser'){e.chaserWindup=0;e.chaserStrike=0;e.chaserCooldown=0;delete e.chaserAim;}e.eliteWarning=0;e.eliteCooldown=Math.max(1,e.eliteCooldown||0);e.phase=null;e.attackPhase=null;e.prismPhase=null;delete e.darkAttack;delete e.darkFlash;delete e.counterReason;delete e.gravity;delete e.guardPortal;e.kingTransition=0;e.kneel=0;delete e.chargeAngle;e.cd=Math.max(.8,e.cd||0);e.jumpCooldown=Math.max(1,e.jumpCooldown||0);if(Math.hypot(e.x-s.player.x,e.y-s.player.y)<100){e.x=s.player.x<480?180:780;e.y=s.player.y<270?180:360;safeSpawn(e,r.obstacles,enemyRadius(e));}}
- constrainRoomActors(r,s.player);
+ constrainRoomActors(r,s.player,enemyRadius);
 }
 export function fireArrow(s,target){
  const p=s.player,side=s.volleySide??1;s.volleySide=-side;emitWeaponVolley(s.projectiles,p,p,target,side);
@@ -89,7 +89,7 @@ export function fireArrow(s,target){
 export function stepRun(s,dt,input={x:0,y:0}){
  const events=[],effects=[];if(s.status!=='playing')return {events,effects,damageResults:drainDamageResults(s)};
  if(s.player.hp<=0){events.push('dead');return {events,effects,damageResults:drainDamageResults(s)};}
- constrainRoomActors(currentRoom(s));
+ constrainRoomActors(currentRoom(s),null,enemyRadius);
  recoverPlayerPosition(s.player,currentRoom(s).obstacles,currentRoom(s));
  if(currentRoom(s).shrineState==='choice'&&!currentRoom(s).used)return {events:['incantation'],effects};
  trackRankingRoom(s);const p=s.player,metrics=ensureMetrics(s);observeGrowth(s);tickBossRecord(s,currentRoom(s),dt);s.projectiles??=[];advanceClock(s,dt,false);metrics.floorTimes[s.floor]=(metrics.floorTimes[s.floor]||0)+dt;

@@ -20,6 +20,7 @@ export function generateObstacles(floor,type,random=Math.random){
 }
 export function blocked(x,y,r,obstacles=[]){const f=obstacleFootprints.get(obstacles);if(f&&(x<f.x+r||x>f.x+f.width-r||y<f.y+r||y>f.y+f.height-r))return true;return obstacles.some(source=>x>source.x-r&&x<source.x+source.w+r&&y>source.y-r&&y<source.y+source.h+r&&stoneFragments(source).some(o=>x>o.x-r&&x<o.x+o.w+r&&y>o.y-r&&y<o.y+o.h+r));}
 export function segmentBlocked(a,b,obstacles=[],radius=0){
+ const f=obstacleFootprints.get(obstacles);if(f&&[a,b].some(p=>p.x<f.x+radius||p.x>f.x+f.width-radius||p.y<f.y+radius||p.y>f.y+f.height-radius))return true;
  const intersects=o=>{let lo=0,hi=1;for(const [start,delta,min,max] of [[a.x,b.x-a.x,o.x-radius,o.x+o.w+radius],[a.y,b.y-a.y,o.y-radius,o.y+o.h+radius]]){if(Math.abs(delta)<1e-9){if(start<min||start>max)return false;}else{const t1=(min-start)/delta,t2=(max-start)/delta;lo=Math.max(lo,Math.min(t1,t2));hi=Math.min(hi,Math.max(t1,t2));if(lo>hi)return false;}}return true;};
  return obstacles.some(source=>{if(!intersects(source))return false;const parts=stoneFragments(source);return parts.length===1||parts.some(intersects);});
 }

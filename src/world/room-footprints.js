@@ -52,13 +52,25 @@ export function validRoomFootprint(run,room,floor){
  if(!(run.roomGeometryVersion===1&&floor<=3&&room.type==='normal'&&!room.gate&&!room.tutorial&&!room.hasChest&&!room.specialEncounter&&!room.pursuerEncounter&&!room.supportEncounter&&!room.sealEngine&&Object.hasOwn(roomFootprints,room.footprint)))return false;
  return perimeter(room,connected(run.floors[floor],room)).every(w=>(room.obstacles||[]).some(o=>o.type==='wall'&&o.x===w.x&&o.y===w.y&&o.w===w.w&&o.h===w.h));
 }
-export function constrainRoomActors(room,arrival=null){
+const actorRadius=e=>(e.type==='ossuaryMinion'?15:e.type==='brute'||e.type==='demonCaptain'?24:19)*(e.scale??1);
+export function registerRoomFootprints(run){for(const rooms of run.floors)for(const room of rooms)registerObstacleFootprint(room.obstacles,roomGeometry(room).footprint);}
+export function constrainRoomActors(room,arrival=null,radiusFor=actorRadius){
  const f=roomGeometry(room).footprint;if(!f)return;
  registerObstacleFootprint(room.obstacles,f);
  for(const e of room.enemies){
-  const x=Math.max(f.x+54,Math.min(f.x+f.width-54,e.x)),y=Math.max(f.y+69,Math.min(f.y+f.height-69,e.y));
-  if(x===e.x&&y===e.y&&!blocked(x,y,28,room.obstacles))continue;
-  let best=null;for(let py=f.y+70;py<=f.y+f.height-70;py+=20)for(let px=f.x+60;px<=f.x+f.width-60;px+=20)if((!arrival||Math.hypot(px-arrival.x,py-arrival.y)>=100)&&!blocked(px,py,28,room.obstacles)&&(!best||Math.hypot(px-x,py-y)<best.distance))best={x:px,y:py,distance:Math.hypot(px-x,py-y)};
+  if(e.hp<=0||e.phase==='air'||e.phase==='splitJump'||e.attackPhase==='leap')continue;
+  const radius=radiusFor(e);
+  if(!blocked(e.x,e.y,radius,room.obstacles)&&(!arrival||Math.hypot(e.x-arrival.x,e.y-arrival.y)>=100))continue;
+  const x=Math.max(f.x+radius,Math.min(f.x+f.width-radius,e.x)),y=Math.max(f.y+radius,Math.min(f.y+f.height-radius,e.y));
+  let best=null;
+  for(const spaced of [true,false]){
+   for(let py=f.y+70;py<=f.y+f.height-70;py+=20)for(let px=f.x+60;px<=f.x+f.width-60;px+=20){
+    if(arrival&&Math.hypot(px-arrival.x,py-arrival.y)<100||blocked(px,py,radius,room.obstacles))continue;
+    if(spaced&&room.enemies.some(other=>other!==e&&other.hp>0&&Math.hypot(px-other.x,py-other.y)<radius+radiusFor(other)+4))continue;
+    const distance=Math.hypot(px-x,py-y);if(!best||distance<best.distance)best={x:px,y:py,distance};
+   }
+   if(best)break;
+  }
   if(best){e.x=best.x;e.y=best.y;}
  }
 }
