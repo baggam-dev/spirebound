@@ -3292,3 +3292,6 @@ utilityUseState로기존실사용조건을공유하고 canCastUtility는같은re
 사용자 다음ㄱ·시작clean c9de04b. utilityUseState의기존실사용조건단일판정/canCastUtility공유(동작조건동일), 신규ui/utility-guide를PC·모바일기존버튼값/title/aria·구체실패toast/성공상태·빌드상세와연결. 준비/재사용·대상없음/체력부족·발동대기/경직·등장·정지구분,6종요령/실유물쿨다운·지속/방어잔여·혈월만피소모/2기회·질풍소거소진후이속유지명시. 양수남은시간올림.1초·설명실유물수치는2소수유지. 기존HUD혈월/질풍문구맞춤·기존레이아웃/버튼disabled/즉시조작보존·새스타일/PNG/모달없음. HUD계산결과를모바일전달해대상중복검색안함.
 관련6회귀작성만(마혈무소모/뇌격대상조건/상태·냉각경계/기회소진·지속/6종빌드유물·불변/정지·미소유). 마지막정적실판정동일·import/escape·목표조회횟수/문구·git diff --check확인. 테스트/구문실행/서버브라우저/사람청취·실기기/공개조회/푸시배포없음. 기존운영912는이번검증아님. 실행중명령/차단없음·로컬커밋까지. 상세docs/skill-growth-visuals.md.
 4단계누적시전4·피격5·1초간격7·명중6·이번안내6은전부미실행, 로컬연결완료와실검증구분. 운영0.61 runtimebf276cd/release20261122-101459-1c7dba 유지. 다음사용자배포지시시누적전체/관련회귀·6시전3적포즈/빠른연사·벨카르1초·실명중/29PCM·안내PC/모바일버튼문구폭/aria·빌드왕복/저장·coldfail/완화/부하를묶어검증후푸시배포. 추가작업지시가없으면범위임의확장안함.
+
+## 게임 개발 공용 스킬 도입 완료 (2026-11-22)
+사용자 전체 도입 지시로 gamedev-skills/awesome-gamedev-agent-skills commit c6ca6c41c839b68319ffc08430b99ab768debc32의 79개+router 총80개를 C:/Users/SDSPRO/.codex/skills에 번들 skill-installer로 설치·SKILL.md 존재 확인. 다음 턴부터 사용 가능, 관련 스킬만 선택하고 프로젝트 규칙 우선. 기존 스킬 보존. tools/install-gamedev-skills.ps1·docs/gamedev-skills.md 추가. 게임 코드/자산·기존 누적 미검증 상태 불변, 테스트/푸시/배포 없음. 실행 중 명령/차단 없음. 다음은 사용자 작업 지시, 스킬 라우팅 실제 품질은 미확인.

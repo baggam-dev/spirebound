@@ -1,3 +1,10 @@
+## 최신 인계 — 공용 게임 개발 스킬 설치
+~~~text
+## 게임 개발 공용 스킬 도입 완료 (2026-11-22)
+사용자 전체 도입 지시로 gamedev-skills/awesome-gamedev-agent-skills commit c6ca6c41c839b68319ffc08430b99ab768debc32의 79개+router 총80개를 C:/Users/SDSPRO/.codex/skills에 번들 skill-installer로 설치·SKILL.md 존재 확인. 다음 턴부터 사용 가능, 관련 스킬만 선택하고 프로젝트 규칙 우선. 기존 스킬 보존. tools/install-gamedev-skills.ps1·docs/gamedev-skills.md 추가. 게임 코드/자산·기존 누적 미검증 상태 불변, 테스트/푸시/배포 없음. 실행 중 명령/차단 없음. 다음은 사용자 작업 지시, 스킬 라우팅 실제 품질은 미확인.
+
+~~~
+
 ## 최신 인계 — 4단계 액티브 사용 안내 로컬 연결 완료
 ~~~text
 ## 4단계 액티브 사용 안내 로컬 구현 완료·미검증 (2026-11-22)
