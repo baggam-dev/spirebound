@@ -1,6 +1,7 @@
+import {doorCenter} from '../../src/world/doors.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {newRun,currentRoom,travel} from '../../src/game/engine.js';
+import {newRun,currentRoom,travel,neighbor,roomLocked} from '../../src/game/engine.js';
 import {stepRun} from '../../src/game/simulation.js';
 import {challengeDemon,updateDemon} from '../../src/combat/demon.js';
 import {REMNANT_PARTS,remnantSeal,remnantFragments,remnantReachableRooms,canEnterRemnantRoom} from '../../src/world/remnant-hunt.js';
@@ -10,6 +11,13 @@ import {startRemnantAttack} from '../../src/combat/remnant-hunt.js';
 import {createPractice,practiceCleared} from '../../src/game/boss-practice.js';
 
 const make=campaign=>newRun(77,{campaign,bossLayoutVersion:1});
+test('a lethal hit at a doorway settles the fragment before leaving the room',()=>{
+ const s=make('expanded');s.floor=7;s.room=remnantSeal(s).rooms[0];const r=currentRoom(s);r.seen=true;
+ const direction=[0,1,2,3].find(d=>neighbor(s,d)>=0&&s.floors[7][neighbor(s,d)].type!=='boss');assert.notEqual(direction,undefined);
+ s.player.x=direction%2?(direction===1?931:29):doorCenter(r,direction);s.player.y=direction%2?doorCenter(r,direction):direction===0?47:493;
+ r.enemies[0].hp=0;s.attack=999;s.invulnerable=999;assert.equal(roomLocked(s),true);const result=stepRun(s,.01);
+ assert.equal(currentRoom(s),r);assert.ok(result.events.includes('remnantFragment'));assert.equal(remnantFragments(s),1);assert.equal(roomLocked(s),false);assert.doesNotThrow(()=>encodeSave(s));
+});
 function defeat(s){for(const e of currentRoom(s).enemies)e.hp=0;s.attack=999;s.invulnerable=999;s.entryGrace=0;return stepRun(s,.01);}
 function gather(s){s.floor=7;for(const index of remnantSeal(s).rooms){s.room=index;currentRoom(s).seen=true;const result=defeat(s);assert.ok(result.events.includes('remnantFragment'));assert.ok(!result.events.some(e=>['key','stairs','xpBoss'].includes(e)));}s.room=s.floors[7].findIndex(r=>r.remnantSeal);return currentRoom(s);}
 test('five unique fragments are reachable outside the locked boss room and seeded deterministically',()=>{

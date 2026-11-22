@@ -1,4 +1,4 @@
-import {planRemnantHunt} from '../world/remnant-hunt.js';
+import {planRemnantHunt,remnantBattleActive} from '../world/remnant-hunt.js';
 import {planNewRoomFootprints} from '../world/room-footprints.js';
 import {planSealEngines} from '../world/seal-engines.js';
 import {planSupportEncounters,retireSupportForReturn} from '../world/support-encounters.js';
@@ -81,4 +81,4 @@ export function travel(s,direction){
 }
 export function bossDefeated(s){if(s.practice){currentRoom(s).used=true;return 'practiceWon';}const r=currentRoom(s);r.used=true;offerRelics(s,r);if(s.floor===s.floors.length-1){enrage(s);s.returnNoticePending=true;return 'key';}offerRelics(s,r);return 'stairs';}
 export const useShrine=claimIncantation;
-export const roomLocked=(s,r=currentRoom(s))=>Boolean(finalEscapeActive(r)||(s.key?returnDoorsLocked(r):shrineLocked(r)||r.enemies.some(e=>e.hp>0)));
+export const roomLocked=(s,r=currentRoom(s))=>Boolean(finalEscapeActive(r)||(s.key?returnDoorsLocked(r):shrineLocked(r)||remnantBattleActive(r)||r.enemies.some(e=>e.hp>0)));

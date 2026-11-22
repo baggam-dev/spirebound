@@ -4,6 +4,7 @@ export const REMNANT_PARTS=Object.freeze(['hand','foot','eye','nose','mouth']);
 export const REMNANT_NAMES={hand:'손',foot:'발',eye:'눈',nose:'코',mouth:'입',core:'완전체'};
 export const remnantSeal=s=>s?.remnantHuntVersion===1?s.floors[7]?.find(r=>r.remnantSeal)?.remnantSeal:null;
 export const remnantFragments=s=>remnantSeal(s)?.defeated.length??0;
+export const remnantBattleActive=r=>['hunt','whole','split'].includes(r.remnantBattle?.stage);
 // Test the room graph with the boss room removed: no fragment may be behind its door.
 export function remnantReachableRooms(rooms){
  const seen=new Set([0]),queue=[0];

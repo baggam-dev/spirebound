@@ -1,3 +1,4 @@
+import {blocked} from '../../src/world/terrain.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {newRun,currentRoom,canEscape} from '../../src/game/engine.js';
@@ -11,6 +12,14 @@ import {kingPhase,tickUpperState} from '../../src/combat/upper-floors.js';
 import {commanderProfile,fastKing} from '../../src/combat/boss-pressure.js';
 import {floorAssetOptions,floorAssetPlan} from '../../src/rendering/asset-packs.js';
 function escape(){const s=newRun(47);s.key=true;s.tutorialComplete=true;s.attack=999;s.invulnerable=999;const r=currentRoom(s);r.enemies=[];assert.ok(startFinalEscape(s,r));return {s,r};}
+test('accumulated shadow arrivals use separate positions without clearing earlier rounds',()=>{
+ const {s,r}=escape();tickFinalEscape(s,r,42);assert.equal(r.enemies.length,15);
+ for(let i=0;i<r.enemies.length;i++)for(let j=0;j<i;j++)assert.ok(Math.hypot(r.enemies[i].x-r.enemies[j].x,r.enemies[i].y-r.enemies[j].y)>85,'arrivals must not stack');
+});
+test('blocked original portals use free floor positions away from the player',()=>{
+ const {s,r}=escape();s.player.x=480;s.player.y=270;r.obstacles=[[130,130],[830,130],[130,410],[830,410],[300,130],[660,410],[300,410],[660,130]].map(([x,y])=>({x:x-45,y:y-45,w:90,h:90,type:'rock'}));
+ tickFinalEscape(s,r,2);assert.equal(r.enemies.length,3);for(const e of r.enemies){assert.equal(blocked(e.x,e.y,40,r.obstacles),false);assert.ok(Math.hypot(e.x-s.player.x,e.y-s.player.y)>=160);}
+});
 test('five timed shadow rounds each summon one boss and two escorts without legacy bats',()=>{
  const {s,r}=escape();assert.equal(r.finalEscape.wave,0);tickFinalEscape(s,r,1.99);assert.equal(r.enemies.length,0);tickFinalEscape(s,r,.01);
  for(let wave=0;wave<5;wave++){if(wave)tickFinalEscape(s,r,10);assert.equal(r.finalEscape.wave,wave+1);assert.equal(r.enemies.length,(wave+1)*3);assert.deepEqual(r.enemies.filter(e=>e.shadowBoss).map(e=>e.variant||'warden'),SHADOW_BOSSES.slice(0,wave+1));assert.ok(!r.enemies.some(e=>e.type==='demonBat'));assert.doesNotThrow(()=>parseSave(encodeSave(s)));}

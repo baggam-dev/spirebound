@@ -7,9 +7,19 @@ export const SHADOW_BOSSES=['warden','prism','slime','commander','king'];
 export const shadowBaseMax=(s,kind)=>({warden:1155,prism:2100,slime:1350,commander:8500,king:s.bossLayoutVersion===1?25600:18720})[kind];
 const points=[[130,130],[830,130],[130,410],[830,410],[300,130],[660,410],[300,410],[660,130]];
 function spawnPoint(s,r,offset){
- const candidates=points.map((_,i)=>points[(i+offset)%points.length]).map(([x,y])=>({x,y})).filter(p=>!blocked(p.x,p.y,40,r.obstacles));
- candidates.sort((a,b)=>Math.hypot(b.x-s.player.x,b.y-s.player.y)-Math.hypot(a.x-s.player.x,a.y-s.player.y));
- const p=candidates.find(p=>r.enemies.every(e=>e.hp<=0||Math.hypot(p.x-e.x,p.y-e.y)>85))||candidates[0]||{x:480,y:270};safeSpawn(p,r.obstacles,40);return p;
+ const candidates=points.map((_,i)=>points[(i+offset)%points.length]).map(([x,y])=>({x,y}));
+ // Eight portals cannot hold fifteen arrivals. Use additional floor positions
+ // before accepting any overlap, while leaving the central escape lane clear.
+ for(let y=100;y<=440;y+=34)for(let x=100;x<=860;x+=38)if(Math.abs(x-480)>85)candidates.push({x,y});
+ const free=candidates.filter(p=>!blocked(p.x,p.y,40,r.obstacles)),living=r.enemies.filter(e=>e.hp>0);
+ const playerGap=p=>Math.hypot(p.x-s.player.x,p.y-s.player.y);
+ const actorGap=p=>Math.min(1000,...living.map(e=>Math.hypot(p.x-e.x,p.y-e.y)));
+ free.sort((a,b)=>playerGap(b)-playerGap(a));
+ const p=free.find(p=>playerGap(p)>=160&&actorGap(p)>85)
+  ||free.find(p=>actorGap(p)>85)
+  ||free.sort((a,b)=>Math.min(playerGap(b),actorGap(b))-Math.min(playerGap(a),actorGap(a)))[0]
+  ||{x:480,y:270};
+ safeSpawn(p,r.obstacles,40);return p;
 }
 export function shadowBoss(s,kind,id,point){
  const max=Math.ceil(shadowBaseMax(s,kind)*.7),e={id,type:'boss',...point,hp:max,max,cd:1.5,tier:kind==='warden'?1:kind==='prism'?3:kind==='slime'?5:kind==='commander'?8:9,balanceVersion:1,bossHealthVersion:1,bossPowerVersion:18,summoned:true,shadowBoss:1,shadowRootMax:max,spawnGrace:1.2};
