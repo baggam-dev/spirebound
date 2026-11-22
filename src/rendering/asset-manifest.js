@@ -46,7 +46,7 @@ export const assetFiles={
   "demon-archer-reference-atlas.png"
  ],
  "demon-bat-sprite": [
-  "demon-bat-reference-atlas.png"
+  "demon-bat-compact-v1.png"
  ],
  "demon-captain-sprite": [
   "demon-captain-reference-atlas.png"

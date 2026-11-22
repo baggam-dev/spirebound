@@ -13,20 +13,32 @@ export const infernalTypes=['demonBat','spikeNest','demonSoldier','demonArcher',
 const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 const aim=(a,b)=>Math.atan2(b.y-a.y,b.x-a.x);
 const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
-const radius=e=>e.type==='demonBat'?14:e.type==='demonCaptain'?24:19;
+const radius=e=>e.type==='demonBat'?10:e.type==='demonCaptain'?24:19;
 function walk(e,p,obstacles,dt,speed){const a=steering(e,p,obstacles,radius(e)),slow=movementSlowFactor(e);moveBody(e,Math.cos(a)*speed*slow*dt,Math.sin(a)*speed*slow*dt,obstacles,radius(e));e.x=clamp(e.x,45,915);e.y=clamp(e.y,60,480);}
 function shoot(e,a,bullets){bullets.push({x:e.x,y:e.y,vx:Math.cos(a)*270,vy:Math.sin(a)*270,enemy:true,source:'악마 사수 화살',damage:e.escapeDepth>=4?12:10,life:4,hit:[]});}
+function explodeBat(e,p,obstacles,hurt){
+ if(!e.hit&&distance(e,p)<48&&!segmentBlocked(e,p,obstacles)){hurt(12,'폭렬 박쥐 폭발');e.hit=true;}
+ e.hp=0;e.summoned=true;e.selfDestruct=true;
+}
 export function updateInfernal(e,p,room,dt,bullets,hurt){
  const obstacles=room.obstacles,kind=e.type;
+ if(kind==='demonBat'&&e.hp<=0)return;
  if(kind==='demonArcher'&&e.attackPhase==='warning'&&!enemyShotLane(e,e.aim,p,obstacles)){e.attackPhase=null;e.attackTime=0;e.cd=.2;}
  if(e.attackPhase){
-  e.attackTime=Math.max(0,e.attackTime-dt);
+  const beforeTime=e.attackTime;e.attackTime=Math.max(0,e.attackTime-dt);
   if(kind==='demonBat'&&e.attackPhase==='dash'){
-   const before={x:e.x,y:e.y},speed=340*(movementSlowFactor(e));
-   moveBody(e,Math.cos(e.aim)*speed*dt,Math.sin(e.aim)*speed*dt,obstacles,14);
+   const before={x:e.x,y:e.y},step=Math.min(dt*movementSlowFactor(e),beforeTime),travel=420*step;
+   e.attackTime=Math.max(0,beforeTime-step);
+   const next={x:e.x+Math.cos(e.aim)*travel,y:e.y+Math.sin(e.aim)*travel};
+   if(segmentBlocked(before,next,obstacles,10)){
+    let last=before;const count=Math.max(1,Math.ceil(travel/4));
+    for(let i=1;i<=count;i++){const point={x:before.x+(next.x-before.x)*i/count,y:before.y+(next.y-before.y)*i/count};if(segmentBlocked(before,point,obstacles,10))break;last=point;}
+    e.x=last.x;e.y=last.y;
+   }else moveBody(e,next.x-before.x,next.y-before.y,obstacles,10);
    e.x=clamp(e.x,45,915);e.y=clamp(e.y,60,480);
-   if(!e.hit&&distance(e,p)<28&&!segmentBlocked(before,p,obstacles)){hurt(12,'폭렬 박쥐 충돌');e.hit=true;}
-   if(e.attackTime===0){if(distance(e,p)<48&&!e.hit&&!segmentBlocked(e,p,obstacles))hurt(12,'폭렬 박쥐 폭발');e.hp=0;e.summoned=true;e.selfDestruct=true;}
+   const dx=e.x-before.x,dy=e.y-before.y,t=clamp(((p.x-before.x)*dx+(p.y-before.y)*dy)/(dx*dx+dy*dy||1),0,1),near={x:before.x+dx*t,y:before.y+dy*t};
+   if(distance(near,p)<24&&!segmentBlocked(before,p,obstacles)){e.x=near.x;e.y=near.y;explodeBat(e,p,obstacles,hurt);}
+   else if(e.attackTime===0||distance(before,e)+.05<travel)explodeBat(e,p,obstacles,hurt);
    return;
   }
   if(kind==='demonCaptain'&&e.attackPhase==='dash'){
@@ -37,7 +49,7 @@ export function updateInfernal(e,p,room,dt,bullets,hurt){
   }
   if(e.attackTime>0)return;
   if(e.attackPhase==='warning'){
-   if(kind==='demonBat'){e.attackPhase='dash';e.attackTime=.34;e.hit=false;return;}
+   if(kind==='demonBat'){e.attackPhase='dash';e.attackTime=e.targetX!==undefined?Math.min(.7,Math.hypot(e.targetX-e.x,e.targetY-e.y)/420):.34;e.hit=false;return;}
    if(kind==='demonCaptain'){e.attackPhase='dash';e.attackTime=.42;e.hit=false;return;}
    if(kind==='spikeNest'){if(Math.hypot(p.x-e.targetX,p.y-e.targetY)<34)hurt(9,'심연 가시핵 솟구침');}
    if(kind==='demonSoldier'&&distance(e,p)<72&&Math.abs(Math.atan2(Math.sin(aim(e,p)-e.aim),Math.cos(aim(e,p)-e.aim)))<1.05&&!segmentBlocked(e,p,obstacles))hurt(9,'악마 병사 베기');
@@ -49,16 +61,17 @@ export function updateInfernal(e,p,room,dt,bullets,hurt){
  }
  e.cd=(e.cd??1)-dt;
  const gap=distance(e,p);
- if(kind==='demonBat')walk(e,p,obstacles,dt,145);
+ if(kind==='demonBat')walk(e,p,obstacles,dt,200);
  if(kind==='demonSoldier'||kind==='demonCaptain')walk(e,p,obstacles,dt,kind==='demonCaptain'?82:68);
  if(kind==='demonArcher'&&!seekEnemyShot(e,p,obstacles,dt,{radius:19,speed:42*(movementSlowFactor(e)),preferred:260})){e.cd=Math.max(0,e.cd);return;}
- if(e.cd>0||kind==='demonBat'&&gap>85||kind==='demonSoldier'&&gap>85||kind==='demonCaptain'&&gap>260)return;
+ if(e.cd>0||kind==='demonBat'&&gap>220||kind==='demonSoldier'&&gap>85||kind==='demonCaptain'&&gap>260)return;
  if(kind==='spikeNest'){const point={x:clamp(p.x,65,895),y:clamp(p.y,75,465)};safeSpawn(point,obstacles,34);e.targetX=point.x;e.targetY=point.y;}
- e.aim=aim(e,p);e.attackPhase='warning';e.attackTime=kind==='spikeNest'?.9:kind==='demonBat'?.5:kind==='demonCaptain'?.75:kind==='demonSoldier'?.2:.65;
+ if(kind==='demonBat'){e.targetX=clamp(p.x,45,915);e.targetY=clamp(p.y,60,480);}
+ e.aim=kind==='demonBat'?Math.atan2(e.targetY-e.y,e.targetX-e.x):aim(e,p);e.attackPhase='warning';e.attackTime=kind==='spikeNest'?.9:kind==='demonBat'?.5:kind==='demonCaptain'?.75:kind==='demonSoldier'?.2:.65;
 }
-export function drawInfernalGround(c,e,reduced=false){drawDemonCaptainEffects(c,e,reduced);drawDemonArcherWarning(c,e);drawDemonSoldierAttack(c,e,reduced);drawSpikeNestAttack(c,e,reduced);if(e.type==='demonBat'&&e.attackPhase==='warning'){c.save();c.strokeStyle='#edaa9c';c.lineWidth=1;c.setLineDash([5,5]);c.beginPath();c.moveTo(e.x,e.y);c.lineTo(e.x+Math.cos(e.aim)*130,e.y+Math.sin(e.aim)*130);c.stroke();c.setLineDash([]);c.globalAlpha=.25+.4*(1-e.attackTime/.5);c.beginPath();c.arc(e.x,e.y,14,0,Math.PI*2);c.stroke();c.restore();}}
+export function drawInfernalGround(c,e,reduced=false){drawDemonCaptainEffects(c,e,reduced);drawDemonArcherWarning(c,e);drawDemonSoldierAttack(c,e,reduced);drawSpikeNestAttack(c,e,reduced);if(e.type==='demonBat'&&e.attackPhase==='warning'){c.save();c.strokeStyle='#edaa9c';c.lineWidth=1;c.setLineDash([5,5]);c.beginPath();c.moveTo(e.x,e.y);c.lineTo(e.targetX??e.x+Math.cos(e.aim)*143,e.targetY??e.y+Math.sin(e.aim)*143);c.stroke();c.setLineDash([]);c.globalAlpha=.25+.4*(1-e.attackTime/.5);c.beginPath();c.arc(e.targetX??e.x,e.targetY??e.y,48,0,Math.PI*2);c.stroke();c.restore();}}
 export function drawInfernal(c,e,time=0,reduced=false,staticPose=false){if(!infernalTypes.includes(e.type))return;if(drawFeedbackSprite(c,e,time,{reduced,staticPose}))return;if(drawDemonCaptainSprite(c,e,time,reduced,staticPose)||drawDemonArcherSprite(c,e,time,reduced,staticPose)||drawDemonSoldierSprite(c,e,time,reduced,staticPose)||drawSpikeNestSprite(c,e,staticPose)||drawDemonBatSprite(c,e,time,reduced,staticPose))return;c.save();c.translate(e.x,e.y);const red=!!e.escapeDepth;c.fillStyle='#0008';c.fillRect(-18,18,36,5);
- if(e.type==='demonBat'){c.fillStyle='#211c2a';c.fillRect(-26,-10,14,5);c.fillRect(12,-10,14,5);c.fillRect(-23,-5,7,5);c.fillRect(16,-5,7,5);c.fillStyle=red?'#702c3d':'#39213a';c.fillRect(-13,-14,26,20);c.fillRect(-24,-8,12,7);c.fillRect(12,-8,12,7);c.fillStyle=red?'#b65257':'#71405d';c.fillRect(-21,-7,8,2);c.fillRect(13,-7,8,2);c.fillStyle=red?'#e67b60':'#9c567b';c.fillRect(-8,-20,5,8);c.fillRect(3,-20,5,8);c.fillStyle='#ff9e8c';c.fillRect(-7,-7,4,3);c.fillRect(3,-7,4,3);c.fillStyle='#d28c8d';c.fillRect(-2,1,4,2);}
+ if(e.type==='demonBat'){c.scale(.55,.55);c.fillStyle='#211c2a';c.fillRect(-26,-10,14,5);c.fillRect(12,-10,14,5);c.fillRect(-23,-5,7,5);c.fillRect(16,-5,7,5);c.fillStyle=red?'#702c3d':'#39213a';c.fillRect(-13,-14,26,20);c.fillRect(-24,-8,12,7);c.fillRect(12,-8,12,7);c.fillStyle=red?'#b65257':'#71405d';c.fillRect(-21,-7,8,2);c.fillRect(13,-7,8,2);c.fillStyle=red?'#e67b60':'#9c567b';c.fillRect(-8,-20,5,8);c.fillRect(3,-20,5,8);c.fillStyle='#ff9e8c';c.fillRect(-7,-7,4,3);c.fillRect(3,-7,4,3);c.fillStyle='#d28c8d';c.fillRect(-2,1,4,2);}
  if(e.type==='spikeNest'){c.fillStyle='#211e29';c.fillRect(-25,13,50,8);c.fillRect(-20,2,40,17);c.fillStyle=red?'#883c45':'#5a3949';for(let i=-2;i<=2;i++){c.beginPath();c.moveTo(i*8-5,5);c.lineTo(i*8,-21-(i%2)*5);c.lineTo(i*8+5,5);c.fill();}c.fillStyle=red?'#ea8467':'#ad7084';for(const x of [-16,0,16])c.fillRect(x,-9,2,10);c.fillStyle=red?'#ffe0a2':'#e5aab7';c.fillRect(-4,-4,8,5);c.fillStyle='#67394d';c.fillRect(-21,17,8,4);c.fillRect(13,17,8,4);}
  if(['demonSoldier','demonArcher','demonCaptain'].includes(e.type)){const captain=e.type==='demonCaptain',archer=e.type==='demonArcher';c.fillStyle='#1d1e27';c.fillRect(-14,-25,28,40);c.fillStyle=red?(captain?'#713944':'#65313b'):captain?'#4c4356':'#393840';c.fillRect(-12,-23,24,35);c.fillStyle=red?'#ad454b':'#8e5360';c.fillRect(-10,-28,20,12);c.fillStyle=red?'#ffd5a0':'#f3ba86';c.fillRect(-7,-24,14,4);c.fillStyle='#24242b';c.fillRect(-10,12,7,9);c.fillRect(3,12,7,9);c.fillStyle=captain?'#b6a59f':'#8b8385';c.fillRect(-15,-16,5,22);c.fillRect(10,-16,5,22);c.fillStyle='#79666a';c.fillRect(-9,-10,18,2);c.fillRect(-9,6,18,2);c.fillStyle='#be8b76';c.fillRect(-2,-6,4,10);if(captain){c.fillStyle='#b6a59f';c.fillRect(-12,-34,24,7);c.fillRect(-18,-27,6,9);c.fillRect(12,-27,6,9);c.fillStyle='#d2bdad';c.fillRect(-8,-33,16,2);}if(archer){c.strokeStyle='#d8b68a';c.lineWidth=3;c.beginPath();c.arc(18,-8,12,-Math.PI/2,Math.PI/2);c.stroke();}else{c.fillStyle='#d5b0a4';c.fillRect(15,-20,4,29);}}
  if(red){

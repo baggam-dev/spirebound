@@ -72,7 +72,7 @@ export function collisionTime(a,b,c,radius){
  const dx=b.x-a.x,dy=b.y-a.y,ox=a.x-c.x,oy=a.y-c.y,A=dx*dx+dy*dy,C=ox*ox+oy*oy-radius*radius;
  if(C<=0)return 0;if(A===0)return Infinity;const B=2*(ox*dx+oy*dy),discriminant=B*B-4*A*C;if(discriminant<0)return Infinity;const t=(-B-Math.sqrt(discriminant))/(2*A);return t>=0&&t<=1?t:Infinity;
 }
-export function enemyRadius(e){return e.type==='ossuaryMinion'?15:e.type==='pursuer'?PURSUER.radius:e.variant==='slime'||e.type==='minislime'?slimeRadius(e):(e.type==='boss'?32:e.type==='brute'||e.type==='demonCaptain'?24:e.type==='demonBat'?14:19)*(e.scale??1);}
+export function enemyRadius(e){return e.type==='ossuaryMinion'?15:e.type==='pursuer'?PURSUER.radius:e.variant==='slime'||e.type==='minislime'?slimeRadius(e):(e.type==='boss'?32:e.type==='brute'||e.type==='demonCaptain'?24:e.type==='demonBat'?10:19)*(e.scale??1);}
 export function enemyAirborne(e){return e.phase==='air'||e.phase==='splitJump'||e.attackPhase==='leap';}
 export function ensureMetrics(s){const m=s.metrics??={};for(const [key,value] of Object.entries({damageTaken:0,damageDealt:0,shields:0,potionsUsed:0,ultimatesUsed:0,dodgesUsed:0,roomsVisited:1,floorTimes:Array(s.floors.length).fill(0)}))m[key]??=value;return m;}
 export function enterRoom(s){clearDamageResults(s);beginWardenArrival(s,currentRoom(s),!currentRoom(s).seen);resetSpectralBlade(s);delete s.roll;s.bloodBossHealth={};

@@ -10,7 +10,8 @@ import {drawChargerWalk} from './charger-walk.js';
 import {drawScatterWalk} from './scatter-walk.js';
 import {drawRicochetWalk} from './ricochet-walk.js';
 import {drawLaserWalk} from './laser-walk.js';
-import {drawBruteWalk} from './brute-walk.js';
+import {drawBruteWalk,drawBruteRedesign} from './brute-walk.js';
+import {ordinaryPose} from './ordinary-presentation-state.js';
 import {characterSizes} from './character-sizes.js';
 // Approved masked grunt originals; crop and downsample once, never modify saved actors.
 const specs={
@@ -42,6 +43,7 @@ export function gruntPose(e,p,run){
  return {index:brute||aiming||charging||melee||ranged&&!(e.type==='laser'&&e.phase==='aim')?1:0,face:Number.isFinite(aim)?(Math.cos(aim)<0?-1:1):p.face||1,bob:p.moving?Math.abs(p.step||0)*.35:0};
 }
 export function drawGruntSprite(c,e,p,run,{reduced=false}={}){
+ if(e.type==='brute'&&drawBruteRedesign(c,e,p,ordinaryPose(e,{reduced}),{reduced}))return true;
  const recovering=gruntActionPose(e,run?.elapsed,{reduced,fallbackFace:p.face});
  if(!recovering&&drawEnemyHitSprite(c,e,p,run,{reduced}))return true;
  if(drawEnemyMeleeSprite(c,e,p.face))return true;

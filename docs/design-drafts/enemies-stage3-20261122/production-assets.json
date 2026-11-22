@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-22",
+  "source": "OpenAI built-in image_gen; approved package-b-v1.png reference",
+  "provenance": "AI-generated project assets; original generated files preserved; no third-party raster copied",
+  "design_approval": "User next-proceed instruction after package presentation",
+  "technical_checks_passed": false,
+  "validation_note": "Visual review and PNG header/selected alpha metadata read only. Automated asset checks, native game rendering and runtime tests deferred until explicit deployment instruction.",
+  "assets": [
+    {
+      "file": "assets/images/demon-bat-compact-v1.png",
+      "width": 1254,
+      "height": 1254,
+      "frames": 4,
+      "grid": [2, 2],
+      "alpha_metadata": "32bpp ARGB, sampled corner and centre alpha 0",
+      "display_scale": 0.07,
+      "collision_radius": 10,
+      "prompt": "bat-production-prompt.txt",
+      "purpose": "flight down/up, target warning, straight dash; separate code VFX",
+      "loading": "existing infernal module manifest replaces prior atlas filename"
+    },
+    {
+      "file": "assets/images/brute-redesign-v1.png",
+      "width": 1536,
+      "height": 1024,
+      "frames": 12,
+      "grid": [4, 3],
+      "alpha_metadata": "32bpp ARGB, sampled corner and centre alpha 0",
+      "body_height": 67,
+      "feet_anchor": 24,
+      "prompt": "giant-production-prompt.txt",
+      "purpose": "idle, walk 2, leap prep, air, landing, punch prep, punch, recover, hit light/heavy, death",
+      "loading": "optional matching live room and portrait; existing body fallback while unavailable",
+      "normalization": "runtime alpha >192 crop/matte per cell, one shared scale from idle; source file unchanged"
+    }
+  ]
+}

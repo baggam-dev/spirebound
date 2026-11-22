@@ -10,6 +10,7 @@ export function drawOrdinaryDeath(c,f,{reduced=false}={}){
  if(!canvas){
   canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;const ctx=canvas.getContext('2d');ctx.translate(128,160);
   const e={id:0,type:f.bodyType,hp:1,max:1,x:0,y:0,scale:f.bodyScale,escapeDepth:f.bodyEscapeDepth,facing:f.face<0?Math.PI:0};
+  if(e.type==='brute')e.hp=0;
   ctx.scale(f.face<0?-1:1,1);
   if(upperTypes.includes(e.type))drawUpper(ctx,e,0,true,true);
   else if(infernalTypes.includes(e.type))drawInfernal(ctx,e,0,true,true);

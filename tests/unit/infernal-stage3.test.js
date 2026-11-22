@@ -12,6 +12,29 @@ const foe=(type,cd=0)=>({id:0,type,x:300,y:260,hp:100,max:100,cd,tier:8});
 const room=e=>({enemies:[e],obstacles:[]});
 const tick=(e,p,seconds,bullets=[],hurt=()=>{})=>{const r=room(e);for(let i=0;i<Math.ceil(seconds/.02);i++)updateInfernal(e,p,r,.02,bullets,hurt);};
 
+test('compact bat locks its endpoint, keeps a straight dash and detonates once at the original target',()=>{
+ const e=foe('demonBat'),r=room(e),p={x:450,y:260},hits=[];
+ updateInfernal(e,p,r,.01,[],(...h)=>hits.push(h));assert.equal(e.attackPhase,'warning');assert.equal(e.targetX,450);assert.equal(e.targetY,260);
+ updateInfernal(e,{x:700,y:400},r,.5,[],(...h)=>hits.push(h));assert.equal(e.attackPhase,'dash');
+ updateInfernal(e,{x:700,y:400},r,1,[],(...h)=>hits.push(h));assert.ok(Math.abs(e.x-450)<1e-6);assert.equal(e.y,260);assert.equal(e.hp,0);assert.equal(e.selfDestruct,true);assert.equal(hits.length,0);
+ updateInfernal(e,p,r,1,[],(...h)=>hits.push(h));assert.equal(hits.length,0);
+});
+
+test('bat swept contact hits once while a wall stops the straight dash and shields explosion damage',()=>{
+ for(const wall of [false,true]){
+  const e={...foe('demonBat'),x:200,attackPhase:'dash',attackTime:.5,aim:0},r=room(e),hits=[];
+  if(wall)r.obstacles=[{x:280,y:180,w:20,h:160}];
+  const p={x:wall?310:350,y:260};updateInfernal(e,p,r,.5,[],(...h)=>hits.push(h));assert.equal(e.hp,0);assert.equal(hits.length,wall?0:1);
+  if(wall)assert.ok(e.x<280);updateInfernal(e,p,r,.5,[],(...h)=>hits.push(h));assert.equal(hits.length,wall?0:1);
+ }
+});
+
+test('bat warning endpoints survive save and resume without retargeting',()=>{
+ const s=newRun(12,{campaign:'expanded'});s.floor=8;s.room=1;const r=s.floors[8][1],e={...foe('demonBat'),balanceVersion:1};r.obstacles=[];r.enemies=[e];
+ updateInfernal(e,{x:450,y:260},r,.01,[],()=>{});const loaded=parseSave(encodeSave(s)),copy=loaded.floors[8][1].enemies[0];
+ assert.equal(copy.targetX,e.targetX);assert.equal(copy.targetY,e.targetY);assert.equal(copy.aim,e.aim);assert.equal(copy.attackTime,e.attackTime);
+});
+
 test('sixth through ninth floors favor their own packs and ninth has every demon role',()=>{
  const themes=new Map([[5,'hive'],[6,'sniper'],[7,'royal'],[8,'infernal']]);
  for(const [floor,prefix] of themes){let focus=0;const seen=new Set();for(let seed=0;seed<250;seed++){const pack=upperEncounter(floor,seededRandom(seed));const id=pack[0].formation;seen.add(id);if(id.startsWith(prefix)||floor===6&&['gravity','escort','crossfire','vanguard','pursuit','siege','garden'].includes(id)||floor===7&&['rift','court','hunt','bulwark'].includes(id))focus++;}assert.ok(focus>150,`${floor+1}F focus ${focus}/250`);assert.ok(formationPool(floor).length>0);}

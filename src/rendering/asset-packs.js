@@ -11,6 +11,7 @@ export function floorAssetOptions(run,allRooms=true){
  return {returning:!!run.key,enemies:[...new Set(rooms.flatMap(r=>r.enemies||[]).map(e=>e.type==='boss'?e.variant||'warden':e.gateTitle?(e.type==='starKnight'?'kald':'vera'):e.type))]};
 }
 function actorPlan(key){
+ if(key==='brute')return {modules:[],feedback:['named-brute']};
  if(key==='warden')return {modules:warden,feedback:[]};
  if(key==='king')return {modules:['mordo-phase1-sprite','mordo-phase2-sprite','mordo-phase3-sprite','resurrected-king','mordo-presentation-art','shadow-aura'],feedback:['bosses']};
  if(key==='commander')return {modules:['commander-phase1-sprite','commander-phase2-sprite','velkar-presentation-art','shadow-aura'],feedback:['bosses']};
@@ -47,7 +48,8 @@ export function portraitAssetPlan(key){
  if(key==='roamingElite')key='chaser';
  if(key==='warden')return {modules:warden,feedback:[],extra:[]};
  if(key==='vera')return {modules:['vera-sprite'],feedback:[],extra:[]};
- if(['kald','brute'].includes(key))return {modules:[],feedback:['named-brute'],extra:[]};
+ if(key==='brute')return {modules:[],feedback:['named-brute'],extra:['brute-redesign-v1.png']};
+ if(key==='kald')return {modules:[],feedback:['named-brute'],extra:[]};
  if(key==='king')return {modules:['mordo-phase3-sprite','resurrected-king','shadow-aura'],feedback:['bosses'],extra:[]};
  if(key==='commander')return {modules:['commander-phase1-sprite','shadow-aura'],feedback:['bosses'],extra:[]};
  if(key==='demon')return {modules:['demon-sprite','remnant-sprite','demon-core-sprite','demon-presentation-art','shadow-aura'],feedback:[],extra:[]};
