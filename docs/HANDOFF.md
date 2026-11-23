@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 타격감 2차 로컬 구현
+~~~text
+기준e2a5402에서 보상창 표시 순서/보스 합성음/구르기 잔상 구현. 새 boss-reward-reveal.js는 이미 생성·저장된 보상 패널만1.2초까지 투명/inert, 선택지/RNG/게임 정지 시점 불변·스킵/ESC/Tab/초점·lease/전환 정리. 가림 중 death FX만 감쇠. boss-clear.js는 actual 완료 cue를0/.18/.75초1회·stale/skip제외, sound.js는 world보호cue/기존cap·mute·duck+rollRush. roll-trail.js는 실제 위치포즈3개/140ms, 감소효과·방/로드정리. 추가8회귀 작성만·누적15 미실행. diff정적만, 구문/테스트/브라우저/성능/실기기/청취·미터/푸시/배포 금지 유지·운영0.63. 새 아트PNG/게임수치·보상·저장필드 변경 없음. 다음 숫자합산/가독성→대표 아트 보드 확정 후 실제 가족·프레임 제작. docs/design-drafts/reference-feel-20261123/review.md 상세. 가로 고정TODO/추가후기 유지. 실행 중 명령·차단 없음. 별도 배포 지시 시 누적 검증 필수.
+~~~
+
 ## 최신 복사용 인계 — 참고 영상 타격감 1차 로컬 구현
 ~~~text
 사용자 ㄱㄱ 승인으로 기존 외형 유지 공통 타격/보스 마무리를 로컬 연결. src/rendering/combat-impact.js(실제 fresh damage 기반16상한·.18초국소flash/기존파편중복억제·치명흔들림간격), boss-clear.js(1.8초 국소파열/실제XP만강조/적생존큰문구제외/그림자·분열제외), room-stage.js(월드offset±8/HUD고정), game.js 훅. 회귀 tests/unit/combat-impact.test.js6 + room-stage1 작성만. diff 정적만, 구문/테스트/게임브라우저/성능/실기기/푸시/배포 금지 유지·운영0.63. 아트 보드 docs/design-drafts/reference-feel-20261123/art-board-v1.png 및 prompt/manifest 검토전용(기존 주인공/모르도, imagegen1장); 제품PNG 미반영. 다음 모달 가림 안전순서→숫자/음향/이동잔상→대표보드확정 후 실제자산가족. 전체 개편 완료 아님. 가로고정 TODO/추가후기 유지. 실행중명령/차단없음. 별도 새 배포 지시 때 누적 검증.

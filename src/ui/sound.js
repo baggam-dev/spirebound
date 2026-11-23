@@ -2,6 +2,10 @@
 export const SETTINGS_KEY='spirebound.settings.v1';
 export const DEFAULT_SETTINGS=Object.freeze({muted:false,volume:.5,reducedEffects:false});
 const CUES={
+ bossImpact:{gap:.5,bus:'world',priority:5,duck:.22,notes:[[0,78,.18,'triangle',.025,38],[.004,960,.04,'square',.004,260]]},
+ bossBreak:{gap:.5,bus:'world',priority:4,notes:[[0,140,.16,'triangle',.018,50],[.025,900,.045,'square',.004,280]]},
+ bossRelease:{gap:.6,bus:'world',priority:4,notes:[[0,196,.18,'sine',.012],[.06,392,.22,'sine',.011],[.11,587,.25,'triangle',.006]]},
+ rollRush:{gap:.25,group:'motion',priority:1,notes:[[0,500,.09,'triangle',.009,120],[.015,1100,.045,'sine',.003,400]]},
  utilityFocus:{gap:.35,group:'utility',priority:3,notes:[[0,95,.16,'triangle',.024,45],[.025,660,.1,'sine',.009,330]]},
  utilityBlood:{gap:.35,group:'utility',priority:3,notes:[[0,165,.16,'triangle',.016,110],[.05,330,.18,'sine',.009]]},
  utilityGuardian:{gap:.35,group:'utility',priority:3,notes:[[0,196,.15,'triangle',.018],[.025,784,.22,'sine',.011]]},
@@ -52,7 +56,7 @@ export function readSoundSettings(storage){
 export function createSoundSystem(storage,AudioCtor=globalThis.AudioContext||globalThis.webkitAudioContext){
  let settings=readSoundSettings(storage),context=null,master=null,buses=null,duckUntil=0;const last=new Map(),voices=new Set();
  const save=()=>{try{storage?.setItem(SETTINGS_KEY,JSON.stringify(settings));}catch{}};
- const busOf=name=>['warning','hurt','boss','resurrectionRise','resurrectionBell'].includes(name)?'alert':name==='shot'||name==='hit'||CUES[name]?.group?'combat':'world';
+ const busOf=name=>CUES[name]?.bus||(['warning','hurt','boss','resurrectionRise','resurrectionBell'].includes(name)?'alert':name==='shot'||name==='hit'||CUES[name]?.group?'combat':'world');
  const kill=voice=>{try{voice.amp.gain.cancelScheduledValues?.(context.currentTime);voice.amp.gain.setValueAtTime(.0001,context.currentTime);voice.osc.stop(context.currentTime+.008);}catch{}voices.delete(voice);};
  const clear=filter=>{for(const voice of voices)if(filter(voice))kill(voice);};
  const setVolume=()=>{if(!master)return;const now=context.currentTime;master.gain.cancelScheduledValues?.(now);master.gain.setValueAtTime(settings.muted?0:settings.volume,now);};
@@ -75,7 +79,7 @@ export function createSoundSystem(storage,AudioCtor=globalThis.AudioContext||glo
    let excess=active.length+cue.notes.length-limit;
    if(excess>0){const replace=active.filter(v=>v.priority<priority).sort((a,b)=>a.priority-b.priority||a.until-b.until);if(replace.length<excess)return false;for(const voice of replace.slice(0,excess))kill(voice);}
    const made=[];
-   try{if(bus==='alert')duck(now,cue.duck??.32);
+   try{if(bus==='alert'||cue.duck)duck(now,cue.duck??.32);
     for(const [delay,hz,duration,wave,gain,toHz] of cue.notes){const start=now+delay,osc=context.createOscillator(),amp=context.createGain(),voice={osc,amp,bus,priority,until:start+duration+.01};made.push(voice);voices.add(voice);osc.type=wave;osc.frequency.value=hz;osc.frequency.setValueAtTime?.(hz,start);if(toHz)osc.frequency.exponentialRampToValueAtTime?.(toHz,start+duration);amp.gain.setValueAtTime(.0001,start);amp.gain.linearRampToValueAtTime(gain,start+Math.min(.008,duration/3));amp.gain.exponentialRampToValueAtTime(.0001,start+duration);osc.connect(amp);amp.connect(buses[bus]);osc.onended=()=>{voices.delete(voice);try{osc.disconnect();amp.disconnect();}catch{}};osc.start(start);osc.stop(voice.until);}
     last.set(name,now);if(group){last.set('group:'+group,now);last.set('priority:'+group,priority);}if(reward)last.set('rewardFeedback',now);return true;
    }catch{for(const voice of made)kill(voice);return false;}

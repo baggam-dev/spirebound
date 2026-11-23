@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {advanceCombatImpacts,combatImpactFilter,combatImpactShake,combatImpactState,resetCombatImpacts,drawCombatImpacts} from '../../src/rendering/combat-impact.js';
-import {startBossClear,advanceBossClear,bossClearPhase,bossClearState,bossClearShake,drawBossClear} from '../../src/rendering/boss-clear.js';
+import {startBossClear,advanceBossClear,bossClearPhase,bossClearState,bossClearShake,drawBossClear,takeBossClearCues,skipBossClear} from '../../src/rendering/boss-clear.js';
 const hit=(id=1,extra={})=>({enemyId:id,x:400,y:250,damage:30,applied:true,newHit:true,critical:false,...extra});
 function context(){const calls=[];return {calls,globalAlpha:1,save(){},restore(){},beginPath(){},rect(){},clip(){},setLineDash(){},moveTo(){},lineTo(){},stroke(){},fillRect(...args){calls.push(['box',...args]);},strokeText(t){calls.push(['label',t]);},fillText(){}};}
 
@@ -62,4 +62,14 @@ test('boss reward shafts never mark absent or already attracted XP',()=>{
  const c=context();drawBossClear(c,run,room,{combatActive:true});assert.equal(c.calls.filter(a=>a[0]==='box').length,2);
  room.xpDrops[0].attract=true;const d=context();drawBossClear(d,run,room,{combatActive:true});assert.equal(d.calls.length,0);
  room.xpDrops=[];const e=context();drawBossClear(e,run,room,{combatActive:true});assert.equal(e.calls.length,0);
+});
+
+test('boss audio follows presentation phases once and skipped or stale cues never burst on resume',()=>{
+ const run={},room={};startBossClear(run,room);
+ assert.deepEqual(takeBossClearCues(run),['bossImpact']);assert.deepEqual(takeBossClearCues(run),[]);
+ advanceBossClear(run,room,.1);advanceBossClear(run,room,.09);assert.deepEqual(takeBossClearCues(run),['bossBreak']);
+ for(let i=0;i<6;i++)advanceBossClear(run,room,.1);assert.deepEqual(takeBossClearCues(run),['bossRelease']);
+ assert.equal(bossClearState(run,{}),null);skipBossClear(run);assert.deepEqual(takeBossClearCues(run),[]);assert.equal(bossClearPhase(run),null);
+ const late={};startBossClear(late,room);for(let i=0;i<14;i++)advanceBossClear(late,room,.1);
+ assert.deepEqual(takeBossClearCues(late),[]);
 });

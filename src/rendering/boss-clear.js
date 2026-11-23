@@ -6,7 +6,7 @@ export const BOSS_CLEAR_DURATION=1.8;
 export function startBossClear(run,room,origin){
  if(!run||!room||states.get(run)?.room===room||origin?.shadowBoss===1||origin?.split)return false;
  const rewardIds=(room.xpDrops||[]).filter(d=>d.burst==='boss'&&d.born>=(run.elapsed??0)-.1).slice(0,16).map(d=>d.id);
- states.set(run,{room,age:0,x:point(origin?.x,480,25,935),y:point(origin?.y,220,45,500),king:!!origin?.king,rewardIds});return true;
+ states.set(run,{room,age:0,x:point(origin?.x,480,25,935),y:point(origin?.y,220,45,500),king:!!origin?.king,rewardIds,cues:new Set()});return true;
 }
 export const resetBossClear=run=>{if(run)states.delete(run);};
 export function advanceBossClear(run,room,dt,active=true){
@@ -14,7 +14,17 @@ export function advanceBossClear(run,room,dt,active=true){
  if(v.room!==room){states.delete(run);return;}
  if(active&&Number.isFinite(dt)&&dt>0)v.age=Math.min(BOSS_CLEAR_DURATION,v.age+Math.min(.1,dt));
 }
-export const bossClearState=run=>{const v=run&&states.get(run);return v?{age:v.age,x:v.x,y:v.y}:null;};
+export const bossClearState=(run,room)=>{const v=run&&states.get(run);return v&&(!room||v.room===room)?{age:v.age,x:v.x,y:v.y}:null;};
+export function skipBossClear(run){const v=run&&states.get(run);if(v)v.age=BOSS_CLEAR_DURATION;}
+export function takeBossClearCues(run){
+ const v=run&&states.get(run);if(!v||v.age>=BOSS_CLEAR_DURATION)return [];
+ const out=[];
+ for(const [at,window,cue] of [[0,.12,'bossImpact'],[.18,.22,'bossBreak'],[.75,.35,'bossRelease']]){
+  if(v.age<at||v.cues.has(cue))continue;v.cues.add(cue);
+  if(v.age<=at+window)out.push(cue);
+ }
+ return out;
+}
 export const bossClearPhase=run=>{
  const v=run&&states.get(run);if(!v||v.age>=BOSS_CLEAR_DURATION)return null;
  return v.age<.08?'impact':v.age<.35?'fracture':v.age<.75?'collapse':v.age<1.2?'reward':'settle';
