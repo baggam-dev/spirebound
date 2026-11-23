@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 참고 영상 타격감 1차 로컬 구현
+~~~text
+사용자 ㄱㄱ 승인으로 기존 외형 유지 공통 타격/보스 마무리를 로컬 연결. src/rendering/combat-impact.js(실제 fresh damage 기반16상한·.18초국소flash/기존파편중복억제·치명흔들림간격), boss-clear.js(1.8초 국소파열/실제XP만강조/적생존큰문구제외/그림자·분열제외), room-stage.js(월드offset±8/HUD고정), game.js 훅. 회귀 tests/unit/combat-impact.test.js6 + room-stage1 작성만. diff 정적만, 구문/테스트/게임브라우저/성능/실기기/푸시/배포 금지 유지·운영0.63. 아트 보드 docs/design-drafts/reference-feel-20261123/art-board-v1.png 및 prompt/manifest 검토전용(기존 주인공/모르도, imagegen1장); 제품PNG 미반영. 다음 모달 가림 안전순서→숫자/음향/이동잔상→대표보드확정 후 실제자산가족. 전체 개편 완료 아님. 가로고정 TODO/추가후기 유지. 실행중명령/차단없음. 별도 새 배포 지시 때 누적 검증.
+~~~
+
 ## 최신 복사용 인계 — 참고 영상 아트·타격감 패키지
 ~~~text
 2026-11-23 사용자 영상(C:/baggam-dev/files/KakaoTalk_20261123_224947172.mp4, 실제4.49MB/14.13초)을 재생40장면 분석. 큰 보스/흰 피격/폭발/처치 후 전리품이 핵심. docs/design-drafts/reference-feel-20261123/review.md 및 motion-draft.html(기존 우리 자산 독립 Canvas 시안) 작성. 시간/입자 수는 제안값, 오디오·실제 hit-stop·광고 게임속도 미측정. 원본/추출 이미지 제품 사용 없음. 새 큰 디자인 방향은 기존 시안 규칙에 따라 대표 외형+모션+별도 FX 패키지 검토 후 반영. 아직 런타임 미수정·게임 테스트/푸시/배포 없음, 운영0.63. 추가 플레이 후기/가로 고정 TODO 유지. 다음 대표 한 장면 시안 보강→공통 타격/보스 마무리→자산 가족 확장. 완료·검증으로 과장하지 않는다.

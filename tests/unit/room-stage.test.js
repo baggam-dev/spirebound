@@ -18,3 +18,12 @@ test('stage composes independent world and UI surfaces and captures logical snap
  const snapshot=surface();stage.capture(snapshot);assert.equal(snapshot.width,960);assert.equal(snapshot.height,540);
  assert.deepEqual(snapshot.calls.filter(c=>c[0]==='image').map(c=>c[1]),layers);stage.dispose();
 });
+
+test('world shake is bounded while HUD transforms and logical captures stay fixed',()=>{
+ function surface(){const calls=[],c={globalAlpha:1,globalCompositeOperation:'source-over',save(){},restore(){},setTransform(...v){calls.push(v);},clearRect(){},fillRect(){},drawImage(){}};return {width:0,height:0,calls,getContext:()=>c};}
+ const target=surface(),stage=createRoomStage(target,{makeCanvas:surface,observe:false});
+ stage.present({offset:{x:100,y:-100}});
+ assert.deepEqual(target.calls,[[1,0,0,1,0,0],[1,0,0,1,8,-8],[1,0,0,1,0,0]]);
+ const capture=surface();stage.capture(capture);assert.equal(capture.width,960);assert.equal(capture.height,540);
+ stage.dispose();
+});

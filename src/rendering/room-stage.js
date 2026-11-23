@@ -22,10 +22,11 @@ export function createRoomStage(canvas,{makeCanvas=()=>document.createElement('c
   worldContext,hudContext,
   begin(){reset(worldContext);reset(hudContext);},
   capture(target,room=null){const c=target.getContext('2d');target.width=960;target.height=540;paintWorld(c,world,room);c.drawImage(hud,0,0);},
-  present({wide=false,room=null}={}){
+  present({wide=false,room=null,offset={x:0,y:0}}={}){
    const size=roomSurfaceSize(box.width,box.height,wide);
    if(canvas.width!==size.width)canvas.width=size.width;if(canvas.height!==size.height)canvas.height=size.height;
-   const camera=createRoomCamera(size.width,size.height);
+   const base=createRoomCamera(size.width,size.height),safe=n=>Number.isFinite(n)?Math.max(-8,Math.min(8,n)):0;
+   const camera={...base,x:base.x+Math.round(safe(offset.x)*base.scale),y:base.y+Math.round(safe(offset.y)*base.scale)};
    withRoomCamera(display,camera,c=>{c.imageSmoothingEnabled=false;paintWorld(c,world,room);});
    // UI has its own fixed common frame, independent of future room footprints.
    const ui=createRoomCamera(size.width,size.height);
