@@ -1,6 +1,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readableEffects,drawCombatLabels,combatEffectVisible} from '../../src/combat/combat-readability.js';
+
+test('damage numbers yield to pickup and weakness labels without changing their original effects',()=>{
+ const effects=[{text:'정수 +1',essencePickup:true,x:480,y:200,t:1},{text:'약점!',precisionBurst:true,x:480,y:286,t:1},{damageNumber:true,text:'30!',critical:true,x:480,y:286,t:1,color:'#ffe3a0'}],before=JSON.stringify(effects),positions=[];
+ const c={globalAlpha:1,save(){},restore(){},measureText(){return {width:80};},strokeText(){},fillText(text,x,y){positions.push({text,x,y});}};
+ drawCombatLabels(c,effects,true);assert.equal(positions.find(p=>p.text==='정수 +1').y,286);assert.equal(positions.find(p=>p.text==='약점!').y,264);
+ assert.ok(![264,286].includes(positions.find(p=>p.text==='30!').y));assert.equal(JSON.stringify(effects),before);
+});
+
+test('desktop numbers avoid existing labels and omit excess overlapping decoration',()=>{
+ const effects=[{text:'방어막!',x:480,y:200,t:1},...Array.from({length:30},(_,i)=>({damageNumber:true,text:String(i+1),x:480,y:200,t:1}))],positions=[];
+ const c={globalAlpha:1,save(){},restore(){},measureText(){return {width:80};},strokeText(){},fillText(text,x,y){positions.push({text,x,y});}};
+ drawCombatLabels(c,effects,false);assert.equal(positions[0].y,200);assert.ok(positions.length<=9);assert.equal(new Set(positions.map(p=>p.y)).size,positions.length);
+});
 test('pickup space is reserved before combat labels regardless of effect drawing order',()=>{
  const pickup=Object.freeze({text:'정수 +1',essencePickup:true,x:480,y:200,t:1}),weakness=Object.freeze({text:'약점!',precisionBurst:true,x:480,y:286,t:1});
  const before=JSON.stringify([pickup,weakness]);

@@ -8,9 +8,9 @@ export function criticalFeedback(results=[],effects=[]){
   if(!hit.applied||!hit.critical||!hit.newHit||!(hit.damage>0)||!Number.isFinite(hit.x)||!Number.isFinite(hit.y))continue;
   const key=hit.enemyId+':'+hit.attackId;if(seen.has(key))continue;seen.add(key);
   const weak=effects.find(f=>f.precisionBurst&&f.attackId===hit.attackId&&f.attackId!==null);
-  if(weak){weak.criticalBurst=true;weak.text='약점 치명!';weak.color='#ffe6a1';continue;}
+  if(weak){weak.criticalBurst=true;weak.enemyId=hit.enemyId;weak.text='약점 치명!';weak.color='#ffe6a1';continue;}
   if(selected.length>=6)continue;
-  selected.push({x:hit.x,y:hit.y-28,t:.65,duration:.65,color:'#ffe6a1',text:'치명!',criticalBurst:true,attackId:hit.attackId});
+  selected.push({x:hit.x,y:hit.y-28,t:.65,duration:.65,color:'#ffe6a1',text:'치명!',criticalBurst:true,enemyId:hit.enemyId,attackId:hit.attackId});
  }
  return selected;
 }

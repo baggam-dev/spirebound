@@ -23,7 +23,7 @@ export function readableEffects(effects,compact=false,reduced=false){
  return effects.filter(f=>keep.has(f));
 }
 export function drawCombatLabels(c,effects,compact=false){
- const labels=effects.filter(f=>f.text),essences=labels.filter(f=>f.essencePickup),placed=[];let row=0;
+ const labels=effects.filter(f=>f.text&&!f.damageNumber),numbers=effects.filter(f=>f.damageNumber&&f.text),essences=labels.filter(f=>f.essencePickup),placed=[];let row=0;
  c.save();c.textAlign='center';c.strokeStyle='#101016';c.lineWidth=4;
  // Reserve the fixed pickup stack before placing combat labels, even when
  // pickup effects occur later in the original drawing order.
@@ -54,6 +54,26 @@ export function drawCombatLabels(c,effects,compact=false){
    if(!f.essencePickup)placed.push({x,y,width,height});
   }
   c.fillStyle=f.color;c.strokeText(f.text,x,y);c.fillText(f.text,x,y);
+  if(!compact&&numbers.length)placed.push({x,y,width:Math.min(884,c.measureText(f.text).width),height:22});
+  if(numbers.length&&f.hitSource){
+   c.font='bold 12px Galmuri, monospace';
+   placed.push({x:Math.max(120,Math.min(840,f.x)),y:Math.max(28,f.y-28),width:Math.min(884,c.measureText(f.hitSource).width),height:14});
+  }
+ }
+ // Numbers are optional decoration, placed after every existing important label.
+ // If no nearby slot is clear, omit the number instead of obscuring that label.
+ const alpha=c.globalAlpha;
+ for(const f of numbers){
+  c.font=`${f.critical?'bold ':''}${f.critical?18:14}px Galmuri, monospace`;
+  const width=Math.min(884,c.measureText(f.text).width),height=f.critical?21:17,margin=width/2+8;
+  const x=Math.max(margin,Math.min(960-margin,f.x)),base=Math.max(62,Math.min(485,f.y-(1-f.t)*16));let y=null;
+  search:for(let step=0;step<=4;step++)for(const direction of step?[-1,1]:[0]){
+   const candidate=base+step*22*direction;if(candidate<62||candidate>485)continue;
+   if(placed.some(p=>Math.abs(p.x-x)<(p.width+width)/2+4&&Math.abs(p.y-candidate)<(p.height+height)/2+2))continue;
+   y=candidate;break search;
+  }
+  if(y===null)continue;
+  placed.push({x,y,width,height});c.globalAlpha=alpha*Math.min(1,f.t*4);c.fillStyle=f.color;c.strokeText(f.text,x,y);c.fillText(f.text,x,y);
  }
  c.restore();
 }

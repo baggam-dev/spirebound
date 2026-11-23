@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 타격감 3차 숫자 표시 로컬 구현
+~~~text
+6406e26 후속으로 일반 피해 숫자 신규·합산/가독성 로컬 구현. 기존 일반숫자는 없었음. 새 src/rendering/damage-numbers.js는 actual positive applied damageResults(DoT 실제 반복 포함), 대상/일반·치명성분별160ms 고정창·650ms·24상한, 표시8/5/4·치명우선·K/M. 전투값/보상/RNG/저장불변. combat-readability.js는 기존 약점/정수/피격·공격원 텍스트 먼저 공간보호, 숫자만 근처 빈행/과밀생략. critical-feedback enemyId 표시메타데이터로 선택된 치명숫자와 일반치명문구통합, 원 FX/음향 유지. game.js viewclock/방일치/reset·보스보상가림 수명 연결. 추가8회귀(숫자6/배치2) 작성만·누적23 미실행. diff정적만, 구문/게임테스트/브라우저/실기기/성능/음향/푸시/배포 금지 유지·운영0.63. 다음 대표 아트 보드의 실제 캐릭터/오브젝트/모션 프레임 패키지 구체화, 새 원화 사전검토 유지. 가로 고정TODO·추가후기 보존. 실행 중 명령·차단 없음. 새 명시 배포 때 누적검증.
+~~~
+
 ## 최신 복사용 인계 — 타격감 2차 로컬 구현
 ~~~text
 기준e2a5402에서 보상창 표시 순서/보스 합성음/구르기 잔상 구현. 새 boss-reward-reveal.js는 이미 생성·저장된 보상 패널만1.2초까지 투명/inert, 선택지/RNG/게임 정지 시점 불변·스킵/ESC/Tab/초점·lease/전환 정리. 가림 중 death FX만 감쇠. boss-clear.js는 actual 완료 cue를0/.18/.75초1회·stale/skip제외, sound.js는 world보호cue/기존cap·mute·duck+rollRush. roll-trail.js는 실제 위치포즈3개/140ms, 감소효과·방/로드정리. 추가8회귀 작성만·누적15 미실행. diff정적만, 구문/테스트/브라우저/성능/실기기/청취·미터/푸시/배포 금지 유지·운영0.63. 새 아트PNG/게임수치·보상·저장필드 변경 없음. 다음 숫자합산/가독성→대표 아트 보드 확정 후 실제 가족·프레임 제작. docs/design-drafts/reference-feel-20261123/review.md 상세. 가로 고정TODO/추가후기 유지. 실행 중 명령·차단 없음. 별도 배포 지시 시 누적 검증 필수.
