@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 0.63 배포 완료
+~~~text
+0.63.0-prebeta 운영 https://168.107.21.43/ · 런타임564369d/active release-20261123-110150-773b7a · 이전release-20261122-181152-951870 보존. 1~6단계+마감보완+실행발견 로딩/소환수정 배포·GitHub main반영. 전체985/985·집중26·서버API28·로컬Edge18시나리오 통과(오류0/점수POST0), 공개65변경파일 byte일치/HTTPS health ok/nginx·API active/0.63 secureCookie true·PC/844타이틀 확인. 신규잔해/탈출은새원정, 기존저장구조/DB/시즌보존·온라인최신허용0.63 정책. docs/qa-play-feedback-20261123/README.md·full-final.log·browser/art/public result·deploy/services.log가최종증거. 실패/중단로그는성공으로해석금지. 실제iPhone/사람난도/장시간성능/전체프레임alpha정밀QA는미검증. 임시서버4633/4634종료·실행중명령/차단없음·요청배포미완료없음. 다음추가피드백시git status→WORK_STATUS/TODO/WORK_LOG최근/HANDOFF순서,새평상시수정은로컬커밋까지/별도새배포지시규칙유지.
+~~~
+
 ## 최신 복사용 인계 — 0.63 검증 통과·배포 진행
 ~~~text
 사용자배포명시승인. 최종전체985/985·집중26·로컬Edge18시나리오통과/오류0/점수POST0. 0.63 client/API/header동기·선택brutePromise필수대기교착/그림자실반경간격보완. docs/qa-play-feedback-20261123/전체로그/PC모바일스크린샷·실기기한계기록. 다음커밋푸시/공식deploy.ps1/공개바이트hash·health·PC모바일타이틀확인. 운영아직0.62·배포완료로표시금지. 서버4634세션59209(권한밖)/4633세션4796(초기QA)·종료전실상태확인. 테스트완료·차단없음.

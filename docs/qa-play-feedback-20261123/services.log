@@ -1,0 +1,4 @@
+/usr/share/nginx/spirebound-releases/release-20261123-110150-773b7a
+active
+active
+{"season": "SPIREBOUND", "open": true, "versions": ["0.63.0-prebeta"], "origins": ["https://168.107.21.43"], "secureCookie": true, "blockedNames": ["admin", "moderator", "spirebound", "운영자", "관리자", "시발", "씨발", "병신"]}

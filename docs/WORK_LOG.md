@@ -3445,3 +3445,11 @@ utilityUseState로기존실사용조건을공유하고 canCastUtility는같은re
 
 ## 0.63 배포 전 검증 통과 (2026-11-23)
 전체 node --test --test-concurrency4 985/985통과·실패0(full-final.log),집중26통과. Edge PC/가로모바일/소형reduced15 + 아트3 =18시나리오 오류0/점수POST0, 육안전체/모바일UI/배우확인. 선택brutePromise필수로딩교착·실제반경소환배정수정포함. source/API/header0.63.0-prebeta·DB/시즌/원본저장보존. 다음커밋푸시→공식deploy.ps1→공개바이트/health/PC모바일타이틀확인. 운영성공확인전0.62유지·차단없음.
+
+## 0.63 피드백 누적 배포 완료 (2026-11-23)
+- 운영: https://168.107.21.43/ · 0.63.0-prebeta. 런타임 커밋564369d, 활성 release-20261123-110150-773b7a. 이전 release-20261122-181152-951870 보존. GitHub main 푸시 및 공식 deploy.ps1 배포 완료.
+- 검증: 전체985/985, 집중26, 서버API28 통과. 로컬 Edge PC/가로 터치/소형 reduced의18시나리오 오류0·점수POST0. 공개 HTTPS 변경65파일 정확한 바이트 일치·health ok·nginx/API active·API 허용0.63/secureCookie true·PC/844폭 타이틀 확인. 모바일은 에뮬레이션/화면 크기 검증이며 실제 iPhone·사람 난도·장시간 성능은 미검증.
+- 범위: 1~6단계 누적 UI/수도사20%무제한/지뢰1초·요정/적·수문장/모르도·귀환붕괴/잔해5조각2페이즈/그림자5턴. 새 원정의 잔해·탈출 구조와 기존 저장의 옛 구조를 버전 분리. DB·원정 원본·시즌 보존, 최신 온라인 허용은 기존 정책대로0.63 기준.
+- 실행 중 발견 보완: 선택 거인 Promise의 필수 로딩 교착 제거, 실제 배우 반경과24격자를 사용한 그림자 소환 간격 배정. 기대값 변경7종은 실전투/새 아틀라스/새 시간표에 맞췄고 전체 재검증 통과.
+- 증거: docs/qa-play-feedback-20261123/README.md, full-final.log, browser/result.json, art/result.json, deploy.log, services.log, public/result.json. 실패/중단 로그는 이력으로 보존하며 최종 성공 결과와 구분한다.
+실행 중 배포/테스트 명령·차단 없음. 임시 개발 서버4633/4634 종료 확인. 다음은 사용자 추가 플레이 피드백 또는 필요한 실기기 확인이며, 현재 승인 배포 범위의 미완료 작업은 없다.
