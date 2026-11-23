@@ -5,7 +5,7 @@ import {newRun,currentRoom,canEscape} from '../../src/game/engine.js';
 import {startFinalEscape,tickFinalEscape} from '../../src/world/final-escape.js';
 import {SHADOW_BOSSES,shadowBaseMax} from '../../src/world/shadow-escape.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
-import {stepRun} from '../../src/game/simulation.js';
+import {stepRun,enemyRadius} from '../../src/game/simulation.js';
 import {splitSlime} from '../../src/combat/poison.js';
 import {commanderPhase,updateCommander} from '../../src/combat/commander.js';
 import {kingPhase,tickUpperState} from '../../src/combat/upper-floors.js';
@@ -14,11 +14,11 @@ import {floorAssetOptions,floorAssetPlan} from '../../src/rendering/asset-packs.
 function escape(){const s=newRun(47);s.key=true;s.tutorialComplete=true;s.attack=999;s.invulnerable=999;const r=currentRoom(s);r.enemies=[];assert.ok(startFinalEscape(s,r));return {s,r};}
 test('accumulated shadow arrivals use separate positions without clearing earlier rounds',()=>{
  const {s,r}=escape();tickFinalEscape(s,r,42);assert.equal(r.enemies.length,15);
- for(let i=0;i<r.enemies.length;i++)for(let j=0;j<i;j++)assert.ok(Math.hypot(r.enemies[i].x-r.enemies[j].x,r.enemies[i].y-r.enemies[j].y)>85,'arrivals must not stack');
+ for(let i=0;i<r.enemies.length;i++)for(let j=0;j<i;j++)assert.ok(Math.hypot(r.enemies[i].x-r.enemies[j].x,r.enemies[i].y-r.enemies[j].y)>=enemyRadius(r.enemies[i])+enemyRadius(r.enemies[j])+8,'arrivals must not stack');
 });
 test('blocked original portals use free floor positions away from the player',()=>{
  const {s,r}=escape();s.player.x=480;s.player.y=270;r.obstacles=[[130,130],[830,130],[130,410],[830,410],[300,130],[660,410],[300,410],[660,130]].map(([x,y])=>({x:x-45,y:y-45,w:90,h:90,type:'rock'}));
- tickFinalEscape(s,r,2);assert.equal(r.enemies.length,3);for(const e of r.enemies){assert.equal(blocked(e.x,e.y,40,r.obstacles),false);assert.ok(Math.hypot(e.x-s.player.x,e.y-s.player.y)>=160);}
+ tickFinalEscape(s,r,2);assert.equal(r.enemies.length,3);for(const e of r.enemies){assert.equal(blocked(e.x,e.y,enemyRadius(e),r.obstacles),false);assert.ok(Math.hypot(e.x-s.player.x,e.y-s.player.y)>=160);}
 });
 test('five timed shadow rounds each summon one boss and two escorts without legacy bats',()=>{
  const {s,r}=escape();assert.equal(r.finalEscape.wave,0);tickFinalEscape(s,r,1.99);assert.equal(r.enemies.length,0);tickFinalEscape(s,r,.01);

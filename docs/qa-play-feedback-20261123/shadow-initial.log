@@ -1,0 +1,36 @@
+✖ accumulated shadow arrivals use separate positions without clearing earlier rounds (587.5341ms)
+✔ blocked original portals use free floor positions away from the player (348.1824ms)
+✔ five timed shadow rounds each summon one boss and two escorts without legacy bats (912.1692ms)
+✔ opening retains living enemies and projectiles and permits escape without kills (324.4046ms)
+✔ round progress reloads without duplicate summons or a second health reduction (211.8193ms)
+✔ slime splits once, children retain their shadow identity and cannot split again (233.5643ms)
+✔ commander remains phase one and Mordo remains final phase at full and low health (339.5765ms)
+✔ shadow deaths do not grant original boss rewards or alter run completion (345.0565ms)
+✔ return floor asset plan includes every future shadow boss before the first round (233.6865ms)
+✔ malformed shadow saves reject wrong rounds, health scaling and phase limits (213.9819ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13442.4547
+
+✖ failing tests:
+
+test at tests\unit\shadow-escape.test.js:15:1
+✖ accumulated shadow arrivals use separate positions without clearing earlier rounds (587.5341ms)
+  AssertionError [ERR_ASSERTION]: arrivals must not stack
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/shadow-escape.test.js:17:64)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

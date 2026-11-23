@@ -1,0 +1,46 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --mute-audio --user-data-dir=C:\Users\SDSPRO\AppData\Local\Packages\openai.codex_2p2nqsd0c76g0\AC\#!sandbox.{f734c490-13e0-4617-abb3-756613f01a4b}\Temp\playwright_chromiumdev_profile-jrPLMD --remote-debugging-pipe --no-startup-window
+<launched> pid=8828
+[pid=8828][err] [8828:20652:1123/104251.106:ERROR:chrome\browser\first_run\edge_upgrade_util_win.cc:82] CoCreateInstance of Elevator failed; hr =80070005
+[pid=8828][err] [1123/104252.437:ERROR:third_party\crashpad\crashpad\util\win\registration_protocol_win.cc:136] TransactNamedPipe: 파이프가 끝났습니다. (0x6D)
+[pid=8828][err] [8828:20652:1123/104301.721:ERROR:chrome\browser\first_run\edge_upgrade_util_win.cc:82] CoCreateInstance of Elevator failed; hr =80070005
+Call log:
+  - <launching> C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --mute-audio --user-data-dir=C:\Users\SDSPRO\AppData\Local\Packages\openai.codex_2p2nqsd0c76g0\AC\#!sandbox.{f734c490-13e0-4617-abb3-756613f01a4b}\Temp\playwright_chromiumdev_profile-jrPLMD --remote-debugging-pipe --no-startup-window
+  - <launched> pid=8828
+  - [pid=8828][err] [8828:20652:1123/104251.106:ERROR:chrome\browser\first_run\edge_upgrade_util_win.cc:82] CoCreateInstance of Elevator failed; hr =80070005
+  - [pid=8828][err] [1123/104252.437:ERROR:third_party\crashpad\crashpad\util\win\registration_protocol_win.cc:136] TransactNamedPipe: 파이프가 끝났습니다. (0x6D)
+  - [pid=8828][err] [8828:20652:1123/104301.721:ERROR:chrome\browser\first_run\edge_upgrade_util_win.cc:82] CoCreateInstance of Elevator failed; hr =80070005
+  - [pid=8828] <gracefully close start>
+  - [pid=8828] <kill>
+  - [pid=8828] <will force kill>
+  - [pid=8828] taskkill stderr: ERROR: The user name or password is incorrect.
+  - [pid=8828] <process did exit: exitCode=0, signal=null>
+  - [pid=8828] starting temporary directories cleanup
+  - [pid=8828] finished temporary directories cleanup
+  - [pid=8828] <gracefully close end>
+
+    at C:\baggam-dev\spirebound\tools\qa\play-feedback-release-qa.mjs:40:30 {
+  log: [
+    '  - <launching> C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --mute-audio --user-data-dir=C:\\Users\\SDSPRO\\AppData\\Local\\Packages\\openai.codex_2p2nqsd0c76g0\\AC\\#!sandbox.{f734c490-13e0-4617-abb3-756613f01a4b}\\Temp\\playwright_chromiumdev_profile-jrPLMD --remote-debugging-pipe --no-startup-window',
+    '  - <launched> pid=8828',
+    '  - [pid=8828][err] [8828:20652:1123/104251.106:ERROR:chrome\\browser\\first_run\\edge_upgrade_util_win.cc:82] CoCreateInstance of Elevator failed; hr =80070005',
+    '  - [pid=8828][err] [1123/104252.437:ERROR:third_party\\crashpad\\crashpad\\util\\win\\registration_protocol_win.cc:136] TransactNamedPipe: 파이프가 끝났습니다. (0x6D)',
+    '  - [pid=8828][err] [8828:20652:1123/104301.721:ERROR:chrome\\browser\\first_run\\edge_upgrade_util_win.cc:82] CoCreateInstance of Elevator failed; hr =80070005',
+    '  - [pid=8828] <gracefully close start>',
+    '  - [pid=8828] <kill>',
+    '  - [pid=8828] <will force kill>',
+    '  - [pid=8828] taskkill stderr: ERROR: The user name or password is incorrect.',
+    '  - [pid=8828] <process did exit: exitCode=0, signal=null>',
+    '  - [pid=8828] starting temporary directories cleanup',
+    '  - [pid=8828] finished temporary directories cleanup',
+    '  - [pid=8828] <gracefully close end>'
+  ]
+}
+
+Node.js v24.14.0

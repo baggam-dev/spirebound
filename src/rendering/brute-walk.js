@@ -10,7 +10,8 @@ const sources=[
 const frames=[];
 const redesign=[];
 export const bruteRedesignState=()=>({ready:redesign.length===12,frames:redesign.length});
-export const bruteRedesignReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
+// Optional art must not match floor-assets moduleReady discovery.
+export const bruteRedesignPromise=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
  const image=new DeferredImage();image.onload=()=>{try{
   if(image.naturalWidth!==1536||image.naturalHeight!==1024){resolve(false);return;}
   const crops=[];

@@ -33,7 +33,7 @@ test('separate effects are read-only and do not restyle ordinary or friendly pro
 test('Vera keeps the five-shot fan and ordinary snipers retain their original source label',()=>{
  for(const named of [false,true]){
   const e={id:1,type:'astralSniper',hp:100,max:100,x:300,y:270,cd:0,...(named?{gateTitle:'베라'}:{})},p={x:600,y:270},room={enemies:[e],obstacles:[]},shots=[];
-  startUpperAttack(e,'fan',p,room);updateUpper(e,p,room,.6,shots,()=>{});
+  startUpperAttack(e,'fan',p,room);updateUpper(e,p,room,named?.7:.6,shots,()=>{});
   assert.equal(shots.length,named?5:2);assert.ok(shots.every(b=>b.damage===9&&b.dark&&b.source===(named?'별의 눈, 베라 별빛 화살':'별자리 저격수 별빛 화살')));
  }
 });

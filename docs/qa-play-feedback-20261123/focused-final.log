@@ -1,0 +1,52 @@
+✖ accumulated shadow arrivals use separate positions without clearing earlier rounds (113.8327ms)
+✔ blocked original portals use free floor positions away from the player (55.9503ms)
+✔ five timed shadow rounds each summon one boss and two escorts without legacy bats (234.5056ms)
+✔ opening retains living enemies and projectiles and permits escape without kills (150.4999ms)
+✔ round progress reloads without duplicate summons or a second health reduction (106.4997ms)
+✔ slime splits once, children retain their shadow identity and cannot split again (116.3745ms)
+✔ commander remains phase one and Mordo remains final phase at full and low health (235.179ms)
+✔ shadow deaths do not grant original boss rewards or alter run completion (221.2089ms)
+✔ return floor asset plan includes every future shadow boss before the first round (84.36ms)
+✔ malformed shadow saves reject wrong rounds, health scaling and phase limits (207.5043ms)
+✔ dash moves over time, damages only swept corridor, and stops before cover (5.0747ms)
+✔ saved dash resumes at identical coordinates and cannot damage twice (186.3877ms)
+✔ ring locks its preview direction and all projectiles leave the visible safe gap (2.1402ms)
+✔ king avoids empty melee at range and immediate pattern repeats (0.7407ms)
+✔ both judgment orientations use the same rectangle for hit tests and previews (0.9019ms)
+✔ judgment ends with a heavy marked strike and a long kneeling opening (0.8392ms)
+✔ phase changes clear attacks and enemy shots, freeze danger and round trip mid-transition (127.9547ms)
+✔ summon timer runs during long openings and freeze with a visible one second portal (135.085ms)
+✔ attack flash expires during recovery and while frozen (105.2693ms)
+✔ king and guards cap overlapping new warnings at two (103.9323ms)
+✔ knight shield reduces frontal arrows and tower shots but not rear or damage over time (116.016ms)
+✔ new state validation rejects malformed moving dash and summon portal (154.1585ms)
+✔ Vera art is prepared for the actual gate and isolated portrait without first-floor overhead (3.6949ms)
+✔ existing aim, release and elite recovery select poses without changing saved attack clocks (0.7692ms)
+✔ separate effects are read-only and do not restyle ordinary or friendly projectiles (0.8638ms)
+✔ Vera keeps the five-shot fan and ordinary snipers retain their original source label (4.9794ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 25
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2865.0875
+
+✖ failing tests:
+
+test at tests\unit\shadow-escape.test.js:15:1
+✖ accumulated shadow arrivals use separate positions without clearing earlier rounds (113.8327ms)
+  AssertionError [ERR_ASSERTION]: arrivals must not stack
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/shadow-escape.test.js:17:64)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -1,0 +1,34 @@
+✔ accumulated shadow arrivals use separate positions without clearing earlier rounds (243.0608ms)
+✔ blocked original portals use free floor positions away from the player (157.204ms)
+✔ five timed shadow rounds each summon one boss and two escorts without legacy bats (433.8882ms)
+✔ opening retains living enemies and projectiles and permits escape without kills (278.9362ms)
+✔ round progress reloads without duplicate summons or a second health reduction (173.9399ms)
+✔ slime splits once, children retain their shadow identity and cannot split again (231.7294ms)
+✔ commander remains phase one and Mordo remains final phase at full and low health (294.5181ms)
+✔ shadow deaths do not grant original boss rewards or alter run completion (224.9233ms)
+✔ return floor asset plan includes every future shadow boss before the first round (83.3279ms)
+✔ malformed shadow saves reject wrong rounds, health scaling and phase limits (258.7283ms)
+✔ dash moves over time, damages only swept corridor, and stops before cover (10.6371ms)
+✔ saved dash resumes at identical coordinates and cannot damage twice (449.5483ms)
+✔ ring locks its preview direction and all projectiles leave the visible safe gap (4.1866ms)
+✔ king avoids empty melee at range and immediate pattern repeats (2.5894ms)
+✔ both judgment orientations use the same rectangle for hit tests and previews (2.7371ms)
+✔ judgment ends with a heavy marked strike and a long kneeling opening (1.609ms)
+✔ phase changes clear attacks and enemy shots, freeze danger and round trip mid-transition (237.9174ms)
+✔ summon timer runs during long openings and freeze with a visible one second portal (260.6712ms)
+✔ attack flash expires during recovery and while frozen (159.6018ms)
+✔ king and guards cap overlapping new warnings at two (109.1941ms)
+✔ knight shield reduces frontal arrows and tower shots but not rear or damage over time (170.3223ms)
+✔ new state validation rejects malformed moving dash and summon portal (192.4216ms)
+✔ Vera art is prepared for the actual gate and isolated portrait without first-floor overhead (8.3935ms)
+✔ existing aim, release and elite recovery select poses without changing saved attack clocks (1.1525ms)
+✔ separate effects are read-only and do not restyle ordinary or friendly projectiles (2.1893ms)
+✔ Vera keeps the five-shot fan and ordinary snipers retain their original source label (9.1936ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5501.8205

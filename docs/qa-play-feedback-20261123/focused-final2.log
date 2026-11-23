@@ -1,0 +1,57 @@
+✔ accumulated shadow arrivals use separate positions without clearing earlier rounds (104.9387ms)
+✖ blocked original portals use free floor positions away from the player (45.2334ms)
+✔ five timed shadow rounds each summon one boss and two escorts without legacy bats (160.1624ms)
+✔ opening retains living enemies and projectiles and permits escape without kills (85.3417ms)
+✔ round progress reloads without duplicate summons or a second health reduction (52.5665ms)
+✔ slime splits once, children retain their shadow identity and cannot split again (57.7412ms)
+✔ commander remains phase one and Mordo remains final phase at full and low health (93.0714ms)
+✔ shadow deaths do not grant original boss rewards or alter run completion (78.8972ms)
+✔ return floor asset plan includes every future shadow boss before the first round (30.0159ms)
+✔ malformed shadow saves reject wrong rounds, health scaling and phase limits (92.0092ms)
+✔ dash moves over time, damages only swept corridor, and stops before cover (4.7418ms)
+✔ saved dash resumes at identical coordinates and cannot damage twice (159.3617ms)
+✔ ring locks its preview direction and all projectiles leave the visible safe gap (0.9286ms)
+✔ king avoids empty melee at range and immediate pattern repeats (0.4221ms)
+✔ both judgment orientations use the same rectangle for hit tests and previews (0.4606ms)
+✔ judgment ends with a heavy marked strike and a long kneeling opening (0.4721ms)
+✔ phase changes clear attacks and enemy shots, freeze danger and round trip mid-transition (90.2837ms)
+✔ summon timer runs during long openings and freeze with a visible one second portal (82.7491ms)
+✔ attack flash expires during recovery and while frozen (53.863ms)
+✔ king and guards cap overlapping new warnings at two (43.3911ms)
+✔ knight shield reduces frontal arrows and tower shots but not rear or damage over time (56.904ms)
+✔ new state validation rejects malformed moving dash and summon portal (63.1514ms)
+✔ Vera art is prepared for the actual gate and isolated portrait without first-floor overhead (3.4071ms)
+✔ existing aim, release and elite recovery select poses without changing saved attack clocks (0.448ms)
+✔ separate effects are read-only and do not restyle ordinary or friendly projectiles (0.7785ms)
+✔ Vera keeps the five-shot fan and ordinary snipers retain their original source label (3.1424ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 25
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1968.9108
+
+✖ failing tests:
+
+test at tests\unit\shadow-escape.test.js:19:1
+✖ blocked original portals use free floor positions away from the player (45.2334ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/shadow-escape.test.js:21:91)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

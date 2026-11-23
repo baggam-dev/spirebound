@@ -1,0 +1,112 @@
+{
+  "base": "http://127.0.0.1:4634",
+  "reports": [
+    {
+      "viewport": "pc",
+      "kind": "whole",
+      "actors": 1,
+      "stage": "whole"
+    },
+    {
+      "viewport": "pc",
+      "kind": "split",
+      "actors": 5,
+      "stage": "split"
+    },
+    {
+      "viewport": "pc",
+      "kind": "shadow",
+      "actors": 15
+    },
+    {
+      "viewport": "pc",
+      "kind": "roulette",
+      "layout": {
+        "height": 468,
+        "scroll": 468,
+        "width": 839.15625
+      }
+    },
+    {
+      "viewport": "pc",
+      "kind": "relic",
+      "layout": {
+        "height": 510,
+        "scroll": 510,
+        "width": 956.25
+      }
+    },
+    {
+      "viewport": "mobile",
+      "kind": "whole",
+      "actors": 1,
+      "stage": "whole"
+    },
+    {
+      "viewport": "mobile",
+      "kind": "split",
+      "actors": 5,
+      "stage": "split"
+    },
+    {
+      "viewport": "mobile",
+      "kind": "shadow",
+      "actors": 15
+    },
+    {
+      "viewport": "mobile",
+      "kind": "roulette",
+      "layout": {
+        "height": 333,
+        "scroll": 333,
+        "width": 725.828125
+      }
+    },
+    {
+      "viewport": "mobile",
+      "kind": "relic",
+      "layout": {
+        "height": 368,
+        "scroll": 368,
+        "width": 807.515625
+      }
+    },
+    {
+      "viewport": "small-reduced",
+      "kind": "whole",
+      "actors": 1,
+      "stage": "whole"
+    },
+    {
+      "viewport": "small-reduced",
+      "kind": "split",
+      "actors": 5,
+      "stage": "split"
+    },
+    {
+      "viewport": "small-reduced",
+      "kind": "shadow",
+      "actors": 15
+    },
+    {
+      "viewport": "small-reduced",
+      "kind": "roulette",
+      "layout": {
+        "height": 308,
+        "scroll": 308,
+        "width": 636.390625
+      }
+    },
+    {
+      "viewport": "small-reduced",
+      "kind": "relic",
+      "layout": {
+        "height": 338,
+        "scroll": 338,
+        "width": 705.59375
+      }
+    }
+  ],
+  "errors": [],
+  "posts": 0
+}

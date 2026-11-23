@@ -3442,3 +3442,6 @@ utilityUseState로기존실사용조건을공유하고 canCastUtility는같은re
 수정 runtime3: src/world/shadow-escape.js, src/world/remnant-hunt.js, src/game/engine.js. tests2에 신규3회귀 작성(15체 간격, 기존 포털 전부 막힘, 출입구에서 치명타 직후 조각 정산)·미실행. 1~4단계 주요 수치/이관/보상/UI 경로도 소스로 재확인했으며 전체 실행 검증을 대신하지 않는다.
 마지막 성공 확인 git diff --check·소스/차분 읽기만. 테스트/구문 실행/서버·브라우저/실기기/푸시/배포 없음. 1~6단계 누적 실행 검증 대기·운영0.62 유지. 실행 중 명령/차단 없음. 다음 최종 배포 명시 지시 후 누적 테스트·QA와 필요한 수정, 푸시·배포·공개 확인. 그 전에는 승인된 로컬 수정만 진행한다.
 
+
+## 0.63 배포 전 검증 통과 (2026-11-23)
+전체 node --test --test-concurrency4 985/985통과·실패0(full-final.log),집중26통과. Edge PC/가로모바일/소형reduced15 + 아트3 =18시나리오 오류0/점수POST0, 육안전체/모바일UI/배우확인. 선택brutePromise필수로딩교착·실제반경소환배정수정포함. source/API/header0.63.0-prebeta·DB/시즌/원본저장보존. 다음커밋푸시→공식deploy.ps1→공개바이트/health/PC모바일타이틀확인. 운영성공확인전0.62유지·차단없음.

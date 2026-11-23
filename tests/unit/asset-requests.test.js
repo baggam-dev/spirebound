@@ -34,7 +34,8 @@ test('selected portraits do not require every monster or any dungeon hall',()=>{
 test('fresh return saves prepare descent-only enemies without making first ascent download them',()=>{
  const normal=assetPlanFiles(floorAssetPlan(0)),returning=assetPlanFiles(floorAssetPlan(0,{returning:true}));
  for(const file of ['ambusher-reference-atlas.png','ringcaster-reference-atlas.png','strafer-reference-atlas.png','feedback-demons-v1.png']){assert.equal(normal.includes(file),false);assert.equal(returning.includes(file),true);}
- for(const type of ['bat','soldier','archer','captain'])assert.equal(returning.includes('demon-'+type+'-reference-atlas.png'),true,'escape waves');
+ assert.ok(returning.includes('demon-bat-compact-v1.png'));
+ for(const type of ['soldier','archer','captain'])assert.equal(returning.includes('demon-'+type+'-reference-atlas.png'),true,'legacy escape waves');
 });
 test('rare upper-floor expeditions and chest bosses are loaded from the actual roster',()=>{
  const base=assetPlanFiles(floorAssetPlan(0));assert.equal(base.includes('prism-reference-atlas.png'),false);

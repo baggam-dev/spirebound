@@ -1,0 +1,55 @@
+✔ imported images do not request a source until their pack is activated (4.1836ms)
+✔ an already activated source starts immediately; replacing a deferred source never starts the stale URL (0.7628ms)
+✔ all floor packs point at existing originals and floor1 excludes later bosses and halls (475.9239ms)
+✔ selected portraits do not require every monster or any dungeon hall (1.8104ms)
+✔ fresh return saves prepare descent-only enemies without making first ascent download them (0.9219ms)
+✔ rare upper-floor expeditions and chest bosses are loaded from the actual roster (3.4169ms)
+✔ floor discovery covers later rooms while a combat check can inspect only its current room (1.5289ms)
+✔ all descent raw damage resolves to one heart while ascent and shields retain their rules (1196.5687ms)
+✔ descent heavy projectiles produce one-heart damage in live simulation (394.7222ms)
+✔ gate guardians use combo/dash and fan/ring patterns with faster recovery (260.239ms)
+✔ king overhaul scales previous health once and shortens phase recovery (113.2173ms)
+✔ cover-stopped gate dash exposes a saved counter window, unobstructed dash does not (9.784ms)
+✔ king counter window requires avoiding every strike in the combo (2.6838ms)
+✔ counter window survives reload and allows contact without free collision damage (686.7181ms)
+✔ formation first attacks stagger frontline ranged and support while limiting support count (10.5542ms)
+✔ eight connected floors place three bosses and flowers only on upper ascent floors (7130.577ms)
+✔ all eight ascent and descent transitions preserve gates, maps and key timing (125.2485ms)
+✔ legacy two and four floor saves keep their maps and final key floor (360.6161ms)
+✔ prism emits 18 reflected rounds and fixed five beams resume identically (3.6047ms)
+✖ accumulated shadow arrivals use separate positions without clearing earlier rounds (479.3726ms)
+✔ blocked original portals use free floor positions away from the player (148.4101ms)
+✔ five timed shadow rounds each summon one boss and two escorts without legacy bats (786.3144ms)
+✔ opening retains living enemies and projectiles and permits escape without kills (206.5355ms)
+✔ round progress reloads without duplicate summons or a second health reduction (184.2083ms)
+✔ slime splits once, children retain their shadow identity and cannot split again (186.7287ms)
+✔ commander remains phase one and Mordo remains final phase at full and low health (241.6017ms)
+✔ shadow deaths do not grant original boss rewards or alter run completion (138.6849ms)
+✔ return floor asset plan includes every future shadow boss before the first round (68.6451ms)
+✔ malformed shadow saves reject wrong rounds, health scaling and phase limits (189.2796ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 28
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9640.9953
+
+✖ failing tests:
+
+test at tests\unit\shadow-escape.test.js:15:1
+✖ accumulated shadow arrivals use separate positions without clearing earlier rounds (479.3726ms)
+  AssertionError [ERR_ASSERTION]: arrivals must not stack
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/shadow-escape.test.js:17:64)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

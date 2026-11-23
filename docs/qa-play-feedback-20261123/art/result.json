@@ -1,0 +1,22 @@
+{
+  "base": "http://127.0.0.1:4634",
+  "reports": [
+    {
+      "viewport": "pc",
+      "kind": "redesign",
+      "actors": 2
+    },
+    {
+      "viewport": "mobile",
+      "kind": "redesign",
+      "actors": 2
+    },
+    {
+      "viewport": "small-reduced",
+      "kind": "redesign",
+      "actors": 2
+    }
+  ],
+  "errors": [],
+  "posts": 0
+}
