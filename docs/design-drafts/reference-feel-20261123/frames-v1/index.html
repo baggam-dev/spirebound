@@ -1,0 +1,33 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spirebound · 프레임 패키지 01</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#10131a;color:#dfd8c9;font:16px system-ui,sans-serif}main{max-width:1200px;margin:auto;padding:24px}small,a{color:#c9ac72}h1{font-size:28px}h2{font-size:22px;margin-top:36px}p{line-height:1.7;color:#aeb5c2}button,select,input{font:inherit}button,select{padding:10px 14px;background:#202631;color:#ecdcb7;border:1px solid #79623e;min-height:44px}nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:20px 0}canvas{display:block;width:100%;image-rendering:pixelated;border:1px solid #49494a}.strip{overflow-x:auto;border:1px solid #343943}.strip img{display:block;max-width:none;width:1152px;image-rendering:pixelated}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{padding:16px;background:#191e27;border:1px solid #343943}.card img{display:block;max-width:100%;height:auto;image-rendering:pixelated}.source{max-width:100%;height:auto;image-rendering:pixelated}label{display:flex;align-items:center;gap:8px}input[type=range]{width:min(300px,70vw)}@media(max-width:680px){main{padding:14px}.grid{grid-template-columns:1fr}}</style>
+<main><small>SPIREBOUND / FRAME PACKAGE 01</small><h1>캐릭터·문·이펙트, 같은 화면에서</h1><p>검토용 4시트·28핵심 프레임입니다. 기존 주인공과 모르도의 해골형을 기준으로 제작했습니다. 아래는 배치·타이밍 시안이며 실제 게임플레이가 아닙니다. 중간 모션 프레임과 다른 보스 페이즈는 포함하지 않았습니다.</p>
+<nav><select id="kind" aria-label="장면"><option value="hit">사격 → 명중</option><option value="clear" selected>보스 격파 → 문 개방</option></select><button id="play">일시정지</button><button id="replay">처음부터</button><label>속도 <select id="speed"><option value="0.5" selected>느리게 ½</option><option value="1">시안 1×</option></select></label><label>시점 <input id="seek" type="range" min="0" max="2.6" step="0.01" value="0"></label></nav>
+<canvas id="scene" width="960" height="540" aria-label="프레임 조합 시안"></canvas><p id="note" role="status">이미지를 읽는 중입니다.</p>
+<h2>논리 크기 1× 비교</h2><p>가로로 스크롤해서 보세요. 주인공 몸체58px·모르도92.4px는 현재 표시 크기를 기준으로 삼았습니다. 큰 봉인문92px 높이는 제안값이며 일반문80×35 규격의 대체품이 아닙니다.</p><div class="strip"><img src="native-contact.png" alt="주인공6·모르도6·문4·이펙트12의 실제 논리 크기 비교"></div>
+<h2>핵심 자세 재생 · 3× 확대</h2><p>GIF는 핵심 자세를 이어 보는 느린 검토용입니다. 게임의 실제 공격 속도나 최종 모션 품질을 뜻하지 않습니다.</p><div class="grid">
+<article class="card"><h3>주인공 사격</h3><img src="hero-attack.gif" alt="대기·당김·발사·회수"><a href="hero-review.png">피격·착지까지 6자세</a></article>
+<article class="card"><h3>모르도 공격</h3><img src="mordo-attack.gif" alt="대기·준비·공격 회수"><a href="mordo-review.png">모르도 6자세</a></article>
+<article class="card"><h3>모르도 붕괴</h3><img src="mordo-collapse.gif" alt="피격·균열·붕괴"><p>몸체와 별도 이펙트를 분리했습니다.</p></article>
+<article class="card"><h3>문 상태</h3><img src="door-review.png" alt="봉인·해제·개방·붕괴"><p>정면 큰 봉인문 시안입니다. 일반문 방향별 변형은 후속 범위입니다.</p></article>
+<article class="card"><h3>명중·파열·보상, 별도 레이어</h3><img src="fx-impact.gif" alt="명중4프레임"><img src="fx-fracture.gif" alt="파열4프레임"><img src="fx-reward.gif" alt="보상4프레임"></article>
+<article class="card"><h3>이펙트 프레임 비교</h3><a href="fx-review.png"><img src="fx-review.png" alt="별도이펙트12프레임"></a></article></div>
+<h2>제작 상태</h2><p>선택 원본4장의 크기·투명 채널, 작은 크기용28프레임의 투명도·48색 한도·핵심 픽셀 셀 경계를 정적으로 확인했습니다. 게임 반영·실기기·성능·연속 동작 검증은 하지 않았습니다. 원본의 세부 질감과 일부 자세 차이는 후속 픽셀 정리·중간 프레임 제작이 필요합니다.</p><p><a href="README.md">제작·제약 기록</a> · <a href="frame-map.json">좌표·기준점</a> · <a href="asset-manifest.json">출처·승인 상태</a> · <a href="prompts.md">생성 프롬프트</a></p></main>
+<script>
+const scene=document.getElementById('scene'),note=document.getElementById('note'),play=document.getElementById('play'),replay=document.getElementById('replay'),kind=document.getElementById('kind'),speed=document.getElementById('speed'),seek=document.getElementById('seek');
+const c=scene.getContext('2d'),images={hero:[],mordo:[],door:[],fx:[]};let ready=false,playing=true,t=0,last=performance.now();
+Promise.all(Object.entries({hero:6,mordo:6,door:4,fx:12}).flatMap(([family,n])=>Array.from({length:n},(_,i)=>new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>{images[family][i]=im;resolve();};im.onerror=reject;im.src='native/'+family+'-'+String(i).padStart(2,'0')+'.png';})))).then(()=>{ready=true;last=performance.now();}).catch(()=>{note.textContent='이미지를 읽지 못했습니다. 이 HTML과 native 폴더를 함께 보관하세요.';});
+play.onclick=()=>{playing=!playing;play.textContent=playing?'일시정지':'재생';};replay.onclick=()=>{t=0;};kind.onchange=()=>{t=0;};seek.oninput=()=>{t=Number(seek.value);playing=false;play.textContent='재생';};
+function sprite(family,index,x,y,alpha=1){const im=images[family][index];if(!im)return;const pivot=family==='hero'?[64,90]:family==='mordo'?[96,132]:family==='door'?[64,118]:[64,64];c.save();c.globalAlpha=alpha;c.imageSmoothingEnabled=false;c.drawImage(im,Math.round(x-pivot[0]),Math.round(y-pivot[1]));c.restore();}
+function frame(now){const dt=Math.max(0,Math.min(.1,(now-last)/1000));last=now;if(ready){if(playing)t=(t+dt*Number(speed.value))%2.6;seek.value=t;
+ c.fillStyle='#171c25';c.fillRect(0,0,960,540);for(let y=75;y<530;y+=40)for(let x=0;x<960;x+=64){c.fillStyle=(x/64+y)%3?'#232a34':'#272e38';c.fillRect(x+(y%80?0:32),y,62,38);}c.fillStyle='#393e46';c.fillRect(20,50,920,25);c.fillStyle='#71644d';c.fillRect(20,75,920,3);
+ const clear=kind.value==='clear',hitAt=.5,h=t<.25?0:t<.43?1:t<.57?2:t<.8?3:0;
+ const m=t<hitAt?0:t<.65?3:clear?(t<.9?4:5):0;const fade=clear?Math.max(0,Math.min(1,(1.35-t)/.4)):1;
+ sprite('door',clear&&t>1.4?2:0,480,155);sprite('hero',h,280,370);if(fade>0)sprite('mordo',m,650,350,fade);
+ if(t>.43&&t<hitAt){const q=(t-.43)/(hitAt-.43);c.fillStyle='#f0d595';c.fillRect(Math.round(310+q*330),315,16,2);}
+ if(t>=hitAt&&t<hitAt+.22)sprite('fx',Math.min(3,Math.floor((t-hitAt)/.055)),650,315);
+ if(clear&&t>.65&&t<1.2)sprite('fx',4+Math.min(3,Math.floor((t-.65)/.1375)),650,310);
+ if(clear&&t>1.15&&t<1.95)sprite('fx',8+Math.min(3,Math.floor((t-1.15)/.2)),650-(t-1.15)*160,320);
+ c.fillStyle='#aeb6c3';c.font='14px system-ui';c.fillText('프레임 조합 시안 · 배경은 배치 가이드 · 무음',28,510);
+ note.textContent=t<hitAt?'준비 → 당김 → 발사':clear?(t<.9?'국소 명중 → 몸체 균열':t<1.4?'붕괴 → 별도 파편':t<1.95?'문 개방 → 보상 잔광':'마무리'):'명중 → 회수';
+ }requestAnimationFrame(frame);}requestAnimationFrame(frame);
+</script></html>

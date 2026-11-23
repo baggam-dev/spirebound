@@ -1,0 +1,1000 @@
+{
+  "review_only": true,
+  "production_ready": false,
+  "threshold": 192,
+  "palette_limit": 48,
+  "families": {
+    "hero": {
+      "source": "hero-poses-source.png",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "source_alpha": [
+        0,
+        254
+      ],
+      "native_canvas": [
+        128,
+        104
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "name": "대기",
+          "source_rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "core_bounds": [
+            114,
+            43,
+            421,
+            473
+          ],
+          "scale": 0.134884,
+          "source_pivot": [
+            256,
+            470
+          ],
+          "output_pivot": [
+            64,
+            90
+          ],
+          "edge_content": false,
+          "native": "native/hero-00.png",
+          "native_bounds": [
+            44,
+            33,
+            86,
+            91
+          ]
+        },
+        {
+          "index": 1,
+          "name": "당김",
+          "source_rect": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "core_bounds": [
+            53,
+            17,
+            434,
+            471
+          ],
+          "scale": 0.134884,
+          "source_pivot": [
+            256,
+            470
+          ],
+          "output_pivot": [
+            64,
+            90
+          ],
+          "edge_content": false,
+          "native": "native/hero-01.png",
+          "native_bounds": [
+            36,
+            29,
+            87,
+            90
+          ]
+        },
+        {
+          "index": 2,
+          "name": "발사",
+          "source_rect": [
+            1024,
+            0,
+            1536,
+            512
+          ],
+          "core_bounds": [
+            57,
+            42,
+            439,
+            472
+          ],
+          "scale": 0.134884,
+          "source_pivot": [
+            256,
+            470
+          ],
+          "output_pivot": [
+            64,
+            90
+          ],
+          "edge_content": false,
+          "native": "native/hero-02.png",
+          "native_bounds": [
+            37,
+            33,
+            88,
+            91
+          ]
+        },
+        {
+          "index": 3,
+          "name": "회수",
+          "source_rect": [
+            0,
+            512,
+            512,
+            1024
+          ],
+          "core_bounds": [
+            78,
+            51,
+            427,
+            467
+          ],
+          "scale": 0.134884,
+          "source_pivot": [
+            256,
+            466
+          ],
+          "output_pivot": [
+            64,
+            90
+          ],
+          "edge_content": false,
+          "native": "native/hero-03.png",
+          "native_bounds": [
+            40,
+            34,
+            87,
+            90
+          ]
+        },
+        {
+          "index": 4,
+          "name": "피격",
+          "source_rect": [
+            512,
+            512,
+            1024,
+            1024
+          ],
+          "core_bounds": [
+            40,
+            69,
+            382,
+            465
+          ],
+          "scale": 0.134884,
+          "source_pivot": [
+            256,
+            460
+          ],
+          "output_pivot": [
+            64,
+            90
+          ],
+          "edge_content": false,
+          "native": "native/hero-04.png",
+          "native_bounds": [
+            34,
+            37,
+            80,
+            91
+          ]
+        },
+        {
+          "index": 5,
+          "name": "착지",
+          "source_rect": [
+            1024,
+            512,
+            1536,
+            1024
+          ],
+          "core_bounds": [
+            22,
+            79,
+            402,
+            460
+          ],
+          "scale": 0.134884,
+          "source_pivot": [
+            256,
+            460
+          ],
+          "output_pivot": [
+            64,
+            90
+          ],
+          "edge_content": false,
+          "native": "native/hero-05.png",
+          "native_bounds": [
+            32,
+            39,
+            83,
+            90
+          ]
+        }
+      ]
+    },
+    "mordo": {
+      "source": "mordo-poses-alpha-v2.png",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "source_alpha": [
+        0,
+        254
+      ],
+      "native_canvas": [
+        192,
+        152
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "name": "대기",
+          "source_rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "core_bounds": [
+            38,
+            96,
+            492,
+            479
+          ],
+          "scale": 0.241253,
+          "source_pivot": [
+            256,
+            472
+          ],
+          "output_pivot": [
+            96,
+            132
+          ],
+          "edge_content": false,
+          "native": "native/mordo-00.png",
+          "native_bounds": [
+            43,
+            41,
+            153,
+            134
+          ]
+        },
+        {
+          "index": 1,
+          "name": "공격 준비",
+          "source_rect": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "core_bounds": [
+            42,
+            22,
+            442,
+            480
+          ],
+          "scale": 0.241253,
+          "source_pivot": [
+            256,
+            472
+          ],
+          "output_pivot": [
+            96,
+            132
+          ],
+          "edge_content": false,
+          "native": "native/mordo-01.png",
+          "native_bounds": [
+            44,
+            23,
+            141,
+            134
+          ]
+        },
+        {
+          "index": 2,
+          "name": "공격 회수",
+          "source_rect": [
+            1024,
+            0,
+            1536,
+            512
+          ],
+          "core_bounds": [
+            10,
+            123,
+            488,
+            477
+          ],
+          "scale": 0.241253,
+          "source_pivot": [
+            256,
+            472
+          ],
+          "output_pivot": [
+            96,
+            132
+          ],
+          "edge_content": false,
+          "native": "native/mordo-02.png",
+          "native_bounds": [
+            36,
+            48,
+            152,
+            134
+          ]
+        },
+        {
+          "index": 3,
+          "name": "피격",
+          "source_rect": [
+            0,
+            512,
+            512,
+            1024
+          ],
+          "core_bounds": [
+            34,
+            87,
+            475,
+            456
+          ],
+          "scale": 0.241253,
+          "source_pivot": [
+            256,
+            458
+          ],
+          "output_pivot": [
+            96,
+            132
+          ],
+          "edge_content": false,
+          "native": "native/mordo-03.png",
+          "native_bounds": [
+            42,
+            43,
+            149,
+            132
+          ]
+        },
+        {
+          "index": 4,
+          "name": "균열",
+          "source_rect": [
+            512,
+            512,
+            1024,
+            1024
+          ],
+          "core_bounds": [
+            16,
+            75,
+            437,
+            434
+          ],
+          "scale": 0.241253,
+          "source_pivot": [
+            256,
+            446
+          ],
+          "output_pivot": [
+            96,
+            132
+          ],
+          "edge_content": false,
+          "native": "native/mordo-04.png",
+          "native_bounds": [
+            38,
+            42,
+            140,
+            129
+          ]
+        },
+        {
+          "index": 5,
+          "name": "붕괴",
+          "source_rect": [
+            1024,
+            512,
+            1536,
+            1024
+          ],
+          "core_bounds": [
+            2,
+            124,
+            472,
+            462
+          ],
+          "scale": 0.241253,
+          "source_pivot": [
+            256,
+            430
+          ],
+          "output_pivot": [
+            96,
+            132
+          ],
+          "edge_content": false,
+          "native": "native/mordo-05.png",
+          "native_bounds": [
+            34,
+            58,
+            148,
+            140
+          ]
+        }
+      ]
+    },
+    "door": {
+      "source": "door-states-source.png",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "source_alpha": [
+        0,
+        254
+      ],
+      "native_canvas": [
+        128,
+        128
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "name": "봉인",
+          "source_rect": [
+            0,
+            0,
+            768,
+            512
+          ],
+          "core_bounds": [
+            220,
+            15,
+            549,
+            482
+          ],
+          "scale": 0.197002,
+          "source_pivot": [
+            384,
+            480
+          ],
+          "output_pivot": [
+            64,
+            118
+          ],
+          "edge_content": false,
+          "native": "native/door-00.png",
+          "native_bounds": [
+            31,
+            26,
+            96,
+            118
+          ]
+        },
+        {
+          "index": 1,
+          "name": "해제",
+          "source_rect": [
+            768,
+            0,
+            1536,
+            512
+          ],
+          "core_bounds": [
+            220,
+            15,
+            549,
+            482
+          ],
+          "scale": 0.197002,
+          "source_pivot": [
+            384,
+            480
+          ],
+          "output_pivot": [
+            64,
+            118
+          ],
+          "edge_content": false,
+          "native": "native/door-01.png",
+          "native_bounds": [
+            31,
+            26,
+            96,
+            118
+          ]
+        },
+        {
+          "index": 2,
+          "name": "개방",
+          "source_rect": [
+            0,
+            512,
+            768,
+            1024
+          ],
+          "core_bounds": [
+            220,
+            15,
+            549,
+            482
+          ],
+          "scale": 0.197002,
+          "source_pivot": [
+            384,
+            480
+          ],
+          "output_pivot": [
+            64,
+            118
+          ],
+          "edge_content": false,
+          "native": "native/door-02.png",
+          "native_bounds": [
+            31,
+            26,
+            96,
+            118
+          ]
+        },
+        {
+          "index": 3,
+          "name": "붕괴",
+          "source_rect": [
+            768,
+            512,
+            1536,
+            1024
+          ],
+          "core_bounds": [
+            220,
+            16,
+            614,
+            482
+          ],
+          "scale": 0.197002,
+          "source_pivot": [
+            384,
+            480
+          ],
+          "output_pivot": [
+            64,
+            118
+          ],
+          "edge_content": false,
+          "native": "native/door-03.png",
+          "native_bounds": [
+            31,
+            27,
+            109,
+            118
+          ]
+        }
+      ]
+    },
+    "fx": {
+      "source": "fx-source.png",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "source_alpha": [
+        0,
+        254
+      ],
+      "native_canvas": [
+        128,
+        128
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "name": "명중 1",
+          "source_rect": [
+            0,
+            0,
+            384,
+            341
+          ],
+          "core_bounds": [
+            128,
+            135,
+            252,
+            239
+          ],
+          "scale": 0.083333,
+          "source_pivot": [
+            192.0,
+            170.5
+          ],
+          "output_pivot": [
+            64,
+            64
+          ],
+          "edge_content": false,
+          "native": "native/fx-00.png",
+          "native_bounds": [
+            59,
+            62,
+            68,
+            70
+          ]
+        },
+        {
+          "index": 1,
+          "name": "명중 2",
+          "source_rect": [
+            384,
+            0,
+            768,
+            341
+          ],
+          "core_bounds": [
+            73,
+            96,
+            288,
+            275
+          ],
+          "scale": 0.083333,
+          "source_pivot": [
+            192.0,
+            170.5
+          ],
+          "output_pivot": [
+            64,
+            64
+          ],
+          "edge_content": false,
+          "native": "native/fx-01.png",
+          "native_bounds": [
+            54,
+            58,
+            72,
+            73
+          ]
+        },
+        {
+          "index": 2,
+          "name": "명중 3",
+          "source_rect": [
+            768,
+            0,
+            1152,
+            341
+          ],
+          "core_bounds": [
+            41,
+            60,
+            319,
+            297
+          ],
+          "scale": 0.083333,
+          "source_pivot": [
+            192.0,
+            170.5
+          ],
+          "output_pivot": [
+            64,
+            64
+          ],
+          "edge_content": false,
+          "native": "native/fx-02.png",
+          "native_bounds": [
+            51,
+            55,
+            75,
+            73
+          ]
+        },
+        {
+          "index": 3,
+          "name": "명중 4",
+          "source_rect": [
+            1152,
+            0,
+            1536,
+            341
+          ],
+          "core_bounds": [
+            72,
+            69,
+            325,
+            286
+          ],
+          "scale": 0.083333,
+          "source_pivot": [
+            192.0,
+            170.5
+          ],
+          "output_pivot": [
+            64,
+            64
+          ],
+          "edge_content": false,
+          "native": "native/fx-03.png",
+          "native_bounds": [
+            56,
+            56,
+            75,
+            72
+          ]
+        },
+        {
+          "index": 4,
+          "name": "파열 1",
+          "source_rect": [
+            0,
+            341,
+            384,
+            682
+          ],
+          "core_bounds": [
+            119,
+            67,
+            262,
+            267
+          ],
+          "scale": 0.25,
+          "source_pivot": [
+            192.0,
+            170.5
+          ],
+          "output_pivot": [
+            64,
+            64
+          ],
+          "edge_content": false,
+          "native": "native/fx-04.png",
+          "native_bounds": [
+            46,
+            38,
+            81,
+            87
+          ]
+        },
+        {
+          "index": 5,
+          "name": "파열 2",
+          "source_rect": [
+            384,
+            341,
+            768,
+            682
+          ],
+          "core_bounds": [
+            48,
+            57,
+            306,
+            292
+          ],
+          "scale": 0.25,
+          "source_pivot": [
+            192.0,
+            170.5
+          ],
+          "output_pivot": [
+            64,
+            64
+          ],
+          "edge_content": false,
+          "native": "native/fx-05.png",
+          "native_bounds": [
+            28,
+            35,
+            92,
+            94
+          ]
+        },
+        {
+          "index": 6,
+          "name": "파열 3",
+          "source_rect": [
+            768,
+            341,
+            1152,
+            682
+          ],
+          "core_bounds": [
+            40,
+            27,
+            336,
+            304
+          ],
+          "scale": 0.25,
+          "source_pivot": [
+            192.0,
+            170.5
+          ],
+          "output_pivot": [
+            64,
+            64
+          ],
+          "edge_content": false,
+          "native": "native/fx-06.png",
+          "native_bounds": [
+            26,
+            28,
+            100,
+            97
+          ]
+        },
+        {
+          "index": 7,
+          "name": "파열 4",
+          "source_rect": [
+            1152,
+            341,
+            1536,
+            682
+          ],
+          "core_bounds": [
+            49,
+            41,
+            326,
+            286
+          ],
+          "scale": 0.25,
+          "source_pivot": [
+            192.0,
+            170.5
+          ],
+          "output_pivot": [
+            64,
+            64
+          ],
+          "edge_content": false,
+          "native": "native/fx-07.png",
+          "native_bounds": [
+            28,
+            31,
+            97,
+            92
+          ]
+        },
+        {
+          "index": 8,
+          "name": "보상 1",
+          "source_rect": [
+            0,
+            682,
+            384,
+            1024
+          ],
+          "core_bounds": [
+            122,
+            155,
+            264,
+            271
+          ],
+          "scale": 0.166667,
+          "source_pivot": [
+            192.0,
+            171.0
+          ],
+          "output_pivot": [
+            64,
+            64
+          ],
+          "edge_content": false,
+          "native": "native/fx-08.png",
+          "native_bounds": [
+            52,
+            62,
+            76,
+            81
+          ]
+        },
+        {
+          "index": 9,
+          "name": "보상 2",
+          "source_rect": [
+            384,
+            682,
+            768,
+            1024
+          ],
+          "core_bounds": [
+            103,
+            58,
+            267,
+            284
+          ],
+          "scale": 0.166667,
+          "source_pivot": [
+            192.0,
+            171.0
+          ],
+          "output_pivot": [
+            64,
+            64
+          ],
+          "edge_content": false,
+          "native": "native/fx-09.png",
+          "native_bounds": [
+            49,
+            46,
+            76,
+            83
+          ]
+        },
+        {
+          "index": 10,
+          "name": "보상 3",
+          "source_rect": [
+            768,
+            682,
+            1152,
+            1024
+          ],
+          "core_bounds": [
+            55,
+            88,
+            336,
+            274
+          ],
+          "scale": 0.166667,
+          "source_pivot": [
+            192.0,
+            171.0
+          ],
+          "output_pivot": [
+            64,
+            64
+          ],
+          "edge_content": false,
+          "native": "native/fx-10.png",
+          "native_bounds": [
+            41,
+            51,
+            88,
+            82
+          ]
+        },
+        {
+          "index": 11,
+          "name": "보상 4",
+          "source_rect": [
+            1152,
+            682,
+            1536,
+            1024
+          ],
+          "core_bounds": [
+            130,
+            103,
+            284,
+            245
+          ],
+          "scale": 0.166667,
+          "source_pivot": [
+            192.0,
+            171.0
+          ],
+          "output_pivot": [
+            64,
+            64
+          ],
+          "edge_content": false,
+          "native": "native/fx-11.png",
+          "native_bounds": [
+            54,
+            53,
+            79,
+            77
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,15 +1,27 @@
 {
   "date": "2026-11-23",
-  "assets": [{
-    "file": "art-board-v1.png",
-    "role": "Six-panel art and combat feedback concept board; review only",
-    "source": {"kind": "generated", "tool": "built-in image_gen.imagegen", "calls": 1},
-    "references": ["assets/images/hero-reference-atlas.png", "assets/images/mordo-presentation-poses-v2.png"],
-    "prompt": "art-board-prompt.md",
-    "edits": "Copied generated PNG without changes; original retained",
-    "approval_status": "Representative new art package awaiting review; existing visual feedback direction authorized",
-    "technical_checks_passed": false,
-    "shipping": false,
-    "restrictions": "Not a sliced sprite atlas. No alpha/frame/grid/native-scale QA. Do not import into production. Use existing approved hero and boss identities when authoring asset families. No third-party video frames or audio used as shipped assets."
-  }]
+  "assets": [
+    {
+      "file": "art-board-v1.png",
+      "role": "Six-panel art and combat feedback concept board; review only",
+      "source": {
+        "kind": "generated",
+        "tool": "built-in image_gen.imagegen",
+        "calls": 1
+      },
+      "references": [
+        "assets/images/hero-reference-atlas.png",
+        "assets/images/mordo-presentation-poses-v2.png"
+      ],
+      "prompt": "art-board-prompt.md",
+      "edits": "Copied generated PNG without changes; original retained",
+      "approval_status": "Representative new art package awaiting review; existing visual feedback direction authorized",
+      "technical_checks_passed": false,
+      "shipping": false,
+      "restrictions": "Not a sliced sprite atlas. No alpha/frame/grid/native-scale QA. Do not import into production. Use existing approved hero and boss identities when authoring asset families. No third-party video frames or audio used as shipped assets."
+    }
+  ],
+  "linked_review_packages": [
+    "frames-v1/asset-manifest.json"
+  ]
 }

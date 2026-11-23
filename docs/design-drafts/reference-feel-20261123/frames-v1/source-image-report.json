@@ -1,0 +1,85 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "docs/design-drafts/reference-feel-20261123/frames-v1/hero-poses-source.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2208115,
+      "color_count": ">65535",
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 254,
+      "transparent_pixels": 1052082,
+      "content_bounds": [
+        33,
+        14,
+        1502,
+        1024
+      ],
+      "problems": []
+    },
+    {
+      "path": "docs/design-drafts/reference-feel-20261123/frames-v1/mordo-poses-alpha-v2.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2306776,
+      "color_count": ">65535",
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 254,
+      "transparent_pixels": 989450,
+      "content_bounds": [
+        29,
+        16,
+        1519,
+        979
+      ],
+      "problems": []
+    },
+    {
+      "path": "docs/design-drafts/reference-feel-20261123/frames-v1/door-states-source.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1781259,
+      "color_count": ">65535",
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 254,
+      "transparent_pixels": 1129275,
+      "content_bounds": [
+        0,
+        12,
+        1534,
+        1024
+      ],
+      "problems": []
+    },
+    {
+      "path": "docs/design-drafts/reference-feel-20261123/frames-v1/fx-source.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1644843,
+      "color_count": ">65535",
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 254,
+      "transparent_pixels": 14009,
+      "content_bounds": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "problems": []
+    }
+  ]
+}

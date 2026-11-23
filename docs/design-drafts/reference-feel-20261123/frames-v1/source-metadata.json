@@ -1,0 +1,50 @@
+[
+  {
+    "file": "hero-poses-source.png",
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ]
+  },
+  {
+    "file": "mordo-poses-source.png",
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "alpha": [
+      54,
+      251
+    ]
+  },
+  {
+    "file": "door-states-source.png",
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ]
+  },
+  {
+    "file": "fx-source.png",
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ]
+  }
+]

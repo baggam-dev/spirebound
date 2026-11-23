@@ -1,0 +1,171 @@
+{
+  "date": "2026-11-24",
+  "built_in_calls": 5,
+  "production_assets_modified": false,
+  "assets": [
+    {
+      "family": "hero",
+      "file": "hero-poses-source.png",
+      "sha256": "31996a4ee0d021d0d7f5e93ce49fcb14471b0ec0744e07bf4c288596d07415cc",
+      "source": {
+        "kind": "generated",
+        "tool": "built-in image_gen.imagegen",
+        "references": [
+          "assets/images/hero-reference-atlas.png",
+          "docs/design-drafts/reference-feel-20261123/art-board-v1.png"
+        ],
+        "generation_calls": 1,
+        "correction_calls": 0
+      },
+      "prompt": "prompts.md",
+      "frames": [
+        "native/hero-00.png",
+        "native/hero-01.png",
+        "native/hero-02.png",
+        "native/hero-03.png",
+        "native/hero-04.png",
+        "native/hero-05.png"
+      ],
+      "frame_map": "frame-map.json",
+      "image_static_checks_passed": true,
+      "technical_checks_passed": false,
+      "approval_status": "Review package only; no production asset approval recorded",
+      "shipping": false,
+      "edits": [
+        "equal-grid slicing",
+        "shared standing-frame scale",
+        "manual draft pivots",
+        "nearest-neighbor resize",
+        "alpha threshold192 in derivatives",
+        "shared 47-color family palette plus canonical transparency"
+      ],
+      "restrictions": "Key poses only. No intermediate-motion, direction, phase-family, engine/native-device or performance approval. Source requests and exact compliance differ; see README."
+    },
+    {
+      "family": "mordo",
+      "file": "mordo-poses-alpha-v2.png",
+      "sha256": "ae697f0356e49e72b71a69723bd2555f1d4c4ab0807166b92e94d9c56fa418a7",
+      "source": {
+        "kind": "generated",
+        "tool": "built-in image_gen.imagegen",
+        "references": [
+          "assets/images/mordo-presentation-poses-v2.png",
+          "docs/design-drafts/reference-feel-20261123/art-board-v1.png"
+        ],
+        "generation_calls": 1,
+        "correction_calls": 1
+      },
+      "prompt": "prompts.md",
+      "frames": [
+        "native/mordo-00.png",
+        "native/mordo-01.png",
+        "native/mordo-02.png",
+        "native/mordo-03.png",
+        "native/mordo-04.png",
+        "native/mordo-05.png"
+      ],
+      "frame_map": "frame-map.json",
+      "image_static_checks_passed": true,
+      "technical_checks_passed": false,
+      "approval_status": "Review package only; no production asset approval recorded",
+      "shipping": false,
+      "edits": [
+        "equal-grid slicing",
+        "shared standing-frame scale",
+        "manual draft pivots",
+        "nearest-neighbor resize",
+        "alpha threshold192 in derivatives",
+        "shared 47-color family palette plus canonical transparency"
+      ],
+      "restrictions": "Key poses only. No intermediate-motion, direction, phase-family, engine/native-device or performance approval. Source requests and exact compliance differ; see README."
+    },
+    {
+      "family": "door",
+      "file": "door-states-source.png",
+      "sha256": "2e4f41cc260d5bb248217b962b87d03de9b93804a2322cdbaa601451a4610805",
+      "source": {
+        "kind": "generated",
+        "tool": "built-in image_gen.imagegen",
+        "references": [
+          "docs/design-drafts/reference-feel-20261123/art-board-v1.png"
+        ],
+        "generation_calls": 1,
+        "correction_calls": 0
+      },
+      "prompt": "prompts.md",
+      "frames": [
+        "native/door-00.png",
+        "native/door-01.png",
+        "native/door-02.png",
+        "native/door-03.png"
+      ],
+      "frame_map": "frame-map.json",
+      "image_static_checks_passed": true,
+      "technical_checks_passed": false,
+      "approval_status": "Review package only; no production asset approval recorded",
+      "shipping": false,
+      "edits": [
+        "equal-grid slicing",
+        "shared standing-frame scale",
+        "manual draft pivots",
+        "nearest-neighbor resize",
+        "alpha threshold192 in derivatives",
+        "shared 47-color family palette plus canonical transparency"
+      ],
+      "restrictions": "Key poses only. No intermediate-motion, direction, phase-family, engine/native-device or performance approval. Source requests and exact compliance differ; see README."
+    },
+    {
+      "family": "fx",
+      "file": "fx-source.png",
+      "sha256": "fd475c3ff940a989cb2a71dea0cf9c2b70e45d8323fbbaae7a379fea343eaf90",
+      "source": {
+        "kind": "generated",
+        "tool": "built-in image_gen.imagegen",
+        "references": [],
+        "generation_calls": 1,
+        "correction_calls": 0
+      },
+      "prompt": "prompts.md",
+      "frames": [
+        "native/fx-00.png",
+        "native/fx-01.png",
+        "native/fx-02.png",
+        "native/fx-03.png",
+        "native/fx-04.png",
+        "native/fx-05.png",
+        "native/fx-06.png",
+        "native/fx-07.png",
+        "native/fx-08.png",
+        "native/fx-09.png",
+        "native/fx-10.png",
+        "native/fx-11.png"
+      ],
+      "frame_map": "frame-map.json",
+      "image_static_checks_passed": true,
+      "technical_checks_passed": false,
+      "approval_status": "Review package only; no production asset approval recorded",
+      "shipping": false,
+      "edits": [
+        "equal-grid slicing",
+        "shared standing-frame scale",
+        "manual draft pivots",
+        "nearest-neighbor resize",
+        "alpha threshold192 in derivatives",
+        "shared 47-color family palette plus canonical transparency"
+      ],
+      "restrictions": "Key poses only. No intermediate-motion, direction, phase-family, engine/native-device or performance approval. Source requests and exact compliance differ; see README."
+    }
+  ],
+  "rejected_history": [
+    {
+      "file": "mordo-poses-source.png",
+      "reason": "Minimum alpha54; no fully clear background. Preserved as rejected draft, superseded by alpha-v2."
+    }
+  ],
+  "reports": [
+    "source-image-report.json",
+    "native-image-report.json",
+    "frame-map.json"
+  ],
+  "review_only": true
+}
