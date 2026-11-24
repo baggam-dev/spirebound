@@ -1,0 +1,519 @@
+{
+  "status": "review only; no runtime integration",
+  "tool": "built-in imagegen",
+  "calls": 4,
+  "prompt": "prompts.md",
+  "families": [
+    {
+      "family": "phase2",
+      "file": "phase2-source.png",
+      "sourceSha256": "678cfa734e7771501409d8c10367eaff708ba09f72e66c431e16380ed2a78fd1",
+      "sourceAlpha": [
+        0,
+        254
+      ],
+      "scale": 0.2531506849315069,
+      "idleFullSilhouetteHeight": 92.4,
+      "nativeSize": [
+        192,
+        152
+      ],
+      "pivot": [
+        96,
+        132
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "cell": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "coreBox": [
+            37,
+            102,
+            503,
+            467
+          ],
+          "sourceRoot": [
+            240,
+            466
+          ],
+          "minimumCoreMargin": 9,
+          "paste": [
+            45,
+            40
+          ]
+        },
+        {
+          "frame": 1,
+          "cell": [
+            512,
+            0,
+            512,
+            512
+          ],
+          "coreBox": [
+            40,
+            17,
+            442,
+            467
+          ],
+          "sourceRoot": [
+            250,
+            466
+          ],
+          "minimumCoreMargin": 17,
+          "paste": [
+            43,
+            18
+          ]
+        },
+        {
+          "frame": 2,
+          "cell": [
+            1024,
+            0,
+            512,
+            512
+          ],
+          "coreBox": [
+            27,
+            145,
+            507,
+            472
+          ],
+          "sourceRoot": [
+            275,
+            471
+          ],
+          "minimumCoreMargin": 5,
+          "paste": [
+            33,
+            49
+          ]
+        },
+        {
+          "frame": 3,
+          "cell": [
+            0,
+            512,
+            512,
+            512
+          ],
+          "coreBox": [
+            48,
+            16,
+            453,
+            466
+          ],
+          "sourceRoot": [
+            245,
+            465
+          ],
+          "minimumCoreMargin": 16,
+          "paste": [
+            46,
+            18
+          ]
+        },
+        {
+          "frame": 4,
+          "cell": [
+            512,
+            512,
+            512,
+            512
+          ],
+          "coreBox": [
+            28,
+            96,
+            497,
+            466
+          ],
+          "sourceRoot": [
+            255,
+            465
+          ],
+          "minimumCoreMargin": 15,
+          "paste": [
+            39,
+            38
+          ]
+        },
+        {
+          "frame": 5,
+          "cell": [
+            1024,
+            512,
+            512,
+            512
+          ],
+          "coreBox": [
+            21,
+            68,
+            458,
+            466
+          ],
+          "sourceRoot": [
+            290,
+            465
+          ],
+          "minimumCoreMargin": 21,
+          "paste": [
+            28,
+            31
+          ]
+        }
+      ]
+    },
+    {
+      "family": "phase3",
+      "file": "phase3-padding-v2.png",
+      "sourceSha256": "15f596f552763ac6ad51d5efa605fdeba61df66e92768b8509413de82df4ce89",
+      "sourceAlpha": [
+        0,
+        254
+      ],
+      "scale": 0.3291139240506329,
+      "idleFullSilhouetteHeight": 104,
+      "nativeSize": [
+        192,
+        152
+      ],
+      "pivot": [
+        96,
+        132
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "cell": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "coreBox": [
+            124,
+            100,
+            414,
+            416
+          ],
+          "sourceRoot": [
+            270,
+            415
+          ],
+          "minimumCoreMargin": 96,
+          "paste": [
+            48,
+            28
+          ]
+        },
+        {
+          "frame": 1,
+          "cell": [
+            512,
+            0,
+            512,
+            512
+          ],
+          "coreBox": [
+            98,
+            84,
+            401,
+            416
+          ],
+          "sourceRoot": [
+            270,
+            415
+          ],
+          "minimumCoreMargin": 84,
+          "paste": [
+            39,
+            23
+          ]
+        },
+        {
+          "frame": 2,
+          "cell": [
+            1024,
+            0,
+            512,
+            512
+          ],
+          "coreBox": [
+            67,
+            139,
+            425,
+            416
+          ],
+          "sourceRoot": [
+            275,
+            415
+          ],
+          "minimumCoreMargin": 67,
+          "paste": [
+            28,
+            41
+          ]
+        },
+        {
+          "frame": 3,
+          "cell": [
+            0,
+            512,
+            512,
+            512
+          ],
+          "coreBox": [
+            115,
+            56,
+            392,
+            394
+          ],
+          "sourceRoot": [
+            260,
+            393
+          ],
+          "minimumCoreMargin": 56,
+          "paste": [
+            48,
+            21
+          ]
+        },
+        {
+          "frame": 4,
+          "cell": [
+            512,
+            512,
+            512,
+            512
+          ],
+          "coreBox": [
+            103,
+            96,
+            407,
+            394
+          ],
+          "sourceRoot": [
+            270,
+            393
+          ],
+          "minimumCoreMargin": 96,
+          "paste": [
+            41,
+            34
+          ]
+        },
+        {
+          "frame": 5,
+          "cell": [
+            1024,
+            512,
+            512,
+            512
+          ],
+          "coreBox": [
+            70,
+            83,
+            375,
+            391
+          ],
+          "sourceRoot": [
+            290,
+            390
+          ],
+          "minimumCoreMargin": 70,
+          "paste": [
+            24,
+            31
+          ]
+        }
+      ]
+    },
+    {
+      "family": "fx",
+      "file": "fx-source.png",
+      "sourceSha256": "1e2608e2ee1f28303f0001fe49750e6612d5f7e0f058c57defe5115fab696cc8",
+      "sourceAlpha": [
+        0,
+        254
+      ],
+      "scale": 0.25,
+      "idleFullSilhouetteHeight": null,
+      "nativeSize": [
+        128,
+        128
+      ],
+      "pivot": [
+        64,
+        64
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "cell": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "coreBox": [
+            89,
+            159,
+            334,
+            360
+          ],
+          "sourceRoot": [
+            256,
+            256
+          ],
+          "minimumCoreMargin": 89,
+          "paste": [
+            22,
+            40
+          ]
+        },
+        {
+          "frame": 1,
+          "cell": [
+            512,
+            0,
+            512,
+            512
+          ],
+          "coreBox": [
+            25,
+            72,
+            444,
+            442
+          ],
+          "sourceRoot": [
+            256,
+            256
+          ],
+          "minimumCoreMargin": 25,
+          "paste": [
+            6,
+            18
+          ]
+        },
+        {
+          "frame": 2,
+          "cell": [
+            1024,
+            0,
+            512,
+            512
+          ],
+          "coreBox": [
+            71,
+            108,
+            364,
+            432
+          ],
+          "sourceRoot": [
+            256,
+            256
+          ],
+          "minimumCoreMargin": 71,
+          "paste": [
+            18,
+            27
+          ]
+        },
+        {
+          "frame": 3,
+          "cell": [
+            0,
+            512,
+            512,
+            512
+          ],
+          "coreBox": [
+            36,
+            116,
+            479,
+            411
+          ],
+          "sourceRoot": [
+            256,
+            256
+          ],
+          "minimumCoreMargin": 33,
+          "paste": [
+            9,
+            29
+          ]
+        },
+        {
+          "frame": 4,
+          "cell": [
+            512,
+            512,
+            512,
+            512
+          ],
+          "coreBox": [
+            25,
+            45,
+            461,
+            400
+          ],
+          "sourceRoot": [
+            256,
+            256
+          ],
+          "minimumCoreMargin": 25,
+          "paste": [
+            6,
+            11
+          ]
+        },
+        {
+          "frame": 5,
+          "cell": [
+            1024,
+            512,
+            512,
+            512
+          ],
+          "coreBox": [
+            36,
+            43,
+            471,
+            378
+          ],
+          "sourceRoot": [
+            256,
+            256
+          ],
+          "minimumCoreMargin": 36,
+          "paste": [
+            9,
+            11
+          ]
+        }
+      ]
+    }
+  ],
+  "rejected": [
+    {
+      "file": "phase3-source.png",
+      "sha256": "a27dfb0a531e065316b573c0e0dbd3df4b3b0ea21fef49b3de4fb646104e1a0d",
+      "reason": "core pixels touch cell boundaries in frames 1,2,4,5"
+    }
+  ],
+  "staticReport": "image-report.json",
+  "gameVerified": false,
+  "deployed": false,
+  "limitations": [
+    "Key poses only; no in-betweens, walking or directional family.",
+    "Manual body roots and common scale do not guarantee motion volume continuity.",
+    "Phase2 final draw is feedback at height92.4/feet21; phase3 resurrection first draw uses variable frame boxes/feet29.",
+    "GIF timing and FX placement are review compositions, not combat or phase transition clocks."
+  ]
+}

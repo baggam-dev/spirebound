@@ -1,0 +1,125 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/fx-00.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 128,
+      "bytes": 2888,
+      "color_count": 43,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 15399,
+      "content_bounds": [
+        22,
+        40,
+        83,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/fx-01.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 128,
+      "bytes": 6474,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 13555,
+      "content_bounds": [
+        6,
+        18,
+        111,
+        110
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/fx-02.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 128,
+      "bytes": 1784,
+      "color_count": 44,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 16017,
+      "content_bounds": [
+        18,
+        27,
+        91,
+        108
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/fx-03.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 128,
+      "bytes": 5892,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 14297,
+      "content_bounds": [
+        9,
+        29,
+        120,
+        102
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/fx-04.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 128,
+      "bytes": 4261,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 15132,
+      "content_bounds": [
+        6,
+        11,
+        115,
+        99
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/fx-05.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 128,
+      "bytes": 2016,
+      "color_count": 35,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 15947,
+      "content_bounds": [
+        9,
+        12,
+        118,
+        95
+      ],
+      "problems": []
+    }
+  ]
+}

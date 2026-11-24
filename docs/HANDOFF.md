@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 모르도2·부활3형 검토 가족
+~~~text
+착지연결뒤docs만작업. frames-mordo23-v1에2형6/장발부활3형6/별도FX6=18native·4GIF/접촉1x2x/밝은배경/index/원본4/전체prompt/sha/셀루트배율/build/manifest/report. builtin3+3형여백보정1;최초3형셀1/2/4/5경계접촉제외·padding-v2선택여백56px.2형5px무기끝/FX25·선택alpha0~254·핵심경계접촉0·native몸192x152/발96,132×12+FX128x128×6 alpha/48색크기18정적통과·접촉육안. 실제현재2형feedback높이92.4발21,3형resurrectedKing우선(장발인간·version1/HP30%↓)개별atlas박스발29;옛큰뿔해골3형은fallback임. 새3형대기104공통배율은모든기존자세크기일치아님. 게임src/assets미반영·게임구문테스트/브라우저푸시배포없음·운영0.63/누적37회귀미실행.다음우선부활경로안선택적포즈매핑·실패fallback/그림자구버전보존.피격전형활성화/중간패배보상오인금지.키포즈만·보행/중간/변신없음·실제모션/위험표시미검증.가로고정TODO유지·실행중명령차단없음.
+~~~
+
 ## 최신 복사용 인계 — 착지6프레임 로컬 연결
 ~~~text
 e798e06뒤사용자다음진행으로연결. assets/images/reference-hero-landing-frames-v1.png384x208검토atlas그대로복사·runtime-manifest/SHA/image-report(alpha48색크기통과). reference-frame-art선택적5가족/요청base4왕방5·필수Ready없음·실패fallback. hero-landing.js WeakMap0.18초6자세/효과줄이기3;직전업데이트관측roll종료만실제끝위치회복(벽중단포함),slash/첫관측/방/로드reset재생제외. 이동입력/좌표변화·사격준비/발사·시전피격경직죽음·새roll취소. game update beforeRoll/이동1회캡처·reset, pixel-world기존face/캐스트우선이후착지/일반순서. 전투/이동무적공격시간·저장/RNG변경없음. 추가4회귀작성만·누적37미실행·fixture개수갱신. 소스/diff/PNG정적만, 게임구문테스트/브라우저실기기/푸시배포없음·운영0.63. 다음모르도2~3형가족검토. 옛roll→착지/idle체적·실제전환가독성미검증,가로고정TODO/추가후기보존. 실행중명령차단없음.

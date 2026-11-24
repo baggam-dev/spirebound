@@ -1,0 +1,245 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/phase2-00.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 152,
+      "bytes": 13201,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 24409,
+      "content_bounds": [
+        45,
+        40,
+        163,
+        132
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/phase2-01.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 152,
+      "bytes": 14389,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 23982,
+      "content_bounds": [
+        43,
+        18,
+        145,
+        132
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/phase2-02.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 152,
+      "bytes": 12299,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 24699,
+      "content_bounds": [
+        33,
+        49,
+        155,
+        132
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/phase2-03.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 152,
+      "bytes": 14703,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 23788,
+      "content_bounds": [
+        46,
+        18,
+        149,
+        132
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/phase2-04.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 152,
+      "bytes": 13998,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 24084,
+      "content_bounds": [
+        39,
+        38,
+        158,
+        132
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/phase2-05.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 152,
+      "bytes": 11834,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 25011,
+      "content_bounds": [
+        28,
+        31,
+        139,
+        132
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/phase3-00.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 152,
+      "bytes": 13620,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 23571,
+      "content_bounds": [
+        48,
+        28,
+        143,
+        132
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/phase3-01.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 152,
+      "bytes": 13848,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 23104,
+      "content_bounds": [
+        39,
+        23,
+        138,
+        132
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/phase3-02.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 152,
+      "bytes": 12326,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 23879,
+      "content_bounds": [
+        28,
+        41,
+        146,
+        132
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/phase3-03.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 152,
+      "bytes": 12827,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 23713,
+      "content_bounds": [
+        48,
+        21,
+        139,
+        132
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/phase3-04.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 152,
+      "bytes": 13667,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 23361,
+      "content_bounds": [
+        42,
+        34,
+        141,
+        132
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/native/phase3-05.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 152,
+      "bytes": 11084,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 24542,
+      "content_bounds": [
+        25,
+        32,
+        124,
+        132
+      ],
+      "problems": []
+    }
+  ]
+}
