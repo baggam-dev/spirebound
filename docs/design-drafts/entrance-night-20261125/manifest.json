@@ -1,0 +1,652 @@
+{
+  "status": "review-only; runtime unchanged",
+  "sourceTool": "builtin image_gen",
+  "generationCalls": 4,
+  "layoutStudyRejected": "background-layout-study.png has portrait panels; preserved as diagnostic only",
+  "sources": [
+    {
+      "file": "background-source.png",
+      "size": [
+        1672,
+        941
+      ],
+      "sha256": "6b42582b5039f27157c151aa7876b62fec8cfb7289d9cc6690cca0fee5e1b72d"
+    },
+    {
+      "file": "walk-source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "39ec569167b43d1a613795bb9e22f4d490a95a0587a5c0e9b431e404b2c69a6f"
+    },
+    {
+      "file": "actions-front-source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "a6ab71452c1da1ec20e3d7b03bed023dd33551a7b1f22c2bdaafd2d842760e22"
+    }
+  ],
+  "nativeBackground": [
+    640,
+    360
+  ],
+  "backgroundPaletteMax": 96,
+  "actors": [
+    {
+      "family": "rear",
+      "source": "walk-source.png",
+      "grid": [
+        4,
+        2
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "alphaThreshold": 192,
+      "sourceBounds": [
+        [
+          56,
+          54,
+          374,
+          463
+        ],
+        [
+          54,
+          54,
+          374,
+          463
+        ],
+        [
+          54,
+          54,
+          374,
+          463
+        ],
+        [
+          39,
+          54,
+          374,
+          463
+        ],
+        [
+          37,
+          54,
+          374,
+          463
+        ],
+        [
+          43,
+          54,
+          374,
+          463
+        ],
+        [
+          41,
+          55,
+          374,
+          463
+        ],
+        [
+          52,
+          54,
+          374,
+          463
+        ]
+      ],
+      "scale": 0.23471882640586797,
+      "sourceAnchorX": 235,
+      "pivot": [
+        64,
+        120
+      ],
+      "native": [
+        128,
+        128
+      ],
+      "colorsMax": 48
+    },
+    {
+      "family": "pause",
+      "source": "actions-front-source.png",
+      "grid": [
+        4,
+        3
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "alphaThreshold": 192,
+      "sourceBounds": [
+        [
+          61,
+          14,
+          282,
+          388
+        ],
+        [
+          63,
+          14,
+          282,
+          388
+        ],
+        [
+          54,
+          14,
+          284,
+          387
+        ],
+        [
+          45,
+          16,
+          276,
+          387
+        ]
+      ],
+      "scale": 0.25668449197860965,
+      "sourceAnchorX": 183,
+      "pivot": [
+        64,
+        120
+      ],
+      "native": [
+        128,
+        128
+      ],
+      "colorsMax": 48
+    },
+    {
+      "family": "front",
+      "source": "actions-front-source.png",
+      "grid": [
+        4,
+        3
+      ],
+      "indices": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "alphaThreshold": 192,
+      "sourceBounds": [
+        [
+          53,
+          14,
+          262,
+          390
+        ],
+        [
+          52,
+          15,
+          260,
+          387
+        ],
+        [
+          51,
+          15,
+          258,
+          387
+        ],
+        [
+          54,
+          13,
+          261,
+          379
+        ],
+        [
+          49,
+          15,
+          260,
+          387
+        ],
+        [
+          49,
+          15,
+          262,
+          387
+        ],
+        [
+          52,
+          15,
+          263,
+          387
+        ],
+        [
+          51,
+          15,
+          263,
+          387
+        ]
+      ],
+      "scale": 0.2553191489361702,
+      "sourceAnchorX": 160,
+      "pivot": [
+        64,
+        120
+      ],
+      "native": [
+        128,
+        128
+      ],
+      "colorsMax": 48
+    }
+  ],
+  "fireSource": "../title-night-pixel-20261124/native/fire-0..3.png",
+  "preview": {
+    "size": [
+      640,
+      360
+    ],
+    "frames": 80,
+    "fps": 10,
+    "seconds": 8,
+    "gifBytes": 1543955
+  },
+  "timing": {
+    "approach": [
+      0,
+      2.4
+    ],
+    "pause": [
+      2.4,
+      3.8
+    ],
+    "frontEntry": [
+      3.8,
+      6.4
+    ],
+    "closedEndpoint": [
+      6.4,
+      8
+    ]
+  },
+  "limitations": [
+    "Animation pose proposal, not runtime integration or mobile performance proof.",
+    "Foot-root normalization and common scale; hand/bow and exact contact need final frame QA.",
+    "Closed panel is an endpoint cut, not a replacement for existing hinged door implementation.",
+    "No game tests, browser QA, push or deployment."
+  ],
+  "nativeAssets": [
+    {
+      "file": "native/background-0.png",
+      "size": [
+        640,
+        360
+      ],
+      "alphaBounds": null,
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/background-1.png",
+      "size": [
+        640,
+        360
+      ],
+      "alphaBounds": null,
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/background-2.png",
+      "size": [
+        640,
+        360
+      ],
+      "alphaBounds": null,
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/background-3.png",
+      "size": [
+        640,
+        360
+      ],
+      "alphaBounds": null,
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/front-0.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        37,
+        24,
+        90,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/front-1.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        36,
+        25,
+        89,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/front-2.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        36,
+        25,
+        89,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/front-3.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        37,
+        27,
+        90,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/front-4.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        36,
+        25,
+        90,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/front-5.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        36,
+        25,
+        90,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/front-6.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        36,
+        25,
+        90,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/front-7.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        36,
+        25,
+        90,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/pause-0.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        33,
+        24,
+        90,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/pause-1.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        33,
+        24,
+        89,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/pause-2.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        31,
+        24,
+        90,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/pause-3.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        29,
+        25,
+        88,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/rear-0.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        22,
+        24,
+        97,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/rear-1.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        22,
+        24,
+        97,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/rear-2.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        22,
+        24,
+        97,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/rear-3.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        18,
+        24,
+        97,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/rear-4.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        18,
+        24,
+        97,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/rear-5.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        19,
+        24,
+        97,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/rear-6.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        18,
+        24,
+        96,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/rear-7.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaBounds": [
+        21,
+        24,
+        97,
+        120
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen; deterministic slicing/palette/scale"
+    }
+  ]
+}

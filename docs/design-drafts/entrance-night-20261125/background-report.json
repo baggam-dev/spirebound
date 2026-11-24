@@ -1,0 +1,85 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/entrance-night-20261125/native/background-0.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 640,
+      "height": 360,
+      "bytes": 337057,
+      "color_count": 93,
+      "has_alpha": false,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "transparent_pixels": 0,
+      "content_bounds": [
+        0,
+        0,
+        640,
+        360
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/entrance-night-20261125/native/background-1.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 640,
+      "height": 360,
+      "bytes": 331115,
+      "color_count": 93,
+      "has_alpha": false,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "transparent_pixels": 0,
+      "content_bounds": [
+        0,
+        0,
+        640,
+        360
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/entrance-night-20261125/native/background-2.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 640,
+      "height": 360,
+      "bytes": 298297,
+      "color_count": 93,
+      "has_alpha": false,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "transparent_pixels": 0,
+      "content_bounds": [
+        0,
+        0,
+        640,
+        360
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/entrance-night-20261125/native/background-3.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 640,
+      "height": 360,
+      "bytes": 319481,
+      "color_count": 94,
+      "has_alpha": false,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "transparent_pixels": 0,
+      "content_bounds": [
+        0,
+        0,
+        640,
+        360
+      ],
+      "problems": []
+    }
+  ]
+}
