@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 착지6프레임 로컬 연결
+~~~text
+e798e06뒤사용자다음진행으로연결. assets/images/reference-hero-landing-frames-v1.png384x208검토atlas그대로복사·runtime-manifest/SHA/image-report(alpha48색크기통과). reference-frame-art선택적5가족/요청base4왕방5·필수Ready없음·실패fallback. hero-landing.js WeakMap0.18초6자세/효과줄이기3;직전업데이트관측roll종료만실제끝위치회복(벽중단포함),slash/첫관측/방/로드reset재생제외. 이동입력/좌표변화·사격준비/발사·시전피격경직죽음·새roll취소. game update beforeRoll/이동1회캡처·reset, pixel-world기존face/캐스트우선이후착지/일반순서. 전투/이동무적공격시간·저장/RNG변경없음. 추가4회귀작성만·누적37미실행·fixture개수갱신. 소스/diff/PNG정적만, 게임구문테스트/브라우저실기기/푸시배포없음·운영0.63. 다음모르도2~3형가족검토. 옛roll→착지/idle체적·실제전환가독성미검증,가로고정TODO/추가후기보존. 실행중명령차단없음.
+~~~
+
 ## 최신 복사용 인계 — 주인공 착지6프레임 시안
 ~~~text
 50a48bb뒤docs만변경. frames-landing-v1/index.html에6착지/기립native·2GIF(기존idle복귀포함)/1x2x접촉/명암비교·원본/prompt/sha/manifest/build/report. builtinimagegen1회,1536x1024 alpha0~254,A>192경계접촉0/여백38. 기립427→58px공통배율·발64,90·128x104/기존팔레트. native6정적크기투명48색통과,최초wildcard보고실패후6명시경로로수정. 제품src/assets미반영·게임테스트/구문/브라우저/푸시배포없음·운영0.63/누적33회귀미실행. 다음선택적착지연결:0.28/0.224실제회피·무적/공격시간불변,행동우선취소·첫관측로드방재생금지·slash유지·실패fallback. 옛구르기와정체성/체적·손활/idle복귀실게임미검증. 가로고정TODO유지·실행중명령/차단없음.

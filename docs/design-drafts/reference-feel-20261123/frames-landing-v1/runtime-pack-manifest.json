@@ -1,0 +1,22 @@
+{
+  "file": "assets/images/reference-hero-landing-frames-v1.png",
+  "sha256": "91faa253c4c44bc093d938996b4533b098c5cdc715c719564632d4c499e865e3",
+  "source": "landing-review-atlas.png (unchanged copy of six normalized native frames)",
+  "size": [
+    384,
+    208
+  ],
+  "cell": [
+    128,
+    104
+  ],
+  "pivot": [
+    64,
+    90
+  ],
+  "count": 6,
+  "approval": "User next instruction, existing hero motion family",
+  "staticReport": "runtime-image-report.json",
+  "gameVerified": false,
+  "deployed": false
+}

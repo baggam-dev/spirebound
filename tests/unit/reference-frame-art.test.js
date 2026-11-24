@@ -4,9 +4,18 @@ import {createReferenceFrameStore,referenceHeroFrame,referenceHeroMoveFrame,refe
 import {referencePresentationFiles} from '../../src/rendering/presentation-assets.js';
 import {existsSync} from 'node:fs';
 const context=()=>({globalAlpha:1,calls:[],save(){},restore(){},translate(...a){this.calls.push(['translate',...a]);},scale(){},rotate(){},beginPath(){},rect(){},clip(){},drawImage(...a){this.calls.push(['draw',...a.slice(1)]);}});
+test('landing art uses shared feet and refuses missing or incorrectly sized optional atlas',()=>{
+ const images=[];class FakeImage{constructor(){images.push(this);}}
+ const store=createReferenceFrameStore(FakeImage),c=context(),im=images.find(i=>i.src.includes('reference-hero-landing-'));
+ assert.equal(store.draw(c,'heroLanding',0,0,22),false);
+ im.naturalWidth=384;im.naturalHeight=207;im.onload();assert.equal(store.has('heroLanding'),false);
+ im.naturalHeight=208;im.onload();assert.equal(store.draw(c,'heroLanding',5,0,22),true);
+ assert.deepEqual(c.calls.find(v=>v[0]==='draw'),['draw',256,104,128,104,-64,-90,128,104]);
+ im.onerror();assert.equal(store.draw(c,'heroLanding',0,0,22),false);
+});
 test('optional atlas validates dimensions and gracefully declines unloaded, corrupt or failed images',()=>{
  const images=[];class FakeImage{constructor(){images.push(this);}}
- const store=createReferenceFrameStore(FakeImage),c=context();assert.equal(images.length,4);assert.equal(store.draw(c,'hero',0,0,22),false);
+ const store=createReferenceFrameStore(FakeImage),c=context();assert.equal(images.length,5);assert.equal(store.draw(c,'hero',0,0,22),false);
  const image=images.find(im=>im.src.includes('reference-hero-'));
  image.naturalWidth=1;image.naturalHeight=1;image.onload();assert.equal(store.has('hero'),false);
  image.naturalWidth=384;image.naturalHeight=208;image.onload();assert.equal(store.draw(c,'hero',5,0,22),true);
@@ -26,10 +35,10 @@ test('new king attack silhouettes apply only to skeletal melee without overridin
  assert.equal(referenceMordoAttackFrame(e,{stage:'windup'},{reduced:true}),null);assert.equal(referenceMordoAttackFrame(e,{stage:'windup'},{staticPose:true}),null);assert.equal(JSON.stringify(e),before);
 });
 test('optional atlas requests match live king rooms and never mutate saved run fields',()=>{
- const s={player:{},floor:0,room:0,floors:[[{enemies:[]}]]};assert.equal(referencePresentationFiles(s).length,3);
- s.floors[0][0].enemies=[{variant:'king',hp:100}];const before=JSON.stringify(s),files=referencePresentationFiles(s);assert.equal(files.length,4);
+ const s={player:{},floor:0,room:0,floors:[[{enemies:[]}]]};assert.equal(referencePresentationFiles(s).length,4);
+ s.floors[0][0].enemies=[{variant:'king',hp:100}];const before=JSON.stringify(s),files=referencePresentationFiles(s);assert.equal(files.length,5);
  for(const f of files)assert.ok(existsSync('assets/images/'+f));assert.equal(JSON.stringify(s),before);
- s.floors[0][0].enemies[0].shadowBoss=1;assert.equal(referencePresentationFiles(s).length,3);
+ s.floors[0][0].enemies[0].shadowBoss=1;assert.equal(referencePresentationFiles(s).length,4);
  assert.deepEqual(referencePresentationFiles(null),[]);
 });
 

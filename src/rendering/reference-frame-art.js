@@ -2,6 +2,7 @@ import {DeferredImage} from './asset-requests.js';
 const specs={
  hero:{file:'reference-hero-frames-v1.png',w:128,h:104,cols:3,count:6,pivot:[64,90]},
  heroMove:{file:'reference-hero-move-frames-v1.png',w:128,h:104,cols:4,count:16,pivot:[64,90]},
+ heroLanding:{file:'reference-hero-landing-frames-v1.png',w:128,h:104,cols:3,count:6,pivot:[64,90]},
  mordo:{file:'reference-mordo-frames-v1.png',w:192,h:152,cols:3,count:6,pivot:[96,132]},
  fx:{file:'reference-fx-frames-v1.png',w:128,h:128,cols:4,count:12,pivot:[64,64]}
 };
@@ -25,9 +26,10 @@ export function createReferenceFrameStore(ImageCtor=typeof Image==='undefined'?n
  };
 }
 const art=createReferenceFrameStore();
+export const drawReferenceHeroLanding=(c,frame)=>art.draw(c,'heroLanding',frame,0,22);
 export const referenceFrameArtState=()=>art.state();
 export function referenceHeroFrame(p,{preparing=false,hit=false,reduced=false}={}){
- if(p.moving)return null; // This package has no walking/upper-body cycle yet.
+ if(p.moving)return null; // Moving poses use the separate gait family below.
  if(hit&&!reduced)return 4;
  if(p.recoil>.6)return 2;if(p.recoil>0)return 3;
  if(preparing)return 1;return 0;

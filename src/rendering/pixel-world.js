@@ -17,7 +17,9 @@ import {drawPrismSprite} from './prism-sprite.js';
 import {drawSlimeSprite} from './slime-sprite.js';
 import {drawHero} from './hero.js';
 import {heroPresentationPose} from './ordinary-presentation-state.js';
-import {drawReferenceHero} from './reference-frame-art.js';
+import {drawReferenceHero,drawReferenceHeroLanding} from './reference-frame-art.js';
+import {heroLandingFrame} from './hero-landing.js';
+import {heroCastPose} from './hero-cast-state.js';
 import {drawHeroCast} from './hero-cast-art.js';
 import {drawGruntSprite} from './grunt-sprite.js';
 import {objectPoint} from '../world/object-positions.js';
@@ -81,7 +83,11 @@ export function drawPixelActor(c,e,time=0,run=null,reduced=false){
   const shotFace=heroShots.has(run?.player)?heroShotFacing(run.player,time,shot):shot&&Math.abs(shot.vx)>20?Math.sign(shot.vx):0;
   if(shotFace){p.face=shotFace;const history=motion.get(run.player);if(history)history.face=p.face;}
   const preparing=shotPreparation(run);
-  c.scale(p.face,1);const casting=run&&drawHeroCast(c,run.player,p,time,{reduced});if(!casting&&!(run&&run.player.hp>0&&drawReferenceHero(c,p,{preparing:heroPreparingShot(run),hit:heroPresentationPose(run.player,{reduced})?.kind==='hit',reduced})))drawHero(c,p,time,bow);if(preparing&&!casting){c.save();c.translate(29,-2);drawElementNock(c,preparing.element,preparing.charge);c.restore();}
+  c.scale(p.face,1);const casting=run&&drawHeroCast(c,run.player,p,time,{reduced});
+  const hit=run&&heroPresentationPose(run.player,{reduced})?.kind==='hit';
+  const landing=run?heroLandingFrame(run,run.floors?.[run.floor]?.[run.room],{blocked:!!heroCastPose(run.player,time,{reduced})||p.moving||p.recoil>0||heroPreparingShot(run)||!!hit,reduced}):null;
+  const landed=landing!==null&&drawReferenceHeroLanding(c,landing);
+  if(!casting&&!landed&&!(run&&run.player.hp>0&&drawReferenceHero(c,p,{preparing:heroPreparingShot(run),hit,reduced})))drawHero(c,p,time,bow);if(preparing&&!casting){c.save();c.translate(29,-2);drawElementNock(c,preparing.element,preparing.charge);c.restore();}
  }else if(boss){
   const attack=bossPose(e);c.translate(0,attack.bodyY-attack.lift);
   if(!drawWardenSprite(c,e,p,attack,red,{reduced,staticPose:!run,awakening:run?.floors[run.floor][run.room].wardenArrival||0,rising:run?.floors[run.floor][run.room].wardenRise||0})){

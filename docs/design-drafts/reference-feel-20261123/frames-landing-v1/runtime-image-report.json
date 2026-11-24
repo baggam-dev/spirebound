@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "assets/images/reference-hero-landing-frames-v1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 384,
+      "height": 208,
+      "bytes": 23543,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 72063,
+      "content_bounds": [
+        36,
+        39,
+        340,
+        194
+      ],
+      "problems": []
+    }
+  ]
+}

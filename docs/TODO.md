@@ -1,3 +1,12 @@
+## 2026-11-24 착지6프레임 로컬 연결 완료
+- 선택적reference-hero-landing-frames-v1.png384x208(6셀128x104/발64,90) 추가·기존검토atlas무변형복사. reference-frame-art/presentation-assets 요청만추가·필수Ready없음/실패기존자세fallback. runtime manifest SHA·이미지보고서크기alpha48색정적통과.
+- hero-landing WeakMap은전업데이트에활성관측된동일roll이사라질때만 실제종료위치에서0.18초/6자세(효과줄이기3) 회복. 벽에막힌실제종료포함·slash제외. 첫관측/로드reset/방변화재생금지. 이동입력·좌표변화/사격·준비/시전/피격·사망·경직/새구르기즉시취소. pixel-world 기존face/발기준과시전우선연결. 새착지경직/이동·무적/공격시간·판정/RNG/저장변경없음·분진추가없음.
+- 소스호출/reset/포즈우선/diff정적검토만. 회귀4작성(수명/행동취소/로드방slashdead/선택atlas실패좌표)·누적37미실행, 선택요청개수fixture갱신. 게임구문/테스트/브라우저·실기기/푸시배포없음·운영0.63유지. 옛구르기→착지/idle체적연결·0.18초가독성·연속행동취소실게임미검증.
+- 다음: 모르도2~3형모션가족검토패키지. 일반문래스터질감/해제중간·가로고정TODO/추가후기유지. 실행중명령/차단없음·새명시배포때누적검증.
+
+## 2026-11-24 착지 표시 연결 진행 중
+사용자다음진행으로6프레임연결승인. 선택적atlas추가·별도WeakMap회복표시0.18초예정, 실제구르기관측종료만시작/이동사격시전피격우선취소·slash제외·로드방reset. 현재수정예정 hero-landing/reference-frame-art/presentation-assets/pixel-world/game·회귀·출처기록. 마지막성공 e798e06 clean·소스정적, 실행중명령차단없음·게임구문테스트/푸시배포없음.
+
 ## 2026-11-24 주인공 착지6프레임 검토 패키지 완료
 - frames-landing-v1/index.html: 착지/압축/반기립/준비/회복/대기6프레임, 재생GIF·기존idle복귀GIF·1x/2x접촉·밝은배경비교. builtinimagegen1회/원본·전체prompt·sha/셀·수동몸기준좌표/공통배율/build/manifest·report보존. 제품src/assets미반영.
 - 원본1536x1024 alpha0~254, A>192셀접촉0/최소여백38px. 기립427px→58px공통배율·128x104/발64,90·기존팔레트. native6장크기/투명도/48색정적통과·접촉/idle비교육안확인. 최초와일드카드보고실패는명시6경로로수정해최종report통과. 게임테스트아님.

@@ -8,7 +8,7 @@ export function presentationAssetFiles(s){
 }
 export function referencePresentationFiles(s){
  if(!s?.player)return [];
- const files=['reference-hero-frames-v1.png','reference-hero-move-frames-v1.png','reference-fx-frames-v1.png'];
+ const files=['reference-hero-frames-v1.png','reference-hero-move-frames-v1.png','reference-hero-landing-frames-v1.png','reference-fx-frames-v1.png'];
  if(s.floors?.[s.floor]?.[s.room]?.enemies?.some(e=>e.variant==='king'&&e.hp>0&&e.shadowBoss!==1))files.push('reference-mordo-frames-v1.png');
  return files;
 }
