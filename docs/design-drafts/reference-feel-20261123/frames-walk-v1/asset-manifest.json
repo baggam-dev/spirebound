@@ -1,0 +1,507 @@
+{
+  "source_kind": "generated",
+  "tool": "built-in image_gen.imagegen",
+  "calls": 2,
+  "reference": "../frames-v1/hero-poses-source.png",
+  "prompt": "prompts.md",
+  "body_height_target": 58,
+  "common_scale": 0.1380952380952381,
+  "palette": "Existing integrated reference-hero-frames-v1.png",
+  "threshold": 192,
+  "atlas": {
+    "file": "assets/images/reference-hero-move-frames-v1.png",
+    "size": [
+      512,
+      416
+    ],
+    "cell": [
+      128,
+      104
+    ],
+    "columns": 4,
+    "count": 16,
+    "sha256": "12d45373df381bb4e999fe04e54cd6481d1e697224526be123ce6cd7360e7050"
+  },
+  "frames": [
+    {
+      "index": 0,
+      "source": "walk-source.png",
+      "source_rect": [
+        0,
+        0,
+        384,
+        512
+      ],
+      "core_bounds": [
+        70,
+        51,
+        358,
+        471
+      ],
+      "source_root": [
+        225,
+        470
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-00.png",
+      "minimum_source_margin": 26,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 1,
+      "source": "walk-source.png",
+      "source_rect": [
+        384,
+        0,
+        768,
+        512
+      ],
+      "core_bounds": [
+        51,
+        66,
+        349,
+        470
+      ],
+      "source_root": [
+        210,
+        469
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-01.png",
+      "minimum_source_margin": 35,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 2,
+      "source": "walk-source.png",
+      "source_rect": [
+        768,
+        0,
+        1152,
+        512
+      ],
+      "core_bounds": [
+        43,
+        55,
+        335,
+        470
+      ],
+      "source_root": [
+        216,
+        469
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-02.png",
+      "minimum_source_margin": 42,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 3,
+      "source": "walk-source.png",
+      "source_rect": [
+        1152,
+        0,
+        1536,
+        512
+      ],
+      "core_bounds": [
+        42,
+        47,
+        329,
+        470
+      ],
+      "source_root": [
+        215,
+        469
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-03.png",
+      "minimum_source_margin": 42,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 4,
+      "source": "walk-source.png",
+      "source_rect": [
+        0,
+        512,
+        384,
+        1024
+      ],
+      "core_bounds": [
+        53,
+        45,
+        359,
+        470
+      ],
+      "source_root": [
+        225,
+        469
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-04.png",
+      "minimum_source_margin": 25,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 5,
+      "source": "walk-source.png",
+      "source_rect": [
+        384,
+        512,
+        768,
+        1024
+      ],
+      "core_bounds": [
+        41,
+        57,
+        350,
+        470
+      ],
+      "source_root": [
+        210,
+        469
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-05.png",
+      "minimum_source_margin": 34,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 6,
+      "source": "walk-source.png",
+      "source_rect": [
+        768,
+        512,
+        1152,
+        1024
+      ],
+      "core_bounds": [
+        38,
+        50,
+        338,
+        470
+      ],
+      "source_root": [
+        216,
+        469
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-06.png",
+      "minimum_source_margin": 38,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 7,
+      "source": "walk-source.png",
+      "source_rect": [
+        1152,
+        512,
+        1536,
+        1024
+      ],
+      "core_bounds": [
+        32,
+        44,
+        330,
+        470
+      ],
+      "source_root": [
+        215,
+        469
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-07.png",
+      "minimum_source_margin": 32,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 8,
+      "source": "moving-shot-source.png",
+      "source_rect": [
+        0,
+        0,
+        384,
+        512
+      ],
+      "core_bounds": [
+        35,
+        31,
+        381,
+        470
+      ],
+      "source_root": [
+        216,
+        469
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-08.png",
+      "minimum_source_margin": 3,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 9,
+      "source": "moving-shot-source.png",
+      "source_rect": [
+        384,
+        0,
+        768,
+        512
+      ],
+      "core_bounds": [
+        48,
+        31,
+        381,
+        470
+      ],
+      "source_root": [
+        216,
+        469
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-09.png",
+      "minimum_source_margin": 3,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 10,
+      "source": "moving-shot-source.png",
+      "source_rect": [
+        768,
+        0,
+        1152,
+        512
+      ],
+      "core_bounds": [
+        41,
+        30,
+        383,
+        473
+      ],
+      "source_root": [
+        216,
+        472
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-10.png",
+      "minimum_source_margin": 1,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 11,
+      "source": "moving-shot-source.png",
+      "source_rect": [
+        1152,
+        0,
+        1536,
+        512
+      ],
+      "core_bounds": [
+        34,
+        30,
+        381,
+        471
+      ],
+      "source_root": [
+        216,
+        470
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-11.png",
+      "minimum_source_margin": 3,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 12,
+      "source": "moving-shot-source.png",
+      "source_rect": [
+        0,
+        512,
+        384,
+        1024
+      ],
+      "core_bounds": [
+        35,
+        31,
+        370,
+        471
+      ],
+      "source_root": [
+        216,
+        470
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-12.png",
+      "minimum_source_margin": 14,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 13,
+      "source": "moving-shot-source.png",
+      "source_rect": [
+        384,
+        512,
+        768,
+        1024
+      ],
+      "core_bounds": [
+        48,
+        33,
+        371,
+        471
+      ],
+      "source_root": [
+        216,
+        470
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-13.png",
+      "minimum_source_margin": 13,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 14,
+      "source": "moving-shot-source.png",
+      "source_rect": [
+        768,
+        512,
+        1152,
+        1024
+      ],
+      "core_bounds": [
+        41,
+        31,
+        372,
+        474
+      ],
+      "source_root": [
+        216,
+        473
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-14.png",
+      "minimum_source_margin": 12,
+      "touches_source_boundary": false
+    },
+    {
+      "index": 15,
+      "source": "moving-shot-source.png",
+      "source_rect": [
+        1152,
+        512,
+        1536,
+        1024
+      ],
+      "core_bounds": [
+        34,
+        31,
+        371,
+        472
+      ],
+      "source_root": [
+        216,
+        471
+      ],
+      "native_root": [
+        64,
+        90
+      ],
+      "scale": 0.138095,
+      "native": "native/hero-move-15.png",
+      "minimum_source_margin": 13,
+      "touches_source_boundary": false
+    }
+  ],
+  "technical_checks_passed": false,
+  "game_verified": false,
+  "deployment": false,
+  "limitations": "Key-pose gait extension, single view. Manual draft roots and remaining gait/aim transitions require engine review on explicit deployment. No walk speed or attack time changes.",
+  "source_metadata": [
+    {
+      "file": "walk-source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha": [
+        0,
+        254
+      ],
+      "sha256": "e29f2e6518765c17e76e2a23252fc87d08ddde34a08dfe87697464d8040eabe3"
+    },
+    {
+      "file": "moving-shot-source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha": [
+        0,
+        254
+      ],
+      "sha256": "b4d555bafc125914720b9cc65e66e7eee1f82c42e8772f4c9c53c7a2f1b3d4d6"
+    }
+  ],
+  "phase_correspondence": "phase-correspondence.json",
+  "integration": "Authorized unchanged hero direction extension; optional local runtime atlas, game validation pending"
+}

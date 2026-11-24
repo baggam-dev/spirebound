@@ -1,0 +1,179 @@
+{
+  "region": [
+    32,
+    73,
+    100,
+    93
+  ],
+  "method": "Alpha-silhouette difference; static phase hint, not motion QA",
+  "frames": [
+    {
+      "walk": 0,
+      "draw": {
+        "scores": [
+          136.0,
+          224.0,
+          317.0,
+          248.0
+        ],
+        "nearest_phase": 0
+      },
+      "release": {
+        "scores": [
+          140.0,
+          227.0,
+          317.0,
+          247.0
+        ],
+        "nearest_phase": 0
+      }
+    },
+    {
+      "walk": 1,
+      "draw": {
+        "scores": [
+          181.0,
+          151.0,
+          294.0,
+          239.0
+        ],
+        "nearest_phase": 1
+      },
+      "release": {
+        "scores": [
+          183.0,
+          154.0,
+          300.0,
+          240.0
+        ],
+        "nearest_phase": 1
+      }
+    },
+    {
+      "walk": 2,
+      "draw": {
+        "scores": [
+          377.0,
+          247.0,
+          36.0,
+          97.0
+        ],
+        "nearest_phase": 2
+      },
+      "release": {
+        "scores": [
+          377.0,
+          242.0,
+          38.0,
+          100.0
+        ],
+        "nearest_phase": 2
+      }
+    },
+    {
+      "walk": 3,
+      "draw": {
+        "scores": [
+          338.0,
+          250.0,
+          113.0,
+          24.0
+        ],
+        "nearest_phase": 3
+      },
+      "release": {
+        "scores": [
+          342.0,
+          247.0,
+          113.0,
+          25.0
+        ],
+        "nearest_phase": 3
+      }
+    },
+    {
+      "walk": 4,
+      "draw": {
+        "scores": [
+          160.0,
+          254.0,
+          329.0,
+          260.0
+        ],
+        "nearest_phase": 0
+      },
+      "release": {
+        "scores": [
+          164.0,
+          255.0,
+          335.0,
+          259.0
+        ],
+        "nearest_phase": 0
+      }
+    },
+    {
+      "walk": 5,
+      "draw": {
+        "scores": [
+          334.0,
+          154.0,
+          159.0,
+          210.0
+        ],
+        "nearest_phase": 1
+      },
+      "release": {
+        "scores": [
+          334.0,
+          149.0,
+          155.0,
+          213.0
+        ],
+        "nearest_phase": 1
+      }
+    },
+    {
+      "walk": 6,
+      "draw": {
+        "scores": [
+          359.0,
+          195.0,
+          74.0,
+          147.0
+        ],
+        "nearest_phase": 2
+      },
+      "release": {
+        "scores": [
+          359.0,
+          190.0,
+          76.0,
+          150.0
+        ],
+        "nearest_phase": 2
+      }
+    },
+    {
+      "walk": 7,
+      "draw": {
+        "scores": [
+          329.0,
+          249.0,
+          134.0,
+          31.0
+        ],
+        "nearest_phase": 3
+      },
+      "release": {
+        "scores": [
+          333.0,
+          246.0,
+          134.0,
+          30.0
+        ],
+        "nearest_phase": 3
+      }
+    }
+  ]
+}

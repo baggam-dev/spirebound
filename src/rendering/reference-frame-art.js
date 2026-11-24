@@ -1,6 +1,7 @@
 import {DeferredImage} from './asset-requests.js';
 const specs={
  hero:{file:'reference-hero-frames-v1.png',w:128,h:104,cols:3,count:6,pivot:[64,90]},
+ heroMove:{file:'reference-hero-move-frames-v1.png',w:128,h:104,cols:4,count:16,pivot:[64,90]},
  mordo:{file:'reference-mordo-frames-v1.png',w:192,h:152,cols:3,count:6,pivot:[96,132]},
  fx:{file:'reference-fx-frames-v1.png',w:128,h:128,cols:4,count:12,pivot:[64,64]}
 };
@@ -32,8 +33,19 @@ export function referenceHeroFrame(p,{preparing=false,hit=false,reduced=false}={
  if(preparing)return 1;return 0;
 }
 export function drawReferenceHero(c,p,options={}){
+ if(p.moving){const frame=referenceHeroMoveFrame(p,options);return frame!==null&&art.draw(c,'heroMove',frame,0,22);}
  const frame=referenceHeroFrame(p,options);if(frame===null||!art.has('hero'))return false;
  return art.draw(c,'hero',frame,0,22);
+}
+export function referenceHeroMoveFrame(p,{preparing=false,reduced=false}={}){
+ if(!p.moving||!Number.isFinite(p.walk))return null;
+ const tau=Math.PI*2,phase=((p.walk%tau)+tau)%tau;
+ let step=Math.min(7,Math.floor(phase/tau*8));if(reduced)step=Math.floor(step/2)*2;
+ // Static lower-leg comparison matches both four-pose shot rows to step % 4.
+ // Recoil/preparation only selects the row, never resets the walking phase.
+ if(p.recoil>0)return 12+step%4;
+ if(preparing)return 8+step%4;
+ return step;
 }
 export function referenceMordoAttackFrame(e,attack,{reduced=false,staticPose=false}={}){
  if(e.variant!=='king'||e.shadowBoss===1||!(e.hp/e.max>.65)||(e.kingStage??1)!==1||reduced||staticPose||e.kingTransition>0||e.frozen>0||e.kneel>0||e.opening>0)return null;

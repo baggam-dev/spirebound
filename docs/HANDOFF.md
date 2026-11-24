@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 주인공 보행·이동사격 확장
+~~~text
+기준01cc358에서 기존주인공방향 내 보행8+이동당김4/발사4=16프레임 제작·제품선택적연결. assets/images/reference-hero-move-frames-v1.png512x416, reference-frame-art heroMove16/spec/선택함수·presentation-assets추가. 실제거리p.walk8위상, 다리정적비교결과 양사격행0,1,2,3,0,1,2,3 대응(step%4), recoil/준비로행만변경·걸음reset없음. 정지/시전·회피·실패fallback유지, 필수Ready없음·게임값/저장/RNG불변. docs/design-drafts/reference-feel-20261123/frames-walk-v1 index/원본2/prompt/manifest·루트/정적report/GIF/접촉/위상JSON/buildscript. native16+atlas1 alpha/48색정적통과·경계접촉0·원본최소여백1px, 육안접촉만. 추가3회귀작성·누적31미실행, 구문/게임테스트/브라우저/실기기/성능/음향/푸시/배포없음·운영0.63. 미세루트/체적·반대조준·실제연결품질은배포전검증대상. 다음일반문80x35/좌우벽70x29방향·봉인개방패키지;착지중간/모르도다른형후속. 가로고정TODO·추가후기유지. 실행중명령/차단없음. 새명시배포때누적검증.
+~~~
+
 ## 최신 복사용 인계 — 선택 프레임 게임 연결
 ~~~text
 0998819 뒤 사용자다음진행을패키지연결승인으로반영. assets/images/reference-{hero,mordo,fx}-frames-v1.png3장(native그대로묶음) 및 reference-frame-art.js 선택적로더/포즈/FX 연결. 필수Ready추가없음, 크기검증·실패fallback. presentation-assets 별도 referencePresentationFiles 호출 및 bossApproach시요청. pixel-world 정지주인공5자세·기존이동/시전유지, upper-visuals는선행공통body앞근접해골형포즈, mordo-presentation1형평시피격/처치·다른형보존, arrow/boss-clear(Mordo만파열)/실제xpPickupFX. 실제우선Mordo몸92.4/발21;84/29는하위fallback임을정정·신규기준92.4/21. 문미반영(80x35/방향과불일치). runtime-pack-manifest/report·README/review/current4기록최신. 추가5회귀작성만·누적28미실행. PNG3alpha/48색·소스diff정적만, 게임구문/단위/브라우저/실기기/성능/음향/푸시/배포없음·운영0.63. 다음이동사격상체·보행/착지프레임/일반문규격·방향패키지. 새명시배포때누적검증. 가로고정TODO·추가후기유지. 실행중명령/차단없음.

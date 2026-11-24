@@ -1,0 +1,345 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-00.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4258,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12090,
+      "content_bounds": [
+        43,
+        32,
+        82,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-01.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4121,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12144,
+      "content_bounds": [
+        42,
+        34,
+        83,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-02.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 3837,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12236,
+      "content_bounds": [
+        40,
+        33,
+        80,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-03.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 3723,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12282,
+      "content_bounds": [
+        40,
+        32,
+        79,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-04.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4301,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12068,
+      "content_bounds": [
+        40,
+        31,
+        83,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-05.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4110,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12120,
+      "content_bounds": [
+        41,
+        33,
+        83,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-06.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4086,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12155,
+      "content_bounds": [
+        39,
+        32,
+        81,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-07.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 3790,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12247,
+      "content_bounds": [
+        39,
+        31,
+        79,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-08.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4638,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 11940,
+      "content_bounds": [
+        39,
+        29,
+        86,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-09.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4541,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12001,
+      "content_bounds": [
+        41,
+        29,
+        86,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-10.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4398,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12038,
+      "content_bounds": [
+        40,
+        29,
+        86,
+        91
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-11.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4266,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12092,
+      "content_bounds": [
+        39,
+        29,
+        86,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-12.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4676,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 11960,
+      "content_bounds": [
+        39,
+        29,
+        85,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-13.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4467,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12013,
+      "content_bounds": [
+        41,
+        30,
+        85,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-14.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4372,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12040,
+      "content_bounds": [
+        40,
+        29,
+        85,
+        91
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-walk-v1/native/hero-move-15.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4263,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12097,
+      "content_bounds": [
+        39,
+        29,
+        85,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "assets/images/reference-hero-move-frames-v1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 512,
+      "height": 416,
+      "bytes": 58592,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 193523,
+      "content_bounds": [
+        39,
+        32,
+        470,
+        403
+      ],
+      "problems": []
+    }
+  ]
+}

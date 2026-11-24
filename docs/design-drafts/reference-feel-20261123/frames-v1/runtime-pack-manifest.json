@@ -59,5 +59,8 @@
       "game_verified": false
     }
   ],
-  "door": "Not imported: incompatible general door geometry"
+  "door": "Not imported: incompatible general door geometry",
+  "extensions": [
+    "../frames-walk-v1/asset-manifest.json"
+  ]
 }
