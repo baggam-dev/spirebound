@@ -1,0 +1,63 @@
+{
+  "status": "Local integration authorized by user next; not tested or deployed",
+  "assets": [
+    {
+      "file": "assets/images/reference-hero-frames-v1.png",
+      "size": [
+        384,
+        208
+      ],
+      "frames": 6,
+      "source": "docs\\design-drafts\\reference-feel-20261123\\frames-v1\\native",
+      "sha256": "34252eae40c0fb59296c2f42724ff4ede486757c424b4cd31c1e76f8427caa14",
+      "layout": {
+        "columns": 3,
+        "cell": [
+          128,
+          104
+        ]
+      },
+      "edits": "Exact native frame packing; no resampling or new content",
+      "game_verified": false
+    },
+    {
+      "file": "assets/images/reference-mordo-frames-v1.png",
+      "size": [
+        576,
+        304
+      ],
+      "frames": 6,
+      "source": "docs\\design-drafts\\reference-feel-20261123\\frames-v1\\native",
+      "sha256": "442d1234b266de728014122fd06f201fb78cb0d17f03484680be8f56a0d7db5f",
+      "layout": {
+        "columns": 3,
+        "cell": [
+          192,
+          152
+        ]
+      },
+      "edits": "Exact native frame packing; no resampling or new content",
+      "game_verified": false
+    },
+    {
+      "file": "assets/images/reference-fx-frames-v1.png",
+      "size": [
+        512,
+        384
+      ],
+      "frames": 12,
+      "source": "docs\\design-drafts\\reference-feel-20261123\\frames-v1\\native",
+      "sha256": "cd5523e15bedc4bd1e7280eb4bc75f3591334638052940d0316d7ebef609ac10",
+      "layout": {
+        "columns": 4,
+        "cell": [
+          128,
+          128
+        ]
+      },
+      "edits": "Exact native frame packing; no resampling or new content",
+      "game_verified": false
+    }
+  ],
+  "door": "Not imported: incompatible general door geometry"
+}

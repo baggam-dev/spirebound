@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 선택 프레임 게임 연결
+~~~text
+0998819 뒤 사용자다음진행을패키지연결승인으로반영. assets/images/reference-{hero,mordo,fx}-frames-v1.png3장(native그대로묶음) 및 reference-frame-art.js 선택적로더/포즈/FX 연결. 필수Ready추가없음, 크기검증·실패fallback. presentation-assets 별도 referencePresentationFiles 호출 및 bossApproach시요청. pixel-world 정지주인공5자세·기존이동/시전유지, upper-visuals는선행공통body앞근접해골형포즈, mordo-presentation1형평시피격/처치·다른형보존, arrow/boss-clear(Mordo만파열)/실제xpPickupFX. 실제우선Mordo몸92.4/발21;84/29는하위fallback임을정정·신규기준92.4/21. 문미반영(80x35/방향과불일치). runtime-pack-manifest/report·README/review/current4기록최신. 추가5회귀작성만·누적28미실행. PNG3alpha/48색·소스diff정적만, 게임구문/단위/브라우저/실기기/성능/음향/푸시/배포없음·운영0.63. 다음이동사격상체·보행/착지프레임/일반문규격·방향패키지. 새명시배포때누적검증. 가로고정TODO·추가후기유지. 실행중명령/차단없음.
+~~~
+
 ## 최신 복사용 인계 — 대표 아트28프레임 검토 패키지
 ~~~text
 기준0beed80에서 docs만 후속. frames-v1/index.html: 주인공6/모르도해골형6/큰봉인문4/별도FX12, 총28핵심프레임.4생성+모르도투명도보정1 built-in imagegen. 원본/보정제외이력/전체프롬프트/manifest sha/좌표·발기준점/nativePNG/GIF/접촉·명암·조합캡처/build-review.py 포함. 선택4소스1536x1024/alpha, native28 alpha/48색정적통과·핵심셀경계접촉0·육안확인. 독립시안HTML만열람, 게임소스·제품자산미반영·게임테스트/구문/실기기/성능/음향/푸시/배포없음.1~3차23회귀계속미실행·운영0.63. README 제약: 키포즈만/중간·이동·전방향없음/모르도해골형만/큰문정면형92px제안이며일반문80x35부적합, 손/활/체적·앵커세부정리/문봉인형상차추가필요. 패키지묶음검토후 제품프레임가족확장·연결, 새 명시배포때누적검증. 가로고정TODO/추가후기 유지. 실행중명령/차단없음. 정적이미지보고서통과를제품승인·실게임검증으로해석금지.

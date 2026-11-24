@@ -1,7 +1,7 @@
 {
   "date": "2026-11-24",
   "built_in_calls": 5,
-  "production_assets_modified": false,
+  "production_assets_modified": true,
   "assets": [
     {
       "family": "hero",
@@ -29,7 +29,7 @@
       "frame_map": "frame-map.json",
       "image_static_checks_passed": true,
       "technical_checks_passed": false,
-      "approval_status": "Review package only; no production asset approval recorded",
+      "approval_status": "User next authorized selected derivative local integration; game verification pending",
       "shipping": false,
       "edits": [
         "equal-grid slicing",
@@ -67,7 +67,7 @@
       "frame_map": "frame-map.json",
       "image_static_checks_passed": true,
       "technical_checks_passed": false,
-      "approval_status": "Review package only; no production asset approval recorded",
+      "approval_status": "User next authorized selected derivative local integration; game verification pending",
       "shipping": false,
       "edits": [
         "equal-grid slicing",
@@ -143,7 +143,7 @@
       "frame_map": "frame-map.json",
       "image_static_checks_passed": true,
       "technical_checks_passed": false,
-      "approval_status": "Review package only; no production asset approval recorded",
+      "approval_status": "User next authorized selected derivative local integration; game verification pending",
       "shipping": false,
       "edits": [
         "equal-grid slicing",
@@ -167,5 +167,16 @@
     "native-image-report.json",
     "frame-map.json"
   ],
-  "review_only": true
+  "review_only": true,
+  "runtime_integration": {
+    "manifest": "runtime-pack-manifest.json",
+    "authorized_by": "User next after representative package delivery",
+    "selected_families": [
+      "hero",
+      "mordo",
+      "fx"
+    ],
+    "tests_run": false,
+    "deployed": false
+  }
 }

@@ -1,4 +1,5 @@
 import {DeferredImage} from './asset-requests.js';
+import {drawReferenceEffect} from './reference-frame-art.js';
 import {BOSS_XP_FLIGHT} from '../progression/xp-drops.js';
 const SIZE={1:4,3:6,9:10},COLOR={1:'#e1f9ff',3:'#94e7ff',9:'#d2b8ff'};
 const frames=[];let loaded=false;
@@ -39,5 +40,6 @@ export function drawXpDrops(c,s,r,reduced=false){
  c.restore();
 }
 export function drawXpPickup(c,f,reduced=false){
+ if(f.xpPickup&&f.t>0&&!reduced&&drawReferenceEffect(c,'reward',.75+(1-Math.min(1,f.t/.16))*.24,f.x,f.y,{scale:.5,alpha:Math.min(1,f.t/.16)}))return true;
  if(!f.xpPickup)return false;if(!(f.t>0))return true;const life=Math.min(1,f.t/.16),size=life>.5?2:1;c.save();c.globalAlpha*=life*life;c.fillStyle='#c9e8ff';c.fillRect(Math.round(f.x-size),Math.round(f.y),size*2+1,1);if(!reduced)c.fillRect(Math.round(f.x),Math.round(f.y-size),1,size*2+1);c.restore();return true;
 }

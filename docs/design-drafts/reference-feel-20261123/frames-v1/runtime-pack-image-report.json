@@ -1,0 +1,65 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "assets/images/reference-hero-frames-v1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 384,
+      "height": 208,
+      "bytes": 24385,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 71927,
+      "content_bounds": [
+        40,
+        29,
+        344,
+        195
+      ],
+      "problems": []
+    },
+    {
+      "path": "assets/images/reference-mordo-frames-v1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 576,
+      "height": 304,
+      "bytes": 69543,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 146964,
+      "content_bounds": [
+        42,
+        23,
+        536,
+        292
+      ],
+      "problems": []
+    },
+    {
+      "path": "assets/images/reference-fx-frames-v1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 512,
+      "height": 384,
+      "bytes": 11735,
+      "color_count": 46,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 192450,
+      "content_bounds": [
+        46,
+        55,
+        481,
+        339
+      ],
+      "problems": []
+    }
+  ]
+}

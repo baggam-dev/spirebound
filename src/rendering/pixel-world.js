@@ -16,6 +16,8 @@ import {drawFlowerSprite} from './flower-sprite.js';
 import {drawPrismSprite} from './prism-sprite.js';
 import {drawSlimeSprite} from './slime-sprite.js';
 import {drawHero} from './hero.js';
+import {heroPresentationPose} from './ordinary-presentation-state.js';
+import {drawReferenceHero} from './reference-frame-art.js';
 import {drawHeroCast} from './hero-cast-art.js';
 import {drawGruntSprite} from './grunt-sprite.js';
 import {objectPoint} from '../world/object-positions.js';
@@ -39,11 +41,14 @@ export function heroShotFacing(player,time,projectile){
 export function heroShotProjectile(run){return run?.projectiles?.findLast(b=>!b.enemy&&!b.passive&&!b.turretShot&&!b.seeker&&!(b.delay>0)&&b.life>2.7);}
 const ink = '#111720';
 const palettes = {fire:['#ff713d','#ffe7a0'],frost:['#71c9ef','#e8fcff'],poison:['#73cc68','#d7ff99'],chain:['#a18aff','#f5e9ff'],precision:['#dbc18a','#fff0c6']};
+export function heroPreparingShot(run){
+ const p=run?.player;if(!p||!(run.attack>0&&run.attack<.18))return false;
+ const room=run.floors?.[run.floor]?.[run.room];
+ return !!room?.enemies?.some(enemy=>enemy.hp>0&&!['air','splitJump'].includes(enemy.phase)&&enemy.attackPhase!=='leap'&&!segmentBlocked(p,enemy,room.obstacles,3));
+}
 export function shotPreparation(run){
  const p=run?.player,element=p?.fire?'fire':p?.poison?'poison':p?.frost?'frost':p?.chain?'chain':p?.precision?'precision':null;
- if(!element||!(run.attack>0&&run.attack<.18))return null;
- const room=run.floors?.[run.floor]?.[run.room];
- if(!room?.enemies?.some(enemy=>enemy.hp>0&&!['air','splitJump'].includes(enemy.phase)&&enemy.attackPhase!=='leap'&&!segmentBlocked(p,enemy,room.obstacles,3)))return null;
+ if(!element||!heroPreparingShot(run))return null;
  return {element,charge:1-run.attack/.18};
 }
 function box(c,x,y,w,h,color){c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h);}
@@ -76,7 +81,7 @@ export function drawPixelActor(c,e,time=0,run=null,reduced=false){
   const shotFace=heroShots.has(run?.player)?heroShotFacing(run.player,time,shot):shot&&Math.abs(shot.vx)>20?Math.sign(shot.vx):0;
   if(shotFace){p.face=shotFace;const history=motion.get(run.player);if(history)history.face=p.face;}
   const preparing=shotPreparation(run);
-  c.scale(p.face,1);const casting=run&&drawHeroCast(c,run.player,p,time,{reduced});if(!casting)drawHero(c,p,time,bow);if(preparing&&!casting){c.save();c.translate(29,-2);drawElementNock(c,preparing.element,preparing.charge);c.restore();}
+  c.scale(p.face,1);const casting=run&&drawHeroCast(c,run.player,p,time,{reduced});if(!casting&&!(run&&run.player.hp>0&&drawReferenceHero(c,p,{preparing:heroPreparingShot(run),hit:heroPresentationPose(run.player,{reduced})?.kind==='hit',reduced})))drawHero(c,p,time,bow);if(preparing&&!casting){c.save();c.translate(29,-2);drawElementNock(c,preparing.element,preparing.charge);c.restore();}
  }else if(boss){
   const attack=bossPose(e);c.translate(0,attack.bodyY-attack.lift);
   if(!drawWardenSprite(c,e,p,attack,red,{reduced,staticPose:!run,awakening:run?.floors[run.floor][run.room].wardenArrival||0,rising:run?.floors[run.floor][run.room].wardenRise||0})){

@@ -1,3 +1,4 @@
+import {drawReferenceEffect} from './reference-frame-art.js';
 // Event-only, view-only celebration. Never awards XP, replays on load or blocks input.
 const states=new WeakMap();
 const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n));
@@ -48,7 +49,8 @@ export function drawBossClear(c,run,room,{reduced=false,combatActive=false}={}){
  }
  if(t>.08&&t<.9){
   const q=clamp((t-.08)/.82),count=reduced?8:28;c.globalAlpha=alpha*(1-q)*.85;
-  for(let i=0;i<count;i++){
+  const raster=v.king&&!reduced&&drawReferenceEffect(c,'fracture',q,v.x,bodyY,{alpha:.9});
+  if(!raster)for(let i=0;i<count;i++){
    const a=i*2.39996,reach=(18+i%7*9)*(1-(1-q)**3),x=v.x+Math.cos(a)*reach,y=bodyY+Math.sin(a)*reach*.65-28*q+q*q*90;
    c.fillStyle=i%4?color:light;c.fillRect(Math.round(x),Math.round(y),2+i%3,2+i%4);
   }

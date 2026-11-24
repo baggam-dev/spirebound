@@ -450,6 +450,7 @@ function update(dt){if(!s||paused)return;if(!floorAssetsLoaded(s.floor,floorAsse
  advanceDamageNumbers(s,room(),dt,result.events.includes('room')?[]:result.damageResults);
  const approach=result.events.find(event=>event.startsWith('bossApproach:'));
  if(approach){
+  preparePresentationAssets(s);
   encounterMoment(s,room(),'approach');const kind=approach.split(':')[1];
   if(kind==='king')startMordoArrival(room().enemies.find(e=>e.variant==='king'));
   else if(kind==='commander')startVelkarArrival(room().enemies.find(e=>e.variant==='commander'));

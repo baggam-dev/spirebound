@@ -1,3 +1,4 @@
+import {drawReferenceEffect} from './reference-frame-art.js';
 // A contact accent for plain and precision arrows, including lethal hits.
 // Elemental arrows already have dedicated contact visuals.
 export function arrowImpactEffect(arrow,point,elementContacts=null){
@@ -44,6 +45,7 @@ export function drawGroundContact(c,{x,y,age,reduced=false,finishing=false}){
 export function drawArrowImpact(c,f,reduced=false){
  if(!f.arrowImpact)return false;
  if(!(f.t>0))return true;
+ if(!reduced&&drawReferenceEffect(c,'impact',(f.duration-f.t)/f.duration,f.x,f.y,{angle:f.angle,scale:f.precision?1.3:1}))return true;
  drawImpactAccent(c,{x:f.x,y:f.y,age:f.duration-f.t,duration:f.duration,angle:f.angle,strength:f.precision?1:0,reduced});return true;
 }
 

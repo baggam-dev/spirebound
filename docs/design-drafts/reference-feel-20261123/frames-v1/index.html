@@ -11,7 +11,7 @@
 <article class="card"><h3>문 상태</h3><img src="door-review.png" alt="봉인·해제·개방·붕괴"><p>정면 큰 봉인문 시안입니다. 일반문 방향별 변형은 후속 범위입니다.</p></article>
 <article class="card"><h3>명중·파열·보상, 별도 레이어</h3><img src="fx-impact.gif" alt="명중4프레임"><img src="fx-fracture.gif" alt="파열4프레임"><img src="fx-reward.gif" alt="보상4프레임"></article>
 <article class="card"><h3>이펙트 프레임 비교</h3><a href="fx-review.png"><img src="fx-review.png" alt="별도이펙트12프레임"></a></article></div>
-<h2>제작 상태</h2><p>선택 원본4장의 크기·투명 채널, 작은 크기용28프레임의 투명도·48색 한도·핵심 픽셀 셀 경계를 정적으로 확인했습니다. 게임 반영·실기기·성능·연속 동작 검증은 하지 않았습니다. 원본의 세부 질감과 일부 자세 차이는 후속 픽셀 정리·중간 프레임 제작이 필요합니다.</p><p><a href="README.md">제작·제약 기록</a> · <a href="frame-map.json">좌표·기준점</a> · <a href="asset-manifest.json">출처·승인 상태</a> · <a href="prompts.md">생성 프롬프트</a></p></main>
+<h2>제작 상태</h2><p>선택 원본4장의 크기·투명 채널, 작은 크기용28프레임의 투명도·48색 한도·핵심 픽셀 셀 경계를 정적으로 확인했습니다. 선택 프레임을 로컬 게임 코드에 연결했지만 게임 검증·실기기·성능·연속 동작 검증은 하지 않았습니다. 원본의 세부 질감과 일부 자세 차이는 후속 픽셀 정리·중간 프레임 제작이 필요합니다.</p><p><a href="README.md">제작·제약 기록</a> · <a href="frame-map.json">좌표·기준점</a> · <a href="asset-manifest.json">출처·승인 상태</a> · <a href="prompts.md">생성 프롬프트</a></p></main>
 <script>
 const scene=document.getElementById('scene'),note=document.getElementById('note'),play=document.getElementById('play'),replay=document.getElementById('replay'),kind=document.getElementById('kind'),speed=document.getElementById('speed'),seek=document.getElementById('seek');
 const c=scene.getContext('2d'),images={hero:[],mordo:[],door:[],fx:[]};let ready=false,playing=true,t=0,last=performance.now();

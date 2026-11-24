@@ -10,8 +10,8 @@ test('arrival is explicit, uses update time, and does not replay after reset or 
  tickMordoPresentation([e],.45);assert.deepEqual(mordoPresentationPose(e),{phase:1,pose:'awaken'});tickMordoPresentation([e],.46);assert.equal(mordoPresentationPose(e),null);assert.equal(JSON.stringify(e),saved);
  startMordoArrival(e);clearMordoPresentation();assert.equal(mordoPresentationPose(e),null);assert.equal(mordoPresentationPose(JSON.parse(saved)),null);
 });
-test('repeated light and heavy hits never replace the king body in any phase',()=>{
- for(const phase of [1,2,3]){
+test('repeated hits retain existing forms outside the newly authored skeletal phase',()=>{
+ for(const phase of [2,3]){
   clearMordoPresentation();const e=king(phase),before=JSON.stringify(e);
   for(let i=0;i<30;i++){notifyMordoHits([e],hit(i%2?.04:.01));assert.equal(mordoPresentationPose(e),null);tickMordoPresentation([e],.25,hit(.04));assert.equal(mordoPresentationPose(e),null);}
   assert.equal(mordoPresentationPose(e,{reduced:true}),null);assert.equal(mordoPresentationPose(e,{staticPose:true}),null);assert.equal(JSON.stringify(e),before);
@@ -20,7 +20,17 @@ test('repeated light and heavy hits never replace the king body in any phase',()
   }
   e.hp=phase===1?50:phase===2?20:0;tickMordoPresentation([e],.01);assert.equal(mordoPresentationPose(e),null);
  }
- const e=king(1);startMordoArrival(e);notifyMordoHits([e],hit());assert.equal(mordoPresentationPose(e),null);
+ const e=king(1);startMordoArrival(e);notifyMordoHits([e],hit());assert.deepEqual(mordoPresentationPose(e),{phase:1,pose:'light'});
+});
+
+test('skeletal hit pose is view-only, rate-limited and never replaces attack or phase transition',()=>{
+ clearMordoPresentation();const e=king(1),before=JSON.stringify(e);notifyMordoHits([e],hit());
+ assert.deepEqual(mordoPresentationPose(e),{phase:1,pose:'light'});assert.equal(mordoPresentationPose(e,{reduced:true}),null);
+ tickMordoPresentation([e],.13,hit());assert.equal(mordoPresentationPose(e),null);
+ tickMordoPresentation([e],.9,hit());assert.deepEqual(mordoPresentationPose(e),{phase:1,pose:'light'});
+ e.darkAttack={kind:'slash'};tickMordoPresentation([e],.01,hit());delete e.darkAttack;assert.equal(mordoPresentationPose(e),null);
+ assert.equal(JSON.stringify(e),before);
+ e.hp=50;tickMordoPresentation([e],1,hit());assert.equal(mordoPresentationPose(e),null);
 });
 test('lethal snapshots preserve the visible phase instead of dead hp forcing phase three',()=>{
  for(const phase of [1,2,3]){const e=king(phase);e.hp=0;const before=JSON.stringify(e),f=enemyDeathEffect(e,false,phase===1?100:phase===2?50:20);assert.equal(f.kingPhase,phase);assert.equal(f.duration,1.1);assert.equal(f.t,1.1);assert.equal(JSON.stringify(e),before);}

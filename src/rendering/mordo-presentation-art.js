@@ -1,4 +1,5 @@
 import {DeferredImage} from './asset-requests.js';
+import {drawReferenceMordoPose} from './reference-frame-art.js';
 import {mordoPresentationPose} from './mordo-presentation-state.js';
 import {drawKingAura} from './king-aura.js';
 import {cleanDetachedCrop} from './sprite-crop.js';
@@ -38,6 +39,7 @@ export const mordoPresentationArtReady=typeof Image==='undefined'?Promise.resolv
  }catch{resolve(false);}};image.onerror=()=>resolve(false);image.src=new URL('../../assets/images/'+s.file,import.meta.url).href;
 }))).then(ok=>ok.every(Boolean));
 export function drawMordoPose(c,phase,pose,x,y,face=1,alpha=1){
+ if(drawReferenceMordoPose(c,phase,pose,x,y,face,alpha))return true;
  const f=poses.get(phase+':'+pose);if(!f)return false;
  c.save();c.translate(Math.round(x),Math.round(y));c.scale(face<0?-1:1,1);c.globalAlpha*=alpha;c.imageSmoothingEnabled=false;c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));c.restore();return true;
 }
