@@ -1,0 +1,314 @@
+{
+  "scope": "Static file metadata/text inspection only. No JS parser, module import, test runner, server, browser, network or deployment executed.",
+  "base": "012f972",
+  "reviewedHead": "2de0d5d5d0c729880d67fd3b38a634636ac6dc0b",
+  "includesUncommittedWorkingTree": true,
+  "changedRuntimeFiles": [
+    "src/combat/combat-readability.js",
+    "src/game/game.js",
+    "src/rendering/arrow-impact-visuals.js",
+    "src/rendering/boss-clear.js",
+    "src/rendering/combat-impact.js",
+    "src/rendering/critical-feedback.js",
+    "src/rendering/damage-numbers.js",
+    "src/rendering/hero-landing.js",
+    "src/rendering/infernal-ambience.js",
+    "src/rendering/interaction-visuals.js",
+    "src/rendering/mordo-collapse.js",
+    "src/rendering/mordo-presentation-art.js",
+    "src/rendering/mordo-presentation-state.js",
+    "src/rendering/pixel-world.js",
+    "src/rendering/presentation-assets.js",
+    "src/rendering/reference-frame-art.js",
+    "src/rendering/resurrected-king.js",
+    "src/rendering/roll-trail.js",
+    "src/rendering/room-exterior.js",
+    "src/rendering/room-stage.js",
+    "src/rendering/upper-visuals.js",
+    "src/rendering/xp-shards.js",
+    "src/ui/boss-reward-reveal.js",
+    "src/ui/sound.js"
+  ],
+  "localImportCount": 247,
+  "missingImports": [],
+  "runtimeSourceHashes": {
+    "src/combat/combat-readability.js": "51c115635b048c3f5c3494348764687c288f5679d39dfb4d863bd3f0f703357a",
+    "src/game/game.js": "fc0ebdeeed19b149a9b5bb619dadbc71aaa7d90f49fbb710c4b5d235ac3745c8",
+    "src/rendering/arrow-impact-visuals.js": "60672acbae9301e7230df9c489d3b7369b051f62529f89882f188cdbd847fb24",
+    "src/rendering/boss-clear.js": "8f661dfa9d32725e9fa4bdf91e8daba1624465f8ec3c41cb2c87d36ee060f91b",
+    "src/rendering/combat-impact.js": "ee84f105c3ae1d7d40bcc9a1e7e8dd2473dd420903f607936e58888b7ea6a8b0",
+    "src/rendering/critical-feedback.js": "24384c5a036149d604c9398c891ab0d451ad5f03b403ae6002588216df04a64e",
+    "src/rendering/damage-numbers.js": "eaa222b5745e5a65dd70cc6b37f1ca9a3287efe3928dff9357669ceb9f941fe0",
+    "src/rendering/hero-landing.js": "014c1889e5f9f900dbb1e24637eda457253559cc86288b283aa8c3ece52ee96f",
+    "src/rendering/infernal-ambience.js": "b119d94fbeacd20a2456043d79b117ebaa281dbd8e0d33cf9b9c797e5b1dcf84",
+    "src/rendering/interaction-visuals.js": "cec4c329b2f3ecc1499381515fa75aed708f1f3bc0efafcdb2dbda15f598bb4a",
+    "src/rendering/mordo-collapse.js": "30a1b3d84a30a7857dfa2f672b14579391e93d6b4d35df99505c5bf8096f13f5",
+    "src/rendering/mordo-presentation-art.js": "f374813c7d21e5a2b0d23bb94853bfdf38d8290858958fcd14cd2747f9bac4fd",
+    "src/rendering/mordo-presentation-state.js": "b1df7f3a24a688d9b30b6f90575a653e74ec9576de94fe680e3c9f5befa698c4",
+    "src/rendering/pixel-world.js": "ce8069c5ea9e6cc68607f344cf534de8112a731f209b543186a4691033b34253",
+    "src/rendering/presentation-assets.js": "9b09a5289d983ecd3d8fbd4215869b9a0797aa31c120c8ece46632813aaeeff1",
+    "src/rendering/reference-frame-art.js": "e964e97982a87d6fff277b424644b9c92fccef0e1a9853519b82669525bcf2e8",
+    "src/rendering/resurrected-king.js": "db3c4653cbce8843ea846e2c94113511c92a208b9b95f82976017f5129d66e5a",
+    "src/rendering/roll-trail.js": "087ad860bb52e5993944f26f4b90df4e15e50fdeb28d2941d67d2d67f4115455",
+    "src/rendering/room-exterior.js": "565d7b8bcf878d90d3a394c34e0f2fbaeb71c0cdc1a1bf84e1d1f016362e0590",
+    "src/rendering/room-stage.js": "a27a9e3e31e36b6d18ab2a6df78a7ef5bc7babe360a17285c73084d161dbe06c",
+    "src/rendering/upper-visuals.js": "2a7d477d24899f24151d0b367987c40faf696bd99af8673d79c6e6f5fe145237",
+    "src/rendering/xp-shards.js": "2e07416d09ac483c8186e15e3251ab2274b38a20ed0813ab7b573eba75aa335e",
+    "src/ui/boss-reward-reveal.js": "a2e9ed11b7a76c92a46ccfa82a53274d579c2a54527bfd5fee7830fc3213ddb0",
+    "src/ui/sound.js": "db9747e44f673d8dfcfc0e58862fc83cfd2334f7cf65b7f0e9d7d207206d630a"
+  },
+  "testDeclarationInventory": [
+    {
+      "file": "tests/unit/boss-reward-reveal.test.js",
+      "netNewDeclarations": 4
+    },
+    {
+      "file": "tests/unit/combat-impact.test.js",
+      "netNewDeclarations": 8
+    },
+    {
+      "file": "tests/unit/combat-readability.test.js",
+      "netNewDeclarations": 2
+    },
+    {
+      "file": "tests/unit/damage-numbers.test.js",
+      "netNewDeclarations": 6
+    },
+    {
+      "file": "tests/unit/effects-finish.test.js",
+      "netNewDeclarations": 3
+    },
+    {
+      "file": "tests/unit/hero-landing.test.js",
+      "netNewDeclarations": 3
+    },
+    {
+      "file": "tests/unit/mordo-presentation.test.js",
+      "netNewDeclarations": 1
+    },
+    {
+      "file": "tests/unit/reference-frame-art.test.js",
+      "netNewDeclarations": 15
+    },
+    {
+      "file": "tests/unit/roll-trail.test.js",
+      "netNewDeclarations": 3
+    },
+    {
+      "file": "tests/unit/room-exterior.test.js",
+      "netNewDeclarations": 2
+    },
+    {
+      "file": "tests/unit/room-stage.test.js",
+      "netNewDeclarations": 1
+    },
+    {
+      "file": "tests/unit/sound.test.js",
+      "netNewDeclarations": 1
+    }
+  ],
+  "netNewTestDeclarations": 49,
+  "optionalAtlases": [
+    {
+      "key": "hero",
+      "file": "assets/images/reference-hero-frames-v1.png",
+      "size": [
+        384,
+        208
+      ],
+      "expected": [
+        384,
+        208
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "colors": 48,
+      "sha256": "34252eae40c0fb59296c2f42724ff4ede486757c424b4cd31c1e76f8427caa14",
+      "ok": true
+    },
+    {
+      "key": "heroMove",
+      "file": "assets/images/reference-hero-move-frames-v1.png",
+      "size": [
+        512,
+        416
+      ],
+      "expected": [
+        512,
+        416
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "colors": 48,
+      "sha256": "12d45373df381bb4e999fe04e54cd6481d1e697224526be123ce6cd7360e7050",
+      "ok": true
+    },
+    {
+      "key": "heroLanding",
+      "file": "assets/images/reference-hero-landing-frames-v1.png",
+      "size": [
+        384,
+        208
+      ],
+      "expected": [
+        384,
+        208
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "colors": 48,
+      "sha256": "91faa253c4c44bc093d938996b4533b098c5cdc715c719564632d4c499e865e3",
+      "ok": true
+    },
+    {
+      "key": "mordo",
+      "file": "assets/images/reference-mordo-frames-v1.png",
+      "size": [
+        576,
+        304
+      ],
+      "expected": [
+        576,
+        304
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "colors": 48,
+      "sha256": "442d1234b266de728014122fd06f201fb78cb0d17f03484680be8f56a0d7db5f",
+      "ok": true
+    },
+    {
+      "key": "mordo2",
+      "file": "assets/images/reference-mordo-phase2-frames-v1.png",
+      "size": [
+        576,
+        304
+      ],
+      "expected": [
+        576,
+        304
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "colors": 48,
+      "sha256": "72d88c5ec9da31ba937f5fc20d257df34ceec461709b669cf1f4198609b898dc",
+      "ok": true
+    },
+    {
+      "key": "mordo3",
+      "file": "assets/images/reference-mordo-phase3-frames-v1.png",
+      "size": [
+        576,
+        304
+      ],
+      "expected": [
+        576,
+        304
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "colors": 48,
+      "sha256": "c1c5f37d4a77502f9321f83566b12cf5a26aff2d0f7d197a92bd7ea45320fd71",
+      "ok": true
+    },
+    {
+      "key": "mordoFx",
+      "file": "assets/images/reference-mordo-fx-frames-v1.png",
+      "size": [
+        384,
+        256
+      ],
+      "expected": [
+        384,
+        256
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "colors": 48,
+      "sha256": "24f09a1d434a9afc72c2c77a9e1eab6fb2e735dc38ac2183dc2357ddd8e6a478",
+      "ok": true
+    },
+    {
+      "key": "fx",
+      "file": "assets/images/reference-fx-frames-v1.png",
+      "size": [
+        512,
+        384
+      ],
+      "expected": [
+        512,
+        384
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "colors": 46,
+      "sha256": "cd5523e15bedc4bd1e7280eb4bc75f3591334638052940d0316d7ebef609ac10",
+      "ok": true
+    }
+  ],
+  "productManifestHashes": [
+    {
+      "manifest": "docs/design-drafts/reference-feel-20261123/frames-landing-v1/runtime-pack-manifest.json",
+      "file": "assets/images/reference-hero-landing-frames-v1.png",
+      "ok": true
+    },
+    {
+      "manifest": "docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/runtime-pack-manifest.json",
+      "file": "assets/images/reference-mordo-phase2-frames-v1.png",
+      "ok": true
+    },
+    {
+      "manifest": "docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/runtime-pack-manifest.json",
+      "file": "assets/images/reference-mordo-phase3-frames-v1.png",
+      "ok": true
+    },
+    {
+      "manifest": "docs/design-drafts/reference-feel-20261123/frames-mordo23-v1/runtime-pack-manifest.json",
+      "file": "assets/images/reference-mordo-fx-frames-v1.png",
+      "ok": true
+    },
+    {
+      "manifest": "docs/design-drafts/reference-feel-20261123/frames-v1/runtime-pack-manifest.json",
+      "file": "assets/images/reference-hero-frames-v1.png",
+      "ok": true
+    },
+    {
+      "manifest": "docs/design-drafts/reference-feel-20261123/frames-v1/runtime-pack-manifest.json",
+      "file": "assets/images/reference-mordo-frames-v1.png",
+      "ok": true
+    },
+    {
+      "manifest": "docs/design-drafts/reference-feel-20261123/frames-v1/runtime-pack-manifest.json",
+      "file": "assets/images/reference-fx-frames-v1.png",
+      "ok": true
+    },
+    {
+      "manifest": "docs/design-drafts/reference-feel-20261123/frames-walk-v1/asset-manifest.json",
+      "file": "assets/images/reference-hero-move-frames-v1.png",
+      "ok": true
+    }
+  ],
+  "optionalLoaderHasNoReadyExport": true,
+  "limitations": [
+    "Regex imports only: not a syntax or binding check.",
+    "PNG checks do not prove runtime loading, animation, readability or performance.",
+    "This report is a checkpoint, not verification of later commits."
+  ],
+  "ok": true
+}

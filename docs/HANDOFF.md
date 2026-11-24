@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 누적 정적 마감·실행 검증 대기
+~~~text
+2de0d5d뒤정적감사/마감보완. docs/qa-reference-feel-20261124 README에명시배포후검증14흐름/순서;static-audit.py/JSON은JS실행없이소스경로·PNG·manifest만검사. base012f972 runtime24/import247경로·8선택atlas크기alpha48색·SHA8일치/필수Ready없음;소스workingtreeSHA포함·구문바인딩동작검증아님. 발견보완:combatImpactFilter/Shake/draw및rollTrail draw에현재room전달해새방첫update전이전접촉/동일enemyIdflash·흔들림·잔상차단. 회귀2작성만·텍스트집계누적49신규전체미실행. 소스diff정적만·게임구문단위브라우저실기기성능음향/푸시배포없음·운영0.63/564369d/release-20261123-110150-773b7a유지. 과거985개는이번검증아님. 누적개발분정적마감·명시배포시node--test전체1회/실패필요재검증→Edge행렬→커밋푸시공식배포공개확인. 추가후기/가로고정TODO만보존·임의가로구현금지. 원화중간/전방향/일반문질감은추가범위,현재완료과장금지. 실행중명령차단없음.
+~~~
+
 ## 최신 복사용 인계 — 일반문 봉인 해제 연출
 ~~~text
 9d246d0뒤interaction-visuals기존roomClear/unlocked에서0.25초파편분리+0.15초잔광총0.4.doorReleasePose/clearInteractionEffects추가·같은방중복clear재시작억제.첫프레임부터통로밖80/70기준·roomDoorFrame/d회전small/corridor도맞춤.reduced즉시최종문표시·draw현재roomLocked면해제/출구문구억제.game resetTransient/room이동이력정리·일반event doors마스크에서neighbor.remnantSeal특수문제외.새자산/충돌통행시간저장RNG음향변경없음.회귀3작성만·누적47미실행.소스/diff정적만·게임구문테스트브라우저푸시배포없음·운영0.63.다음누적타격감/원화연결정적마감및배포전검증목록정리.실제문연출/배경가독성미검증·가로고정TODO/추가후기보존·실행중명령차단없음.

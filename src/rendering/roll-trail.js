@@ -11,8 +11,8 @@ export function advanceRollTrail(run,room,dt){
  v.last=v.age;v.poses.push({age:0,player:{x:p.x,y:p.y},roll:{x:q.x,y:q.y,kind:q.kind,elapsed:q.elapsed,duration:q.duration}});
  if(v.poses.length>3)v.poses.shift();
 }
-export function drawRollTrail(c,run,drawPose,{reduced=false}={}){
- if(reduced)return false;const v=run&&states.get(run);if(!v?.poses.length)return false;
+export function drawRollTrail(c,run,drawPose,{reduced=false,room=null}={}){
+ if(reduced)return false;const v=run&&states.get(run);if(!v?.poses.length||room&&v.room!==room)return false;
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();const alpha=c.globalAlpha;
  for(const p of v.poses){if(p.age<.025)continue;c.globalAlpha=alpha*.2*(1-p.age/.14)**2;drawPose(c,p);}
  c.restore();return true;

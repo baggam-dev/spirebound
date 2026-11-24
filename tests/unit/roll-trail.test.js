@@ -2,6 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {advanceRollTrail,drawRollTrail,resetRollTrail} from '../../src/rendering/roll-trail.js';
 const context=()=>({globalAlpha:1,save(){},restore(){},beginPath(){},rect(){},clip(){}});
+test('first new-room draw rejects old roll silhouettes before the next presentation update',()=>{
+ const run={player:{x:100,y:200},roll:{x:1,y:0,elapsed:.1,duration:.28}},oldRoom={},newRoom={};
+ advanceRollTrail(run,oldRoom,.04);run.player.x=110;advanceRollTrail(run,oldRoom,.04);
+ assert.equal(drawRollTrail(context(),run,()=>assert.fail('stale room silhouette'),{room:newRoom}),false);
+ let painted=0;assert.equal(drawRollTrail(context(),run,()=>painted++,{room:oldRoom}),true);assert.ok(painted>0);
+});
 test('roll ghosts use bounded snapshots of actual positions rather than extrapolated movement',()=>{
  const run={player:{x:100,y:200},roll:{x:1,y:0,kind:null,elapsed:.01,duration:.28}},room={};
  for(let i=0;i<8;i++){run.player.x=100+i*4;run.roll.elapsed+=.04;advanceRollTrail(run,room,.04);}

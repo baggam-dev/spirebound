@@ -32,19 +32,21 @@ export function advanceCombatImpacts(run,room,dt,results=[],effects=[]){
 export function combatImpactState(run){
  const v=run&&states.get(run);return v?{count:v.contacts.length,time:v.time}:null;
 }
-export function combatImpactFilter(run,enemy,{reduced=false}={}){
+export function combatImpactFilter(run,enemy,{reduced=false,room=null}={}){
  if(reduced||enemy.shadowBoss===1)return null;
- const v=run&&states.get(run),f=v?.contacts.findLast(f=>f.id===enemy.id&&f.age<(f.heavy?.06:.04));
+ const v=run&&states.get(run);if(room&&v?.room!==room)return null;
+ const f=v?.contacts.findLast(f=>f.id===enemy.id&&f.age<(f.heavy?.06:.04));
  return f?'brightness(1.8) saturate(0.55)':null;
 }
-export function combatImpactShake(run,{reduced=false}={}){
+export function combatImpactShake(run,{reduced=false,room=null}={}){
  const v=run&&states.get(run),age=v?.shake?v.time-v.shake.at:Infinity;
+ if(room&&v?.room!==room)return {x:0,y:0};
  if(reduced||age<0||age>=.13)return {x:0,y:0};
  const strength=2.5*(1-age/.13)**2;
  return {x:Math.round(Math.sin(age*105+1)*strength),y:Math.round(Math.cos(age*87)*strength*.6)};
 }
-export function drawCombatImpacts(c,run,{reduced=false}={}){
- const v=run&&states.get(run);if(!v?.contacts.length)return false;
+export function drawCombatImpacts(c,run,{reduced=false,room=null}={}){
+ const v=run&&states.get(run);if(!v?.contacts.length||room&&v.room!==room)return false;
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();const alpha=c.globalAlpha;
  for(const f of v.contacts){
   if(!f.sparks)continue;

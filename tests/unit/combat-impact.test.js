@@ -3,6 +3,13 @@ import assert from 'node:assert/strict';
 import {advanceCombatImpacts,combatImpactFilter,combatImpactShake,combatImpactState,resetCombatImpacts,drawCombatImpacts} from '../../src/rendering/combat-impact.js';
 import {startBossClear,advanceBossClear,bossClearPhase,bossClearState,bossClearShake,drawBossClear,takeBossClearCues,skipBossClear} from '../../src/rendering/boss-clear.js';
 const hit=(id=1,extra={})=>({enemyId:id,x:400,y:250,damage:30,applied:true,newHit:true,critical:false,...extra});
+test('new-room first draw cannot reuse an old enemy id flash, particles or camera shake before update',()=>{
+ const run={},oldRoom={},newRoom={};advanceCombatImpacts(run,oldRoom,.01,[hit(1,{critical:true})]);
+ assert.ok(combatImpactFilter(run,{id:1},{room:oldRoom}));
+ assert.equal(combatImpactFilter(run,{id:1},{room:newRoom}),null);
+ assert.deepEqual(combatImpactShake(run,{room:newRoom}),{x:0,y:0});
+ assert.equal(drawCombatImpacts(context(),run,{room:newRoom}),false);
+});
 function context(){const calls=[];return {calls,globalAlpha:1,save(){},restore(){},beginPath(){},rect(){},clip(){},setLineDash(){},moveTo(){},lineTo(){},stroke(){},fillRect(...args){calls.push(['box',...args]);},strokeText(t){calls.push(['label',t]);},fillText(){}};}
 
 test('contacts require real fresh damage and leave run, room and actors unchanged',()=>{

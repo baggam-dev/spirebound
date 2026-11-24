@@ -3560,3 +3560,9 @@ utilityUseState로기존실사용조건을공유하고 canCastUtility는같은re
 - reduced는움직이는문연출생략·열린최종모양즉시유지. draw시현재roomLocked옵션으로재잠금이면효과/출구개방문구억제. 일반door마스크에서특수remnantSeal문제외(별도봉인표시유지). 중복roomClear가이력을재시작하지않음. resetTransient/방이동에clearInteractionEffects연결해로드/빠른재입장잔존차단.
 - 소스/호출·reset/겹침영역/diff정적만. 회귀3작성(방형태별4문/중복·방·reset재생금지/수명·reduced·재잠금·mask)·누적47미실행. 게임구문/테스트/브라우저실기기/푸시배포없음·운영0.63유지. 실제문설주연출가독성/테마배경겹침미검증.
 - 다음: 누적타격감·원화연결의정적마감/배포전검증목록정리. 새대형원화확장전패키지규칙유지. 가로고정TODO/추가후기보존·실행중명령차단없음.
+
+## 2026-11-24 누적 변경 정적 마감 완료(실행 검증 대기)
+- docs/qa-reference-feel-20261124/README.md에누적연결범위·배포전QA14흐름/명시배포후순서·실기기한계정리. static-audit.py/JSON은게임JS를실행하지않고기준012f972대비runtime24파일/import247곳경로·선택8atlas크기alpha48색/제품manifestSHA8개일치확인. 필수Readyexport없음·소스workingtree SHA기록. 구문/바인딩/동작검증은아님.
+- 정적발견보완: 새방첫update이전draw에서도이전방접촉/치명흔들림/구르기잔상이보일가능성차단. combatImpactFilter/Shake/draw및drawRollTrail에현재room옵션·game실호출전달. 기존advance/reset/전투판정·AI·보상·저장RNG·시간불변.
+- 회귀2작성만(새방같은enemyIdflash/흔들림/입자및구르기첫draw차단). 텍스트선언집계로누적49신규확인·전체미실행. git diff정적통과·게임구문/단위/브라우저실기기/성능·음향/푸시배포없음. 운영0.63/564369d·release-20261123-110150-773b7a유지·과거985통과는이번검증아님.
+- 현재누적개발분정적마감·실제체감/프레임연결/선택로딩실패·성능은배포지시후검증대기. 다음명시배포시전체node--test1회→필요수정재검증/Edge흐름→푸시공식배포공개확인. 가로고정TODO/추가후기·원화확장제약보존. 실행중명령차단없음.
