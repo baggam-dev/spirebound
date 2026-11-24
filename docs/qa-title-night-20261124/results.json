@@ -1,0 +1,22 @@
+{
+  "results": [
+    {
+      "width": 1280,
+      "assets": 12,
+      "motion": true,
+      "reduced": true,
+      "settings": true
+    },
+    {
+      "width": 844,
+      "assets": 12,
+      "motion": true,
+      "reduced": true,
+      "settings": true
+    },
+    {
+      "fallback": true
+    }
+  ],
+  "errors": []
+}
