@@ -1,12 +1,15 @@
 import {bossAtlas} from './boss-atlas.js';
 import {locomotion,drawWalkingFrame} from './locomotion.js';
 import {kingWeaponMotion,kingLocomotionBlocked} from './boss-motion.js';
+import {drawReferenceMordoAdvanced} from './reference-frame-art.js';
 const atlas=bossAtlas('king-resurrection-poses-v1.png',[[145,104],[145,123],[165,106],[130,128],[145,104],[145,104]]);
 export const resurrectedKingReady=atlas.ready.then(()=>true);
 export const resurrectedKingState=atlas.state;
 export const revivedKing=e=>e?.variant==='king'&&e.resurrectionVersion===1&&e.hp/e.max<=.3&&(e.kingStage===undefined||e.kingStage===3);
 export function drawResurrectedKing(c,e,attack,time=0,{reduced=false,staticPose=false,pose=null}={}){
- if(!revivedKing(e)||atlas.frames.length!==6)return false;
+ if(!revivedKing(e))return false;
+ if(!pose&&drawReferenceMordoAdvanced(c,e,attack,{reduced,staticPose}))return true;
+ if(atlas.frames.length!==6)return false;
  const motion=kingWeaponMotion(e,{reduced,staticPose}),forced=pose==='death'?5:null;
  const aim=e.darkAttack?.aim??e.darkFlash?.aim??e.facing??0,face=Math.cos(aim)<0?-1:1;
  c.save();c.translate(Math.round(e.x),Math.round(e.y));c.scale(face,1);c.imageSmoothingEnabled=false;

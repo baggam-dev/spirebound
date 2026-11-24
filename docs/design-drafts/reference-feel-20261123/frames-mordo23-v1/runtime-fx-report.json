@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "assets/images/reference-mordo-fx-frames-v1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 384,
+      "height": 256,
+      "bytes": 22141,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 90347,
+      "content_bounds": [
+        9,
+        18,
+        374,
+        230
+      ],
+      "problems": []
+    }
+  ]
+}

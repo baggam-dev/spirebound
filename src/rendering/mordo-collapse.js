@@ -1,4 +1,5 @@
 // Presentation only: deterministic room details, no gameplay RNG or saved state.
+import {drawReferenceMordoSlash} from './reference-frame-art.js';
 export const MORDO_COLLAPSE_SECONDS=2.4;
 export function collapseShake(token,reduced=false){
  if(reduced||token?.kind!=='return'||(!token.fresh||!token.mordo))return {x:0,y:0};
@@ -40,7 +41,8 @@ export function drawMordoAttackOrnaments(c,e,a,{flash=false,reduced=false}={}){
  c.save();c.setLineDash([]);c.globalAlpha*=reduced?.35:flash?.75:.4;c.strokeStyle=flash?'#f4d79b':'#b779e8';c.lineWidth=flash?3:1;
  const mark=a.kind==='mark'||a.kind==='blink',x=mark?a.tx:a.x,y=mark?a.ty:a.y;
  if(mark){const radius=a.kind==='blink'?35:65;c.beginPath();c.arc(x,y,radius,0,Math.PI*2);c.stroke();for(let i=0;i<6;i++){const angle=i*Math.PI/3;c.beginPath();c.moveTo(x+Math.cos(angle)*(radius-8),y+Math.sin(angle)*(radius-8));c.lineTo(x+Math.cos(angle)*radius,y+Math.sin(angle)*radius);c.stroke();}}
- if(!reduced&&flash){for(let i=0;i<12;i++){const angle=(a.aim||0)+i*Math.PI/6,reach=20+(1-a.time/.18)*50;c.fillStyle=i%3?'#b880e2':'#f4d79b';c.fillRect(x+Math.cos(angle)*reach,y+Math.sin(angle)*reach,2,4);}}
+ const slashArt=flash&&drawReferenceMordoSlash(c,e,a,{reduced});
+ if(!reduced&&flash&&!slashArt){for(let i=0;i<12;i++){const angle=(a.aim||0)+i*Math.PI/6,reach=20+(1-a.time/.18)*50;c.fillStyle=i%3?'#b880e2':'#f4d79b';c.fillRect(x+Math.cos(angle)*reach,y+Math.sin(angle)*reach,2,4);}}
  if(a.kind==='slash'&&flash){c.beginPath();c.arc(x,y,Math.min(150,e.hp/e.max<=.65?165:145),a.aim-1.15,a.aim+1.15);c.stroke();}
  c.restore();
 }

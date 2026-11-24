@@ -1,3 +1,13 @@
+## 2026-11-24 모르도2·부활3형 공격 로컬 연결 완료
+- 검토atlas무변형복사3:reference-mordo-phase2/phase3(576x304)/fx(384x256)-frames-v1.png, 선택적spec8가족·왕방요청8/일반4, 필수Ready없음/실패기존원화fallback. runtime-pack-manifest SHA·alpha48색크기3장정적통과.
+- 2형은기존drawReferenceMordoAttack의feedback앞경로,3형은drawResurrectedKing안우선분기. 실제bossPose준비/타격에서slash1/2·mark/fan/ring/judgment/blink시전3 선택. 왕방입장에모든후반atlas선행요청. 기존combo새windup이전flash보다우선, finish가opening과flash동시생성하는점을정적확인해실제잔광동안베기유지후기존회복으로복귀.
+- 실제2/부활3형slash flash0.18초에분리FX0~2·방향/위치읽기, 기존장식입자중복만억제·위험윤곽/arc보존. 2형발21/3형29·몸체공통배율. 대기보행/피격/패배·전환·효과줄이기·그림자/구버전3형은기존표시. 시트자세0/4/5·FX3~5는자료만/제품에서미선택. 전투/AI·판정/예고범위·저장RNG/공격시간변경없음.
+- 소스/우선경로/finish상태/diff정적만. 회귀4작성(형태상태/제외조건/콤보및opening동시생성/선택atlas독립실패좌표)·기존개수fixture갱신·누적41미실행. 게임구문/단위/브라우저실기기/푸시배포없음·운영0.63유지. 실제체적·준비연결/피격윤곽·FX위치/가독성은배포전검증대상.
+- 다음: 보스최종패배실루엣/파열FX연결정리(중간전환오인·그림자/보상재발동방지). 일반문질감/해제중간·가로고정TODO/추가후기유지. 실행중명령차단없음.
+
+## 2026-11-24 모르도2·부활3형 실제상태 연결 진행 중
+340ad84 clean확인, 사용자다음진행을선택적연결승인으로반영. 2형공통body앞/3형우선부활경로안에서실제준비베기시전자세연결·slash실제해제FX만교체예정. 이동대기·피격/패배·변신/그림자/구버전은기존유지. 현재수정예정 reference-frame-art/presentation-assets/resurrected-king/mordo-collapse·회귀/atlas출처/기록. 마지막소스정적·실행중명령차단없음·게임구문테스트/푸시배포없음.
+
 ## 2026-11-24 모르도2·부활3형18프레임 검토 패키지 완료
 - frames-mordo23-v1/index.html에2형6/부활3형6/별도FX6=18native·공격시전4GIF·1x/2x접촉·밝은배경·원본4/전체prompt/SHA/셀·수동루트/배율/build/manifest·정적report. 제품src/assets미반영.
 - 실제우선경로정정확인:2형feedback king2높이92.4/발21,3형resurrectionVersion1이면장발인간형resurrectedKing가feedback앞에우선. 옛큰뿔해골3형fallback은별도보존. 부활6자세는기존개별박스/발29이나새초안은대기104px공통배율·같은크기로단정안함.

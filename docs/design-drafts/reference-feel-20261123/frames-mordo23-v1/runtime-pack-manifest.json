@@ -1,0 +1,26 @@
+[
+  {
+    "source": "phase2-review-atlas.png (unchanged copy)",
+    "deployed": false,
+    "sha256": "72d88c5ec9da31ba937f5fc20d257df34ceec461709b669cf1f4198609b898dc",
+    "approved": "User next instruction; existing Mordo family",
+    "file": "assets/images/reference-mordo-phase2-frames-v1.png",
+    "gameVerified": false
+  },
+  {
+    "source": "phase3-review-atlas.png (unchanged copy)",
+    "deployed": false,
+    "sha256": "c1c5f37d4a77502f9321f83566b12cf5a26aff2d0f7d197a92bd7ea45320fd71",
+    "approved": "User next instruction; existing Mordo family",
+    "file": "assets/images/reference-mordo-phase3-frames-v1.png",
+    "gameVerified": false
+  },
+  {
+    "source": "fx-review-atlas.png (unchanged copy)",
+    "deployed": false,
+    "sha256": "24f09a1d434a9afc72c2c77a9e1eab6fb2e735dc38ac2183dc2357ddd8e6a478",
+    "approved": "User next instruction; existing Mordo family",
+    "file": "assets/images/reference-mordo-fx-frames-v1.png",
+    "gameVerified": false
+  }
+]

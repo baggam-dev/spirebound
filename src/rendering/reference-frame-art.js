@@ -4,6 +4,9 @@ const specs={
  heroMove:{file:'reference-hero-move-frames-v1.png',w:128,h:104,cols:4,count:16,pivot:[64,90]},
  heroLanding:{file:'reference-hero-landing-frames-v1.png',w:128,h:104,cols:3,count:6,pivot:[64,90]},
  mordo:{file:'reference-mordo-frames-v1.png',w:192,h:152,cols:3,count:6,pivot:[96,132]},
+ mordo2:{file:'reference-mordo-phase2-frames-v1.png',w:192,h:152,cols:3,count:6,pivot:[96,132]},
+ mordo3:{file:'reference-mordo-phase3-frames-v1.png',w:192,h:152,cols:3,count:6,pivot:[96,132]},
+ mordoFx:{file:'reference-mordo-fx-frames-v1.png',w:128,h:128,cols:3,count:6,pivot:[64,64]},
  fx:{file:'reference-fx-frames-v1.png',w:128,h:128,cols:4,count:12,pivot:[64,64]}
 };
 // Optional images have no exported *Ready promise and cannot gate floor loading.
@@ -55,9 +58,42 @@ export function referenceMordoAttackFrame(e,attack,{reduced=false,staticPose=fal
  return attack.stage==='windup'?1:attack.stage==='strike'?2:null;
 }
 export function drawReferenceMordoAttack(c,e,attack,options={}){
+ if(referenceMordoFamily(e)==='mordo2')return drawReferenceMordoAdvanced(c,e,attack,options);
  const frame=referenceMordoAttackFrame(e,attack,options);if(frame===null)return false;
  const angle=e.darkAttack?.aim??e.darkFlash?.aim??e.facing??0;
  return art.draw(c,'mordo',frame,e.x,e.y+21,{face:Math.cos(angle)<0?-1:1});
+}
+export function referenceMordoFamily(e){
+ if(e?.variant!=='king'||e.shadowBoss===1||!(e.hp>0)||!(e.max>0))return null;
+ const ratio=e.hp/e.max;
+ if(ratio<=.65&&ratio>.3&&(e.kingStage===undefined||e.kingStage===2))return 'mordo2';
+ if(ratio<=.3&&e.resurrectionVersion===1&&(e.kingStage===undefined||e.kingStage===3))return 'mordo3';
+ return null;
+}
+export function referenceMordoAdvancedFrame(e,attack,{reduced=false,staticPose=false}={}){
+ if(!referenceMordoFamily(e)||reduced||staticPose||e.kingTransition>0||e.frozen>0||e.kneel>0)return null;
+ // finish() opens the punish window at the same instant it creates the flash.
+ // Keep that real strike silhouette until the flash ends, then use old recovery.
+ if(e.opening>0&&!(attack?.stage==='strike'&&e.darkFlash?.time>0))return null;
+ if(!['windup','strike'].includes(attack?.stage))return null;
+ // A new combo warning may coexist with the previous attack's fading flash.
+ const kind=attack.stage==='windup'?e.darkAttack?.kind:(e.darkFlash?.time>0?e.darkFlash.kind:e.darkAttack?.kind);
+ if(kind==='slash')return attack.stage==='windup'?1:2;
+ if(['mark','fan','ring','judgment','blink'].includes(kind))return 3;
+ return null;
+}
+export function drawReferenceMordoAdvanced(c,e,attack,options={}){
+ const frame=referenceMordoAdvancedFrame(e,attack,options);if(frame===null)return false;
+ const source=attack.stage==='windup'?e.darkAttack:(e.darkFlash?.time>0?e.darkFlash:e.darkAttack);
+ const angle=source?.aim??e.facing??0,family=referenceMordoFamily(e);
+ return art.draw(c,family,frame,e.x,e.y+(family==='mordo3'?29:21),{face:Math.cos(angle)<0?-1:1});
+}
+export function drawReferenceMordoSlash(c,e,a,{reduced=false}={}){
+ if(reduced||!referenceMordoFamily(e)||a?.kind!=='slash'||!(a.time>0)||a.time>.18||e.kingTransition>0)return false;
+ const x=a.x,y=a.y,angle=a.aim??e.facing??0;
+ if(![x,y,angle].every(Number.isFinite))return false;
+ const progress=1-a.time/.18,frame=Math.min(2,Math.floor(progress*3));
+ return art.draw(c,'mordoFx',frame,x+Math.cos(angle)*48,y+Math.sin(angle)*48,{angle,alpha:.65,clip:true});
 }
 export function drawReferenceMordoPose(c,phase,pose,x,y,face=1,alpha=1){
  const frame={light:3,heavy:3,death:4,rest:5}[pose];if(phase!==1||frame===undefined)return false;

@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 모르도2·부활3형 공격 연결
+~~~text
+340ad84뒤사용자다음진행으로선택적3atlas무변형복사:reference-mordo-phase2/phase3/fx-frames-v1.png, SHA/report3정적통과.spec8가족/일반요청4왕방8·필수Ready없음/독립실패fallback.2형referenceMordoAttack기존feedback앞에서advanced선택·3형resurrectedKing내우선분기.실제bossPosewindup/strike:slash1/2·주문markfanringjudgmentblink3.2발21/3발29.콤보새windup우선·finishopening+flash동시상태에서도잔광끝까지실제strike표시후기존회복.slash실제flash0.18만분리FX0~2·절차입자중복억제/위험arc보존.idlewalk/hit/death/전환·reduced·그림자구버전기존유지;자세0/4/5·FX3~5미선택.AI/시간판정보상저장RNG불변.추가4회귀작성만·누적41미실행·fixture개수갱신.소스/diff·PNG정적만/게임구문테스트브라우저푸시배포없음·운영0.63.다음최종패배실루엣/파열FX정리·중간전환/그림자/보상재발동주의.실제체적/전환가독성FX위치미검증·가로고정TODO유지·실행중명령차단없음.
+~~~
+
 ## 최신 복사용 인계 — 모르도2·부활3형 검토 가족
 ~~~text
 착지연결뒤docs만작업. frames-mordo23-v1에2형6/장발부활3형6/별도FX6=18native·4GIF/접촉1x2x/밝은배경/index/원본4/전체prompt/sha/셀루트배율/build/manifest/report. builtin3+3형여백보정1;최초3형셀1/2/4/5경계접촉제외·padding-v2선택여백56px.2형5px무기끝/FX25·선택alpha0~254·핵심경계접촉0·native몸192x152/발96,132×12+FX128x128×6 alpha/48색크기18정적통과·접촉육안. 실제현재2형feedback높이92.4발21,3형resurrectedKing우선(장발인간·version1/HP30%↓)개별atlas박스발29;옛큰뿔해골3형은fallback임. 새3형대기104공통배율은모든기존자세크기일치아님. 게임src/assets미반영·게임구문테스트/브라우저푸시배포없음·운영0.63/누적37회귀미실행.다음우선부활경로안선택적포즈매핑·실패fallback/그림자구버전보존.피격전형활성화/중간패배보상오인금지.키포즈만·보행/중간/변신없음·실제모션/위험표시미검증.가로고정TODO유지·실행중명령차단없음.
