@@ -1,0 +1,21 @@
+{
+  "version": "0.65.0-prebeta",
+  "files": [
+    "assets/images/title-night-background-v1.png",
+    "assets/images/title-night-fire-0.png",
+    "assets/images/title-night-fire-1.png",
+    "assets/images/title-night-fire-2.png",
+    "assets/images/title-night-fire-3.png",
+    "assets/images/title-night-hero-0.png",
+    "assets/images/title-night-hero-1.png",
+    "assets/images/title-night-hero-2.png",
+    "assets/images/title-night-leaves-0.png",
+    "assets/images/title-night-leaves-1.png",
+    "assets/images/title-night-leaves-2.png",
+    "assets/images/title-night-tree-v1.png",
+    "index.html",
+    "src/game/version.js",
+    "src/ui/title-scene.js"
+  ],
+  "matched": 15
+}
