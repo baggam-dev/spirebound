@@ -1,9 +1,27 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createReferenceFrameStore,referenceHeroFrame,referenceHeroMoveFrame,referenceMordoAttackFrame,referenceMordoFamily,referenceMordoAdvancedFrame} from '../../src/rendering/reference-frame-art.js';
+import {createReferenceFrameStore,referenceHeroFrame,referenceHeroMoveFrame,referenceMordoAttackFrame,referenceMordoFamily,referenceMordoAdvancedFrame,referenceMordoDeathPose,referenceMordoReleaseFrame} from '../../src/rendering/reference-frame-art.js';
 import {referencePresentationFiles} from '../../src/rendering/presentation-assets.js';
 import {existsSync} from 'node:fs';
 const context=()=>({globalAlpha:1,calls:[],save(){},restore(){},translate(...a){this.calls.push(['translate',...a]);},scale(){},rotate(){},beginPath(){},rect(){},clip(){},drawImage(...a){this.calls.push(['draw',...a.slice(1)]);}});
+test('new defeat silhouettes require final death snapshots and retain the last visible form',()=>{
+ const f={enemyFeedback:'death',king:true,kingPhase:2,t:1.1,duration:1.1};
+ assert.deepEqual(referenceMordoDeathPose(f),{family:'mordo2',frame:5,feet:21,alpha:1});
+ assert.deepEqual(referenceMordoDeathPose({...f,kingPhase:3,resurrection:true}),{family:'mordo3',frame:5,feet:29,alpha:1});
+ for(const patch of [{enemyFeedback:'hit'},{enemyFeedback:undefined},{king:false},{kingPhase:1},{kingPhase:3,resurrection:false},{shadowBoss:1},{split:true}])assert.equal(referenceMordoDeathPose({...f,...patch}),null);
+ assert.equal(referenceMordoDeathPose({variant:'king',hp:30,max:100,kingStage:3,resurrectionVersion:1}),null);
+});
+test('defeat snapshots fade with their existing lifetime and reduced effects keep the old renderer',()=>{
+ const f={enemyFeedback:'death',king:true,kingPhase:3,resurrection:true,t:.22,duration:1.1},before=JSON.stringify(f);
+ assert.ok(Math.abs(referenceMordoDeathPose(f).alpha-.4)<1e-10);assert.equal(JSON.stringify(f),before);
+ assert.equal(referenceMordoDeathPose(f,{reduced:true}),null);
+ for(const patch of [{t:0},{t:NaN},{t:Infinity},{duration:0},{duration:Infinity}])assert.equal(referenceMordoDeathPose({...f,...patch}),null);
+});
+test('final release samples only the detached seal breakup row and declines stale or invalid clocks',()=>{
+ assert.equal(referenceMordoReleaseFrame(0),3);assert.equal(referenceMordoReleaseFrame(.24),4);assert.equal(referenceMordoReleaseFrame(.62),5);
+ assert.equal(referenceMordoReleaseFrame(.999),5);
+ for(const value of [-.01,1,Infinity,NaN])assert.equal(referenceMordoReleaseFrame(value),null);
+});
 test('landing art uses shared feet and refuses missing or incorrectly sized optional atlas',()=>{
  const images=[];class FakeImage{constructor(){images.push(this);}}
  const store=createReferenceFrameStore(FakeImage),c=context(),im=images.find(i=>i.src.includes('reference-hero-landing-'));

@@ -1,5 +1,5 @@
 import {DeferredImage} from './asset-requests.js';
-import {drawReferenceMordoPose} from './reference-frame-art.js';
+import {drawReferenceMordoPose,drawReferenceMordoDeath} from './reference-frame-art.js';
 import {mordoPresentationPose} from './mordo-presentation-state.js';
 import {drawKingAura} from './king-aura.js';
 import {cleanDetachedCrop} from './sprite-crop.js';
@@ -48,6 +48,7 @@ export function drawMordoPresentation(c,e,time=0,options={}){
  return drawMordoPose(c,p.phase,p.pose,e.x,e.y,Number.isFinite(e.facing)&&Math.cos(e.facing)<0?-1:1);
 }
 export function drawMordoDeath(c,f,{reduced=false}={}){
+ if(drawReferenceMordoDeath(c,f,{reduced}))return true;
  if(!f.king||!poses.has(f.kingPhase+':death')||!poses.has(f.kingPhase+':rest'))return false;
  const age=Math.max(0,Math.min(1,1-f.t/f.duration)),alpha=Math.min(1,(1-age)*2.1),pose=reduced||age>.42?'rest':'death';
  c.save();c.beginPath();c.rect(25,45,910,455);c.clip();

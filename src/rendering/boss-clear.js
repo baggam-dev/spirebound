@@ -1,4 +1,4 @@
-import {drawReferenceEffect} from './reference-frame-art.js';
+import {drawReferenceEffect,referenceMordoDeathPose,drawReferenceMordoRelease} from './reference-frame-art.js';
 // Event-only, view-only celebration. Never awards XP, replays on load or blocks input.
 const states=new WeakMap();
 const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n));
@@ -7,7 +7,7 @@ export const BOSS_CLEAR_DURATION=1.8;
 export function startBossClear(run,room,origin){
  if(!run||!room||states.get(run)?.room===room||origin?.shadowBoss===1||origin?.split)return false;
  const rewardIds=(room.xpDrops||[]).filter(d=>d.burst==='boss'&&d.born>=(run.elapsed??0)-.1).slice(0,16).map(d=>d.id);
- states.set(run,{room,age:0,x:point(origin?.x,480,25,935),y:point(origin?.y,220,45,500),king:!!origin?.king,rewardIds,cues:new Set()});return true;
+ states.set(run,{room,age:0,x:point(origin?.x,480,25,935),y:point(origin?.y,220,45,500),king:!!origin?.king,mordo:!!referenceMordoDeathPose(origin),rewardIds,cues:new Set()});return true;
 }
 export const resetBossClear=run=>{if(run)states.delete(run);};
 export function advanceBossClear(run,room,dt,active=true){
@@ -49,7 +49,7 @@ export function drawBossClear(c,run,room,{reduced=false,combatActive=false}={}){
  }
  if(t>.08&&t<.9){
   const q=clamp((t-.08)/.82),count=reduced?8:28;c.globalAlpha=alpha*(1-q)*.85;
-  const raster=v.king&&!reduced&&drawReferenceEffect(c,'fracture',q,v.x,bodyY,{alpha:.9});
+  const raster=v.king&&!reduced&&((v.mordo&&drawReferenceMordoRelease(c,q,v.x,v.y-8-q*18,{alpha:.9}))||drawReferenceEffect(c,'fracture',q,v.x,bodyY,{alpha:.9}));
   if(!raster)for(let i=0;i<count;i++){
    const a=i*2.39996,reach=(18+i%7*9)*(1-(1-q)**3),x=v.x+Math.cos(a)*reach,y=bodyY+Math.sin(a)*reach*.65-28*q+q*q*90;
    c.fillStyle=i%4?color:light;c.fillRect(Math.round(x),Math.round(y),2+i%3,2+i%4);

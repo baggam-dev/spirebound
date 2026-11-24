@@ -1,3 +1,13 @@
+## 2026-11-24 모르도 최종 패배·파열 로컬 연결 완료
+- 실제enemyDeathEffect snapshot만새패배선택:2형mordo2·resurrection부활3형mordo3의5번무릎자세,발21/29·기존사망수명1.1초와후반fade읽기. live배우/피격/phase1/옛해골3/그림자/분열·효과줄이기는기존경로. resurrectedDeath및mordoDeath우선분기·이미지실패기존fallback.
+- 기존startBossClear가stairs/key/practiceWon/gateReward+최종death로시작하는흐름유지, 그snapshot에서만mordo표시플래그캡처. 기존0.08~0.9초파열구간에FX3봉인원→4파편→5잔광,실제종료위치에서완만히18px상승·공간clip. 실패는이전Mordo파열/절차형·다른보스/효과줄이기유지.
+- 신규이미지·필수요청/시뮬/AI/무적·보상XP·랭킹/저장/RNG·음향큐·선택패널1.2초변경없음. 중간페이즈에서보상/클리어연출재시작없음. 기존같은방중복방지/reset/skip·실제XP만강조동작그대로.
+- 소스/스냅샷·호출순서/diff정적만. 추가3회귀작성(사망형태/제외조건·기존수명fade/reduced·해방행시각범위)·누적44미실행. 이번PNG변경없어이미지검사반복안함. 게임구문/테스트/브라우저·실기기/푸시배포없음·운영0.63유지. 실제패배몸체/파편중첩·위험가독성미검증.
+- 다음: 일반문봉인해제중간연출(기존4방향/방형태·효과줄이기/로드재생금지) 보강. 가로고정TODO/추가후기유지·실행중명령차단없음.
+
+## 2026-11-24 모르도 최종 패배·파열 연결 진행 중
+02e5f01 clean확인. 실제enemyDeathEffect와stairs/key/practiceWon/gateReward시작경로 확인, 새패배는death snapshot2/부활3만·shadow제외, 새FX3~5는동일최종클리어state에서만선택예정. 중간페이즈/실제보상/시간판정변경없음. 현재수정예정 reference-frame-art/resurrected-king/mordo-presentation-art/boss-clear·회귀/기록. 마지막소스정적·실행중명령차단없음·게임구문테스트/푸시배포없음.
+
 ## 2026-11-24 모르도2·부활3형 공격 로컬 연결 완료
 - 검토atlas무변형복사3:reference-mordo-phase2/phase3(576x304)/fx(384x256)-frames-v1.png, 선택적spec8가족·왕방요청8/일반4, 필수Ready없음/실패기존원화fallback. runtime-pack-manifest SHA·alpha48색크기3장정적통과.
 - 2형은기존drawReferenceMordoAttack의feedback앞경로,3형은drawResurrectedKing안우선분기. 실제bossPose준비/타격에서slash1/2·mark/fan/ring/judgment/blink시전3 선택. 왕방입장에모든후반atlas선행요청. 기존combo새windup이전flash보다우선, finish가opening과flash동시생성하는점을정적확인해실제잔광동안베기유지후기존회복으로복귀.

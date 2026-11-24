@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 모르도 최종 패배·파열 연결
+~~~text
+02e5f01뒤reference-frame-art deathPose/death/releaseFrame/release추가.실제death snapshot2/부활3만5번무릎자세/발21·29·기존수명1.1fade.생배우·hit·1형/옛3형/그림자split/reduced제외,실패fallback.resurrectedDeath/mordoDeath앞분기.boss-clear기존최종event+death시작시mordo플래그캡처,기존0.08~0.9구간에FX3→4→5·실제지점에서18px상승·clip,실패이전raster/절차형.그림자/다른보스/중간전환·중복방지/reset/skip보존·XP보상/선택패널음향시뮬저장RNG불변.추가3회귀작성만·누적44미실행·소스diff정적만·게임구문테스트브라우저푸시배포없음·운영0.63.새PNG없음.다음일반문봉인해제중간연출보강.실제패배/FX중첩가독성미검증·가로고정TODO/추가후기유지·실행중명령차단없음.
+~~~
+
 ## 최신 복사용 인계 — 모르도2·부활3형 공격 연결
 ~~~text
 340ad84뒤사용자다음진행으로선택적3atlas무변형복사:reference-mordo-phase2/phase3/fx-frames-v1.png, SHA/report3정적통과.spec8가족/일반요청4왕방8·필수Ready없음/독립실패fallback.2형referenceMordoAttack기존feedback앞에서advanced선택·3형resurrectedKing내우선분기.실제bossPosewindup/strike:slash1/2·주문markfanringjudgmentblink3.2발21/3발29.콤보새windup우선·finishopening+flash동시상태에서도잔광끝까지실제strike표시후기존회복.slash실제flash0.18만분리FX0~2·절차입자중복억제/위험arc보존.idlewalk/hit/death/전환·reduced·그림자구버전기존유지;자세0/4/5·FX3~5미선택.AI/시간판정보상저장RNG불변.추가4회귀작성만·누적41미실행·fixture개수갱신.소스/diff·PNG정적만/게임구문테스트브라우저푸시배포없음·운영0.63.다음최종패배실루엣/파열FX정리·중간전환/그림자/보상재발동주의.실제체적/전환가독성FX위치미검증·가로고정TODO유지·실행중명령차단없음.

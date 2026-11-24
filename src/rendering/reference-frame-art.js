@@ -95,6 +95,23 @@ export function drawReferenceMordoSlash(c,e,a,{reduced=false}={}){
  const progress=1-a.time/.18,frame=Math.min(2,Math.floor(progress*3));
  return art.draw(c,'mordoFx',frame,x+Math.cos(angle)*48,y+Math.sin(angle)*48,{angle,alpha:.65,clip:true});
 }
+export function referenceMordoDeathPose(f,{reduced=false}={}){
+ if(reduced||f?.enemyFeedback!=='death'||!f.king||f.shadowBoss===1||f.split||!(f.duration>0)||!Number.isFinite(f.duration)||!(f.t>0)||!Number.isFinite(f.t))return null;
+ const family=f.kingPhase===2?'mordo2':f.kingPhase===3&&f.resurrection?'mordo3':null;
+ return family?{family,frame:5,feet:family==='mordo3'?29:21,alpha:Math.min(1,f.t/f.duration*2)}:null;
+}
+export function drawReferenceMordoDeath(c,f,options={}){
+ const pose=referenceMordoDeathPose(f,options);if(!pose)return false;
+ return art.draw(c,pose.family,pose.frame,f.x,f.y+pose.feet,{face:f.face,alpha:pose.alpha,clip:true});
+}
+export function referenceMordoReleaseFrame(progress){
+ if(!Number.isFinite(progress)||progress<0||progress>=1)return null;
+ return progress<.24?3:progress<.62?4:5;
+}
+export function drawReferenceMordoRelease(c,progress,x,y,options={}){
+ const frame=referenceMordoReleaseFrame(progress);if(frame===null)return false;
+ return art.draw(c,'mordoFx',frame,x,y,{...options,clip:true});
+}
 export function drawReferenceMordoPose(c,phase,pose,x,y,face=1,alpha=1){
  const frame={light:3,heavy:3,death:4,rest:5}[pose];if(phase!==1||frame===undefined)return false;
  return art.draw(c,'mordo',frame,x,y+21,{face,alpha});
