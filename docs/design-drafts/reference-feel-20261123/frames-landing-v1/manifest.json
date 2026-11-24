@@ -1,0 +1,180 @@
+{
+  "status": "review-only; not integrated; not game-tested",
+  "source": "built-in imagegen; original archer reference owned by project",
+  "sourceSha256": "7aa3238293e2a0626e38e55a2117a655477d5c5d08fce772dfc893180411da67",
+  "sourceAlphaExtrema": [
+    0,
+    254
+  ],
+  "nativeSize": [
+    128,
+    104
+  ],
+  "scale": 0.1358313817330211,
+  "palette": "existing reference-hero-frames-v1.png opaque palette",
+  "frames": [
+    {
+      "frame": 0,
+      "sourceCell": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "coreBox": [
+        48,
+        143,
+        428,
+        467
+      ],
+      "sourceRoot": 252,
+      "paste": [
+        36,
+        46
+      ],
+      "pivot": [
+        64,
+        90
+      ],
+      "scale": 0.1358313817330211
+    },
+    {
+      "frame": 1,
+      "sourceCell": [
+        512,
+        0,
+        512,
+        512
+      ],
+      "coreBox": [
+        65,
+        112,
+        428,
+        464
+      ],
+      "sourceRoot": 260,
+      "paste": [
+        38,
+        42
+      ],
+      "pivot": [
+        64,
+        90
+      ],
+      "scale": 0.1358313817330211
+    },
+    {
+      "frame": 2,
+      "sourceCell": [
+        1024,
+        0,
+        512,
+        512
+      ],
+      "coreBox": [
+        63,
+        86,
+        412,
+        464
+      ],
+      "sourceRoot": 262,
+      "paste": [
+        37,
+        39
+      ],
+      "pivot": [
+        64,
+        90
+      ],
+      "scale": 0.1358313817330211
+    },
+    {
+      "frame": 3,
+      "sourceCell": [
+        0,
+        512,
+        512,
+        512
+      ],
+      "coreBox": [
+        77,
+        57,
+        424,
+        464
+      ],
+      "sourceRoot": 264,
+      "paste": [
+        39,
+        35
+      ],
+      "pivot": [
+        64,
+        90
+      ],
+      "scale": 0.1358313817330211
+    },
+    {
+      "frame": 4,
+      "sourceCell": [
+        512,
+        512,
+        512,
+        512
+      ],
+      "coreBox": [
+        79,
+        44,
+        410,
+        465
+      ],
+      "sourceRoot": 262,
+      "paste": [
+        39,
+        33
+      ],
+      "pivot": [
+        64,
+        90
+      ],
+      "scale": 0.1358313817330211
+    },
+    {
+      "frame": 5,
+      "sourceCell": [
+        1024,
+        512,
+        512,
+        512
+      ],
+      "coreBox": [
+        91,
+        38,
+        403,
+        465
+      ],
+      "sourceRoot": 262,
+      "paste": [
+        41,
+        32
+      ],
+      "pivot": [
+        64,
+        90
+      ],
+      "scale": 0.1358313817330211
+    }
+  ],
+  "previewTimingMs": [
+    60,
+    60,
+    60,
+    60,
+    60,
+    500
+  ],
+  "limitations": [
+    "Timing is a review proposal, not game clock.",
+    "Manual source roots; no in-engine gait/volume validation.",
+    "No production atlas installed."
+  ]
+}

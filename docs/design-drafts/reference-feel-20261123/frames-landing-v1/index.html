@@ -1,0 +1,8 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>주인공 착지 연결 6프레임</title>
+<style>body{background:#131b20;color:#e1d5ba;margin:24px;font:16px system-ui}p{line-height:1.6;max-width:1000px}img{image-rendering:pixelated;max-width:100%;height:auto}a{color:#b8ddd1}.row{display:flex;flex-wrap:wrap;gap:24px}figure{margin:0}figcaption{margin:8px 0}</style>
+<h1>주인공 착지 → 일어서기</h1><p>기존 주인공 모습의 착지·압축·반기립·준비·회복·대기 6프레임 검토안입니다. 게임에는 아직 연결하지 않았습니다. 60ms 간격은 비교용 제안이며 이동·무적·사격 시간을 바꾸지 않습니다.</p>
+<div class="row"><figure><img src="landing.gif" width="384" alt="착지부터 기립 6자세 반복"><figcaption>새 착지 가족</figcaption></figure><figure><img src="landing-to-idle.gif" width="384" alt="착지 6자세 이후 기존 대기로 복귀"><figcaption>기존 대기로 복귀 비교</figcaption></figure></div>
+<h2>실제 픽셀 크기</h2><img src="contact-1x.png" width="384" alt="6프레임 1배 크기 접촉표">
+<h2>2배 확대 · 동일 발 기준</h2><img src="contact-2x.png" width="768" alt="같은 발 기준에 정렬한 6프레임">
+<h2>새 마지막 자세 / 기존 대기 · 밝은 배경</h2><img src="idle-comparison.png" width="768" alt="왼쪽 새 마지막 자세 오른쪽 기존 대기 자세">
+<p>완전한 모션 일치 판정이 아닙니다. 자세 사이의 팔·활·몸통 체적 변화와 마지막 대기 전환은 실제 게임에서 추가 검토해야 합니다. <a href="README.md">범위·연결 계획</a> · <a href="landing-source.png">생성 원본</a> · <a href="image-report.json">정적 검사</a></p>

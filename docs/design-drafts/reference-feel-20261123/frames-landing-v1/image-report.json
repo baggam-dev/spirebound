@@ -1,0 +1,125 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-landing-v1/native/landing-00.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4505,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 11939,
+      "content_bounds": [
+        36,
+        46,
+        88,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-landing-v1/native/landing-01.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4294,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12071,
+      "content_bounds": [
+        38,
+        42,
+        87,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-landing-v1/native/landing-02.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4310,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12058,
+      "content_bounds": [
+        37,
+        39,
+        84,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-landing-v1/native/landing-03.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4499,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 11998,
+      "content_bounds": [
+        39,
+        35,
+        86,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-landing-v1/native/landing-04.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4588,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 11983,
+      "content_bounds": [
+        39,
+        33,
+        84,
+        90
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/reference-feel-20261123/frames-landing-v1/native/landing-05.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 128,
+      "height": 104,
+      "bytes": 4451,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 12014,
+      "content_bounds": [
+        41,
+        32,
+        83,
+        90
+      ],
+      "problems": []
+    }
+  ]
+}
