@@ -1,0 +1,125 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/lighting-v2/native/hero-0.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 112,
+      "bytes": 7591,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 7694,
+      "content_bounds": [
+        15,
+        16,
+        83,
+        104
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/lighting-v2/native/hero-1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 112,
+      "bytes": 7828,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 7664,
+      "content_bounds": [
+        13,
+        16,
+        83,
+        104
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/lighting-v2/native/hero-2.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 112,
+      "bytes": 7812,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 7600,
+      "content_bounds": [
+        9,
+        16,
+        84,
+        104
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/lighting-v2/native/leaves-0.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 384,
+      "height": 360,
+      "bytes": 12256,
+      "color_count": 24,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 132306,
+      "content_bounds": [
+        19,
+        53,
+        335,
+        184
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/lighting-v2/native/leaves-1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 384,
+      "height": 360,
+      "bytes": 11812,
+      "color_count": 24,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 132299,
+      "content_bounds": [
+        20,
+        53,
+        340,
+        180
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/lighting-v2/native/leaves-2.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 384,
+      "height": 360,
+      "bytes": 12215,
+      "color_count": 24,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 132284,
+      "content_bounds": [
+        20,
+        53,
+        336,
+        184
+      ],
+      "problems": []
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "status": "review-only; no runtime changes",
+  "generatedCalls": 2,
+  "parentSources": "../native background/tree-0/fire0..3 unchanged",
+  "sources": [
+    {
+      "file": "hero-rim-source.png",
+      "sha256": "24b70f4f94e0a47787720eec910990a88be80696f58c737b42d03c330a5b4eeb"
+    },
+    {
+      "file": "leaves-source.png",
+      "sha256": "0731953181dcf0a9978c207d24a695b381e8bf44077862bd5752bb5112563d36"
+    }
+  ],
+  "hero": {
+    "boxes": [
+      [
+        138,
+        54,
+        619,
+        676
+      ],
+      [
+        123,
+        53,
+        619,
+        676
+      ],
+      [
+        96,
+        53,
+        622,
+        676
+      ]
+    ],
+    "scale": 0.14170692431561996,
+    "root": [
+      48,
+      104
+    ],
+    "paletteColors": 47
+  },
+  "leaves": {
+    "boxes": [
+      [
+        38,
+        68,
+        677,
+        334
+      ],
+      [
+        41,
+        68,
+        688,
+        325
+      ],
+      [
+        40,
+        67,
+        679,
+        334
+      ]
+    ],
+    "native": [
+      384,
+      360
+    ],
+    "treeCoordinateScale": 0.7,
+    "paste": [
+      0,
+      19
+    ],
+    "paletteColors": 23
+  },
+  "tree": {
+    "file": "../native/tree-0.png",
+    "sha256": "fbc75416701e113f12c7d1bac14fcbeca4511e5210e27afc3c6a349338049dff",
+    "staticPosition": [
+      -40,
+      0
+    ],
+    "rotation": 0,
+    "frameChanges": false
+  },
+  "changes": {
+    "doorSeam": [
+      461,
+      112,
+      270
+    ],
+    "floorSpill": true,
+    "fireSize": [
+      58,
+      58
+    ],
+    "fireSizeFactor": 1.2083333333333333,
+    "embersMaxPerFire": 3,
+    "fallingLeavesMax": 3,
+    "leafStepSeconds": 0.3
+  },
+  "preview": {
+    "size": [
+      640,
+      360
+    ],
+    "still": [
+      1280,
+      720
+    ],
+    "frames": 60,
+    "fps": 10,
+    "seconds": 6,
+    "gifBytes": 353314
+  },
+  "limitations": [
+    "Leaf-only painted key poses, wood stays completely fixed.",
+    "Manual leaf placement and light planes are review composition, not game shader or live integration.",
+    "Actual browser/game QA, mobile performance, runtime fallback and deployment not performed."
+  ]
+}

@@ -1,0 +1,8 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>야간 픽셀 메인 · 움직임 시안</title>
+<style>body{background:#080d16;color:#b8becb;font:16px system-ui;margin:24px}h1{color:#ddd0af;font-size:24px}p{max-width:1000px;line-height:1.7}img{image-rendering:pixelated;max-width:100%;height:auto}button{background:#18202d;color:#d4c7ad;border:1px solid #877459;padding:10px 18px;font:inherit;cursor:pointer}a{color:#c4b48b}figure{margin:24px 0}</style>
+<h1>조명 보강 · 나무 고정 · 잎 움직임</h1>
+<p>주인공을 배경과 같은 청회색 명암으로 맞추고, 화로 일렁임·작은 불티·고정된 줄기·가지 위의 잎 흔들림·간헐적 낙엽을 분리했습니다. 검토용 합성이며 현재 게임에는 반영하지 않았습니다.</p>
+<button id="toggle" aria-pressed="false">움직임 멈추기</button> <a href="main-menu-still.png">정지 이미지 원본</a> · <a href="motion-preview.gif">움직임 원본</a> · <a href="README.md">구성·제약</a>
+<figure><img id="preview" src="motion-preview.gif" width="1280" height="720" alt="어두운 탑 앞 궁수와 일렁이는 화로·작은 불티·잎·낙엽 움직임"></figure>
+<p>640×360 논리 픽셀을 2배로 표시합니다. 6초/10fps 합성 GIF이며 게임 렌더링 속도·모바일 성능을 검증한 결과는 아닙니다. 실제 저장이 없는 경우에는 ‘계속 탐험’을 숨기는 기존 규칙을 유지할 예정입니다.</p>
+<script>let still=matchMedia('(prefers-reduced-motion: reduce)').matches;const p=document.getElementById('preview'),b=document.getElementById('toggle');function sync(){p.src=still?'main-menu-still.png':'motion-preview.gif';b.textContent=still?'움직임 재생':'움직임 멈추기';b.setAttribute('aria-pressed',String(still));}b.onclick=()=>{still=!still;sync();};sync();</script>
