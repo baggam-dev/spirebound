@@ -7,5 +7,6 @@
   "implementation": "New clean background plate, existing independent rear idle hero, separate flame/mist particles; real HTML/CSS menu; original entrance gate flow preserved",
   "runtimeImageReport": "runtime-image-report.json",
   "gameVerified": true,
-  "deployed": false
+  "deployed": true,
+  "release": "release-20261124-223438-183200"
 }

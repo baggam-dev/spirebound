@@ -3576,3 +3576,10 @@ utilityUseState로기존실사용조건을공유하고 canCastUtility는같은re
 ## 2026-11-24 0.64 배포 전 검증 통과·배포 진행
 메인시안배포승인반영·깨끗한title배경v2/실제메뉴·기존주인공불안개·새원정입장흐름연결, client/API/header0.64·deploy/server새9PNG허용. 로컬서버허용누락및QA비동기predicate오판정발견수정·동기state확인으로실제8atlas/v2로드재검증. 전체1034/1034(full-release.log), 서버수정후HTTP2(server-fix.log), 신규Edge47(presentation-verified)/기존18(legacy-browser)·오류0점수POST0통과. 초기presentation-browser/final·title-probe는최종증거아님.
 현재운영0.63·아직배포완료아님. 현재수정title/version/config/server/deploy/회귀·생성출처/QA기록. 다음커밋푸시→공식deploy.ps1→HTTPS변경바이트/health/services·PC/모바일확인. 로컬서버4635세션77375실행중·브라우저QA종료·차단없음. 실제기기/장시간성능/음향청취미검증·가로고정TODO보존.
+
+## 2026-11-24 0.64 배포·공개 확인 완료
+- 운영 https://168.107.21.43/ · 0.64.0-prebeta · 런타임c39d26f · active release-20261124-223438-183200(454파일). 이전release-20261123-110150-773b7a보존·DB/계정/원정저장구조삭제없음. GitHub main푸시완료. 새메인탑문배경/메뉴와누적주인공·모르도·타격숫자·보스격파/일반문연출반영.
+- 전체1034/1034·서버이미지허용수정후HTTP2·서버배포API28통과. 최종Edge신규47(presentation-verified)·기존18(legacy-browser), pageerror0/점수POST0. 공개38변경runtime파일byte정확일치·HTTPShealth ok·웹/APIcurrent동일새release·nginx/API active·최신0.64/secureCookie true·공개PC1280/모바일에뮬844새메인육안확인.
+- 증거docs/qa-reference-feel-20261124의full-release.log/server-fix.log/presentation-verified/legacy-browser/deploy.log/services.log/api-live-config.log/public.초기presentation-browser/final·title-probe는실패/미확정진단이며최종검증근거아님(서버신규asset허용누락/async wait오판정수정후진짜원화로재검증).
+- 새메인은승인무드배경판분리+실제HTML메뉴/기존궁수/불안개. 입장문열림은기존입장플레이트/스킵흐름사용·시안문짝새프레임아님. 실제iPhone/Android·사람체감/장시간성능·청취·전체원화정밀접합미검증. 가로고정은TODO만/추가후기대기유지.
+- 배포요청미완료없음·로컬4635서버종료/테스트·브라우저·배포세션완료·실행중명령차단없음. 다음추가요청은다시수정·로컬커밋까지만/새배포지시때검증푸시배포규칙유지.

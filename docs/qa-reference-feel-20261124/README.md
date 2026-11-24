@@ -1,3 +1,6 @@
+## 0.64 운영 배포 완료 — 최종 결과
+런타임c39d26f/active release-20261124-223438-183200·공개https://168.107.21.43/.배포API28/HTTPShealth/nginxAPI active·공개38파일byte일치·PC1280/에뮬844확인,최신0.64/secureCookie true.최종증거public/result.json·공개캡처/deploy.log/services.log/api-live-config.log.이전릴리스보존·로컬서버4635종료.아래배포전서술은이력이다.
+
 ## 2026-11-24 0.64 배포 전 실행 검증 결과(최신)
 사용자명시배포지시후전체1034/1034통과(full-release.log), 로컬서버신규9PNG허용수정뒤HTTP2통과(server-fix.log), 실제새8atlas/v2로드를동기식상태로확인한Edge47흐름(presentation-verified/result.json)·기존잔해/탈출/UI18흐름(legacy-browser/result.json)통과. 두브라우저세트모두pageerror0/점수POST0. 초기presentation-browser는선택이미지차단규칙오류, presentation-browser-final은비동기waitpredicate로로딩을확정하지못했던중간자료이며최종성공근거가아니다. title-probe도서버허용수정전진단자료다. 서버누락은브라우저육안대조로발견해수정하고실제신규9URL200을회귀에추가했다. static-audit.json은이전정적마감시점자료로남긴다. 실제iPhone/Android/장시간성능/음향청취·전체원화프레임정밀QA는미검증. 아래미실행서술은명시배포전계획이력이다.
 

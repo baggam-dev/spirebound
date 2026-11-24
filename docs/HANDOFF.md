@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 0.64 배포 완료
+~~~text
+0.64.0-prebeta 운영https://168.107.21.43/·런타임c39d26f·active release-20261124-223438-183200(454파일)·이전0.63 release-20261123-110150-773b7a보존/DB계정저장삭제없음. GitHub main푸시완료. 새title배경분리/실제메뉴/기존궁수불안개·기존입장스킵+누적타격숫자/주인공모르도/보스격파·문연출배포. 전체1034·서버fixHTTP2·배포API28통과;최종Edge신규47presentation-verified/기존18legacy-browser오류0점수POST0;공개38runtime byte일치·HTTPShealth ok·nginx/API active·웹/API새release일치·최신0.64/secureCookie true·공개1280/에뮬844새메인육안확인. docs/qa-reference-feel-20261124가증거. 초기presentation-browser/final·title-probe는미확정진단(서버asset허용누락및asyncwait오판정수정후실제8atlas/v2로재검증),최종성공으로쓰지말것. 실제기기/장시간성능/청취·전프레임접합미검증. 시안문짝새입장프레임은아니고기존입장플레이트유지. 가로고정TODO/추가후기유지. 로컬4635종료·실행중명령차단없음·배포요청미완료없음. 새요청시git status→상태/TODO/로그최근/HANDOFF읽고후속일반수정은로컬커밋까지/새배포지시별도.
+~~~
+
 ## 최신 복사용 인계 — 0.64 검증통과·배포진행
 ~~~text
 사용자배포명시승인(메인시안승인포함).0.64client/API/header·새title배경분리1회/실제메뉴금색/기존별도궁수불안개·기존입장스킵흐름. 신규9PNGdeploy/server허용. 전체1034통과·서버HTTP2재검증·신규Edge47최종presentation-verified/기존18legacy-browser오류0/점수POST0. 초기신규QAasyncpredicate허위통과+serverasset누락발견수정후동기loaderstate모두확인;초기presentation-browser/final·title-probe는최종증거아님. 8atlas/v2실제로드/이미지실패/보상스킵/입장/저장이어검증. 현재운영0.63아직미배포·다음커밋푸시공식deploy/공개바이트health서비스PC모바일확인. 로컬4635세션77375실행중·QA세션종료·차단없음. 실제휴대폰장시간성능/청취미검증·가로고정TODO보존.
