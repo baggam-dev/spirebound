@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {newRun,currentRoom,canEscape} from '../../src/game/engine.js';
 import {startFinalEscape,tickFinalEscape} from '../../src/world/final-escape.js';
-import {SHADOW_BOSSES,shadowBaseMax} from '../../src/world/shadow-escape.js';
+import {SHADOW_BOSSES,shadowBaseMax,shadowHealthMax} from '../../src/world/shadow-escape.js';
 import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 import {stepRun,enemyRadius} from '../../src/game/simulation.js';
 import {splitSlime} from '../../src/combat/poison.js';
@@ -28,7 +28,7 @@ test('opening retains living enemies and projectiles and permits escape without 
  const {s,r}=escape();tickFinalEscape(s,r,42);s.projectiles=[{x:200,y:200,vx:100,vy:0,life:2,enemy:true,hit:[]}];const count=r.enemies.length;assert.equal(canEscape(s),false);assert.deepEqual(tickFinalEscape(s,r,10),['finalReady']);assert.equal(r.enemies.length,count);assert.equal(s.projectiles.length,1);assert.equal(canEscape(s),true);assert.deepEqual(tickFinalEscape(s,r,1),[]);assert.doesNotThrow(()=>parseSave(encodeSave(s)));
 });
 test('round progress reloads without duplicate summons or a second health reduction',()=>{
- let {s,r}=escape();tickFinalEscape(s,r,22);const maxes=r.enemies.filter(e=>e.shadowBoss).map(e=>e.max);s=parseSave(encodeSave(s));r=currentRoom(s);assert.deepEqual(r.enemies.filter(e=>e.shadowBoss).map(e=>e.max),maxes);tickFinalEscape(s,r,.1);assert.equal(r.enemies.length,9);for(const e of r.enemies.filter(e=>e.shadowBoss))assert.equal(e.shadowRootMax,Math.ceil(shadowBaseMax(s,e.variant||'warden')*.7));
+ let {s,r}=escape();tickFinalEscape(s,r,22);const maxes=r.enemies.filter(e=>e.shadowBoss).map(e=>e.max);s=parseSave(encodeSave(s));r=currentRoom(s);assert.deepEqual(r.enemies.filter(e=>e.shadowBoss).map(e=>e.max),maxes);tickFinalEscape(s,r,.1);assert.equal(r.enemies.length,9);for(const e of r.enemies.filter(e=>e.shadowBoss))assert.equal(e.shadowRootMax,shadowHealthMax(s,e.variant||'warden'));
 });
 test('slime splits once, children retain their shadow identity and cannot split again',()=>{
  const {s,r}=escape();tickFinalEscape(s,r,22);const slime=r.enemies.find(e=>e.variant==='slime');r.enemies=r.enemies.filter(e=>e!==slime);assert.equal(splitSlime(slime,r,s.player),true);const children=r.enemies.filter(e=>e.variant==='slime');assert.equal(children.length,2);assert.ok(children.every(e=>e.shadowBoss===1&&e.summoned&&e.shadowSplit===1));assert.equal(splitSlime(children[0],r,s.player),false);assert.doesNotThrow(()=>parseSave(encodeSave(s)));
@@ -44,4 +44,23 @@ test('return floor asset plan includes every future shadow boss before the first
 });
 test('malformed shadow saves reject wrong rounds, health scaling and phase limits',()=>{
  const {s,r}=escape();tickFinalEscape(s,r,42);for(const mutate of [x=>currentRoom(x).finalEscape.wave=4,x=>currentRoom(x).enemies.find(e=>e.variant==='king').max++,x=>currentRoom(x).enemies.find(e=>e.variant==='commander').commander.phase=2,x=>currentRoom(x).enemies.find(e=>e.variant==='slime').shadowSplit=2]){const copy=structuredClone(s);mutate(copy);assert.throws(()=>encodeSave(copy));}
+});
+
+test('first two shadows gain twenty percent while later rounds retain their health',()=>{
+ const {s,r}=escape();tickFinalEscape(s,r,42);
+ const bosses=r.enemies.filter(e=>e.shadowBoss);
+ assert.equal(bosses[0].max,971);assert.equal(bosses[1].max,1764);
+ for(const e of bosses.slice(2))assert.equal(e.max,Math.ceil(shadowBaseMax(s,e.variant)*.7));
+});
+test('legacy first two shadow bosses load with health ratio preserved once and dead stays dead',()=>{
+ let {s,r}=escape();tickFinalEscape(s,r,12);
+ const bosses=r.enemies.filter(e=>e.shadowBoss);
+ for(const e of bosses){const root=Math.ceil(shadowBaseMax(s,e.variant||'warden')*.7);e.max=e.shadowRootMax=root;e.hp=root/2;delete e.shadowHealthVersion;}
+ bosses[1].hp=0;
+ s=parseSave(encodeSave(s));r=currentRoom(s);
+ const restored=r.enemies.filter(e=>e.shadowBoss);
+ assert.equal(restored[0].max,971);assert.equal(restored[0].hp,486);assert.equal(restored[1].max,1764);assert.equal(restored[1].hp,0);
+ const snapshot=restored.map(e=>({hp:e.hp,max:e.max}));
+ const again=currentRoom(parseSave(encodeSave(s))).enemies.filter(e=>e.shadowBoss);
+ assert.deepEqual(again.map(e=>({hp:e.hp,max:e.max})),snapshot);
 });

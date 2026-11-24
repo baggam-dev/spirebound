@@ -1,10 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createEnemyChatter} from '../../src/rendering/enemy-chatter.js';
+import {createEnemyChatter as createRawChatter} from '../../src/rendering/enemy-chatter.js';
 import {ENEMY_CHATTER} from '../../src/ui/enemy-chatter-data.js';
 import {storyTracesMarkup,enemyLoreMarkup} from '../../src/ui/story-lore.js';
 import {returnEpilogueMarkup} from '../../src/ui/story-copy.js';
 
+// Deterministic successful eligibility keeps existing timing/budget checks independent of chance.
+const createEnemyChatter=run=>createRawChatter(run,{random:()=>.1});
 const actor=(extra={})=>({type:'chaser',elite:'guardian',hp:100,x:220,y:340,...extra});
 function fixture(enemies=[actor()]){return {seed:45,status:'playing',bossLayoutVersion:1,floor:0,room:0,key:false,player:{x:480,y:450},floors:[[{seen:true,enemies}]]};}
 function canvas(){const lines=[];const ctx=new Proxy({measureText:s=>({width:s.length*14}),fillText:s=>lines.push(s)},{get:(o,k)=>k in o?o[k]:()=>{}});return {ctx,lines};}
@@ -46,4 +48,13 @@ test('epilogue follows the actual campaign and is absent on failed, practice and
  const s=fixture();s.status='won';s.campaign='classic';assert.match(returnEpilogueMarkup(s),/봉인의 잔해/);assert.doesNotMatch(returnEpilogueMarkup(s),/왕이 붙잡던/);
  s.campaign='expanded';assert.match(returnEpilogueMarkup(s),/왕이 붙잡던/);
  s.status='dead';assert.equal(returnEpilogueMarkup(s),'');s.status='won';s.practice={};assert.equal(returnEpilogueMarkup(s),'');delete s.practice;s.bossLayoutVersion=0;assert.equal(returnEpilogueMarkup(s),'');
+});
+
+test('elite chatter accepts below seventy percent and permanently rejects the boundary per encounter',()=>{
+ const allowed=fixture();assert.ok(collect(createRawChatter(allowed,{random:()=>.699999}),40).length>0);
+ const denied=fixture(),before=JSON.stringify(denied);let chance=.7;
+ const c=createRawChatter(denied,{random:()=>chance});assert.deepEqual(collect(c,25),[]);
+ chance=0;assert.deepEqual(collect(c,90),[]);
+ denied.floors[0].push({enemies:[]});denied.room=1;c.tick(.1);denied.room=0;assert.deepEqual(collect(c,40),[]);
+ denied.floors[0].pop();assert.equal(JSON.stringify(denied),before);
 });

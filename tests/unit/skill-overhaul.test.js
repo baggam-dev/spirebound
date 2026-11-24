@@ -22,7 +22,7 @@ test('mines detonate at one second, keep their damage, and legacy remaining time
 });
 
 test('only fairy acquisition weights decrease slightly while the king and owned blade retain their rules',()=>{
- const s=fight();for(const id of ['sunFairy','snowFairy','stormFairy'])assert.equal(skillOfferWeight(s.player,skills.find(k=>k.id===id)),.32);
+ const s=fight();for(const id of ['sunFairy','snowFairy','stormFairy'])assert.equal(skillOfferWeight(s.player,skills.find(k=>k.id===id)),.28);
  assert.equal(skillOfferWeight(s.player,skills.find(k=>k.id==='fairyKing')),.12);
  s.player.aura=1;assert.equal(skillOfferWeight(s.player,skills.find(k=>k.id==='aura')),1);
  Object.assign(s.player,{level:15,mainSkill:'fire',fire:1,sunFairy:1,snowFairy:1,stormFairy:1});s.pendingLevels=1;s.levelQueue=[15];assert.ok(levelChoices(s,()=>.5).some(k=>k.id==='fairyKing'));

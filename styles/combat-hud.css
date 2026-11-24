@@ -59,7 +59,7 @@ body:has(#runHUD:not([hidden])),body:has(#runHUD:not([hidden])) .arena{backgroun
 #runContext:not([hidden]){display:flex;position:absolute;left:12px;top:8px;transform:none;width:210px;max-width:calc(100% - 170px);gap:7px;align-items:center;color:#eee0bc;font-size:11px;line-height:18px;text-shadow:1px 1px #000;pointer-events:none}
 #runFloor{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#runClock{flex-shrink:0;font-variant-numeric:tabular-nums}
 #runHUD .vitals{top:30px}#runHUD #xpTrack{top:92px}#combatStatus{top:122px}
-.arena>#notice{top:33%;left:50%;transform:translate(-50%,-50%);max-width:min(55%,420px);white-space:normal;overflow-wrap:anywhere;line-height:1.45;font-size:12px;text-align:center;padding:7px 12px;background:#0c141aeb;border:1px solid #9f8b5c99;pointer-events:none;z-index:5}
+.arena>#notice{top:33%;left:50%;transform:translate(-50%,-50%);max-width:min(55%,420px);white-space:normal;overflow-wrap:anywhere;line-height:1.45;font-size:12px;text-align:center;padding:7px 12px;background:#0c141abc;border:1px solid #9f8b5c99;pointer-events:none;z-index:5}
 body:has(#overlay:not(:empty)) .arena>#notice{visibility:hidden}
 @media(pointer:coarse) and (orientation:landscape){
  #runContext:not([hidden]){position:fixed;left:calc(10px + env(safe-area-inset-left));top:calc(5px + env(safe-area-inset-top));width:190px;max-width:32vw;font-size:10px;line-height:18px}

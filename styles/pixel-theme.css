@@ -74,7 +74,7 @@ body:has(.title-art) header{display:none!important}
  #xpTrack{height:13px}#xpLabel{font-size:10px;line-height:13px}
  #mapLabel{font-size:10px;letter-spacing:1px}
 }
-#notice{top:60%;bottom:auto;left:50%;transform:translateX(-50%);width:max-content;max-width:56%;box-sizing:border-box;background:#10191d66;border-color:#b9cbb533;text-shadow:0 1px 2px #000,1px 0 2px #000;pointer-events:none;overflow-wrap:anywhere}
+#notice{top:60%;bottom:auto;left:50%;transform:translateX(-50%);width:max-content;max-width:56%;box-sizing:border-box;background:#10191d52;border-color:#b9cbb533;text-shadow:0 1px 2px #000,1px 0 2px #000;pointer-events:none;overflow-wrap:anywhere}
 
 @media(pointer:coarse){#notice{top:68%}}
 @media(pointer:coarse) and (orientation:portrait){#notice{top:60%;max-width:76%;font-size:10px;padding:5px 8px}}

@@ -76,7 +76,7 @@ export function createBossDialogue(run,{loaded=false}={}){
   },
   tick(dt){
    const q=queue[0];if(!q)return;q.age+=dt;
-   if(q.age>=3.6)queue.shift();
+   if(q.age>=2.52)queue.shift();
   },
   draw(ctx,{compact=false}={}){
    const q=queue[0];if(!q||q.room!==roomOf(run))return;
@@ -94,7 +94,7 @@ export function drawBubble(ctx,q,player,compact){
  const fits=b=>b.x>=14&&b.x+w<=946&&b.y>=96&&b.y+h<=480&&!(b.x+w>650&&b.y<260)&&!(player.x>b.x-22&&player.x<b.x+w+22&&player.y>b.y-15&&player.y<b.y+h+60);
  const b=candidates.find(fits)||{x:clamp(head.x-w/2,16,Math.max(16,645-w)),y:clamp(head.y-h-12,100,460-h)};
  const tip={x:clamp(head.x,16,944),y:clamp(head.y,96,480)},from={x:clamp(tip.x,b.x+8,b.x+w-8),y:tip.y>=b.y+h?b.y+h:tip.y<=b.y?b.y:clamp(tip.y,b.y+6,b.y+h-6)};
- ctx.fillStyle='#101217f5';ctx.strokeStyle='#a4a29a';ctx.lineWidth=1;
+ ctx.fillStyle='#101217c4';ctx.strokeStyle='#a4a29a';ctx.lineWidth=1;
  // Short tail, clipped to the safe band; never connect through the top boss HUD.
  if(Math.hypot(tip.x-from.x,tip.y-from.y)<60){ctx.beginPath();ctx.moveTo(from.x-4,from.y);ctx.lineTo(tip.x,tip.y);ctx.lineTo(from.x+4,from.y);ctx.closePath();ctx.fill();ctx.stroke();}
  ctx.fillRect(Math.round(b.x),Math.round(b.y),w,h);ctx.strokeRect(Math.round(b.x)+.5,Math.round(b.y)+.5,w-1,h-1);

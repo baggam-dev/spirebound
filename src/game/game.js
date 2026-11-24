@@ -194,7 +194,7 @@ $('relicStrip').addEventListener('pointerdown',e=>e.stopPropagation());$('relicS
 function notifyRelicLoot(){const loot=room().lastLoot;if(loot?.id==='relic'&&relicInfo(loot.relic))relicBanner.show(s,room(),loot.relic);}
 const input=createInput($('stick'),dispatch);
 const lease=new SessionLease(storage,()=>{stop('lease-lost');panel('<h2>다른 탭에서 진행 중</h2><p>이 탭은 저장 덮어쓰기를 막기 위해 멈췄습니다.</p><button id="goTitle">입구로</button>');button('goTitle',title);});
-function toast(message){$('notice').textContent=message;toastTime=4;}
+function toast(message){$('notice').textContent=message;toastTime=2.8;}
 function save(){if(!s||s.status!=='playing')return false;if(s.practice){$('saveStatus').textContent='보스 테스트 · 일반 저장 유지';return true;}lease.heartbeat();if(!lease.active){saveFailed=true;saveError='다른 탭이 진행 중이어서 이 탭은 저장할 수 없습니다.';toast(saveError);return false;}const result=store.write(s);saveFailed=!result.ok;saveError=result.error||'';$('saveStatus').textContent=result.ok?'진행 저장됨':'저장 실패';if(!result.ok)toast(result.error);return result.ok;}
 function panel(html){renderTitleScene=null;bossRewardReveal.clear();$('overlay').innerHTML=`<div class="panel" role="dialog" aria-modal="true" tabindex="-1">${html}</div>`;if(!syncBossRewardReveal())$('overlay').firstElementChild.focus();}
 const modalFocusables='button:not([disabled]):not([hidden]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';

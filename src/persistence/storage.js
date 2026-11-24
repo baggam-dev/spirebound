@@ -1,4 +1,4 @@
-import {validateShadowEscape} from './shadow-escape-save.js';
+import {validateShadowEscape,migrateShadowEscapeHealth} from './shadow-escape-save.js';
 import {validateRemnantHunt} from './remnant-hunt-save.js';
 import {validRoomFootprint,constrainRoomActors,registerRoomFootprints} from '../world/room-footprints.js';
 import {validateUtilityExpansion} from './utility-save.js';
@@ -143,7 +143,7 @@ export function validateRun(s){
 function fingerprint(text){let hash=2166136261;for(let i=0;i<text.length;i++)hash=Math.imul(hash^text.charCodeAt(i),16777619);return (hash>>>0).toString(16);}
 export function parseSave(raw){
  check(typeof raw==='string'&&raw.length<5000000);const decoded=JSON.parse(raw);if(decoded?.schema!==undefined)check(decoded.schema===2&&typeof decoded.payload==='string'&&fingerprint(decoded.payload)===decoded.checksum);
- const s=validateRun(decoded.schema===2?JSON.parse(decoded.payload):decoded);s.runId??='legacy-'+fingerprint(raw);migrateRun(s);refreshRoomLayout(s);registerRoomFootprints(s);constrainRoomActors(s.floors[s.floor][s.room]);recoverPlayerPosition(s.player,s.floors[s.floor][s.room].obstacles,s.floors[s.floor][s.room]);s.projectiles??=[];s.floors[s.floor][s.room].seen=true;return s;
+ const s=validateRun(decoded.schema===2?JSON.parse(decoded.payload):decoded);s.runId??='legacy-'+fingerprint(raw);migrateRun(s);migrateShadowEscapeHealth(s);refreshRoomLayout(s);registerRoomFootprints(s);constrainRoomActors(s.floors[s.floor][s.room]);recoverPlayerPosition(s.player,s.floors[s.floor][s.room].obstacles,s.floors[s.floor][s.room]);s.projectiles??=[];s.floors[s.floor][s.room].seen=true;return s;
 }
 export function encodeSave(s){validateRun(s);const payload=JSON.stringify(s);return JSON.stringify({schema:2,checksum:fingerprint(payload),savedAt:new Date().toISOString(),release:RELEASE,payload});}
 function saveStorageFailure(error){

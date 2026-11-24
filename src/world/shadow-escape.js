@@ -5,6 +5,7 @@ export const SHADOW_ESCAPE_DURATION=52;
 export const SHADOW_WAVE_TIMES=[2,12,22,32,42];
 export const SHADOW_BOSSES=['warden','prism','slime','commander','king'];
 export const shadowBaseMax=(s,kind)=>({warden:1155,prism:2100,slime:1350,commander:8500,king:s.bossLayoutVersion===1?25600:18720})[kind];
+export const shadowHealthMax=(s,kind,version=2)=>Math.ceil(shadowBaseMax(s,kind)*(version===2&&['warden','prism'].includes(kind)?.84:.7));
 const points=[110,210,310,650,750,850].flatMap(x=>[110,210,310,410].map(y=>[x,y]));
 const spawnRadius=e=>e.type==='boss'?(e.variant==='slime'?[38,28,20][e.stage||0]:32):e.type==='brute'?24:19;
 function spawnPoint(s,r,offset,radius=32){
@@ -26,7 +27,7 @@ function spawnPoint(s,r,offset,radius=32){
  safeSpawn(p,r.obstacles,radius);return p;
 }
 export function shadowBoss(s,kind,id,point){
- const max=Math.ceil(shadowBaseMax(s,kind)*.7),e={id,type:'boss',...point,hp:max,max,cd:1.5,tier:kind==='warden'?1:kind==='prism'?3:kind==='slime'?5:kind==='commander'?8:9,balanceVersion:1,bossHealthVersion:1,bossPowerVersion:18,summoned:true,shadowBoss:1,shadowRootMax:max,spawnGrace:1.2};
+ const max=shadowHealthMax(s,kind),e={id,type:'boss',...point,hp:max,max,cd:1.5,tier:kind==='warden'?1:kind==='prism'?3:kind==='slime'?5:kind==='commander'?8:9,balanceVersion:1,bossHealthVersion:1,bossPowerVersion:18,summoned:true,shadowBoss:1,shadowHealthVersion:2,shadowRootMax:max,spawnGrace:1.2};
  if(kind!=='warden')e.variant=kind;
  if(kind==='slime'){e.stage=0;e.shadowSplit=0;}
  if(kind==='commander'){e.bossPressureVersion=1;e.commander={phase:1,volleyClock:1.5,blinkClock:6,rainClock:6,snipeClock:5.5,strafeClock:3.5,strafeDirection:1,transition:0,blinkIndex:0,ricochetClock:3};}
