@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 일반문 방향·상태 검토 시안
+~~~text
+529efae 뒤 docs만 변경. doors-v1/index.html/comparison.svg 4테마4방향3상태48벡터안·build/manifest/README. 실제문80x35/29x70·0층40예외/테마우선/side API방향정보부족확인. 빗장·틈·빈통로 형태차/별도FX·횃불배제영역8/18후보 제안. 제품미반영·새게임상태없음·완성원화아님. SVG구조48그룹/manifest·diff정적만, 브라우저/게임구문테스트/푸시배포없음. 운영0.63·누적31회귀미실행. 다음시안방향확인후실제배경비교·방향전달/공통계층·픽셀키프레임가족. 기존특수문/충돌/저장불변·가로고정TODO유지. 실행중명령/차단없음.
+~~~
+
 ## 최신 복사용 인계 — 주인공 보행·이동사격 확장
 ~~~text
 기준01cc358에서 기존주인공방향 내 보행8+이동당김4/발사4=16프레임 제작·제품선택적연결. assets/images/reference-hero-move-frames-v1.png512x416, reference-frame-art heroMove16/spec/선택함수·presentation-assets추가. 실제거리p.walk8위상, 다리정적비교결과 양사격행0,1,2,3,0,1,2,3 대응(step%4), recoil/준비로행만변경·걸음reset없음. 정지/시전·회피·실패fallback유지, 필수Ready없음·게임값/저장/RNG불변. docs/design-drafts/reference-feel-20261123/frames-walk-v1 index/원본2/prompt/manifest·루트/정적report/GIF/접촉/위상JSON/buildscript. native16+atlas1 alpha/48색정적통과·경계접촉0·원본최소여백1px, 육안접촉만. 추가3회귀작성·누적31미실행, 구문/게임테스트/브라우저/실기기/성능/음향/푸시/배포없음·운영0.63. 미세루트/체적·반대조준·실제연결품질은배포전검증대상. 다음일반문80x35/좌우벽70x29방향·봉인개방패키지;착지중간/모르도다른형후속. 가로고정TODO·추가후기유지. 실행중명령/차단없음. 새명시배포때누적검증.

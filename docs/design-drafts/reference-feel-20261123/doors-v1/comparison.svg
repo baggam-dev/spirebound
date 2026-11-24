@@ -1,0 +1,758 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1160" viewBox="0 0 1200 1160">
+<rect width="1200" height="1160" fill="#101619"/>
+<style>text{fill:#e0d8c4;font:14px sans-serif} .small{font-size:11px;fill:#a5b0af}</style>
+<text x="24" y="28">일반문 · 방향 / 봉인 상태 비교 — 기하 시안, 제품 미반영</text>
+<text x="18" y="76">석조 · 북</text>
+<rect x="202" y="43" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="69">봉인 · 80×35</text>
+<g transform="translate(210,52)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#a49b83"/>
+<rect x="76" y="-2" width="9" height="39" fill="#a49b83"/>
+<rect x="0" y="-3" width="80" height="5" fill="#a49b83"/>
+<rect x="-4" y="0" width="2" height="35" fill="#dbca8c"/>
+<rect x="82" y="0" width="2" height="35" fill="#dbca8c"/>
+<rect x="4" y="32" width="72" height="3" fill="#a49b83"/>
+<rect x="5" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="40" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="66" height="6" fill="#b09562"/>
+<rect x="35" y="10" width="10" height="14" fill="#302a30"/>
+<path d="M40,12 l4,5 -4,5 -4,-5 Z" fill="#dbca8c"/>
+</g>
+<rect x="530" y="43" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="69">해제 중 · 80×35</text>
+<g transform="translate(538,52)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#a49b83"/>
+<rect x="76" y="-2" width="9" height="39" fill="#a49b83"/>
+<rect x="0" y="-3" width="80" height="5" fill="#a49b83"/>
+<rect x="-4" y="0" width="2" height="35" fill="#dbca8c"/>
+<rect x="82" y="0" width="2" height="35" fill="#dbca8c"/>
+<rect x="4" y="32" width="72" height="3" fill="#a49b83"/>
+<rect x="5" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="46" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="48" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="39" y="4" width="2" height="26" fill="#dbca8c"/>
+</g>
+<rect x="858" y="43" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="69">개방 · 80×35</text>
+<g transform="translate(866,52)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#a49b83"/>
+<rect x="76" y="-2" width="9" height="39" fill="#a49b83"/>
+<rect x="0" y="-3" width="80" height="5" fill="#a49b83"/>
+<rect x="-4" y="0" width="2" height="35" fill="#dbca8c"/>
+<rect x="82" y="0" width="2" height="35" fill="#dbca8c"/>
+<rect x="4" y="32" width="72" height="3" fill="#a49b83"/>
+<rect x="30" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="25" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="21" y="29" width="38" height="2" fill="#dbca8c"/>
+</g>
+<text x="18" y="144">석조 · 동</text>
+<rect x="202" y="111" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="137">봉인 · 29×70</text>
+<g transform="translate(245,111) rotate(90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#a49b83"/>
+<rect x="66" y="-2" width="9" height="33" fill="#a49b83"/>
+<rect x="0" y="-3" width="70" height="5" fill="#a49b83"/>
+<rect x="-4" y="0" width="2" height="29" fill="#dbca8c"/>
+<rect x="72" y="0" width="2" height="29" fill="#dbca8c"/>
+<rect x="4" y="26" width="62" height="3" fill="#a49b83"/>
+<rect x="5" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="35" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="56" height="6" fill="#b09562"/>
+<rect x="30" y="7" width="10" height="14" fill="#302a30"/>
+<path d="M35,9 l4,5 -4,5 -4,-5 Z" fill="#dbca8c"/>
+</g>
+<rect x="530" y="111" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="137">해제 중 · 29×70</text>
+<g transform="translate(573,111) rotate(90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#a49b83"/>
+<rect x="66" y="-2" width="9" height="33" fill="#a49b83"/>
+<rect x="0" y="-3" width="70" height="5" fill="#a49b83"/>
+<rect x="-4" y="0" width="2" height="29" fill="#dbca8c"/>
+<rect x="72" y="0" width="2" height="29" fill="#dbca8c"/>
+<rect x="4" y="26" width="62" height="3" fill="#a49b83"/>
+<rect x="5" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="41" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="43" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="34" y="4" width="2" height="20" fill="#dbca8c"/>
+</g>
+<rect x="858" y="111" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="137">개방 · 29×70</text>
+<g transform="translate(901,111) rotate(90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#a49b83"/>
+<rect x="66" y="-2" width="9" height="33" fill="#a49b83"/>
+<rect x="0" y="-3" width="70" height="5" fill="#a49b83"/>
+<rect x="-4" y="0" width="2" height="29" fill="#dbca8c"/>
+<rect x="72" y="0" width="2" height="29" fill="#dbca8c"/>
+<rect x="4" y="26" width="62" height="3" fill="#a49b83"/>
+<rect x="25" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="20" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="16" y="23" width="38" height="2" fill="#dbca8c"/>
+</g>
+<text x="18" y="212">석조 · 남</text>
+<rect x="202" y="179" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="205">봉인 · 80×35</text>
+<g transform="translate(290,223) rotate(180)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#a49b83"/>
+<rect x="76" y="-2" width="9" height="39" fill="#a49b83"/>
+<rect x="0" y="-3" width="80" height="5" fill="#a49b83"/>
+<rect x="-4" y="0" width="2" height="35" fill="#dbca8c"/>
+<rect x="82" y="0" width="2" height="35" fill="#dbca8c"/>
+<rect x="4" y="32" width="72" height="3" fill="#a49b83"/>
+<rect x="5" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="40" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="66" height="6" fill="#b09562"/>
+<rect x="35" y="10" width="10" height="14" fill="#302a30"/>
+<path d="M40,12 l4,5 -4,5 -4,-5 Z" fill="#dbca8c"/>
+</g>
+<rect x="530" y="179" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="205">해제 중 · 80×35</text>
+<g transform="translate(618,223) rotate(180)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#a49b83"/>
+<rect x="76" y="-2" width="9" height="39" fill="#a49b83"/>
+<rect x="0" y="-3" width="80" height="5" fill="#a49b83"/>
+<rect x="-4" y="0" width="2" height="35" fill="#dbca8c"/>
+<rect x="82" y="0" width="2" height="35" fill="#dbca8c"/>
+<rect x="4" y="32" width="72" height="3" fill="#a49b83"/>
+<rect x="5" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="46" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="48" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="39" y="4" width="2" height="26" fill="#dbca8c"/>
+</g>
+<rect x="858" y="179" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="205">개방 · 80×35</text>
+<g transform="translate(946,223) rotate(180)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#a49b83"/>
+<rect x="76" y="-2" width="9" height="39" fill="#a49b83"/>
+<rect x="0" y="-3" width="80" height="5" fill="#a49b83"/>
+<rect x="-4" y="0" width="2" height="35" fill="#dbca8c"/>
+<rect x="82" y="0" width="2" height="35" fill="#dbca8c"/>
+<rect x="4" y="32" width="72" height="3" fill="#a49b83"/>
+<rect x="30" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="25" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="21" y="29" width="38" height="2" fill="#dbca8c"/>
+</g>
+<text x="18" y="280">석조 · 서</text>
+<rect x="202" y="247" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="273">봉인 · 29×70</text>
+<g transform="translate(216,317) rotate(-90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#a49b83"/>
+<rect x="66" y="-2" width="9" height="33" fill="#a49b83"/>
+<rect x="0" y="-3" width="70" height="5" fill="#a49b83"/>
+<rect x="-4" y="0" width="2" height="29" fill="#dbca8c"/>
+<rect x="72" y="0" width="2" height="29" fill="#dbca8c"/>
+<rect x="4" y="26" width="62" height="3" fill="#a49b83"/>
+<rect x="5" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="35" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="56" height="6" fill="#b09562"/>
+<rect x="30" y="7" width="10" height="14" fill="#302a30"/>
+<path d="M35,9 l4,5 -4,5 -4,-5 Z" fill="#dbca8c"/>
+</g>
+<rect x="530" y="247" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="273">해제 중 · 29×70</text>
+<g transform="translate(544,317) rotate(-90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#a49b83"/>
+<rect x="66" y="-2" width="9" height="33" fill="#a49b83"/>
+<rect x="0" y="-3" width="70" height="5" fill="#a49b83"/>
+<rect x="-4" y="0" width="2" height="29" fill="#dbca8c"/>
+<rect x="72" y="0" width="2" height="29" fill="#dbca8c"/>
+<rect x="4" y="26" width="62" height="3" fill="#a49b83"/>
+<rect x="5" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="41" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="43" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="34" y="4" width="2" height="20" fill="#dbca8c"/>
+</g>
+<rect x="858" y="247" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="273">개방 · 29×70</text>
+<g transform="translate(872,317) rotate(-90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#a49b83"/>
+<rect x="66" y="-2" width="9" height="33" fill="#a49b83"/>
+<rect x="0" y="-3" width="70" height="5" fill="#a49b83"/>
+<rect x="-4" y="0" width="2" height="29" fill="#dbca8c"/>
+<rect x="72" y="0" width="2" height="29" fill="#dbca8c"/>
+<rect x="4" y="26" width="62" height="3" fill="#a49b83"/>
+<rect x="25" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="20" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="16" y="23" width="38" height="2" fill="#dbca8c"/>
+</g>
+<text x="18" y="348">기록보관소 · 북</text>
+<rect x="202" y="315" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="341">봉인 · 80×35</text>
+<g transform="translate(210,324)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#9889a4"/>
+<rect x="76" y="-2" width="9" height="39" fill="#9889a4"/>
+<rect x="0" y="-3" width="80" height="5" fill="#9889a4"/>
+<rect x="-4" y="0" width="2" height="35" fill="#dfcbef"/>
+<rect x="82" y="0" width="2" height="35" fill="#dfcbef"/>
+<rect x="4" y="32" width="72" height="3" fill="#9889a4"/>
+<rect x="5" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="40" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="66" height="6" fill="#b09562"/>
+<rect x="35" y="10" width="10" height="14" fill="#302a30"/>
+<path d="M40,12 l4,5 -4,5 -4,-5 Z" fill="#dfcbef"/>
+</g>
+<rect x="530" y="315" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="341">해제 중 · 80×35</text>
+<g transform="translate(538,324)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#9889a4"/>
+<rect x="76" y="-2" width="9" height="39" fill="#9889a4"/>
+<rect x="0" y="-3" width="80" height="5" fill="#9889a4"/>
+<rect x="-4" y="0" width="2" height="35" fill="#dfcbef"/>
+<rect x="82" y="0" width="2" height="35" fill="#dfcbef"/>
+<rect x="4" y="32" width="72" height="3" fill="#9889a4"/>
+<rect x="5" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="46" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="48" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="39" y="4" width="2" height="26" fill="#dfcbef"/>
+</g>
+<rect x="858" y="315" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="341">개방 · 80×35</text>
+<g transform="translate(866,324)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#9889a4"/>
+<rect x="76" y="-2" width="9" height="39" fill="#9889a4"/>
+<rect x="0" y="-3" width="80" height="5" fill="#9889a4"/>
+<rect x="-4" y="0" width="2" height="35" fill="#dfcbef"/>
+<rect x="82" y="0" width="2" height="35" fill="#dfcbef"/>
+<rect x="4" y="32" width="72" height="3" fill="#9889a4"/>
+<rect x="30" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="25" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="21" y="29" width="38" height="2" fill="#dfcbef"/>
+</g>
+<text x="18" y="416">기록보관소 · 동</text>
+<rect x="202" y="383" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="409">봉인 · 29×70</text>
+<g transform="translate(245,383) rotate(90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#9889a4"/>
+<rect x="66" y="-2" width="9" height="33" fill="#9889a4"/>
+<rect x="0" y="-3" width="70" height="5" fill="#9889a4"/>
+<rect x="-4" y="0" width="2" height="29" fill="#dfcbef"/>
+<rect x="72" y="0" width="2" height="29" fill="#dfcbef"/>
+<rect x="4" y="26" width="62" height="3" fill="#9889a4"/>
+<rect x="5" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="35" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="56" height="6" fill="#b09562"/>
+<rect x="30" y="7" width="10" height="14" fill="#302a30"/>
+<path d="M35,9 l4,5 -4,5 -4,-5 Z" fill="#dfcbef"/>
+</g>
+<rect x="530" y="383" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="409">해제 중 · 29×70</text>
+<g transform="translate(573,383) rotate(90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#9889a4"/>
+<rect x="66" y="-2" width="9" height="33" fill="#9889a4"/>
+<rect x="0" y="-3" width="70" height="5" fill="#9889a4"/>
+<rect x="-4" y="0" width="2" height="29" fill="#dfcbef"/>
+<rect x="72" y="0" width="2" height="29" fill="#dfcbef"/>
+<rect x="4" y="26" width="62" height="3" fill="#9889a4"/>
+<rect x="5" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="41" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="43" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="34" y="4" width="2" height="20" fill="#dfcbef"/>
+</g>
+<rect x="858" y="383" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="409">개방 · 29×70</text>
+<g transform="translate(901,383) rotate(90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#9889a4"/>
+<rect x="66" y="-2" width="9" height="33" fill="#9889a4"/>
+<rect x="0" y="-3" width="70" height="5" fill="#9889a4"/>
+<rect x="-4" y="0" width="2" height="29" fill="#dfcbef"/>
+<rect x="72" y="0" width="2" height="29" fill="#dfcbef"/>
+<rect x="4" y="26" width="62" height="3" fill="#9889a4"/>
+<rect x="25" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="20" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="16" y="23" width="38" height="2" fill="#dfcbef"/>
+</g>
+<text x="18" y="484">기록보관소 · 남</text>
+<rect x="202" y="451" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="477">봉인 · 80×35</text>
+<g transform="translate(290,495) rotate(180)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#9889a4"/>
+<rect x="76" y="-2" width="9" height="39" fill="#9889a4"/>
+<rect x="0" y="-3" width="80" height="5" fill="#9889a4"/>
+<rect x="-4" y="0" width="2" height="35" fill="#dfcbef"/>
+<rect x="82" y="0" width="2" height="35" fill="#dfcbef"/>
+<rect x="4" y="32" width="72" height="3" fill="#9889a4"/>
+<rect x="5" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="40" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="66" height="6" fill="#b09562"/>
+<rect x="35" y="10" width="10" height="14" fill="#302a30"/>
+<path d="M40,12 l4,5 -4,5 -4,-5 Z" fill="#dfcbef"/>
+</g>
+<rect x="530" y="451" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="477">해제 중 · 80×35</text>
+<g transform="translate(618,495) rotate(180)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#9889a4"/>
+<rect x="76" y="-2" width="9" height="39" fill="#9889a4"/>
+<rect x="0" y="-3" width="80" height="5" fill="#9889a4"/>
+<rect x="-4" y="0" width="2" height="35" fill="#dfcbef"/>
+<rect x="82" y="0" width="2" height="35" fill="#dfcbef"/>
+<rect x="4" y="32" width="72" height="3" fill="#9889a4"/>
+<rect x="5" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="46" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="48" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="39" y="4" width="2" height="26" fill="#dfcbef"/>
+</g>
+<rect x="858" y="451" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="477">개방 · 80×35</text>
+<g transform="translate(946,495) rotate(180)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#9889a4"/>
+<rect x="76" y="-2" width="9" height="39" fill="#9889a4"/>
+<rect x="0" y="-3" width="80" height="5" fill="#9889a4"/>
+<rect x="-4" y="0" width="2" height="35" fill="#dfcbef"/>
+<rect x="82" y="0" width="2" height="35" fill="#dfcbef"/>
+<rect x="4" y="32" width="72" height="3" fill="#9889a4"/>
+<rect x="30" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="25" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="21" y="29" width="38" height="2" fill="#dfcbef"/>
+</g>
+<text x="18" y="552">기록보관소 · 서</text>
+<rect x="202" y="519" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="545">봉인 · 29×70</text>
+<g transform="translate(216,589) rotate(-90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#9889a4"/>
+<rect x="66" y="-2" width="9" height="33" fill="#9889a4"/>
+<rect x="0" y="-3" width="70" height="5" fill="#9889a4"/>
+<rect x="-4" y="0" width="2" height="29" fill="#dfcbef"/>
+<rect x="72" y="0" width="2" height="29" fill="#dfcbef"/>
+<rect x="4" y="26" width="62" height="3" fill="#9889a4"/>
+<rect x="5" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="35" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="56" height="6" fill="#b09562"/>
+<rect x="30" y="7" width="10" height="14" fill="#302a30"/>
+<path d="M35,9 l4,5 -4,5 -4,-5 Z" fill="#dfcbef"/>
+</g>
+<rect x="530" y="519" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="545">해제 중 · 29×70</text>
+<g transform="translate(544,589) rotate(-90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#9889a4"/>
+<rect x="66" y="-2" width="9" height="33" fill="#9889a4"/>
+<rect x="0" y="-3" width="70" height="5" fill="#9889a4"/>
+<rect x="-4" y="0" width="2" height="29" fill="#dfcbef"/>
+<rect x="72" y="0" width="2" height="29" fill="#dfcbef"/>
+<rect x="4" y="26" width="62" height="3" fill="#9889a4"/>
+<rect x="5" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="41" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="43" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="34" y="4" width="2" height="20" fill="#dfcbef"/>
+</g>
+<rect x="858" y="519" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="545">개방 · 29×70</text>
+<g transform="translate(872,589) rotate(-90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#9889a4"/>
+<rect x="66" y="-2" width="9" height="33" fill="#9889a4"/>
+<rect x="0" y="-3" width="70" height="5" fill="#9889a4"/>
+<rect x="-4" y="0" width="2" height="29" fill="#dfcbef"/>
+<rect x="72" y="0" width="2" height="29" fill="#dfcbef"/>
+<rect x="4" y="26" width="62" height="3" fill="#9889a4"/>
+<rect x="25" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="20" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="16" y="23" width="38" height="2" fill="#dfcbef"/>
+</g>
+<text x="18" y="620">프리즘 · 북</text>
+<rect x="202" y="587" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="613">봉인 · 80×35</text>
+<g transform="translate(210,596)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#73949a"/>
+<rect x="76" y="-2" width="9" height="39" fill="#73949a"/>
+<rect x="0" y="-3" width="80" height="5" fill="#73949a"/>
+<rect x="-4" y="0" width="2" height="35" fill="#a2e4de"/>
+<rect x="82" y="0" width="2" height="35" fill="#a2e4de"/>
+<rect x="4" y="32" width="72" height="3" fill="#73949a"/>
+<rect x="5" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="40" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="66" height="6" fill="#b09562"/>
+<rect x="35" y="10" width="10" height="14" fill="#302a30"/>
+<path d="M40,12 l4,5 -4,5 -4,-5 Z" fill="#a2e4de"/>
+</g>
+<rect x="530" y="587" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="613">해제 중 · 80×35</text>
+<g transform="translate(538,596)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#73949a"/>
+<rect x="76" y="-2" width="9" height="39" fill="#73949a"/>
+<rect x="0" y="-3" width="80" height="5" fill="#73949a"/>
+<rect x="-4" y="0" width="2" height="35" fill="#a2e4de"/>
+<rect x="82" y="0" width="2" height="35" fill="#a2e4de"/>
+<rect x="4" y="32" width="72" height="3" fill="#73949a"/>
+<rect x="5" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="46" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="48" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="39" y="4" width="2" height="26" fill="#a2e4de"/>
+</g>
+<rect x="858" y="587" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="613">개방 · 80×35</text>
+<g transform="translate(866,596)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#73949a"/>
+<rect x="76" y="-2" width="9" height="39" fill="#73949a"/>
+<rect x="0" y="-3" width="80" height="5" fill="#73949a"/>
+<rect x="-4" y="0" width="2" height="35" fill="#a2e4de"/>
+<rect x="82" y="0" width="2" height="35" fill="#a2e4de"/>
+<rect x="4" y="32" width="72" height="3" fill="#73949a"/>
+<rect x="30" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="25" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="21" y="29" width="38" height="2" fill="#a2e4de"/>
+</g>
+<text x="18" y="688">프리즘 · 동</text>
+<rect x="202" y="655" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="681">봉인 · 29×70</text>
+<g transform="translate(245,655) rotate(90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#73949a"/>
+<rect x="66" y="-2" width="9" height="33" fill="#73949a"/>
+<rect x="0" y="-3" width="70" height="5" fill="#73949a"/>
+<rect x="-4" y="0" width="2" height="29" fill="#a2e4de"/>
+<rect x="72" y="0" width="2" height="29" fill="#a2e4de"/>
+<rect x="4" y="26" width="62" height="3" fill="#73949a"/>
+<rect x="5" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="35" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="56" height="6" fill="#b09562"/>
+<rect x="30" y="7" width="10" height="14" fill="#302a30"/>
+<path d="M35,9 l4,5 -4,5 -4,-5 Z" fill="#a2e4de"/>
+</g>
+<rect x="530" y="655" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="681">해제 중 · 29×70</text>
+<g transform="translate(573,655) rotate(90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#73949a"/>
+<rect x="66" y="-2" width="9" height="33" fill="#73949a"/>
+<rect x="0" y="-3" width="70" height="5" fill="#73949a"/>
+<rect x="-4" y="0" width="2" height="29" fill="#a2e4de"/>
+<rect x="72" y="0" width="2" height="29" fill="#a2e4de"/>
+<rect x="4" y="26" width="62" height="3" fill="#73949a"/>
+<rect x="5" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="41" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="43" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="34" y="4" width="2" height="20" fill="#a2e4de"/>
+</g>
+<rect x="858" y="655" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="681">개방 · 29×70</text>
+<g transform="translate(901,655) rotate(90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#73949a"/>
+<rect x="66" y="-2" width="9" height="33" fill="#73949a"/>
+<rect x="0" y="-3" width="70" height="5" fill="#73949a"/>
+<rect x="-4" y="0" width="2" height="29" fill="#a2e4de"/>
+<rect x="72" y="0" width="2" height="29" fill="#a2e4de"/>
+<rect x="4" y="26" width="62" height="3" fill="#73949a"/>
+<rect x="25" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="20" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="16" y="23" width="38" height="2" fill="#a2e4de"/>
+</g>
+<text x="18" y="756">프리즘 · 남</text>
+<rect x="202" y="723" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="749">봉인 · 80×35</text>
+<g transform="translate(290,767) rotate(180)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#73949a"/>
+<rect x="76" y="-2" width="9" height="39" fill="#73949a"/>
+<rect x="0" y="-3" width="80" height="5" fill="#73949a"/>
+<rect x="-4" y="0" width="2" height="35" fill="#a2e4de"/>
+<rect x="82" y="0" width="2" height="35" fill="#a2e4de"/>
+<rect x="4" y="32" width="72" height="3" fill="#73949a"/>
+<rect x="5" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="40" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="66" height="6" fill="#b09562"/>
+<rect x="35" y="10" width="10" height="14" fill="#302a30"/>
+<path d="M40,12 l4,5 -4,5 -4,-5 Z" fill="#a2e4de"/>
+</g>
+<rect x="530" y="723" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="749">해제 중 · 80×35</text>
+<g transform="translate(618,767) rotate(180)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#73949a"/>
+<rect x="76" y="-2" width="9" height="39" fill="#73949a"/>
+<rect x="0" y="-3" width="80" height="5" fill="#73949a"/>
+<rect x="-4" y="0" width="2" height="35" fill="#a2e4de"/>
+<rect x="82" y="0" width="2" height="35" fill="#a2e4de"/>
+<rect x="4" y="32" width="72" height="3" fill="#73949a"/>
+<rect x="5" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="46" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="48" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="39" y="4" width="2" height="26" fill="#a2e4de"/>
+</g>
+<rect x="858" y="723" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="749">개방 · 80×35</text>
+<g transform="translate(946,767) rotate(180)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#73949a"/>
+<rect x="76" y="-2" width="9" height="39" fill="#73949a"/>
+<rect x="0" y="-3" width="80" height="5" fill="#73949a"/>
+<rect x="-4" y="0" width="2" height="35" fill="#a2e4de"/>
+<rect x="82" y="0" width="2" height="35" fill="#a2e4de"/>
+<rect x="4" y="32" width="72" height="3" fill="#73949a"/>
+<rect x="30" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="25" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="21" y="29" width="38" height="2" fill="#a2e4de"/>
+</g>
+<text x="18" y="824">프리즘 · 서</text>
+<rect x="202" y="791" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="817">봉인 · 29×70</text>
+<g transform="translate(216,861) rotate(-90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#73949a"/>
+<rect x="66" y="-2" width="9" height="33" fill="#73949a"/>
+<rect x="0" y="-3" width="70" height="5" fill="#73949a"/>
+<rect x="-4" y="0" width="2" height="29" fill="#a2e4de"/>
+<rect x="72" y="0" width="2" height="29" fill="#a2e4de"/>
+<rect x="4" y="26" width="62" height="3" fill="#73949a"/>
+<rect x="5" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="35" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="56" height="6" fill="#b09562"/>
+<rect x="30" y="7" width="10" height="14" fill="#302a30"/>
+<path d="M35,9 l4,5 -4,5 -4,-5 Z" fill="#a2e4de"/>
+</g>
+<rect x="530" y="791" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="817">해제 중 · 29×70</text>
+<g transform="translate(544,861) rotate(-90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#73949a"/>
+<rect x="66" y="-2" width="9" height="33" fill="#73949a"/>
+<rect x="0" y="-3" width="70" height="5" fill="#73949a"/>
+<rect x="-4" y="0" width="2" height="29" fill="#a2e4de"/>
+<rect x="72" y="0" width="2" height="29" fill="#a2e4de"/>
+<rect x="4" y="26" width="62" height="3" fill="#73949a"/>
+<rect x="5" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="41" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="43" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="34" y="4" width="2" height="20" fill="#a2e4de"/>
+</g>
+<rect x="858" y="791" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="817">개방 · 29×70</text>
+<g transform="translate(872,861) rotate(-90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#73949a"/>
+<rect x="66" y="-2" width="9" height="33" fill="#73949a"/>
+<rect x="0" y="-3" width="70" height="5" fill="#73949a"/>
+<rect x="-4" y="0" width="2" height="29" fill="#a2e4de"/>
+<rect x="72" y="0" width="2" height="29" fill="#a2e4de"/>
+<rect x="4" y="26" width="62" height="3" fill="#73949a"/>
+<rect x="25" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="20" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="16" y="23" width="38" height="2" fill="#a2e4de"/>
+</g>
+<text x="18" y="892">상층 철문 · 북</text>
+<rect x="202" y="859" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="885">봉인 · 80×35</text>
+<g transform="translate(210,868)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#9b7c7a"/>
+<rect x="76" y="-2" width="9" height="39" fill="#9b7c7a"/>
+<rect x="0" y="-3" width="80" height="5" fill="#9b7c7a"/>
+<rect x="-4" y="0" width="2" height="35" fill="#e5b481"/>
+<rect x="82" y="0" width="2" height="35" fill="#e5b481"/>
+<rect x="4" y="32" width="72" height="3" fill="#9b7c7a"/>
+<rect x="5" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="40" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="66" height="6" fill="#b09562"/>
+<rect x="35" y="10" width="10" height="14" fill="#302a30"/>
+<path d="M40,12 l4,5 -4,5 -4,-5 Z" fill="#e5b481"/>
+</g>
+<rect x="530" y="859" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="885">해제 중 · 80×35</text>
+<g transform="translate(538,868)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#9b7c7a"/>
+<rect x="76" y="-2" width="9" height="39" fill="#9b7c7a"/>
+<rect x="0" y="-3" width="80" height="5" fill="#9b7c7a"/>
+<rect x="-4" y="0" width="2" height="35" fill="#e5b481"/>
+<rect x="82" y="0" width="2" height="35" fill="#e5b481"/>
+<rect x="4" y="32" width="72" height="3" fill="#9b7c7a"/>
+<rect x="5" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="46" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="48" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="39" y="4" width="2" height="26" fill="#e5b481"/>
+</g>
+<rect x="858" y="859" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="885">개방 · 80×35</text>
+<g transform="translate(866,868)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#9b7c7a"/>
+<rect x="76" y="-2" width="9" height="39" fill="#9b7c7a"/>
+<rect x="0" y="-3" width="80" height="5" fill="#9b7c7a"/>
+<rect x="-4" y="0" width="2" height="35" fill="#e5b481"/>
+<rect x="82" y="0" width="2" height="35" fill="#e5b481"/>
+<rect x="4" y="32" width="72" height="3" fill="#9b7c7a"/>
+<rect x="30" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="25" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="21" y="29" width="38" height="2" fill="#e5b481"/>
+</g>
+<text x="18" y="960">상층 철문 · 동</text>
+<rect x="202" y="927" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="953">봉인 · 29×70</text>
+<g transform="translate(245,927) rotate(90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#9b7c7a"/>
+<rect x="66" y="-2" width="9" height="33" fill="#9b7c7a"/>
+<rect x="0" y="-3" width="70" height="5" fill="#9b7c7a"/>
+<rect x="-4" y="0" width="2" height="29" fill="#e5b481"/>
+<rect x="72" y="0" width="2" height="29" fill="#e5b481"/>
+<rect x="4" y="26" width="62" height="3" fill="#9b7c7a"/>
+<rect x="5" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="35" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="56" height="6" fill="#b09562"/>
+<rect x="30" y="7" width="10" height="14" fill="#302a30"/>
+<path d="M35,9 l4,5 -4,5 -4,-5 Z" fill="#e5b481"/>
+</g>
+<rect x="530" y="927" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="953">해제 중 · 29×70</text>
+<g transform="translate(573,927) rotate(90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#9b7c7a"/>
+<rect x="66" y="-2" width="9" height="33" fill="#9b7c7a"/>
+<rect x="0" y="-3" width="70" height="5" fill="#9b7c7a"/>
+<rect x="-4" y="0" width="2" height="29" fill="#e5b481"/>
+<rect x="72" y="0" width="2" height="29" fill="#e5b481"/>
+<rect x="4" y="26" width="62" height="3" fill="#9b7c7a"/>
+<rect x="5" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="41" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="43" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="34" y="4" width="2" height="20" fill="#e5b481"/>
+</g>
+<rect x="858" y="927" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="953">개방 · 29×70</text>
+<g transform="translate(901,927) rotate(90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#9b7c7a"/>
+<rect x="66" y="-2" width="9" height="33" fill="#9b7c7a"/>
+<rect x="0" y="-3" width="70" height="5" fill="#9b7c7a"/>
+<rect x="-4" y="0" width="2" height="29" fill="#e5b481"/>
+<rect x="72" y="0" width="2" height="29" fill="#e5b481"/>
+<rect x="4" y="26" width="62" height="3" fill="#9b7c7a"/>
+<rect x="25" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="20" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="16" y="23" width="38" height="2" fill="#e5b481"/>
+</g>
+<text x="18" y="1028">상층 철문 · 남</text>
+<rect x="202" y="995" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="1021">봉인 · 80×35</text>
+<g transform="translate(290,1039) rotate(180)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#9b7c7a"/>
+<rect x="76" y="-2" width="9" height="39" fill="#9b7c7a"/>
+<rect x="0" y="-3" width="80" height="5" fill="#9b7c7a"/>
+<rect x="-4" y="0" width="2" height="35" fill="#e5b481"/>
+<rect x="82" y="0" width="2" height="35" fill="#e5b481"/>
+<rect x="4" y="32" width="72" height="3" fill="#9b7c7a"/>
+<rect x="5" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="40" y="4" width="35" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="66" height="6" fill="#b09562"/>
+<rect x="35" y="10" width="10" height="14" fill="#302a30"/>
+<path d="M40,12 l4,5 -4,5 -4,-5 Z" fill="#e5b481"/>
+</g>
+<rect x="530" y="995" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="1021">해제 중 · 80×35</text>
+<g transform="translate(618,1039) rotate(180)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#9b7c7a"/>
+<rect x="76" y="-2" width="9" height="39" fill="#9b7c7a"/>
+<rect x="0" y="-3" width="80" height="5" fill="#9b7c7a"/>
+<rect x="-4" y="0" width="2" height="35" fill="#e5b481"/>
+<rect x="82" y="0" width="2" height="35" fill="#e5b481"/>
+<rect x="4" y="32" width="72" height="3" fill="#9b7c7a"/>
+<rect x="5" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="46" y="4" width="29" height="25" fill="#3d4143"/>
+<rect x="7" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="48" y="14" width="25" height="5" fill="#b09562"/>
+<rect x="39" y="4" width="2" height="26" fill="#e5b481"/>
+</g>
+<rect x="858" y="995" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="1021">개방 · 80×35</text>
+<g transform="translate(946,1039) rotate(180)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="92" height="41" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="39" fill="#9b7c7a"/>
+<rect x="76" y="-2" width="9" height="39" fill="#9b7c7a"/>
+<rect x="0" y="-3" width="80" height="5" fill="#9b7c7a"/>
+<rect x="-4" y="0" width="2" height="35" fill="#e5b481"/>
+<rect x="82" y="0" width="2" height="35" fill="#e5b481"/>
+<rect x="4" y="32" width="72" height="3" fill="#9b7c7a"/>
+<rect x="30" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="25" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="21" y="29" width="38" height="2" fill="#e5b481"/>
+</g>
+<text x="18" y="1096">상층 철문 · 서</text>
+<rect x="202" y="1063" width="300" height="62" fill="#252d30"/>
+<text class="small" x="385" y="1089">봉인 · 29×70</text>
+<g transform="translate(216,1133) rotate(-90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#9b7c7a"/>
+<rect x="66" y="-2" width="9" height="33" fill="#9b7c7a"/>
+<rect x="0" y="-3" width="70" height="5" fill="#9b7c7a"/>
+<rect x="-4" y="0" width="2" height="29" fill="#e5b481"/>
+<rect x="72" y="0" width="2" height="29" fill="#e5b481"/>
+<rect x="4" y="26" width="62" height="3" fill="#9b7c7a"/>
+<rect x="5" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="35" y="4" width="30" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="56" height="6" fill="#b09562"/>
+<rect x="30" y="7" width="10" height="14" fill="#302a30"/>
+<path d="M35,9 l4,5 -4,5 -4,-5 Z" fill="#e5b481"/>
+</g>
+<rect x="530" y="1063" width="300" height="62" fill="#252d30"/>
+<text class="small" x="713" y="1089">해제 중 · 29×70</text>
+<g transform="translate(544,1133) rotate(-90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#9b7c7a"/>
+<rect x="66" y="-2" width="9" height="33" fill="#9b7c7a"/>
+<rect x="0" y="-3" width="70" height="5" fill="#9b7c7a"/>
+<rect x="-4" y="0" width="2" height="29" fill="#e5b481"/>
+<rect x="72" y="0" width="2" height="29" fill="#e5b481"/>
+<rect x="4" y="26" width="62" height="3" fill="#9b7c7a"/>
+<rect x="5" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="41" y="4" width="24" height="19" fill="#3d4143"/>
+<rect x="7" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="43" y="11" width="20" height="5" fill="#b09562"/>
+<rect x="34" y="4" width="2" height="20" fill="#e5b481"/>
+</g>
+<rect x="858" y="1063" width="300" height="62" fill="#252d30"/>
+<text class="small" x="1041" y="1089">개방 · 29×70</text>
+<g transform="translate(872,1133) rotate(-90) scale(.7)" shape-rendering="crispEdges">
+<rect x="-6" y="-3" width="82" height="35" fill="#080e12"/>
+<rect x="-5" y="-2" width="9" height="33" fill="#9b7c7a"/>
+<rect x="66" y="-2" width="9" height="33" fill="#9b7c7a"/>
+<rect x="0" y="-3" width="70" height="5" fill="#9b7c7a"/>
+<rect x="-4" y="0" width="2" height="29" fill="#e5b481"/>
+<rect x="72" y="0" width="2" height="29" fill="#e5b481"/>
+<rect x="4" y="26" width="62" height="3" fill="#9b7c7a"/>
+<rect x="25" y="8" width="20" height="2" fill="#465a59"/>
+<rect x="20" y="15" width="30" height="2" fill="#637a72"/>
+<rect x="16" y="23" width="38" height="2" fill="#e5b481"/>
+</g>
+<text x="24" y="1148" class="small">측면은 비교표에서만70% 표시. 치수는 게임 논리px. 빗장 / 분리 / 빈 통로의 형태로 상태 구분.</text>
+</svg>

@@ -1,0 +1,26 @@
+{
+  "status": "review-only; no runtime integration; no in-game verification",
+  "source": "Original code-authored SVG geometry, no third-party art or generated raster",
+  "generator": "build-preview.py",
+  "variants": 48,
+  "logicalSizes": {
+    "northSouth": [
+      80,
+      35
+    ],
+    "eastWest": [
+      29,
+      70
+    ],
+    "environmentFloor0Exception": [
+      80,
+      40
+    ]
+  },
+  "collisionChanges": false,
+  "gameTestsRun": false,
+  "reviewNotes": [
+    "Side contact-sheet display is 70%; dimensions are logical game pixels.",
+    "This is a shape/state proposal, not finished pixel art or an animation quality claim."
+  ]
+}
