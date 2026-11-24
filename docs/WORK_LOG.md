@@ -3583,3 +3583,9 @@ utilityUseState로기존실사용조건을공유하고 canCastUtility는같은re
 - 증거docs/qa-reference-feel-20261124의full-release.log/server-fix.log/presentation-verified/legacy-browser/deploy.log/services.log/api-live-config.log/public.초기presentation-browser/final·title-probe는실패/미확정진단이며최종검증근거아님(서버신규asset허용누락/async wait오판정수정후진짜원화로재검증).
 - 새메인은승인무드배경판분리+실제HTML메뉴/기존궁수/불안개. 입장문열림은기존입장플레이트/스킵흐름사용·시안문짝새프레임아님. 실제iPhone/Android·사람체감/장시간성능·청취·전체원화정밀접합미검증. 가로고정은TODO만/추가후기대기유지.
 - 배포요청미완료없음·로컬4635서버종료/테스트·브라우저·배포세션완료·실행중명령차단없음. 다음추가요청은다시수정·로컬커밋까지만/새배포지시때검증푸시배포규칙유지.
+
+## 2026-11-24 야간 픽셀 메인·불티 수정 시안 완료(검토용)
+- title-night-pixel-20261124/index.html·main-menu-still.png1280x720·motion-preview.gif640x360/6초60프레임10fps(338486byte)/2배확대·정지전환·분리접촉/동작접촉표작성. 사용자첨부배경+기존궁수참조 builtin3회(나무제거배경/야간궁수3/불4나무2). 원본·전체prompt·SHA/셀·수동루트·배율/build/manifest·정적보고보존.
+- 640x360논리도트/배경96색·궁수31/불15/나무23+투명, 실제alpha있는분리PNG9장48색정적통과·합성/접촉육안확인·GIF파일정적decode60확인. 나무0.22도미세기울기/2키포즈·궁수망토3, 불0.12초제안·작은반사별도. 추가사용자요청불티는화로별최대3점상승소멸, 낙엽최대3/6초중2.1초후조용한구간. 메뉴고정·저장데이터가상예시없음(계속탐험은배치검토).
+- 제품src/assets미반영·승인전시안만. 나무끝분리변형/루트·모바일실가독성·달세부명암양자화단순화/실제게임성능미검증. 게임구문/단위/브라우저·실기기/푸시배포없음, 운영0.64/c39d26f/release-20261124-223438-183200유지. 이전배포1034통과를이번시안게임검증으로사용안함.
+- 다음사용자묶음검토후승인방향실제레이어연결·reduced/기존저장/입장/실패fallback·server/deploy허용함께검토. 별도새배포지시규칙/가로고정TODO보존. 실행중명령차단없음.

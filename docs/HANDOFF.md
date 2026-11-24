@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 야간 픽셀 메인·불티 시안
+~~~text
+194c0e2뒤사용자어두운청회색/굵은픽셀·불화로/바람나무·간헐낙엽·궁수톤맞춤시안ㄱㄱ후불티추가요청. docs/design-drafts/title-night-pixel-20261124에배경분리/야간궁수3/불4나무2 builtin3원본·prompt/SHA/manifest/native/build/정적보고·접촉·정지1280x720·GIF640x360/6초60프레임10fps338486byte·index정지/재생. 논리640x360배경96색/궁수31불15나무23+투명·9분리PNGalpha48색통과/핵심셀접촉0·합성육안/GIF정적decode. 불티화로별최대3점·낙엽최대3/6초중2.1초·나무0.22도미세기울기/2키포즈(가지끝분리는미구현). 제품src/assets미반영·검토용·게임구문테스트브라우저푸시배포없음·운영0.64/c39d26f/release-20261124-223438-183200유지. 다음사용자시안묶음검토후승인방향층/모션/HTML메뉴연결·fallback/server/deploy허용목록동반·별도새배포지시전테스트금지. 달명암/루트·모바일가독성/성능미검증·가로고정TODO유지·실행중명령차단없음.
+~~~
+
 ## 최신 복사용 인계 — 0.64 배포 완료
 ~~~text
 0.64.0-prebeta 운영https://168.107.21.43/·런타임c39d26f·active release-20261124-223438-183200(454파일)·이전0.63 release-20261123-110150-773b7a보존/DB계정저장삭제없음. GitHub main푸시완료. 새title배경분리/실제메뉴/기존궁수불안개·기존입장스킵+누적타격숫자/주인공모르도/보스격파·문연출배포. 전체1034·서버fixHTTP2·배포API28통과;최종Edge신규47presentation-verified/기존18legacy-browser오류0점수POST0;공개38runtime byte일치·HTTPShealth ok·nginx/API active·웹/API새release일치·최신0.64/secureCookie true·공개1280/에뮬844새메인육안확인. docs/qa-reference-feel-20261124가증거. 초기presentation-browser/final·title-probe는미확정진단(서버asset허용누락및asyncwait오판정수정후실제8atlas/v2로재검증),최종성공으로쓰지말것. 실제기기/장시간성능/청취·전프레임접합미검증. 시안문짝새입장프레임은아니고기존입장플레이트유지. 가로고정TODO/추가후기유지. 로컬4635종료·실행중명령차단없음·배포요청미완료없음. 새요청시git status→상태/TODO/로그최근/HANDOFF읽고후속일반수정은로컬커밋까지/새배포지시별도.

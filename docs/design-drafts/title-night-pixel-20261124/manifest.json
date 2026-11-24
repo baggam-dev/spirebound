@@ -1,0 +1,127 @@
+{
+  "status": "review-only; runtime untouched",
+  "tool": "builtin imagegen",
+  "calls": 3,
+  "nativeScene": [
+    640,
+    360
+  ],
+  "preview": [
+    1280,
+    720
+  ],
+  "gifNative": [
+    640,
+    360
+  ],
+  "sources": [
+    {
+      "file": "user-tone-reference.jpg",
+      "sha256": "dcb569f73060f3099d17e47f90ad6175acb8a4342cfc3780fd64df413ceed473"
+    },
+    {
+      "file": "background-source.png",
+      "sha256": "b7ca8bc8faa7b5e5109f82e082452ef537b4b8243fbdff8322c65c180e995a5e"
+    },
+    {
+      "file": "hero-source.png",
+      "sha256": "7d9f6da7845990320455071413cd357f8844bdea3e2908e9b0c0998042b37aa1"
+    },
+    {
+      "file": "effects-source.png",
+      "sha256": "1781bceb56465b7ea6d15d610c9b03bc90cfa103584b4a18a68e9884b3c924fb"
+    }
+  ],
+  "hero": {
+    "cells": [
+      724,
+      724
+    ],
+    "boxes": [
+      [
+        140,
+        56,
+        619,
+        677
+      ],
+      [
+        125,
+        56,
+        619,
+        677
+      ],
+      [
+        96,
+        56,
+        619,
+        677
+      ]
+    ],
+    "sourceRootX": 370,
+    "nativePivot": [
+      48,
+      104
+    ],
+    "commonScale": 0.14170692431561996
+  },
+  "effects": {
+    "boxes": [
+      [
+        207,
+        287,
+        320,
+        471
+      ],
+      [
+        201,
+        243,
+        315,
+        471
+      ],
+      [
+        193,
+        278,
+        316,
+        471
+      ],
+      [
+        202,
+        286,
+        315,
+        472
+      ],
+      [
+        15,
+        31,
+        470,
+        486
+      ],
+      [
+        16,
+        31,
+        474,
+        486
+      ]
+    ],
+    "fireScale": 0.15,
+    "treeScale": 0.7,
+    "coreAlphaThreshold": 192
+  },
+  "motion": {
+    "duration": 6,
+    "fps": 10,
+    "heroStep": 0.6,
+    "flameStep": 0.12,
+    "treeRotationDegrees": 0.22,
+    "embersPerBrazierMax": 3,
+    "leavesMax": 3,
+    "leavesWindowSeconds": 2.1,
+    "stillOption": true
+  },
+  "limitations": [
+    "Design composition, not game QA or runtime integration.",
+    "Manual placement/roots; tree rigid sway and sparse leaf/ember motion are proposed timing.",
+    "Flame glow is removed from opaque art; reflected light uses independent tiny pixel patches.",
+    "Logical background quantized96/hero31/fire15/tree23 colors; full UI preview/GIF not a 48-color production atlas."
+  ]
+}

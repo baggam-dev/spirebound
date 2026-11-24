@@ -1,0 +1,11 @@
+{
+  "size": [
+    640,
+    360
+  ],
+  "frames": 60,
+  "durationMsPerFrame": 100,
+  "loop": 0,
+  "bytes": 338486,
+  "kind": "Static GIF decode/file inspection; no game execution"
+}

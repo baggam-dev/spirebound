@@ -1,0 +1,185 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/native/fire-0.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 48,
+      "height": 48,
+      "bytes": 697,
+      "color_count": 16,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 2088,
+      "content_bounds": [
+        17,
+        16,
+        34,
+        44
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/native/fire-1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 48,
+      "height": 48,
+      "bytes": 777,
+      "color_count": 16,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 2068,
+      "content_bounds": [
+        16,
+        10,
+        33,
+        44
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/native/fire-2.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 48,
+      "height": 48,
+      "bytes": 651,
+      "color_count": 16,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 2100,
+      "content_bounds": [
+        15,
+        15,
+        33,
+        44
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/native/fire-3.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 48,
+      "height": 48,
+      "bytes": 691,
+      "color_count": 16,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 2078,
+      "content_bounds": [
+        16,
+        16,
+        33,
+        44
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/native/hero-0.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 112,
+      "bytes": 6818,
+      "color_count": 32,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 7710,
+      "content_bounds": [
+        15,
+        16,
+        83,
+        104
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/native/hero-1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 112,
+      "bytes": 6959,
+      "color_count": 32,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 7692,
+      "content_bounds": [
+        13,
+        16,
+        83,
+        104
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/native/hero-2.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 112,
+      "bytes": 6969,
+      "color_count": 32,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 7668,
+      "content_bounds": [
+        9,
+        16,
+        83,
+        104
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/native/tree-0.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 384,
+      "height": 360,
+      "bytes": 28951,
+      "color_count": 24,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 122555,
+      "content_bounds": [
+        10,
+        41,
+        328,
+        359
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/title-night-pixel-20261124/native/tree-1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 384,
+      "height": 360,
+      "bytes": 28396,
+      "color_count": 24,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 122528,
+      "content_bounds": [
+        11,
+        41,
+        332,
+        359
+      ],
+      "problems": []
+    }
+  ]
+}
