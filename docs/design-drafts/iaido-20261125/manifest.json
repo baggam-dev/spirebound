@@ -1,0 +1,350 @@
+{
+  "status": "review-only; no runtime integration",
+  "sourceTool": "builtin image_gen",
+  "generatedCalls": 2,
+  "sources": [
+    {
+      "file": "hero-source.png",
+      "sha256": "1e12b9b5045399d3c4bb9f55382dc829683b85c21b9df9ce78afb003ffb25a81"
+    },
+    {
+      "file": "fx-source.png",
+      "sha256": "e41429629759ea4a333b20cd8036bbd7e38197b846f14eab910ef462bcdb46d4"
+    }
+  ],
+  "hero": {
+    "sourceBoxes": [
+      [
+        0,
+        0,
+        512,
+        512
+      ],
+      [
+        512,
+        0,
+        1024,
+        512
+      ],
+      [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      [
+        0,
+        512,
+        576,
+        1024
+      ],
+      [
+        576,
+        512,
+        1024,
+        1024
+      ],
+      [
+        1024,
+        512,
+        1536,
+        1024
+      ]
+    ],
+    "sourceBounds": [
+      [
+        113,
+        45,
+        366,
+        479
+      ],
+      [
+        69,
+        105,
+        375,
+        477
+      ],
+      [
+        26,
+        109,
+        493,
+        479
+      ],
+      [
+        26,
+        84,
+        571,
+        459
+      ],
+      [
+        24,
+        68,
+        393,
+        461
+      ],
+      [
+        111,
+        45,
+        379,
+        463
+      ]
+    ],
+    "sourceAnchorsX": [
+      250,
+      250,
+      250,
+      250,
+      186,
+      250
+    ],
+    "scale": 0.18433179723502305,
+    "pivot": [
+      64,
+      112
+    ],
+    "native": [
+      144,
+      128
+    ],
+    "paletteColors": 47
+  },
+  "effects": {
+    "grid": [
+      3,
+      2
+    ],
+    "native": [
+      96,
+      96
+    ],
+    "paletteColors": 23,
+    "alphaThreshold": 220
+  },
+  "preview": {
+    "size": [
+      640,
+      360
+    ],
+    "frames": 75,
+    "fps": 25,
+    "seconds": 3,
+    "perDashSeconds": 0.12,
+    "inputGapSeconds": 0.34,
+    "scriptedInputNotAutomaticCombo": true,
+    "encodedFrames": 26,
+    "encodedDurationMs": 3000,
+    "encoding": "Identical frames coalesced with their display durations preserved."
+  },
+  "nativeAssets": [
+    {
+      "file": "native/fx-0.png",
+      "size": [
+        96,
+        96
+      ],
+      "alphaBounds": [
+        35,
+        30,
+        63,
+        64
+      ],
+      "paletteMax": 24,
+      "status": "review-only",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization"
+    },
+    {
+      "file": "native/fx-1.png",
+      "size": [
+        96,
+        96
+      ],
+      "alphaBounds": [
+        13,
+        48,
+        85,
+        55
+      ],
+      "paletteMax": 24,
+      "status": "review-only",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization"
+    },
+    {
+      "file": "native/fx-2.png",
+      "size": [
+        96,
+        96
+      ],
+      "alphaBounds": [
+        6,
+        8,
+        90,
+        86
+      ],
+      "paletteMax": 24,
+      "status": "review-only",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization"
+    },
+    {
+      "file": "native/fx-3.png",
+      "size": [
+        96,
+        96
+      ],
+      "alphaBounds": [
+        6,
+        8,
+        90,
+        84
+      ],
+      "paletteMax": 24,
+      "status": "review-only",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization"
+    },
+    {
+      "file": "native/fx-4.png",
+      "size": [
+        96,
+        96
+      ],
+      "alphaBounds": [
+        20,
+        18,
+        74,
+        73
+      ],
+      "paletteMax": 24,
+      "status": "review-only",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization"
+    },
+    {
+      "file": "native/fx-5.png",
+      "size": [
+        96,
+        96
+      ],
+      "alphaBounds": [
+        26,
+        20,
+        81,
+        72
+      ],
+      "paletteMax": 24,
+      "status": "review-only",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization"
+    },
+    {
+      "file": "native/hero-0.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        39,
+        32,
+        86,
+        112
+      ],
+      "paletteMax": 48,
+      "status": "review-only",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization"
+    },
+    {
+      "file": "native/hero-1.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        31,
+        43,
+        87,
+        112
+      ],
+      "paletteMax": 48,
+      "status": "review-only",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization"
+    },
+    {
+      "file": "native/hero-2.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        23,
+        44,
+        109,
+        112
+      ],
+      "paletteMax": 48,
+      "status": "review-only",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization"
+    },
+    {
+      "file": "native/hero-3.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        23,
+        43,
+        123,
+        112
+      ],
+      "paletteMax": 48,
+      "status": "review-only",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization"
+    },
+    {
+      "file": "native/hero-4.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        34,
+        40,
+        102,
+        112
+      ],
+      "paletteMax": 48,
+      "status": "review-only",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization"
+    },
+    {
+      "file": "native/hero-5.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        38,
+        35,
+        87,
+        112
+      ],
+      "paletteMax": 48,
+      "status": "review-only",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization"
+    }
+  ],
+  "limitations": [
+    "Single facing pose proposal; mirrored/vertical directions and actual input/collision not implemented.",
+    "Local spark is effect demonstration, not verified combat impact or damage.",
+    "Charge UI demonstrates consumption only; recharge mechanics and timing not implemented.",
+    "No game tests, browser QA, push or deployment."
+  ]
+}

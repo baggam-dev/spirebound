@@ -1,0 +1,125 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/iaido-20261125/native/hero-0.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 6509,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 16230,
+      "content_bounds": [
+        39,
+        32,
+        86,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/iaido-20261125/native/hero-1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 6279,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 16279,
+      "content_bounds": [
+        31,
+        43,
+        87,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/iaido-20261125/native/hero-2.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 7043,
+      "color_count": 46,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 15825,
+      "content_bounds": [
+        23,
+        44,
+        109,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/iaido-20261125/native/hero-3.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 7029,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 15771,
+      "content_bounds": [
+        23,
+        43,
+        123,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/iaido-20261125/native/hero-4.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 6468,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 16141,
+      "content_bounds": [
+        34,
+        40,
+        102,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/iaido-20261125/native/hero-5.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 6398,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 16255,
+      "content_bounds": [
+        38,
+        35,
+        87,
+        112
+      ],
+      "problems": []
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/iaido-20261125/native/fx-0.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 96,
+      "bytes": 560,
+      "color_count": 8,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 9045,
+      "content_bounds": [
+        35,
+        30,
+        63,
+        64
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/iaido-20261125/native/fx-1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 96,
+      "bytes": 327,
+      "color_count": 9,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 9071,
+      "content_bounds": [
+        13,
+        48,
+        85,
+        55
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/iaido-20261125/native/fx-2.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 96,
+      "bytes": 1376,
+      "color_count": 9,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 7592,
+      "content_bounds": [
+        6,
+        8,
+        90,
+        86
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/iaido-20261125/native/fx-3.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 96,
+      "bytes": 1290,
+      "color_count": 11,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 7798,
+      "content_bounds": [
+        6,
+        8,
+        90,
+        84
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/iaido-20261125/native/fx-4.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 96,
+      "bytes": 983,
+      "color_count": 9,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 8752,
+      "content_bounds": [
+        20,
+        18,
+        74,
+        73
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/iaido-20261125/native/fx-5.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 96,
+      "bytes": 729,
+      "color_count": 8,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 8923,
+      "content_bounds": [
+        26,
+        20,
+        81,
+        72
+      ],
+      "problems": []
+    }
+  ]
+}

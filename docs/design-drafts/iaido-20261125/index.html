@@ -1,0 +1,8 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>일섬 발도·연속 입력 시안</title>
+<style>body{margin:24px;background:#080d16;color:#b7bfcd;font:16px system-ui}h1{font-size:24px;color:#d5c7aa}p{max-width:1040px;line-height:1.7}img{max-width:100%;height:auto;image-rendering:pixelated}button{padding:10px 18px;background:#18202d;color:#d5c7aa;border:1px solid #877459;font:inherit}a{color:#d1bd91}</style>
+<h1>몸을 깊게 숙여, 짧고 크게 베기</h1>
+<p>1·2·3단계의 연속 입력과 충전 소모를 비교합니다. 0.12초 이동·큰 참격·국소 섬광·잔상을 별도 레이어로 묶은 시안입니다. 실제 게임/피해/무적/재충전은 아직 변경하지 않았습니다.</p>
+<button id="toggle">움직임 멈추기</button> <a href="actor-contact.png">주인공6자세</a> · <a href="fx-contact.png">별도6효과</a> · <a href="README.md">구성·제약</a>
+<p><img id="preview" src="motion-preview.gif" width="1280" height="720" alt="일섬 1회·2회·3회 연속 입력과 큰 참격 효과 비교 시안"></p>
+<p>3초 반복은 시연 재시작입니다. 한 번의 입력으로 자동3회 시전하거나 즉시 충전이 회복된다는 뜻은 아닙니다.</p>
+<script>let still=matchMedia('(prefers-reduced-motion: reduce)').matches;const p=document.querySelector('#preview'),b=document.querySelector('#toggle');function sync(){p.src=still?'main-still.png':'motion-preview.gif';b.textContent=still?'움직임 재생':'움직임 멈추기';b.setAttribute('aria-pressed',String(still));}b.onclick=()=>{still=!still;sync();};sync();</script>
