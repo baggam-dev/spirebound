@@ -1,7 +1,7 @@
 // Title-only presentation. No run state, RNG, save or audio side effects.
 const root='assets/images/';
 function asset(name){const img=new Image();img.src=root+name;return img;}
-const art={background:asset('title-background-v1.png'),hero:asset('title-hero-idle-v1.png'),branch:asset('title-branch-v1.png')};
+const art={background:asset('title-background-v1.png'),gate:asset('title-background-v2.png'),hero:asset('title-hero-idle-v1.png'),branch:asset('title-branch-v1.png')};
 export const titleArt=art;
 const ready=img=>img.complete&&img.naturalWidth>0;
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -28,16 +28,18 @@ export function createTitleScene(host){
   // Fit the full approved composition, including the hero's feet, on every aspect ratio.
   const scale=Math.min(w/1600,h/900),ox=(w-1600*scale)/2,oy=(h-900*scale)/2;
   ctx.setTransform(scale,0,0,scale,ox,oy);ctx.imageSmoothingEnabled=false;
-  if(ready(art.background))ctx.drawImage(art.background,0,0,1600,900);
+  const gate=ready(art.gate);
+  if(gate)ctx.drawImage(art.gate,0,0,1600,900);
+  else if(ready(art.background))ctx.drawImage(art.background,0,0,1600,900);
   const t=still?0:elapsed;
   // Anchors match the two unlit braziers of the clean background plate.
-  for(const [i,x] of [1003,1178].entries()){
-   const y=458,flicker=still?1:1+Math.sin(t*9+i*2)*.12+Math.sin(t*17+i)*.06;
+  for(const [i,x] of (gate?[750,1468]:[1003,1178]).entries()){
+   const y=gate?591:458,flicker=still?1:1+Math.sin(t*9+i*2)*.12+Math.sin(t*17+i)*.06;
    const glow=ctx.createRadialGradient(x,y,1,x,y,72*flicker);
    glow.addColorStop(0,'#ffb15539');glow.addColorStop(1,'#ed802000');
    ctx.fillStyle=glow;ctx.fillRect(x-90,y-90,180,180);
    for(let k=0;k<6;k++){
-    const flameHeight=(10+Math.sin(t*11+k*3+i)*4)*flicker;
+    const flameHeight=((gate?24:10)+Math.sin(t*11+k*3+i)*(gate?7:4))*flicker;
     ctx.fillStyle=k%2?'#ffcd72':'#d67432';ctx.fillRect(x-9+k*3,y-flameHeight,3,flameHeight);
    }
    ctx.fillStyle='#ffe7a1';ctx.fillRect(x-3,y-8,6,8);
@@ -57,9 +59,9 @@ export function createTitleScene(host){
   }
   if(ready(art.hero)){
    const frame=still?0:[0,1,2,1][Math.floor(t/.65)%4],cell=art.hero.naturalWidth/3;
-   ctx.drawImage(art.hero,frame*cell,0,cell,art.hero.naturalHeight,740,597,295,295);
+   ctx.drawImage(art.hero,frame*cell,0,cell,art.hero.naturalHeight,gate?930:740,gate?570:597,295,295);
   }
-  if(ready(art.branch)){
+  if(!gate&&ready(art.branch)){
    for(const side of [0,1]){
     ctx.save();ctx.translate(side?1600:0,side?16:-12);ctx.scale(side?-1:1,1);
     ctx.rotate(still?0:Math.sin(t*.55+side*1.7)*.008);

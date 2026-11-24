@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "assets/images/title-background-v2.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1671,
+      "height": 941,
+      "bytes": 2881609,
+      "color_count": ">65535",
+      "has_alpha": false,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "transparent_pixels": 0,
+      "content_bounds": [
+        0,
+        0,
+        1671,
+        941
+      ],
+      "problems": []
+    }
+  ]
+}

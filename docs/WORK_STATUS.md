@@ -1,3 +1,10 @@
+## 2026-11-24 0.64 배포 전 검증 통과·배포 진행
+메인시안배포승인반영·깨끗한title배경v2/실제메뉴·기존주인공불안개·새원정입장흐름연결, client/API/header0.64·deploy/server새9PNG허용. 로컬서버허용누락및QA비동기predicate오판정발견수정·동기state확인으로실제8atlas/v2로드재검증. 전체1034/1034(full-release.log), 서버수정후HTTP2(server-fix.log), 신규Edge47(presentation-verified)/기존18(legacy-browser)·오류0점수POST0통과. 초기presentation-browser/final·title-probe는최종증거아님.
+현재운영0.63·아직배포완료아님. 현재수정title/version/config/server/deploy/회귀·생성출처/QA기록. 다음커밋푸시→공식deploy.ps1→HTTPS변경바이트/health/services·PC/모바일확인. 로컬서버4635세션77375실행중·브라우저QA종료·차단없음. 실제기기/장시간성능/음향청취미검증·가로고정TODO보존.
+
+## 2026-11-24 명시 배포 승인·0.64 구현 및 검증 진행 중
+사용자배포명시를메인시안승인+누적개발분검증푸시배포권한으로반영. title배경판builtin1회분리(title-background-v2)·실제HTML메뉴/기존주인공/별도불안개연결·금색선택테두리. 원정기존입장문열림/스킵흐름유지. client/API/header0.64동기·deploy허용목록신규9PNG추가. 현재수정title-scene/CSS/version/config/index/deploy·출처/QA/기록, 테스트아직시작전·운영0.63. 다음전체node--test→실패수정필요검증/Edge누적흐름→커밋푸시공식배포공개확인. 가로고정TODO미구현유지. 실행중명령차단없음.
+
 ## 2026-11-24 메인화면 탑의문 도트고도화 시안 완료(승인 대기)
 - 사용자1번탑문앞선택/도트품질업요청으로 title-gate-20261124/main-menu-gate-v1.png 전체화면1장제작. 거대봉인문·후드석상/사슬·젖은계단·황금불과차가운안개·기존궁수후면/좌측기능메뉴. 원본참조기존title시안/입장주인공·builtin1회, 전체prompt/원본위치/SHA/manifest·README외형모션UI패키지보존.
 - 실제시안1672x941 RGB2,963,338byte·이미지열림/메타데이터정적통과·생성화면육안확인. 고정픽셀격자/48색/제품레이어검증아님. 텍스트/버튼포함된무드목업이며승인후제품시배경·문·궁수·FX분리/HTMLCSS폰트로메뉴재구성필요. 버튼실제저장데이터생성없음.

@@ -1,0 +1,11 @@
+{
+  "file": "assets/images/title-background-v2.png",
+  "sha256": "3fdbee95928011fa5552c00000e44f9c0e75982fe1f991d8515841a02a825576",
+  "source": "background-plate-v2.png (unchanged copy)",
+  "prompt": "production-prompt-v2.md",
+  "approval": "2026-11-24 user explicitly requested deployment after preview",
+  "implementation": "New clean background plate, existing independent rear idle hero, separate flame/mist particles; real HTML/CSS menu; original entrance gate flow preserved",
+  "runtimeImageReport": "runtime-image-report.json",
+  "gameVerified": true,
+  "deployed": false
+}

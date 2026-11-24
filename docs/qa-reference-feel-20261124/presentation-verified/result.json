@@ -1,0 +1,331 @@
+{
+  "base": "http://127.0.0.1:4635",
+  "reports": [
+    {
+      "kind": "title",
+      "w": 1280,
+      "h": 720,
+      "layout": {
+        "x": 76.796875,
+        "y": 125.546875,
+        "right": 537.59375,
+        "bottom": 594.4375,
+        "buttons": [
+          {
+            "id": "start",
+            "w": 405.515625,
+            "h": 51
+          },
+          {
+            "id": "titleRecords",
+            "w": 405.515625,
+            "h": 48
+          },
+          {
+            "id": "titleSettings",
+            "w": 405.515625,
+            "h": 48
+          },
+          {
+            "id": "rank",
+            "w": 405.515625,
+            "h": 44
+          },
+          {
+            "id": "bossPractice",
+            "w": 405.515625,
+            "h": 44
+          }
+        ]
+      }
+    },
+    {
+      "w": 1280,
+      "kind": "hero-walk"
+    },
+    {
+      "w": 1280,
+      "kind": "hero-shot"
+    },
+    {
+      "w": 1280,
+      "kind": "landing"
+    },
+    {
+      "w": 1280,
+      "kind": "doors"
+    },
+    {
+      "w": 1280,
+      "kind": "king2-windup"
+    },
+    {
+      "w": 1280,
+      "kind": "king2-strike"
+    },
+    {
+      "w": 1280,
+      "kind": "king2-cast"
+    },
+    {
+      "w": 1280,
+      "kind": "king3-windup"
+    },
+    {
+      "w": 1280,
+      "kind": "king3-strike"
+    },
+    {
+      "w": 1280,
+      "kind": "king3-cast"
+    },
+    {
+      "w": 1280,
+      "kind": "king3-death"
+    },
+    {
+      "w": 1280,
+      "kind": "reward-skip"
+    },
+    {
+      "w": 1280,
+      "kind": "new-entrance-skip"
+    },
+    {
+      "w": 1280,
+      "kind": "continue-saved"
+    },
+    {
+      "kind": "title",
+      "w": 844,
+      "h": 390,
+      "layout": {
+        "x": 42.1875,
+        "y": 43.46875,
+        "right": 405.09375,
+        "bottom": 346.53125,
+        "buttons": [
+          {
+            "id": "start",
+            "w": 333.875,
+            "h": 44
+          },
+          {
+            "id": "titleRecords",
+            "w": 333.875,
+            "h": 44
+          },
+          {
+            "id": "titleSettings",
+            "w": 333.875,
+            "h": 44
+          },
+          {
+            "id": "rank",
+            "w": 163.9375,
+            "h": 44
+          },
+          {
+            "id": "bossPractice",
+            "w": 163.9375,
+            "h": 44
+          }
+        ]
+      }
+    },
+    {
+      "w": 844,
+      "kind": "hero-walk"
+    },
+    {
+      "w": 844,
+      "kind": "hero-shot"
+    },
+    {
+      "w": 844,
+      "kind": "landing"
+    },
+    {
+      "w": 844,
+      "kind": "doors"
+    },
+    {
+      "w": 844,
+      "kind": "king2-windup"
+    },
+    {
+      "w": 844,
+      "kind": "king2-strike"
+    },
+    {
+      "w": 844,
+      "kind": "king2-cast"
+    },
+    {
+      "w": 844,
+      "kind": "king3-windup"
+    },
+    {
+      "w": 844,
+      "kind": "king3-strike"
+    },
+    {
+      "w": 844,
+      "kind": "king3-cast"
+    },
+    {
+      "w": 844,
+      "kind": "king3-death"
+    },
+    {
+      "w": 844,
+      "kind": "reward-skip"
+    },
+    {
+      "w": 844,
+      "kind": "new-entrance-skip"
+    },
+    {
+      "w": 844,
+      "kind": "continue-saved"
+    },
+    {
+      "kind": "title",
+      "w": 740,
+      "h": 360,
+      "layout": {
+        "x": 37,
+        "y": 32.3125,
+        "right": 355.1875,
+        "bottom": 327.671875,
+        "buttons": [
+          {
+            "id": "start",
+            "w": 292.734375,
+            "h": 44
+          },
+          {
+            "id": "titleRecords",
+            "w": 292.734375,
+            "h": 44
+          },
+          {
+            "id": "titleSettings",
+            "w": 292.734375,
+            "h": 44
+          },
+          {
+            "id": "rank",
+            "w": 143.375,
+            "h": 44
+          },
+          {
+            "id": "bossPractice",
+            "w": 143.359375,
+            "h": 44
+          }
+        ]
+      }
+    },
+    {
+      "w": 740,
+      "kind": "hero-walk"
+    },
+    {
+      "w": 740,
+      "kind": "hero-shot"
+    },
+    {
+      "w": 740,
+      "kind": "landing"
+    },
+    {
+      "w": 740,
+      "kind": "doors"
+    },
+    {
+      "w": 740,
+      "kind": "king2-windup"
+    },
+    {
+      "w": 740,
+      "kind": "king2-strike"
+    },
+    {
+      "w": 740,
+      "kind": "king2-cast"
+    },
+    {
+      "w": 740,
+      "kind": "king3-windup"
+    },
+    {
+      "w": 740,
+      "kind": "king3-strike"
+    },
+    {
+      "w": 740,
+      "kind": "king3-cast"
+    },
+    {
+      "w": 740,
+      "kind": "king3-death"
+    },
+    {
+      "w": 740,
+      "kind": "reward-skip"
+    },
+    {
+      "w": 740,
+      "kind": "new-entrance-skip"
+    },
+    {
+      "w": 740,
+      "kind": "continue-saved"
+    },
+    {
+      "kind": "title",
+      "w": 390,
+      "h": 844,
+      "layout": {
+        "x": 20,
+        "y": 396.15625,
+        "right": 370,
+        "bottom": 820,
+        "buttons": [
+          {
+            "id": "start",
+            "w": 308,
+            "h": 48
+          },
+          {
+            "id": "titleRecords",
+            "w": 308,
+            "h": 48
+          },
+          {
+            "id": "titleSettings",
+            "w": 308,
+            "h": 48
+          },
+          {
+            "id": "rank",
+            "w": 308,
+            "h": 48
+          },
+          {
+            "id": "bossPractice",
+            "w": 308,
+            "h": 48
+          }
+        ]
+      }
+    },
+    {
+      "kind": "all-optional-images-aborted",
+      "fallback": true
+    }
+  ],
+  "errors": [],
+  "posts": 0
+}

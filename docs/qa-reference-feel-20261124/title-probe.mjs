@@ -1,0 +1,5 @@
+import {pathToFileURL} from 'node:url';
+import {join} from 'node:path';
+const {chromium}=await import(pathToFileURL(join(process.env.USERPROFILE,'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs')).href);
+const browser=await chromium.launch({channel:'msedge',headless:true});
+try{const p=await browser.newPage({viewport:{width:1280,height:720}});await p.goto('http://127.0.0.1:4635');await p.waitForFunction(async()=>{const {titleArt}=await import('/src/ui/title-scene.js');return titleArt.gate.naturalWidth>0;},null,{timeout:120000});await p.waitForTimeout(1000);console.log(await p.evaluate(async()=>{const {titleArt}=await import('/src/ui/title-scene.js');const c=document.querySelector('.title-scene-canvas');return {visibility:document.visibilityState,gate:titleArt.gate.src,width:titleArt.gate.naturalWidth,pixel:[...c.getContext('2d').getImageData(1040,200,1,1).data],canvas:[c.width,c.height]};}));await p.screenshot({path:'docs/qa-reference-feel-20261124/title-probe.png'});}finally{await browser.close();}

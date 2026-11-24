@@ -1,3 +1,6 @@
+## 2026-11-24 0.64 배포 전 실행 검증 결과(최신)
+사용자명시배포지시후전체1034/1034통과(full-release.log), 로컬서버신규9PNG허용수정뒤HTTP2통과(server-fix.log), 실제새8atlas/v2로드를동기식상태로확인한Edge47흐름(presentation-verified/result.json)·기존잔해/탈출/UI18흐름(legacy-browser/result.json)통과. 두브라우저세트모두pageerror0/점수POST0. 초기presentation-browser는선택이미지차단규칙오류, presentation-browser-final은비동기waitpredicate로로딩을확정하지못했던중간자료이며최종성공근거가아니다. title-probe도서버허용수정전진단자료다. 서버누락은브라우저육안대조로발견해수정하고실제신규9URL200을회귀에추가했다. static-audit.json은이전정적마감시점자료로남긴다. 실제iPhone/Android/장시간성능/음향청취·전체원화프레임정밀QA는미검증. 아래미실행서술은명시배포전계획이력이다.
+
 # 참고 영상 기반 타격감·원화 연결 — 정적 마감
 
 2026-11-24. 운영은 **0.63.0-prebeta**, 배포 런타임564369d / release-20261123-110150-773b7a 그대로다. 이 문서는 이후 로컬 누적 변경의 정적 검토 및 **향후 명시 배포 지시 때 실행할 계획**이다. 현재 게임 테스트·구문 검사·서버·브라우저 QA·푸시·배포·공개 조회는 수행하지 않았다. 과거985개 통과 결과를 이번 변경의 검증으로 사용하지 않는다.

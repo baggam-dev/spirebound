@@ -2,18 +2,18 @@
 body:has(.title-screen)>header,body:has(.title-screen) .rotate{display:none!important}
 #overlay:has(.title-screen){position:fixed!important;inset:0!important;display:block;width:100%;height:100%;z-index:50;overflow:auto;overscroll-behavior:contain;background:#08090e;backdrop-filter:none}
 #overlay .panel.title-screen{position:relative;isolation:isolate;display:flex;align-items:center;width:100%;max-width:none;min-height:100svh;min-height:100dvh;height:auto;max-height:none;margin:0;padding:24px max(22px,env(safe-area-inset-right)) 24px max(6vw,env(safe-area-inset-left));border:0;box-shadow:none;background:#08090e;overflow:hidden;text-align:left}
-.title-scene{position:absolute;inset:0;z-index:-2;pointer-events:none;overflow:hidden;background:#08090e url('../assets/images/title-background-v1.png') center/contain no-repeat}
+.title-scene{position:absolute;inset:0;z-index:-2;pointer-events:none;overflow:hidden;background:#08090e url('../assets/images/title-background-v2.png') center/contain no-repeat}
 .title-scene-canvas{position:absolute;width:100%;height:100%;inset:0;display:block}
 .title-screen::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,#05060be0 0%,#05060b85 32%,#05060b12 60%,#05060b0a),linear-gradient(0deg,#03040b55,transparent 50%)}
-.title-menu{position:relative;width:min(42vw,620px);min-width:310px;color:#dfddd7;text-shadow:0 2px 3px #000;}
+.title-menu{position:relative;width:min(36vw,570px);min-width:310px;color:#dfddd7;text-shadow:0 2px 3px #000;}
 .title-logo{position:relative;overflow:hidden;width:100%;aspect-ratio:5.8}
-.title-logo img{position:absolute;width:100%;height:auto;left:0;top:-43%;filter:grayscale(1);image-rendering:pixelated}
+.title-logo img{position:absolute;width:100%;height:auto;left:0;top:-43%;filter:sepia(.35) saturate(.7);image-rendering:pixelated}
 #overlay .title-motto{margin:12px 0 24px;text-align:center;font-size:clamp(12px,1.3vw,19px);letter-spacing:.3em;color:#c6c3bd;line-height:1.5!important}
 .title-main{display:grid;gap:4px;padding:20px 0 20px 12%;border-top:1px solid #bfb6a544;border-bottom:1px solid #bfb6a533;}
 #overlay .title-menu button{display:block;position:relative;width:100%;min-height:48px;min-width:0;margin:0;padding:8px 12px 8px 26px;border:1px solid transparent;box-shadow:none;background:transparent;text-align:left;font-size:clamp(16px,1.65vw,25px);font-weight:400;letter-spacing:.1em;color:#c4c2be;text-shadow:0 2px 3px #000;touch-action:manipulation}
 #overlay .title-menu button:hover,#overlay .title-menu button:focus-visible{background:#bab3a412;color:#fff1d0;border-color:#d4c19b55;outline:1px solid #d4c19b88;outline-offset:1px}
-#overlay .title-menu .title-selected{color:#f2dfb5;text-shadow:0 0 12px #dbb86c66,0 2px 2px #000}
-.title-selected::before{content:'♦';position:absolute;left:4px;color:#f0d49d}
+#overlay .title-menu .title-selected{color:#ffedc7;border:3px double #b99158;background:linear-gradient(90deg,#44342288,#16151b99);padding-left:34px;text-shadow:0 0 12px #dbb86c66,0 2px 2px #000}
+.title-selected::before{content:'♦';position:absolute;left:10px;color:#f0d49d}
 #overlay .title-main button span{display:block;font-size:10px;letter-spacing:0;color:#bbb7ad;line-height:1.6}
 .title-links{padding:12px 0 0 12%;}
 #overlay .title-links button{font-size:clamp(12px,1.05vw,16px);min-height:44px;color:#a7a39f}

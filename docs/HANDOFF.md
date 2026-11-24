@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 0.64 검증통과·배포진행
+~~~text
+사용자배포명시승인(메인시안승인포함).0.64client/API/header·새title배경분리1회/실제메뉴금색/기존별도궁수불안개·기존입장스킵흐름. 신규9PNGdeploy/server허용. 전체1034통과·서버HTTP2재검증·신규Edge47최종presentation-verified/기존18legacy-browser오류0/점수POST0. 초기신규QAasyncpredicate허위통과+serverasset누락발견수정후동기loaderstate모두확인;초기presentation-browser/final·title-probe는최종증거아님. 8atlas/v2실제로드/이미지실패/보상스킵/입장/저장이어검증. 현재운영0.63아직미배포·다음커밋푸시공식deploy/공개바이트health서비스PC모바일확인. 로컬4635세션77375실행중·QA세션종료·차단없음. 실제휴대폰장시간성능/청취미검증·가로고정TODO보존.
+~~~
+
 ## 최신 복사용 인계 — 메인화면 탑의문 시안
 ~~~text
 661e33a뒤사용자1번탑문앞·도트품질업시안요청. docs/design-drafts/title-gate-20261124/main-menu-gate-v1.png1672x941RGB전체화면시안1장builtinimagegen·기존title/궁수참조. 거대문석상사슬/젖은계단/불안개/궁수후면/좌측기능메뉴. prompt/원본위치/sha/manifest/image-report/README에외형모션UI제안보존. 목업글자/버튼포함·고정도트격자팔레트/분리레이어아님;생성본열림/육안만. 새원정문해제/열림걸음·전진/별도불안개망토/reduced스킵후보는미구현·계속탐험저장복귀유지. 제품src/assets미수정·승인전자료만·게임구문테스트브라우저푸시배포없음·운영0.63/누적49회귀미실행. 다음사용자시안검토→승인방향세분화. 가로고정TODO보존·실행중명령차단없음.

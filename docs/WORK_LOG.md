@@ -3572,3 +3572,7 @@ utilityUseState로기존실사용조건을공유하고 canCastUtility는같은re
 - 실제시안1672x941 RGB2,963,338byte·이미지열림/메타데이터정적통과·생성화면육안확인. 고정픽셀격자/48색/제품레이어검증아님. 텍스트/버튼포함된무드목업이며승인후제품시배경·문·궁수·FX분리/HTMLCSS폰트로메뉴재구성필요. 버튼실제저장데이터생성없음.
 - 진입후보:새원정만문틈빛/봉인해제→양문열림·궁수걸음/카메라전진,계속탐험은저장복귀·기존기능유지. 망토/불/안개별도레이어·reduced/스킵제안은README(미구현).
 - 제품src/assets변경없음·승인전시안/문서만. 게임구문/테스트/브라우저실기기/푸시배포없음·운영0.63/누적49회귀미실행유지. 모바일레이아웃/모션분리·실제도트규격/메모리미검증. 다음시안사용자검토후승인방향패키지세분화. 실행중명령차단없음.
+
+## 2026-11-24 0.64 배포 전 검증 통과·배포 진행
+메인시안배포승인반영·깨끗한title배경v2/실제메뉴·기존주인공불안개·새원정입장흐름연결, client/API/header0.64·deploy/server새9PNG허용. 로컬서버허용누락및QA비동기predicate오판정발견수정·동기state확인으로실제8atlas/v2로드재검증. 전체1034/1034(full-release.log), 서버수정후HTTP2(server-fix.log), 신규Edge47(presentation-verified)/기존18(legacy-browser)·오류0점수POST0통과. 초기presentation-browser/final·title-probe는최종증거아님.
+현재운영0.63·아직배포완료아님. 현재수정title/version/config/server/deploy/회귀·생성출처/QA기록. 다음커밋푸시→공식deploy.ps1→HTTPS변경바이트/health/services·PC/모바일확인. 로컬서버4635세션77375실행중·브라우저QA종료·차단없음. 실제기기/장시간성능/음향청취미검증·가로고정TODO보존.
