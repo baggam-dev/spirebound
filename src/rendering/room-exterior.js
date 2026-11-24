@@ -15,7 +15,8 @@ export function roomTorchAnchors(room){
 
 // Approved stone / iron / rune treatments. View only; entry geometry and RNG are untouched.
 export function drawReadableDoors(c,room,{floor=0,locked=false,sealed=false,doors=[]}={}){
- const style=[2,3,8].includes(floor)?'rune':[1,6,9].includes(floor)?'iron':'stone';
+ const style=floor===2?'archive':floor===3?'prism':[1,6,7,8,9].includes(floor)?'iron':'stone';
+ const palette={stone:['#a49b83','#dbca8c'],archive:['#9889a4','#dfcbef'],prism:['#73949a','#a2e4de'],iron:['#9b7c7a','#e5b481']}[style];
  c.save();try{c.imageSmoothingEnabled=false;
   for(let d=0;d<4;d++)if(doors[d]){
    const p=roomDoorFrame(room,d),w=d%2?70:80,h=d%2?29:35;
@@ -24,21 +25,24 @@ export function drawReadableDoors(c,room,{floor=0,locked=false,sealed=false,door
     else if(d===1){c.translate(p.x+29,p.y);c.rotate(Math.PI/2);}
     else if(d===2){c.translate(p.x+80,p.y+35);c.rotate(Math.PI);}
     else{c.translate(p.x,p.y+70);c.rotate(-Math.PI/2);}
-    const edge=style==='rune'?'#8dafa9':style==='iron'?'#b49c73':'#b8b09a';
+    const [material,edge]=palette;
     c.fillStyle='#121a20';c.fillRect(0,0,w,h);
-    c.fillStyle=style==='iron'?'#635647':'#67695f';c.fillRect(0,0,9,h);c.fillRect(w-9,0,9,h);c.fillRect(0,0,w,6);
+    c.fillStyle=material;c.fillRect(0,0,9,h);c.fillRect(w-9,0,9,h);c.fillRect(0,0,w,6);
     c.fillStyle=edge;c.fillRect(1,1,2,h-2);c.fillRect(w-3,1,2,h-2);c.fillRect(2,1,w-4,2);
     c.fillStyle='#343b3c';for(let y=10;y<h-4;y+=10){c.fillRect(3,y,6,2);c.fillRect(w-9,y,6,2);}
-    c.fillStyle='#484b45';c.fillRect(10,h-12,w-20,10);
+    // An open door remains an empty passage, rather than a bright solid panel.
     c.fillStyle='#827d66';c.fillRect(8,h-5,w-16,5);c.fillStyle=locked?'#8c7960':'#e3cb8c';c.fillRect(9,h-4,w-18,2);
     c.strokeStyle='#777664';c.lineWidth=1;for(let x=20;x<w-10;x+=16){c.beginPath();c.moveTo(x,h-11);c.lineTo(x-3,h-5);c.stroke();}
-    if(style==='iron'){c.fillStyle='#c1a36c';for(let x=14;x<w-9;x+=12){c.fillRect(x,3,3,locked?h-9:6);c.fillStyle='#e2c58a';c.fillRect(x,3,1,2);c.fillStyle='#c1a36c';}}
-    if(style==='rune'){c.fillStyle='#83d2c2';for(const x of [5,w-7])for(let y=9;y<h-5;y+=9){c.fillRect(x,y,2,4);c.fillRect(x-1,y+1,4,1);}}
+    if(style==='iron'){c.fillStyle=edge;for(const x of [4,w-6])for(let y=6;y<h-4;y+=9)c.fillRect(x,y,2,2);}
+    if(style==='prism'||style==='archive'){c.fillStyle=edge;for(const x of [5,w-7])for(let y=9;y<h-5;y+=9){c.fillRect(x,y,2,4);c.fillRect(x-1,y+1,4,1);}}
     if(locked){
-     c.strokeStyle=sealed?'#c3a0da':'#b29a70';c.lineWidth=3;c.beginPath();c.moveTo(12,9);c.lineTo(w-12,h-7);c.moveTo(w-12,9);c.lineTo(12,h-7);c.stroke();
-     if(sealed){const x=w/2,y=h/2;c.fillStyle='#302339';c.fillRect(x-7,y-7,14,14);c.strokeStyle='#d3afe8';c.lineWidth=1;c.beginPath();c.moveTo(x,y-6);c.lineTo(x+6,y);c.lineTo(x,y+6);c.lineTo(x-6,y);c.closePath();c.stroke();}
+     c.fillStyle='#3d4143';c.fillRect(10,6,w/2-11,h-12);c.fillRect(w/2+1,6,w/2-11,h-12);
+     c.fillStyle=sealed?'#b190c7':'#b09562';c.fillRect(10,Math.floor(h/2)-3,w-20,6);
+     const x=w/2,y=Math.floor(h/2);c.fillStyle=sealed?'#302339':'#302a30';c.fillRect(x-6,y-7,12,14);
+     c.strokeStyle=sealed?'#d3afe8':edge;c.lineWidth=1;c.beginPath();c.moveTo(x,y-5);c.lineTo(x+4,y);c.lineTo(x,y+5);c.lineTo(x-4,y);c.closePath();c.stroke();
     }else{
-     c.strokeStyle=style==='rune'?'#9bded0':'#e3cb8c';c.lineWidth=1;c.beginPath();c.moveTo(w/2-4,h-8);c.lineTo(w/2,h-11);c.lineTo(w/2+4,h-8);c.stroke();
+     c.fillStyle='#465a59';c.fillRect(w/2-10,8,20,2);c.fillStyle='#637a72';c.fillRect(w/2-15,15,30,2);
+     c.fillStyle=edge;c.fillRect(w/2-19,h-7,38,2);
     }
    }finally{c.restore();}
   }

@@ -1,5 +1,5 @@
 // Successful interactions only; transient presentation never enters saved state.
-import {doorCenter} from '../world/doors.js';
+import {roomDoorFrame} from '../world/room-geometry.js';
 const effects=new WeakMap();
 export function emitInteraction(s,kind,room,detail={}){
  const list=(effects.get(s)||[]).filter(e=>e.room===room&&s.elapsed-e.start<.9&&(kind!=='level'||e.kind!=='level'));
@@ -30,7 +30,8 @@ function fountainEffect(c,x,y,p,reduced){
  c.restore();
 }
 function doorRelease(c,room,d,p,reduced){
- c.save();c.translate(d===1?943:d===3?17:doorCenter(room,d),d===0?25:d===2?520:doorCenter(room,d));c.rotate(d*Math.PI/2);
+ const frame=roomDoorFrame(room,d);
+ c.save();c.translate(frame.x+(d%2?29:80)/2,frame.y+(d%2?70:35)/2);c.rotate(d*Math.PI/2);
  c.setLineDash([]);c.lineWidth=1;
  const edge=d%2?35:40,spread=edge+2+p*14;
  for(const side of [-1,1]){

@@ -1,4 +1,5 @@
 import {outerWalls} from './stone-walls.js';
+import {roomDoorFrame} from '../world/room-geometry.js';
 const layouts=new WeakMap();
 function layout(obstacles){
  const walls=[...outerWalls,...obstacles.filter(o=>o.type==='wall')];
@@ -9,11 +10,16 @@ function layout(obstacles){
  cached={stamp,walls,vents};layouts.set(obstacles,cached);return cached;
 }
 // Wall decoration only: no RNG, saved state, hazards or collision changes.
-export function drawInfernalAmbience(c,obstacles,floor,time=0,reduced=false){
+export function drawInfernalAmbience(c,obstacles,floor,time=0,reduced=false,room=null){
  if(floor<8||reduced)return;
  const {walls,vents}=layout(obstacles),deep=floor>=9;
+ const doorZones=room?[0,1,2,3].filter(d=>room.doorPositions?.[d]!==null).map(d=>{
+  const p=roomDoorFrame(room,d);return {x:p.x-18,y:p.y-18,w:(d%2?29:80)+36,h:(d%2?70:35)+36};
+ }):[];
  c.save();c.beginPath();for(const o of walls)c.rect(o.x,o.y,o.w,o.h);c.clip();
  for(const [i,v] of vents.entries()){
+  // Include the entire rising ember envelope, not just the flame's anchor.
+  if(doorZones.some(q=>v.x+9>q.x&&v.x-9<q.x+q.w&&v.y>q.y&&v.y-43<q.y+q.h))continue;
   const phase=Math.floor(time*7+i*1.7)%3,height=12+phase*3;
   c.fillStyle=deep?'#a63e4380':'#e9643180';c.fillRect(v.x-7,v.y-height,14,height);
   c.fillStyle=deep?'#e16b588c':'#ffac5ea6';c.fillRect(v.x-4,v.y-height+4,8,height-4);
