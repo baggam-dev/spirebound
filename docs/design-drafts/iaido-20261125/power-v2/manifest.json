@@ -1,0 +1,97 @@
+{
+  "status": "review-only; runtime unchanged",
+  "newImageGenerationCalls": 0,
+  "source": "../native/hero0..5 and fx0..5 unchanged",
+  "sourceSha256": [
+    {
+      "file": "../native/fx-0.png",
+      "sha256": "24a8093fcc3f28d894d6e1f1f7b036e6f8080cc88e33185350d04abf0513a837"
+    },
+    {
+      "file": "../native/fx-1.png",
+      "sha256": "8d8b3a72a2e74c742a1a8d874bc84d8c57e2b2ce915783cace29468ac741577d"
+    },
+    {
+      "file": "../native/fx-2.png",
+      "sha256": "29b0d7828d097d19809885898026300125e421570ce86ea2822c1cb951332432"
+    },
+    {
+      "file": "../native/fx-3.png",
+      "sha256": "8033cbd38bd7992e0a6f2dd35f5f4a20e11c6af11740ebd392f397c608c33857"
+    },
+    {
+      "file": "../native/fx-4.png",
+      "sha256": "b726185deb5c2d5219886b54d8a1d4d79904f5c9fdeded2b0e0ab23eb2512d47"
+    },
+    {
+      "file": "../native/fx-5.png",
+      "sha256": "70400653cfa8cd6673b105815447f1a0523cc5cae4aec91e211d7870fb2e2683"
+    },
+    {
+      "file": "../native/hero-0.png",
+      "sha256": "60533759586c71b491fac2c569dd0f9476c124fd9628d9cb2e9da324d28bcfe3"
+    },
+    {
+      "file": "../native/hero-1.png",
+      "sha256": "3a2a34f1b0b877c7ad23075bae415b41fdb4496eb1667fb1bb23c4866da6e5f7"
+    },
+    {
+      "file": "../native/hero-2.png",
+      "sha256": "ecfd5b321370bfb203ede78812ba85c655314c45a838a448f429aed26145ef4a"
+    },
+    {
+      "file": "../native/hero-3.png",
+      "sha256": "19d3a84aaee72ae9c51383c66f44300776f92b57e4ec7fb88a87fd915394efc6"
+    },
+    {
+      "file": "../native/hero-4.png",
+      "sha256": "e5e34021cc6afff2fd007d17115ad8944780670f8f6c4f995f5a60ad1b5d36c5"
+    },
+    {
+      "file": "../native/hero-5.png",
+      "sha256": "f68effe4a39975f710b51b39e02f6e02d6b38419f7957cc0f25181c011754acd"
+    }
+  ],
+  "changes": {
+    "dashSeconds": 0.08,
+    "previousDashSeconds": 0.12,
+    "speedMultiplierSameDistance": 1.5,
+    "primarySlashSize": [
+      160,
+      136
+    ],
+    "previousSlashSize": [
+      96,
+      96
+    ],
+    "echoSlashSize": [
+      125,
+      106
+    ],
+    "ghostSamples": 5,
+    "ghostLifeSeconds": 0.24,
+    "ghostInitialAlpha": 0.46,
+    "inputDemoGapSeconds": 0.26,
+    "impactSparkSize": [
+      100,
+      100
+    ],
+    "fullScreenFlash": false
+  },
+  "preview": {
+    "size": [
+      640,
+      360
+    ],
+    "sourceFrames": 150,
+    "fpsGrid": 50,
+    "encodedFrames": 44,
+    "durationMs": 3000,
+    "gifBytes": 482058
+  },
+  "limitations": [
+    "Time-sampled fixed ghosts and layered pixel FX are an offline composition proposal.",
+    "Charges consume on separate scripted inputs; recharge, damage, immunity, collision and audio not implemented.",
+    "No new raster source or runtime assets; no game/browser tests, push or deploy."
+  ]
+}

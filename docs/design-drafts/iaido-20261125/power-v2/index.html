@@ -1,0 +1,8 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>일섬 강화 시안 v2</title>
+<style>body{margin:24px;background:#080d16;color:#b7bfcd;font:16px system-ui}h1{font-size:24px;color:#d5c7aa}p{max-width:1040px;line-height:1.7}img{max-width:100%;height:auto;image-rendering:pixelated}button{padding:10px 18px;background:#18202d;color:#d5c7aa;border:1px solid #877459;font:inherit}a{color:#d1bd91}</style>
+<h1>더 큰 참격 · 더 빠른 발도 · 길게 남는 잔상</h1>
+<p>이동0.08초, 큰 겹참격과 파편, 지나간 경로에 남아0.24초간 사라지는 잔상5개를 묶었습니다. 1·2·3회는 각각 재입력한 상황을 시연합니다.</p>
+<button id="toggle">움직임 멈추기</button> <a href="comparison.png">이전/수정 비교</a> · <a href="../index.html">이전 시안</a> · <a href="README.md">구성·제약</a>
+<p><img id="preview" src="motion-preview.gif" width="1280" height="720" alt="커진 참격과 오래 남는 잔상을 더한 고속 일섬 비교 시안"></p>
+<p>실제 스킬 연결·배포 전 검토본입니다. 3초 반복은 시연 재시작이며 즉시 재충전을 뜻하지 않습니다.</p>
+<script>let still=matchMedia('(prefers-reduced-motion: reduce)').matches;const p=document.querySelector('#preview'),b=document.querySelector('#toggle');function sync(){p.src=still?'main-still.png':'motion-preview.gif';b.textContent=still?'움직임 재생':'움직임 멈추기';b.setAttribute('aria-pressed',String(still));}b.onclick=()=>{still=!still;sync();};sync();</script>
