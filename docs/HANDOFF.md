@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 일반문 봉인 해제 연출
+~~~text
+9d246d0뒤interaction-visuals기존roomClear/unlocked에서0.25초파편분리+0.15초잔광총0.4.doorReleasePose/clearInteractionEffects추가·같은방중복clear재시작억제.첫프레임부터통로밖80/70기준·roomDoorFrame/d회전small/corridor도맞춤.reduced즉시최종문표시·draw현재roomLocked면해제/출구문구억제.game resetTransient/room이동이력정리·일반event doors마스크에서neighbor.remnantSeal특수문제외.새자산/충돌통행시간저장RNG음향변경없음.회귀3작성만·누적47미실행.소스/diff정적만·게임구문테스트브라우저푸시배포없음·운영0.63.다음누적타격감/원화연결정적마감및배포전검증목록정리.실제문연출/배경가독성미검증·가로고정TODO/추가후기보존·실행중명령차단없음.
+~~~
+
 ## 최신 복사용 인계 — 모르도 최종 패배·파열 연결
 ~~~text
 02e5f01뒤reference-frame-art deathPose/death/releaseFrame/release추가.실제death snapshot2/부활3만5번무릎자세/발21·29·기존수명1.1fade.생배우·hit·1형/옛3형/그림자split/reduced제외,실패fallback.resurrectedDeath/mordoDeath앞분기.boss-clear기존최종event+death시작시mordo플래그캡처,기존0.08~0.9구간에FX3→4→5·실제지점에서18px상승·clip,실패이전raster/절차형.그림자/다른보스/중간전환·중복방지/reset/skip보존·XP보상/선택패널음향시뮬저장RNG불변.추가3회귀작성만·누적44미실행·소스diff정적만·게임구문테스트브라우저푸시배포없음·운영0.63.새PNG없음.다음일반문봉인해제중간연출보강.실제패배/FX중첩가독성미검증·가로고정TODO/추가후기유지·실행중명령차단없음.

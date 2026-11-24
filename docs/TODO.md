@@ -1,3 +1,12 @@
+## 2026-11-24 일반문 봉인 해제 중간 연출 로컬 완료
+- 기존성공roomClear/unlocked만사용해0.25초양쪽봉인빗장파편분리+0.15초잔광(총0.4). roomDoorFrame중심/d회전으로일반·small·corridor4방향일치, 파편은첫프레임부터80/70px통로밖·최대12px추가분리/6px낙하. 통행즉시개방/충돌·입력/저장/RNG불변·신규자산/로더/음향없음.
+- reduced는움직이는문연출생략·열린최종모양즉시유지. draw시현재roomLocked옵션으로재잠금이면효과/출구개방문구억제. 일반door마스크에서특수remnantSeal문제외(별도봉인표시유지). 중복roomClear가이력을재시작하지않음. resetTransient/방이동에clearInteractionEffects연결해로드/빠른재입장잔존차단.
+- 소스/호출·reset/겹침영역/diff정적만. 회귀3작성(방형태별4문/중복·방·reset재생금지/수명·reduced·재잠금·mask)·누적47미실행. 게임구문/테스트/브라우저실기기/푸시배포없음·운영0.63유지. 실제문설주연출가독성/테마배경겹침미검증.
+- 다음: 누적타격감·원화연결의정적마감/배포전검증목록정리. 새대형원화확장전패키지규칙유지. 가로고정TODO/추가후기보존·실행중명령차단없음.
+
+## 2026-11-24 일반문 해제 중간 연출 진행 중
+9d246d0 clean확인. 기존성공roomClear/unlocked event만사용·0.25초봉인파편분리+0.15초잔광,통로밖양문설주영역에만표시예정. reduced즉시최종모양/로드reset·방이동상호작용이력정리/특수잔해문제외. 현재수정예정 interaction-visuals/game·회귀/기록, 통행/저장/RNG불변. 마지막소스정적·실행중명령차단없음·게임구문테스트/푸시배포없음.
+
 ## 2026-11-24 모르도 최종 패배·파열 로컬 연결 완료
 - 실제enemyDeathEffect snapshot만새패배선택:2형mordo2·resurrection부활3형mordo3의5번무릎자세,발21/29·기존사망수명1.1초와후반fade읽기. live배우/피격/phase1/옛해골3/그림자/분열·효과줄이기는기존경로. resurrectedDeath및mordoDeath우선분기·이미지실패기존fallback.
 - 기존startBossClear가stairs/key/practiceWon/gateReward+최종death로시작하는흐름유지, 그snapshot에서만mordo표시플래그캡처. 기존0.08~0.9초파열구간에FX3봉인원→4파편→5잔광,실제종료위치에서완만히18px상승·공간clip. 실패는이전Mordo파열/절차형·다른보스/효과줄이기유지.

@@ -1,8 +1,10 @@
 // Successful interactions only; transient presentation never enters saved state.
 import {roomDoorFrame} from '../world/room-geometry.js';
 const effects=new WeakMap();
+export const clearInteractionEffects=s=>{if(s)effects.delete(s);};
 export function emitInteraction(s,kind,room,detail={}){
  const list=(effects.get(s)||[]).filter(e=>e.room===room&&s.elapsed-e.start<.9&&(kind!=='level'||e.kind!=='level'));
+ if(kind==='roomClear'&&list.some(e=>e.kind==='roomClear'))return;
  list.push({kind,room,start:s.elapsed,...detail});effects.set(s,list.slice(-4));
 }
 export function interactionAge(s,r,kind){const e=effects.get(s)?.findLast(e=>e.room===r&&e.kind===kind);return e?Math.max(0,s.elapsed-e.start):Infinity;}
@@ -29,15 +31,26 @@ function fountainEffect(c,x,y,p,reduced){
  }
  c.restore();
 }
-function doorRelease(c,room,d,p,reduced){
+export function doorReleasePose(age,{reduced=false}={}){
+ if(reduced||!Number.isFinite(age)||age<0||age>=.4)return null;
+ const q=Math.min(1,age/.25),ease=1-(1-q)**3;
+ return {phase:age<.25?'split':'glow',spread:2+ease*12,drop:Math.round(ease*6),alpha:age<.25?1:1-(age-.25)/.15};
+}
+function doorRelease(c,room,d,age,reduced){
+ const pose=doorReleasePose(age,{reduced});if(!pose)return;
  const frame=roomDoorFrame(room,d);
  c.save();c.translate(frame.x+(d%2?29:80)/2,frame.y+(d%2?70:35)/2);c.rotate(d*Math.PI/2);
- c.setLineDash([]);c.lineWidth=1;
- const edge=d%2?35:40,spread=edge+2+p*14;
+ c.setLineDash([]);c.lineWidth=1;c.globalAlpha*=pose.alpha;
+ const edge=d%2?35:40,spread=edge+pose.spread;
  for(const side of [-1,1]){
-  c.save();c.scale(side,1);c.strokeStyle='#b7d8b2';c.beginPath();c.moveTo(spread+3,-8);c.lineTo(spread,-3);c.lineTo(spread+3,1);c.lineTo(spread+1,7);c.stroke();
-  c.fillStyle='#d2e4c6';c.fillRect(Math.round(spread+4),Math.round(-5-p*4),2,2);
-  if(!reduced){c.fillStyle='#8fbaa3';c.fillRect(Math.round(spread+7),Math.round(4+p*5),2,1);}
+  c.save();c.scale(side,1);
+  if(pose.phase==='split'){
+   c.fillStyle='#b09562';c.fillRect(Math.round(spread),-3+pose.drop,6,3);
+   c.fillStyle='#dbca8c';c.fillRect(Math.round(spread),-3+pose.drop,4,1);
+   c.strokeStyle='#d2e4c6';c.beginPath();c.moveTo(spread+2,-9);c.lineTo(spread,-6);c.lineTo(spread+3,-3);c.stroke();
+  }
+  c.fillStyle='#d2e4c6';c.fillRect(Math.round(spread+3),-9-pose.drop,2,2);
+  c.fillStyle='#8fbaa3';c.fillRect(Math.round(spread+7),4+pose.drop,2,1);
   c.restore();
  }
  c.restore();
@@ -106,7 +119,7 @@ function stairsEffect(c,x,y,p,direction,reduced){
  }
  c.restore();
 }
-export function drawInteractionEffects(c,s,r,reduced=false){
+export function drawInteractionEffects(c,s,r,reduced=false,{doorsLocked=false}={}){
  c.save();const alpha=c.globalAlpha;
  for(const e of effects.get(s)||[]){
   const age=s.elapsed-e.start;if(e.room!==r||age<0||age>=.9)continue;
@@ -121,13 +134,14 @@ export function drawInteractionEffects(c,s,r,reduced=false){
   }else if(e.kind==='pact'){
    pactEffect(c,x,y,p,e.choice,reduced);
   }else if(e.kind==='roomClear'){
+   const unlocked=e.unlocked&&!doorsLocked;
    c.fillStyle='#b7d8ba';c.textAlign='center';c.font='12px Galmuri, monospace';
-   c.fillText(e.unlocked?'전투 종료 · 출구 개방':'전투 종료',480,165-Math.round(p*8));
+   c.fillText(unlocked?'전투 종료 · 출구 개방':'전투 종료',480,165-Math.round(p*8));
    c.fillRect(406,170-Math.round(p*8),148,1);
-   if(e.unlocked)for(let d=0;d<4;d++){
+   if(unlocked)for(let d=0;d<4;d++){
     if(!e.doors?.[d])continue;
     // All pieces stay outside the open 80/70px passage, including the first frame.
-    doorRelease(c,e.room,d,p,reduced);
+    doorRelease(c,e.room,d,age,reduced);
    }
   }else if(e.kind==='stairs'){
    stairsEffect(c,x,y,p,e.direction||1,reduced);
