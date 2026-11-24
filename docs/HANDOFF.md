@@ -1,3 +1,8 @@
+## 최신 복사용 인계 — 메인화면 탑의문 시안
+~~~text
+661e33a뒤사용자1번탑문앞·도트품질업시안요청. docs/design-drafts/title-gate-20261124/main-menu-gate-v1.png1672x941RGB전체화면시안1장builtinimagegen·기존title/궁수참조. 거대문석상사슬/젖은계단/불안개/궁수후면/좌측기능메뉴. prompt/원본위치/sha/manifest/image-report/README에외형모션UI제안보존. 목업글자/버튼포함·고정도트격자팔레트/분리레이어아님;생성본열림/육안만. 새원정문해제/열림걸음·전진/별도불안개망토/reduced스킵후보는미구현·계속탐험저장복귀유지. 제품src/assets미수정·승인전자료만·게임구문테스트브라우저푸시배포없음·운영0.63/누적49회귀미실행. 다음사용자시안검토→승인방향세분화. 가로고정TODO보존·실행중명령차단없음.
+~~~
+
 ## 최신 복사용 인계 — 누적 정적 마감·실행 검증 대기
 ~~~text
 2de0d5d뒤정적감사/마감보완. docs/qa-reference-feel-20261124 README에명시배포후검증14흐름/순서;static-audit.py/JSON은JS실행없이소스경로·PNG·manifest만검사. base012f972 runtime24/import247경로·8선택atlas크기alpha48색·SHA8일치/필수Ready없음;소스workingtreeSHA포함·구문바인딩동작검증아님. 발견보완:combatImpactFilter/Shake/draw및rollTrail draw에현재room전달해새방첫update전이전접촉/동일enemyIdflash·흔들림·잔상차단. 회귀2작성만·텍스트집계누적49신규전체미실행. 소스diff정적만·게임구문단위브라우저실기기성능음향/푸시배포없음·운영0.63/564369d/release-20261123-110150-773b7a유지. 과거985개는이번검증아님. 누적개발분정적마감·명시배포시node--test전체1회/실패필요재검증→Edge행렬→커밋푸시공식배포공개확인. 추가후기/가로고정TODO만보존·임의가로구현금지. 원화중간/전방향/일반문질감은추가범위,현재완료과장금지. 실행중명령차단없음.

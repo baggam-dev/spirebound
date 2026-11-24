@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "docs/design-drafts/title-gate-20261124/main-menu-gate-v1.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2963338,
+      "color_count": ">65535",
+      "has_alpha": false,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "transparent_pixels": 0,
+      "content_bounds": [
+        0,
+        0,
+        1672,
+        941
+      ],
+      "problems": []
+    }
+  ]
+}

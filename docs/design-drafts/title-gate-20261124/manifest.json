@@ -1,0 +1,12 @@
+{
+  "gameVerified": false,
+  "runtimeIntegrated": false,
+  "file": "main-menu-gate-v1.png",
+  "prompt": "prompt-v1.md",
+  "original": "C:\\Users\\SDSPRO\\.codex\\generated_images\\01a202df-5176-7391-946c-06d5ac40a0a2\\exec-443bd588-110d-46cc-9b44-a68220d106a6.png",
+  "deployed": false,
+  "sha256": "6096904391584ce8bf7f06c2fa65bbdd8672d1d854b319c15c8787227b2ed57b",
+  "status": "full-screen review mockup only; not approved for production",
+  "source": "built-in imagegen, project-owned title and hero references",
+  "calls": 1
+}
