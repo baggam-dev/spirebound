@@ -1,6 +1,7 @@
 import {createCachedPreparation} from '../rendering/asset-wait.js';
 const load=name=>new Promise(resolve=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=()=>resolve(null);i.src=new URL('../../assets/images/'+name+'.png',import.meta.url).href;});
-export const prepareNightEntrance=createCachedPreparation(async()=>{const [background,rear,pause,front,...fire]=await Promise.all(['entrance-night-background-v1','entrance-night-rear-v1','entrance-night-pause-v1','entrance-night-front-v1',...Array.from({length:4},(_,i)=>'title-night-fire-'+i)].map(load));return background&&rear&&pause&&front?{background,rear,pause,front,fire}:null;});
+export function validNightAtlas(image,width,height){return !!image&&image.naturalWidth===width&&image.naturalHeight===height;}
+export const prepareNightEntrance=createCachedPreparation(async()=>{const [background,rear,pause,front,...fire]=await Promise.all(['entrance-night-background-v1','entrance-night-rear-v1','entrance-night-pause-v1','entrance-night-front-v1',...Array.from({length:4},(_,i)=>'title-night-fire-'+i)].map(load));return validNightAtlas(background,2560,360)&&validNightAtlas(rear,1024,128)&&validNightAtlas(pause,512,128)&&validNightAtlas(front,1024,128)?{background,rear,pause,front,fire:fire.map(image=>validNightAtlas(image,48,48)?image:null)}:null;});
 const clamp=n=>Math.max(0,Math.min(1,n));
 export function nightMotion(t,reduced=false){
  if(t<2.4){const q=reduced ? .5 : clamp(t/2.4);return {phase:0,sheet:'rear',frame:reduced?0:Math.floor(t/.1)%8,x:267+52*q,feet:345-38*q,height:102-8*q};}

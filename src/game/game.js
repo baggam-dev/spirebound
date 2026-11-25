@@ -185,7 +185,7 @@ let escapeAssets=null,renderEscape=null,escapeArmed=0;
 const journey=createJourneyState();const trialScene=createTrialSceneState();const trialRewardPrompted=new WeakSet();
 let descentFrame=null,journeyArmed=0;
 let renderEntrance=null,entranceAssets=null,entranceArmed=0;
-let opening=null,renderStory=null,storyHeld=false,storyReplay=false;
+let opening=null,renderStory=null,storyHeld=false,storyReplay=false,entranceRequest=0;
 let bossDialogue=null,enemyChatter=null;
 let practiceDraft=null,utilityRoulette=null,utilitySavePending=false;
 let buildView=createBuildView(),buildWindow=null;
@@ -215,7 +215,7 @@ $('overlay').addEventListener('keydown',event=>{
  else if(!event.shiftKey&&document.activeElement===items.at(-1)){event.preventDefault();items[0].focus();}
 });
 function button(id,fn){$(id)?.addEventListener('click',fn);}
-function stop(nextMode){rollBuffer=null;bossRewardReveal.clear();clearHeroCast(s?.player);sound.stopCombat();if(mode==='utility')utilityRoulette=null;if(mode.startsWith('trial-')&&nextMode!==mode)trialScene.cancel();if(mode.startsWith('escape')&&!nextMode.startsWith('escape')){escapeScene.cancel();renderEscape=null;}if(['floor-loading','journey-descent'].includes(mode)&&nextMode!==mode)floorLoading=null;if(mode.startsWith('entrance')&&!nextMode.startsWith('entrance')){entrance.suspend();renderEntrance=null;renderStory=null;}if(mode.startsWith('journey')&&!nextMode.startsWith('journey')){journey.cancel();descentFrame=null;}paused=true;mode=nextMode;input.setEnabled(false);accumulator=0;}
+function stop(nextMode){if(mode.startsWith('entrance')&&nextMode!==mode)entranceRequest++;rollBuffer=null;bossRewardReveal.clear();clearHeroCast(s?.player);sound.stopCombat();if(mode==='utility')utilityRoulette=null;if(mode.startsWith('trial-')&&nextMode!==mode)trialScene.cancel();if(mode.startsWith('escape')&&!nextMode.startsWith('escape')){escapeScene.cancel();renderEscape=null;}if(['floor-loading','journey-descent'].includes(mode)&&nextMode!==mode)floorLoading=null;if(mode.startsWith('entrance')&&!nextMode.startsWith('entrance')){entrance.suspend();renderEntrance=null;renderStory=null;}if(mode.startsWith('journey')&&!nextMode.startsWith('journey')){journey.cancel();descentFrame=null;}paused=true;mode=nextMode;input.setEnabled(false);accumulator=0;}
 function finishEscape(){if(!mode.startsWith('escape'))return;escapeScene.cancel();renderEscape=null;input.reset();accumulator=0;last=performance.now();resultPanel();}
 function bindEscapeSkip(){button('escapeSkip',event=>{event.preventDefault();event.stopImmediatePropagation();finishEscape();});}
 async function showEscape(){
@@ -282,17 +282,17 @@ function drawJourney(){
  }
 }
 async function showStory(replay=false){
- const run=s,token=opening||(opening={time:0,done:false});storyReplay=replay;stop('entrance-story-loading');panel('<div class="entrance-loading"><p role="status">이야기를 펼치는 중…</p><button id="entranceSkip">서사 건너뛰기</button></div>');bindEntranceSkip();entranceArmed=performance.now();
- const art=await prepareStoryArt();if(opening!==token||s!==run||mode!=='entrance-story-loading')return;if(document.hidden||mobilePortrait()){if(replay)title();else pause('화면으로 돌아온 뒤 계속 탐험을 눌러주세요.');return;}
+ const run=s,token=opening||(opening={time:0,done:false});storyReplay=replay;stop('entrance-story-loading');const request=++entranceRequest;panel('<div class="entrance-loading"><p role="status">이야기를 펼치는 중…</p><button id="entranceSkip">서사 건너뛰기</button></div>');bindEntranceSkip();entranceArmed=performance.now();
+ const art=await prepareStoryArt();if(request!==entranceRequest||opening!==token||s!==run||mode!=='entrance-story-loading')return;if(document.hidden||mobilePortrait()){if(replay)title();else pause('화면으로 돌아온 뒤 계속 탐험을 눌러주세요.');return;}
  stop('entrance-story');panel(storyMarkup());bindEntranceSkip();storyHeld=false;button('storyPause',()=>{storyHeld=!storyHeld;$('storyPause').textContent=storyHeld?'계속 보기':'일시정지';});renderStory=createStoryRenderer($('overlay'),art,{reduced:sound.settings.reducedEffects||window.matchMedia('(prefers-reduced-motion: reduce)').matches});renderStory(token.time);$('entranceSkip').focus();last=performance.now();
 }
 function completeStory(){if(!opening||opening.done)return;opening.done=true;rememberStory();renderStory=null;if(storyReplay){title();return;}showEntrance();}
 async function showEntrance(){
  if(opening&&!opening.done){showStory();return;}
- const run=s;stop('entrance-loading');entranceArmed=performance.now();
+ const run=s;stop('entrance-loading');const request=++entranceRequest;entranceArmed=performance.now();
  panel('<div class="entrance-loading"><p role="status">탑의 문을 여는 중…</p><button id="entranceSkip">건너뛰기</button><button id="entranceBack">입구로</button></div>');bindEntranceSkip();button('entranceBack',title);
  const art=await (entranceAssets||prepareNightEntrance());
- if(s!==run||mode!=='entrance-loading'||!entrance.queued(run))return;
+ if(request!==entranceRequest||s!==run||mode!=='entrance-loading'||!entrance.queued(run))return;
  if(document.hidden||mobilePortrait()){pause('화면으로 돌아온 뒤 계속 탐험을 눌러주세요.');return;}
  if(!art){finishEntrance();return;}
  if(!entrance.start(run))return;
@@ -327,7 +327,7 @@ async function loadCurrentFloor(){
   $('overlay').firstElementChild.classList.add('floor-loading-panel');button('loadingReload',()=>location.reload());button('loadingBack',title);
  }finally{if(floorLoading===task)floorLoading=null;}
 }
-function resetTransient({loaded=false}={}){opening=null;renderStory=null;storyReplay=false;storyHeld=false;rollBuffer=null;clearHeroCast();buildView=createBuildView();buildWindow=null;utilityRoulette=null;utilitySavePending=false;combatAudio.reset();sound.stop();bossRewardReveal.clear();resetBossClear(s);resetCombatImpacts(s);resetRollTrail(s);resetIaido(s);resetHeroLanding(s);clearInteractionEffects(s);resetDamageNumbers(s);trialScene.cancel();escapeScene.cancel();renderEscape=null;escapeAssets=null;floorLoading=null;journey.cancel();descentFrame=null;clearEncounterTransitions();entrance.cancel();renderEntrance=null;entranceAssets=null;bossDialogue=s?createBossDialogue(s,{loaded}):null;enemyChatter=s?createEnemyChatter(s):null;relicBanner.clear();resetWardenPresentation(s?.floors?.flat()||[]);resetPrismPresentation(s?.floors?.flat()||[]);resetRemainingBossPresentation(s?.floors?.flat()||[]);resetOrdinaryPresentation(s?.floors?.flat()||[]);clearMordoPresentation();clearHeroShots(s?.player);clearKingResurrection();clearVelkarPresentation();clearDemonPresentation();fx=[];bullets=s?.projectiles||[];saveTick=0;accumulator=0;last=performance.now();}
+function resetTransient({loaded=false}={}){entranceRequest++;opening=null;renderStory=null;storyReplay=false;storyHeld=false;rollBuffer=null;clearHeroCast();buildView=createBuildView();buildWindow=null;utilityRoulette=null;utilitySavePending=false;combatAudio.reset();sound.stop();bossRewardReveal.clear();resetBossClear(s);resetCombatImpacts(s);resetRollTrail(s);resetIaido(s);resetHeroLanding(s);clearInteractionEffects(s);resetDamageNumbers(s);trialScene.cancel();escapeScene.cancel();renderEscape=null;escapeAssets=null;floorLoading=null;journey.cancel();descentFrame=null;clearEncounterTransitions();entrance.cancel();renderEntrance=null;entranceAssets=null;bossDialogue=s?createBossDialogue(s,{loaded}):null;enemyChatter=s?createEnemyChatter(s):null;relicBanner.clear();resetWardenPresentation(s?.floors?.flat()||[]);resetPrismPresentation(s?.floors?.flat()||[]);resetRemainingBossPresentation(s?.floors?.flat()||[]);resetOrdinaryPresentation(s?.floors?.flat()||[]);clearMordoPresentation();clearHeroShots(s?.player);clearKingResurrection();clearVelkarPresentation();clearDemonPresentation();fx=[];bullets=s?.projectiles||[];saveTick=0;accumulator=0;last=performance.now();}
 function title(){
  stop('title');lease.release();s=null;resetTransient();$('route').hidden=true;$('skill').hidden=true;$('utility').hidden=true;$('interact').hidden=true;
  $('floor').textContent='잊힌 탑의 입구';$('phase').textContent='THE FORSAKEN SPIRE';$('health').textContent='♥♥♥♥♥';$('level').textContent='LV 1';$('timer').textContent='00:00';$('objective').textContent='탑에 들어가 탈출 열쇠를 찾으세요.';
