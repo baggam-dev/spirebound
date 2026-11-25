@@ -1,0 +1,159 @@
+{
+  "status": "review-only; runtime unchanged",
+  "imageGenerationCalls": 1,
+  "source": {
+    "file": "background-source.png",
+    "size": [
+      1672,
+      941
+    ],
+    "sha256": "a462bc3c4d3e965ba51c24100044bfff3b92fc151cd01fbc7bcbd976c8dd2378"
+  },
+  "backgrounds": [
+    {
+      "file": "native/background-0.png",
+      "sourceBox": [
+        0,
+        0,
+        836,
+        470
+      ],
+      "native": [
+        640,
+        360
+      ],
+      "paletteMax": 96,
+      "technical_checks_passed": true,
+      "approval": "pending"
+    },
+    {
+      "file": "native/background-1.png",
+      "sourceBox": [
+        836,
+        0,
+        1672,
+        470
+      ],
+      "native": [
+        640,
+        360
+      ],
+      "paletteMax": 96,
+      "technical_checks_passed": true,
+      "approval": "pending"
+    },
+    {
+      "file": "native/background-2.png",
+      "sourceBox": [
+        0,
+        470,
+        836,
+        941
+      ],
+      "native": [
+        640,
+        360
+      ],
+      "paletteMax": 96,
+      "technical_checks_passed": true,
+      "approval": "pending"
+    },
+    {
+      "file": "native/background-3.png",
+      "sourceBox": [
+        836,
+        470,
+        1672,
+        941
+      ],
+      "native": [
+        640,
+        360
+      ],
+      "paletteMax": 96,
+      "technical_checks_passed": true,
+      "approval": "pending"
+    }
+  ],
+  "story": {
+    "status": "wording proposal; not runtime story data",
+    "paragraphs": [
+      [
+        "왕국에는,",
+        "밤이 끝나지 않는 탑이 있었다.",
+        "",
+        "문을 지난 이들은",
+        "돌아오지 않았다."
+      ],
+      [
+        "돌아오지 않은 이들을 찾아",
+        "원정대가 떠났다.",
+        "",
+        "그러나 그들마저",
+        "소식을 끊었다."
+      ],
+      [
+        "당신은 그들의 마지막 흔적을",
+        "추적하라는 명을 받은 정찰병이다.",
+        "",
+        "활 하나와 남겨진 표식을 따라,",
+        "탑으로 향했다."
+      ],
+      [
+        "누가 아직 살아 있는지.",
+        "무엇이 귀환을 막고 있는지.",
+        "",
+        "답은 저 문 너머에 있었다."
+      ]
+    ],
+    "paragraphTitles": [
+      "밤에 잠긴 왕국",
+      "끊긴 원정대의 흔적",
+      "정찰병의 임무",
+      "탑 앞에 도착하다"
+    ],
+    "storySeconds": 28,
+    "entranceExcerptSeconds": 2,
+    "scrollPixelsPerSecond": 29.535714285714285,
+    "lineHeight": 24,
+    "fontSize": 14,
+    "textAnchorX": 52,
+    "textWindow": [
+      45,
+      318
+    ],
+    "backgroundSwitchSeconds": [
+      9.344619105199516,
+      14.49093107617896,
+      19.43409915356711
+    ],
+    "crossfadeSeconds": 0.8
+  },
+  "entranceExcerpt": {
+    "source": "../entrance-night-20261125/motion-preview.gif",
+    "sha256": "cb2324b4ff858e82bb1b1c5cd4ed220ea0faa44da4b6d1c528c16ea1778f4410",
+    "sourceSeconds": [
+      0.2,
+      2.2
+    ],
+    "crossfadeSeconds": 0.7,
+    "notFullEntrance": true
+  },
+  "preview": {
+    "size": [
+      640,
+      360
+    ],
+    "sourceFrames": 300,
+    "fps": 10,
+    "encodedFrames": 295,
+    "durationMs": 30000,
+    "gifBytes": 6704217
+  },
+  "limitations": [
+    "Background art and new narration wording are proposals, not canonical runtime data.",
+    "No voice recording or TTS; text narration only.",
+    "The two-second entrance excerpt demonstrates a cut, not full new-run integration.",
+    "No game tests, browser QA, push or deployment."
+  ]
+}

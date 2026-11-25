@@ -1,0 +1,8 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>오프닝 서사 스크롤 시안</title>
+<style>body{margin:24px;background:#080d16;color:#b7bfcd;font:16px system-ui}h1{font-size:24px;color:#d5c7aa}p{max-width:1040px;line-height:1.7}img{max-width:100%;height:auto;image-rendering:pixelated}button{padding:10px 18px;background:#18202d;color:#d5c7aa;border:1px solid #877459;font:inherit;min-height:48px}a{color:#d1bd91}.copy{max-width:700px;line-height:1.9;white-space:pre-line}</style>
+<h1>돌아오지 않은 이들의 흔적을 따라</h1>
+<p>왕국 → 실종 원정대 → 정찰병의 임무 → 탑 도착. 글은 위로 흐르고 배경4컷이 연달아 전환됩니다. 서사28초와 입장 연결 예시2초를 묶었습니다. 음성 나레이션은 없는 글 연출 시안입니다.</p>
+<button id="toggle">정지·전체 글 보기</button> <a href="storyboard.png">네 장면과 전체 문구</a> · <a href="narration.txt">문구 원문</a> · <a href="README.md">구성·제약</a>
+<p><img id="preview" src="motion-preview.gif" width="1280" height="720" alt="실종 원정대를 찾는 정찰병의 목적을 설명하는 4컷 배경과 위로 올라가는 글 시안"></p>
+<p>실제 새 원정 흐름·스킵/읽기 시간·입장 연결은 아직 구현 전입니다.</p>
+<script>let still=matchMedia('(prefers-reduced-motion: reduce)').matches;const p=document.querySelector('#preview'),b=document.querySelector('#toggle');function sync(){p.src=still?'storyboard.png':'motion-preview.gif';b.textContent=still?'움직임 처음부터 재생':'정지·전체 글 보기';b.setAttribute('aria-pressed',String(still));}b.onclick=()=>{still=!still;sync();};sync();</script>
