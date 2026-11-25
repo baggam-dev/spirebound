@@ -1,0 +1,399 @@
+{
+  "scope": "Static file metadata and text comparison only; no runtime imports, game execution, server, tests or deployment",
+  "assetCount": 39,
+  "assetBytes": 2935456,
+  "relativeImportReferences": 1268,
+  "issues": [],
+  "assets": [
+    {
+      "path": "assets/images/iaido-hero-0.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 6509,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/iaido-hero-1.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 6279,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/iaido-hero-2.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 7043,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/iaido-hero-3.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 7029,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/iaido-hero-4.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 6468,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/iaido-hero-5.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 6398,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/iaido-fx-0.png",
+      "dimensions": [
+        96,
+        96
+      ],
+      "bytes": 560,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/iaido-fx-1.png",
+      "dimensions": [
+        96,
+        96
+      ],
+      "bytes": 327,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/iaido-fx-2.png",
+      "dimensions": [
+        96,
+        96
+      ],
+      "bytes": 1376,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/iaido-fx-3.png",
+      "dimensions": [
+        96,
+        96
+      ],
+      "bytes": 1290,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/iaido-fx-4.png",
+      "dimensions": [
+        96,
+        96
+      ],
+      "bytes": 983,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/iaido-fx-5.png",
+      "dimensions": [
+        96,
+        96
+      ],
+      "bytes": 729,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-warrior-0.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 4720,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-warrior-1.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 4525,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-warrior-2.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 4452,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-warrior-3.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 5252,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-warrior-4.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 4979,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-warrior-5.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 4545,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-warrior-6.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 4828,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-warrior-7.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 3505,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-archer-0.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 4427,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-archer-1.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 4342,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-archer-2.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 4247,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-archer-3.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 5194,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-archer-4.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 5065,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-archer-5.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 4901,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-archer-6.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 4690,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-archer-7.png",
+      "dimensions": [
+        144,
+        128
+      ],
+      "bytes": 3369,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-fx-0.png",
+      "dimensions": [
+        96,
+        96
+      ],
+      "bytes": 595,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-fx-1.png",
+      "dimensions": [
+        96,
+        96
+      ],
+      "bytes": 1416,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-fx-2.png",
+      "dimensions": [
+        96,
+        96
+      ],
+      "bytes": 1147,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-fx-3.png",
+      "dimensions": [
+        96,
+        96
+      ],
+      "bytes": 743,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-fx-4.png",
+      "dimensions": [
+        96,
+        96
+      ],
+      "bytes": 903,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/skeleton-fx-5.png",
+      "dimensions": [
+        96,
+        96
+      ],
+      "bytes": 945,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/opening-story-v1.png",
+      "dimensions": [
+        2560,
+        360
+      ],
+      "bytes": 1301376,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/entrance-night-background-v1.png",
+      "dimensions": [
+        2560,
+        360
+      ],
+      "bytes": 1376528,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/entrance-night-rear-v1.png",
+      "dimensions": [
+        1024,
+        128
+      ],
+      "bytes": 59033,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/entrance-night-pause-v1.png",
+      "dimensions": [
+        512,
+        128
+      ],
+      "bytes": 26027,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    },
+    {
+      "path": "assets/images/entrance-night-front-v1.png",
+      "dimensions": [
+        1024,
+        128
+      ],
+      "bytes": 48711,
+      "sha256Matches": true,
+      "serverAndDeploymentListed": true
+    }
+  ]
+}
