@@ -1,0 +1,114 @@
+{
+  "status": "runtime source connected; game verification pending; not deployed",
+  "approvedDirection": "power-v2",
+  "assets": [
+    {
+      "source": "docs/design-drafts/iaido-20261125/native/hero-0.png",
+      "runtime": "assets/images/iaido-hero-0.png",
+      "sha256": "60533759586c71b491fac2c569dd0f9476c124fd9628d9cb2e9da324d28bcfe3",
+      "approval": "user ㄱㄱ after power-v2",
+      "sourceTool": "builtin image_gen with deterministic normalization",
+      "technical_checks_passed": true,
+      "evidence": "hero-report.json / fx-report.json from preview; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/iaido-20261125/native/hero-1.png",
+      "runtime": "assets/images/iaido-hero-1.png",
+      "sha256": "3a2a34f1b0b877c7ad23075bae415b41fdb4496eb1667fb1bb23c4866da6e5f7",
+      "approval": "user ㄱㄱ after power-v2",
+      "sourceTool": "builtin image_gen with deterministic normalization",
+      "technical_checks_passed": true,
+      "evidence": "hero-report.json / fx-report.json from preview; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/iaido-20261125/native/hero-2.png",
+      "runtime": "assets/images/iaido-hero-2.png",
+      "sha256": "ecfd5b321370bfb203ede78812ba85c655314c45a838a448f429aed26145ef4a",
+      "approval": "user ㄱㄱ after power-v2",
+      "sourceTool": "builtin image_gen with deterministic normalization",
+      "technical_checks_passed": true,
+      "evidence": "hero-report.json / fx-report.json from preview; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/iaido-20261125/native/hero-3.png",
+      "runtime": "assets/images/iaido-hero-3.png",
+      "sha256": "19d3a84aaee72ae9c51383c66f44300776f92b57e4ec7fb88a87fd915394efc6",
+      "approval": "user ㄱㄱ after power-v2",
+      "sourceTool": "builtin image_gen with deterministic normalization",
+      "technical_checks_passed": true,
+      "evidence": "hero-report.json / fx-report.json from preview; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/iaido-20261125/native/hero-4.png",
+      "runtime": "assets/images/iaido-hero-4.png",
+      "sha256": "e5e34021cc6afff2fd007d17115ad8944780670f8f6c4f995f5a60ad1b5d36c5",
+      "approval": "user ㄱㄱ after power-v2",
+      "sourceTool": "builtin image_gen with deterministic normalization",
+      "technical_checks_passed": true,
+      "evidence": "hero-report.json / fx-report.json from preview; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/iaido-20261125/native/hero-5.png",
+      "runtime": "assets/images/iaido-hero-5.png",
+      "sha256": "f68effe4a39975f710b51b39e02f6e02d6b38419f7957cc0f25181c011754acd",
+      "approval": "user ㄱㄱ after power-v2",
+      "sourceTool": "builtin image_gen with deterministic normalization",
+      "technical_checks_passed": true,
+      "evidence": "hero-report.json / fx-report.json from preview; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/iaido-20261125/native/fx-0.png",
+      "runtime": "assets/images/iaido-fx-0.png",
+      "sha256": "24a8093fcc3f28d894d6e1f1f7b036e6f8080cc88e33185350d04abf0513a837",
+      "approval": "user ㄱㄱ after power-v2",
+      "sourceTool": "builtin image_gen with deterministic normalization",
+      "technical_checks_passed": true,
+      "evidence": "hero-report.json / fx-report.json from preview; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/iaido-20261125/native/fx-1.png",
+      "runtime": "assets/images/iaido-fx-1.png",
+      "sha256": "8d8b3a72a2e74c742a1a8d874bc84d8c57e2b2ce915783cace29468ac741577d",
+      "approval": "user ㄱㄱ after power-v2",
+      "sourceTool": "builtin image_gen with deterministic normalization",
+      "technical_checks_passed": true,
+      "evidence": "hero-report.json / fx-report.json from preview; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/iaido-20261125/native/fx-2.png",
+      "runtime": "assets/images/iaido-fx-2.png",
+      "sha256": "29b0d7828d097d19809885898026300125e421570ce86ea2822c1cb951332432",
+      "approval": "user ㄱㄱ after power-v2",
+      "sourceTool": "builtin image_gen with deterministic normalization",
+      "technical_checks_passed": true,
+      "evidence": "hero-report.json / fx-report.json from preview; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/iaido-20261125/native/fx-3.png",
+      "runtime": "assets/images/iaido-fx-3.png",
+      "sha256": "8033cbd38bd7992e0a6f2dd35f5f4a20e11c6af11740ebd392f397c608c33857",
+      "approval": "user ㄱㄱ after power-v2",
+      "sourceTool": "builtin image_gen with deterministic normalization",
+      "technical_checks_passed": true,
+      "evidence": "hero-report.json / fx-report.json from preview; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/iaido-20261125/native/fx-4.png",
+      "runtime": "assets/images/iaido-fx-4.png",
+      "sha256": "b726185deb5c2d5219886b54d8a1d4d79904f5c9fdeded2b0e0ab23eb2512d47",
+      "approval": "user ㄱㄱ after power-v2",
+      "sourceTool": "builtin image_gen with deterministic normalization",
+      "technical_checks_passed": true,
+      "evidence": "hero-report.json / fx-report.json from preview; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/iaido-20261125/native/fx-5.png",
+      "runtime": "assets/images/iaido-fx-5.png",
+      "sha256": "70400653cfa8cd6673b105815447f1a0523cc5cae4aec91e211d7870fb2e2683",
+      "approval": "user ㄱㄱ after power-v2",
+      "sourceTool": "builtin image_gen with deterministic normalization",
+      "technical_checks_passed": true,
+      "evidence": "hero-report.json / fx-report.json from preview; exact byte copy"
+    }
+  ]
+}

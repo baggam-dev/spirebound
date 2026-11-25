@@ -1,7 +1,7 @@
 import {utilityGuide} from './utility-guide.js';
 import {skillIconMarkup} from '../rendering/skill-icons.js';
 import {iconSVG} from '../rendering/pixel-icons.js';
-import {rollAction} from '../combat/roll.js';
+import {rollAction,rollCharges,slashRank} from '../combat/roll.js';
 const coarse=window.matchMedia('(pointer:coarse)'),hud=document.getElementById('runHUD');
 const map=document.createElement('canvas');map.id='mobileMinimap';map.width=166;map.height=160;map.setAttribute('role','img');map.setAttribute('aria-label','탐색 지도 · 방 형태·문 연결과 현재 위치');hud.append(map);
 export function renderHUDMinimap(draw,ctx,...args){
@@ -19,7 +19,7 @@ export function updateMobileActions(s,{paused=false,utilityStatus=null}={}){
  if(!coarse.matches||!s)return;
  prepareMobileMenuArt();
  const p=s.player,turret=p.evolutions?.ultimate==='turret',roll=rollAction(p),guide=utilityStatus||utilityGuide(s,{paused});
- const actions=[['potion','potion','물약',s.potionCooldown,p.potions],['utility',p.utility||'focus',guide.name,s.utilityCooldown],['skill',turret?'turret':'ultimate',turret?'석궁':'화살비',s.skill],['dodge',roll.icon,roll.name,s.dodge]];
+ const actions=[['potion','potion','물약',s.potionCooldown,p.potions],['utility',p.utility||'focus',guide.name,s.utilityCooldown],['skill',turret?'turret':'ultimate',turret?'석궁':'화살비',s.skill],['dodge',roll.icon,roll.name,slashRank(p)&&rollCharges(s)>0?0:s.dodge,slashRank(p)?`${rollCharges(s)}/${slashRank(p)}`:undefined]];
  for(const [id,icon,name,cooldown,count] of actions){
   const button=document.getElementById(id),time=id==='utility'?guide.short:cooldown>0?cooldown.toFixed(1)+'초':'',key=[icon,name,time,count].join('|');
   if(button.dataset.mobileAction!==key||!button.querySelector('.action-icon')){button.innerHTML='<span class="action-icon" aria-hidden="true">'+(['potion'].includes(id)?iconSVG(icon):skillIconMarkup(id==='skill'?'ultimate:'+(turret?'turret':'burst'):icon))+'</span><span class="action-label">'+name+'</span><span class="action-value">'+(time||(count===undefined?'':count))+'</span>';button.dataset.mobileAction=key;}

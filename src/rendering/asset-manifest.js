@@ -40,7 +40,7 @@ export const assetFiles={
   "commander-phase2-reference-atlas.png"
  ],
  "companion-roll-art": [
-  "companions-roll-v1.png","hero-draw-dash-v2.png"
+  "companions-roll-v1.png","hero-draw-dash-v2.png","iaido-hero-0.png","iaido-hero-1.png","iaido-hero-2.png","iaido-hero-3.png","iaido-hero-4.png","iaido-hero-5.png","iaido-fx-0.png","iaido-fx-1.png","iaido-fx-2.png","iaido-fx-3.png","iaido-fx-4.png","iaido-fx-5.png"
  ],
  "demon-archer-sprite": [
   "demon-archer-reference-atlas.png"

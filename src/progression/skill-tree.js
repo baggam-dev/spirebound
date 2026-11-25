@@ -6,7 +6,7 @@ export const mainSkills=['fire','frost','poison','chain','precision'];
 export const supportSkills=['split','pierce','haste','power','repeat','aura','homing','ultimate','weakpoint','finisher','rollMastery','sunFairy','snowFairy','stormFairy','fairyKing',...synergyIds,...criticalSkillIds];
 export const skillIds=[...mainSkills,...supportSkills];
 export const skillPoints=p=>skillIds.reduce((n,id)=>n+(p[id]||0),0);
-export const allowedSkill=(p,id)=>id==='ultimate'?false:id==='fairyKing'?fairyTrio(p):criticalSkillAllowed(p,id)&&synergyAllowed(p,id)&&(!mainSkills.includes(id)||!p.mainSkill||p.mainSkill===id);
+export const allowedSkill=(p,id)=>id==='ultimate'?false:id==='fairyKing'?fairyTrio(p):criticalSkillAllowed(p,id)&&synergyAllowed(p,id)&&(id!=='rollMastery'||!p.rollMastery||p.evolutions?.rollMastery==='slash')&&(!mainSkills.includes(id)||!p.mainSkill||p.mainSkill===id);
 export function mainChoices(s,random=()=>runRandom(s),reroll=false){
  if(s.player.mainSkill)return [];
  if(!reroll&&s.mainChoices?.length===3)return s.mainChoices;

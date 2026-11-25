@@ -37,7 +37,7 @@ export const skills = [
  {id:'ultimate',name:'궁극기 습득',description:'화살비 또는 자동 저격 석궁 중 하나를 선택합니다.',max:1},
  {id:'aura',name:'망령검: 베르가스',description:'유니크 보조 · 접근한 적을 자동 요격 · 평타 200/400/600% · 범위 180 · 재사용 3.2/3.0/2.8초 · 3레벨 단죄/검무 분기',max:3},
  {id:'homing',name:'추적 화살',description:'유니크 · 1.5초마다 별도 무속성 유도 화살 1발 · 일반 공격력 100% · 갈래/연속 복제 없음',max:1},
- {id:'rollMastery',name:'회피의 극의',description:'유니크 · 잔영 지뢰 / 질풍 회피 / 일섬 중 하나로 구르기를 진화',max:1},
+ {id:'rollMastery',name:'회피의 극의',description:'유니크 · 잔영 지뢰 / 질풍 회피 / 일섬 중 하나로 구르기를 진화 · 일섬은 강화해 최대 3회 충전',max:3},
  {id:'sunFairy',name:'태양요정: 솔리아',description:'유니크 · 1.5초마다 80% 탄 +3초 총60% 화상 · 물약 회복 +1하트',max:1},
  {id:'snowFairy',name:'눈꽃요정: 니베아',description:'유니크 · 1.5초마다 70% 탄 / 2초 25%둔화 · 이속 +5%',max:1},
  {id:'stormFairy',name:'번개요정: 볼티아',description:'유니크 · 1.5초마다 100% 탄 +주변1체 50% 전이 · 공속 +5%',max:1},

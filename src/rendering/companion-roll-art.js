@@ -1,6 +1,7 @@
 import {DeferredImage} from './asset-requests.js';
 import {drawHeroSprite} from './hero-sprite.js';
 import {characterSizes} from './character-sizes.js';
+import {drawIaidoHero,iaidoArtReady} from './iaido-art.js';
 // Generated originals stay untouched; equal-cell crops are cached at runtime.
 const frames=[];
 const rollArtReady=typeof Image==='undefined'?Promise.resolve(false):new Promise(resolve=>{
@@ -19,11 +20,12 @@ const dashArtReady=typeof Image==='undefined'?Promise.resolve(false):new Promise
  }catch{dashFrames.length=0;resolve(false);}};im.onerror=()=>resolve(false);im.src=new URL('../../assets/images/hero-draw-dash-v2.png',import.meta.url).href;
 });
 // Roll/fairy assets remain usable if the new dash atlas fails; slash has a safe idle fallback.
-export const companionArtReady=Promise.all([rollArtReady,dashArtReady]).then(([roll])=>roll);
+export const companionArtReady=Promise.all([rollArtReady,dashArtReady,iaidoArtReady]).then(([roll])=>roll);
 export const dashArtState=()=>({ready:dashFrames.length===4,frames:dashFrames.length});
 export function drawRollHero(c,s){
- if(!s.roll)return false;
+ if(!s.roll)return drawIaidoHero(c,s);
  if(s.roll.kind==='slash'){
+  if(drawIaidoHero(c,s))return true;
   const q=s.roll,progress=Math.min(1,q.elapsed/q.duration),index=progress<.15?0:progress<.4?1:progress<.8?2:3,f=dashFrames[index];
   c.save();c.translate(Math.round(s.player.x),Math.round(s.player.y));if(q.x<0)c.scale(-1,1);c.rotate(Math.max(-.3,Math.min(.3,q.y*.2)));c.imageSmoothingEnabled=false;
   if(f)c.drawImage(f.canvas,Math.round(f.x),Math.round(f.y));
