@@ -1,0 +1,12 @@
+✔ all descent raw damage resolves to one heart while ascent and shields retain their rules (307.6229ms)
+✔ descent heavy projectiles produce one-heart damage in live simulation (52.6125ms)
+✔ gate guardians use combo/dash and fan/ring patterns with faster recovery (79.8846ms)
+✔ king overhaul scales previous health once and shortens phase recovery (45.4696ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1328.565

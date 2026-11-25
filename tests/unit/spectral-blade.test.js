@@ -30,10 +30,10 @@ test('old level-three aura keeps its guard once; newly learned Vergas does not g
 });
 test('Vergas remains unique while acquisition is rare and owned upgrades use normal weight',()=>{
  const {s}=fight(),skill=skills.find(k=>k.id==='aura');assert.equal(skill.grade,'unique');
- s.player.aura=0;assert.equal(skillOfferWeight(s.player,skill),.04);
+ s.player.aura=0;assert.equal(skillOfferWeight(s.player,skill),.12);
  s.player.aura=1;assert.equal(skillOfferWeight(s.player,skill),1);
  s.player.aura=3;assert.ok(!skillChoices(s.player,()=>.5).some(k=>k.id==='aura'));
- assert.equal(skill.weight,.04);assert.equal(skill.max,3);
+ assert.equal(skill.weight,.12);assert.equal(skill.max,3);
 });
 test('saved ordinary-support Vergas rewards remain claimable even when all ordinary supports are capped',()=>{
  const {s,r}=fight();s.player.aura=1;s.player.mainSkill='precision';s.player.precision=1;

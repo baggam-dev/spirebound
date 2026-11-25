@@ -1,0 +1,38 @@
+{
+  "base": "http://localhost:5173",
+  "results": [
+    {
+      "kind": "normal",
+      "width": 1280,
+      "replayWithoutRun": true,
+      "frozen": true,
+      "sameRun": true,
+      "continueNoIntro": true
+    },
+    {
+      "kind": "normal",
+      "width": 844,
+      "replayWithoutRun": true,
+      "frozen": true,
+      "sameRun": true,
+      "continueNoIntro": true
+    },
+    {
+      "kind": "reduced",
+      "width": 844,
+      "replayWithoutRun": true,
+      "frozen": true,
+      "sameRun": true,
+      "continueNoIntro": true
+    },
+    {
+      "kind": "failure",
+      "width": 844,
+      "replayWithoutRun": true,
+      "frozen": true,
+      "sameRun": true,
+      "continueNoIntro": true
+    }
+  ],
+  "errors": []
+}

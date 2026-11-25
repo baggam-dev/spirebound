@@ -10,7 +10,7 @@ const types=Object.keys(enemyGuide).filter(type=>!excluded.has(type));
 const actor=type=>({id:3,type,hp:100,max:100,x:240,y:200});
 const hit=(loss=.04)=>[{enemyFeedback:'hit',enemyId:3,beforeRatio:1,afterRatio:1-loss}];
 test('all ordinary bestiary types receive bounded view reactions, with no boss overlap or actor writes',()=>{
- assert.equal(types.length,24);assert.equal(isOrdinary({...actor('chaser'),roamingElite:true}),true);assert.equal(enemyDeathEffect({...actor('chaser'),roamingElite:true}).bodyType,'chaser');
+ assert.equal(types.length,26);assert.equal(isOrdinary({...actor('chaser'),roamingElite:true}),true);assert.equal(enemyDeathEffect({...actor('chaser'),roamingElite:true}).bodyType,'chaser');
  for(const type of types){const e=actor(type),r={enemies:[e]},saved=JSON.stringify(r);resetOrdinaryPresentation();assert.equal(isOrdinary(e),true);tickOrdinaryPresentation(r,.01);assert.equal(ordinaryPose(e).kind,'arrival');for(let i=0;i<6;i++)ordinaryPose(e);tickOrdinaryPresentation(r,.31);assert.equal(ordinaryPose(e),null);notifyOrdinaryHits(r,hit());assert.equal(ordinaryPose(e).kind,'hit');assert.equal(ordinaryPose(e).heavy,false);assert.equal(ordinaryPose(e,{staticPose:true}),null);assert.equal(ordinaryPose(e,{reduced:true}),null);tickOrdinaryPresentation(r,1.01);notifyOrdinaryHits(r,hit(.2),[{enemyId:e.id,applied:true,newHit:true,damage:20,critical:true,procDepth:0,source:'arrow'}]);assert.equal(ordinaryPose(e).heavy,true);tickOrdinaryPresentation(r,.15);assert.equal(ordinaryPose(e),null);assert.equal(JSON.stringify(r),saved);}
  for(const e of [{type:'boss'},{type:'starKnight',gateTitle:'칼드'},{type:'boss',variant:'demon'},{type:'player'}])assert.equal(isOrdinary(e),false);
 });

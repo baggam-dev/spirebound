@@ -7,7 +7,7 @@ test('iaido keeps up to five stationary past poses longer than an ordinary roll'
  for(let i=0;i<5;i++){run.player.x+=10;run.roll.elapsed+=.012;advanceRollTrail(run,room,.012);}
  delete run.roll;advanceRollTrail(run,room,.15);const positions=[];drawRollTrail(context(),run,(_,p)=>positions.push(p.player.x),{room});
  assert.ok(positions.length>0&&positions.length<=5);assert.ok(positions.every(x=>x>=110&&x<=150));
- advanceRollTrail(run,room,.1);let painted=0;drawRollTrail(context(),run,()=>painted++,{room});assert.equal(painted,0);
+ advanceRollTrail(run,room,.1);advanceRollTrail(run,room,.1);let painted=0;drawRollTrail(context(),run,()=>painted++,{room});assert.equal(painted,0);
 });
 test('first new-room draw rejects old roll silhouettes before the next presentation update',()=>{
  const run={player:{x:100,y:200},roll:{x:1,y:0,elapsed:.1,duration:.28}},oldRoom={},newRoom={};

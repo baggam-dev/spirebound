@@ -1,0 +1,83 @@
+✔ all descent raw damage resolves to one heart while ascent and shields retain their rules (438.1732ms)
+✔ descent heavy projectiles produce one-heart damage in live simulation (61.5184ms)
+✔ gate guardians use combo/dash and fan/ring patterns with faster recovery (115.2506ms)
+✖ king overhaul scales previous health once and shortens phase recovery (50.2877ms)
+✔ exhausted skill pool provides saved repeatable growth choices with real benefits (392.6414ms)
+✔ normal skill pool and guaranteed ultimate take precedence over fallback rewards (126.7156ms)
+✔ growth rewards respect stat caps (50.6439ms)
+✔ growth snapshots are recorded once per floor and direction and survive reload (82.835ms)
+✔ boss record excludes dormant rooms and descent, accumulates through reload and completes once (90.0803ms)
+✔ simulation observes growth without retroactively creating missing floor records (61.4673ms)
+✔ restoring excludes capped growth candidates and persists the corrected list (55.6458ms)
+✔ fully stale saved choices rebuild without rerolling ultimate eligibility or consuming a level (40.8665ms)
+✔ all ordinary bestiary types receive bounded view reactions, with no boss overlap or actor writes (6.4246ms)
+✔ seen-room load and room reentry do not replay arrival, while new summons do (0.6751ms)
+✔ melee, charge, ranged, aerial, elite and hazard threats take priority without cancellation (1.1672ms)
+✔ ordinary death snapshots keep style/timing and root anchors, self-destruct stays distinct (1.7094ms)
+✔ hero reaction is visual only, reduced mode quiet, defeat immediate with no result delay (0.5043ms)
+✔ ordinary removals and rewards remain immediate with one detached death effect (131.344ms)
+✔ iaido keeps up to five stationary past poses longer than an ordinary roll (2.405ms)
+✔ first new-room draw rejects old roll silhouettes before the next presentation update (0.4425ms)
+✔ roll ghosts use bounded snapshots of actual positions rather than extrapolated movement (0.7729ms)
+✔ reduced effects, room changes and reset prevent stale roll silhouettes (0.4455ms)
+✔ mines detonate at one second, keep their damage, and legacy remaining time caps once (135.5281ms)
+✔ only fairy acquisition weights decrease slightly while the king and owned blade retain their rules (69.23ms)
+✔ roll travels continuously, freezes with pause, survives save, ends at140 and does not create post-roll immunity (118.6374ms)
+✔ roll avoids a live projectile and checks walls for every movement segment (54.0029ms)
+✔ roll branches deal once and place timed mines only in their own room (260.8513ms)
+✔ roll action follows learned evolution immediately and after saved-run resume (93.7766ms)
+✔ old immunity relic remains a short roll bonus and cooldown has a hard lower bound (40.1079ms)
+✔ free unlocks require both the intended boss and level without consuming normal choices (36.8179ms)
+✔ fairy king stays guaranteed through reroll, saved stale choices and declining the offer (53.9881ms)
+✔ migration refunds capped levels once, preserves learned utilities, and removes duplicate fairy relics (50.1038ms)
+✔ all legacy snapshots and saved repeat rewards remain loadable before and after one migration (50.8633ms)
+✔ blood pact shares a two-heart cap across kills and boss damage, excluding summons, and cannot revive (37.7737ms)
+✔ awakening costs one heart without triggering shields or invulnerability and refuses the last heart (57.115ms)
+✔ king laser has bounded damage, respects walls, and does not recursively emit arrows or elements (111.0251ms)
+✔ bow mastery changes direct damage but not fire explosion and midgame xp is reduced (1.901ms)
+✔ rain applies six scaled pulses, has no off-region damage and survives midcast save (39.1837ms)
+✔ new fairy skills never appear in randomly offered relic pools (38.7151ms)
+✔ a wall appearing during preparation blocks damage; an escaping enemy is not hit (209.1688ms)
+✔ dance rechecks its target and never hits a dead target twice (67.8155ms)
+✔ precision blade favors an existing mark without advancing it (47.648ms)
+✔ blade poison cannot create poison gas, explosions or primary marks (56.6367ms)
+✔ saved cooldown prevents a repeated slash after loading and rejects corruption (158.3421ms)
+✔ old level-three aura keeps its guard once; newly learned Vergas does not grant a shield (115.4505ms)
+✔ Vergas remains unique while acquisition is rare and owned upgrades use normal weight (73.0331ms)
+✔ saved ordinary-support Vergas rewards remain claimable even when all ordinary supports are capped (116.0738ms)
+✔ upper floors provide rest, elite gate and explicit king challenge (2354.286ms)
+✔ gate rewards once and king alone begins eight floor descent (63.5806ms)
+✔ king phase thresholds, telegraphs and summons survive long combat and saves (890.9639ms)
+✔ telegraph deals no early damage and slash can be avoided behind king (58.5444ms)
+✔ every new enemy runs and round trips in ascent and descent (916.3971ms)
+ℹ tests 52
+ℹ suites 0
+ℹ pass 51
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5615.4601
+
+✖ failing tests:
+
+test at tests\unit\balance29.test.js:6:1
+✖ king overhaul scales previous health once and shortens phase recovery (50.2877ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  15912 !== 18720
+  
+      at TestContext.<anonymous> (file:///C:/baggam-dev/spirebound/tests/unit/balance29.test.js:6:245)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 15912,
+    expected: 18720,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
