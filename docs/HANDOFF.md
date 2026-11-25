@@ -1,3 +1,12 @@
+## 최신 복사용 인계 — 0.66 배포 완료
+~~~text
+## 2026-11-25 0.66 배포·공개 검증 완료
+- 공개 https://168.107.21.43/ 0.66.0-prebeta. runtime0482d70/main 원격푸시·deploy.ps1 성공, 활성 release-20261125-115959-1f97f7 / 이전 release-20261124-231257-a048a6 복구대상 유지. index해시/HTTPS/API health ok·nginx/API active, 원격API28/28·nginx설정 통과.
+- 누적85개 공개 runtime 파일 byte일치. 전체 node --test 최종1055/1055(Python API통합 포함), 로컬title PC1280/모바일844·모션감소/설정/이어하기/fallback 오류0, 오프닝 로컬/공개 각4경우(PC/모바일/모션감소/이미지실패)의 스킵·중단재개·저장/시계불변·다시보기/이어하기 오류0. 로컬28+8초 자동완주35588ms. 로컬/공개 신규39PNG decode·해골/일섬 대표렌더 오류0.
+- 증거 docs/qa-predeploy-20261125 (tests-final.log, deploy.log, services.log, public/files.json, public-opening/results.json, public-assets/results.json 및스크린샷). 최초8실패는 변경설계에맞춘 fixture 갱신후해결. 레거시 mordo gallery QA는팩활성화없어중단·성공으로집계안함.
+- 실제iPhone·장시간다수전투성능 미검증. 가로고정은별도TODO보류. 승인1~4단계 안내/확률·그림자/베르가스, 일섬, 모르도/해골, 서사/야간입장 및 로딩보완 모두배포. 새미배포제품변경없음. 로컬서버5173 종료요청완료·QA/테스트명령종료. 다음 사용자플레이피드백 대기.
+~~~
+
 ## 최신 복사용 인계 — 0.66 검증 통과·게시 진행
 ~~~text
 ## 2026-11-25 0.66 배포 전 검증 완료·게시 진행

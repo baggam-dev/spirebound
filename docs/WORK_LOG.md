@@ -3683,3 +3683,9 @@ utilityUseState로기존실사용조건을공유하고 canCastUtility는같은re
 - Edge 로컬 title PC1280/844+fallback 오류0, 새 opening QA4경우(PC/모바일/모션감소/자산실패) 저장/시간/스킵/다시보기/중단재개/이어하기 통과·자동완주35588ms 오류0.39PNG 실제decode·전사8/궁수8/FX6·일섬6+6 로드/대표렌더 통과·스크린샷 육안확인.
 - 기존 mordo-presentation QA는 구gallery가 DeferredImage 팩을 활성화하지 않아 대기, 중단했고 통과로 계산하지 않음. 신규 해골/왕 동작은 전체 단위/통합 및 별도 브라우저 자산 렌더 근거 사용. 실제 iPhone/장시간 성능 미검증.
 - src/game/version.js/index0.66·api/config는0.65+0.66 허용. 다음 커밋·푸시→deploy.ps1→HTTPS/파일/API/서비스·공개Edge 확인. 현재 운영0.65이며 아직 게시 안함. 로컬 서버5173 세션48826, 종료한 테스트/브라우저 세션은 재사용하지 않음.
+
+## 2026-11-25 0.66 배포·공개 검증 완료
+- 공개 https://168.107.21.43/ 0.66.0-prebeta. runtime0482d70/main 원격푸시·deploy.ps1 성공, 활성 release-20261125-115959-1f97f7 / 이전 release-20261124-231257-a048a6 복구대상 유지. index해시/HTTPS/API health ok·nginx/API active, 원격API28/28·nginx설정 통과.
+- 누적85개 공개 runtime 파일 byte일치. 전체 node --test 최종1055/1055(Python API통합 포함), 로컬title PC1280/모바일844·모션감소/설정/이어하기/fallback 오류0, 오프닝 로컬/공개 각4경우(PC/모바일/모션감소/이미지실패)의 스킵·중단재개·저장/시계불변·다시보기/이어하기 오류0. 로컬28+8초 자동완주35588ms. 로컬/공개 신규39PNG decode·해골/일섬 대표렌더 오류0.
+- 증거 docs/qa-predeploy-20261125 (tests-final.log, deploy.log, services.log, public/files.json, public-opening/results.json, public-assets/results.json 및스크린샷). 최초8실패는 변경설계에맞춘 fixture 갱신후해결. 레거시 mordo gallery QA는팩활성화없어중단·성공으로집계안함.
+- 실제iPhone·장시간다수전투성능 미검증. 가로고정은별도TODO보류. 승인1~4단계 안내/확률·그림자/베르가스, 일섬, 모르도/해골, 서사/야간입장 및 로딩보완 모두배포. 새미배포제품변경없음. 로컬서버5173 종료요청완료·QA/테스트명령종료. 다음 사용자플레이피드백 대기.
