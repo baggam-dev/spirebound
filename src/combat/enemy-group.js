@@ -1,8 +1,8 @@
 import {movementSlowFactor} from './frost.js';
 import {blocked,segmentBlocked,steering,moveBody} from '../world/terrain.js';
 import {replaceEnemyMovementGoals,enemyMovementGoal,enemyMovementLocked} from '../world/enemy-movement-goals.js';
-const melee=new Set(['chaser','charger','brute','starKnight','royalGuard','riftHunter','ambusher','demonSoldier','demonCaptain']);
-const ranged=new Set(['archer','scatter','laser','ricochet','astralSniper','demonArcher','strafer','gravityMage','starBearer']);
+const melee=new Set(['skeletonWarrior','chaser','charger','brute','starKnight','royalGuard','riftHunter','ambusher','demonSoldier','demonCaptain']);
+const ranged=new Set(['skeletonArcher','archer','scatter','laser','ricochet','astralSniper','demonArcher','strafer','gravityMage','starBearer']);
 const rooms=new WeakMap(),cell=80;
 const key=(x,y)=>Math.floor(x/cell)+','+Math.floor(y/cell);
 function gridOf(actors){const grid=new Map();for(const e of actors){const k=key(e.x,e.y);if(!grid.has(k))grid.set(k,[]);grid.get(k).push(e);}return grid;}

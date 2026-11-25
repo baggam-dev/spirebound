@@ -1,5 +1,6 @@
 // Source filenames for explicit on-demand packs. Original PNGs are unchanged.
 export const assetFiles={
+ "skeleton-art":["skeleton-warrior-0.png","skeleton-warrior-1.png","skeleton-warrior-2.png","skeleton-warrior-3.png","skeleton-warrior-4.png","skeleton-warrior-5.png","skeleton-warrior-6.png","skeleton-warrior-7.png","skeleton-archer-0.png","skeleton-archer-1.png","skeleton-archer-2.png","skeleton-archer-3.png","skeleton-archer-4.png","skeleton-archer-5.png","skeleton-archer-6.png","skeleton-archer-7.png","skeleton-fx-0.png","skeleton-fx-1.png","skeleton-fx-2.png","skeleton-fx-3.png","skeleton-fx-4.png","skeleton-fx-5.png"],
  "support-sprites":["ossuary-summoner-atlas-v1.png","choir-cantor-atlas-v1.png","ossuary-minion-atlas-v1.png"],
  "pursuer-sprite":["pursuer-atlas-v1.png"],
  "resurrected-king" : ["king-resurrection-poses-v1.png"],

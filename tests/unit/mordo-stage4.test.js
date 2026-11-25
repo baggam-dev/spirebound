@@ -8,7 +8,7 @@ import {encodeSave,parseSave} from '../../src/persistence/storage.js';
 
 function arena(){const e={id:0,type:'boss',variant:'king',x:300,y:200,hp:8000,max:16000,cd:0,kingOverhaulVersion:1},p={x:550,y:200},r={enemies:[e],obstacles:[]},bullets=[];return {e,p,r,bullets,tick:dt=>updateUpper(e,p,r,dt,bullets,()=>{})};}
 test('Mordo health upgrade preserves injury and death and applies only once',()=>{
- for(const hp of [0,4000,16000]){const e={type:'boss',variant:'king',hp,max:16000};strengthenKing(e);assert.equal(e.max,25600);assert.equal(e.hp,hp*1.6);strengthenKing(e);assert.equal(e.max,25600);assert.equal(e.hp,hp*1.6);}
+ for(const hp of [0,4000,16000]){const e={type:'boss',variant:'king',hp,max:16000};strengthenKing(e);assert.equal(e.max,21760);assert.equal(e.hp,hp/16000*21760);strengthenKing(e);assert.equal(e.max,21760);assert.equal(e.hp,hp/16000*21760);}
  const e={type:'boss',variant:'archer',max:100,hp:50};strengthenKing(e);assert.equal(e.max,100);assert.equal(e.kingOverhaulVersion,undefined);
 });
 test('Mordo dash adds separately warned slashes then a single fixed target mark',()=>{

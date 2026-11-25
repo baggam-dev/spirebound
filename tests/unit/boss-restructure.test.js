@@ -37,7 +37,7 @@ test('remnant has one attack stream and lower direct damage without pressure sum
  updateDemon(s,r,p,.02,[],n=>hits.push(n));assert.deepEqual(hits,[6]);assert.equal(r.demon.attacks,undefined);assert.equal(r.demon.fields,undefined);
 });
 test('new final king stays on ten, saves phase three, and final ranking gate follows king',()=>{
- const s=run('expanded'),r=arena(s,9);assert.equal(r.demonPending,undefined);assert.ok(challengeKing(s));const e=r.enemies[0];assert.equal(e.resurrectionVersion,1);assert.equal(e.max,25600);assert.equal(e.tier,9);
+ const s=run('expanded'),r=arena(s,9);assert.equal(r.demonPending,undefined);assert.ok(challengeKing(s));const e=r.enemies[0];assert.equal(e.resurrectionVersion,1);assert.equal(e.max,21760);assert.equal(e.tier,9);
  e.hp=e.max*.29;assert.equal(revivedKing(e),false);tickUpperState(e,s.player,r,.01,s.projectiles,()=>{});assert.equal(e.kingStage,3);assert.ok(revivedKing(e));assert.ok(e.kingTransition>0);assert.doesNotThrow(()=>encodeSave(s));
  r.enemies=[];assert.equal(bossDefeated(s),'key');assert.ok(finalBossDefeated(s));assert.ok(s.key);
 });

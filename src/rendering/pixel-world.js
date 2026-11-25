@@ -1,3 +1,4 @@
+import {drawSkeletonSprite,drawSkeletonProjectile} from './skeleton-art.js';
 import {drawFairyProjectile} from './fairy-feedback.js';
 import {drawSupportSprite} from './support-sprites.js';
 import {drawPursuerSprite} from './pursuer-sprite.js';
@@ -74,7 +75,7 @@ export function observeHeroRoll(run,time,roll=run?.roll){
 }
 function bow(c,x,y,pull=0){line(c,[[x,y-15],[x+5,y-11],[x+8,y],[x+5,y+11],[x,y+15]],ink,5);line(c,[[x,y-15],[x+5,y-11],[x+8,y],[x+5,y+11],[x,y+15]],'#c9a066',3);line(c,[[x,y-15],[x-pull,y],[x,y+15]],'#efe0b6',1);box(c,x-10-pull,y-1,23,2,'#f4deb0');diamond(c,x+14,y,3,'#d9e8df');}
 export function drawPixelActor(c,e,time=0,run=null,reduced=false){
- if(drawSupportSprite(c,e,time,reduced)||drawPursuerSprite(c,e,time,reduced)||drawAmbusherSprite(c,e,time,reduced)||drawRingcasterSprite(c,e)||drawStraferSprite(c,e,time,reduced))return;
+ if(drawSkeletonSprite(c,e,time,reduced)||drawSupportSprite(c,e,time,reduced)||drawPursuerSprite(c,e,time,reduced)||drawAmbusherSprite(c,e,time,reduced)||drawRingcasterSprite(c,e)||drawStraferSprite(c,e,time,reduced))return;
  const hero=e.type==='player',boss=e.type==='boss',p=pose(hero&&run?run.player:e,time,hero?run?.attack||0:0,hero?.09:.16),red=!!run?.key;
  c.save();c.translate(Math.round(e.x),Math.round(e.y));
  box(c,boss?-30:-15,17,boss?60:30,5,'#0005');
@@ -148,7 +149,7 @@ export function drawObjectDetails(c,s,r,reduced=false){c.save();const t=s.elapse
  if(r.type==='fountain'){box(c,456,121,48,4,'#384e59');box(c,462,102,36,2,r.used?'#526565':'#afd8d2');if(!r.used){for(let i=0;i<3;i++){const x=465+(i*11+Math.floor(t*9))%30;box(c,x,109+i%2*5,6,1,'#ceeee3');}box(c,478,89,4,15,'#78bdbd');box(c,479,88,2,12,'#d3f5ed');}}
  if(['up','down','exit'].includes(r.type)){for(let i=0;i<5;i++){box(c,458+i*3,90+i*7,43-i*6,1,'#d6ceb077');box(c,455+i*3,91+i*7,2,4,'#273735');}box(c,451,87,4,39,'#4e5d58');box(c,505,87,4,39,'#4e5d58');box(c,450,85,6,3,'#a5ac8c');box(c,504,85,6,3,'#a5ac8c');}
  c.restore();}
-export function drawProjectile(c,b,time=0,player={},reduced=false){if(b.delay>0)return;const [color,light]=palettes[b.element]||[({sunFairy:'#ff993f',snowFairy:'#99ddff',stormFairy:'#ffe16a',turret:'#cfb786'})[b.passive]|| (b.demonIce?'#85e6ff':b.frostArrow?'#8bd5f4':b.dark?'#c792ee':b.ricochet?'#74e1dd':b.poisonShot?'#d59bea':b.enemy?'#ed8877':b.seeker?'#bfdaee':'#d9c492'),b.frostArrow?'#e7fbff':'#fff2cd'];
+export function drawProjectile(c,b,time=0,player={},reduced=false){if(b.delay>0)return;if(drawSkeletonProjectile(c,b))return;const [color,light]=palettes[b.element]||[({sunFairy:'#ff993f',snowFairy:'#99ddff',stormFairy:'#ffe16a',turret:'#cfb786'})[b.passive]|| (b.demonIce?'#85e6ff':b.frostArrow?'#8bd5f4':b.dark?'#c792ee':b.ricochet?'#74e1dd':b.poisonShot?'#d59bea':b.enemy?'#ed8877':b.seeker?'#bfdaee':'#d9c492'),b.frostArrow?'#e7fbff':'#fff2cd'];
  c.save();c.translate(Math.round(b.x),Math.round(b.y));c.rotate(Math.atan2(b.vy??0,b.vx??1));
  if(b.frostShard&&!b.enemy){c.scale(.5,.5);c.globalAlpha*=.75;}
  if(drawVeraArrow(c,b,time,reduced)||drawHostileProjectile(c,b,time,reduced)){}else if(b.enemy){const size=b.demonIce?5:b.poisonShot==='orb'?6:3;diamond(c,0,0,size+1,ink);diamond(c,0,0,size,color);box(c,-1,-1,2,2,light);}

@@ -32,8 +32,9 @@ export function strengthenPursuer(e){
 }
 
 export function strengthenKing(e){
- if(e.type!=='boss'||e.variant!=='king'||e.kingOverhaulVersion===1)return e;
- const ratio=e.max>0?Math.max(0,Math.min(1,e.hp/e.max)):1;
- e.max=Math.min(100000,Math.ceil(e.max*1.6));e.hp=e.hp<=0?0:Math.min(e.max,Math.ceil(e.max*ratio));
- e.kingOverhaulVersion=1;return e;
+ if(e.type!=='boss'||e.variant!=='king')return e;
+ const scale=factor=>{const ratio=e.max>0?Math.max(0,Math.min(1,e.hp/e.max)):1;e.max=Math.min(100000,Math.ceil(e.max*factor));e.hp=e.hp<=0?0:Math.min(e.max,Math.ceil(e.max*ratio));};
+ if(e.kingOverhaulVersion!==1){scale(1.6);e.kingOverhaulVersion=1;}
+ if(e.shadowBoss!==1&&e.kingSkeletonVersion!==1){scale(.85);e.kingSkeletonVersion=1;delete e.guardPortal;delete e.guardClock;}
+ return e;
 }

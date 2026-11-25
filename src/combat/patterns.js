@@ -8,7 +8,7 @@ import {enemyName} from '../world/expedition.js';
 import {ENEMY_COOLDOWN_FACTOR,attackProfile} from './balance.js';
 import {moveBody,steering,safeSpawn,segmentBlocked} from '../world/terrain.js';
 export const bossPatterns=['ring','slam','fan','spiral','cross','pincer'];
-export function emitShot(e,angle,speed,bullets){speed*=attackProfile(e).speed;bullets.push({x:e.x,y:e.y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,enemy:true,source:enemyName(e)+(e.elite?' 정예탄':' 탄환'),damage:e.trialChampion?9:e.escapeDepth>=4?12:10,life:4,hit:[]});}
+export function emitShot(e,angle,speed,bullets){speed*=attackProfile(e).speed;bullets.push({x:e.x,y:e.y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,enemy:true,...(['skeletonWarrior','skeletonArcher'].includes(e.type)?{skeletonShot:true,skeletonOwner:e.summoner}:{}),source:enemyName(e)+(e.elite?' 정예탄':' 탄환'),damage:e.trialChampion?9:e.escapeDepth>=4?12:10,life:4,hit:[]});}
 function recover(e,seconds){e.attackPhase='recover';e.attackTime=seconds*(e.type==='boss'?.4:ENEMY_COOLDOWN_FACTOR*attackProfile(e).recovery);}
 export function updatePattern(e,p,obstacles,dt,bullets,enraged=false){
  if(e.hp<=0)return 0;

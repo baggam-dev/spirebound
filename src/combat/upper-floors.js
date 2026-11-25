@@ -1,3 +1,4 @@
+import {tickKingSkeletonSummons} from './mordo-summons.js';
 import {movementSlowFactor} from './frost.js';
 import {strengthenKing} from './balance.js';
 import {kingFloor,revisedBosses} from '../game/boss-layout.js';
@@ -47,17 +48,16 @@ function resolve(e,p,r,dt,bullets,hurt){const a=e.darkAttack;if(!a)return false;
  if(a.kind==='slash'&&a.chain==='slashMark'){if(!a.landed){finish(e,a);return true;}startUpperAttack(e,'mark',p,r);delete e.darkAttack.chain;e.darkAttack.time=.75;e.darkAttack.warningDuration=.75;return true;}
  finish(e,a);return true;
 }
-export function tickUpperState(e,p,r,dt,bullets){
+export function tickUpperState(e,p,r,dt,bullets,random=Math.random){
  if(!(e.opening>0))delete e.counterReason;
  if(e.darkFlash){e.darkFlash.time=Math.max(0,e.darkFlash.time-dt);if(!e.darkFlash.time)delete e.darkFlash;}
  e.kneel=Math.max(0,(e.kneel||0)-dt);
  if(e.type==='starBearer'&&e.gateTitle&&e.hp>0&&!(e.frozen>0))for(const n of r.enemies)if(n!==e&&n.hp>0&&dist(n,e)<170&&n.cd>0)n.cd=Math.max(0,n.cd-dt*.25);
  if(e.hp<=0||e.variant!=='king')return false;
  const phase=kingPhase(e);e.kingStage??=phase;
- if(phase>e.kingStage){e.kingStage=phase;e.kingTransition=1.4;e.cd=1;delete e.darkAttack;delete e.darkFlash;delete e.guardPortal;e.opening=0;delete e.counterReason;e.kneel=0;e.frozen=0;for(const n of r.enemies){delete n.darkAttack;delete n.darkFlash;n.cd=Math.max(1,n.cd||0);}for(const b of bullets)if(b.enemy)b.life=0;}
+ if(phase>e.kingStage){e.kingStage=phase;e.kingTransition=1.4;e.cd=1;delete e.darkAttack;delete e.darkFlash;delete e.guardPortal;delete e.skeletonPortals;delete e.skeletonPortalTime;e.opening=0;delete e.counterReason;e.kneel=0;e.frozen=0;for(const n of r.enemies){delete n.darkAttack;delete n.darkFlash;delete n.skeletonAttack;n.cd=Math.max(1,n.cd||0);}for(const b of bullets)if(b.enemy)b.life=0;}
  if(e.kingTransition>0){for(const b of bullets)if(b.enemy)b.life=0;e.kingTransition=Math.max(0,e.kingTransition-dt);return true;}
- if(phase>=2&&e.shadowBoss!==1){e.guardClock=Math.max(0,(e.guardClock??1.5)-dt);if(e.guardPortal){e.guardPortal.time=Math.max(0,e.guardPortal.time-dt);if(!e.guardPortal.time){const living=r.enemies.filter(n=>n.summoned&&n.summoner===e.id&&n.hp>0).length;if(living<2){const id=Math.max(r.nextEnemyId||0,...r.enemies.map(n=>n.id+1));r.nextEnemyId=id+1;const child={id,type:id%2?'astralSniper':'pulseTurret',x:e.guardPortal.x,y:e.guardPortal.y,hp:180,max:180,cd:1.2,tier:7,balanceVersion:1,summoned:true,summoner:e.id,spawnGrace:1};safeSpawn(child,r.obstacles,22);r.enemies.push(child);}delete e.guardPortal;}}
- if(!e.guardClock&&!e.guardPortal&&r.enemies.filter(n=>n.summoned&&n.summoner===e.id&&n.hp>0).length<2){const point={x:p.x<480?780:180,y:p.y<270?390:140};safeSpawn(point,r.obstacles,22);e.guardPortal={...point,time:1};e.guardClock=6;}}
+ tickKingSkeletonSummons(e,p,r,dt,phase,random);
  return false;
 }
 export function chooseKingAttack(e,p){const phase=kingPhase(e),near=dist(e,p)<155;let options=near?['slash','mark','dash']:['fan','dash','mark'];if(phase>=2)options.push(near?'ring':'blink');if(phase===3&&(e.darkTurn??0)%3===0&&e.lastDarkAttack!=='judgment')return 'judgment';options=options.filter(k=>k!==e.lastDarkAttack);return options[(e.darkTurn??0)%options.length];}

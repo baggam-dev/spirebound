@@ -1,3 +1,5 @@
+import {updateSkeleton} from '../combat/skeleton-enemies.js';
+import {cleanupKingSkeletons} from '../combat/mordo-summons.js';
 import {canEnterRemnantRoom,advanceRemnantHunt} from '../world/remnant-hunt.js';
 import {roomGeometry,roomExitDirection,roomProjectileInside} from '../world/room-geometry.js';
 import {constrainRoomActors} from '../world/room-footprints.js';
@@ -125,16 +127,17 @@ export function stepRun(s,dt,input={x:0,y:0}){
  updateHazards(r,dt,p,raw=>hurt(raw,raw>=12?'독성 군체 독':'꽃봉우리 독'));
  if(s.entryGrace<=0)updateDemon(s,r,p,dt,s.projectiles,(raw,source)=>hurt(raw,source));
  const target=r.enemies.filter(e=>e.hp>0&&!enemyAirborne(e)&&!segmentBlocked(p,e,r.obstacles,3)).sort((a,b)=>distance(a,p)-distance(b,p))[0];
- tickSpectralBlade(s,r,dt,effects);
+ tickSpectralBlade(s,r,dt,effects);cleanupKingSkeletons(r,s.projectiles);
  if(target&&target.hp>0&&s.attack<=0&&!rolling&&!(p.actionStun>0)){fireArrow(s,target);events.push('shot');}
  prepareEnemyGroup(r,p,dt);
  for(const e of r.enemies){
-  hitOrigin=e;tickSupportState(e,dt);if(e.utilityFrostTime!==undefined)e.utilityFrostTime=Math.max(0,e.utilityFrostTime-dt);const hpBefore=Math.max(0,e.hp);tickEffects(e,dt);interruptSupportIfNeeded(e);tickHighState(e,dt);metrics.damageDealt+=hpBefore-Math.max(0,e.hp);const upper=e.variant==='king'||upperTypes.includes(e.type);const transitioning=upper&&tickUpperState(e,p,r,s.entryGrace>0?0:dt,s.projectiles);if(e.hp<=0||e.frozen>0||transitioning||r.enemies.some(n=>n.variant==='king'&&n.kingTransition>0)){if(transitioning||r.enemies.some(n=>n.kingTransition>0))cancelHighAttack(e);continue;}
+  hitOrigin=e;tickSupportState(e,dt);if(e.utilityFrostTime!==undefined)e.utilityFrostTime=Math.max(0,e.utilityFrostTime-dt);const hpBefore=Math.max(0,e.hp);tickEffects(e,dt);interruptSupportIfNeeded(e);tickHighState(e,dt);metrics.damageDealt+=hpBefore-Math.max(0,e.hp);const upper=e.variant==='king'||upperTypes.includes(e.type);const transitioning=upper&&tickUpperState(e,p,r,s.entryGrace>0?0:dt,s.projectiles,()=>runRandom(s));if(e.hp<=0||e.frozen>0||transitioning||r.enemies.some(n=>n.variant==='king'&&n.kingTransition>0)){if(transitioning||r.enemies.some(n=>n.kingTransition>0))cancelHighAttack(e);continue;}
   if(e.cd>0)e.cd+=dt*(1-frostAttackRate(e));if(e.jumpCooldown>0)e.jumpCooldown+=dt*(1-frostAttackRate(e));
   if(e.variant==='prism'&&s.entryGrace<=0)updatePrismSummons(e,p,r,dt,()=>runRandom(s));
   if(e.opening>0){e.opening=Math.max(0,e.opening-dt);continue;}if(!coordinateAttack(e,r)){if(s.entryGrace<=0&&!(e.spawnGrace>0))moveWaitingEnemy(e,p,r,dt);continue;}
   e.spawnGrace=Math.max(0,(e.spawnGrace||0)-dt);if(s.entryGrace>0||e.spawnGrace>0)continue;
   if(e.variant==='demon')continue;
+  if(updateSkeleton(e,p,r,dt,s.projectiles,(raw,source,kind,origin)=>hurt(raw,source,kind,origin),()=>runRandom(s)))continue;
   if(supportTypes.includes(e.type)){updateSupportCaster(e,p,r,dt,s.projectiles);continue;}
   if(e.type==='ossuaryMinion'){updateSupportMinion(e,p,r,dt,(raw,source,kind,origin)=>hurt(raw,source,kind,origin));continue;}
   if(e.type==='pursuer'){updatePursuer(e,p,r,dt,(raw,source,kind,origin)=>hurt(raw,source,kind,origin));continue;}
@@ -162,6 +165,7 @@ export function stepRun(s,dt,input={x:0,y:0}){
  if(p.hp<=0){events.push('dead');return {events,effects,damageResults:drainDamageResults(s)};}
  for(const b of s.projectiles){
   if(b.life<=0)continue;
+  if(b.skeletonShot&&!r.enemies.some(e=>e.variant==='king'&&e.id===b.skeletonOwner&&e.hp>0&&e.shadowBoss!==1)){b.life=0;continue;}
   if(b.ricochet){if(advanceRicochet(b,dt,r.obstacles,p))hurt(9,b.source||'반사탄',null,{x:p.x-b.vx,y:p.y-b.vy});if(p.hp<=0)break;continue;}
   let travelDt=dt;if(b.delay>0){travelDt=Math.max(0,dt-b.delay);b.delay=Math.max(0,b.delay-dt);if(b.delay>0)continue;if(!b.enemy)events.push(b.turretShot?'crossbowRepeat':'repeatShot');if(b.turretShot){const w=b.weapon||p;effects.push({turretMuzzle:true,x:b.x,y:b.y,angle:Math.atan2(b.vy,b.vx),color:w.fire?'#efaa78':w.frost?'#a9deee':w.poison?'#b4d68b':w.chain?'#cdb6ed':'#e4cf9d',t:.09,duration:.09});}if(!b.turretShot){b.x=p.x;b.y=p.y;}}if(!b.enemy)steerArrow(b,r.enemies,r.obstacles,travelDt,segmentBlocked);
   if(b.demonCurve){const turn=b.demonCurve*travelDt,c=Math.cos(turn),sin=Math.sin(turn),vx=b.vx;b.vx=vx*c-b.vy*sin;b.vy=vx*sin+b.vy*c;}
@@ -177,12 +181,13 @@ export function stepRun(s,dt,input={x:0,y:0}){
  s.projectiles=s.projectiles.filter(b=>b.life>0&&roomProjectileInside(r,b));
  if(p.hp<=0){events.push('dead');return {events,effects,damageResults:drainDamageResults(s)};}
  r.nextEnemyId=Math.max(r.nextEnemyId||0,...r.enemies.map(e=>e.id+1));
- resolveFireFields(r);cleanupSupportMinions(r);
+ resolveFireFields(r);cleanupSupportMinions(r);cleanupKingSkeletons(r,s.projectiles);
  tickBloodContract(s,r,dt,effects);
  const defeated=r.enemies.filter(e=>e.hp<=0);r.enemies=r.enemies.filter(e=>e.hp>0);if(defeated.length&&!r.enemies.some(e=>!e.summoned))silenceSealEngine(s,r);
  const remnantEvent=advanceRemnantHunt(s,r,defeated);if(remnantEvent){events.push(remnantEvent);if(remnantEvent==='remnantFragment'){dropXp(s,r,defeated[0],80,'elite');effects.push({x:p.x,y:p.y-45,t:1.5,color:'#ead6a3',text:'봉인조각 +1'});}}
  if(r.demon&&advanceDemonPhase(r,s.projectiles))events.push('demonPhase');
  for(const e of defeated){
+  if(e.skeletonCleanup)continue;
   recordRankingDefeat(s,e);recordSupportDefeat(s,r,e);
   effects.push(enemyDeathEffect(e,!!s.key,enemyHealthBefore.get(e)));
   const shardStart=s.projectiles.length;frostShatter(e.frostWeapon||p,e,s.projectiles);if(e.frostWeapon)for(const shard of s.projectiles.slice(shardStart)){shard.weapon=e.frostWeapon;shard.turretShot=true;}if(!e.selfDestruct&&e.shadowBoss!==1&&!e.shadowEscort)recordDefeat(s,e);

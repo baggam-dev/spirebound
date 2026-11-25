@@ -1,0 +1,203 @@
+{
+  "status": "source connected; game verification pending; not deployed",
+  "assets": [
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/warrior-0.png",
+      "runtime": "assets/images/skeleton-warrior-0.png",
+      "sha256": "0fdc43eced7665aabc8ccbed18f50addf8bc6704979920825cc060029d0a59e3",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/warrior-1.png",
+      "runtime": "assets/images/skeleton-warrior-1.png",
+      "sha256": "489a0a4e39b68f0fbb42c295feeab3aae2049eef7142eae57c93b174613e92ce",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/warrior-2.png",
+      "runtime": "assets/images/skeleton-warrior-2.png",
+      "sha256": "619541cd0d14b2cdfa46b4aecfe003685d0a5220329f0c987adb38bc8cc78d59",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/warrior-3.png",
+      "runtime": "assets/images/skeleton-warrior-3.png",
+      "sha256": "17006697904127ce2b571cb98f1ad07a00d4b67ae4c8958390ec4ee15d112d68",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/warrior-4.png",
+      "runtime": "assets/images/skeleton-warrior-4.png",
+      "sha256": "340f3a3e5c20b1e21dfd03c237709ef0dd4089b116b4af9f84a61387cc51ab5a",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/warrior-5.png",
+      "runtime": "assets/images/skeleton-warrior-5.png",
+      "sha256": "2e1797837d087eba1055c0b392de08ac1d944b676350de69bee4ee2a3729ee70",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/warrior-6.png",
+      "runtime": "assets/images/skeleton-warrior-6.png",
+      "sha256": "a5ad93da4928ecba17f997effb1823deeccf4d6e892762c440d13301ff4b208f",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/warrior-7.png",
+      "runtime": "assets/images/skeleton-warrior-7.png",
+      "sha256": "3acac8a49d2059e3e80638df19f4fdda86087a128dcc39bae3430e0917a7e719",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/archer-0.png",
+      "runtime": "assets/images/skeleton-archer-0.png",
+      "sha256": "8abd316be87a70f9845da154c8c2afa16b0739ea03fcf9aec4145200f054e1e3",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/archer-1.png",
+      "runtime": "assets/images/skeleton-archer-1.png",
+      "sha256": "a9ee72c599a19f7ad21c1650f7a4c8b7e109a7cd0e45e9eb9f0b4efad7d7d43c",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/archer-2.png",
+      "runtime": "assets/images/skeleton-archer-2.png",
+      "sha256": "e2b89fa41f1aadcb77cb31704dfdfbfc159dcee04a5c80f5820526a1d7c1b579",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/archer-3.png",
+      "runtime": "assets/images/skeleton-archer-3.png",
+      "sha256": "96b5abd58c5f6d2216b3810ac4ae4de270832ef9f40eb45184a37813f45f8907",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/archer-4.png",
+      "runtime": "assets/images/skeleton-archer-4.png",
+      "sha256": "2adca9fe605c993cab63fe8b2033d72bb89c5b5a67f5e68849a9f310006cf85b",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/archer-5.png",
+      "runtime": "assets/images/skeleton-archer-5.png",
+      "sha256": "9cc5d95d52a6970887f64c632f3dc185637d86b2a9ec157d8dbfece5c7a8ae70",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/archer-6.png",
+      "runtime": "assets/images/skeleton-archer-6.png",
+      "sha256": "2ed0f1918f68f269268cae10312fdfd1729b84e1f1e0adbc29f2c010e2002b63",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/archer-7.png",
+      "runtime": "assets/images/skeleton-archer-7.png",
+      "sha256": "3fcada4d69552661d57129b68ca2c248e9910174fbcc28c524dcf033417fc057",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/fx-0.png",
+      "runtime": "assets/images/skeleton-fx-0.png",
+      "sha256": "3c8a7108aa7745fc92e54dc87b12fa4d3ec2249073331709637b6e87b5a007ed",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/fx-1.png",
+      "runtime": "assets/images/skeleton-fx-1.png",
+      "sha256": "e5ec8052851cd64c4a5e26219408e3acac42fdf9effef888bb369ce682bd6cb9",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/fx-2.png",
+      "runtime": "assets/images/skeleton-fx-2.png",
+      "sha256": "9ce9aae28c0d89c472f53e5d3bc0e49e639b011c3ca1bef9e28650b06748064a",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/fx-3.png",
+      "runtime": "assets/images/skeleton-fx-3.png",
+      "sha256": "eb8a1374433485dd592393cec9e375f1425ae5d70729f838687a9e8bb934d185",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/fx-4.png",
+      "runtime": "assets/images/skeleton-fx-4.png",
+      "sha256": "be24c0ce90cefa89e7f53a0d8562e53d701288f8da25c4318e61be83d65c0858",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    },
+    {
+      "source": "docs/design-drafts/mordo-skeletons-20261125/native/fx-5.png",
+      "runtime": "assets/images/skeleton-fx-5.png",
+      "sha256": "6ff6f2057196d1cf847096648704f424dec1851c94d0caa50baba3354a8a0d59",
+      "approval": "user ㄱ after package",
+      "technical_checks_passed": true,
+      "sourceTool": "builtin image_gen; deterministic normalization",
+      "evidence": "actor-report.json / fx-report.json; exact byte copy"
+    }
+  ]
+}

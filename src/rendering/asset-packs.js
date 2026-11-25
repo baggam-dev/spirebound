@@ -14,7 +14,7 @@ export function floorAssetOptions(run,allRooms=true){
 function actorPlan(key){
  if(key==='brute')return {modules:[],feedback:['named-brute']};
  if(key==='warden')return {modules:warden,feedback:[]};
- if(key==='king')return {modules:['mordo-phase1-sprite','mordo-phase2-sprite','mordo-phase3-sprite','resurrected-king','mordo-presentation-art','shadow-aura'],feedback:['bosses']};
+ if(key==='king')return {modules:['mordo-phase1-sprite','mordo-phase2-sprite','mordo-phase3-sprite','resurrected-king','mordo-presentation-art','skeleton-art','shadow-aura'],feedback:['bosses']};
  if(key==='commander')return {modules:['commander-phase1-sprite','commander-phase2-sprite','velkar-presentation-art','shadow-aura'],feedback:['bosses']};
  if(key==='demon')return {modules:['demon-sprite','remnant-sprite','demon-core-sprite','demon-presentation-art','shadow-aura',...infernal],feedback:['demons']};
  if(key==='prism')return {modules:['prism-sprite','prism-presentation-art'],feedback:[]};
@@ -32,7 +32,7 @@ export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
  if(floor===6)modules.push('vera-sprite');
  if(floor>=3)modules.push('flower-sprite','prism-sprite','slime-sprite','prism-presentation-art');
  if(floor>=6){modules.push(...upper);feedback.push('upper');}
- if(floor===7||floor===9){modules.push('mordo-phase1-sprite','mordo-phase2-sprite','mordo-phase3-sprite','resurrected-king','mordo-presentation-art');feedback.push('bosses');}
+ if(floor===7||floor===9){modules.push('skeleton-art','mordo-phase1-sprite','mordo-phase2-sprite','mordo-phase3-sprite','resurrected-king','mordo-presentation-art');feedback.push('bosses');}
  if(floor>=8){modules.push('commander-phase1-sprite','commander-phase2-sprite','velkar-presentation-art',...infernal);feedback.push('demons','bosses');}
  if(floor===7||floor===9)modules.push('demon-sprite','remnant-sprite','demon-core-sprite','demon-presentation-art');
  if(returning&&floor>=1&&floor<=7)modules.push('pursuer-sprite');
@@ -45,6 +45,7 @@ export function floorAssetPlan(floor,{returning=false,enemies=[]}={}){
 }
 export function portraitAssetPlan(key){
  if(['ossuarySummoner','choirCantor','ossuaryMinion'].includes(key))return {modules:['support-sprites'],feedback:[],extra:[]};
+ if(['skeletonWarrior','skeletonArcher'].includes(key))return {modules:['skeleton-art'],feedback:[],extra:[]};
  if(key==='pursuer')return {modules:['pursuer-sprite'],feedback:[],extra:[]};
  if(key==='roamingElite')key='chaser';
  if(key==='warden')return {modules:warden,feedback:[],extra:[]};
