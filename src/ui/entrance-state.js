@@ -1,6 +1,6 @@
 // Presentation-only, memory-only token. Never mutates or serializes a run.
-export const ENTRANCE_DURATION=7;
-export const ENTRANCE_CUES=Object.freeze([[.12,'gateStep'],[.6,'gateStep'],[1.08,'gateStep'],[3.26,'gateStep'],[3.62,'gateStep'],[3.98,'gateStep'],[4.34,'gateStep'],[4.7,'gateStep'],[5.08,'gateOpen'],[6.4,'gateClose']].map(Object.freeze));
+export const ENTRANCE_DURATION=8;
+export const ENTRANCE_CUES=Object.freeze([[.12,'gateStep'],[.7,'gateStep'],[1.3,'gateStep'],[1.9,'gateStep'],[3.9,'gateStep'],[4.5,'gateStep'],[5.1,'gateStep'],[5.7,'gateStep'],[6.4,'gateOpen'],[7.2,'gateClose']].map(Object.freeze));
 const clamp=n=>Math.max(0,Math.min(1,n)),ease=n=>{n=clamp(n);return n*n*(3-2*n);};
 // Short stance holds separated by weight transfer; no camera zoom simulates walking.
 function paced(time,duration,stride){const at=t=>{const n=t/stride;return Math.floor(n)+ease(((n%1)-.12)/.76);};return clamp(at(Math.min(time,duration))/at(duration));}
@@ -22,6 +22,7 @@ export function createEntranceState(){
   time:run=>matches(run)?token.elapsed:0,
   advance(run,dt){if(!matches(run)||token.status!=='active')return false;if(Number.isFinite(dt)&&dt>0)token.elapsed=Math.min(ENTRANCE_DURATION,token.elapsed+Math.min(dt,.1));return token.elapsed>=ENTRANCE_DURATION;},
   finish(run){if(!matches(run))return false;token=null;return true;},
+  suspend(){if(token)token.status='queued';},
   cancel(){token=null;}
  };
 }

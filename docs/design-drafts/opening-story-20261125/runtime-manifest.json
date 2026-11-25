@@ -1,0 +1,164 @@
+[
+  {
+    "path": "assets/images/opening-story-v1.png",
+    "size": [
+      2560,
+      360
+    ],
+    "sha256": "f8227bf22231b04e9d29ae3ed061f52651dca139fc13b594546a7bcfd6628e85",
+    "sources": [
+      {
+        "path": "docs/design-drafts/opening-story-20261125/native/background-0.png",
+        "sha256": "dfcbb38d3fc2663962e93bea8fb35c1634378df53ff094ea7fa78faa03730bfd"
+      },
+      {
+        "path": "docs/design-drafts/opening-story-20261125/native/background-1.png",
+        "sha256": "ba093fd193390df47bdef94e8f554763c4770a92c9267f16991c703ee2653554"
+      },
+      {
+        "path": "docs/design-drafts/opening-story-20261125/native/background-2.png",
+        "sha256": "874a61fbce6ac1ac1d84eaec93169ea99e98678fddbf1f7966341947860a3158"
+      },
+      {
+        "path": "docs/design-drafts/opening-story-20261125/native/background-3.png",
+        "sha256": "9faab2f26fba3b5db71c15cf086ef108541b2f8ab6327850c59cb75b3ae140fe"
+      }
+    ]
+  },
+  {
+    "path": "assets/images/entrance-night-background-v1.png",
+    "size": [
+      2560,
+      360
+    ],
+    "sha256": "d26cb40618bbee75ae21ea24fcc3f4d404518351fc750aca81a45d3bf7a5611c",
+    "sources": [
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/background-0.png",
+        "sha256": "4c7a415359b137e9ae6710f9d1262c22865f3009b96f98da31a27192b84cbedd"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/background-1.png",
+        "sha256": "ed9c0bc709087a61d416b60fd3ccd6fab3126c82d682826abe37c94a8b3a3899"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/background-2.png",
+        "sha256": "d8e2011d341a2f1bd62b03195c0861326ded9849db9bb29521217af89c87bf10"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/background-3.png",
+        "sha256": "bd66d24dc7c2b70f6ca909182aec2cbd15a5161dd0621aa05e618bcd0e34f9c6"
+      }
+    ]
+  },
+  {
+    "path": "assets/images/entrance-night-rear-v1.png",
+    "size": [
+      1024,
+      128
+    ],
+    "sha256": "5d49c7cbde1c6bf6cf6c5171afa27beb4a18adb4e6482cf62a6858307a22a535",
+    "sources": [
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/rear-0.png",
+        "sha256": "6cb0e3902fa3f626a475de65a34312c27167861850def8fcb38adc13c135f760"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/rear-1.png",
+        "sha256": "637f7496ece239971f4b4dac7dfd07e95d8125579a2e41f0ee3119bfcb24c22b"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/rear-2.png",
+        "sha256": "856e01fb4540a01bd425d1c56f60cc319f651b0f4a4bd55e02a96b1778a165d3"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/rear-3.png",
+        "sha256": "a6ccabc3aa20a8ab94b653cbe32a2ff64834ac130bee314e9e7077f02723c2fb"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/rear-4.png",
+        "sha256": "9bf074cfcd7e8a164658b0c275015509b0b2a3acfeaa5d783b95f4b02e218544"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/rear-5.png",
+        "sha256": "1425546bf9fd305ee58c936ed420414465182aecf8b8ca5b485eec81dad57ea8"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/rear-6.png",
+        "sha256": "5ba9252eb4faba5880bc39c42b4a69d11f74141273d743ad98f815bf2ec47dca"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/rear-7.png",
+        "sha256": "f41b34d747b231f1a7819963c2d17b9f7452df243c0232730c6cd88b2fceb932"
+      }
+    ]
+  },
+  {
+    "path": "assets/images/entrance-night-pause-v1.png",
+    "size": [
+      512,
+      128
+    ],
+    "sha256": "4782b526e86f0cb6f319b7a1c25d7067c1dcb3d2fa7fdc35988308e4c60f4795",
+    "sources": [
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/pause-0.png",
+        "sha256": "d6f62484054b01b7929e88c06d1127a0a982930f0cb926c6f0d776d255e33b80"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/pause-1.png",
+        "sha256": "c54e57d6f538c8ad60c2b607db1d322bd412ca57a97ee56094235b2cf204ae62"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/pause-2.png",
+        "sha256": "b68524576f5234ba7e8b5d94d9fde2a5ae83df0dcd25406869c1d788fb1ee439"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/pause-3.png",
+        "sha256": "d869aeb390f50fe5769cd9c07808465f7ebb2da105b4bfea35d65eec185564a0"
+      }
+    ]
+  },
+  {
+    "path": "assets/images/entrance-night-front-v1.png",
+    "size": [
+      1024,
+      128
+    ],
+    "sha256": "14e44abafa6f2d228b08a62cff0741152741e8146fc803771ec48754e06cfc47",
+    "sources": [
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/front-0.png",
+        "sha256": "b6f88bcef2cf1abaf39b260c85ac2791fc61b24b3999f8c11a72c058f3af71c2"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/front-1.png",
+        "sha256": "68c783363eb32fc72bdcde43f4fe9b829a809bd9e176370a3af0a7fc8764d1c9"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/front-2.png",
+        "sha256": "ec24d4beaefd3f3df76f9bad565adfc1dea0782379aa4782c5035f31e57b170b"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/front-3.png",
+        "sha256": "562626d802b21521bb4a69508b1b087eaba5c6a1cb254812bcaa61c0a4834311"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/front-4.png",
+        "sha256": "06b48595598b3e2a71fb662599b8a52ba74911e04f1029987c02c92f39c39aea"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/front-5.png",
+        "sha256": "d31bf276b687f53e5601acd8bc322d674d6d15dab463686f221c1687c0319031"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/front-6.png",
+        "sha256": "75cb5bc5c39efac0c1e82c27d95bb32b38a3bebf718c91270ceda91bc9203f60"
+      },
+      {
+        "path": "docs/design-drafts/entrance-night-20261125/native/front-7.png",
+        "sha256": "35c68f8fa859ad9f65034948ace4a08cd7abd66e4bf6d815ee20e6273a29ef4b"
+      }
+    ]
+  }
+]

@@ -33,3 +33,7 @@ body:has(.journey-scene) #notice{visibility:hidden}
 @media(pointer:coarse){#escapeSkip{font-size:12px}#escapeSubtitle{font-size:14px}}
 
 body:has(.escape-scene),body:has(.escape-loading){background:#08090e}body:has(.escape-scene) #notice{visibility:hidden}
+
+#storyPause{position:absolute;left:calc(16px + env(safe-area-inset-left));bottom:calc(12px + env(safe-area-inset-bottom));min-height:44px;min-width:112px;background:#0b1019cc;color:#eee6d0;border:1px solid #9d9a7b88;font-size:14px}
+.story-accessible{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+body:has(.entrance-scene) #notice{visibility:hidden}
