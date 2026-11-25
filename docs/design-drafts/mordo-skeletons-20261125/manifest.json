@@ -1,0 +1,704 @@
+{
+  "status": "review-only; runtime unchanged",
+  "generatedCalls": 5,
+  "rejectedAlphaSources": [
+    "warrior-alpha-failed.png",
+    "warrior-alpha-retry-failed.png"
+  ],
+  "sources": [
+    {
+      "file": "warrior-source.png",
+      "sha256": "ca63725619519d5de0bb2040b191529b74e66fb37a726e0368061867f27d2cb5"
+    },
+    {
+      "file": "archer-source.png",
+      "sha256": "5d8bfeb9986d0cec787ee78f81c24db42e2688a2f6b4327c852c0e94c75b4f11"
+    },
+    {
+      "file": "fx-source.png",
+      "sha256": "b8789369a9824735b8bd63f0f5dcb354ebbf4c86941a03469f2c1912917aee80"
+    }
+  ],
+  "actorNative": [
+    144,
+    128
+  ],
+  "actorPaletteColors": 47,
+  "scale": 0.2206896551724138,
+  "pivot": [
+    64,
+    112
+  ],
+  "sourceRegions": [
+    {
+      "family": "warrior",
+      "frame": 0,
+      "sourceBox": [
+        0,
+        0,
+        384,
+        512
+      ],
+      "bounds": [
+        83,
+        129,
+        291,
+        419
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "warrior",
+      "frame": 1,
+      "sourceBox": [
+        384,
+        0,
+        768,
+        512
+      ],
+      "bounds": [
+        62,
+        138,
+        284,
+        415
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "warrior",
+      "frame": 2,
+      "sourceBox": [
+        768,
+        0,
+        1152,
+        512
+      ],
+      "bounds": [
+        70,
+        138,
+        303,
+        412
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "warrior",
+      "frame": 3,
+      "sourceBox": [
+        1152,
+        0,
+        1536,
+        512
+      ],
+      "bounds": [
+        81,
+        79,
+        299,
+        417
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "warrior",
+      "frame": 4,
+      "sourceBox": [
+        0,
+        512,
+        408,
+        1024
+      ],
+      "bounds": [
+        50,
+        134,
+        391,
+        418
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "warrior",
+      "frame": 5,
+      "sourceBox": [
+        408,
+        512,
+        768,
+        1024
+      ],
+      "bounds": [
+        14,
+        178,
+        270,
+        418
+      ],
+      "anchorX": 168,
+      "extraRegion": null
+    },
+    {
+      "family": "warrior",
+      "frame": 6,
+      "sourceBox": [
+        768,
+        512,
+        1152,
+        1024
+      ],
+      "bounds": [
+        1,
+        161,
+        413,
+        415
+      ],
+      "anchorX": 192,
+      "extraRegion": [
+        1152,
+        512,
+        1200,
+        780
+      ]
+    },
+    {
+      "family": "warrior",
+      "frame": 7,
+      "sourceBox": [
+        1152,
+        780,
+        1536,
+        1024
+      ],
+      "bounds": [
+        13,
+        15,
+        358,
+        154
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "archer",
+      "frame": 0,
+      "sourceBox": [
+        0,
+        0,
+        384,
+        512
+      ],
+      "bounds": [
+        97,
+        129,
+        303,
+        419
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "archer",
+      "frame": 1,
+      "sourceBox": [
+        384,
+        0,
+        768,
+        512
+      ],
+      "bounds": [
+        64,
+        134,
+        317,
+        415
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "archer",
+      "frame": 2,
+      "sourceBox": [
+        768,
+        0,
+        1152,
+        512
+      ],
+      "bounds": [
+        69,
+        137,
+        317,
+        414
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "archer",
+      "frame": 3,
+      "sourceBox": [
+        1152,
+        0,
+        1536,
+        512
+      ],
+      "bounds": [
+        84,
+        72,
+        323,
+        415
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "archer",
+      "frame": 4,
+      "sourceBox": [
+        0,
+        512,
+        384,
+        1024
+      ],
+      "bounds": [
+        51,
+        78,
+        325,
+        421
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "archer",
+      "frame": 5,
+      "sourceBox": [
+        384,
+        512,
+        768,
+        1024
+      ],
+      "bounds": [
+        35,
+        107,
+        321,
+        419
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "archer",
+      "frame": 6,
+      "sourceBox": [
+        768,
+        512,
+        1152,
+        1024
+      ],
+      "bounds": [
+        15,
+        105,
+        357,
+        415
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    },
+    {
+      "family": "archer",
+      "frame": 7,
+      "sourceBox": [
+        1152,
+        512,
+        1536,
+        1024
+      ],
+      "bounds": [
+        18,
+        264,
+        357,
+        431
+      ],
+      "anchorX": 192,
+      "extraRegion": null
+    }
+  ],
+  "effectNative": [
+    96,
+    96
+  ],
+  "effectPaletteColors": 31,
+  "effectInset": 4,
+  "alphaThreshold": 220,
+  "assets": [
+    {
+      "file": "native/archer-0.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        43,
+        48,
+        88,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/archer-1.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        36,
+        50,
+        92,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/archer-2.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        37,
+        51,
+        92,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/archer-3.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        40,
+        36,
+        92,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/archer-4.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        34,
+        36,
+        93,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/archer-5.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        29,
+        43,
+        92,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/archer-6.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        25,
+        44,
+        99,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/archer-7.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        26,
+        75,
+        101,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/fx-0.png",
+      "size": [
+        96,
+        96
+      ],
+      "alphaBounds": [
+        12,
+        46,
+        87,
+        68
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/fx-1.png",
+      "size": [
+        96,
+        96
+      ],
+      "alphaBounds": [
+        9,
+        32,
+        84,
+        69
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/fx-2.png",
+      "size": [
+        96,
+        96
+      ],
+      "alphaBounds": [
+        5,
+        38,
+        84,
+        74
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/fx-3.png",
+      "size": [
+        96,
+        96
+      ],
+      "alphaBounds": [
+        21,
+        13,
+        80,
+        77
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/fx-4.png",
+      "size": [
+        96,
+        96
+      ],
+      "alphaBounds": [
+        14,
+        22,
+        82,
+        68
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/fx-5.png",
+      "size": [
+        96,
+        96
+      ],
+      "alphaBounds": [
+        11,
+        36,
+        81,
+        53
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/warrior-0.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        40,
+        48,
+        86,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/warrior-1.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        35,
+        51,
+        84,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/warrior-2.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        37,
+        52,
+        88,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/warrior-3.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        40,
+        37,
+        88,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/warrior-4.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        33,
+        49,
+        107,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/warrior-5.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        30,
+        59,
+        86,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/warrior-6.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        22,
+        56,
+        112,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    },
+    {
+      "file": "native/warrior-7.png",
+      "size": [
+        144,
+        128
+      ],
+      "alphaBounds": [
+        24,
+        81,
+        100,
+        112
+      ],
+      "technical_checks_passed": true,
+      "status": "review-only",
+      "sourceTool": "builtin image_gen plus deterministic slicing/palette/scale"
+    }
+  ],
+  "preview": {
+    "size": [
+      640,
+      360
+    ],
+    "sourceFrames": 120,
+    "fps": 20,
+    "encodedFrames": 115,
+    "durationMs": 6000
+  },
+  "limitations": [
+    "Two stride poses plus action key poses are a design proposal, not final AI animation blending.",
+    "Archer projectiles and warning lines are scripted demonstrations, not actual combat logic.",
+    "Phase composition board shows requested counts; caps, HP and spawn timing implementation pending.",
+    "No game tests, browser QA, push or deployment."
+  ]
+}

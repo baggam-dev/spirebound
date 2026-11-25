@@ -1,0 +1,325 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/archer-0.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 4427,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 17121,
+      "content_bounds": [
+        43,
+        48,
+        88,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/archer-1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 4342,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 17161,
+      "content_bounds": [
+        36,
+        50,
+        92,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/archer-2.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 4247,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 17188,
+      "content_bounds": [
+        37,
+        51,
+        92,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/archer-3.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 5194,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 16852,
+      "content_bounds": [
+        40,
+        36,
+        92,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/archer-4.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 5065,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 16885,
+      "content_bounds": [
+        34,
+        36,
+        93,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/archer-5.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 4901,
+      "color_count": 45,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 16915,
+      "content_bounds": [
+        29,
+        43,
+        92,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/archer-6.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 4690,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 17026,
+      "content_bounds": [
+        25,
+        44,
+        99,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/archer-7.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 3369,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 17425,
+      "content_bounds": [
+        26,
+        75,
+        101,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/warrior-0.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 4720,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 17059,
+      "content_bounds": [
+        40,
+        48,
+        86,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/warrior-1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 4525,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 17116,
+      "content_bounds": [
+        35,
+        51,
+        84,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/warrior-2.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 4452,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 17151,
+      "content_bounds": [
+        37,
+        52,
+        88,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/warrior-3.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 5252,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 16900,
+      "content_bounds": [
+        40,
+        37,
+        88,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/warrior-4.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 4979,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 16930,
+      "content_bounds": [
+        33,
+        49,
+        107,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/warrior-5.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 4545,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 17080,
+      "content_bounds": [
+        30,
+        59,
+        86,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/warrior-6.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 4828,
+      "color_count": 47,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 16917,
+      "content_bounds": [
+        22,
+        56,
+        112,
+        112
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/warrior-7.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 144,
+      "height": 128,
+      "bytes": 3505,
+      "color_count": 48,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 17339,
+      "content_bounds": [
+        24,
+        81,
+        100,
+        112
+      ],
+      "problems": []
+    }
+  ]
+}

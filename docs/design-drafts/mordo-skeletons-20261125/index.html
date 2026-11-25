@@ -1,0 +1,8 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>모르도 해골 군세 시안</title>
+<style>body{margin:24px;background:#080d16;color:#b7bfcd;font:16px system-ui}h1{font-size:24px;color:#d5c7aa}p{max-width:1040px;line-height:1.7}img{max-width:100%;height:auto;image-rendering:pixelated}button{padding:10px 18px;background:#18202d;color:#d5c7aa;border:1px solid #877459;font:inherit}a{color:#d1bd91}</style>
+<h1>모르도의 해골 전사 · 해골 궁수</h1>
+<p>전사의 일반 베기·대시와 궁수의 부채꼴·반사탄·일자 연사를 비교합니다. 정예 금빛 표식과 소환 인장은 몸과 별도 레이어입니다. 실제 소환 AI·피해·체력은 아직 변경하지 않았습니다.</p>
+<button id="toggle">움직임 멈추기</button> <a href="phase-board.png">페이즈별 구성</a> · <a href="actor-contact.png">전체16자세</a> · <a href="fx-contact.png">별도 효과</a> · <a href="README.md">구성·제약</a>
+<p><img id="preview" src="motion-preview.gif" width="1280" height="720" alt="해골 전사의 베기와 대시, 궁수의 부채꼴·반사탄·연사 시안"></p>
+<p>오프라인 동작 시연입니다. 무작위 패턴·충돌·피해·방별 소환 수를 실제 게임에서 검증한 결과는 아닙니다.</p>
+<script>let still=matchMedia('(prefers-reduced-motion: reduce)').matches;const p=document.querySelector('#preview'),b=document.querySelector('#toggle');function sync(){p.src=still?'phase-board.png':'motion-preview.gif';b.textContent=still?'움직임 재생':'움직임 멈추기';b.setAttribute('aria-pressed',String(still));}b.onclick=()=>{still=!still;sync();};sync();</script>

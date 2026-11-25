@@ -1,0 +1,125 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/fx-0.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 96,
+      "bytes": 595,
+      "color_count": 9,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 9026,
+      "content_bounds": [
+        12,
+        46,
+        87,
+        68
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/fx-1.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 96,
+      "bytes": 1416,
+      "color_count": 11,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 8387,
+      "content_bounds": [
+        9,
+        32,
+        84,
+        69
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/fx-2.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 96,
+      "bytes": 1147,
+      "color_count": 12,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 8822,
+      "content_bounds": [
+        5,
+        38,
+        84,
+        74
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/fx-3.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 96,
+      "bytes": 743,
+      "color_count": 13,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 9038,
+      "content_bounds": [
+        21,
+        13,
+        80,
+        77
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/fx-4.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 96,
+      "bytes": 903,
+      "color_count": 7,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 8479,
+      "content_bounds": [
+        14,
+        22,
+        82,
+        68
+      ],
+      "problems": []
+    },
+    {
+      "path": "C:/baggam-dev/spirebound/docs/design-drafts/mordo-skeletons-20261125/native/fx-5.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 96,
+      "height": 96,
+      "bytes": 945,
+      "color_count": 14,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 8776,
+      "content_bounds": [
+        11,
+        36,
+        81,
+        53
+      ],
+      "problems": []
+    }
+  ]
+}
